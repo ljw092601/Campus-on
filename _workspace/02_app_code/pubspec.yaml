@@ -1,0 +1,65 @@
+name: campus_on
+description: "Campus-On — 외국인 유학생 캠퍼스 안내 앱 (Flutter)."
+publish_to: "none"
+version: 0.2.0+2
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Backend — Firebase / Cloud Firestore (read-only content, offline persistence)
+  # Only initialized when the app is run with --dart-define=USE_FIRESTORE=true
+  # (see lib/core/config/firebase_init.dart). Run `flutterfire configure` to
+  # generate lib/firebase_options.dart + platform config before enabling.
+  firebase_core: ^3.6.0
+  cloud_firestore: ^5.4.4
+
+  # State management
+  flutter_riverpod: ^2.5.1
+
+  # Routing
+  go_router: ^14.2.0
+
+  # i18n — pinned to the version flutter_localizations requires (Flutter 3.44 → intl 0.20.2)
+  intl: ^0.20.2
+
+  # Local storage (favorites / language / recent searches)
+  shared_preferences: ^2.2.3
+
+  # Map — Kakao Maps (community Flutter plugin, JS key based).
+  # Isolated behind lib/presentation/map/widgets/campus_map_view.dart so it
+  # can be swapped without touching screens if the plugin API changes.
+  kakao_map_plugin: ^0.3.1
+
+  # Icons
+  material_symbols_icons: ^4.2785.1
+
+  # Utilities
+  url_launcher: ^6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
+  # fonts:
+  #   - family: Pretendard
+  #     fonts:
+  #       - asset: assets/fonts/Pretendard-Regular.otf
+  #       - asset: assets/fonts/Pretendard-Medium.otf
+  #         weight: 500
+  #       - asset: assets/fonts/Pretendard-SemiBold.otf
+  #         weight: 600
+  #       - asset: assets/fonts/Pretendard-Bold.otf
+  #         weight: 700

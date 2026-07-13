@@ -1,0 +1,29 @@
+{
+  "arc-issue": {
+    "categoryId": "immigration",
+    "title_ko": "외국인등록증 발급",
+    "title_en": "Alien Registration Card",
+    "summary_ko": "입국 90일 이내 신청",
+    "summary_en": "Apply within 90 days of entry",
+    "relatedFacilityIds": ["oia-office"],
+    "status": "published"
+  },
+  "bank-account": {
+    "categoryId": "living",
+    "title_ko": "은행 계좌 개설",
+    "title_en": "Open a Bank Account",
+    "summary_ko": "여권·외국인등록증 지참",
+    "summary_en": "Bring passport & ARC",
+    "relatedFacilityIds": [],
+    "status": "comingSoon"
+  },
+  "library-guide": {
+    "categoryId": "school",
+    "title_ko": "도서관 이용 안내",
+    "title_en": "Library Guide",
+    "summary_ko": "대출·열람실 이용",
+    "summary_en": "Borrowing & reading rooms",
+    "relatedFacilityIds": ["lib-central"],
+    "status": "comingSoon"
+  }
+}

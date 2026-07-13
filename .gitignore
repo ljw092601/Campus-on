@@ -1,0 +1,41 @@
+# ── Campus-On 저장소 루트 .gitignore ──
+# (Flutter 프로젝트별 _workspace/02_app_code/.gitignore, android/.gitignore도 함께 적용)
+
+# 빌드 산출물 / 캐시 (커밋 금지 — 용량 큼)
+**/build/
+**/.dart_tool/
+**/.gradle/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.flutter-plugins-dependencies.json
+
+# gen-l10n 생성물 (pub get이 재생성)
+**/lib/l10n/gen/
+
+# IDE / 툴링
+.idea/
+.vscode/
+*.iml
+.metadata
+
+# Flutter/네이티브 로컬 설정 (머신 종속)
+**/android/local.properties
+**/android/key.properties
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/.symlinks/
+**/ios/Pods/
+**/*.g.dart.lock
+
+# ── 시크릿 (절대 커밋 금지) ──
+# Kakao JS 키는 --dart-define으로만 주입, 파일 저장 안 함.
+*.env
+**/env.json
+**/serviceAccount.json
+**/node_modules/
+**/google-services.json
+**/GoogleService-Info.plist
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,19 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+# pubspec.lock — 애플리케이션 프로젝트는 재현 빌드를 위해 커밋(무시하지 않음)
+
+# Generated localizations
+lib/l10n/gen/
+
+# Secrets — Kakao key is injected via --dart-define, never committed.
+*.env
+env.json
+
+# Firestore seed tooling — Admin SDK service-account private key (full DB
+# access) must never be committed. Local npm deps for the seeder too.
+tool/firestore_seed/serviceAccount.json
+node_modules/

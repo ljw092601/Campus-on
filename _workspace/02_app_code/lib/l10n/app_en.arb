@@ -1,0 +1,102 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Campus-On",
+  "@appTitle": {},
+
+  "tab_home_label": "Home",
+  "tab_map_label": "Map",
+  "tab_guide_label": "Guide",
+  "tab_settings_label": "Settings",
+
+  "common_retry": "Retry",
+  "common_all": "All",
+  "common_clear": "Clear",
+  "common_resetFilter": "Reset filter",
+  "common_close": "Close",
+  "common_sortDistance": "Distance",
+  "common_sortName": "Name",
+  "common_comingSoon": "Coming soon",
+  "common_loadFailed": "Something went wrong.",
+
+  "home_appbar_langToggle": "KO | EN",
+  "home_searchBar_hint": "Search facilities & admin",
+  "home_mapBanner_title": "Open campus map",
+  "home_mapBanner_subtitle": "Find nearby facilities",
+  "home_section_facilityCategory": "Facility categories",
+  "home_section_guide": "Admin guide",
+  "home_empty_noFacility": "No facility info yet.",
+
+  "facility_category_building": "Building",
+  "facility_category_classroom": "Classroom",
+  "facility_category_dining": "Dining",
+  "facility_category_library": "Library",
+  "facility_category_amenity": "Amenity",
+  "facility_category_etc": "Etc",
+
+  "map_appbar_title": "Map",
+  "map_toggle_toList": "List",
+  "map_toggle_toMap": "Map",
+  "map_empty_noMarker": "No facilities in this category.",
+  "map_error_loadFailed": "Couldn't load the map.",
+  "map_error_openList": "Open facility list instead",
+  "map_myLocation_denied": "Location permission is off. Showing campus center.",
+  "map_peek_viewDetail": "View detail",
+
+  "list_appbar_title": "Facilities",
+  "list_empty_noResult": "No facilities match your filter.",
+  "list_error_loadFailed": "Couldn't load the list.",
+
+  "facility_meta_distance": "{meters}m",
+  "@facility_meta_distance": {
+    "placeholders": { "meters": { "type": "int" } }
+  },
+  "facility_action_viewOnMap": "View on map",
+  "facility_action_call": "Call",
+  "facility_section_about": "About",
+  "facility_detail_error": "Couldn't load the info.",
+  "facility_favorite_add": "Add to favorites",
+  "facility_favorite_remove": "Remove from favorites",
+
+  "search_appbar_hint": "Search",
+  "search_segment_all": "All",
+  "search_segment_facility": "Facilities",
+  "search_segment_guide": "Guide",
+  "search_recent_title": "Recent searches",
+  "search_section_facility": "Facilities ({count})",
+  "@search_section_facility": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "search_section_guide": "Guide ({count})",
+  "@search_section_guide": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "search_empty_noResult": "No results for '{query}'.",
+  "@search_empty_noResult": {
+    "placeholders": { "query": { "type": "String" } }
+  },
+  "search_empty_hint": "Search facilities and admin guides.",
+  "search_error_failed": "Search failed.",
+
+  "guide_category_immigration": "Immigration & Stay",
+  "guide_category_housing": "Housing",
+  "guide_category_living": "Living",
+  "guide_category_health": "Health & Insurance",
+  "guide_category_school": "School admin",
+  "guide_category_emergency": "Emergency & Help",
+
+  "guide_stub_title": "Admin guide",
+  "guide_stub_body": "Admin guide arrives in week 3.",
+
+  "settings_title": "Settings",
+  "settings_language_title": "Language",
+  "settings_language_ko": "한국어",
+  "settings_language_en": "English",
+  "settings_favorites_title": "Favorites",
+  "settings_stub_body": "Full settings arrive in week 3.",
+
+  "favorites_title": "Favorites",
+  "favorites_empty_title": "No favorites yet",
+  "favorites_empty_body": "Tap the star to save.",
+  "favorites_stub_body": "Favorites list arrives in week 3."
+}
