@@ -17,6 +17,12 @@ class MockGuideRepository implements GuideRepository {
   }
 
   @override
+  Future<List<AdminGuideItem>> getByCategory(GuideCategory category) async {
+    await Future<void>.delayed(latency);
+    return orderGuideItems(_data.where((g) => g.categoryId == category));
+  }
+
+  @override
   Future<AdminGuideItem?> getById(String id) async {
     await Future<void>.delayed(latency);
     for (final g in _data) {

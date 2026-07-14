@@ -23,8 +23,8 @@ extension FacilityCategoryLabel on FacilityCategory {
   }
 }
 
-/// Maps admin-guide category enums to localized labels (used by S1 home grid;
-/// full guide screens land in week 3).
+/// Maps admin-guide category enums to localized labels + one-line summaries
+/// (S1 home grid + S5 category list).
 extension GuideCategoryLabel on GuideCategory {
   String label(AppLocalizations l) {
     switch (this) {
@@ -40,6 +40,23 @@ extension GuideCategoryLabel on GuideCategory {
         return l.guide_category_school;
       case GuideCategory.emergency:
         return l.guide_category_emergency;
+    }
+  }
+
+  String summary(AppLocalizations l) {
+    switch (this) {
+      case GuideCategory.immigration:
+        return l.guide_categorySummary_immigration;
+      case GuideCategory.housing:
+        return l.guide_categorySummary_housing;
+      case GuideCategory.living:
+        return l.guide_categorySummary_living;
+      case GuideCategory.health:
+        return l.guide_categorySummary_health;
+      case GuideCategory.school:
+        return l.guide_categorySummary_school;
+      case GuideCategory.emergency:
+        return l.guide_categorySummary_emergency;
     }
   }
 }

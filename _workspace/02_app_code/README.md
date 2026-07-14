@@ -1,8 +1,15 @@
-# Campus-On — Flutter app (week 2)
+# Campus-On — Flutter app (weeks 1–3)
 
-App skeleton + campus map & facility features. Screens S1 (Home), S2 (Map),
-S3 (Facility List), S4 (Facility Detail), S8 (Search). Guide (S5–S7),
-Settings (S9), Favorites (S10) are route stubs for week 3.
+Full MVP screen set. S1 (Home), S2 (Map + 6-color category pins), S3 (Facility
+List), S4 (Facility Detail), S5 (Guide Categories), S6 (Guide Item List), S7
+(Guide Detail — 4-section template), S8 (Search), S9 (Settings + About/data-
+source/contact sub-pages), S10 (Favorites — segments + swipe-delete). Admin
+guide content is structure-first: one fully-authored item (ARC issuance), the
+rest are `comingSoon` placeholders on the same schema.
+
+Map markers are drawn from 6 category pin PNGs in `assets/markers/` loaded via
+`MarkerIcon.fromAsset` (base64, fully offline). Regenerate them with the
+System.Drawing snippet noted in `02_app_architecture.md` if colors change.
 
 ## First-time setup
 

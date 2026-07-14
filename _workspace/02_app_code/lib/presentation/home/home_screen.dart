@@ -194,8 +194,8 @@ class _GuideTile extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: InkWell(
         borderRadius: context.dimens.brMd,
-        // Week 3: deep-link to the specific guide category (S6).
-        onTap: () => context.go('/guide'),
+        // Deep-link into the specific guide category (S6).
+        onTap: () => context.go('/guide/category/${category.name}'),
         child: Padding(
           padding: EdgeInsets.all(context.dimens.spaceSm),
           child: Column(

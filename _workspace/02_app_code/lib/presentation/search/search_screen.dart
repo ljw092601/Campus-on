@@ -216,8 +216,7 @@ class _Results extends ConsumerWidget {
               subtitle: g.summary(locale) != null
                   ? Text(g.summary(locale)!)
                   : null,
-              // Week 3: → guide detail S7. Stub route for now.
-              onTap: () => context.go('/guide'),
+              onTap: () => context.go('/guide/item/${g.id}'),
             ),
         ],
       ],

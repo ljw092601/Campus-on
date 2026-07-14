@@ -52,6 +52,11 @@ flutter:
   uses-material-design: true
   generate: true
 
+  # Category marker pins (6 colors) — loaded via MarkerIcon.fromAsset and drawn
+  # on the Kakao map (S2). See lib/presentation/map/widgets/marker_icons.dart.
+  assets:
+    - assets/markers/
+
   # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
   # fonts:
   #   - family: Pretendard

@@ -169,13 +169,24 @@ flutter test               # test/smoke_test.dart (부팅 스모크)
 - 한/영: `localeProvider.toggle()` 즉시 리빌드, S4 하단 CTA 폰트 200% 세로 전환, 리스트 오버플로우(ellipsis).
 - A11y: 즐겨찾기 버튼 tooltip/Semantics, 카테고리칩 Semantics(selected), 터치 타깃 48dp.
 
-## Remaining TODO (Week 3)
+## Week 3 구현 완료 (2026-07-14)
 
-- **가이드 S5–S7**: 카테고리 리스트/항목/상세(접이식 4섹션·체크리스트·관련링크). `GuideRepository` 상세 메서드 활용, 홈 가이드 타일→해당 카테고리 딥링크.
-- **설정 S9**: About/데이터출처/문의/개인정보처리방침(외부링크)/라이선스/버전.
-- **즐겨찾기 S10**: 시설/가이드 세그먼트 목록 + 스와이프 삭제(저장 로직은 이미 동작).
-- **지도**: 카테고리별 6색 마커 PNG 에셋(`CampusMapView.markerImageFor`), 내 위치 권한 흐름, 미니지도 Kakao static 이미지, 거리 계산(정렬).
-- **오프라인 캐싱**: Hive/Isar + 오프라인 배너(api-integrator 협업).
-- **폰트**: Pretendard 번들(pubspec 주석 처리됨).
-- **홈 카운트 배지**: 카테고리별 시설/항목 수(원격, 실패 시 숨김).
+- **가이드 S5–S7** (`lib/presentation/guide/`)
+  - `guide_category_screen.dart` (S5): 6종 카테고리 하드코딩 리스트 + `guideCategoryCountsProvider` 배지(실패 시 숨김).
+  - `guide_item_list_screen.dart` (S6): `guideItemsByCategoryProvider(category)`, `orderGuideItems`로 published 우선 정렬, 재사용 `GuideListItem`(즐겨찾기 별).
+  - `guide_detail_screen.dart` (S7): `ExpansionTile` 4섹션(개요/준비물 체크박스/단계 번호/관련 링크·위치), 메타(소요시간·난이도 dot), 외부 링크(`url_launcher` external), 관련 위치 카드→`/map?focus=<id>` 딥링크. 콘텐츠 전무 시 `hasNoContent`→표준 comingSoon 카드.
+  - 엔티티 확장: `AdminGuideItem`에 `overview/checklist/steps/links/duration/difficulty` + `GuideLink`. 로케일 폴백 접근자(`_pick`/`_pickList`).
+- **설정 S9** (`lib/presentation/settings/settings_screen.dart` + `settings_info_screen.dart`)
+  - 언어 라디오(즉시 반영), 즐겨찾기 진입, 정보 섹션(앱 소개·데이터 출처·문의하기 정적 서브페이지 / 개인정보처리방침 외부링크 / 오픈소스 라이선스 `showLicensePage` / 버전). 문의=`mailto:`, URL/이메일은 `AppConfig`.
+- **즐겨찾기 S10** (`favorites_screen.dart`)
+  - 시설/가이드 `SegmentedButton`, `favoriteFacilitiesProvider`/`favoriteGuideItemsProvider`(키 Set→객체 해석, 즐겨찾기 토글 시 반응형 갱신), `Dismissible` 스와이프 삭제 + 실행취소 스낵바, 세그먼트별 빈 상태 CTA.
+- **지도 6색 커스텀 마커** (`assets/markers/pin_*.png` + `marker_icons.dart`)
+  - 카테고리 6색 티어드롭 핀 PNG(48×60, System.Drawing 생성) → `CategoryMarkerIcons`가 `MarkerIcon.fromAsset`(base64, 오프라인)로 1회 로드·메모이즈. `CampusMapView`가 아이콘 준비 후 렌더(FutureBuilder), 선택 마커 zIndex 상향. 필터 변경 시 `didUpdateWidget`가 마커 재적용.
+  - 색 변경 시 재생성: `Add-Type -AssemblyName System.Drawing`으로 카테고리별 색(=`category_colors.dart`) 핀을 그려 저장.
+- **오프라인 캐싱 마감**: `firebase_init.dart`에서 Firestore 영속성 명시(`persistenceEnabled`) + 모든 읽기 경로(시설·가이드 getAll/getById/**getByCategory**) `Source.cache` 폴백. 오프라인 연결 배너(connectivity)는 데이터 계층 무변경 Phase-2 후보로 유지.
+- **테스트**: `test/guide_flow_test.dart` 3건(S5→S6→S7 내비, comingSoon 플레이스홀더, 즐겨찾기 토글→S10 지속) + 기존 스모크 → `flutter test` 🟢 4건. `analyze` 🟢.
+
+### 남은 TODO (4주차 이후)
+
+- 실 캠퍼스 좌표/시설·가이드 콘텐츠 입력, Pretendard 번들, 거리 계산(정렬), 내 위치 권한 흐름, 미니지도 Kakao static 이미지, 오프라인 연결 배너, iOS 런타임 검증.
 ```

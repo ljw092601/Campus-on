@@ -45,6 +45,14 @@ class FirestoreGuideRepository implements GuideRepository {
   Future<List<AdminGuideItem>> getAllItems() => _loadAll();
 
   @override
+  Future<List<AdminGuideItem>> getByCategory(GuideCategory category) async {
+    // Filter client-side off the (cache-friendly) full load: the dataset is
+    // campus-small, and reusing _loadAll keeps the same offline fallback path.
+    final all = await _loadAll();
+    return orderGuideItems(all.where((g) => g.categoryId == category));
+  }
+
+  @override
   Future<AdminGuideItem?> getById(String id) async {
     try {
       final doc = await _col.doc(id).get();

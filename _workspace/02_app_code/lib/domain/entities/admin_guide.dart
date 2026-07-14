@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 /// Admin guide categories — the 6 from UX doc §8 (includes emergency).
-/// Full guide screens (S5–S7) land in week 3; the enum + light model are
-/// defined now so search (S8) and deep links can reference them.
 enum GuideCategory {
   immigration,
   housing,
@@ -35,9 +33,39 @@ enum GuideCategory {
 
 enum GuideStatus { published, comingSoon }
 
-/// Minimal guide item — enough for the S8 search index + deep-link contract.
-/// Full sectioned content (overview/checklist/steps/links) is fleshed out in
-/// week 3 and lives on the same schema (UX doc §8 AdminGuideItem).
+/// External / related link shown in the S7 "Links & Locations" section.
+@immutable
+class GuideLink {
+  const GuideLink({
+    required this.labelKo,
+    required this.labelEn,
+    required this.url,
+  });
+
+  final String labelKo;
+  final String labelEn;
+  final String url;
+
+  String label(Locale l) {
+    final primary = l.languageCode == 'ko' ? labelKo : labelEn;
+    if (primary.trim().isNotEmpty) return primary;
+    final other = l.languageCode == 'ko' ? labelEn : labelKo;
+    return other.trim().isNotEmpty ? other : url;
+  }
+
+  factory GuideLink.fromJson(Map<String, dynamic> j) => GuideLink(
+        labelKo: (j['label_ko'] ?? '') as String,
+        labelEn: (j['label_en'] ?? '') as String,
+        url: (j['url'] ?? '') as String,
+      );
+}
+
+/// Admin guide item — full sectioned content (UX doc §8 AdminGuideItem).
+///
+/// Sections follow the fixed S7 template: overview → checklist → steps →
+/// links/locations. Items may carry [GuideStatus.comingSoon] while the content
+/// is a placeholder; the loading + rendering path is complete regardless (the
+/// screen shows the standard "content coming soon" copy per section).
 @immutable
 class AdminGuideItem {
   const AdminGuideItem({
@@ -47,7 +75,17 @@ class AdminGuideItem {
     required this.titleEn,
     this.summaryKo,
     this.summaryEn,
+    this.overviewKo,
+    this.overviewEn,
+    this.checklistKo = const [],
+    this.checklistEn = const [],
+    this.stepsKo = const [],
+    this.stepsEn = const [],
+    this.links = const [],
     this.relatedFacilityIds = const [],
+    this.durationKo,
+    this.durationEn,
+    this.difficulty,
     this.status = GuideStatus.comingSoon,
   });
 
@@ -58,32 +96,108 @@ class AdminGuideItem {
   final String? summaryKo;
   final String? summaryEn;
 
+  // Section 1 — overview.
+  final String? overviewKo;
+  final String? overviewEn;
+
+  // Section 2 — checklist (what to prepare).
+  final List<String> checklistKo;
+  final List<String> checklistEn;
+
+  // Section 3 — steps.
+  final List<String> stepsKo;
+  final List<String> stepsEn;
+
+  // Section 4 — links + related locations.
+  final List<GuideLink> links;
+
   /// Deep-link target: `/map?focus=<ids joined by ','>` (UX doc §3).
   final List<String> relatedFacilityIds;
+
+  // Optional meta (durationText / difficulty 1–3).
+  final String? durationKo;
+  final String? durationEn;
+  final int? difficulty;
+
   final GuideStatus status;
 
-  String title(Locale l) =>
-      (l.languageCode == 'ko' ? titleKo : titleEn).trim().isNotEmpty
-          ? (l.languageCode == 'ko' ? titleKo : titleEn)
-          : (l.languageCode == 'ko' ? titleEn : titleKo);
+  bool get isComingSoon => status == GuideStatus.comingSoon;
 
-  String? summary(Locale l) {
-    final s = l.languageCode == 'ko' ? summaryKo : summaryEn;
-    return (s != null && s.trim().isNotEmpty) ? s : null;
+  String _pick(String ko, String en, Locale l) {
+    final primary = l.languageCode == 'ko' ? ko : en;
+    if (primary.trim().isNotEmpty) return primary;
+    return l.languageCode == 'ko' ? en : ko;
   }
 
-  factory AdminGuideItem.fromJson(Map<String, dynamic> j) => AdminGuideItem(
-        id: j['id'] as String,
-        categoryId:
-            GuideCategory.fromId((j['categoryId'] ?? 'immigration') as String),
-        titleKo: (j['title_ko'] ?? '') as String,
-        titleEn: (j['title_en'] ?? '') as String,
-        summaryKo: j['summary_ko'] as String?,
-        summaryEn: j['summary_en'] as String?,
-        relatedFacilityIds:
-            (j['relatedFacilityIds'] as List?)?.cast<String>() ?? const [],
-        status: (j['status'] == 'published')
-            ? GuideStatus.published
-            : GuideStatus.comingSoon,
-      );
+  String title(Locale l) => _pick(titleKo, titleEn, l);
+
+  String? summary(Locale l) {
+    final s = _pick(summaryKo ?? '', summaryEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  String? overview(Locale l) {
+    final s = _pick(overviewKo ?? '', overviewEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  /// Locale-aware list with fallback to the other language when one is empty.
+  List<String> checklist(Locale l) => _pickList(checklistKo, checklistEn, l);
+  List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
+
+  List<String> _pickList(List<String> ko, List<String> en, Locale l) {
+    final primary = l.languageCode == 'ko' ? ko : en;
+    if (primary.isNotEmpty) return primary;
+    return l.languageCode == 'ko' ? en : ko;
+  }
+
+  String? duration(Locale l) {
+    final s = _pick(durationKo ?? '', durationEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  /// True when every content section is empty — used to render the whole-screen
+  /// "coming soon" state even if [status] was mislabeled.
+  bool get hasNoContent =>
+      (overviewKo ?? '').trim().isEmpty &&
+      (overviewEn ?? '').trim().isEmpty &&
+      checklistKo.isEmpty &&
+      checklistEn.isEmpty &&
+      stepsKo.isEmpty &&
+      stepsEn.isEmpty &&
+      links.isEmpty &&
+      relatedFacilityIds.isEmpty;
+
+  factory AdminGuideItem.fromJson(Map<String, dynamic> j) {
+    List<String> strList(dynamic v) =>
+        (v as List?)?.map((e) => e.toString()).toList() ?? const [];
+    final meta = (j['meta'] as Map?)?.cast<String, dynamic>() ?? const {};
+    return AdminGuideItem(
+      id: j['id'] as String,
+      categoryId:
+          GuideCategory.fromId((j['categoryId'] ?? 'immigration') as String),
+      titleKo: (j['title_ko'] ?? '') as String,
+      titleEn: (j['title_en'] ?? '') as String,
+      summaryKo: j['summary_ko'] as String?,
+      summaryEn: j['summary_en'] as String?,
+      overviewKo: j['overview_ko'] as String?,
+      overviewEn: j['overview_en'] as String?,
+      checklistKo: strList(j['checklist_ko']),
+      checklistEn: strList(j['checklist_en']),
+      stepsKo: strList(j['steps_ko']),
+      stepsEn: strList(j['steps_en']),
+      links: (j['links'] as List?)
+              ?.map((e) => GuideLink.fromJson((e as Map).cast<String, dynamic>()))
+              .toList() ??
+          const [],
+      relatedFacilityIds:
+          (j['relatedFacilityIds'] as List?)?.cast<String>() ?? const [],
+      durationKo: meta['durationText_ko'] as String?,
+      durationEn: meta['durationText_en'] as String?,
+      difficulty: (meta['difficulty'] as num?)?.toInt(),
+      status: (j['status'] == 'published')
+          ? GuideStatus.published
+          : GuideStatus.comingSoon,
+    );
+  }
 }

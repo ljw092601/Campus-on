@@ -196,8 +196,14 @@ Spark free quota: **50,000 document reads/day**, 1 GiB stored, 10 GiB/mo egress.
 
 - Run `flutterfire configure` against the real Firebase project → replaces `firebase_options.dart` placeholders + adds platform config files.
 - Seed the real project (`tool/firestore_seed/seed.mjs`) and deploy `firestore.rules`.
-- Fill real `imageUrl`s / guide content (week 3) — schema already supports it (`published` status flips per item).
-- **Offline banner** (presentation, week-3 TODO): optional connectivity watcher; data layer already serves cache, no repo change required.
-- Week-3 guide detail (S5–S7): consume `overview_*`/`checklist_*`/`steps_*`/`links[]` on the same `guide_items` docs; no new collection.
+- Fill real `imageUrl`s / guide content — schema already supports it (`published` status flips per item). Seed the same fields the app now reads (below).
+- **Offline banner** (presentation): optional connectivity watcher; data layer already serves cache, no repo change required. Deferred to Phase-2 (4주차 후보).
+
+### Week 3 완료 — guide detail + offline caching (2026-07-14)
+
+- **`GuideRepository.getByCategory(GuideCategory)` added** (mock + Firestore). Firestore impl filters the cache-friendly `_loadAll()` client-side (campus-small dataset) so it inherits the same `Source.cache` offline fallback; both impls order via shared `orderGuideItems` (published first).
+- **`guide_items` docs now consumed in full** by S7: `overview_ko/en`, `checklist_ko/en` (array), `steps_ko/en` (array), `links` (`[{label_ko,label_en,url}]`), `relatedFacilityIds`, and `meta:{durationText_ko,durationText_en,difficulty}`. Seed these fields; `status:comingSoon` items may omit them (the screen renders the standard placeholder). One exemplar (`arc-issue`) is authored end-to-end in the mock as the seeding reference.
+- **Offline caching finalized**: Firestore persistence set explicitly in `firebase_init.dart`; every read path (facility `getAll`/`getById`, guide `getAll`/`getById`/`getByCategory`) has a `Source.cache` fallback. Verify with the airplane-mode relaunch test above.
+- Map markers now load from bundled PNG assets (`assets/markers/`) via `MarkerIcon.fromAsset` — no network, no impact on the repository layer.
 - ~~`.gitignore`: add `tool/firestore_seed/serviceAccount.json` and `node_modules/`.~~ **Done** — both lines added to `02_app_code/.gitignore` (QA 🔴-C1).
 - Confirm real campus center coordinate (`AppConfig.campusCenterLat/Lng`) with the seeded facility coordinates (currently Seoul placeholder coords, shared with mock).

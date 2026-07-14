@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/entities/admin_guide.dart';
 import '../../presentation/facility/facility_detail_screen.dart';
 import '../../presentation/facility/facility_list_screen.dart';
-import '../../presentation/guide/guide_stub_screen.dart';
+import '../../presentation/guide/guide_category_screen.dart';
+import '../../presentation/guide/guide_detail_screen.dart';
+import '../../presentation/guide/guide_item_list_screen.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/map/map_screen.dart';
 import '../../presentation/search/search_screen.dart';
-import '../../presentation/settings/favorites_stub_screen.dart';
-import '../../presentation/settings/settings_stub_screen.dart';
+import '../../presentation/settings/favorites_screen.dart';
+import '../../presentation/settings/settings_info_screen.dart';
+import '../../presentation/settings/settings_screen.dart';
 import '../../presentation/shell/app_shell.dart';
 
 /// go_router configuration.
@@ -67,25 +71,53 @@ class AppRouter {
               ),
             ],
           ),
-          // Branch 2 — Guide (stub; S5–S7 in week 3)
+          // Branch 2 — Guide (S5 categories → S6 item list → S7 detail)
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/guide',
-                builder: (context, state) => const GuideStubScreen(),
+                builder: (context, state) => const GuideCategoryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'category/:id',
+                    builder: (context, state) => GuideItemListScreen(
+                      category: GuideCategory.fromId(state.pathParameters['id']!),
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'item/:id',
+                    builder: (context, state) =>
+                        GuideDetailScreen(itemId: state.pathParameters['id']!),
+                  ),
+                ],
               ),
             ],
           ),
-          // Branch 3 — Settings (+ favorites)
+          // Branch 3 — Settings (+ favorites S10 + info sub-pages)
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/settings',
-                builder: (context, state) => const SettingsStubScreen(),
+                builder: (context, state) => const SettingsScreen(),
                 routes: [
                   GoRoute(
                     path: 'favorites',
-                    builder: (context, state) => const FavoritesStubScreen(),
+                    builder: (context, state) => const FavoritesScreen(),
+                  ),
+                  GoRoute(
+                    path: 'about',
+                    builder: (context, state) => const SettingsInfoScreen(
+                        type: SettingsInfoType.about),
+                  ),
+                  GoRoute(
+                    path: 'data-source',
+                    builder: (context, state) => const SettingsInfoScreen(
+                        type: SettingsInfoType.dataSource),
+                  ),
+                  GoRoute(
+                    path: 'contact',
+                    builder: (context, state) => const SettingsInfoScreen(
+                        type: SettingsInfoType.contact),
                   ),
                 ],
               ),
