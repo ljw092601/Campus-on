@@ -111,7 +111,10 @@ class AdminGuideItem {
   // Section 4 — links + related locations.
   final List<GuideLink> links;
 
-  /// Deep-link target: `/map?focus=<ids joined by ','>` (UX doc §3).
+  /// Related campus locations. S7 renders one card per id; tapping a card
+  /// deep-links to `/map?focus=<that id>` (single-facility focus). The router
+  /// also accepts a comma-joined `focus` list for multi-marker fitBounds
+  /// (UX doc §3), used by other entry points.
   final List<String> relatedFacilityIds;
 
   // Optional meta (durationText / difficulty 1–3).

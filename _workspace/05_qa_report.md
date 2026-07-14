@@ -448,3 +448,46 @@
 
 ### 종합 판정 (라운드 4)
 🟢 **3주차 전 산출물 통과.** 신규 🔴 없음. 잔여는 콘텐츠 입력·실좌표·연결 배너·iOS 런타임 등 4주차/이후 항목(비차단).
+
+---
+
+## 라운드 5 — 4주차 QA 점검 (2026-07-15)
+
+독립 코드 감사(qa-engineer) + 실기기 재검증. **런타임 검증에서만 잡히는 기능 결함 2건**을 발견·수정한 것이 이번 라운드의 핵심.
+
+### 🔴 런타임 결함 (실기기 재검증에서 발견 → 수정·재확인)
+
+| ID | 결함 | 근본 원인 | 수정 | 검증 |
+|----|------|-----------|------|:---:|
+| **RT-1** | **첫 지도 진입(전체)에 커스텀 마커가 안 뜸** — 필터를 눌러야만 핀 표시 | `kakao_map_plugin`은 초기 `onMapCreated`가 아니라 `didUpdateWidget`에서만 마커를 추가함 → 최초 렌더 시 마커 미적용 | `campus_map_view.dart` `onMapCreated`에서 `controller.addMarker(markers:...)` 명시 호출 | 🟢 무조작 첫 진입에 6색 핀 정상 |
+| **RT-2** | **전화(S4)·이메일(S9)·외부링크(S7/S9) 버튼 무동작** | Android 11+/iOS의 패키지 가시성 규칙 — url_launcher가 `canLaunchUrl`을 위해 요구하는 `<queries>`(tel/mailto/https)·`LSApplicationQueriesSchemes` 미선언 | AndroidManifest `<queries>` 3종 + iOS `LSApplicationQueriesSchemes`(+ Kakao WebView용 `NSAllowsLocalNetworking`) 추가 | 🟢 전화 버튼→다이얼러(02-000-0001) 실행 확인 |
+
+> 두 결함 모두 정적 분석·위젯 테스트에서는 드러나지 않고 **실 디바이스 실행에서만** 확인됨 → 런타임 검증의 가치.
+
+### 독립 코드 감사 (접근성·i18n·성능·정합성·보안)
+
+배포 차단급 🔴 **없음**. 반영한 🟡/🟢:
+
+| ID | 영역 | 조치 |
+|----|------|------|
+| A-1 | 접근성 | S7 난이도 도트를 `Semantics(label:'난이도 n/3')`+`ExcludeSemantics`로 → SR이 값 낭독 |
+| A-3 | 접근성 | 홈 가이드 그리드 `childAspectRatio`를 폰트 배율에 반응(`1/textScale` 클램프) → 200%에서 오버플로우 제거 |
+| A-4 | 접근성 | 설정 버전 값을 trailing→subtitle로 이동(대폰트 가로 오버플로우 예방) |
+| A-5 | 접근성 | 언어 라디오 라벨에 `Text(locale:)` 지정(혼합 ko/en TTS 발음) |
+| A-6·I-1 | 접근성·i18n | 고아 키 `guide_meta_itemCount`를 S5 배지 `Semantics(label:)`에 사용(SR "n건/n items") |
+| I-2 | i18n | 고아 키 `favorites_empty_body` 제거(ko/en) |
+| P-1 | 성능 | 리스트 아이템 즐겨찾기 구독을 `.select()`로 축소(토글 시 전체 행 리빌드 방지) |
+| X-1 | 정합 | 관련 위치 카드 딥링크(카드=단일 focus) 계약을 엔티티 docstring에 반영 |
+| X-3 | 정합 | 즐겨찾기 낙관적 토글에 실패 시 롤백(try/catch) 추가 |
+
+**통과 확인(감사)**: ARB ko↔en 키 완전 일치·하드코딩 사용자 문자열 0·아이콘 버튼 tooltip·색+아이콘+라벨 3중·라우트 전부 도달·Firestore default-deny·시크릿 미노출·.gitignore 충족.
+**미조치(문서화)**: A-2(지도 마커는 플러그인 WebView라 SR 라벨 불가 → 접근 대체 경로 = 시설 목록 S3), X-2(`meta.durationText` ko/en 이중화는 §8 대비 다국어 개선, seed 동기화 필요).
+
+### 실 캠퍼스 좌표 반영
+- 지도 중심 + 시설 6곳을 **동아대학교 승학캠퍼스**(부산 사하구 낙동대로550번길 37, 35.1148/128.9683) 주변으로 이동. 실기기에서 승학캠퍼스 지도 위 6색 핀 정상 확인. (상세 건물 실측·행정 콘텐츠는 확보 후 교체)
+
+### 정적/자동 재검증
+`flutter analyze` 🟢 No issues · `flutter test` 🟢 4건 유지.
+
+### 종합 판정 (라운드 5)
+🟢 **4주차 QA 통과.** 런타임 결함(RT-1/RT-2) 수정·재확인, 접근성/성능/정합성 🟡·🟢 반영, 실 캠퍼스 좌표 적용. 남은 항목: 스토어 배포 준비(메타데이터·스크린샷·개인정보처리방침·심사), 상세 건물/행정 콘텐츠 입력, iOS 실기기 런타임(Mac 필요), 오프라인 연결 배너(Phase-2).

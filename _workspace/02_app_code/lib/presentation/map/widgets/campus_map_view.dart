@@ -91,6 +91,11 @@ class _CampusMapViewState extends State<CampusMapView> {
           markers: _markers(icons),
           onMapCreated: (controller) {
             _controller = controller;
+            // The plugin only auto-adds markers on didUpdateWidget (e.g. a
+            // filter change), not on first create — so add them explicitly once
+            // the controller is ready, otherwise the initial (unfiltered) map
+            // renders with no pins until the user interacts.
+            controller.addMarker(markers: _markers(icons));
             _applyFocus();
           },
           onMarkerTap: (markerId, latLng, zoomLevel) {

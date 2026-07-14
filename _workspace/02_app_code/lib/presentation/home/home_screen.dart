@@ -167,13 +167,17 @@ class _GuideGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    // Taller cells under large font scale so the 2-line label never overflows
+    // (UX §6: no breakage at 200%).
+    final textScale = MediaQuery.textScalerOf(context).scale(1.0);
+    final aspect = (1.0 / textScale).clamp(0.6, 1.0);
     return GridView.count(
       crossAxisCount: 3,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: context.dimens.spaceSm,
       crossAxisSpacing: context.dimens.spaceSm,
-      childAspectRatio: 1.0,
+      childAspectRatio: aspect,
       children: [
         for (final cat in GuideCategory.values)
           _GuideTile(category: cat, label: cat.label(l)),

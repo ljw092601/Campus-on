@@ -66,5 +66,23 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- url_launcher: schemes canLaunchUrl() may probe. Without these iOS
+	     returns false and the Call(S4)/email(S9)/external-link(S7,S9) actions
+	     silently fail. -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>http</string>
+		<string>tel</string>
+		<string>mailto</string>
+	</array>
+	<!-- Kakao Maps renders the JS SDK in a WebView whose page origin is
+	     http://localhost (see kakao_init.dart baseUrl). Allow local networking
+	     so ATS doesn't block that http origin; the SDK itself loads over https. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

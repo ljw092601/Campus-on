@@ -22,10 +22,11 @@ class GuideListItem extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
     final color = context.catColors.forGuide(item.categoryId);
-    final favorites = ref.watch(favoritesProvider);
-    final isFav = favorites.valueOrNull
-            ?.contains('${FavoriteType.guide.name}:${item.id}') ??
-        false;
+    // Narrow the subscription: only this row's favorite flag, so toggling one
+    // item doesn't rebuild the whole list (QA P-1).
+    final favKey = '${FavoriteType.guide.name}:${item.id}';
+    final isFav = ref.watch(favoritesProvider
+        .select((v) => v.valueOrNull?.contains(favKey) ?? false));
     final summary = item.summary(locale);
 
     return ListTile(

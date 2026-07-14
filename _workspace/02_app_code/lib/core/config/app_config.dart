@@ -21,10 +21,12 @@ class AppConfig {
 
   static bool get hasKakaoKey => kakaoJsKey.isNotEmpty;
 
-  /// Fallback campus center used when location permission is denied and as the
-  /// default map camera. Replace with the real campus coordinate.
-  static const double campusCenterLat = 37.5665;
-  static const double campusCenterLng = 126.9780;
+  /// Campus center = 동아대학교 승학캠퍼스 (부산 사하구 낙동대로550번길 37).
+  /// Used as the default map camera and the fallback when location permission is
+  /// denied. Individual facility coordinates are still placeholders clustered
+  /// around this point until the real building survey is provided.
+  static const double campusCenterLat = 35.1148;
+  static const double campusCenterLng = 128.9683;
 
   /// Contact email shown on the Settings → Contact page (S9).
   static const String contactEmail = 'donga.campus.on@gmail.com';

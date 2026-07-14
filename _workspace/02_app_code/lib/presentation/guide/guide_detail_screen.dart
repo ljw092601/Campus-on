@@ -180,17 +180,23 @@ class _MetaRow extends StatelessWidget {
       ));
     }
     if (item.difficulty != null) {
-      children.add(Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('${l.guide_meta_difficulty} ',
-              style: Theme.of(context).textTheme.bodySmall),
-          for (var i = 1; i <= 3; i++)
-            Icon(i <= item.difficulty! ? Symbols.circle : Symbols.circle,
-                fill: i <= item.difficulty! ? 1 : 0,
-                size: 10,
-                color: color),
-        ],
+      // Value is announced via Semantics; the dots are decorative (fill only).
+      children.add(Semantics(
+        label: '${l.guide_meta_difficulty} ${item.difficulty}/3',
+        child: ExcludeSemantics(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('${l.guide_meta_difficulty} ',
+                  style: Theme.of(context).textTheme.bodySmall),
+              for (var i = 1; i <= 3; i++)
+                Icon(Symbols.circle,
+                    fill: i <= item.difficulty! ? 1 : 0,
+                    size: 10,
+                    color: color),
+            ],
+          ),
+        ),
       ));
     }
     if (children.isEmpty) return const SizedBox.shrink();

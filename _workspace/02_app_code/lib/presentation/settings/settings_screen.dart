@@ -33,9 +33,14 @@ class SettingsScreen extends ConsumerWidget {
             child: Column(
               children: [
                 RadioListTile<String>(
-                    value: 'ko', title: Text(l.settings_language_ko)),
+                    value: 'ko',
+                    // Locale hint so a non-Korean TTS pronounces "한국어" correctly.
+                    title: Text(l.settings_language_ko,
+                        locale: const Locale('ko'))),
                 RadioListTile<String>(
-                    value: 'en', title: Text(l.settings_language_en)),
+                    value: 'en',
+                    title: Text(l.settings_language_en,
+                        locale: const Locale('en'))),
               ],
             ),
           ),
@@ -86,7 +91,9 @@ class SettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Symbols.info_i),
             title: Text(l.settings_version),
-            trailing: Text(l.settings_version_value,
+            // Value as subtitle (not trailing) so it never overflows the row
+            // under large font scale (QA A-4).
+            subtitle: Text(l.settings_version_value,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: scheme.onSurfaceVariant,
                     )),

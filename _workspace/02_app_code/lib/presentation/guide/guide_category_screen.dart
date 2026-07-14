@@ -53,6 +53,7 @@ class _CategoryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final color = context.catColors.forGuide(category);
+    final count = this.count; // local promotes to non-null inside the guard
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: color.withValues(alpha: 0.15),
@@ -65,10 +66,14 @@ class _CategoryRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (count != null)
-            Text('$count',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    )),
+            // Visual = compact number; screen reader hears "{count}건 / items".
+            Semantics(
+              label: l.guide_meta_itemCount(count),
+              child: Text('$count',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      )),
+            ),
           SizedBox(width: context.dimens.spaceXs),
           const Icon(Symbols.chevron_right),
         ],

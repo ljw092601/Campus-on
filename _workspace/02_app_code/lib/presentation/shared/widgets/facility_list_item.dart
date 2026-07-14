@@ -29,10 +29,10 @@ class FacilityListItem extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
     final color = context.catColors.forFacility(facility.category);
-    final favorites = ref.watch(favoritesProvider);
-    final isFav = favorites.valueOrNull
-            ?.contains('${FavoriteType.facility.name}:${facility.id}') ??
-        false;
+    // Narrow the subscription to this row's favorite flag only (QA P-1).
+    final favKey = '${FavoriteType.facility.name}:${facility.id}';
+    final isFav = ref.watch(favoritesProvider
+        .select((v) => v.valueOrNull?.contains(favKey) ?? false));
 
     final subtitleParts = <String>[facility.category.label(l)];
     if (distanceMeters != null) {

@@ -181,7 +181,8 @@ flutter test               # test/smoke_test.dart (부팅 스모크)
 - **즐겨찾기 S10** (`favorites_screen.dart`)
   - 시설/가이드 `SegmentedButton`, `favoriteFacilitiesProvider`/`favoriteGuideItemsProvider`(키 Set→객체 해석, 즐겨찾기 토글 시 반응형 갱신), `Dismissible` 스와이프 삭제 + 실행취소 스낵바, 세그먼트별 빈 상태 CTA.
 - **지도 6색 커스텀 마커** (`assets/markers/pin_*.png` + `marker_icons.dart`)
-  - 카테고리 6색 티어드롭 핀 PNG(48×60, System.Drawing 생성) → `CategoryMarkerIcons`가 `MarkerIcon.fromAsset`(base64, 오프라인)로 1회 로드·메모이즈. `CampusMapView`가 아이콘 준비 후 렌더(FutureBuilder), 선택 마커 zIndex 상향. 필터 변경 시 `didUpdateWidget`가 마커 재적용.
+  - 카테고리 6색 티어드롭 핀 PNG(48×60, System.Drawing 생성) → `CategoryMarkerIcons`가 `MarkerIcon.fromAsset`(base64, 오프라인)로 1회 로드·메모이즈. `CampusMapView`가 아이콘 준비 후 렌더(FutureBuilder), 선택 마커 zIndex 상향.
+  - ⚠️ 마커 초기 렌더(4주차 QA RT-1): 플러그인은 `didUpdateWidget`(필터 변경 등)에서만 마커를 추가하고 최초 `onMapCreated`엔 안 넣음 → 첫 지도 진입에 핀 미표시. `onMapCreated`에서 `controller.addMarker(...)`를 명시 호출해 해결(실기기 확인).
   - 색 변경 시 재생성: `Add-Type -AssemblyName System.Drawing`으로 카테고리별 색(=`category_colors.dart`) 핀을 그려 저장.
 - **오프라인 캐싱 마감**: `firebase_init.dart`에서 Firestore 영속성 명시(`persistenceEnabled`) + 모든 읽기 경로(시설·가이드 getAll/getById/**getByCategory**) `Source.cache` 폴백. 오프라인 연결 배너(connectivity)는 데이터 계층 무변경 Phase-2 후보로 유지.
 - **테스트**: `test/guide_flow_test.dart` 3건(S5→S6→S7 내비, comingSoon 플레이스홀더, 즐겨찾기 토글→S10 지속) + 기존 스모크 → `flutter test` 🟢 4건. `analyze` 🟢.
