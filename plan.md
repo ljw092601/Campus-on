@@ -151,7 +151,9 @@
   - **오프라인 캐싱 마감**: Firestore 영속성 명시 + 모든 읽기 경로(시설·가이드 getAll/getById/getByCategory) `Source.cache` 폴백
   - 검증: `analyze` 🟢 No issues · `test` 🟢 4건(가이드 플로우·즐겨찾기 지속·스모크) · Android 에뮬레이터 실기기 전 화면 스크린샷 확인 → `05_qa_report.md` 라운드 4
 - [ ] 국제교류처에 데이터/API 제공 가능 여부 문의 (섹션 4 액션 아이템)
-- [ ] 카카오 개발자 등록 + 지도 API 키 발급 / Firebase 프로젝트 `flutterfire configure`
+- [x] **카카오 실 키 연동 완료** (2026-07-16): JavaScript 키를 `env.json`(`--dart-define-from-file`)으로 주입 → Android 에뮬레이터에서 **실 카카오맵 타일·6색 커스텀 마커·동아대 승학캠퍼스 실좌표**가 렌더됨을 스크린샷으로 확인. 카카오 콘솔(카카오맵 활성화·Web 도메인)도 유효. `env.json`은 `.gitignore` 제외. RT-1(첫 진입 마커) 수정도 실 타일에서 재확인
+  - ⚠️ **빌드 환경 이슈**: 프로젝트 경로에 한글(`추가-기능-추천`)이 있어 Gradle이 non-ASCII 경로를 거부 → 이번엔 ASCII 경로로 임시 복사해 빌드. 향후 워크트리/폴더명은 **영문으로 생성** 필요(또는 `android/gradle.properties`에 `android.overridePathCheck=true`)
+- [ ] Firebase 프로젝트 `flutterfire configure` + Firestore 시딩 (현재 mock 데이터로 동작 → 콘텐츠 확정 후 진행)
 - [~] **4주차 (진행 중)** — QA 점검 완료(2026-07-15), 스토어 준비는 다음:
   - [x] **QA 점검**: 독립 코드 감사(접근성·i18n·성능·정합성·보안) + 실기기 재검증. **런타임 결함 2건 발견·수정** — RT-1 지도 첫 진입 마커 미표시(`onMapCreated` 명시 addMarker), RT-2 전화/이메일/외부링크 무동작(Android `<queries>`·iOS `LSApplicationQueriesSchemes`/ATS). 접근성 A-1/3/4/5/6·성능 P-1·정합 X-1/3 반영. `analyze`/`test` 🟢 → `05_qa_report.md` 라운드 5
   - [x] **실 캠퍼스 좌표**: 지도 중심·시설을 동아대 승학캠퍼스(부산)로 이동(상세 건물은 추후 실측)
