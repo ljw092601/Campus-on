@@ -12,6 +12,7 @@
 - **Navigation**: **go_router ^14.2.0** (`StatefulShellRoute.indexedStack`, 하단 4탭 + 탭별 스택)
 - **Local DB**: `shared_preferences ^2.2.3` (즐겨찾기·언어·최근검색 — 전면 로컬)
 - **Map**: **카카오맵** (`kakao_map_plugin ^0.3.1`) — `CampusMapView` 위젯 한 곳에 격리
+- **Geolocation**: `geolocator ^13.0.2` — S2 "내 위치"(파란 점 + 정확도 원). `LocationService`(data/services) 한 곳에 격리
 - **i18n**: `intl ^0.20.2` (flutter_localizations 고정 버전과 정합) + ARB(ko/en), `flutter gen-l10n`
 - **Network**: 없음(week 2). Firestore 클라이언트는 api-integrator가 Repository 구현으로 주입
 - **Icons**: `material_symbols_icons` (1세트 통일, iOS/Android 공통)
@@ -139,7 +140,7 @@ flutter test               # test/smoke_test.dart (부팅 스모크)
 ```
 
 ### pubspec 의존성
-`flutter_riverpod ^2.5.1`, `go_router ^14.2.0`, `intl ^0.20.2`, `shared_preferences ^2.2.3`, `kakao_map_plugin ^0.3.1`, `material_symbols_icons ^4.2785.1`, `url_launcher ^6.3.0` / dev: `flutter_test`, `flutter_lints ^4.0.0`. (Flutter 3.44.6 stable에서 `pub get`·`analyze`·`test` 통과 확인 — QA 라운드 2.)
+`flutter_riverpod ^2.5.1`, `go_router ^14.2.0`, `intl ^0.20.2`, `shared_preferences ^2.2.3`, `kakao_map_plugin ^0.3.1`, `geolocator ^13.0.2`, `material_symbols_icons ^4.2785.1`, `url_launcher ^6.3.0` / dev: `flutter_test`, `flutter_lints ^4.0.0`. (Flutter 3.44.6 stable에서 `pub get`·`analyze`·`test` 통과 확인 — QA 라운드 2.)
 
 ## Error Handling Strategy
 
@@ -147,7 +148,9 @@ flutter test               # test/smoke_test.dart (부팅 스모크)
 |-----------|------|----------------|
 | 시설/목록 로드 실패 | `AsyncValue.error` → `invalidate` 재시도 | `ErrorStateView` + 다시 시도(+지도는 목록 폴백) |
 | 카카오맵 로드 실패/키 없음 | S2 폴백 렌더 | "지도를 불러오지 못했어요" + 목록 이동 |
-| 위치 권한 거부 | 캠퍼스 중심 폴백(week3 재요청) | 스낵바 안내 |
+| 위치 권한 거부 | 캠퍼스 중심 폴백. 영구 거부 시 앱 설정 바로가기 | 스낵바 안내(+설정 액션) |
+| 위치 서비스(GPS) 꺼짐 | 지도 유지, 점 미표시 | 스낵바 + 위치 설정 바로가기 |
+| 위치 취득 실패/타임아웃 | last-known 폴백 → 없으면 실패 처리 | "다시 시도" 스낵바 |
 | 상세 단건 없음/실패 | Error 전면 | 다시 시도 |
 | 필드 결측(Partial) | 해당 행 숨김, 이미지→카테고리 배너 | 빈 라벨 미표시 |
 | 검색 실패 | Error 인라인 | 다시 시도 |
@@ -187,7 +190,19 @@ flutter test               # test/smoke_test.dart (부팅 스모크)
 - **오프라인 캐싱 마감**: `firebase_init.dart`에서 Firestore 영속성 명시(`persistenceEnabled`) + 모든 읽기 경로(시설·가이드 getAll/getById/**getByCategory**) `Source.cache` 폴백. 오프라인 연결 배너(connectivity)는 데이터 계층 무변경 Phase-2 후보로 유지.
 - **테스트**: `test/guide_flow_test.dart` 3건(S5→S6→S7 내비, comingSoon 플레이스홀더, 즐겨찾기 토글→S10 지속) + 기존 스모크 → `flutter test` 🟢 4건. `analyze` 🟢.
 
+## 내 위치(GPS) 구현 완료 (2026-07-16) — 실시간 추적 + 방향 표시
+
+- **패키지**: `geolocator ^13.0.2`(위치 스트림) + `flutter_compass ^0.8.1`(나침반 헤딩). Android `ACCESS_FINE/COARSE_LOCATION`, iOS `NSLocationWhenInUseUsageDescription` 추가(나침반은 별도 권한 불필요).
+- **`LocationService`** (`lib/data/services/location_service.dart`): 센서 플러그인 결합을 한 곳에 격리(카카오 플러그인 격리와 동일 패턴). `ensureAccess()`(서비스 꺼짐/권한 거부(영구 여부)/실패 → sealed `LocationResult`, 절대 throw 안 함) → `positionUpdates()`(last-known 즉시 방출 후 라이브 스트림, `distanceFilter: 2m`) + `headingUpdates()`(0–360° 정규화, 자기장 센서 없으면 empty). `locationServiceProvider`로 주입.
+- **`UserLocation`** (domain/entities): lat/lng/accuracyMeters. 의도적으로 값 동등성 없음 — 새 GPS fix = 새 인스턴스, `CampusMapView.didUpdateWidget`이 인스턴스 정체성으로 "신규 fix" 판단.
+- **`CampusMapView`**: 파란 점+방향 부채꼴 = `CustomOverlay`(픽셀 고정 HTML, zIndex 20), 정확도 원 = `Circle`(15m 미만 생략, 최대 300m 클램프). 최초 생성 시 `onMapCreated`에서 명시 추가(RT-1과 같은 이유), 이후 플러그인 `didUpdateWidget`이 같은 ID clear→재추가로 위치 갱신.
+  - **방향 부채꼴**: 나침반 이벤트(~30Hz)는 Flutter 리빌드/오버레이 재추가를 거치지 않고 **DOM 직접 갱신**(`getElementById("uloc-heading").style.transform`) — 스로틀(≥2° & ≥100ms) + CSS `transition 0.15s`. 359°↔0° 경계에서 역회전하지 않도록 연속 각도 누적. 위치 갱신으로 오버레이가 재생성될 땐 마지막 헤딩을 HTML에 베이크.
+  - **팔로우 모드**: `following=true`인 동안 신규 fix마다 `setCenter`. 지도 드래그(`onDragChangeCallback` start) → `onUserPan` → 팔로우 해제(점은 계속 갱신).
+- **S2 FAB**: 탭 → 권한 흐름 → 추적 시작+팔로우 on(첫 fix 전 스피너, last-known 없고 20초 무응답이면 실패 처리). 팬으로 팔로우 해제 시 아이콘 `location_searching`으로 전환, 재탭 → 팔로우 복귀. 실패 유형별 스낵바(영구 거부→앱 설정, GPS 꺼짐→위치 설정 액션). 백그라운드 전환 시 스트림 해제, 복귀 시 자동 재시작(`WidgetsBindingObserver`). 탭 전환(IndexedStack)은 dispose가 안 불려 추적 유지 — 의도된 동작.
+- **l10n**: 키 4종 추가(tooltip/serviceOff/failed/openSettings, ko/en).
+- **검증**: `dart analyze` 🟢 (⚠️ `flutter analyze`는 비ASCII 경로에서 LSP 채널 크래시 — Dart SDK 버그, `dart analyze` 사용), `flutter test` 🟢 4건, debug APK 빌드 🟢. ⚠️ AGP는 Windows 비ASCII 프로젝트 경로를 거부 — `gradle.properties`에 `android.overridePathCheck=true` 추가로 해소(ASCII 경로 원본 저장소엔 영향 없음).
+
 ### 남은 TODO (4주차 이후)
 
-- 실 캠퍼스 좌표/시설·가이드 콘텐츠 입력, Pretendard 번들, 거리 계산(정렬), 내 위치 권한 흐름, 미니지도 Kakao static 이미지, 오프라인 연결 배너, iOS 런타임 검증.
+- 실 캠퍼스 좌표/시설·가이드 콘텐츠 입력, Pretendard 번들, 거리 계산(정렬), 미니지도 Kakao static 이미지, 오프라인 연결 배너, iOS 런타임 검증(위치 권한 다이얼로그 포함).
 ```

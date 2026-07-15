@@ -41,6 +41,10 @@
   "map_error_loadFailed": "Couldn't load the map.",
   "map_error_openList": "Open facility list instead",
   "map_myLocation_denied": "Location permission is off. Showing campus center.",
+  "map_myLocation_tooltip": "My location",
+  "map_myLocation_serviceOff": "Location (GPS) is turned off. Turn it on to see your position.",
+  "map_myLocation_failed": "Couldn't get your location. Please try again.",
+  "map_myLocation_openSettings": "Settings",
   "map_peek_viewDetail": "View detail",
 
   "list_appbar_title": "Facilities",

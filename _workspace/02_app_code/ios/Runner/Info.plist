@@ -84,5 +84,8 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<!-- "My location" FAB on the map (S2): shown in the iOS permission dialog. -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used only to show where you are on the campus map. 캠퍼스 지도에 현재 위치를 표시하는 데만 사용됩니다.</string>
 </dict>
 </plist>
