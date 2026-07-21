@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart' as kakao;
 
 import '../../../core/config/app_config.dart';
 import '../../../domain/entities/facility.dart';
+import '../../../domain/entities/user_location.dart';
 import 'marker_icons.dart';
 
 /// Thin wrapper around the Kakao Maps widget. ALL Kakao-plugin coupling lives
@@ -16,6 +19,16 @@ import 'marker_icons.dart';
 ///  - On create, if [focusIds] is non-empty, fitBounds over those markers
 ///    (single id → recenter) per the `/map?focus=` deep-link contract.
 ///  - Reports marker taps via [onMarkerTap] (facility id).
+///  - Draws [userLocation] as a blue dot (pixel-fixed CustomOverlay) plus a
+///    translucent accuracy halo (meter-based Circle). While [following], every
+///    NEW [UserLocation] instance recenters the camera (instance identity marks
+///    a fresh GPS fix); a map drag reports [onUserPan] so the screen can drop
+///    follow mode, exactly like native map apps.
+///  - [headingStream] (compass, degrees from north) rotates a direction cone
+///    around the dot. Updates bypass Flutter rebuilds entirely: they are
+///    throttled and applied straight to the overlay's DOM node, because compass
+///    events arrive at ~30Hz — far too fast to re-add overlays through the
+///    plugin bridge.
 class CampusMapView extends StatefulWidget {
   const CampusMapView({
     super.key,
@@ -23,19 +36,180 @@ class CampusMapView extends StatefulWidget {
     required this.focusIds,
     required this.onMarkerTap,
     this.selectedId,
+    this.userLocation,
+    this.following = false,
+    this.onUserPan,
+    this.headingStream,
   });
 
   final List<Facility> facilities;
   final List<String> focusIds;
   final String? selectedId;
   final ValueChanged<String> onMarkerTap;
+  final UserLocation? userLocation;
+  final bool following;
+  final VoidCallback? onUserPan;
+  final Stream<double>? headingStream;
 
   @override
   State<CampusMapView> createState() => _CampusMapViewState();
 }
 
 class _CampusMapViewState extends State<CampusMapView> {
+  static const _dotOverlayId = 'user-location-dot';
+  static const _headingElementId = 'uloc-heading';
+  static const _accuracyCircleId = 'user-location-accuracy';
+  static const _locationBlue = Color(0xFF4285F4);
+
   kakao.KakaoMapController? _controller;
+
+  StreamSubscription<double>? _headingSub;
+
+  /// Continuous (unbounded) rotation target so CSS `transition: transform`
+  /// never animates the long way around the 359°→0° seam.
+  double? _headingContinuous;
+  double? _lastRawHeading;
+
+  /// Last value actually written to the DOM; baked into the overlay HTML when
+  /// a position update forces the overlay to be re-added.
+  double? _appliedHeading;
+  DateTime _lastHeadingWrite = DateTime.fromMillisecondsSinceEpoch(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _syncHeadingSubscription(null);
+  }
+
+  @override
+  void didUpdateWidget(covariant CampusMapView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _syncHeadingSubscription(oldWidget.headingStream);
+
+    // Follow mode: recenter on every fresh GPS fix (new instance) and at the
+    // moment follow is (re-)enabled. The dot/halo themselves are synced by the
+    // plugin's own didUpdateWidget via the customOverlays/circles params.
+    final loc = widget.userLocation;
+    if (loc == null || !widget.following) return;
+    final freshFix = !identical(oldWidget.userLocation, loc);
+    final followTurnedOn = !oldWidget.following;
+    if (freshFix || followTurnedOn) {
+      _controller?.setCenter(kakao.LatLng(loc.lat, loc.lng));
+    }
+  }
+
+  @override
+  void dispose() {
+    _headingSub?.cancel();
+    super.dispose();
+  }
+
+  // ── User location dot + heading cone ──────────────────────────────────────
+
+  /// Pixel-fixed dot with a rotatable direction cone (a Circle would scale
+  /// with zoom). Rendered inside the plugin WebView — double quotes only: the
+  /// plugin injects this string into single-quoted JavaScript.
+  String _dotHtml() {
+    final heading = _appliedHeading;
+    return '<div style="position:relative;width:44px;height:44px;">'
+        '<div id="$_headingElementId" style="position:absolute;inset:0;'
+        'opacity:${heading == null ? 0 : 1};'
+        'transform:rotate(${(heading ?? 0).toStringAsFixed(1)}deg);'
+        'transition:transform 0.15s linear;">'
+        // Cone: apex on the dot, spreading up (= north at rotate(0)).
+        '<div style="position:absolute;left:50%;bottom:50%;margin-left:-11px;'
+        'width:0;height:0;border-left:11px solid transparent;'
+        'border-right:11px solid transparent;'
+        'border-top:18px solid rgba(66,133,244,0.45);"></div>'
+        '</div>'
+        '<div style="position:absolute;left:50%;top:50%;'
+        'transform:translate(-50%,-50%);width:16px;height:16px;'
+        'background:#4285F4;border:3px solid #fff;border-radius:50%;'
+        'box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>'
+        '</div>';
+  }
+
+  List<kakao.CustomOverlay> _userOverlays() {
+    final loc = widget.userLocation;
+    if (loc == null) return const [];
+    return [
+      kakao.CustomOverlay(
+        customOverlayId: _dotOverlayId,
+        latLng: kakao.LatLng(loc.lat, loc.lng),
+        content: _dotHtml(),
+        yAnchor: 0.5,
+        // Above facility pins (selected pin uses 10).
+        zIndex: 20,
+      ),
+    ];
+  }
+
+  List<kakao.Circle> _userCircles() {
+    final loc = widget.userLocation;
+    final accuracy = loc?.accuracyMeters;
+    // A halo under ~15m would hide beneath the dot; skip it.
+    if (loc == null || accuracy == null || accuracy < 15) return const [];
+    return [
+      kakao.Circle(
+        circleId: _accuracyCircleId,
+        center: kakao.LatLng(loc.lat, loc.lng),
+        radius: accuracy.clamp(15, 300).toDouble(),
+        strokeWidth: 1,
+        strokeColor: _locationBlue,
+        strokeOpacity: 0.4,
+        strokeStyle: kakao.StrokeStyle.solid,
+        fillColor: _locationBlue,
+        fillOpacity: 0.12,
+        zIndex: 1,
+      ),
+    ];
+  }
+
+  void _syncHeadingSubscription(Stream<double>? oldStream) {
+    if (identical(widget.headingStream, oldStream)) return;
+    _headingSub?.cancel();
+    _headingSub = widget.headingStream?.listen(_onHeading);
+  }
+
+  void _onHeading(double raw) {
+    // Accumulate the shortest angular delta into a continuous target.
+    final prevRaw = _lastRawHeading;
+    _lastRawHeading = raw;
+    if (_headingContinuous == null || prevRaw == null) {
+      _headingContinuous = raw;
+    } else {
+      final delta = ((raw - prevRaw + 540) % 360) - 180;
+      _headingContinuous = _headingContinuous! + delta;
+    }
+    final target = _headingContinuous!;
+
+    // Throttle DOM writes: compass chatter (<2°) and anything faster than
+    // 100ms is invisible behind the 150ms CSS transition anyway.
+    final now = DateTime.now();
+    if (_appliedHeading != null &&
+        ((target - _appliedHeading!).abs() < 2 ||
+            now.difference(_lastHeadingWrite) <
+                const Duration(milliseconds: 100))) {
+      return;
+    }
+    _appliedHeading = target;
+    _lastHeadingWrite = now;
+    _writeHeadingToDom(target);
+  }
+
+  /// Rotates the cone in place. Touching the DOM node directly (instead of
+  /// re-adding the overlay) avoids remove/add flicker and keeps the CSS
+  /// transition alive. No-ops harmlessly until the dot exists.
+  void _writeHeadingToDom(double degrees) {
+    final controller = _controller;
+    if (controller == null) return;
+    final value = degrees.toStringAsFixed(1);
+    controller.webViewController.runJavaScript(
+        'var e=document.getElementById("$_headingElementId");'
+        'if(e){e.style.opacity="1";e.style.transform="rotate(${value}deg)";}');
+  }
+
+  // ── Map ────────────────────────────────────────────────────────────────────
 
   List<kakao.Marker> _markers(Map<FacilityCategory, kakao.MarkerIcon> icons) => [
         for (final f in widget.facilities)
@@ -89,17 +263,27 @@ class _CampusMapViewState extends State<CampusMapView> {
         return kakao.KakaoMap(
           center: _center,
           markers: _markers(icons),
+          circles: _userCircles(),
+          customOverlays: _userOverlays(),
           onMapCreated: (controller) {
             _controller = controller;
-            // The plugin only auto-adds markers on didUpdateWidget (e.g. a
+            // The plugin only auto-adds overlays on didUpdateWidget (e.g. a
             // filter change), not on first create — so add them explicitly once
             // the controller is ready, otherwise the initial (unfiltered) map
             // renders with no pins until the user interacts.
             controller.addMarker(markers: _markers(icons));
+            if (widget.userLocation != null) {
+              controller.addCircle(circles: _userCircles());
+              controller.addCustomOverlay(customOverlays: _userOverlays());
+            }
             _applyFocus();
           },
           onMarkerTap: (markerId, latLng, zoomLevel) {
             widget.onMarkerTap(markerId);
+          },
+          // A manual pan means "stop chasing me" — native map-app behaviour.
+          onDragChangeCallback: (latLng, zoomLevel, dragType) {
+            if (dragType == kakao.DragType.start) widget.onUserPan?.call();
           },
         );
       },

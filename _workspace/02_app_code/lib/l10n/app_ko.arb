@@ -40,6 +40,10 @@
   "map_error_loadFailed": "지도를 불러오지 못했어요.",
   "map_error_openList": "시설 목록으로 보기",
   "map_myLocation_denied": "위치 권한이 꺼져 있어요. 캠퍼스 중심을 표시해요.",
+  "map_myLocation_tooltip": "내 위치",
+  "map_myLocation_serviceOff": "위치 서비스(GPS)가 꺼져 있어요. 켜면 내 위치를 볼 수 있어요.",
+  "map_myLocation_failed": "내 위치를 가져오지 못했어요. 다시 시도해 주세요.",
+  "map_myLocation_openSettings": "설정",
   "map_peek_viewDetail": "상세 보기",
 
   "list_appbar_title": "시설 목록",

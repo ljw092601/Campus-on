@@ -37,6 +37,12 @@ dependencies:
   # can be swapped without touching screens if the plugin API changes.
   kakao_map_plugin: ^0.3.1
 
+  # Geolocation — live "my location" on the map (S2): position stream (blue
+  # dot follows the user) + compass heading (direction cone). Both wrapped in
+  # lib/data/services/location_service.dart.
+  geolocator: ^13.0.2
+  flutter_compass: ^0.8.1
+
   # Icons
   material_symbols_icons: ^4.2785.1
 

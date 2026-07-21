@@ -151,7 +151,8 @@
   - **오프라인 캐싱 마감**: Firestore 영속성 명시 + 모든 읽기 경로(시설·가이드 getAll/getById/getByCategory) `Source.cache` 폴백
   - 검증: `analyze` 🟢 No issues · `test` 🟢 4건(가이드 플로우·즐겨찾기 지속·스모크) · Android 에뮬레이터 실기기 전 화면 스크린샷 확인 → `05_qa_report.md` 라운드 4
 - [ ] 국제교류처에 데이터/API 제공 가능 여부 문의 (섹션 4 액션 아이템)
-- [x] 카카오 개발자 등록 + 지도 API 키 발급 완료 — 카카오맵 서비스 활성화 ON, 실기기 지도 렌더 확인(QA 라운드 3). 키는 `--dart-define`/`env.json`(gitignore)으로만 주입, 저장소 미보관
+- [x] **카카오 실 키 연동 완료** (2026-07-16): JavaScript 키를 `env.json`(`--dart-define-from-file`)으로 주입 → Android 에뮬레이터에서 **실 카카오맵 타일·6색 커스텀 마커·동아대 승학캠퍼스 실좌표**가 렌더됨을 스크린샷으로 확인. 카카오 콘솔(카카오맵 활성화·Web 도메인)도 유효. `env.json`은 `.gitignore` 제외. RT-1(첫 진입 마커) 수정도 실 타일에서 재확인
+  - ⚠️ **빌드 환경 이슈**: 프로젝트 경로에 한글(`추가-기능-추천`)이 있어 Gradle이 non-ASCII 경로를 거부 → 이번엔 ASCII 경로로 임시 복사해 빌드. 향후 워크트리/폴더명은 **영문으로 생성** 필요(또는 `android/gradle.properties`에 `android.overridePathCheck=true`)
 - [x] **Firebase 실연동 완료 (2026-07-21)**: 프로젝트 `campus-f4748` 생성 → `flutterfire configure`(Android/iOS 앱 등록, `firebase_options.dart`·`google-services.json` 실값) → Firestore DB 생성(서울 `asia-northeast3`) → 보안 규칙 배포(공개 읽기 전용·쓰기 차단) → 시드 업로드(시설 6·가이드 18, 동아대 좌표) 및 서버 읽기 검증. 시드 JSON은 `mock_data.dart`에서 자동 생성(`tool/firestore_seed/export_seed_test.dart`) — 수동 편집 금지. 서비스 계정 키는 로컬 보관(gitignore). 앱 구동 시 `--dart-define=USE_FIRESTORE=true` 필요(기본값은 여전히 mock)
 - [x] 앱 패키지명 확정·적용 (2026-07-21): `io.github.ljw092601.campuson` (Android applicationId/namespace + iOS 번들 ID, `com.example` 제거 — Play 등록 거부 사유 해소)
 - [~] **4주차 (진행 중)** — QA 점검 완료(2026-07-15), 스토어 준비는 다음:

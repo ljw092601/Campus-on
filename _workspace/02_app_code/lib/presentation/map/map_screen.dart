@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,9 +7,12 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/theme/app_theme.dart';
+import '../../data/services/location_service.dart';
 import '../../domain/entities/facility.dart';
+import '../../domain/entities/user_location.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/facility_providers.dart';
+import '../providers/location_providers.dart';
 import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/state_views.dart';
 import 'widgets/campus_map_view.dart';
@@ -24,15 +29,146 @@ class MapScreen extends ConsumerStatefulWidget {
   ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends ConsumerState<MapScreen> {
+class _MapScreenState extends ConsumerState<MapScreen>
+    with WidgetsBindingObserver {
   String? _selectedId;
+
+  // ── Live "my location" tracking (native map-app behaviour) ────────────────
+  // FAB starts a position stream: the blue dot follows the user in real time
+  // and the camera chases every fix (follow mode). A manual map pan drops
+  // follow mode (dot keeps updating); tapping the FAB again re-enables it.
+  UserLocation? _userLocation;
+  bool _locating = false; // access check / waiting for the first fix
+  bool _following = false;
+  StreamSubscription<UserLocation>? _positionSub;
+  Stream<double>? _headingStream;
+  Timer? _firstFixTimeout;
+  bool _resumeTrackingOnForeground = false;
+
+  bool get _tracking => _positionSub != null;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     if (widget.focusIds.isNotEmpty) {
       // Representative marker = first id (deep-link contract, UX doc §3).
       _selectedId = widget.focusIds.first;
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stopTracking();
+    super.dispose();
+  }
+
+  /// GPS keeps draining while backgrounded unless the stream is torn down —
+  /// stop on pause, transparently restart on resume.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused && _tracking) {
+      _stopTracking(keepFollowing: true);
+      _resumeTrackingOnForeground = true;
+    } else if (state == AppLifecycleState.resumed &&
+        _resumeTrackingOnForeground) {
+      _resumeTrackingOnForeground = false;
+      _startTracking(AppLocalizations.of(context));
+    }
+  }
+
+  Future<void> _onMyLocationPressed(AppLocalizations l) async {
+    if (_tracking) {
+      // Already tracking → just re-enable follow (recenters via the map view).
+      setState(() => _following = true);
+      return;
+    }
+    await _startTracking(l);
+  }
+
+  Future<void> _startTracking(AppLocalizations l) async {
+    setState(() {
+      _following = true;
+      _locating = _userLocation == null; // spinner only before the first dot
+    });
+    final service = ref.read(locationServiceProvider);
+    final access = await service.ensureAccess();
+    if (!mounted) return;
+    if (access is! LocationReady) {
+      setState(() {
+        _locating = false;
+        _following = false;
+      });
+      _showAccessSnackBar(access, l, service);
+      return;
+    }
+
+    _headingStream ??= service.headingUpdates();
+    _positionSub = service.positionUpdates().listen((location) {
+      _firstFixTimeout?.cancel();
+      if (!mounted) return;
+      setState(() {
+        _locating = false;
+        _userLocation = location;
+      });
+    }, onError: (Object _) {
+      if (!mounted) return;
+      _stopTracking();
+      setState(() => _locating = false);
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(SnackBar(content: Text(l.map_myLocation_failed)));
+    });
+    // No last-known fix and no live fix either (e.g. deep indoors) → give up
+    // instead of spinning forever.
+    _firstFixTimeout = Timer(const Duration(seconds: 20), () {
+      if (!mounted || _userLocation != null) return;
+      _stopTracking();
+      setState(() => _locating = false);
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(SnackBar(content: Text(l.map_myLocation_failed)));
+    });
+    setState(() {}); // reflect the tracking state on the FAB
+  }
+
+  void _stopTracking({bool keepFollowing = false}) {
+    _positionSub?.cancel();
+    _positionSub = null;
+    _firstFixTimeout?.cancel();
+    _firstFixTimeout = null;
+    if (!keepFollowing) _following = false;
+  }
+
+  void _showAccessSnackBar(
+      LocationResult access, AppLocalizations l, LocationService service) {
+    final messenger = ScaffoldMessenger.of(context)..clearSnackBars();
+    switch (access) {
+      case LocationServiceDisabled():
+        messenger.showSnackBar(SnackBar(
+          content: Text(l.map_myLocation_serviceOff),
+          action: SnackBarAction(
+            label: l.map_myLocation_openSettings,
+            onPressed: service.openLocationSettings,
+          ),
+        ));
+      case LocationPermissionDenied(permanent: final permanent):
+        messenger.showSnackBar(SnackBar(
+          content: Text(l.map_myLocation_denied),
+          // Re-requesting is futile once permanently denied — link to settings.
+          action: permanent
+              ? SnackBarAction(
+                  label: l.map_myLocation_openSettings,
+                  onPressed: service.openAppSettings,
+                )
+              : null,
+        ));
+      case LocationFailure():
+        messenger.showSnackBar(
+            SnackBar(content: Text(l.map_myLocation_failed)));
+      case LocationReady():
+        break; // not an error — caller proceeds
     }
   }
 
@@ -124,21 +260,36 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             facilities: facilities,
             focusIds: widget.focusIds,
             selectedId: _selectedId,
+            userLocation: _userLocation,
+            following: _following,
+            headingStream: _tracking ? _headingStream : null,
+            onUserPan: () {
+              if (_following) setState(() => _following = false);
+            },
             onMarkerTap: (id) => setState(() => _selectedId = id),
           ),
         ),
-        // "My location" FAB (permission handling wired in week 3).
+        // "My location" FAB — starts live tracking (blue dot + heading cone
+        // follow the user); while tracking, re-enables follow after a pan.
         Positioned(
           right: context.dimens.spaceMd,
           bottom: context.dimens.spaceMd +
               (selected != null ? 96 : 0),
           child: FloatingActionButton.small(
             heroTag: 'myLocation',
-            onPressed: () => ScaffoldMessenger.of(context)
-              ..clearSnackBars()
-              ..showSnackBar(
-                  SnackBar(content: Text(l.map_myLocation_denied))),
-            child: const Icon(Symbols.my_location),
+            tooltip: l.map_myLocation_tooltip,
+            onPressed: _locating ? null : () => _onMyLocationPressed(l),
+            child: _locating
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                // Crosshair without dot = "not locked on me" (post-pan);
+                // matches the affordance native map apps use.
+                : Icon(_tracking && !_following
+                    ? Symbols.location_searching
+                    : Symbols.my_location),
           ),
         ),
         if (selected != null)
