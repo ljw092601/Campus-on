@@ -1,11 +1,14 @@
 plugins {
     id("com.android.application")
+    // START: FlutterFire Configuration
+    id("com.google.gms.google-services")
+    // END: FlutterFire Configuration
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
-    namespace = "com.example.campus_on"
+    namespace = "io.github.ljw092601.campuson"
     // webview_flutter_android (kakao_map_plugin가 의존)가 compileSdk >= 36을 요구.
     // Flutter 기본값(35)이면 :kakao_map_plugin:checkDebugAarMetadata에서 빌드 실패.
     compileSdk = 36
@@ -18,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.campus_on"
+        applicationId = "io.github.ljw092601.campuson"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

@@ -151,7 +151,9 @@
   - **오프라인 캐싱 마감**: Firestore 영속성 명시 + 모든 읽기 경로(시설·가이드 getAll/getById/getByCategory) `Source.cache` 폴백
   - 검증: `analyze` 🟢 No issues · `test` 🟢 4건(가이드 플로우·즐겨찾기 지속·스모크) · Android 에뮬레이터 실기기 전 화면 스크린샷 확인 → `05_qa_report.md` 라운드 4
 - [ ] 국제교류처에 데이터/API 제공 가능 여부 문의 (섹션 4 액션 아이템)
-- [ ] 카카오 개발자 등록 + 지도 API 키 발급 / Firebase 프로젝트 `flutterfire configure`
+- [x] 카카오 개발자 등록 + 지도 API 키 발급 완료 — 카카오맵 서비스 활성화 ON, 실기기 지도 렌더 확인(QA 라운드 3). 키는 `--dart-define`/`env.json`(gitignore)으로만 주입, 저장소 미보관
+- [x] **Firebase 실연동 완료 (2026-07-21)**: 프로젝트 `campus-f4748` 생성 → `flutterfire configure`(Android/iOS 앱 등록, `firebase_options.dart`·`google-services.json` 실값) → Firestore DB 생성(서울 `asia-northeast3`) → 보안 규칙 배포(공개 읽기 전용·쓰기 차단) → 시드 업로드(시설 6·가이드 18, 동아대 좌표) 및 서버 읽기 검증. 시드 JSON은 `mock_data.dart`에서 자동 생성(`tool/firestore_seed/export_seed_test.dart`) — 수동 편집 금지. 서비스 계정 키는 로컬 보관(gitignore). 앱 구동 시 `--dart-define=USE_FIRESTORE=true` 필요(기본값은 여전히 mock)
+- [x] 앱 패키지명 확정·적용 (2026-07-21): `io.github.ljw092601.campuson` (Android applicationId/namespace + iOS 번들 ID, `com.example` 제거 — Play 등록 거부 사유 해소)
 - [~] **4주차 (진행 중)** — QA 점검 완료(2026-07-15), 스토어 준비는 다음:
   - [x] **QA 점검**: 독립 코드 감사(접근성·i18n·성능·정합성·보안) + 실기기 재검증. **런타임 결함 2건 발견·수정** — RT-1 지도 첫 진입 마커 미표시(`onMapCreated` 명시 addMarker), RT-2 전화/이메일/외부링크 무동작(Android `<queries>`·iOS `LSApplicationQueriesSchemes`/ATS). 접근성 A-1/3/4/5/6·성능 P-1·정합 X-1/3 반영. `analyze`/`test` 🟢 → `05_qa_report.md` 라운드 5
   - [x] **실 캠퍼스 좌표**: 지도 중심·시설을 동아대 승학캠퍼스(부산)로 이동(상세 건물은 추후 실측)

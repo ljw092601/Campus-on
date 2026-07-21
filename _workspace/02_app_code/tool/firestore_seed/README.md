@@ -2,6 +2,15 @@
 
 Seed the two public collections used by Campus-On:
 
+> **The seed JSONs are GENERATED — do not hand-edit.** The single source of
+> truth is `lib/data/mock/mock_data.dart`. After changing mock data, regenerate
+> and re-upload from the project root:
+>
+> ```bash
+> flutter test tool/firestore_seed/export_seed_test.dart
+> node tool/firestore_seed/seed.mjs --overwrite
+> ```
+
 | Collection    | Source file              | Doc id  |
 |---------------|--------------------------|---------|
 | `facilities`  | `facilities.seed.json`   | the JSON key (e.g. `lib-central`) |

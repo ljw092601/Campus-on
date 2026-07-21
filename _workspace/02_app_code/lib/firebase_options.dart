@@ -44,19 +44,18 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REPLACE_VIA_flutterfire_configure',
-    appId: 'REPLACE_VIA_flutterfire_configure',
-    messagingSenderId: 'REPLACE_VIA_flutterfire_configure',
-    projectId: 'campus-on-REPLACE',
-    storageBucket: 'campus-on-REPLACE.appspot.com',
+    apiKey: 'AIzaSyB16BfoVwCYzlnmiDWyi0wTXiW7LytLXC0',
+    appId: '1:1051782345606:android:5fa919e3aa697de1b57207',
+    messagingSenderId: '1051782345606',
+    projectId: 'campus-f4748',
+    storageBucket: 'campus-f4748.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'REPLACE_VIA_flutterfire_configure',
-    appId: 'REPLACE_VIA_flutterfire_configure',
-    messagingSenderId: 'REPLACE_VIA_flutterfire_configure',
-    projectId: 'campus-on-REPLACE',
-    storageBucket: 'campus-on-REPLACE.appspot.com',
-    iosBundleId: 'com.campuson.app',
+    apiKey: 'AIzaSyARb5TTKHa4s9hQQqcRxafLuwt1YVwmDhY',
+    appId: '1:1051782345606:ios:fb4193d1c1301929b57207',
+    messagingSenderId: '1051782345606',
+    projectId: 'campus-f4748',
+    storageBucket: 'campus-f4748.firebasestorage.app',
+    iosBundleId: 'io.github.ljw092601.campuson',
   );
 }

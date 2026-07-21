@@ -1,12 +1,84 @@
 {
   "arc-issue": {
     "categoryId": "immigration",
-    "title_ko": "외국인등록증 발급",
-    "title_en": "Alien Registration Card",
+    "title_ko": "외국인등록증(ARC) 발급",
+    "title_en": "Alien Registration Card (ARC)",
     "summary_ko": "입국 90일 이내 신청",
     "summary_en": "Apply within 90 days of entry",
-    "relatedFacilityIds": ["oia-office"],
+    "overview_ko": "외국인등록증은 국내 체류·은행·통신 등 대부분의 생활 절차에 필요한 기본 신분증입니다. 입국 후 90일 이내에 신청해야 합니다.",
+    "overview_en": "The ARC is the core ID needed for most everyday procedures in Korea (banking, mobile plans, and more). Apply within 90 days of entry.",
+    "checklist_ko": [
+      "여권",
+      "표준규격 증명사진 1매 (3.5×4.5cm)",
+      "수수료 3만원",
+      "재학증명서 또는 표준입학허가서"
+    ],
+    "checklist_en": [
+      "Passport",
+      "One standard ID photo (3.5×4.5cm)",
+      "Fee: KRW 30,000",
+      "Certificate of enrollment or admission"
+    ],
+    "steps_ko": [
+      "하이코리아(hikorea.go.kr)에서 방문 예약",
+      "관할 출입국·외국인청 방문 및 신청서 제출",
+      "수수료 납부 후 접수증 수령",
+      "약 2–3주 후 등록증 수령(우편 또는 방문)"
+    ],
+    "steps_en": [
+      "Book a visit on HiKorea (hikorea.go.kr)",
+      "Visit the immigration office and submit the application",
+      "Pay the fee and receive the receipt",
+      "Pick up the card in about 2–3 weeks (mail or in person)"
+    ],
+    "links": [
+      {
+        "label_ko": "하이코리아 방문 예약",
+        "label_en": "HiKorea reservation",
+        "url": "https://www.hikorea.go.kr"
+      }
+    ],
+    "relatedFacilityIds": [
+      "oia-office"
+    ],
+    "meta": {
+      "durationText_ko": "예상 2–3주",
+      "durationText_en": "Approx. 2–3 weeks",
+      "difficulty": 2
+    },
     "status": "published"
+  },
+  "stay-extension": {
+    "categoryId": "immigration",
+    "title_ko": "체류기간 연장",
+    "title_en": "Extend Period of Stay",
+    "summary_ko": "만료 4개월 전부터 신청 가능",
+    "summary_en": "Apply from 4 months before expiry",
+    "status": "comingSoon"
+  },
+  "visa-types": {
+    "categoryId": "immigration",
+    "title_ko": "비자 종류 안내",
+    "title_en": "Visa Types",
+    "summary_ko": "D-2 / D-4 차이",
+    "summary_en": "D-2 vs. D-4",
+    "status": "comingSoon"
+  },
+  "dormitory": {
+    "categoryId": "housing",
+    "title_ko": "기숙사 신청",
+    "title_en": "Dormitory Application",
+    "summary_ko": "학기별 신청 일정 확인",
+    "summary_en": "Check the per-semester schedule",
+    "status": "comingSoon"
+  },
+  "off-campus-housing": {
+    "categoryId": "housing",
+    "title_ko": "교외 주거 구하기",
+    "title_en": "Off-campus Housing",
+    "summary_ko": "원룸·하숙·보증금 안내",
+    "summary_en": "Studios, boarding, deposits",
+    "status": "comingSoon"
   },
   "bank-account": {
     "categoryId": "living",
@@ -14,7 +86,62 @@
     "title_en": "Open a Bank Account",
     "summary_ko": "여권·외국인등록증 지참",
     "summary_en": "Bring passport & ARC",
-    "relatedFacilityIds": [],
+    "status": "comingSoon"
+  },
+  "mobile-plan": {
+    "categoryId": "living",
+    "title_ko": "휴대폰 개통",
+    "title_en": "Get a Mobile Plan",
+    "summary_ko": "선불·후불 요금제 비교",
+    "summary_en": "Prepaid vs. postpaid",
+    "status": "comingSoon"
+  },
+  "transit-card": {
+    "categoryId": "living",
+    "title_ko": "교통카드",
+    "title_en": "Transit Card",
+    "summary_ko": "충전·환승 이용법",
+    "summary_en": "Top-up & transfers",
+    "status": "comingSoon"
+  },
+  "health-insurance": {
+    "categoryId": "health",
+    "title_ko": "건강보험 가입",
+    "title_en": "National Health Insurance",
+    "summary_ko": "유학생 의무가입 안내",
+    "summary_en": "Mandatory for students",
+    "status": "comingSoon"
+  },
+  "campus-clinic": {
+    "categoryId": "health",
+    "title_ko": "교내 보건소",
+    "title_en": "Campus Health Center",
+    "summary_ko": "이용 시간·기본 진료",
+    "summary_en": "Hours & basic care",
+    "status": "comingSoon"
+  },
+  "hospital-guide": {
+    "categoryId": "health",
+    "title_ko": "병원 이용",
+    "title_en": "Visiting a Hospital",
+    "summary_ko": "진료 절차·통역 지원",
+    "summary_en": "Process & interpretation",
+    "status": "comingSoon"
+  },
+  "course-registration": {
+    "categoryId": "school",
+    "title_ko": "수강신청",
+    "title_en": "Course Registration",
+    "summary_ko": "수강신청 기간·정정",
+    "summary_en": "Periods & add/drop",
+    "status": "comingSoon"
+  },
+  "certificate-issue": {
+    "categoryId": "school",
+    "title_ko": "증명서 발급",
+    "title_en": "Certificate Issuance",
+    "summary_ko": "재학·성적증명 발급",
+    "summary_en": "Enrollment & transcripts",
     "status": "comingSoon"
   },
   "library-guide": {
@@ -23,7 +150,44 @@
     "title_en": "Library Guide",
     "summary_ko": "대출·열람실 이용",
     "summary_en": "Borrowing & reading rooms",
-    "relatedFacilityIds": ["lib-central"],
+    "relatedFacilityIds": [
+      "lib-central"
+    ],
+    "status": "comingSoon"
+  },
+  "oia-visit": {
+    "categoryId": "school",
+    "title_ko": "국제교류처 방문 안내",
+    "title_en": "Visiting the OIA",
+    "summary_ko": "위치·상담 시간",
+    "summary_en": "Location & hours",
+    "relatedFacilityIds": [
+      "oia-office"
+    ],
+    "status": "comingSoon"
+  },
+  "emergency-contacts": {
+    "categoryId": "emergency",
+    "title_ko": "긴급 연락처",
+    "title_en": "Emergency Contacts",
+    "summary_ko": "112·119·1345 안내",
+    "summary_en": "112 · 119 · 1345",
+    "status": "comingSoon"
+  },
+  "incident-response": {
+    "categoryId": "emergency",
+    "title_ko": "사건·사고 대응",
+    "title_en": "Incident Response",
+    "summary_ko": "분실·도난·사고 시 대응",
+    "summary_en": "Loss, theft, accidents",
+    "status": "comingSoon"
+  },
+  "counseling": {
+    "categoryId": "emergency",
+    "title_ko": "상담 창구",
+    "title_en": "Counseling",
+    "summary_ko": "심리·생활 상담 안내",
+    "summary_en": "Wellbeing & life support",
     "status": "comingSoon"
   }
 }

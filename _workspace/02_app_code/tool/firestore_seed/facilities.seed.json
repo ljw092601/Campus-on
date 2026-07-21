@@ -3,8 +3,8 @@
     "name_ko": "중앙도서관",
     "name_en": "Central Library",
     "category": "library",
-    "lat": 37.5670,
-    "lng": 126.9785,
+    "lat": 35.1152,
+    "lng": 128.9688,
     "address_ko": "캠퍼스 A동 옆",
     "address_en": "Next to Building A",
     "building_ko": "도서관동",
@@ -13,15 +13,14 @@
     "hours_en": "09:00–22:00 (weekdays)",
     "phone": "02-000-0001",
     "description_ko": "열람실, 그룹스터디룸, 노트북 대여를 제공합니다.",
-    "description_en": "Reading rooms, group study rooms, laptop rentals.",
-    "imageUrl": null
+    "description_en": "Reading rooms, group study rooms, laptop rentals."
   },
   "dining-union": {
     "name_ko": "학생회관 식당",
     "name_en": "Student Union Cafeteria",
     "category": "dining",
-    "lat": 37.5662,
-    "lng": 126.9772,
+    "lat": 35.1144,
+    "lng": 128.9676,
     "building_ko": "학생회관 1F",
     "building_en": "Student Union 1F",
     "hours_ko": "11:00–19:00",
@@ -32,8 +31,8 @@
     "name_ko": "공학관 3호관",
     "name_en": "Engineering Building 3",
     "category": "building",
-    "lat": 37.5675,
-    "lng": 126.9760,
+    "lat": 35.1157,
+    "lng": 128.9671,
     "building_ko": "E동",
     "building_en": "Building E"
   },
@@ -41,8 +40,8 @@
     "name_ko": "카페 온",
     "name_en": "Cafe On",
     "category": "amenity",
-    "lat": 37.5668,
-    "lng": 126.9790,
+    "lat": 35.115,
+    "lng": 128.9693,
     "hours_ko": "08:00–20:00",
     "hours_en": "08:00–20:00"
   },
@@ -50,8 +49,8 @@
     "name_ko": "국제교류처",
     "name_en": "Office of International Affairs",
     "category": "building",
-    "lat": 37.5660,
-    "lng": 126.9788,
+    "lat": 35.1142,
+    "lng": 128.969,
     "building_ko": "A동 2F",
     "building_en": "Building A 2F",
     "hours_ko": "09:00–17:00 (평일)",
@@ -62,7 +61,7 @@
     "name_ko": "제1강의동 101호",
     "name_en": "Lecture Hall 1 Room 101",
     "category": "classroom",
-    "lat": 37.5672,
-    "lng": 126.9778
+    "lat": 35.1155,
+    "lng": 128.9681
   }
 }
