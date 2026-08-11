@@ -177,6 +177,80 @@ class MockData {
       titleEn: 'Open a Bank Account',
       summaryKo: '여권·외국인등록증 지참',
       summaryEn: 'Bring passport & ARC',
+      overviewKo: '은행 계좌는 은행 지점 방문을 통해 개설하는 것이 가장 일반적입니다. '
+          '일부 은행은 모바일 앱을 통한 비대면 계좌 개설도 지원할 수 있으나, '
+          '외국인등록증, 본인 명의 휴대폰, 모바일 외국인등록증 등 조건이 필요할 수 있습니다. '
+          '은행마다 가능 여부와 필요 서류가 다르므로 방문 또는 신청 전 확인하는 것이 좋습니다.',
+      overviewEn: 'Opening an account in person at a bank branch is the most common '
+          'route. Some banks also offer app-based (non-face-to-face) account '
+          'opening, but this may require an ARC, a phone number registered in '
+          'your own name, or a mobile ARC. Availability and required documents '
+          'differ by bank, so check before you visit or apply.',
+      checklistKo: [
+        '여권',
+        '외국인등록증(ARC)',
+        '학생증 또는 재학증명서',
+        '체류지 확인 서류: 기숙사 확인서, 임대차계약서 등',
+        '본인 명의 휴대폰 번호',
+        '금융거래 목적 확인 서류: 재학증명서, 등록금 납부 관련 서류 등',
+      ],
+      checklistEn: [
+        'Passport',
+        'Alien Registration Card (ARC)',
+        'Student ID or certificate of enrollment',
+        'Proof of residence: dormitory confirmation, lease contract, etc.',
+        'A phone number registered in your own name',
+        'Proof of purpose for banking: certificate of enrollment, tuition '
+            'payment documents, etc.',
+      ],
+      checklistNoteKo: '※ 은행마다 요구하는 서류가 다를 수 있으므로 방문 전 은행에 확인하는 것이 좋습니다.',
+      checklistNoteEn: '※ Required documents vary by bank — check with the branch '
+          'before your visit.',
+      stepsKo: [
+        '가까운 은행 방문',
+        '번호표 발급 후 대기',
+        '은행 직원에게 계좌 개설 요청',
+        '신분증 및 필요 서류 제출',
+        '신청서 작성',
+        '통장, 체크카드, 인터넷뱅킹 또는 모바일뱅킹 신청',
+      ],
+      stepsEn: [
+        'Visit a nearby bank branch',
+        'Take a queue ticket and wait',
+        'Tell the teller you want to open an account',
+        'Submit your ID and the required documents',
+        'Fill in the application form',
+        'Request a bankbook, check card, and internet or mobile banking',
+      ],
+      tipsKo: [
+        '일반적인 은행 영업시간은 평일 오전 9시부터 오후 4시까지입니다.',
+        '외국인등록증이 없으면 일부 은행에서 계좌 개설이 제한될 수 있습니다.',
+        '금융거래 목적을 증명하기 어려운 경우 한도제한계좌로 개설될 수 있습니다.',
+        '한도제한계좌는 이체나 출금 한도가 제한될 수 있습니다.',
+        '인터넷뱅킹과 모바일뱅킹을 함께 신청하면 송금과 잔액 확인이 편리합니다.',
+        '해외송금은 은행마다 수수료와 환율이 다를 수 있으므로 비교 후 이용하는 것이 좋습니다.',
+      ],
+      tipsEn: [
+        'Banks are usually open 09:00–16:00 on weekdays.',
+        'Without an ARC, some banks may restrict account opening.',
+        'If the purpose of banking is hard to prove, you may receive a '
+            'limited-transaction account.',
+        'A limited-transaction account can cap transfers and withdrawals.',
+        'Applying for internet and mobile banking together makes transfers and '
+            'balance checks easier.',
+        'Overseas remittance fees and exchange rates differ by bank — compare '
+            'before you send money.',
+      ],
+      phrases: [
+        GuidePhrase(
+          ko: '은행 계좌를 만들고 싶습니다.',
+          en: 'I would like to open a bank account.',
+        ),
+      ],
+      durationKo: '예상 30분~1시간',
+      durationEn: 'Approx. 30 min – 1 hour',
+      difficulty: 2,
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'mobile-plan',

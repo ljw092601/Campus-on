@@ -14,9 +14,10 @@ import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
 
-/// S7 — Guide Detail. Fixed 4-section template (overview → checklist → steps →
-/// links/locations) rendered as expandable panels. Coming-soon items show the
-/// standard placeholder (plus any related-location card so the deep link works).
+/// S7 — Guide Detail. Fixed section template (overview → checklist → steps →
+/// tips → phrases → links/locations) rendered as scrollable cards, each headed
+/// by the category accent color. Coming-soon items show the standard
+/// placeholder (plus any related-location card so the deep link works).
 class GuideDetailScreen extends ConsumerWidget {
   const GuideDetailScreen({super.key, required this.itemId});
 
@@ -75,15 +76,19 @@ class _DetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final color = context.catColors.forGuide(item.categoryId);
+    final accent = accentFor(context, context.catColors.forGuide(item.categoryId));
     final d = context.dimens;
+    final scheme = Theme.of(context).colorScheme;
 
     final overview = item.overview(locale);
     final checklist = item.checklist(locale);
+    final checklistNote = item.checklistNote(locale);
     final steps = item.steps(locale);
+    final tips = item.tips(locale);
     final hasLinksOrLocations =
         item.links.isNotEmpty || item.relatedFacilityIds.isNotEmpty;
 
+    // Vertically scrollable body; every section below is its own card.
     return ListView(
       padding: EdgeInsets.only(bottom: d.spaceLg),
       children: [
@@ -95,11 +100,11 @@ class _DetailBody extends ConsumerWidget {
               Text(item.title(locale),
                   style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: d.spaceSm),
-              _MetaRow(item: item, color: color),
+              _MetaRow(item: item, color: accent),
             ],
           ),
         ),
-        SizedBox(height: d.spaceSm),
+        SizedBox(height: d.spaceMd),
 
         // Whole-screen coming-soon when there is no sectioned content at all.
         if (item.hasNoContent)
@@ -112,27 +117,68 @@ class _DetailBody extends ConsumerWidget {
           if (overview != null)
             _Section(
               title: l.guide_section_overview,
-              child: Text(overview,
-                  style: Theme.of(context).textTheme.bodyLarge),
+              icon: Symbols.info,
+              accent: accent,
+              child:
+                  Text(overview, style: Theme.of(context).textTheme.bodyLarge),
             ),
           if (checklist.isNotEmpty)
             _Section(
               title: l.guide_section_checklist,
+              icon: Symbols.checklist,
+              accent: accent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (final c in checklist) _ChecklistRow(text: c),
+                  if (checklistNote != null) ...[
+                    SizedBox(height: d.spaceSm),
+                    Text(
+                      checklistNote,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                            height: 1.45,
+                          ),
+                    ),
+                  ],
                 ],
               ),
             ),
           if (steps.isNotEmpty)
             _Section(
               title: l.guide_section_steps,
+              icon: Symbols.format_list_numbered,
+              accent: accent,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var i = 0; i < steps.length; i++)
-                    _StepRow(index: i + 1, text: steps[i], color: color),
+                    _StepRow(index: i + 1, text: steps[i], color: accent),
+                ],
+              ),
+            ),
+          if (tips.isNotEmpty)
+            _Section(
+              title: l.guide_section_tips,
+              icon: Symbols.lightbulb,
+              accent: accent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final t in tips) _TipRow(text: t, color: accent),
+                ],
+              ),
+            ),
+          if (item.phrases.isNotEmpty)
+            _Section(
+              title: l.guide_section_phrases,
+              icon: Symbols.translate,
+              accent: accent,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final p in item.phrases)
+                    _PhraseCard(phrase: p, color: accent),
                 ],
               ),
             ),
@@ -142,6 +188,8 @@ class _DetailBody extends ConsumerWidget {
         if (hasLinksOrLocations)
           _Section(
             title: l.guide_section_links,
+            icon: Symbols.link,
+            accent: accent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -154,6 +202,21 @@ class _DetailBody extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// Category accent adjusted for the current brightness.
+///
+/// The category tokens (§4.1) are single mid-tone values shared by both themes
+/// — e.g. living = teal `#00838F`, which does not clear text contrast on the
+/// dark surface. Light mode keeps the exact token; dark mode gets a lightened,
+/// slightly desaturated variant so the dark palette itself stays unchanged.
+Color accentFor(BuildContext context, Color base) {
+  if (Theme.of(context).brightness == Brightness.light) return base;
+  final hsl = HSLColor.fromColor(base);
+  return hsl
+      .withLightness((hsl.lightness + 0.32).clamp(0.0, 1.0))
+      .withSaturation((hsl.saturation * 0.85).clamp(0.0, 1.0))
+      .toColor();
 }
 
 class _MetaRow extends StatelessWidget {
@@ -204,24 +267,139 @@ class _MetaRow extends StatelessWidget {
   }
 }
 
-/// Expandable section panel (UX §4.5 SectionAccordion), expanded by default.
+/// Section card — one card per template section, headed by an icon + title in
+/// the category accent. Content is always visible (no accordion) so the whole
+/// guide reads top-to-bottom in a single scroll.
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.child});
+  const _Section({
+    required this.title,
+    required this.icon,
+    required this.accent,
+    required this.child,
+  });
+
   final String title;
+  final IconData icon;
+  final Color accent;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: ExpansionTile(
-        initiallyExpanded: true,
-        tilePadding: EdgeInsets.symmetric(horizontal: context.dimens.spaceMd),
-        childrenPadding: EdgeInsets.fromLTRB(
-            context.dimens.spaceMd, 0, context.dimens.spaceMd, context.dimens.spaceMd),
-        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-        title: Text(title, style: Theme.of(context).textTheme.titleMedium),
-        children: [child],
+    final d = context.dimens;
+    return Card(
+      margin: EdgeInsets.fromLTRB(d.spaceMd, 0, d.spaceMd, d.spaceMd),
+      child: Padding(
+        padding: EdgeInsets.all(d.spaceMd),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 20, color: accent),
+                SizedBox(width: d.spaceSm),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: accent,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: d.spaceSm),
+            Divider(height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
+            SizedBox(height: d.spaceMd),
+            child,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bullet row for the "good to know" section.
+class _TipRow extends StatelessWidget {
+  const _TipRow({required this.text, required this.color});
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = context.dimens;
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: d.spaceXs),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: d.spaceSm),
+            child: Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ),
+          ),
+          SizedBox(width: d.spaceSm + 2),
+          Expanded(
+            child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Korean sentence + its English meaning, tinted with the category accent.
+/// Both lines always render — the Korean line is the one to show at a counter.
+class _PhraseCard extends StatelessWidget {
+  const _PhraseCard({required this.phrase, required this.color});
+  final GuidePhrase phrase;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final d = context.dimens;
+    final text = Theme.of(context).textTheme;
+    final scheme = Theme.of(context).colorScheme;
+
+    Widget line(String label, String value, TextStyle? style) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 56,
+              child: Text(label,
+                  style: text.labelLarge?.copyWith(color: color)),
+            ),
+            SizedBox(width: d.spaceSm),
+            Expanded(child: Text(value, style: style)),
+          ],
+        );
+
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: d.spaceXs),
+      child: Container(
+        padding: EdgeInsets.all(d.spaceMd),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.10),
+          borderRadius: d.brSm,
+          border: Border.all(color: color.withValues(alpha: 0.30)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            line(l.settings_language_ko, phrase.ko,
+                text.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+            SizedBox(height: d.spaceSm),
+            line(
+              l.settings_language_en,
+              phrase.en,
+              text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
+            ),
+          ],
+        ),
       ),
     );
   }

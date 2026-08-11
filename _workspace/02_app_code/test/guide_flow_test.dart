@@ -1,5 +1,6 @@
 import 'package:campus_on/app.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,8 +17,21 @@ Future<ProviderScope> _app() async {
   );
 }
 
+/// Lays a guide detail page out at full height. The section cards run past the
+/// default 800×600 test surface, and the lazy list never builds what falls
+/// below it — so assertions on later sections need the taller viewport.
+void _useTallSurface(WidgetTester tester) {
+  tester.view.physicalSize = const Size(1080, 3200);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(() {
+    tester.view.resetPhysicalSize();
+    tester.view.resetDevicePixelRatio();
+  });
+}
+
 void main() {
   testWidgets('Guide tab: categories → item list → detail', (tester) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
@@ -42,6 +56,33 @@ void main() {
     expect(find.text('Steps'), findsOneWidget);
   });
 
+  testWidgets('Guide detail: bank account renders its full content',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Living'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Open a Bank Account'));
+    await tester.pumpAndSettle();
+
+    // Meta row under the title (same component as the ARC page).
+    expect(find.textContaining('Approx. 30 min'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    // The placeholder copy is gone; the real sections render instead.
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.text('Overview'), findsOneWidget);
+    expect(find.text('What to prepare'), findsOneWidget);
+    expect(find.text('Steps'), findsOneWidget);
+    expect(find.text('Good to know'), findsOneWidget);
+    expect(find.text('Useful phrases'), findsOneWidget);
+    expect(find.text('I would like to open a bank account.'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
@@ -49,10 +90,10 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Living → "Open a Bank Account" is a coming-soon placeholder.
+    // Living → "Get a Mobile Plan" is still a coming-soon placeholder.
     await tester.tap(find.text('Living'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Open a Bank Account'));
+    await tester.tap(find.text('Get a Mobile Plan'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.

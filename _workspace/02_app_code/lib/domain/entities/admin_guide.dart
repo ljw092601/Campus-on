@@ -60,6 +60,23 @@ class GuideLink {
       );
 }
 
+/// A short phrase pair shown in the S7 "Useful phrases" section — the Korean
+/// sentence to say plus its English meaning. Both lines are always rendered
+/// (the Korean line is what the user shows/reads at the counter), so this is
+/// deliberately not locale-switched like the other fields.
+@immutable
+class GuidePhrase {
+  const GuidePhrase({required this.ko, required this.en});
+
+  final String ko;
+  final String en;
+
+  factory GuidePhrase.fromJson(Map<String, dynamic> j) => GuidePhrase(
+        ko: (j['ko'] ?? '') as String,
+        en: (j['en'] ?? '') as String,
+      );
+}
+
 /// Admin guide item — full sectioned content (UX doc §8 AdminGuideItem).
 ///
 /// Sections follow the fixed S7 template: overview → checklist → steps →
@@ -79,8 +96,13 @@ class AdminGuideItem {
     this.overviewEn,
     this.checklistKo = const [],
     this.checklistEn = const [],
+    this.checklistNoteKo,
+    this.checklistNoteEn,
     this.stepsKo = const [],
     this.stepsEn = const [],
+    this.tipsKo = const [],
+    this.tipsEn = const [],
+    this.phrases = const [],
     this.links = const [],
     this.relatedFacilityIds = const [],
     this.durationKo,
@@ -104,11 +126,22 @@ class AdminGuideItem {
   final List<String> checklistKo;
   final List<String> checklistEn;
 
+  /// Caveat rendered under the checklist (e.g. "requirements differ per bank").
+  final String? checklistNoteKo;
+  final String? checklistNoteEn;
+
   // Section 3 — steps.
   final List<String> stepsKo;
   final List<String> stepsEn;
 
-  // Section 4 — links + related locations.
+  // Section 4 — good to know (tips).
+  final List<String> tipsKo;
+  final List<String> tipsEn;
+
+  // Section 5 — useful phrases (ko + en shown together).
+  final List<GuidePhrase> phrases;
+
+  // Section 6 — links + related locations.
   final List<GuideLink> links;
 
   /// Related campus locations. S7 renders one card per id; tapping a card
@@ -147,6 +180,12 @@ class AdminGuideItem {
   /// Locale-aware list with fallback to the other language when one is empty.
   List<String> checklist(Locale l) => _pickList(checklistKo, checklistEn, l);
   List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
+  List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l);
+
+  String? checklistNote(Locale l) {
+    final s = _pick(checklistNoteKo ?? '', checklistNoteEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
 
   List<String> _pickList(List<String> ko, List<String> en, Locale l) {
     final primary = l.languageCode == 'ko' ? ko : en;
@@ -168,6 +207,9 @@ class AdminGuideItem {
       checklistEn.isEmpty &&
       stepsKo.isEmpty &&
       stepsEn.isEmpty &&
+      tipsKo.isEmpty &&
+      tipsEn.isEmpty &&
+      phrases.isEmpty &&
       links.isEmpty &&
       relatedFacilityIds.isEmpty;
 
@@ -187,8 +229,17 @@ class AdminGuideItem {
       overviewEn: j['overview_en'] as String?,
       checklistKo: strList(j['checklist_ko']),
       checklistEn: strList(j['checklist_en']),
+      checklistNoteKo: j['checklist_note_ko'] as String?,
+      checklistNoteEn: j['checklist_note_en'] as String?,
       stepsKo: strList(j['steps_ko']),
       stepsEn: strList(j['steps_en']),
+      tipsKo: strList(j['tips_ko']),
+      tipsEn: strList(j['tips_en']),
+      phrases: (j['phrases'] as List?)
+              ?.map((e) =>
+                  GuidePhrase.fromJson((e as Map).cast<String, dynamic>()))
+              .toList() ??
+          const [],
       links: (j['links'] as List?)
               ?.map((e) => GuideLink.fromJson((e as Map).cast<String, dynamic>()))
               .toList() ??
