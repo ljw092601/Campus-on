@@ -33,6 +33,51 @@ enum GuideCategory {
 
 enum GuideStatus { published, comingSoon }
 
+/// Item-level icon overrides, keyed by their Material Symbols name.
+///
+/// Rows normally show their category icon, which makes same-category items
+/// (bank / mobile / transit) indistinguishable in the list. Items may therefore
+/// name their own icon; the lookup is a fixed map rather than a raw code point
+/// so Firestore can carry `icon` as a plain string and the icon font still
+/// tree-shakes correctly (const [IconData] only).
+const Map<String, IconData> _guideIcons = {
+  'account_balance': Symbols.account_balance,
+  'sim_card': Symbols.sim_card,
+  'smartphone': Symbols.smartphone,
+  'directions_transit': Symbols.directions_transit,
+  'credit_card': Symbols.credit_card,
+  'contactless': Symbols.contactless,
+  'payments': Symbols.payments,
+  'receipt_long': Symbols.receipt_long,
+  'help': Symbols.help,
+  'info': Symbols.info,
+  'storefront': Symbols.storefront,
+  'location_on': Symbols.location_on,
+  'swap_horiz': Symbols.swap_horiz,
+  'lightbulb': Symbols.lightbulb,
+};
+
+/// Resolves a Material Symbols name to its icon, or null when unknown/absent.
+IconData? guideIconFromName(String? name) =>
+    name == null ? null : _guideIcons[name];
+
+/// Locale pick with fallback to the other language when the primary is blank.
+String _pickText(String ko, String en, Locale l) {
+  final primary = l.languageCode == 'ko' ? ko : en;
+  if (primary.trim().isNotEmpty) return primary;
+  return l.languageCode == 'ko' ? en : ko;
+}
+
+/// Same as [_pickText] for lists — falls back when the primary list is empty.
+List<String> _pickTextList(List<String> ko, List<String> en, Locale l) {
+  final primary = l.languageCode == 'ko' ? ko : en;
+  if (primary.isNotEmpty) return primary;
+  return l.languageCode == 'ko' ? en : ko;
+}
+
+List<String> _strList(dynamic v) =>
+    (v as List?)?.map((e) => e.toString()).toList() ?? const [];
+
 /// External / related link shown in the S7 "Links & Locations" section.
 @immutable
 class GuideLink {
@@ -40,23 +85,144 @@ class GuideLink {
     required this.labelKo,
     required this.labelEn,
     required this.url,
+    this.descriptionKo,
+    this.descriptionEn,
+    this.iconName,
   });
 
   final String labelKo;
   final String labelEn;
   final String url;
 
+  /// Optional one-liner under the label (what the page actually covers).
+  final String? descriptionKo;
+  final String? descriptionEn;
+
+  /// Optional row icon (see [guideIconFromName]); defaults to the link glyph.
+  /// Used e.g. by "find a nearby store" rows that open an external map search.
+  final String? iconName;
+
   String label(Locale l) {
-    final primary = l.languageCode == 'ko' ? labelKo : labelEn;
-    if (primary.trim().isNotEmpty) return primary;
-    final other = l.languageCode == 'ko' ? labelEn : labelKo;
-    return other.trim().isNotEmpty ? other : url;
+    final s = _pickText(labelKo, labelEn, l);
+    return s.trim().isNotEmpty ? s : url;
+  }
+
+  String? description(Locale l) {
+    final s = _pickText(descriptionKo ?? '', descriptionEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
   }
 
   factory GuideLink.fromJson(Map<String, dynamic> j) => GuideLink(
         labelKo: (j['label_ko'] ?? '') as String,
         labelEn: (j['label_en'] ?? '') as String,
         url: (j['url'] ?? '') as String,
+        descriptionKo: j['description_ko'] as String?,
+        descriptionEn: j['description_en'] as String?,
+        iconName: j['icon'] as String?,
+      );
+}
+
+/// A titled block inside a [GuideSection] — a short heading plus its bullet
+/// lines (e.g. "추천 대상" + who it suits, or "ARC가 아직 없나요?" + what to do).
+@immutable
+class GuideNote {
+  const GuideNote({
+    required this.titleKo,
+    required this.titleEn,
+    this.linesKo = const [],
+    this.linesEn = const [],
+  });
+
+  final String titleKo;
+  final String titleEn;
+  final List<String> linesKo;
+  final List<String> linesEn;
+
+  String title(Locale l) => _pickText(titleKo, titleEn, l);
+  List<String> lines(Locale l) => _pickTextList(linesKo, linesEn, l);
+
+  factory GuideNote.fromJson(Map<String, dynamic> j) => GuideNote(
+        titleKo: (j['title_ko'] ?? '') as String,
+        titleEn: (j['title_en'] ?? '') as String,
+        linesKo: _strList(j['lines_ko']),
+        linesEn: _strList(j['lines_en']),
+      );
+}
+
+/// An item-specific extra section, rendered with the same section card as the
+/// fixed template ones (between "steps" and "good to know").
+///
+/// The fixed S7 template covers what every guide has; some items need their own
+/// topics on top — mobile plans, for instance, need prepaid vs. postpaid and an
+/// "with/without ARC" helper. Those carry their own title here instead of an
+/// l10n key, so new topics are pure content (mock fixture or Firestore doc) and
+/// need no screen changes.
+@immutable
+class GuideSection {
+  const GuideSection({
+    required this.titleKo,
+    required this.titleEn,
+    this.iconName,
+    this.bodyKo,
+    this.bodyEn,
+    this.stepsKo = const [],
+    this.stepsEn = const [],
+    this.notes = const [],
+    this.noticeKo,
+    this.noticeEn,
+  });
+
+  final String titleKo;
+  final String titleEn;
+
+  /// Section header icon (see [guideIconFromName]); defaults to the info glyph.
+  final String? iconName;
+
+  /// Lead paragraph(s). Use `\n\n` between paragraphs.
+  final String? bodyKo;
+  final String? bodyEn;
+
+  /// Numbered steps, drawn with the same circles as the main "steps" section —
+  /// for items whose flow splits into several named procedures (e.g. a transit
+  /// card's "how to buy" vs. "how to recharge").
+  final List<String> stepsKo;
+  final List<String> stepsEn;
+
+  final List<GuideNote> notes;
+
+  /// Caveat rendered as a small tinted card at the end of the section.
+  final String? noticeKo;
+  final String? noticeEn;
+
+  String title(Locale l) => _pickText(titleKo, titleEn, l);
+
+  List<String> steps(Locale l) => _pickTextList(stepsKo, stepsEn, l);
+
+  String? body(Locale l) {
+    final s = _pickText(bodyKo ?? '', bodyEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  String? notice(Locale l) {
+    final s = _pickText(noticeKo ?? '', noticeEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  factory GuideSection.fromJson(Map<String, dynamic> j) => GuideSection(
+        titleKo: (j['title_ko'] ?? '') as String,
+        titleEn: (j['title_en'] ?? '') as String,
+        iconName: j['icon'] as String?,
+        bodyKo: j['body_ko'] as String?,
+        bodyEn: j['body_en'] as String?,
+        stepsKo: _strList(j['steps_ko']),
+        stepsEn: _strList(j['steps_en']),
+        notes: (j['notes'] as List?)
+                ?.map((e) =>
+                    GuideNote.fromJson((e as Map).cast<String, dynamic>()))
+                .toList() ??
+            const [],
+        noticeKo: j['notice_ko'] as String?,
+        noticeEn: j['notice_en'] as String?,
       );
 }
 
@@ -90,16 +256,21 @@ class AdminGuideItem {
     required this.categoryId,
     required this.titleKo,
     required this.titleEn,
+    this.detailTitleKo,
+    this.detailTitleEn,
     this.summaryKo,
     this.summaryEn,
     this.overviewKo,
     this.overviewEn,
     this.checklistKo = const [],
     this.checklistEn = const [],
+    this.checklistOptionalKo = const [],
+    this.checklistOptionalEn = const [],
     this.checklistNoteKo,
     this.checklistNoteEn,
     this.stepsKo = const [],
     this.stepsEn = const [],
+    this.sections = const [],
     this.tipsKo = const [],
     this.tipsEn = const [],
     this.phrases = const [],
@@ -108,6 +279,7 @@ class AdminGuideItem {
     this.durationKo,
     this.durationEn,
     this.difficulty,
+    this.iconName,
     this.status = GuideStatus.comingSoon,
   });
 
@@ -115,6 +287,12 @@ class AdminGuideItem {
   final GuideCategory categoryId;
   final String titleKo;
   final String titleEn;
+
+  /// Heading for the detail screen when it should read fuller than the list
+  /// row (e.g. list "교통카드" → detail "교통카드 구매 및 충전"). Falls back to [title].
+  final String? detailTitleKo;
+  final String? detailTitleEn;
+
   final String? summaryKo;
   final String? summaryEn;
 
@@ -126,6 +304,11 @@ class AdminGuideItem {
   final List<String> checklistKo;
   final List<String> checklistEn;
 
+  /// Second, softer checklist group ("you may also need") shown under the main
+  /// one — items that only some applicants are asked for.
+  final List<String> checklistOptionalKo;
+  final List<String> checklistOptionalEn;
+
   /// Caveat rendered under the checklist (e.g. "requirements differ per bank").
   final String? checklistNoteKo;
   final String? checklistNoteEn;
@@ -133,6 +316,9 @@ class AdminGuideItem {
   // Section 3 — steps.
   final List<String> stepsKo;
   final List<String> stepsEn;
+
+  // Section 3.5 — item-specific extra sections (rendered after the steps).
+  final List<GuideSection> sections;
 
   // Section 4 — good to know (tips).
   final List<String> tipsKo;
@@ -155,17 +341,25 @@ class AdminGuideItem {
   final String? durationEn;
   final int? difficulty;
 
+  /// Row icon override for the list (see [guideIconFromName]).
+  final String? iconName;
+
   final GuideStatus status;
 
   bool get isComingSoon => status == GuideStatus.comingSoon;
 
-  String _pick(String ko, String en, Locale l) {
-    final primary = l.languageCode == 'ko' ? ko : en;
-    if (primary.trim().isNotEmpty) return primary;
-    return l.languageCode == 'ko' ? en : ko;
-  }
+  /// Icon for list rows — the item's own if it names one, else its category's.
+  IconData get icon => guideIconFromName(iconName) ?? categoryId.icon;
+
+  String _pick(String ko, String en, Locale l) => _pickText(ko, en, l);
 
   String title(Locale l) => _pick(titleKo, titleEn, l);
+
+  /// Detail-screen heading — [detailTitle] when set, otherwise [title].
+  String detailTitle(Locale l) {
+    final s = _pick(detailTitleKo ?? '', detailTitleEn ?? '', l);
+    return s.trim().isNotEmpty ? s : title(l);
+  }
 
   String? summary(Locale l) {
     final s = _pick(summaryKo ?? '', summaryEn ?? '', l);
@@ -179,6 +373,8 @@ class AdminGuideItem {
 
   /// Locale-aware list with fallback to the other language when one is empty.
   List<String> checklist(Locale l) => _pickList(checklistKo, checklistEn, l);
+  List<String> checklistOptional(Locale l) =>
+      _pickList(checklistOptionalKo, checklistOptionalEn, l);
   List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
   List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l);
 
@@ -187,11 +383,8 @@ class AdminGuideItem {
     return s.trim().isNotEmpty ? s : null;
   }
 
-  List<String> _pickList(List<String> ko, List<String> en, Locale l) {
-    final primary = l.languageCode == 'ko' ? ko : en;
-    if (primary.isNotEmpty) return primary;
-    return l.languageCode == 'ko' ? en : ko;
-  }
+  List<String> _pickList(List<String> ko, List<String> en, Locale l) =>
+      _pickTextList(ko, en, l);
 
   String? duration(Locale l) {
     final s = _pick(durationKo ?? '', durationEn ?? '', l);
@@ -205,8 +398,11 @@ class AdminGuideItem {
       (overviewEn ?? '').trim().isEmpty &&
       checklistKo.isEmpty &&
       checklistEn.isEmpty &&
+      checklistOptionalKo.isEmpty &&
+      checklistOptionalEn.isEmpty &&
       stepsKo.isEmpty &&
       stepsEn.isEmpty &&
+      sections.isEmpty &&
       tipsKo.isEmpty &&
       tipsEn.isEmpty &&
       phrases.isEmpty &&
@@ -214,8 +410,6 @@ class AdminGuideItem {
       relatedFacilityIds.isEmpty;
 
   factory AdminGuideItem.fromJson(Map<String, dynamic> j) {
-    List<String> strList(dynamic v) =>
-        (v as List?)?.map((e) => e.toString()).toList() ?? const [];
     final meta = (j['meta'] as Map?)?.cast<String, dynamic>() ?? const {};
     return AdminGuideItem(
       id: j['id'] as String,
@@ -223,18 +417,27 @@ class AdminGuideItem {
           GuideCategory.fromId((j['categoryId'] ?? 'immigration') as String),
       titleKo: (j['title_ko'] ?? '') as String,
       titleEn: (j['title_en'] ?? '') as String,
+      detailTitleKo: j['detail_title_ko'] as String?,
+      detailTitleEn: j['detail_title_en'] as String?,
       summaryKo: j['summary_ko'] as String?,
       summaryEn: j['summary_en'] as String?,
       overviewKo: j['overview_ko'] as String?,
       overviewEn: j['overview_en'] as String?,
-      checklistKo: strList(j['checklist_ko']),
-      checklistEn: strList(j['checklist_en']),
+      checklistKo: _strList(j['checklist_ko']),
+      checklistEn: _strList(j['checklist_en']),
+      checklistOptionalKo: _strList(j['checklist_optional_ko']),
+      checklistOptionalEn: _strList(j['checklist_optional_en']),
       checklistNoteKo: j['checklist_note_ko'] as String?,
       checklistNoteEn: j['checklist_note_en'] as String?,
-      stepsKo: strList(j['steps_ko']),
-      stepsEn: strList(j['steps_en']),
-      tipsKo: strList(j['tips_ko']),
-      tipsEn: strList(j['tips_en']),
+      stepsKo: _strList(j['steps_ko']),
+      stepsEn: _strList(j['steps_en']),
+      sections: (j['sections'] as List?)
+              ?.map((e) =>
+                  GuideSection.fromJson((e as Map).cast<String, dynamic>()))
+              .toList() ??
+          const [],
+      tipsKo: _strList(j['tips_ko']),
+      tipsEn: _strList(j['tips_en']),
       phrases: (j['phrases'] as List?)
               ?.map((e) =>
                   GuidePhrase.fromJson((e as Map).cast<String, dynamic>()))
@@ -249,6 +452,7 @@ class AdminGuideItem {
       durationKo: meta['durationText_ko'] as String?,
       durationEn: meta['durationText_en'] as String?,
       difficulty: (meta['difficulty'] as num?)?.toInt(),
+      iconName: j['icon'] as String?,
       status: (j['status'] == 'published')
           ? GuideStatus.published
           : GuideStatus.comingSoon,

@@ -46,6 +46,13 @@
   "map_myLocation_failed": "Couldn't get your location. Please try again.",
   "map_myLocation_openSettings": "Settings",
   "map_peek_viewDetail": "View detail",
+  "map_peek_openPlace": "Kakao Map",
+  "map_nearby_resultCount": "{count} places found nearby",
+  "@map_nearby_resultCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "map_nearby_empty": "No places found nearby.",
+  "map_nearby_failed": "Couldn't search for nearby places.",
 
   "list_appbar_title": "Facilities",
   "list_empty_noResult": "No facilities match your filter.",
@@ -102,6 +109,8 @@
   },
   "guide_list_empty_title": "This category is coming soon",
   "guide_list_error": "Couldn't load the guide.",
+
+  "guide_checklist_optional_title": "You may also need",
 
   "guide_section_overview": "Overview",
   "guide_section_checklist": "What to prepare",

@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/services/location_service.dart';
 import '../../domain/entities/facility.dart';
+import '../../domain/entities/nearby_place.dart';
 import '../../domain/entities/user_location.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/facility_providers.dart';
@@ -20,10 +22,19 @@ import 'widgets/peek_sheet.dart';
 
 /// S2 — Map. Kakao map + 6-category markers + Peek sheet + `/map?focus=` deep
 /// link (fitBounds + auto-open first marker's Peek).
+///
+/// `/map?nearby=<kw1>,<kw2>,...` additionally searches those keywords around
+/// campus and pins the results (off-campus places such as carrier stores) —
+/// used by guide pages that point at a service the campus itself doesn't host.
 class MapScreen extends ConsumerStatefulWidget {
-  const MapScreen({super.key, this.focusIds = const []});
+  const MapScreen({
+    super.key,
+    this.focusIds = const [],
+    this.nearbyQueries = const [],
+  });
 
   final List<String> focusIds;
+  final List<String> nearbyQueries;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -32,6 +43,12 @@ class MapScreen extends ConsumerStatefulWidget {
 class _MapScreenState extends ConsumerState<MapScreen>
     with WidgetsBindingObserver {
   String? _selectedId;
+
+  // ── Off-campus keyword search (`?nearby=`) ───────────────────────────────
+  // Results are owned here and passed back down to the map view, so a rebuild
+  // (filter change, GPS fix) never re-runs the search.
+  List<NearbyPlace> _places = const [];
+  bool _placesSearched = false;
 
   // ── Live "my location" tracking (native map-app behaviour) ────────────────
   // FAB starts a position stream: the blue dot follows the user in real time
@@ -180,6 +197,42 @@ class _MapScreenState extends ConsumerState<MapScreen>
     return null;
   }
 
+  /// Selected marker resolved as an off-campus place (null for facility ids).
+  NearbyPlace? get _selectedPlace {
+    final id = NearbyPlace.idFromMarker(_selectedId ?? '');
+    if (id == null) return null;
+    for (final p in _places) {
+      if (p.id == id) return p;
+    }
+    return null;
+  }
+
+  void _onPlacesFound(List<NearbyPlace> places, AppLocalizations l) {
+    if (!mounted) return;
+    setState(() {
+      _places = places;
+      _placesSearched = true;
+    });
+    if (places.isEmpty) _showPlacesSnackBar(l.map_nearby_empty);
+  }
+
+  void _showPlacesSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _openPlace(NearbyPlace place, AppLocalizations l) async {
+    final url = place.placeUrl;
+    if (url == null || url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri == null) return;
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -252,6 +305,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
 
     // Empty filter result → toast handled once via ref.listen in build().
     final selected = _find(facilities, _selectedId);
+    final selectedPlace = _selectedPlace;
+    final sheetOpen = selected != null || selectedPlace != null;
 
     return Stack(
       children: [
@@ -263,18 +318,30 @@ class _MapScreenState extends ConsumerState<MapScreen>
             userLocation: _userLocation,
             following: _following,
             headingStream: _tracking ? _headingStream : null,
+            placeQueries: widget.nearbyQueries,
+            places: _places,
+            onPlacesFound: (places) => _onPlacesFound(places, l),
+            onPlacesFailed: () => _showPlacesSnackBar(l.map_nearby_failed),
             onUserPan: () {
               if (_following) setState(() => _following = false);
             },
             onMarkerTap: (id) => setState(() => _selectedId = id),
           ),
         ),
+        // Result count for the `?nearby=` search — the pins alone don't say
+        // what was searched for.
+        if (widget.nearbyQueries.isNotEmpty && _placesSearched)
+          Positioned(
+            left: context.dimens.spaceMd,
+            right: context.dimens.spaceMd,
+            top: context.dimens.spaceSm,
+            child: _NearbyBanner(count: _places.length),
+          ),
         // "My location" FAB — starts live tracking (blue dot + heading cone
         // follow the user); while tracking, re-enables follow after a pan.
         Positioned(
           right: context.dimens.spaceMd,
-          bottom: context.dimens.spaceMd +
-              (selected != null ? 96 : 0),
+          bottom: context.dimens.spaceMd + (sheetOpen ? 96 : 0),
           child: FloatingActionButton.small(
             heroTag: 'myLocation',
             tooltip: l.map_myLocation_tooltip,
@@ -302,8 +369,60 @@ class _MapScreenState extends ConsumerState<MapScreen>
               onViewDetail: () =>
                   context.go('/map/facility/${selected.id}'),
             ),
+          )
+        else if (selectedPlace != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: PlacePeekSheet(
+              place: selectedPlace,
+              // No in-app detail screen for an off-campus place — the CTA is
+              // hidden rather than dead when Kakao gives us no page for it.
+              onOpen: (selectedPlace.placeUrl ?? '').isEmpty
+                  ? null
+                  : () => _openPlace(selectedPlace, l),
+            ),
           ),
       ],
+    );
+  }
+}
+
+/// Thin status strip over the map telling the user what the pins are — shown
+/// only for the `?nearby=` entry point.
+class _NearbyBanner extends StatelessWidget {
+  const _NearbyBanner({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surface,
+      elevation: 2,
+      borderRadius: context.dimens.brSm,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: context.dimens.spaceMd,
+            vertical: context.dimens.spaceSm),
+        child: Row(
+          children: [
+            Icon(Symbols.storefront, size: 18, color: scheme.onSurfaceVariant),
+            SizedBox(width: context.dimens.spaceSm),
+            Expanded(
+              child: Text(
+                l.map_nearby_resultCount(count),
+                style: Theme.of(context).textTheme.bodySmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

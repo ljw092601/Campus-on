@@ -83,6 +83,97 @@ void main() {
     expect(find.text('I would like to open a bank account.'), findsOneWidget);
   });
 
+  testWidgets('Guide detail: mobile plan renders its full content',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Living'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Get a Mobile Plan'));
+    await tester.pumpAndSettle();
+
+    // Header meta (same component as the ARC page).
+    expect(find.textContaining('Same day'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    // Fixed template sections + the item-specific ones, in order.
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.text('Overview'), findsOneWidget);
+    expect(find.text('What to prepare'), findsOneWidget);
+    expect(find.text('You may also need'), findsOneWidget);
+    expect(find.text('Steps'), findsOneWidget);
+    expect(find.text('With or without an ARC'), findsOneWidget);
+    expect(find.text('Prepaid plans'), findsOneWidget);
+    expect(find.text('Postpaid plans'), findsOneWidget);
+    expect(find.text('Best for'), findsNWidgets(2));
+    expect(find.text('Good to know'), findsOneWidget);
+    expect(find.text('Links & Locations'), findsOneWidget);
+    expect(find.text('Find a nearby carrier store'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: transit card renders its full content',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Living'));
+    await tester.pumpAndSettle();
+    // The list row keeps the short title; the detail heading is the fuller one.
+    await tester.tap(find.text('Transit Card'));
+    await tester.pumpAndSettle();
+    expect(find.text('Buying & Recharging a Transit Card'), findsOneWidget);
+
+    expect(find.textContaining('Approx. 10'), findsOneWidget);
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    // Fixed template sections + the transit-specific ones, in order.
+    expect(find.text('Overview'), findsOneWidget);
+    expect(find.text('What to prepare'), findsOneWidget);
+    expect(find.text('How to buy one'), findsOneWidget);
+    expect(find.text('How to recharge'), findsOneWidget);
+    expect(find.text('How to use it'), findsOneWidget);
+    expect(find.text('Transfers'), findsOneWidget);
+    expect(find.text('Which card should I buy?'), findsOneWidget);
+    expect(find.text('Good to know'), findsOneWidget);
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    // The transfer warning card.
+    expect(
+      find.textContaining('tap your card when getting off the bus'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Guide detail: nearby-store link opens the map in-app',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Living'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Get a Mobile Plan'));
+    await tester.pumpAndSettle();
+
+    // Internal route (`/map?nearby=`) → stays in the app on the Map tab
+    // instead of launching a browser.
+    final link = find.text('Find a nearby carrier store');
+    await tester.scrollUntilVisible(link, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(link);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Map'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
@@ -90,10 +181,10 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Living → "Get a Mobile Plan" is still a coming-soon placeholder.
-    await tester.tap(find.text('Living'));
+    // Immigration → "Extend Period of Stay" is still a coming-soon placeholder.
+    await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Get a Mobile Plan'));
+    await tester.tap(find.text('Extend Period of Stay'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.

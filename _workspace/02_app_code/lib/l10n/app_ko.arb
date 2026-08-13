@@ -45,6 +45,10 @@
   "map_myLocation_failed": "내 위치를 가져오지 못했어요. 다시 시도해 주세요.",
   "map_myLocation_openSettings": "설정",
   "map_peek_viewDetail": "상세 보기",
+  "map_peek_openPlace": "카카오맵",
+  "map_nearby_resultCount": "주변 검색 결과 {count}곳",
+  "map_nearby_empty": "주변에서 검색 결과를 찾지 못했어요.",
+  "map_nearby_failed": "주변 장소를 검색하지 못했어요.",
 
   "list_appbar_title": "시설 목록",
   "list_empty_noResult": "검색/필터에 맞는 시설이 없어요.",
@@ -86,6 +90,8 @@
   "guide_meta_itemCount": "{count}건",
   "guide_list_empty_title": "이 카테고리의 안내가 준비 중이에요",
   "guide_list_error": "안내를 불러오지 못했어요.",
+
+  "guide_checklist_optional_title": "경우에 따라 필요할 수 있어요",
 
   "guide_section_overview": "개요",
   "guide_section_checklist": "준비물",

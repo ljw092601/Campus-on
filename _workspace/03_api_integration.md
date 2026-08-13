@@ -56,9 +56,15 @@ Two top-level collections, **document id == entity id** (so `getById(id)` is a d
 | `title_ko` / `title_en` | string | ✅ | |
 | `summary_ko` / `summary_en` | string | – | 1-line list summary |
 | `relatedFacilityIds` | array\<string\> | – | deep-link `/map?focus=<ids>` |
+| `icon` | string | – | Material Symbols name overriding the category icon in list rows (`sim_card`, `account_balance`, …); unknown names fall back to the category icon |
+| `checklist_optional_ko` / `_en` | array\<string\> | – | second checklist group ("경우에 따라 필요할 수 있어요") |
+| `detail_title_ko` / `_en` | string | – | fuller heading for the detail screen when the list row should stay short; falls back to `title_*` |
+| `sections` | array\<object\> | – | item-specific sections rendered after `steps`: `{title_ko,title_en,icon,body_ko,body_en,steps_ko[],steps_en[],notes:[{title_ko,title_en,lines_ko[],lines_en[]}],notice_ko,notice_en}` — `steps_*` draw the same numbered circles as the main steps section |
 | `status` | string | – | `published` \| `comingSoon` (default `comingSoon`) |
 | `updatedAt` | timestamp | – | |
 | _week-3 fields_ | | | `overview_*`, `checklist_*[]`, `steps_*[]`, `links[]`, `meta{}` — reserved by UX §8, added on the SAME docs later; today's mapper ignores unknown fields |
+
+> `links[]` entries also accept `description_ko`/`description_en` (rendered as the row subtitle) and an optional `icon` (same name lookup as the item-level `icon`). A `url` starting with `/` is treated as an in-app route rather than an external page — e.g. `/map?nearby=편의점,지하철역` opens S2 and pins those search results.
 
 ### Indexes
 **None required for week 2.** All reads are whole-collection `get()` or single-doc `get()` — served by the automatic single-field index. No composite index, no `where`/`orderBy`. (If week-3 moves search server-side, add composite indexes then.)

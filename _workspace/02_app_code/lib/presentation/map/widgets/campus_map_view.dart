@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_map_plugin/kakao_map_plugin.dart' as kakao;
 
 import '../../../core/config/app_config.dart';
 import '../../../domain/entities/facility.dart';
+import '../../../domain/entities/nearby_place.dart';
 import '../../../domain/entities/user_location.dart';
 import 'marker_icons.dart';
 
@@ -24,6 +26,12 @@ import 'marker_icons.dart';
 ///    NEW [UserLocation] instance recenters the camera (instance identity marks
 ///    a fresh GPS fix); a map drag reports [onUserPan] so the screen can drop
 ///    follow mode, exactly like native map apps.
+///  - [placeQueries] (non-empty) runs a Kakao keyword search around the campus
+///    center once the map is ready — off-campus POIs such as carrier stores.
+///    Results are converted to [NearbyPlace] here (the plugin's model never
+///    leaves this file), reported via [onPlacesFound], and drawn with the
+///    "etc" pin; their marker ids carry the [NearbyPlace.markerPrefix] so the
+///    screen can tell a store tap from a facility tap.
 ///  - [headingStream] (compass, degrees from north) rotates a direction cone
 ///    around the dot. Updates bypass Flutter rebuilds entirely: they are
 ///    throttled and applied straight to the overlay's DOM node, because compass
@@ -40,6 +48,10 @@ class CampusMapView extends StatefulWidget {
     this.following = false,
     this.onUserPan,
     this.headingStream,
+    this.placeQueries = const [],
+    this.places = const [],
+    this.onPlacesFound,
+    this.onPlacesFailed,
   });
 
   final List<Facility> facilities;
@@ -50,6 +62,14 @@ class CampusMapView extends StatefulWidget {
   final bool following;
   final VoidCallback? onUserPan;
   final Stream<double>? headingStream;
+
+  /// Keyword searches to run once the map is ready (e.g. carrier store names).
+  final List<String> placeQueries;
+
+  /// Places to draw. Owned by the screen; fed back from [onPlacesFound].
+  final List<NearbyPlace> places;
+  final ValueChanged<List<NearbyPlace>>? onPlacesFound;
+  final VoidCallback? onPlacesFailed;
 
   @override
   State<CampusMapView> createState() => _CampusMapViewState();
@@ -85,6 +105,15 @@ class _CampusMapViewState extends State<CampusMapView> {
   void didUpdateWidget(covariant CampusMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
     _syncHeadingSubscription(oldWidget.headingStream);
+
+    // New search terms → search again; new results → frame them. (The plugin
+    // syncs the marker list itself from the `markers` param on update.)
+    if (!listEquals(oldWidget.placeQueries, widget.placeQueries)) {
+      _runPlaceSearch();
+    }
+    if (oldWidget.places.length != widget.places.length) {
+      _fitPlaces();
+    }
 
     // Follow mode: recenter on every fresh GPS fix (new instance) and at the
     // moment follow is (re-)enabled. The dot/halo themselves are synced by the
@@ -224,7 +253,103 @@ class _CampusMapViewState extends State<CampusMapView> {
             // Selected marker draws above its neighbours.
             zIndex: f.id == widget.selectedId ? 10 : 0,
           ),
+        // Off-campus search results share the pin set — "etc" keeps them
+        // visually distinct from every curated campus category.
+        for (final p in widget.places)
+          kakao.Marker(
+            markerId: p.markerId,
+            latLng: kakao.LatLng(p.lat, p.lng),
+            icon: icons[FacilityCategory.etc],
+            width: CategoryMarkerIcons.width,
+            height: CategoryMarkerIcons.height,
+            offsetX: CategoryMarkerIcons.offsetX,
+            offsetY: CategoryMarkerIcons.offsetY,
+            zIndex: p.markerId == widget.selectedId ? 10 : 0,
+          ),
       ];
+
+  // ── Keyword search (off-campus places) ────────────────────────────────────
+
+  /// Runs every query around the campus center and reports the merged result.
+  ///
+  /// One search per keyword (the JS SDK takes a single keyword per call) with
+  /// the responses de-duplicated by place id, since "SKT 대리점" and
+  /// "KT 대리점" can both match a multi-carrier shop.
+  Future<void> _runPlaceSearch() async {
+    final controller = _controller;
+    final queries = widget.placeQueries;
+    if (controller == null || queries.isEmpty) return;
+
+    final found = <String, NearbyPlace>{};
+    var failed = false;
+    for (final keyword in queries) {
+      try {
+        final res = await controller.keywordSearch(
+          kakao.KeywordSearchRequest(
+            keyword: keyword,
+            x: AppConfig.campusCenterLng,
+            y: AppConfig.campusCenterLat,
+            radius: _placeSearchRadiusMeters,
+            size: 15,
+            sort: kakao.SortBy.distance,
+          ),
+        );
+        for (final a in res.list) {
+          final place = _toPlace(a);
+          if (place != null) found[place.id] = place;
+        }
+      } catch (_) {
+        // A single failed keyword shouldn't drop the others (the search runs
+        // through the WebView bridge, which can reject while the page settles).
+        failed = true;
+      }
+    }
+    if (!mounted) return;
+    if (found.isEmpty && failed) {
+      widget.onPlacesFailed?.call();
+      return;
+    }
+    final places = found.values.toList()
+      ..sort((a, b) =>
+          (a.distanceMeters ?? 1 << 30).compareTo(b.distanceMeters ?? 1 << 30));
+    widget.onPlacesFound?.call(places);
+  }
+
+  /// Kakao returns every field as a string; a row without usable coordinates
+  /// can't be pinned, so it is dropped rather than guessed at.
+  NearbyPlace? _toPlace(kakao.KeywordAddress a) {
+    final lat = double.tryParse(a.y ?? '');
+    final lng = double.tryParse(a.x ?? '');
+    final id = a.id;
+    if (lat == null || lng == null || id == null || id.isEmpty) return null;
+    return NearbyPlace(
+      id: id,
+      name: (a.placeName ?? '').trim(),
+      lat: lat,
+      lng: lng,
+      address: a.addressName,
+      roadAddress: a.roadAddressName,
+      phone: a.phone,
+      placeUrl: a.placeUrl,
+      distanceMeters: double.tryParse(a.distance ?? '')?.round(),
+    );
+  }
+
+  /// Wide enough to reach the shopping streets around campus, small enough
+  /// that results stay walkable.
+  static const int _placeSearchRadiusMeters = 5000;
+
+  void _fitPlaces() {
+    final controller = _controller;
+    if (controller == null || widget.places.isEmpty) return;
+    // Keep the campus in frame alongside the stores so the user keeps their
+    // bearings; a single result just recenters.
+    final targets = [
+      kakao.LatLng(AppConfig.campusCenterLat, AppConfig.campusCenterLng),
+      for (final p in widget.places) kakao.LatLng(p.lat, p.lng),
+    ];
+    controller.fitBounds(targets);
+  }
 
   kakao.LatLng get _center {
     if (widget.facilities.isNotEmpty) {
@@ -277,6 +402,7 @@ class _CampusMapViewState extends State<CampusMapView> {
               controller.addCustomOverlay(customOverlays: _userOverlays());
             }
             _applyFocus();
+            _runPlaceSearch();
           },
           onMarkerTap: (markerId, latLng, zoomLevel) {
             widget.onMarkerTap(markerId);

@@ -9,7 +9,8 @@ import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/locale_provider.dart';
 
-/// Reusable guide row (UX doc §4.5 ListItem, guide variant): category icon+color,
+/// Reusable guide row (UX doc §4.5 ListItem, guide variant): item/category icon
+/// in the category color,
 /// title, one-line summary, trailing favorite star. Shared by S6 and S10.
 class GuideListItem extends ConsumerWidget {
   const GuideListItem({super.key, required this.item, required this.onTap});
@@ -33,7 +34,7 @@ class GuideListItem extends ConsumerWidget {
       onTap: onTap,
       leading: CircleAvatar(
         backgroundColor: color.withValues(alpha: 0.15),
-        child: Icon(item.categoryId.icon, color: color),
+        child: Icon(item.icon, color: color),
       ),
       title: Text(item.title(locale),
           maxLines: 1, overflow: TextOverflow.ellipsis),

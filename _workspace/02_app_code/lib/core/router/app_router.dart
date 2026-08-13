@@ -24,6 +24,8 @@ import '../../presentation/shell/app_shell.dart';
 ///
 /// Deep link contract (UX doc §3): `/map?focus=<id1>,<id2>,...` focuses those
 /// markers, fitBounds, and auto-opens the first marker's Peek sheet.
+/// `/map?nearby=<keyword1>,<keyword2>,...` searches those keywords around
+/// campus and pins the off-campus results (e.g. carrier stores from a guide).
 class AppRouter {
   AppRouter._();
 
@@ -55,7 +57,15 @@ class AppRouter {
                   final ids = (focus == null || focus.isEmpty)
                       ? const <String>[]
                       : focus.split(',');
-                  return MapScreen(focusIds: ids);
+                  final nearby = state.uri.queryParameters['nearby'];
+                  final queries = (nearby == null || nearby.trim().isEmpty)
+                      ? const <String>[]
+                      : nearby
+                          .split(',')
+                          .map((e) => e.trim())
+                          .where((e) => e.isNotEmpty)
+                          .toList();
+                  return MapScreen(focusIds: ids, nearbyQueries: queries);
                 },
                 routes: [
                   GoRoute(

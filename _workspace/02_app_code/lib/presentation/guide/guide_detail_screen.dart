@@ -82,6 +82,7 @@ class _DetailBody extends ConsumerWidget {
 
     final overview = item.overview(locale);
     final checklist = item.checklist(locale);
+    final checklistOptional = item.checklistOptional(locale);
     final checklistNote = item.checklistNote(locale);
     final steps = item.steps(locale);
     final tips = item.tips(locale);
@@ -97,7 +98,7 @@ class _DetailBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.title(locale),
+              Text(item.detailTitle(locale),
                   style: Theme.of(context).textTheme.headlineSmall),
               SizedBox(height: d.spaceSm),
               _MetaRow(item: item, color: accent),
@@ -122,7 +123,7 @@ class _DetailBody extends ConsumerWidget {
               child:
                   Text(overview, style: Theme.of(context).textTheme.bodyLarge),
             ),
-          if (checklist.isNotEmpty)
+          if (checklist.isNotEmpty || checklistOptional.isNotEmpty)
             _Section(
               title: l.guide_section_checklist,
               icon: Symbols.checklist,
@@ -131,6 +132,14 @@ class _DetailBody extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (final c in checklist) _ChecklistRow(text: c),
+                  // Second group — only some applicants are asked for these.
+                  if (checklistOptional.isNotEmpty) ...[
+                    SizedBox(height: d.spaceMd),
+                    _NoteTitle(
+                        text: l.guide_checklist_optional_title, color: accent),
+                    SizedBox(height: d.spaceXs),
+                    for (final c in checklistOptional) _ChecklistRow(text: c),
+                  ],
                   if (checklistNote != null) ...[
                     SizedBox(height: d.spaceSm),
                     Text(
@@ -157,6 +166,10 @@ class _DetailBody extends ConsumerWidget {
                 ],
               ),
             ),
+          // Item-specific sections (e.g. prepaid vs. postpaid mobile plans) —
+          // same section card, title/icon carried by the content itself.
+          for (final s in item.sections)
+            _ExtraSection(section: s, accent: accent, locale: locale),
           if (tips.isNotEmpty)
             _Section(
               title: l.guide_section_tips,
@@ -319,6 +332,109 @@ class _Section extends StatelessWidget {
   }
 }
 
+/// One item-specific [GuideSection], rendered with the shared [_Section] card:
+/// optional lead paragraph → titled note blocks (bullet lines) → notice card.
+class _ExtraSection extends StatelessWidget {
+  const _ExtraSection({
+    required this.section,
+    required this.accent,
+    required this.locale,
+  });
+
+  final GuideSection section;
+  final Color accent;
+  final Locale locale;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = context.dimens;
+    final body = section.body(locale);
+    final steps = section.steps(locale);
+    final notice = section.notice(locale);
+    // Anything above the first note needs a gap before it.
+    final hasLead = body != null || steps.isNotEmpty;
+
+    return _Section(
+      title: section.title(locale),
+      icon: guideIconFromName(section.iconName) ?? Symbols.info,
+      accent: accent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (body != null)
+            Text(body, style: Theme.of(context).textTheme.bodyLarge),
+          if (steps.isNotEmpty) ...[
+            if (body != null) SizedBox(height: d.spaceMd),
+            for (var i = 0; i < steps.length; i++)
+              _StepRow(index: i + 1, text: steps[i], color: accent),
+          ],
+          for (var i = 0; i < section.notes.length; i++) ...[
+            if (hasLead || i > 0) SizedBox(height: d.spaceMd),
+            _NoteTitle(text: section.notes[i].title(locale), color: accent),
+            SizedBox(height: d.spaceXs),
+            for (final line in section.notes[i].lines(locale))
+              _TipRow(text: line, color: accent),
+          ],
+          if (notice != null) ...[
+            SizedBox(height: d.spaceMd),
+            _NoticeCard(text: notice, color: accent),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Small heading inside a section card (e.g. "추천 대상", "You may also need").
+class _NoteTitle extends StatelessWidget {
+  const _NoteTitle({required this.text, required this.color});
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Text(
+        text,
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge
+            ?.copyWith(color: color, fontWeight: FontWeight.w600),
+      );
+}
+
+/// Caveat card closing a section — same tinted-container treatment as
+/// [_PhraseCard], with a warning glyph so it doesn't rely on color alone.
+class _NoticeCard extends StatelessWidget {
+  const _NoticeCard({required this.text, required this.color});
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = context.dimens;
+    return Container(
+      padding: EdgeInsets.all(d.spaceMd),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.10),
+        borderRadius: d.brSm,
+        border: Border.all(color: color.withValues(alpha: 0.30)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Symbols.warning, size: 20, color: color),
+          SizedBox(width: d.spaceSm),
+          Expanded(
+            child: Text(text,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// Bullet row for the "good to know" section.
 class _TipRow extends StatelessWidget {
   const _TipRow({required this.text, required this.color});
@@ -470,7 +586,12 @@ class _LinkRow extends StatelessWidget {
   const _LinkRow({required this.link});
   final GuideLink link;
 
-  Future<void> _open() async {
+  /// A url starting with `/` is an in-app route (e.g. the map with a nearby
+  /// search), so it navigates instead of leaving the app. Everything else is
+  /// an external page and opens in the browser as before.
+  bool get _isInternal => link.url.startsWith('/');
+
+  Future<void> _openExternal() async {
     final uri = Uri.tryParse(link.url);
     if (uri == null) return;
     if (await canLaunchUrl(uri)) {
@@ -483,17 +604,28 @@ class _LinkRow extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context);
     final scheme = Theme.of(context).colorScheme;
+    final description = link.description(locale);
     return ListTile(
       contentPadding: EdgeInsets.zero,
       horizontalTitleGap: context.dimens.spaceSm,
-      leading: Icon(Symbols.link, color: scheme.primary),
+      leading: Icon(guideIconFromName(link.iconName) ?? Symbols.link,
+          color: scheme.primary),
       title: Text(link.label(locale)),
-      trailing: Tooltip(
-        message: l.guide_link_external,
-        child: Icon(Symbols.open_in_new,
-            size: 18, color: scheme.onSurfaceVariant),
-      ),
-      onTap: _open,
+      subtitle: description == null
+          ? null
+          : Text(description,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: scheme.onSurfaceVariant)),
+      trailing: _isInternal
+          ? Icon(Symbols.chevron_right, color: scheme.onSurfaceVariant)
+          : Tooltip(
+              message: l.guide_link_external,
+              child: Icon(Symbols.open_in_new,
+                  size: 18, color: scheme.onSurfaceVariant),
+            ),
+      onTap: _isInternal ? () => context.go(link.url) : _openExternal,
     );
   }
 }
