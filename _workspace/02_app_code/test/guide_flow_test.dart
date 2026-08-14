@@ -151,6 +151,50 @@ void main() {
     );
   });
 
+  testWidgets('Guide detail: stay extension renders its sections in order',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Immigration & Stay'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Extension of Stay'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    // "When should I apply?" is a topSection — it must sit above the checklist.
+    final whenY = tester.getTopLeft(find.text('When should I apply?')).dy;
+    final prepareY = tester.getTopLeft(find.text('What to prepare')).dy;
+    expect(whenY, lessThan(prepareY));
+
+    for (final title in const [
+      'Overview',
+      'How to apply',
+      'The documents differ from student to student',
+      'Good to know',
+      'Links & Locations',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    // Twice: the online-application section, and the link row of the same name.
+    expect(find.text('HiKorea e-Application'), findsNWidgets(2));
+
+    // Item-specific heading for the second checklist group.
+    expect(
+      find.text('You may also need these depending on your visa and situation'),
+      findsOneWidget,
+    );
+    // Expiry warning card.
+    expect(
+      find.textContaining('Apply before your current stay period expires'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('Guide detail: nearby-store link opens the map in-app',
       (tester) async {
     _useTallSurface(tester);
@@ -174,6 +218,68 @@ void main() {
     expect(find.widgetWithText(AppBar, 'Map'), findsOneWidget);
   });
 
+  testWidgets('Guide detail: visa types renders sections and in-app links',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Immigration & Stay'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Visa Types'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    // The two visa sections and the comparison sit above the checklist.
+    final compareY =
+        tester.getTopLeft(find.text('D-2 vs. D-4 at a glance')).dy;
+    final prepareY = tester.getTopLeft(find.text('What to prepare')).dy;
+    expect(compareY, lessThan(prepareY));
+
+    for (final title in const [
+      'Overview',
+      'D-2 Student Visa',
+      'D-4 General Training Visa',
+      'How applying for a visa usually works',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // The one-line takeaway of the comparison, and a section footnote.
+    expect(find.textContaining('Degree program → D-2'), findsOneWidget);
+    expect(
+      find.textContaining('There are other D-2 sub-types as well'),
+      findsOneWidget,
+    );
+
+    // The tail of the page (past the viewport even on the tall test surface).
+    for (final title in const [
+      'Good to know',
+      'Check your exact visa status',
+      'Links & Locations',
+    ]) {
+      await tester.scrollUntilVisible(find.text(title), 400);
+      await tester.pumpAndSettle();
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // `/guide/item/...` is internal, so it opens the ARC guide in-app.
+    final arcLink = find.text('Guide — Alien Registration Card (ARC)');
+    await tester.scrollUntilVisible(arcLink, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(arcLink);
+    await tester.pumpAndSettle();
+    expect(find.text('Alien Registration Card (ARC)'), findsWidgets);
+
+    // Drain the ARC page's related-location lookup (mock repo delay) so no
+    // timer outlives the widget tree.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
@@ -181,10 +287,10 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Immigration → "Extend Period of Stay" is still a coming-soon placeholder.
-    await tester.tap(find.text('Immigration & Stay'));
+    // Housing → "Dormitory Application" is still a coming-soon placeholder.
+    await tester.tap(find.text('Housing'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Extend Period of Stay'));
+    await tester.tap(find.text('Dormitory Application'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.

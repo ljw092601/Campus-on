@@ -123,6 +123,10 @@ class _DetailBody extends ConsumerWidget {
               child:
                   Text(overview, style: Theme.of(context).textTheme.bodyLarge),
             ),
+          // Sections that must precede the checklist (e.g. "when should I
+          // apply?"), same card as the item-specific ones below the steps.
+          for (final s in item.topSections)
+            _ExtraSection(section: s, accent: accent, locale: locale),
           if (checklist.isNotEmpty || checklistOptional.isNotEmpty)
             _Section(
               title: l.guide_section_checklist,
@@ -136,7 +140,9 @@ class _DetailBody extends ConsumerWidget {
                   if (checklistOptional.isNotEmpty) ...[
                     SizedBox(height: d.spaceMd),
                     _NoteTitle(
-                        text: l.guide_checklist_optional_title, color: accent),
+                        text: item.checklistOptionalTitle(locale) ??
+                            l.guide_checklist_optional_title,
+                        color: accent),
                     SizedBox(height: d.spaceXs),
                     for (final c in checklistOptional) _ChecklistRow(text: c),
                   ],
@@ -351,6 +357,7 @@ class _ExtraSection extends StatelessWidget {
     final body = section.body(locale);
     final steps = section.steps(locale);
     final notice = section.notice(locale);
+    final footnote = section.footnote(locale);
     // Anything above the first note needs a gap before it.
     final hasLead = body != null || steps.isNotEmpty;
 
@@ -377,7 +384,21 @@ class _ExtraSection extends StatelessWidget {
           ],
           if (notice != null) ...[
             SizedBox(height: d.spaceMd),
-            _NoticeCard(text: notice, color: accent),
+            _NoticeCard(
+              text: notice,
+              color: accent,
+              icon: guideIconFromName(section.noticeIconName),
+            ),
+          ],
+          if (footnote != null) ...[
+            SizedBox(height: d.spaceSm),
+            Text(
+              footnote,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    height: 1.45,
+                  ),
+            ),
           ],
         ],
       ),
@@ -404,9 +425,12 @@ class _NoteTitle extends StatelessWidget {
 /// Caveat card closing a section — same tinted-container treatment as
 /// [_PhraseCard], with a warning glyph so it doesn't rely on color alone.
 class _NoticeCard extends StatelessWidget {
-  const _NoticeCard({required this.text, required this.color});
+  const _NoticeCard({required this.text, required this.color, this.icon});
   final String text;
   final Color color;
+
+  /// Defaults to the warning sign; informative cards pass their own glyph.
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +445,7 @@ class _NoticeCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Symbols.warning, size: 20, color: color),
+          Icon(icon ?? Symbols.warning, size: 20, color: color),
           SizedBox(width: d.spaceSm),
           Expanded(
             child: Text(text,

@@ -138,9 +138,239 @@ class MockData {
       id: 'stay-extension',
       categoryId: GuideCategory.immigration,
       titleKo: '체류기간 연장',
-      titleEn: 'Extend Period of Stay',
-      summaryKo: '만료 4개월 전부터 신청 가능',
-      summaryEn: 'Apply from 4 months before expiry',
+      titleEn: 'Extension of Stay',
+      summaryKo: '신청 시기 · 준비서류 · 연장 방법',
+      summaryEn: 'When to apply, required documents & process',
+      iconName: 'event_repeat',
+      overviewKo: '현재 허가받은 체류기간을 넘어서 한국에 계속 머무르려면 체류기간이 끝나기 전에 '
+          '체류기간 연장 허가를 받아야 합니다.\n\n'
+          '유학생은 본인의 체류자격(D-2, D-4 등)과 개인 상황에 따라 필요한 서류와 연장 가능 '
+          '기간이 달라질 수 있습니다.\n\n'
+          '체류기간이 만료되기 전에 필요한 서류와 신청 방법을 미리 확인하는 것이 중요합니다.',
+      overviewEn: 'To keep living in Korea beyond the stay period you were '
+          'granted, you need an extension of stay — and you have to get it '
+          'before the current period ends.\n\n'
+          'For students, the documents you need and how long you can extend for '
+          'depend on your status of stay (D-2, D-4, and so on) and on your own '
+          'situation.\n\n'
+          'Check what you need and how to apply well before your stay period '
+          'expires.',
+      // Placed above the checklist: what you have to know first is the window
+      // you can apply in, not the paperwork.
+      topSections: [
+        GuideSection(
+          titleKo: '언제 신청해야 하나요?',
+          titleEn: 'When should I apply?',
+          iconName: 'event_repeat',
+          bodyKo: '체류기간 연장은 현재 체류기간 만료 4개월 전부터 만료일까지 신청할 수 '
+              '있습니다.\n\n'
+              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고 여유 있게 준비하세요.',
+          bodyEn: 'You can apply from four months before your current stay '
+              'period expires, up to the expiry date itself.\n\n'
+              'Check the expiry date printed on your Residence Card (ARC) and '
+              'give yourself plenty of time to get ready.',
+          noticeKo: '체류기간 만료 전에 신청하세요.\n'
+              '체류기간이 만료된 뒤 연장을 신청하면 범칙금 등 불이익이 발생할 수 있습니다.',
+          noticeEn: 'Apply before your current stay period expires.\n'
+              'Applying after the expiry date can result in a fine and other '
+              'penalties.',
+        ),
+      ],
+      checklistKo: [
+        '여권',
+        '외국인등록증(Residence Card / ARC)',
+        '체류기간 연장허가 신청서',
+        '수수료',
+      ],
+      checklistEn: [
+        'Passport',
+        'Residence Card (ARC)',
+        'Application form for extension of stay',
+        'The application fee',
+      ],
+      checklistOptionalTitleKo: '체류자격과 상황에 따라 필요할 수 있어요',
+      checklistOptionalTitleEn: 'You may also need these depending on your visa '
+          'and situation',
+      checklistOptionalKo: [
+        '재학증명서',
+        '성적증명서',
+        '등록금 납입 관련 증명서',
+        '체류지 입증서류',
+        '재정능력 입증서류',
+        '기타 체류자격별 추가서류',
+      ],
+      checklistOptionalEn: [
+        'Certificate of enrollment',
+        'Academic transcript',
+        'Proof of tuition payment',
+        'Proof of where you live in Korea',
+        'Proof that you can support yourself financially',
+        'Any other document your status of stay calls for',
+      ],
+      checklistNoteKo: '※ 필요한 서류는 D-2, D-4 등 체류자격과 개인 상황에 따라 달라질 수 '
+          '있습니다. 신청 전에 HiKorea 또는 학교 국제교류 관련 부서에서 최신 서류를 확인하세요.',
+      checklistNoteEn: '※ Which documents you need depends on your status of '
+          'stay (D-2, D-4, and so on) and on your own situation. Check the '
+          'current list on HiKorea, or with your university\'s international '
+          'office, before you apply.',
+      sections: [
+        GuideSection(
+          titleKo: '신청 방법',
+          titleEn: 'How to apply',
+          iconName: 'format_list_numbered',
+          stepsKo: [
+            '외국인등록증에서 체류기간 만료일 확인',
+            '본인의 체류자격(D-2 / D-4 등) 확인',
+            'HiKorea 또는 학교에서 필요한 서류 확인',
+            '필요한 서류 준비',
+            'HiKorea 전자민원 또는 관할 출입국·외국인관서에서 신청',
+            '심사 진행 및 결과 확인',
+            '연장된 체류기간 확인',
+          ],
+          stepsEn: [
+            'Check the expiry date on your Residence Card',
+            'Check your status of stay (D-2, D-4, etc.)',
+            'Check the required documents on HiKorea or with your school',
+            'Get those documents ready',
+            'Apply on HiKorea e-Application or at your immigration office',
+            'Wait for the review and check the result',
+            'Confirm your new stay period',
+          ],
+        ),
+        GuideSection(
+          titleKo: 'HiKorea 전자민원',
+          titleEn: 'HiKorea e-Application',
+          iconName: 'computer',
+          bodyKo: '일부 체류기간 연장 업무는 HiKorea 전자민원을 통해 온라인으로 신청할 수 '
+              '있습니다.',
+          bodyEn: 'Some extension-of-stay applications can be submitted online '
+              'through HiKorea e-Application.',
+          noticeKo: '온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 '
+              '있으므로 신청 전에 확인하세요.',
+          noticeEn: 'Whether you can apply online — and which documents you have '
+              'to submit — depends on your status of stay and your situation, so '
+              'check before you start.',
+        ),
+        GuideSection(
+          titleKo: '서류는 학생마다 다를 수 있습니다',
+          titleEn: 'The documents differ from student to student',
+          iconName: 'help',
+          bodyKo: '인터넷에 있는 다른 학생의 준비서류를 그대로 따라가기보다 본인의 체류자격과 '
+              '현재 상황에 맞는 서류를 확인하세요.',
+          bodyEn: "Rather than copying another student's document list from the "
+              'internet, check what your own status of stay and current '
+              'situation actually require.',
+          // 1345 is shown as text: the app has no tel: launch path yet, and this
+          // guide is not the place to add one.
+          noticeKo: '최신 정보는 HiKorea 또는 외국인종합안내센터 1345에서 확인할 수 있습니다.',
+          noticeEn: 'For the latest information, check HiKorea or call the '
+              'Immigration Contact Center at 1345.',
+        ),
+        GuideSection(
+          titleKo: '알아두면 좋은 점',
+          titleEn: 'Good to know',
+          iconName: 'lightbulb',
+          notes: [
+            GuideNote(
+              titleKo: '📅 미리 준비하세요',
+              titleEn: '📅 Start early',
+              linesKo: [
+                '체류기간 만료 직전에 준비하기보다 미리 필요한 서류를 확인하고 신청하는 것이 '
+                    '좋습니다.',
+              ],
+              linesEn: [
+                'Check the documents and apply ahead of time rather than right '
+                    'before your stay period ends.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🏠 주소가 바뀌었다면 확인하세요',
+              titleEn: '🏠 If your address has changed',
+              linesKo: [
+                '한국에서 체류지가 변경되었다면 체류지 변경 신고가 필요한지 확인하세요.',
+                '체류기간 연장 과정에서 현재 체류지를 증명하는 서류가 필요할 수 있습니다.',
+              ],
+              linesEn: [
+                'If you have moved within Korea, check whether you need to '
+                    'report the change of address.',
+                'You may be asked for a document proving where you currently '
+                    'live.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '✈️ 해외 출국 계획이 있다면 확인하세요',
+              titleEn: '✈️ If you are planning to travel abroad',
+              linesKo: [
+                '체류기간 연장 신청 전후로 해외 출국 계획이 있다면 출입국·외국인관서 또는 '
+                    '외국인종합안내센터에서 절차를 미리 확인하는 것이 좋습니다.',
+              ],
+              linesEn: [
+                'If you plan to leave Korea around the time you apply, check the '
+                    'procedure in advance with your immigration office or the '
+                    'Immigration Contact Center.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🎓 D-2 / D-4라도 조건이 같지 않아요',
+              titleEn: '🎓 D-2 and D-4 are not the same',
+              linesKo: [
+                '같은 유학생이라도 학위과정, 어학연수, 체류자격 세부 유형에 따라 연장 조건과 '
+                    '필요서류가 달라질 수 있습니다.',
+              ],
+              linesEn: [
+                'Even among students, the conditions and documents can differ '
+                    'between degree programs, language courses, and the '
+                    'sub-types of each status.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🪪 연장 후 체류기간 확인',
+              titleEn: '🪪 Check your new stay period',
+              linesKo: [
+                '연장 허가가 완료되면 변경된 체류기간이 정상적으로 반영되었는지 확인하세요.',
+              ],
+              linesEn: [
+                'Once the extension is granted, make sure the new stay period is '
+                    'reflected correctly.',
+              ],
+            ),
+          ],
+        ),
+      ],
+      links: [
+        // Official 출입국/체류안내 → 체류기간연장 → 체류기간연장허가 절차/방법 page: the
+        // 4-months-before window, the fine after expiry, and where to apply.
+        GuideLink(
+          labelKo: 'HiKorea 체류기간 연장 안내',
+          labelEn: 'HiKorea — extension of stay',
+          descriptionKo: '신청 시기 · 절차 · 체류자격별 안내',
+          descriptionEn: 'When to apply, the procedure, and per-status guidance',
+          url: 'https://www.hikorea.go.kr/info/InfoDatail.pt'
+              '?CAT_SEQ=181&PARENT_ID=140',
+        ),
+        GuideLink(
+          labelKo: 'HiKorea 전자민원',
+          labelEn: 'HiKorea e-Application',
+          descriptionKo: '온라인 민원 신청',
+          descriptionEn: 'Apply online',
+          url: 'https://www.hikorea.go.kr/cvlappl/CvlapplInfoPageR.pt',
+          iconName: 'computer',
+        ),
+        // Study in Korea (NIIED, Ministry of Education); anchored at the
+        // stay-extension block of the residence & stay page.
+        GuideLink(
+          labelKo: 'Study in Korea 체류 안내',
+          labelEn: 'Study in Korea — residence & stay',
+          descriptionKo: '유학생 비자 · 체류기간 관련 정보',
+          descriptionEn: 'Visa and stay information for international students',
+          url: 'https://www.studyinkorea.go.kr/eng/life/residenceAndStayInfo.do'
+              '#stay-extension',
+        ),
+      ],
+      durationKo: '서류 준비 + 심사 기간 별도',
+      durationEn: 'Document prep + review time',
+      difficulty: 2,
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'visa-types',
@@ -149,6 +379,345 @@ class MockData {
       titleEn: 'Visa Types',
       summaryKo: 'D-2 / D-4 차이',
       summaryEn: 'D-2 vs. D-4',
+      overviewKo: '한국에서 공부하려는 외국인 학생은 본인의 학업 형태에 맞는 체류자격과 비자를 '
+          '준비해야 합니다.\n\n'
+          '동아대학교 외국인 학생에게 가장 관련이 큰 체류자격은 유학(D-2)과 일반연수(D-4)입니다.\n\n'
+          'D-2는 주로 학위과정과 교환학생 과정에 참여하는 학생에게, D-4는 한국어연수 등 비학위 '
+          '연수과정에 참여하는 학생에게 해당합니다.',
+      overviewEn: 'To study in Korea you need the status of stay — and the visa '
+          'that goes with it — that matches the kind of study you will be '
+          'doing.\n\n'
+          'For international students at Dong-A University the two that matter '
+          'most are Study Abroad (D-2) and General Training (D-4).\n\n'
+          'D-2 is generally for students on a degree or exchange program; D-4 is '
+          'for students on a non-degree course such as Korean language training.',
+      // The two visa types and the comparison have to land before the document
+      // checklist — which of the two you are decides what you prepare.
+      topSections: [
+        GuideSection(
+          titleKo: 'D-2 유학 비자',
+          titleEn: 'D-2 Student Visa',
+          iconName: 'school',
+          bodyKo: 'D-2는 한국의 대학이나 대학원에서 정규 학위과정을 이수하거나 교환학생 등의 '
+              '유학 활동을 하는 학생을 위한 체류자격입니다.',
+          bodyEn: 'D-2 is the status of stay for students taking a formal degree '
+              'program at a Korean university or graduate school, or studying '
+              'here on an exchange program.',
+          notes: [
+            GuideNote(
+              titleKo: '대표적인 유형',
+              titleEn: 'Common sub-types',
+              linesKo: [
+                'D-2-2 — 학사과정',
+                'D-2-3 — 석사과정',
+                'D-2-4 — 박사과정',
+                'D-2-6 — 교환학생',
+              ],
+              linesEn: [
+                "D-2-2 — Bachelor's degree",
+                "D-2-3 — Master's degree",
+                'D-2-4 — Doctoral degree',
+                'D-2-6 — Exchange student',
+              ],
+            ),
+          ],
+          noticeKo: '이런 학생에게 해당해요\n'
+              '동아대학교 학부 · 대학원 · 교환학생 등 정규 교육과정에 참여하는 학생',
+          noticeEn: 'Who is this for?\n'
+              'Students on a formal Dong-A University program — undergraduate, '
+              'graduate, or exchange.',
+          noticeIconName: 'info',
+          footnoteKo: '이외에도 전문학사, 연구과정 등 다른 D-2 세부 유형이 있으며 실제 '
+              '체류자격은 입학 과정에 따라 달라질 수 있습니다.',
+          footnoteEn: 'There are other D-2 sub-types as well — associate degree '
+              'and research courses among them — and your actual status depends '
+              'on the program you were admitted to.',
+        ),
+        GuideSection(
+          titleKo: 'D-4 일반연수 비자',
+          titleEn: 'D-4 General Training Visa',
+          iconName: 'menu_book',
+          bodyKo: 'D-4는 정규 학위과정이 아닌 어학연수나 기타 연수과정에 참여하는 학생을 위한 '
+              '체류자격입니다.',
+          bodyEn: 'D-4 is the status of stay for students on a language course or '
+              'another training course rather than a formal degree program.',
+          notes: [
+            GuideNote(
+              titleKo: '대표적인 유형',
+              titleEn: 'Common sub-types',
+              linesKo: [
+                'D-4-1 — 한국어연수',
+                'D-4-2 — 외국어연수',
+              ],
+              linesEn: [
+                'D-4-1 — Korean language training',
+                'D-4-2 — Foreign language training',
+              ],
+            ),
+          ],
+          noticeKo: '이런 학생에게 해당해요\n'
+              '대학 부설 한국어교육기관 등에서 한국어 또는 기타 어학연수를 하는 학생',
+          noticeEn: 'Who is this for?\n'
+              'Students studying Korean or another language at a '
+              'university-affiliated language institute or similar.',
+          noticeIconName: 'info',
+          footnoteKo: 'D-4에도 여러 세부 유형이 있으므로 실제 비자 종류는 본인이 참여하는 '
+              '교육과정과 입학서류를 기준으로 확인하세요.',
+          footnoteEn: 'D-4 has several sub-types too, so check your actual visa '
+              'against the course you are joining and the documents your school '
+              'issued.',
+        ),
+        // Two stacked note blocks rather than a table — a side-by-side grid
+        // would either wrap badly or scroll horizontally at phone widths.
+        GuideSection(
+          titleKo: 'D-2 / D-4 비교',
+          titleEn: 'D-2 vs. D-4 at a glance',
+          iconName: 'compare_arrows',
+          notes: [
+            GuideNote(
+              titleKo: 'D-2',
+              titleEn: 'D-2',
+              linesKo: [
+                '학위과정 중심',
+                '학부 · 석사 · 박사',
+                '교환학생 등 포함',
+                '정규 교육과정',
+              ],
+              linesEn: [
+                'Built around degree programs',
+                "Bachelor's, master's, doctoral",
+                'Includes exchange students',
+                'Formal academic programs',
+              ],
+            ),
+            GuideNote(
+              titleKo: 'D-4',
+              titleEn: 'D-4',
+              linesKo: [
+                '비학위 연수과정 중심',
+                '대표적으로 한국어연수',
+                '어학연수 등',
+                '연수과정',
+              ],
+              linesEn: [
+                'Built around non-degree courses',
+                'Most commonly Korean language training',
+                'Language training and similar',
+                'Training courses',
+              ],
+            ),
+          ],
+          noticeKo: '정규 학위과정 → D-2\n'
+              '한국어 등 비학위 연수과정 → D-4',
+          noticeEn: 'Degree program → D-2\n'
+              'Non-degree training such as Korean language study → D-4',
+          noticeIconName: 'lightbulb',
+          footnoteKo: '실제 체류자격은 학교에서 발급받은 입학서류와 본인의 교육과정을 기준으로 '
+              '확인하세요.',
+          footnoteEn: 'Confirm your actual status against the admission documents '
+              'your school issued and the course you are really taking.',
+        ),
+        GuideSection(
+          titleKo: '비자 신청 기본 흐름',
+          titleEn: 'How applying for a visa usually works',
+          iconName: 'format_list_numbered',
+          stepsKo: [
+            '동아대학교 입학 또는 연수 허가',
+            '본인의 과정에 맞는 D-2 / D-4 확인',
+            '표준입학허가서 등 필요한 서류 준비',
+            '비자 신청에 필요한 추가서류 확인',
+            '대한민국 재외공관 등에서 비자 신청',
+            '비자 발급 결과 확인',
+            '비자 발급 후 한국 입국',
+          ],
+          stepsEn: [
+            'Get admission or training approval from Dong-A University',
+            'Check whether your course means D-2 or D-4',
+            'Prepare the Certificate of Admission and other documents',
+            'Check what extra documents the visa application needs',
+            'Apply at a Korean embassy or consulate',
+            'Check the result of your application',
+            'Enter Korea once the visa has been issued',
+          ],
+          noticeKo: '신청 방법과 필요서류는 국적, 세부 체류자격, 신청하는 재외공관에 따라 '
+              '달라질 수 있습니다.\n'
+              '위 흐름은 일반적인 순서이며, 신청 전에 해당 공관의 공식 안내를 확인하세요.',
+          noticeEn: 'How you apply, and what you have to submit, can differ by '
+              'nationality, by the exact status of stay, and by the mission you '
+              'apply to.\n'
+              'The steps above are the usual order — check the official guidance '
+              'of your own embassy or consulate before you apply.',
+        ),
+      ],
+      checklistKo: [
+        '여권',
+        '증명사진',
+        '표준입학허가서',
+        '재정능력 입증서류',
+      ],
+      checklistEn: [
+        'Passport',
+        'ID photo',
+        'Certificate of Admission',
+        'Proof that you can support yourself financially',
+      ],
+      checklistOptionalTitleKo: '체류자격과 상황에 따라 추가될 수 있어요',
+      checklistOptionalTitleEn: 'These may be added depending on your visa and '
+          'situation',
+      checklistOptionalKo: [
+        '최종학력 입증서류',
+        '재학 또는 학력 관련 증명서',
+        '연수계획서',
+        '가족관계 입증서류',
+        '결핵검사 관련 서류',
+        '기타 체류자격별 추가서류',
+      ],
+      checklistOptionalEn: [
+        'Proof of your highest level of education',
+        'Enrollment or academic certificates',
+        'A study or training plan',
+        'Proof of family relationship',
+        'Tuberculosis screening documents',
+        'Any other document your status of stay calls for',
+      ],
+      checklistNoteKo: '※ 실제 필요서류는 D-2 / D-4 세부 유형, 국적, 교육과정, 재외공관 '
+          '등에 따라 달라질 수 있습니다. 신청 전에 공식 안내를 확인하세요.',
+      checklistNoteEn: '※ The documents you actually need depend on your D-2 / '
+          'D-4 sub-type, your nationality, your course, and the mission you '
+          'apply to. Check the official guidance before you apply.',
+      sections: [
+        GuideSection(
+          titleKo: '알아두면 좋은 점',
+          titleEn: 'Good to know',
+          iconName: 'lightbulb',
+          notes: [
+            GuideNote(
+              titleKo: '🪪 비자와 외국인등록증은 달라요',
+              titleEn: '🪪 A visa is not a Residence Card',
+              linesKo: [
+                '비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.',
+                '한국에서 장기간 체류하는 학생은 입국 후 별도의 외국인등록 절차가 필요할 수 '
+                    '있습니다.',
+              ],
+              linesEn: [
+                'A visa and a Residence Card (ARC) are two different things.',
+                'If you are staying in Korea long term you may need to register '
+                    'as a foreign resident after you arrive.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💼 아르바이트는 자동으로 허용되지 않아요',
+              titleEn: '💼 Part-time work is not automatic',
+              linesKo: [
+                'D-2 또는 D-4 비자를 가지고 있다고 해서 자유롭게 아르바이트를 할 수 있는 '
+                    '것은 아닙니다.',
+                '학생의 체류자격과 조건에 따라 시간제취업 허가가 필요할 수 있습니다.',
+              ],
+              linesEn: [
+                'Holding a D-2 or D-4 visa does not by itself let you work part '
+                    'time.',
+                'Depending on your status and its conditions, you may need a '
+                    'part-time work permit first.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🔄 교육과정이 바뀌면 확인하세요',
+              titleEn: '🔄 If your course changes',
+              linesKo: [
+                '한국어연수에서 학부과정으로 진학하는 것처럼 학업 형태가 달라지면 현재 '
+                    '체류자격이 새로운 활동에 맞는지 확인해야 합니다.',
+                '체류자격 변경이 필요한지 HiKorea 또는 학교 국제교류 관련 부서에서 확인하세요.',
+              ],
+              linesEn: [
+                'If the kind of study changes — moving from a Korean language '
+                    'course into a degree program, say — check that your current '
+                    'status still fits what you will be doing.',
+                "Ask HiKorea or your university's international office whether "
+                    'you need to change your status of stay.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📅 체류기간도 확인하세요',
+              titleEn: '📅 Check your period of stay too',
+              linesKo: [
+                '비자를 발급받았더라도 한국에서 허가받은 체류기간을 확인하고, 계속 체류해야 '
+                    '한다면 만료 전에 연장 절차를 준비하세요.',
+              ],
+              linesEn: [
+                'Even once your visa is issued, check the stay period you were '
+                    'granted — and if you need to stay longer, start the '
+                    'extension before it expires.',
+              ],
+            ),
+          ],
+        ),
+        GuideSection(
+          titleKo: '내 비자를 정확히 확인하세요',
+          titleEn: 'Check your exact visa status',
+          iconName: 'help',
+          bodyKo: '친구나 다른 학생의 비자 종류를 기준으로 판단하지 말고 본인의 여권, '
+              '사증발급 내용, 외국인등록정보 또는 학교에서 받은 서류를 확인하세요.',
+          bodyEn: 'Do not go by what a friend or another student has. Check your '
+              'own passport, the visa that was issued to you, your '
+              'foreign-resident record, or the documents your school gave you.',
+          noticeKo: '세부 체류자격과 필요한 절차는 학생마다 다를 수 있습니다.',
+          noticeEn: 'The exact status of stay — and the steps that go with it — '
+              'can differ from student to student.',
+        ),
+      ],
+      links: [
+        // Study in Korea (NIIED, Ministry of Education) — "학생비자 및 체류자격";
+        // names the same D-2/D-4 sub-types listed above.
+        GuideLink(
+          labelKo: 'Study in Korea 비자 · 체류 안내',
+          labelEn: 'Study in Korea — student visa & stay',
+          descriptionKo: 'D-2 · D-4 종류와 유학생 체류정보',
+          descriptionEn: 'D-2 and D-4 types, plus stay information for students',
+          url: 'https://www.studyinkorea.go.kr/eng/plan/visaAndStay.do',
+        ),
+        // Korea Visa Portal (법무부) — the Visa Navigator, which filters visa
+        // types by purpose of entry and length of stay.
+        GuideLink(
+          labelKo: 'Korea Visa Portal',
+          labelEn: 'Korea Visa Portal',
+          descriptionKo: '대한민국 비자 공식 정보 · 비자 내비게이터',
+          descriptionEn: 'Official Korean visa information & Visa Navigator',
+          url: 'https://www.visa.go.kr/openPage.do?MENU_ID=10101',
+        ),
+        // HiKorea 출입국/체류안내 → 사증(VISA): what a visa is, how it is issued,
+        // fees, and the per-status issuance manual.
+        GuideLink(
+          labelKo: 'HiKorea 사증(비자) 안내',
+          labelEn: 'HiKorea — visas (사증)',
+          descriptionKo: '사증의 의미 · 발급절차 · 체류자격별 안내',
+          descriptionEn: 'What a visa is, how it is issued, and per-status '
+              'guidance',
+          url: 'https://www.hikorea.go.kr/info/InfoDatail.pt'
+              '?CAT_SEQ=144&PARENT_ID=11',
+        ),
+        // In-app: the two guides this page keeps pointing at. Same `/`-prefixed
+        // internal-route convention the map links use (_LinkRow._isInternal).
+        GuideLink(
+          labelKo: '외국인등록증(ARC) 발급 안내',
+          labelEn: 'Guide — Alien Registration Card (ARC)',
+          descriptionKo: '앱 안에서 바로 보기',
+          descriptionEn: 'Open the in-app guide',
+          url: '/guide/item/arc-issue',
+          iconName: 'badge',
+        ),
+        GuideLink(
+          labelKo: '체류기간 연장 안내',
+          labelEn: 'Guide — Extension of Stay',
+          descriptionKo: '앱 안에서 바로 보기',
+          descriptionEn: 'Open the in-app guide',
+          url: '/guide/item/stay-extension',
+          iconName: 'event_repeat',
+        ),
+      ],
+      durationKo: '예상 5~10분',
+      durationEn: 'Approx. 5–10 min',
+      difficulty: 1,
+      status: GuideStatus.published,
     ),
 
     // ── 주거 (housing) ──

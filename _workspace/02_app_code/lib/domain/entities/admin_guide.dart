@@ -55,6 +55,13 @@ const Map<String, IconData> _guideIcons = {
   'location_on': Symbols.location_on,
   'swap_horiz': Symbols.swap_horiz,
   'lightbulb': Symbols.lightbulb,
+  'event_repeat': Symbols.event_repeat,
+  'format_list_numbered': Symbols.format_list_numbered,
+  'computer': Symbols.computer,
+  'badge': Symbols.badge,
+  'school': Symbols.school,
+  'menu_book': Symbols.menu_book,
+  'compare_arrows': Symbols.compare_arrows,
 };
 
 /// Resolves a Material Symbols name to its icon, or null when unknown/absent.
@@ -170,6 +177,9 @@ class GuideSection {
     this.notes = const [],
     this.noticeKo,
     this.noticeEn,
+    this.noticeIconName,
+    this.footnoteKo,
+    this.footnoteEn,
   });
 
   final String titleKo;
@@ -194,6 +204,17 @@ class GuideSection {
   final String? noticeKo;
   final String? noticeEn;
 
+  /// Glyph for that card (see [guideIconFromName]); defaults to the warning
+  /// sign. Sections whose card is informative rather than cautionary — "who is
+  /// this for?", "the short version" — name a neutral icon instead.
+  final String? noticeIconName;
+
+  /// Muted small print closing the section, same treatment as the checklist's
+  /// note: the "there are other sub-types too" kind of caveat that would read
+  /// as another bullet if it sat in [notes].
+  final String? footnoteKo;
+  final String? footnoteEn;
+
   String title(Locale l) => _pickText(titleKo, titleEn, l);
 
   List<String> steps(Locale l) => _pickTextList(stepsKo, stepsEn, l);
@@ -205,6 +226,11 @@ class GuideSection {
 
   String? notice(Locale l) {
     final s = _pickText(noticeKo ?? '', noticeEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
+  String? footnote(Locale l) {
+    final s = _pickText(footnoteKo ?? '', footnoteEn ?? '', l);
     return s.trim().isNotEmpty ? s : null;
   }
 
@@ -223,6 +249,9 @@ class GuideSection {
             const [],
         noticeKo: j['notice_ko'] as String?,
         noticeEn: j['notice_en'] as String?,
+        noticeIconName: j['notice_icon'] as String?,
+        footnoteKo: j['footnote_ko'] as String?,
+        footnoteEn: j['footnote_en'] as String?,
       );
 }
 
@@ -266,10 +295,13 @@ class AdminGuideItem {
     this.checklistEn = const [],
     this.checklistOptionalKo = const [],
     this.checklistOptionalEn = const [],
+    this.checklistOptionalTitleKo,
+    this.checklistOptionalTitleEn,
     this.checklistNoteKo,
     this.checklistNoteEn,
     this.stepsKo = const [],
     this.stepsEn = const [],
+    this.topSections = const [],
     this.sections = const [],
     this.tipsKo = const [],
     this.tipsEn = const [],
@@ -300,6 +332,12 @@ class AdminGuideItem {
   final String? overviewKo;
   final String? overviewEn;
 
+  /// Sections rendered directly under the overview, ahead of the checklist —
+  /// for items whose first thing to say is a precondition rather than a packing
+  /// list (e.g. "when should I apply?" on the stay-extension guide). Everything
+  /// else goes in [sections], which renders after the steps.
+  final List<GuideSection> topSections;
+
   // Section 2 — checklist (what to prepare).
   final List<String> checklistKo;
   final List<String> checklistEn;
@@ -308,6 +346,12 @@ class AdminGuideItem {
   /// one — items that only some applicants are asked for.
   final List<String> checklistOptionalKo;
   final List<String> checklistOptionalEn;
+
+  /// Heading for that second group when the generic l10n one ("경우에 따라 필요할 수
+  /// 있어요") is too vague — e.g. the stay-extension guide, where what you are
+  /// asked for hangs specifically on your status of stay.
+  final String? checklistOptionalTitleKo;
+  final String? checklistOptionalTitleEn;
 
   /// Caveat rendered under the checklist (e.g. "requirements differ per bank").
   final String? checklistNoteKo;
@@ -378,6 +422,11 @@ class AdminGuideItem {
   List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
   List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l);
 
+  String? checklistOptionalTitle(Locale l) {
+    final s = _pick(checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
   String? checklistNote(Locale l) {
     final s = _pick(checklistNoteKo ?? '', checklistNoteEn ?? '', l);
     return s.trim().isNotEmpty ? s : null;
@@ -402,6 +451,7 @@ class AdminGuideItem {
       checklistOptionalEn.isEmpty &&
       stepsKo.isEmpty &&
       stepsEn.isEmpty &&
+      topSections.isEmpty &&
       sections.isEmpty &&
       tipsKo.isEmpty &&
       tipsEn.isEmpty &&
@@ -427,10 +477,17 @@ class AdminGuideItem {
       checklistEn: _strList(j['checklist_en']),
       checklistOptionalKo: _strList(j['checklist_optional_ko']),
       checklistOptionalEn: _strList(j['checklist_optional_en']),
+      checklistOptionalTitleKo: j['checklist_optional_title_ko'] as String?,
+      checklistOptionalTitleEn: j['checklist_optional_title_en'] as String?,
       checklistNoteKo: j['checklist_note_ko'] as String?,
       checklistNoteEn: j['checklist_note_en'] as String?,
       stepsKo: _strList(j['steps_ko']),
       stepsEn: _strList(j['steps_en']),
+      topSections: (j['top_sections'] as List?)
+              ?.map((e) =>
+                  GuideSection.fromJson((e as Map).cast<String, dynamic>()))
+              .toList() ??
+          const [],
       sections: (j['sections'] as List?)
               ?.map((e) =>
                   GuideSection.fromJson((e as Map).cast<String, dynamic>()))
