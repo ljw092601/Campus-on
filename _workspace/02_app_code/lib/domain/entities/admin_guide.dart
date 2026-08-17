@@ -291,6 +291,8 @@ class AdminGuideItem {
     this.summaryEn,
     this.overviewKo,
     this.overviewEn,
+    this.checklistTitleKo,
+    this.checklistTitleEn,
     this.checklistKo = const [],
     this.checklistEn = const [],
     this.checklistOptionalKo = const [],
@@ -339,6 +341,14 @@ class AdminGuideItem {
   final List<GuideSection> topSections;
 
   // Section 2 — checklist (what to prepare).
+
+  /// Heading for the checklist card when the shared one ("준비물" / "What to
+  /// prepare") misreads the content — e.g. health insurance, whose list is
+  /// things to verify before an automatic enrolment, not documents to bring.
+  /// Falls back to the l10n heading, so every other item is unaffected.
+  final String? checklistTitleKo;
+  final String? checklistTitleEn;
+
   final List<String> checklistKo;
   final List<String> checklistEn;
 
@@ -422,6 +432,11 @@ class AdminGuideItem {
   List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
   List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l);
 
+  String? checklistTitle(Locale l) {
+    final s = _pick(checklistTitleKo ?? '', checklistTitleEn ?? '', l);
+    return s.trim().isNotEmpty ? s : null;
+  }
+
   String? checklistOptionalTitle(Locale l) {
     final s = _pick(checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '', l);
     return s.trim().isNotEmpty ? s : null;
@@ -473,6 +488,8 @@ class AdminGuideItem {
       summaryEn: j['summary_en'] as String?,
       overviewKo: j['overview_ko'] as String?,
       overviewEn: j['overview_en'] as String?,
+      checklistTitleKo: j['checklist_title_ko'] as String?,
+      checklistTitleEn: j['checklist_title_en'] as String?,
       checklistKo: _strList(j['checklist_ko']),
       checklistEn: _strList(j['checklist_en']),
       checklistOptionalKo: _strList(j['checklist_optional_ko']),

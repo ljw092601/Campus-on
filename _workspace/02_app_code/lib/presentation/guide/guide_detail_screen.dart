@@ -129,7 +129,7 @@ class _DetailBody extends ConsumerWidget {
             _ExtraSection(section: s, accent: accent, locale: locale),
           if (checklist.isNotEmpty || checklistOptional.isNotEmpty)
             _Section(
-              title: l.guide_section_checklist,
+              title: item.checklistTitle(locale) ?? l.guide_section_checklist,
               icon: Symbols.checklist,
               accent: accent,
               child: Column(

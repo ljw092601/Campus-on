@@ -58,6 +58,7 @@ Two top-level collections, **document id == entity id** (so `getById(id)` is a d
 | `relatedFacilityIds` | array\<string\> | – | deep-link `/map?focus=<ids>` |
 | `icon` | string | – | Material Symbols name overriding the category icon in list rows (`sim_card`, `account_balance`, …); unknown names fall back to the category icon |
 | `checklist_optional_ko` / `_en` | array\<string\> | – | second checklist group ("경우에 따라 필요할 수 있어요") |
+| `checklist_title_ko` / `_en` | string | – | heading for the checklist card when the shared one ("준비물" / "What to prepare") misreads the list — e.g. `health-insurance` uses "가입 전 확인사항" / "Before you enroll" for things to verify rather than documents to bring; falls back to the l10n heading |
 | `detail_title_ko` / `_en` | string | – | fuller heading for the detail screen when the list row should stay short; falls back to `title_*` |
 | `sections` | array\<object\> | – | item-specific sections rendered after `steps`: `{title_ko,title_en,icon,body_ko,body_en,steps_ko[],steps_en[],notes:[{title_ko,title_en,lines_ko[],lines_en[]}],notice_ko,notice_en}` — `steps_*` draw the same numbered circles as the main steps section |
 | `status` | string | – | `published` \| `comingSoon` (default `comingSoon`) |

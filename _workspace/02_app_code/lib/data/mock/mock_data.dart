@@ -1301,8 +1301,266 @@ class MockData {
       categoryId: GuideCategory.health,
       titleKo: '건강보험 가입',
       titleEn: 'National Health Insurance',
+      detailTitleKo: '외국인 유학생 국민건강보험 안내',
+      detailTitleEn: 'National Health Insurance for International Students',
       summaryKo: '유학생 의무가입 안내',
       summaryEn: 'Mandatory for students',
+      overviewKo: '한국에 체류하는 외국인 유학생은 체류자격과 체류기간에 따라 국민건강보험에 가입하게 됩니다. '
+          '가입 후에는 병원 진료와 건강검진 등에서 내국인과 같은 기준의 건강보험 혜택을 받을 수 있습니다.\n\n'
+          '별도로 가입 신청서를 제출하는 방식이 아니라, 가입 대상이 되면 '
+          '국민건강보험공단에서 자동으로 가입 처리합니다.',
+      overviewEn: 'International students staying in Korea are enrolled in the '
+          'National Health Insurance depending on their visa status and period '
+          'of stay. Once enrolled, students can receive National Health '
+          'Insurance benefits for medical treatment, health checkups, and other '
+          'covered services under the same general system as Korean '
+          'nationals.\n\n'
+          'In most cases, eligible international students are enrolled '
+          'automatically by the National Health Insurance Service (NHIS), '
+          'without submitting a separate enrollment application.',
+      // Enrollment timing is a precondition, not a packing list — it has to be
+      // read before "what to check", so it sits above the checklist.
+      topSections: [
+        GuideSection(
+          titleKo: '언제 가입되나요?',
+          titleEn: 'When does coverage start?',
+          iconName: 'event_repeat',
+          notes: [
+            GuideNote(
+              titleKo: 'D-2 유학 비자',
+              titleEn: 'D-2 Student Visa',
+              linesKo: [
+                '최초 입국한 경우: 외국인등록일부터 적용',
+                '외국인등록 후 출국했다가 재입국한 경우: 재입국일부터 적용',
+              ],
+              linesEn: [
+                'First entry into Korea: coverage begins from the date of '
+                    'foreigner registration.',
+                'Re-entry after foreigner registration: coverage generally '
+                    'begins from the date of re-entry.',
+              ],
+            ),
+            GuideNote(
+              titleKo: 'D-4 일반연수 비자',
+              titleEn: 'D-4 General Training Visa',
+              linesKo: ['입국일로부터 6개월이 지난 후 가입'],
+              linesEn: [
+                'Enrollment generally begins six months after the date of entry '
+                    'into Korea.',
+              ],
+            ),
+          ],
+          footnoteKo: '체류자격이나 개인 상황에 따라 적용 시점이 달라질 수 있으므로 '
+              '본인의 정확한 가입일은 국민건강보험공단에서 확인하는 것이 좋습니다.',
+          footnoteEn: 'The exact enrollment date may depend on your immigration '
+              'and residence status. Check with NHIS if you are unsure about '
+              'your individual case.',
+        ),
+      ],
+      // The list is what to verify before an automatic enrolment, not a set of
+      // documents to bring — the shared "준비물" heading would misread it.
+      checklistTitleKo: '가입 전 확인사항',
+      checklistTitleEn: 'Before you enroll',
+      checklistKo: [
+        '외국인등록 여부',
+        '본인의 체류자격(D-2, D-4 등)',
+        '국내에 신고된 체류지 주소',
+        '국민건강보험공단에서 발송한 가입 안내문 또는 보험료 고지서',
+        '보험료 납부 방법',
+      ],
+      checklistEn: [
+        'Check whether your foreigner registration is complete.',
+        'Check your visa status, such as D-2 or D-4.',
+        'Make sure your registered address in Korea is correct.',
+        'Check any enrollment notice or premium bill sent by NHIS.',
+        'Check how you will pay your insurance premium.',
+      ],
+      checklistNoteKo: '※ 특히 체류지 주소가 변경되었다면 정확한 주소로 신고해야 합니다. '
+          '건강보험 관련 안내문과 고지서가 등록된 국내 주소로 발송될 수 있습니다.',
+      checklistNoteEn: '※ If you change your residence, make sure your '
+          'registered address is updated — NHIS notices and premium bills may '
+          'be sent to your registered address in Korea.',
+      stepsKo: [
+        '체류자격과 가입 시기를 확인합니다. D-2와 D-4는 국민건강보험 적용 시점이 다릅니다.',
+        '외국인등록과 체류지 정보를 정확히 등록합니다. 공단은 등록된 체류정보를 바탕으로 가입을 처리합니다.',
+        '가입 대상이 되면 자동으로 가입됩니다. 일반적으로 별도의 건강보험 가입 신청서를 제출할 필요가 없습니다.',
+        '가입 안내와 보험료 고지 내용을 확인합니다. 가입 후 보험료와 납부기한을 확인합니다.',
+        '정해진 기한 내에 보험료를 납부합니다.',
+        '가입 상태에서 병원이나 약국 등 건강보험 적용 의료서비스를 이용합니다.',
+      ],
+      stepsEn: [
+        'Check your visa status and enrollment date. The enrollment timing is '
+            'different for D-2 and D-4 visa holders.',
+        'Complete your foreigner registration and keep your Korean address up '
+            'to date.',
+        'NHIS automatically enrolls you when you become eligible. A separate '
+            'enrollment application is generally not required.',
+        'Check your enrollment notice and premium bill.',
+        'Pay your premium by the stated due date.',
+        'Once insured, you can use covered medical services at hospitals, '
+            'clinics, pharmacies, and other eligible healthcare providers.',
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '보험료와 유학생 경감',
+          titleEn: 'Premiums and the student reduction',
+          iconName: 'payments',
+          bodyKo: '외국인 지역가입자의 보험료는 소득과 재산 등을 기준으로 산정됩니다. '
+              '따라서 모든 유학생에게 동일한 고정 금액을 안내하기보다는, '
+              '국민건강보험공단에서 발송한 본인의 고지서를 확인하는 것이 가장 정확합니다.\n\n'
+              'D-2·D-4 유학생은 일정 요건을 충족하는 경우 보험료 경감 대상이 될 수 있습니다. '
+              '현재 공식 안내에서는 D-2·D-4 등 대상 유학생이 소득 및 재산 요건을 충족할 경우 '
+              '50% 경감 기준을 안내하고 있습니다.',
+          bodyEn: 'Premiums for foreign regional subscribers are calculated '
+              'based on factors such as income and property. For this reason, '
+              'students should check their individual NHIS premium bill rather '
+              'than relying on a single fixed monthly amount.\n\n'
+              'D-2 and D-4 students may qualify for a premium reduction if they '
+              'meet the applicable income and property requirements. Current '
+              'official guidance provides a 50% reduction for eligible '
+              'international students in these categories.',
+          // Informative, not cautionary — the neutral glyph, not the warning.
+          noticeKo: '보험료와 경감 기준은 변경될 수 있으므로, 고정된 월 보험료를 기준으로 삼기보다 '
+              '최신 고지서 또는 국민건강보험공단 안내를 확인하세요.',
+          noticeEn: 'Premiums and reduction rules may change. Always check your '
+              'latest NHIS bill or official NHIS guidance.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '어떤 혜택을 받을 수 있나요?',
+          titleEn: 'What does the insurance cover?',
+          iconName: 'info',
+          bodyKo: '국민건강보험에 가입하면 내국인과 같은 건강보험 제도 안에서 '
+              '병원 진료, 건강검진 등 다양한 보험 혜택을 받을 수 있습니다.',
+          bodyEn: 'After enrollment, international students can receive '
+              'National Health Insurance benefits such as covered medical '
+              'treatment and health checkups under the same national insurance '
+              'system used by Korean nationals.',
+          noticeKo: '다만 모든 진료가 건강보험 대상인 것은 아닙니다. '
+              '예를 들어 미용 목적의 시술·수술 등 일부 비급여 의료서비스에는 '
+              '건강보험이 적용되지 않을 수 있습니다.',
+          noticeEn: 'However, not every medical service is covered. Certain '
+              'non-covered services, including some cosmetic procedures, may '
+              'require full payment by the patient.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '보험료를 체납하면 주의하세요',
+          titleEn: 'Unpaid premiums can restrict your benefits',
+          iconName: 'receipt_long',
+          bodyKo: '보험료를 장기간 납부하지 않으면 건강보험 급여가 제한될 수 있습니다. '
+              '현재 외국인 지역가입자의 보험급여 제한과 관련한 별도 규정이 있으므로, '
+              '고지서를 받으면 납부기한을 확인하고 체납하지 않는 것이 중요합니다.',
+          bodyEn: 'If insurance premiums remain unpaid, National Health '
+              'Insurance benefits may be restricted under the rules applying to '
+              'foreign regional subscribers. Check the due date on your bill '
+              'and avoid overdue premiums.',
+          // Real consequence → keeps the default warning glyph.
+          noticeKo: '보험료 체납 상태라면 병원을 이용하기 전에 국민건강보험공단에 '
+              '본인의 보험 적용 상태를 확인하세요.',
+          noticeEn: 'If you have unpaid premiums, contact NHIS to confirm your '
+              'current insurance coverage before using medical services.',
+        ),
+        GuideSection(
+          titleKo: '문의',
+          titleEn: 'Where to ask',
+          iconName: 'help',
+          notes: [
+            GuideNote(
+              titleKo: '국민건강보험공단',
+              titleEn: 'National Health Insurance Service (NHIS)',
+              linesKo: [
+                '대표전화: 1577-1000',
+                '외국어 상담: 1577-1000 → 외국인 전용 안내 선택, 또는 033-811-2000',
+                '지원 언어: 영어, 중국어, 베트남어, 우즈베크어',
+                '상담시간: 평일 09:00~18:00',
+                '해외에서: +82-33-811-2001',
+              ],
+              linesEn: [
+                'Main line: 1577-1000',
+                'Foreign-language support: 1577-1000 → select the foreigner '
+                    'service, or 033-811-2000',
+                'Languages: English, Chinese, Vietnamese, Uzbek',
+                'Hours: weekdays 09:00–18:00',
+                'From outside Korea: +82-33-811-2001',
+              ],
+            ),
+            GuideNote(
+              titleKo: '동아대학교 국제지원팀',
+              titleEn: 'Dong-A University International Support Team',
+              linesKo: [
+                '학교 생활·체류·유학생 지원과 관련해 학교 확인이 필요한 경우 문의할 수 있습니다.',
+                '전화: 051-200-6446~8',
+                '유학생 지원 문의: 051-200-6447',
+                '이메일: global@donga.ac.kr',
+              ],
+              linesEn: [
+                'Contact them when you need the university to confirm something '
+                    'about student life, residence, or international student '
+                    'support.',
+                'Phone: 051-200-6446~8',
+                'International student support: 051-200-6447',
+                'Email: global@donga.ac.kr',
+              ],
+            ),
+          ],
+          footnoteKo: '보험료, 경감조건, 가입 기준은 제도 변경 가능성이 있으므로 '
+              '최신 공식 안내를 확인하세요.',
+          footnoteEn: 'Premiums, reduction requirements, and enrollment rules '
+              'may change — always check the latest official guidance.',
+        ),
+      ],
+      tipsKo: [
+        'D-2와 D-4는 가입 시작 시점이 다릅니다.',
+        '가입 대상이 되면 일반적으로 별도의 신청 없이 자동 가입됩니다.',
+        '이사했다면 체류지 주소를 정확히 변경 신고하세요.',
+        '보험료는 학생마다 달라질 수 있으므로 본인의 고지서를 기준으로 확인하세요.',
+        '보험료 경감 여부도 개인의 소득·재산 등 조건에 따라 달라질 수 있습니다.',
+        '확실하지 않은 경우 국민건강보험공단에 직접 문의하는 것이 가장 정확합니다.',
+      ],
+      tipsEn: [
+        'D-2 and D-4 visa holders have different enrollment starting dates.',
+        'Eligible students are generally enrolled automatically.',
+        'Update your registered address if you move.',
+        'Premium amounts can vary, so check your individual NHIS bill.',
+        'Eligibility for a premium reduction depends on applicable conditions.',
+        'Contact NHIS directly if you are unsure about your status.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '국민건강보험공단 외국인 건강보험 안내',
+          labelEn: 'NHIS — Guidance for foreigners',
+          url: 'https://www.nhis.or.kr/english/wbheaa02900m01.do',
+          descriptionKo: '가입 대상·보험료·급여 범위와 외국어 상담 연락처',
+          descriptionEn: 'Enrollment, premiums, coverage, and foreign-language '
+              'contact numbers',
+        ),
+        GuideLink(
+          labelKo: 'Study in Korea 국민건강보험 안내',
+          labelEn: 'Study in Korea — National Health Insurance',
+          url: 'https://www.studyinkorea.go.kr/ko/life/livingAndHousing.do',
+          descriptionKo: 'D-2·D-4 가입 시기, 자동가입, 보험료 경감, 보험 혜택 안내',
+          descriptionEn: 'Enrollment timing for D-2/D-4, automatic enrollment, '
+              'premium reduction, and covered benefits',
+        ),
+        // In-app: coverage is processed off the foreigner registration, so the
+        // ARC guide is the prerequisite step (same `/guide/item/…` route the
+        // visa-types guide uses).
+        GuideLink(
+          labelKo: '가이드 — 외국인등록증(ARC) 발급',
+          labelEn: 'Guide — Alien Registration Card (ARC)',
+          url: '/guide/item/arc-issue',
+          descriptionKo: '건강보험 적용은 외국인등록과 체류지 정보를 기준으로 처리됩니다.',
+          descriptionEn: 'Coverage is processed from your foreigner '
+              'registration and registered address.',
+          iconName: 'badge',
+        ),
+      ],
+      // No related location on purpose: the only candidate facility
+      // (`oia-office`) is week-2 fixture data — placeholder phone and
+      // coordinates — so pinning it would send students to a wrong address.
+      // Reconnect once the facility list carries real campus data.
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'campus-clinic',

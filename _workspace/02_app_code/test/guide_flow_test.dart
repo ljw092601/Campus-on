@@ -280,6 +280,142 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+  testWidgets('Guide detail: health insurance renders its sections in order',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('National Health Insurance'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    // Fuller detail heading than the list row.
+    expect(
+      find.text('National Health Insurance for International Students'),
+      findsOneWidget,
+    );
+
+    // This item overrides the shared checklist heading: its list is what to
+    // verify before an automatic enrolment, not documents to bring.
+    expect(find.text('Before you enroll'), findsOneWidget);
+    expect(find.text('What to prepare'), findsNothing);
+
+    // "When does coverage start?" is a topSection — above the checklist.
+    final whenY = tester.getTopLeft(find.text('When does coverage start?')).dy;
+    final prepareY = tester.getTopLeft(find.text('Before you enroll')).dy;
+    expect(whenY, lessThan(prepareY));
+
+    for (final title in const [
+      'Overview',
+      'D-2 Student Visa',
+      'D-4 General Training Visa',
+      'Steps',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // The tail of the page (past the viewport even on the tall test surface).
+    for (final title in const [
+      'Premiums and the student reduction',
+      'What does the insurance cover?',
+      'Unpaid premiums can restrict your benefits',
+      'Where to ask',
+    ]) {
+      await tester.scrollUntilVisible(find.text(title), 400);
+      await tester.pumpAndSettle();
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // Contact block carries the NHIS foreign-language line — still on screen,
+    // "Where to ask" being the last section scrolled to.
+    expect(find.textContaining('033-811-2000'), findsOneWidget);
+
+    for (final title in const ['Good to know', 'Links & Locations']) {
+      await tester.scrollUntilVisible(find.text(title), 400);
+      await tester.pumpAndSettle();
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // Both official sources are linked (the in-app ARC row is covered by its
+    // own test below).
+    expect(find.text('NHIS — Guidance for foreigners'), findsOneWidget);
+    expect(
+      find.text('Study in Korea — National Health Insurance'),
+      findsOneWidget,
+    );
+  });
+
+  // Deliberately says nothing about whether a premium figure appears: a dated
+  // example ("about ₩XX,XXX as of 2026") may be added from official sources
+  // later, and that is allowed. What has to survive any such edit is the safety
+  // notice — premiums change, so the student is pointed at their own NHIS bill
+  // or the official guidance rather than at a number in this app.
+  testWidgets(
+      'Guide detail: health insurance premiums keep the check-latest-guidance '
+      'notice', (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('National Health Insurance'));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+        find.text('Premiums and the student reduction'), 400);
+    await tester.pumpAndSettle();
+
+    // "Premiums and reduction rules may change. Always check your latest NHIS
+    // bill or official NHIS guidance." — one notice card, asserted in halves so
+    // a failure says which half went missing.
+    expect(
+      find.textContaining('Premiums and reduction rules may change'),
+      findsOneWidget,
+      reason: 'premiums must still be described as subject to change',
+    );
+    expect(
+      find.textContaining('check your latest NHIS bill'),
+      findsOneWidget,
+      reason: 'the guide must still send the student to the official source',
+    );
+  });
+
+  testWidgets('Guide detail: health insurance ARC link opens in-app',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('National Health Insurance'));
+    await tester.pumpAndSettle();
+
+    // `/guide/item/...` is internal, so it opens the ARC guide in-app.
+    final arcLink = find.text('Guide — Alien Registration Card (ARC)');
+    await tester.scrollUntilVisible(arcLink, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(arcLink);
+    await tester.pumpAndSettle();
+    expect(find.text('Alien Registration Card (ARC)'), findsWidgets);
+
+    // Drain the ARC page's related-location lookup (mock repo delay) so no
+    // timer outlives the widget tree.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
