@@ -1,67 +1,425 @@
 {
-  "lib-central": {
-    "name_ko": "중앙도서관",
-    "name_en": "Central Library",
+  "s01": {
+    "name_ko": "대학본부 및 인문과학대학(A)",
+    "category": "building",
+    "lat": 35.11467114988958,
+    "lng": 128.96549766927106,
+    "campus": "seunghak",
+    "buildingCode": "S01",
+    "hasFloorInfo": true,
+    "description_ko": "대강당, 학과실습실, 식당, 동아리실 등의 시설을 갖추고 있습니다."
+  },
+  "s02": {
+    "name_ko": "학생회관(Q)",
+    "category": "building",
+    "lat": 35.11558536131743,
+    "lng": 128.96594462594888,
+    "campus": "seunghak",
+    "buildingCode": "S02",
+    "hasFloorInfo": true
+  },
+  "s03": {
+    "name_ko": "공과대학1호관(P1)",
+    "category": "building",
+    "lat": 35.11598166380311,
+    "lng": 128.96651349790017,
+    "campus": "seunghak",
+    "buildingCode": "S03",
+    "hasFloorInfo": true
+  },
+  "s04": {
+    "name_ko": "공과대학2호관(P2)",
+    "category": "building",
+    "lat": 35.116455923647756,
+    "lng": 128.9672761843048,
+    "campus": "seunghak",
+    "buildingCode": "S04",
+    "hasFloorInfo": true
+  },
+  "s05": {
+    "name_ko": "공과대학3호관(P3)",
+    "category": "building",
+    "lat": 35.1169032605884,
+    "lng": 128.9678929093368,
+    "campus": "seunghak",
+    "buildingCode": "S05",
+    "hasFloorInfo": true
+  },
+  "s06": {
+    "name_ko": "공과대학5호관(RS)",
+    "category": "building",
+    "lat": 35.1172749166863,
+    "lng": 128.96775926839615,
+    "campus": "seunghak",
+    "buildingCode": "S06",
+    "hasFloorInfo": true
+  },
+  "s07": {
+    "name_ko": "예술체육대학1관",
+    "category": "building",
+    "lat": 35.11432660394371,
+    "lng": 128.9664600068146,
+    "campus": "seunghak",
+    "buildingCode": "S07",
+    "hasFloorInfo": true
+  },
+  "s08": {
+    "name_ko": "교수회관(W)",
+    "category": "building",
+    "lat": 35.11425392116053,
+    "lng": 128.96788402010404,
+    "campus": "seunghak",
+    "buildingCode": "S08",
+    "hasFloorInfo": true
+  },
+  "s09": {
+    "name_ko": "생명자원과학대학 및 건강과학대학",
+    "category": "building",
+    "lat": 35.114910298505684,
+    "lng": 128.96853043765964,
+    "campus": "seunghak",
+    "buildingCode": "S09",
+    "hasFloorInfo": true
+  },
+  "s10": {
+    "name_ko": "한림도서관(B)",
     "category": "library",
-    "lat": 35.1152,
-    "lng": 128.9688,
-    "address_ko": "캠퍼스 A동 옆",
-    "address_en": "Next to Building A",
-    "building_ko": "도서관동",
-    "building_en": "Library Hall",
-    "hours_ko": "09:00–22:00 (평일)",
-    "hours_en": "09:00–22:00 (weekdays)",
-    "phone": "02-000-0001",
-    "description_ko": "열람실, 그룹스터디룸, 노트북 대여를 제공합니다.",
-    "description_en": "Reading rooms, group study rooms, laptop rentals."
+    "lat": 35.11550178886394,
+    "lng": 128.96762339547058,
+    "campus": "seunghak",
+    "buildingCode": "S10",
+    "hasFloorInfo": true
   },
-  "dining-union": {
-    "name_ko": "학생회관 식당",
-    "name_en": "Student Union Cafeteria",
-    "category": "dining",
-    "lat": 35.1144,
-    "lng": 128.9676,
-    "building_ko": "학생회관 1F",
-    "building_en": "Student Union 1F",
-    "hours_ko": "11:00–19:00",
-    "hours_en": "11:00–19:00",
-    "phone": "02-000-0002"
-  },
-  "bld-eng-3": {
-    "name_ko": "공학관 3호관",
-    "name_en": "Engineering Building 3",
+  "s11": {
+    "name_ko": "자연과학대학(E)",
     "category": "building",
-    "lat": 35.1157,
-    "lng": 128.9671,
-    "building_ko": "E동",
-    "building_en": "Building E"
+    "lat": 35.115687874758684,
+    "lng": 128.96795689829986,
+    "campus": "seunghak",
+    "buildingCode": "S11",
+    "hasFloorInfo": true
   },
-  "cafe-on": {
-    "name_ko": "카페 온",
-    "name_en": "Cafe On",
-    "category": "amenity",
-    "lat": 35.115,
-    "lng": 128.9693,
-    "hours_ko": "08:00–20:00",
-    "hours_en": "08:00–20:00"
-  },
-  "oia-office": {
-    "name_ko": "국제교류처",
-    "name_en": "Office of International Affairs",
+  "p4": {
+    "name_ko": "공과대학4호관(P4)",
     "category": "building",
-    "lat": 35.1142,
-    "lng": 128.969,
-    "building_ko": "A동 2F",
-    "building_en": "Building A 2F",
-    "hours_ko": "09:00–17:00 (평일)",
-    "hours_en": "09:00–17:00 (weekdays)",
-    "phone": "02-000-0003"
+    "lat": 35.1160873732028,
+    "lng": 128.9683284400812,
+    "campus": "seunghak",
+    "buildingCode": "P4",
+    "hasFloorInfo": false
   },
-  "room-101": {
-    "name_ko": "제1강의동 101호",
-    "name_en": "Lecture Hall 1 Room 101",
-    "category": "classroom",
-    "lat": 35.1155,
-    "lng": 128.9681
+  "s13": {
+    "name_ko": "창업관",
+    "category": "building",
+    "lat": 35.1162097721076,
+    "lng": 128.96966943765634,
+    "campus": "seunghak",
+    "buildingCode": "S13",
+    "hasFloorInfo": true
+  },
+  "s14": {
+    "name_ko": "산학관(SM)",
+    "category": "building",
+    "lat": 35.117361540556615,
+    "lng": 128.96949974839012,
+    "campus": "seunghak",
+    "buildingCode": "S14",
+    "hasFloorInfo": true
+  },
+  "s15": {
+    "name_ko": "한림생활관 승학1관",
+    "category": "building",
+    "lat": 35.11876001285098,
+    "lng": 128.96939906028723,
+    "campus": "seunghak",
+    "buildingCode": "S15",
+    "hasFloorInfo": true
+  },
+  "s16": {
+    "name_ko": "학생군사교육단(DE)",
+    "category": "building",
+    "lat": 35.119207606476486,
+    "lng": 128.9687517535152,
+    "campus": "seunghak",
+    "buildingCode": "S16",
+    "hasFloorInfo": true
+  },
+  "s17": {
+    "name_ko": "예술체육대학2관",
+    "category": "building",
+    "lat": 35.11546888503327,
+    "lng": 128.96867823054578,
+    "campus": "seunghak",
+    "buildingCode": "S17",
+    "hasFloorInfo": true
+  },
+  "s18": {
+    "name_ko": "예술체육대학 실습동",
+    "category": "building",
+    "lat": 35.115201892559284,
+    "lng": 128.96874857838637,
+    "campus": "seunghak",
+    "buildingCode": "S18",
+    "hasFloorInfo": true
+  },
+  "s19": {
+    "name_ko": "한림생활관 승학2관",
+    "category": "building",
+    "lat": 35.11813154344573,
+    "lng": 128.96814455687274,
+    "campus": "seunghak",
+    "buildingCode": "S19",
+    "hasFloorInfo": true
+  },
+  "s20": {
+    "name_ko": "한림생활관 승학2관",
+    "category": "building",
+    "lat": 35.11843328505629,
+    "lng": 128.96843149923154,
+    "campus": "seunghak",
+    "buildingCode": "S20",
+    "hasFloorInfo": true
+  },
+  "s31": {
+    "name_ko": "수위실",
+    "category": "etc",
+    "lat": 35.11386873848791,
+    "lng": 128.96593627898181,
+    "campus": "seunghak",
+    "buildingCode": "S31",
+    "hasFloorInfo": true
+  },
+  "loc059": {
+    "name_ko": "정문",
+    "category": "etc",
+    "lat": 35.11366960778213,
+    "lng": 128.96571214796595,
+    "campus": "seunghak",
+    "hasFloorInfo": false
+  },
+  "s22": {
+    "name_ko": "L2M Platform(S22)",
+    "category": "building",
+    "lat": 35.1167269930644,
+    "lng": 128.96972850335627,
+    "campus": "seunghak",
+    "buildingCode": "S22",
+    "hasFloorInfo": false
+  },
+  "s21": {
+    "name_ko": "고압수소시험동(S21)",
+    "category": "building",
+    "lat": 35.11610969588139,
+    "lng": 128.9694504175016,
+    "campus": "seunghak",
+    "buildingCode": "S21",
+    "hasFloorInfo": false
+  },
+  "g03": {
+    "name_ko": "석당기념관",
+    "category": "building",
+    "lat": 35.1214380891332,
+    "lng": 129.01818194495007,
+    "campus": "gudeok",
+    "buildingCode": "G03",
+    "hasFloorInfo": true
+  },
+  "g01": {
+    "name_ko": "구덕연구동 1호관",
+    "category": "building",
+    "lat": 35.121500367478696,
+    "lng": 129.01863592166714,
+    "campus": "gudeok",
+    "buildingCode": "G01",
+    "hasFloorInfo": true
+  },
+  "loc062": {
+    "name_ko": "의과대학(S2)",
+    "category": "building",
+    "lat": 35.12103827708294,
+    "lng": 129.01892065818467,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "g02": {
+    "name_ko": "의과대학",
+    "category": "building",
+    "lat": 35.12103827708294,
+    "lng": 129.01892065818467,
+    "campus": "gudeok",
+    "buildingCode": "G02",
+    "hasFloorInfo": true
+  },
+  "g04": {
+    "name_ko": "구덕교육동 1호관",
+    "category": "building",
+    "lat": 35.120635651904436,
+    "lng": 129.01915201894838,
+    "campus": "gudeok",
+    "buildingCode": "G04",
+    "hasFloorInfo": true
+  },
+  "g05": {
+    "name_ko": "구덕교육동 2,3호관",
+    "category": "building",
+    "lat": 35.12116219735184,
+    "lng": 129.01905533530316,
+    "campus": "gudeok",
+    "buildingCode": "G05",
+    "hasFloorInfo": true
+  },
+  "g06": {
+    "name_ko": "구덕연구동 2호관",
+    "category": "building",
+    "lat": 35.12081746194128,
+    "lng": 129.0182461505754,
+    "campus": "gudeok",
+    "buildingCode": "G06",
+    "hasFloorInfo": true
+  },
+  "g11": {
+    "name_ko": "구덕교육동 4호관",
+    "category": "building",
+    "lat": 35.12072540879912,
+    "lng": 129.02160561270586,
+    "campus": "gudeok",
+    "buildingCode": "G11",
+    "hasFloorInfo": true
+  },
+  "g12": {
+    "name_ko": "구덕학생회관",
+    "category": "building",
+    "lat": 35.12026398712133,
+    "lng": 129.02171485719055,
+    "campus": "gudeok",
+    "buildingCode": "G12",
+    "hasFloorInfo": true
+  },
+  "loc068": {
+    "name_ko": "동아대학교병원(본관)",
+    "category": "building",
+    "lat": 35.12021118361715,
+    "lng": 129.01758407481896,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "loc069": {
+    "name_ko": "동아대학교병원(서관)",
+    "category": "building",
+    "lat": 35.120305827885936,
+    "lng": 129.017312207212,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "loc070": {
+    "name_ko": "동아대학교병원(동관)",
+    "category": "building",
+    "lat": 35.120226613064396,
+    "lng": 129.01828092804342,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "loc071": {
+    "name_ko": "동아대학교병원(중앙관)",
+    "category": "building",
+    "lat": 35.120037502882745,
+    "lng": 129.01719042506875,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "loc072": {
+    "name_ko": "동아대학교대신요양병원",
+    "category": "building",
+    "lat": 35.120139268079484,
+    "lng": 129.0189258883675,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "loc073": {
+    "name_ko": "정문",
+    "category": "etc",
+    "lat": 35.11935453657375,
+    "lng": 129.01829231417284,
+    "campus": "gudeok",
+    "hasFloorInfo": false
+  },
+  "b01": {
+    "name_ko": "석당박물관(BM)",
+    "category": "building",
+    "lat": 35.10504925133331,
+    "lng": 129.01932119056167,
+    "campus": "bumin",
+    "buildingCode": "B01",
+    "hasFloorInfo": true
+  },
+  "b02": {
+    "name_ko": "법학전문대학원(LS)",
+    "category": "building",
+    "lat": 35.10382461110717,
+    "lng": 129.01926356068935,
+    "campus": "bumin",
+    "buildingCode": "B02",
+    "hasFloorInfo": true
+  },
+  "b03": {
+    "name_ko": "글로벌인재관",
+    "category": "building",
+    "lat": 35.103898106902186,
+    "lng": 129.01890898288548,
+    "campus": "bumin",
+    "buildingCode": "B03",
+    "hasFloorInfo": true
+  },
+  "b04": {
+    "name_ko": "종합강의동(BA-BD)",
+    "category": "building",
+    "lat": 35.104910114736306,
+    "lng": 129.01874752481584,
+    "campus": "bumin",
+    "buildingCode": "B04",
+    "hasFloorInfo": true
+  },
+  "b05": {
+    "name_ko": "국제관",
+    "category": "building",
+    "lat": 35.10557947700048,
+    "lng": 129.0196797055009,
+    "campus": "bumin",
+    "buildingCode": "B05",
+    "hasFloorInfo": true
+  },
+  "b31": {
+    "name_ko": "수위실",
+    "category": "etc",
+    "lat": 35.10497365327198,
+    "lng": 129.0198018302774,
+    "campus": "bumin",
+    "buildingCode": "B31",
+    "hasFloorInfo": false
+  },
+  "b32": {
+    "name_ko": "동아한국어학당",
+    "category": "building",
+    "lat": 35.10345818749041,
+    "lng": 129.0189447360873,
+    "campus": "bumin",
+    "buildingCode": "B32",
+    "hasFloorInfo": true
+  },
+  "loc082": {
+    "name_ko": "한림생활관 부민관",
+    "category": "building",
+    "lat": 35.105726927217574,
+    "lng": 129.01853738434755,
+    "campus": "bumin",
+    "hasFloorInfo": false
+  },
+  "loc083": {
+    "name_ko": "정문",
+    "category": "etc",
+    "lat": 35.104777970268586,
+    "lng": 129.0199176269351,
+    "campus": "bumin",
+    "hasFloorInfo": false
   }
 }

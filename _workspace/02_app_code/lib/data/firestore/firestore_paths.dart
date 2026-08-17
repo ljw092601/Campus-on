@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/admin_guide.dart';
+import '../../domain/entities/building_floors.dart';
 import '../../domain/entities/facility.dart';
 
 /// Single source of truth for Firestore collection names + document→entity
@@ -16,6 +17,9 @@ class FirestorePaths {
 
   /// One document per admin-guide item. Document id == [AdminGuideItem.id].
   static const String guideItems = 'guide_items';
+
+  /// One document per building's floor guide. Document id == [Facility.id].
+  static const String buildingFloors = 'building_floors';
 }
 
 /// Normalizes a raw Firestore document map onto the JSON shape the entity
@@ -40,3 +44,9 @@ Facility facilityFromDoc(DocumentSnapshot<Map<String, dynamic>> doc) =>
 
 AdminGuideItem guideFromDoc(DocumentSnapshot<Map<String, dynamic>> doc) =>
     AdminGuideItem.fromJson(_normalize(doc));
+
+BuildingFloors buildingFloorsFromDoc(
+        DocumentSnapshot<Map<String, dynamic>> doc) =>
+    // `_normalize` injects the doc id as `id`; the entity reads it as
+    // `facilityId` (doc id == owning facility id by schema).
+    BuildingFloors.fromJson(_normalize(doc));

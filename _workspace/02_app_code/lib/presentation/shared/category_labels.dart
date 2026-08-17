@@ -23,6 +23,20 @@ extension FacilityCategoryLabel on FacilityCategory {
   }
 }
 
+/// Maps campus enums to localized labels (S2 campus selector).
+extension CampusLabel on Campus {
+  String label(AppLocalizations l) {
+    switch (this) {
+      case Campus.seunghak:
+        return l.map_campus_seunghak;
+      case Campus.gudeok:
+        return l.map_campus_gudeok;
+      case Campus.bumin:
+        return l.map_campus_bumin;
+    }
+  }
+}
+
 /// Maps admin-guide category enums to localized labels + one-line summaries
 /// (S1 home grid + S5 category list).
 extension GuideCategoryLabel on GuideCategory {

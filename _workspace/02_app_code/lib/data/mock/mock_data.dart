@@ -1,85 +1,21 @@
-import '../../domain/entities/facility.dart';
 import '../../domain/entities/admin_guide.dart';
+import '../../domain/entities/building_floors.dart';
+import '../../domain/entities/facility.dart';
+import 'building_data.g.dart';
 
-/// Seed data for week-2 development. The api-integrator replaces the repository
-/// implementations (not this file) with Firestore; this stays as fixtures for
-/// tests / offline demo.
+/// In-app fixture data. Facilities/floors are the REAL Dong-A buildings
+/// generated from the official campus map (building_data.g.dart — regenerate
+/// via tool/floor_guide_parser/, never hand-edit). Guide items remain
+/// hand-authored here. The Firestore seed is exported from this class
+/// (tool/firestore_seed/export_seed_test.dart) so seed and app can't drift.
 class MockData {
   const MockData._();
 
-  static final List<Facility> facilities = [
-    const Facility(
-      id: 'lib-central',
-      nameKo: '중앙도서관',
-      nameEn: 'Central Library',
-      category: FacilityCategory.library,
-      lat: 35.1152,
-      lng: 128.9688,
-      addressKo: '캠퍼스 A동 옆',
-      addressEn: 'Next to Building A',
-      buildingKo: '도서관동',
-      buildingEn: 'Library Hall',
-      hoursKo: '09:00–22:00 (평일)',
-      hoursEn: '09:00–22:00 (weekdays)',
-      phone: '02-000-0001',
-      descriptionKo: '열람실, 그룹스터디룸, 노트북 대여를 제공합니다.',
-      descriptionEn: 'Reading rooms, group study rooms, laptop rentals.',
-    ),
-    const Facility(
-      id: 'dining-union',
-      nameKo: '학생회관 식당',
-      nameEn: 'Student Union Cafeteria',
-      category: FacilityCategory.dining,
-      lat: 35.1144,
-      lng: 128.9676,
-      buildingKo: '학생회관 1F',
-      buildingEn: 'Student Union 1F',
-      hoursKo: '11:00–19:00',
-      hoursEn: '11:00–19:00',
-      phone: '02-000-0002',
-    ),
-    const Facility(
-      id: 'bld-eng-3',
-      nameKo: '공학관 3호관',
-      nameEn: 'Engineering Building 3',
-      category: FacilityCategory.building,
-      lat: 35.1157,
-      lng: 128.9671,
-      buildingKo: 'E동',
-      buildingEn: 'Building E',
-    ),
-    const Facility(
-      id: 'cafe-on',
-      nameKo: '카페 온',
-      nameEn: 'Cafe On',
-      category: FacilityCategory.amenity,
-      lat: 35.1150,
-      lng: 128.9693,
-      hoursKo: '08:00–20:00',
-      hoursEn: '08:00–20:00',
-    ),
-    const Facility(
-      id: 'oia-office',
-      nameKo: '국제교류처',
-      nameEn: 'Office of International Affairs',
-      category: FacilityCategory.building,
-      lat: 35.1142,
-      lng: 128.9690,
-      buildingKo: 'A동 2F',
-      buildingEn: 'Building A 2F',
-      hoursKo: '09:00–17:00 (평일)',
-      hoursEn: '09:00–17:00 (weekdays)',
-      phone: '02-000-0003',
-    ),
-    const Facility(
-      id: 'room-101',
-      nameKo: '제1강의동 101호',
-      nameEn: 'Lecture Hall 1 Room 101',
-      category: FacilityCategory.classroom,
-      lat: 35.1155,
-      lng: 128.9681,
-    ),
-  ];
+  /// 48 real campus buildings (승학 24 · 구덕 15 · 부민 9).
+  static List<Facility> get facilities => BuildingData.facilities;
+
+  /// Floor-by-floor guides for the 34 buildings that have them (249 floors).
+  static List<BuildingFloors> get buildingFloors => BuildingData.floors;
 
   static final List<AdminGuideItem> guideItems = [
     // ── 입국·체류 (immigration) ──
@@ -128,7 +64,8 @@ class MockData {
           url: 'https://www.hikorea.go.kr',
         ),
       ],
-      relatedFacilityIds: ['oia-office'],
+      // b04 = 종합강의동(부민) — 국제교류과가 1F에 위치.
+      relatedFacilityIds: ['b04'],
       durationKo: '예상 2–3주',
       durationEn: 'Approx. 2–3 weeks',
       difficulty: 2,
@@ -245,7 +182,7 @@ class MockData {
       titleEn: 'Library Guide',
       summaryKo: '대출·열람실 이용',
       summaryEn: 'Borrowing & reading rooms',
-      relatedFacilityIds: ['lib-central'],
+      relatedFacilityIds: ['s10'], // 한림도서관(승학)
     ),
     const AdminGuideItem(
       id: 'oia-visit',
@@ -254,7 +191,7 @@ class MockData {
       titleEn: 'Visiting the OIA',
       summaryKo: '위치·상담 시간',
       summaryEn: 'Location & hours',
-      relatedFacilityIds: ['oia-office'],
+      relatedFacilityIds: ['b04'], // 종합강의동(부민) 1F 국제교류과
     ),
 
     // ── 긴급·도움 (emergency) ──

@@ -35,6 +35,9 @@
   "facility_category_etc": "Etc",
 
   "map_appbar_title": "Map",
+  "map_campus_seunghak": "Seunghak",
+  "map_campus_gudeok": "Gudeok",
+  "map_campus_bumin": "Bumin",
   "map_toggle_toList": "List",
   "map_toggle_toMap": "Map",
   "map_empty_noMarker": "No facilities in this category.",
@@ -58,6 +61,12 @@
   "facility_action_viewOnMap": "View on map",
   "facility_action_call": "Call",
   "facility_section_about": "About",
+  "facility_floors_title": "Floor Guide",
+  "facility_floors_error": "Couldn't load floor info.",
+  "facility_floors_roomCount": "{count} rooms",
+  "@facility_floors_roomCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "facility_detail_error": "Couldn't load the info.",
   "facility_favorite_add": "Add to favorites",
   "facility_favorite_remove": "Remove from favorites",

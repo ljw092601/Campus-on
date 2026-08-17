@@ -39,7 +39,7 @@
       }
     ],
     "relatedFacilityIds": [
-      "oia-office"
+      "b04"
     ],
     "meta": {
       "durationText_ko": "예상 2–3주",
@@ -151,7 +151,7 @@
     "summary_ko": "대출·열람실 이용",
     "summary_en": "Borrowing & reading rooms",
     "relatedFacilityIds": [
-      "lib-central"
+      "s10"
     ],
     "status": "comingSoon"
   },
@@ -162,7 +162,7 @@
     "summary_ko": "위치·상담 시간",
     "summary_en": "Location & hours",
     "relatedFacilityIds": [
-      "oia-office"
+      "b04"
     ],
     "status": "comingSoon"
   },

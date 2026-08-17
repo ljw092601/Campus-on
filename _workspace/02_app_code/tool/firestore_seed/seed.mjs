@@ -11,6 +11,7 @@
 // Run:
 //   node seed.mjs                    # upsert (merge) — safe to re-run
 //   node seed.mjs --overwrite        # replace each doc entirely
+//   node seed.mjs --overwrite --prune  # …and delete docs absent from the seed
 //
 // The JSON is keyed by document id; each value is the document body. `updatedAt`
 // is stamped server-side here (stored as a Firestore Timestamp; the app reader
@@ -24,6 +25,7 @@ import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const overwrite = process.argv.includes('--overwrite');
+const prune = process.argv.includes('--prune');
 
 const serviceAccount = JSON.parse(
   readFileSync(join(here, 'serviceAccount.json'), 'utf8'),
@@ -34,6 +36,7 @@ const db = getFirestore();
 const COLLECTIONS = {
   facilities: 'facilities.seed.json',
   guide_items: 'guide_items.seed.json',
+  building_floors: 'building_floors.seed.json',
 };
 
 async function seedCollection(collection, file) {
@@ -56,6 +59,18 @@ async function seedCollection(collection, file) {
   console.log(
     `Seeded ${entries.length} docs into "${collection}" (${overwrite ? 'overwrite' : 'merge'}).`,
   );
+
+  if (prune) {
+    const seedIds = new Set(Object.keys(docs));
+    const existing = await db.collection(collection).listDocuments();
+    const stale = existing.filter((ref) => !seedIds.has(ref.id));
+    for (const ref of stale) await ref.delete();
+    if (stale.length) {
+      console.log(
+        `Pruned ${stale.length} stale docs from "${collection}": ${stale.map((r) => r.id).join(', ')}`,
+      );
+    }
+  }
 }
 
 for (const [collection, file] of Object.entries(COLLECTIONS)) {

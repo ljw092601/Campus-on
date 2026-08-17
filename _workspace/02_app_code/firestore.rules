@@ -25,6 +25,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Public building floor guides (doc id == facility id) — same policy.
+    match /building_floors/{facilityId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // Default deny for any collection not listed above.
     match /{document=**} {
       allow read, write: if false;
