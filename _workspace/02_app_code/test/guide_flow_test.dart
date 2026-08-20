@@ -416,6 +416,96 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+  testWidgets('Guide detail: course registration renders its sections in order',
+      (tester) async {
+    // Taller than the shared surface: this guide runs to twelve section cards.
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Course Registration'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.textContaining('10–30 minutes'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    // Login is a topSection: a new student cannot open the registration system
+    // at all without the exam-number rule, so it has to precede the checklist.
+    final loginY = tester.getTopLeft(find.text('How to log in')).dy;
+    final beforeY = tester.getTopLeft(find.text('Before registration')).dy;
+    final howY = tester.getTopLeft(find.text('How to register')).dy;
+    expect(loginY, lessThan(beforeY));
+    expect(beforeY, lessThan(howY));
+
+    for (final title in const [
+      'Overview',
+      'How to log in',
+      'Maximum course load',
+      'Credit carryover',
+      'Before registration',
+      'Check what the course actually covers',
+      'How to register',
+      'Confirmation & rejection',
+      'Course add/drop',
+      'Check your final registration',
+      'Required courses for international students',
+      'Register within the period',
+      'Good to know',
+      'Links & Locations',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // The new-student login rule, and the two cards that cost the most to miss.
+    expect(
+      find.textContaining('the last 4 digits of the mobile number'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('Check your registration result'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('No registration means no credits'),
+      findsOneWidget,
+    );
+    // 2024-only figures are attributed to the booklet, never stated as current.
+    expect(
+      find.textContaining('2024 international-student booklet'),
+      findsWidgets,
+    );
+
+    // Carryover: the worked example, the exclusion the notice names, and the
+    // expiry warning. The nationality question is answered explicitly so the
+    // page never implies international students are excluded.
+    expect(
+      find.textContaining('You registered for 16 credits'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('Part-time registered students'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('Carried credits expire if you do not use them'),
+      findsOneWidget,
+    );
+    expect(find.text('What about international students?'), findsOneWidget);
+    // The credit cap is never stated as a flat rule for everyone.
+    expect(find.textContaining('Not every student gets 19 credits'),
+        findsOneWidget);
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();

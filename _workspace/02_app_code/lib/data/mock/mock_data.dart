@@ -1585,8 +1585,588 @@ class MockData {
       categoryId: GuideCategory.school,
       titleKo: '수강신청',
       titleEn: 'Course Registration',
-      summaryKo: '수강신청 기간·정정',
-      summaryEn: 'Periods & add/drop',
+      summaryKo: '일정 · 과목 선택 · 신청 방법',
+      summaryEn: 'Schedule, course selection & registration',
+      iconName: 'format_list_numbered',
+      overviewKo: '수강신청은 매 학기 시작 전에 한 학기 동안 수강할 교과목을 학생이 직접 '
+          '신청하는 절차입니다.\n\n'
+          '학생은 본인의 최대 수강신청 가능학점 범위 안에서 원하는 과목을 선택하고 직접 '
+          '시간표를 구성합니다.\n\n'
+          '수강신청 일정은 학기마다 달라질 수 있으므로 동아대학교의 최신 학사공지를 반드시 '
+          '확인해야 합니다.',
+      overviewEn: 'Course registration is how you choose the courses you will '
+          'take for the coming semester. You do it yourself, before the '
+          'semester starts.\n\n'
+          'You pick the courses you want within the maximum number of credits '
+          'you are allowed to take, and build your own timetable.\n\n'
+          'The registration period is different every semester, so always check '
+          "Dong-A University's latest academic notices.",
+      // Login comes before the checklist: an international freshman cannot even
+      // open the registration system without knowing the exam-number rule.
+      topSections: [
+        GuideSection(
+          titleKo: '로그인 방법',
+          titleEn: 'How to log in',
+          iconName: 'computer',
+          bodyKo: '수강신청과 학사정보 확인은 동아대학교 학생정보 계정으로 로그인한 뒤 이용할 수 '
+              '있습니다.',
+          bodyEn: 'You register for courses — and check your academic '
+              'information — after logging in with your Dong-A University '
+              'student account.',
+          notes: [
+            GuideNote(
+              titleKo: '학번이 이미 있는 학생',
+              titleEn: 'If you already have a student ID number',
+              linesKo: [
+                '기존 학생정보 계정의 학번과 비밀번호로 로그인하세요.',
+              ],
+              linesEn: [
+                'Log in with the student ID number and password of your '
+                    'existing student account.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '학번이 아직 없는 신입생',
+              titleEn: 'If you are a new student without a student ID yet',
+              linesKo: [
+                '아이디: 동아대학교 원서접수 수험번호',
+                '초기 비밀번호: 생년월일 6자리 + 지원 당시 휴대폰번호 뒤 4자리',
+              ],
+              linesEn: [
+                'ID: the application (exam) number from your Dong-A University '
+                    'admission application',
+                'Initial password: your date of birth (6 digits) followed by '
+                    'the last 4 digits of the mobile number you gave when you '
+                    'applied',
+              ],
+            ),
+          ],
+          noticeKo: '학번이 발급되면\n'
+              '학번이 발급된 이후에는 학번을 이용하여 학교 시스템에 로그인하세요.',
+          noticeEn: 'Once your student ID number is issued\n'
+              'From then on, use that student ID number to log in to the '
+              "university's systems.",
+          noticeIconName: 'badge',
+          footnoteKo: '학번 조회에는 본인 명의 휴대폰 인증이 필요할 수 있으며, 비밀번호 초기화는 '
+              '본인 명의 휴대폰 또는 이메일 인증을 이용할 수 있습니다.',
+          footnoteEn: 'Looking up your student ID number may require verifying a '
+              'mobile number registered in your own name. To reset a password '
+              'you can verify with your own mobile number or your email.',
+        ),
+        // No flat "everyone gets N credits" claim: the 2026-2 registration
+        // notice changes the engineering limit by 학번, and the 2024 booklet
+        // lists four more per-department exceptions. The guide states the common
+        // case and sends the student to the number the system shows them.
+        GuideSection(
+          titleKo: '최대 수강신청 학점',
+          titleEn: 'Maximum course load',
+          iconName: 'school',
+          bodyKo: '대부분의 일반 학부 과정은 한 학기 최대 19학점까지 수강신청할 수 '
+              '있습니다.\n\n'
+              '다만 소속 대학·학과, 학번 및 학적 상태에 따라 최대 신청학점이 달라질 수 '
+              '있으므로, 수강신청 전에 수강신청 시스템에서 본인의 신청 가능학점을 '
+              '확인하세요.',
+          bodyEn: 'On most undergraduate programs you can register for up to 19 '
+              'credits in a semester.\n\n'
+              'The limit can differ, though, by college and department, by the '
+              'year your student ID number starts with, and by your enrollment '
+              'status — so check the number the registration system shows for '
+              'you before you register.',
+          notes: [
+            GuideNote(
+              titleKo: '학과에 따라 달라질 수 있어요',
+              titleEn: 'It differs by department',
+              linesKo: [
+                '2026학년도 제2학기 수강신청 안내 기준으로 공과대학은 2019학년도 이전 학번 '
+                    '21학점, 2020학년도 이후 학번 19학점입니다.',
+                '2024학년도 외국인 유학생 안내서에는 석당인재학부·의학과·의예과 24학점, '
+                    '건축학과·간호학과 21학점처럼 학과별 차이가 안내되어 있었습니다.',
+              ],
+              linesEn: [
+                'Per the 2026 second-semester registration notice, the College '
+                    'of Engineering allows 21 credits for student IDs from 2019 '
+                    'or earlier and 19 credits from 2020 onwards.',
+                'The 2024 international-student booklet listed other exceptions '
+                    'as well — 24 credits for Seokdang Honors, Medicine and '
+                    'Pre-Medicine, and 21 for Architecture and Nursing.',
+              ],
+            ),
+          ],
+          noticeKo: '모든 학생이 19학점인 것은 아닙니다\n'
+              '학과와 학번, 학적 상태에 따라 최대 신청학점이 더 높거나 낮을 수 있습니다.\n'
+              '수강신청 시스템에 표시되는 본인의 신청 가능학점이 기준입니다.',
+          noticeEn: 'Not every student gets 19 credits\n'
+              'Your limit can be higher or lower depending on your department, '
+              'your student ID year, and your enrollment status.\n'
+              'The number the registration system shows for you is the one that '
+              'counts.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 위 학점 기준은 2026학년도 제2학기 수강신청 안내와 2024학년도 외국인 '
+              '유학생 안내서를 정리한 것입니다. 학기마다 바뀔 수 있으므로 최신 수강신청 공지를 '
+              '확인하세요.',
+          footnoteEn: '※ These figures come from the 2026 second-semester '
+              'registration notice and the 2024 international-student booklet. '
+              'They can change every semester — check the latest registration '
+              'notice.',
+        ),
+        // Carryover sits next to the credit limit because it only makes sense
+        // as an addition to it: leftover credits raise next semester's cap.
+        GuideSection(
+          titleKo: '학점이월제',
+          titleEn: 'Credit carryover',
+          iconName: 'swap_horiz',
+          bodyKo: '최대 수강신청 학점을 모두 사용하지 않은 경우, 남은 학점이 1~2학점이면 다음 '
+              '학기로 이월하여 최대 수강신청 학점에 더해 사용할 수 있습니다.',
+          bodyEn: 'If you do not use your whole course load, and 1–2 credits are '
+              'left over, those credits carry over to the next semester and are '
+              'added on top of your maximum course load then.',
+          notes: [
+            GuideNote(
+              titleKo: '이월 가능한 학점 (최대 신청학점이 19학점인 경우)',
+              titleEn: 'Credits eligible for carryover (with a 19-credit limit)',
+              linesKo: [
+                '18학점 신청 → 1학점 이월 가능',
+                '17학점 신청 → 2학점 이월 가능',
+                '16학점 신청 → 잔여 3학점이므로 이월 불가',
+              ],
+              linesEn: [
+                'You registered for 18 credits → 1 credit carries over',
+                'You registered for 17 credits → 2 credits carry over',
+                'You registered for 16 credits → 3 left over, so nothing carries '
+                    'over',
+              ],
+            ),
+            GuideNote(
+              titleKo: '적용 제외 대상',
+              titleEn: 'Who it does not apply to',
+              linesKo: [
+                '산업공학과, 의과대학 의학과, 석당인재학부 소속 학생',
+                '시간제 등록생, 그리고 타 대학에 적을 두고 있는 파견·교환학생',
+                '조기졸업, 5년제 학·석사 등 학점 초과취득이 별도로 가능한 학생 (중복 적용되지 '
+                    '않습니다)',
+              ],
+              linesEn: [
+                'Students in Industrial Engineering, the School of Medicine, or '
+                    'Seokdang Honors',
+                'Part-time registered students, and visiting or exchange '
+                    'students enrolled at another university',
+                'Students who can already exceed the credit limit another way — '
+                    'early graduation, the 5-year combined BA/MA — since the two '
+                    'do not stack',
+              ],
+            ),
+            GuideNote(
+              titleKo: '외국인 학생은 어떻게 되나요?',
+              titleEn: 'What about international students?',
+              linesKo: [
+                '동아대학교 정규 학위과정에 재학 중인 외국인 학생이 외국 국적이라는 이유만으로 '
+                    '학점이월제에서 제외된다는 내용은 현재 공식 수강신청 안내에서 확인되지 '
+                    '않습니다.',
+                '다만 타 대학에 소속된 파견·교환학생은 학점이월제 적용 대상에서 제외됩니다.',
+              ],
+              linesEn: [
+                'The official registration notice does not say that '
+                    'international students on a degree program at Dong-A are '
+                    'excluded from carryover because of their nationality.',
+                'Visiting and exchange students enrolled at another university, '
+                    'however, are excluded.',
+              ],
+            ),
+          ],
+          noticeKo: '이월 학점은 그 학기에 쓰지 않으면 사라집니다\n'
+              '이월된 학점을 해당 학기에 사용하지 않으면 다시 다음 학기로 이월되지 않고 '
+              '소멸됩니다.\n'
+              '수강취소 기간에 취소한 학점은 이월되지 않습니다.\n'
+              '학점이월제 적용 제외 대상이 있으므로 본인의 적용 여부를 확인하세요.',
+          noticeEn: 'Carried credits expire if you do not use them\n'
+              'Credits carried into a semester do not roll over again — if you '
+              'do not use them that semester, they are gone.\n'
+              'Credits you drop during the withdrawal period do not carry '
+              'over.\n'
+              'Some students are excluded from carryover, so check whether it '
+              'applies to you.',
+          footnoteKo: '※ 학점이월제 내용은 2026학년도 제2학기 수강신청 안내 기준입니다. 이월 '
+              '조건과 적용 제외 대상은 학기마다 달라질 수 있으므로 최신 수강신청 공지를 '
+              '확인하세요.',
+          footnoteEn: '※ The carryover rules here follow the 2026 '
+              'second-semester registration notice. The conditions and the '
+              'exclusions can change each semester — check the latest '
+              'registration notice.',
+        ),
+      ],
+      checklistTitleKo: '신청 전 확인',
+      checklistTitleEn: 'Before registration',
+      checklistKo: [
+        '학번과 비밀번호 확인',
+        '이번 학기 개설 교과목 확인',
+        '본인의 최대 수강신청 가능학점 확인',
+        '전공필수 / 전공선택 / 교양 등 이수구분 확인',
+        '수업시간 중복 여부 확인',
+        '강의실 및 캠퍼스 확인',
+        '재수강 여부 확인',
+        '외국인 유학생 필수이수교과목 확인',
+      ],
+      checklistEn: [
+        'Your student ID number and password',
+        'The courses offered this semester',
+        'Your own maximum credits for the semester',
+        'Course type — major required, major elective, general education',
+        'Whether any class times overlap',
+        'The classroom and the campus',
+        'Whether a course counts as a retake',
+        'The required courses for international students',
+      ],
+      checklistNoteKo: '※ 이수구분, 최대 신청학점, 재수강 기준은 학년도와 학과에 따라 달라질 수 '
+          '있으므로 신청 전에 최신 학사안내를 확인하세요.',
+      checklistNoteEn: '※ Course types, credit limits, and retake rules can '
+          'differ by academic year and department — check the latest academic '
+          'guidance before you register.',
+      sections: [
+        GuideSection(
+          titleKo: '수업 내용을 미리 확인하세요',
+          titleEn: 'Check what the course actually covers',
+          iconName: 'menu_book',
+          bodyKo: '과목명만 보고 신청하지 말고 강의계획서, 수업방식, 평가방법 등을 '
+              '확인하세요.',
+          bodyEn: 'Do not register based on the course title alone. Check the '
+              'syllabus, how the class is taught, and how it is graded.',
+        ),
+        GuideSection(
+          titleKo: '수강신청 방법',
+          titleEn: 'How to register',
+          iconName: 'format_list_numbered',
+          bodyKo: '동아대학교 홈페이지 → 학사안내 → 수강신청 및 수강정정 → 로그인 순서로 '
+              '접속할 수 있습니다.',
+          bodyEn: 'You can get there from the university homepage: 학사안내 '
+              '(Academic Information) → 수강신청 및 수강정정 (Course registration & '
+              'add/drop) → log in.',
+          stepsKo: [
+            '동아대학교 수강신청 시스템 접속',
+            '학번과 비밀번호로 로그인',
+            '이번 학기 개설 교과목 확인',
+            '전공 · 교양 · 시간 · 학점 확인',
+            '원하는 교과목 신청',
+            '수강확정 / 탈락 여부 확인',
+            '최종 수강신청 내역 확인',
+          ],
+          stepsEn: [
+            'Open the Dong-A University registration system',
+            'Log in with your student ID number and password',
+            'Check the courses offered this semester',
+            'Check the course type, time, and credits',
+            'Register for the courses you want',
+            'Check whether each course was confirmed or dropped',
+            'Check your final registration list',
+          ],
+          noticeKo: '수강신청은 보통 학기가 시작되기 전에 진행되지만 정확한 기간은 매 학기 '
+              '학사공지로 안내됩니다. 신청 전에 최신 공지를 확인하세요.',
+          noticeEn: 'Registration normally takes place before the semester '
+              'begins, but the exact dates are announced each semester in the '
+              'academic notices. Check them before you register.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '수강확정 · 탈락',
+          titleEn: 'Confirmation & rejection',
+          iconName: 'compare_arrows',
+          bodyKo: '교과목을 신청했다고 해서 모든 과목이 바로 최종 확정되는 것은 아닐 수 '
+              '있습니다.\n\n'
+              '신청 인원과 수강제한 인원 등에 따라 수강확정 또는 탈락 결과가 발생할 수 있으므로 '
+              '신청 후 반드시 결과를 확인해야 합니다.',
+          bodyEn: 'Registering for a course does not always mean your place in '
+              'it is final.\n\n'
+              'Depending on how many students applied and the enrollment limit, '
+              'a course can come back confirmed or dropped — so you have to '
+              'check the result after you register.',
+          notes: [
+            GuideNote(
+              titleKo: '탈락한 과목이 있다면',
+              titleEn: 'If one of your courses was dropped',
+              linesKo: [
+                '개설 학과에 증원 가능 여부를 문의할 수 있습니다.',
+                '탈락자 수강신청 기간에 해당 과목 또는 다른 과목을 다시 신청할 수 있습니다.',
+                '탈락자 수강신청 기간에는 남은 정원에 대해 선착순으로 확정될 수 있습니다.',
+              ],
+              linesEn: [
+                'You can ask the department that offers it whether the limit '
+                    'can be raised.',
+                'During the re-registration period for dropped students you can '
+                    'apply for that course again, or for a different one.',
+                'In that period the remaining seats can be filled on a '
+                    'first-come, first-served basis.',
+              ],
+            ),
+          ],
+          noticeKo: '신청 후 결과를 꼭 확인하세요\n'
+              '수강신청 버튼을 눌렀다고 끝난 것이 아닙니다. 수강확정 또는 탈락 여부를 반드시 '
+              '다시 확인하세요.',
+          noticeEn: 'Check your registration result\n'
+              'Pressing the register button is not the end of it. Go back and '
+              'check whether each course was confirmed or dropped.',
+        ),
+        GuideSection(
+          titleKo: '수강정정',
+          titleEn: 'Course add/drop',
+          iconName: 'swap_horiz',
+          bodyKo: '수강신청 후 과목을 변경해야 한다면 학교에서 정한 수강정정 기간을 이용할 수 '
+              '있습니다.',
+          bodyEn: 'If you need to change your courses after registering, you can '
+              'do it during the add/drop period set by the university.',
+          stepsKo: [
+            '수강정정 희망 교과목 확인',
+            '교과목 추가 또는 변경',
+            '수강확정 / 탈락 여부 재확인',
+            '최종 신청내역 확인',
+          ],
+          stepsEn: [
+            'Decide which courses you want to change',
+            'Add or swap the courses',
+            'Check again whether they were confirmed or dropped',
+            'Check your final registration list',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '수강정정 이후의 수강취소 기간',
+              titleEn: 'The withdrawal period after add/drop',
+              linesKo: [
+                '수강정정이 끝난 뒤 별도의 수강취소 기간이 있을 수 있습니다.',
+                '이 기간에는 이미 신청한 교과목의 취소만 가능하며 새로운 과목을 추가할 수 '
+                    '없습니다.',
+              ],
+              linesEn: [
+                'There may be a separate course-withdrawal period after add/drop '
+                    'closes.',
+                'In that period you can only cancel a course you already '
+                    'registered for — you cannot add a new one.',
+              ],
+            ),
+          ],
+          noticeKo: '수강정정은 보통 학기 초에 진행되지만 정확한 일정은 매 학기 학사공지에서 '
+              '확인하세요.',
+          noticeEn: 'Add/drop normally runs at the start of the semester, but '
+              'check the exact dates in the academic notices for that semester.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '최종 수강신청 확인',
+          titleEn: 'Check your final registration',
+          iconName: 'receipt_long',
+          noticeKo: '최종 수강신청 내역을 확인하세요\n'
+              '수강확정 후에는 수강신청 확인서를 확인하여 교과목, 분반, 재수강 여부 등을 '
+              '정확하게 확인하세요.\n'
+              '최종 수강신청 확인서에 기재되지 않은 교과목은 실제로 수업에 참여하더라도 학점과 '
+              '성적이 인정되지 않을 수 있습니다.',
+          noticeEn: 'Check your final course registration\n'
+              'Once registration is confirmed, open your course registration '
+              'confirmation and check every course, section, and retake flag.\n'
+              'A course that is not on that confirmation may not earn you '
+              'credits or a grade, even if you attend the classes.',
+        ),
+        GuideSection(
+          titleKo: '외국인 유학생 필수이수교과목',
+          titleEn: 'Required courses for international students',
+          iconName: 'menu_book',
+          bodyKo: '2024학년도 외국인 유학생 안내서 기준으로, 2023학년도 이후 외국인 '
+              '특별전형으로 입학한 학부 신입생 중 한국어트랙 학생이 대상입니다. 편입학자는 '
+              '제외됩니다.\n\n'
+              'TOPIK 성적과 관계없이 지정된 외국인 유학생 필수교과목을 이수해야 합니다.',
+          bodyEn: 'Per the 2024 international-student booklet, this applies to '
+              'undergraduate freshmen admitted through the international '
+              'special admission from 2023 onwards who are on the Korean '
+              'language track. Transfer students are not included.\n\n'
+              'You have to take the designated required courses regardless of '
+              'your TOPIK score.',
+          notes: [
+            GuideNote(
+              titleKo: '1학기 (2024 안내서 기준)',
+              titleEn: 'First semester (per the 2024 booklet)',
+              linesKo: [
+                '대학한국어Ⅰ — 3학점 / 필수교양',
+                '한국어발표와작문Ⅰ — 3학점 / 필수교양',
+                '한류속한국어와한국문화Ⅰ — 2학점 / 토대교양',
+              ],
+              linesEn: [
+                '대학한국어Ⅰ (College Korean I) — 3 credits / required general '
+                    'education',
+                '한국어발표와작문Ⅰ (Korean Presentation & Writing I) — 3 credits / '
+                    'required general education',
+                '한류속한국어와한국문화Ⅰ (Korean Language & Culture in the Korean Wave I) '
+                    '— 2 credits / foundation general education',
+              ],
+            ),
+            GuideNote(
+              titleKo: '2학기 (2024 안내서 기준)',
+              titleEn: 'Second semester (per the 2024 booklet)',
+              linesKo: [
+                '대학한국어Ⅱ — 3학점 / 필수교양',
+                '한국어발표와작문Ⅱ — 3학점 / 필수교양',
+                '한류속한국어와한국문화Ⅱ — 2학점 / 토대교양',
+              ],
+              linesEn: [
+                '대학한국어Ⅱ (College Korean II) — 3 credits / required general '
+                    'education',
+                '한국어발표와작문Ⅱ (Korean Presentation & Writing II) — 3 credits / '
+                    'required general education',
+                '한류속한국어와한국문화Ⅱ (Korean Language & Culture in the Korean Wave '
+                    'II) — 2 credits / foundation general education',
+              ],
+            ),
+          ],
+          noticeKo: '필수과목 시간이 겹친다면\n'
+              '학과에서 지정한 다른 영역의 필수 교과목이 외국인 유학생 필수교과목과 겹치는 경우 '
+              '학과 지정 과목을 우선 수강할 수 있습니다.\n'
+              '외국인 유학생 필수교과목은 이후 학기에 이수할 수 있지만 졸업 전까지 반드시 '
+              '이수해야 합니다.',
+          noticeEn: 'If a required course clashes with another one\n'
+              'If a required course designated by your department overlaps with '
+              'a required course for international students, you may take the '
+              "department's course first.\n"
+              'You can then take the international-student course in a later '
+              'semester — but you must complete it before you graduate.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 위 과목명과 적용 대상은 2024학년도 외국인 유학생 안내서 기준입니다. '
+              '교육과정은 변경될 수 있으므로 최신 필수이수교과목은 국제교류과 또는 해당 학년도 '
+              '학사안내를 확인하세요.',
+          footnoteEn: '※ The course names and who they apply to are from the '
+              '2024 international-student booklet. Curricula change, so check '
+              'the current required courses with the Office of International '
+              'Affairs or in the academic guidance for your year.',
+        ),
+        GuideSection(
+          titleKo: '반드시 기간 안에 신청하세요',
+          titleEn: 'Register within the period',
+          iconName: 'event_repeat',
+          noticeKo: '수강신청을 하지 않으면 학점 취득이 불가능합니다\n'
+              '등록금을 납부했더라도 지정된 기간에 수강신청을 하지 않으면 해당 학기의 학점을 '
+              '취득할 수 없고 이수학기로 인정되지 않을 수 있습니다.\n'
+              '반드시 정해진 기간 안에 수강신청을 완료하세요.',
+          noticeEn: 'No registration means no credits\n'
+              'Even if you have paid tuition, not registering during the set '
+              'period can mean you earn no credits for that semester, and it '
+              'may not count as a completed semester.\n'
+              'Make sure you finish registration within the period.',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 이 경우 이미 납부한 등록금이 '
+              '반환되지 않는다고 안내되어 있습니다. 등록·학적 관련 규정은 변경될 수 있으므로 '
+              '최신 학사규정을 확인하세요.',
+          footnoteEn: '※ The 2024 international-student booklet states that '
+              'tuition already paid is not refunded in this case. Tuition and '
+              'student-record rules can change, so check the current academic '
+              'regulations.',
+        ),
+        GuideSection(
+          titleKo: '꼭 알아두세요',
+          titleEn: 'Good to know',
+          iconName: 'lightbulb',
+          notes: [
+            GuideNote(
+              titleKo: '📅 일정은 매 학기 달라져요',
+              titleEn: '📅 The schedule changes every semester',
+              linesKo: [
+                '수강신청과 수강정정 일정은 매 학기 달라질 수 있으므로 최신 학사공지를 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'Registration and add/drop dates change from semester to '
+                    'semester — check the latest academic notices.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '✅ 확정 여부를 확인하세요',
+              titleEn: '✅ Confirm that you actually got the course',
+              linesKo: [
+                '신청한 과목이 탈락할 수 있으므로 수강확정 결과를 반드시 확인하세요.',
+              ],
+              linesEn: [
+                'A course you applied for can still be dropped, so always check '
+                    'the confirmation result.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🧾 수강신청 확인서를 확인하세요',
+              titleEn: '🧾 Read your registration confirmation',
+              linesKo: [
+                '최종 신청 과목, 분반, 재수강 여부 등을 확인하세요.',
+              ],
+              linesEn: [
+                'Check the final courses, the section numbers, and whether '
+                    'anything is flagged as a retake.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🏫 캠퍼스를 확인하세요',
+              titleEn: '🏫 Check which campus a class is on',
+              linesKo: [
+                '동아대학교는 여러 캠퍼스를 운영하므로 연속된 수업의 캠퍼스가 다른 경우 '
+                    '이동시간을 고려하세요.',
+              ],
+              linesEn: [
+                'Dong-A University runs several campuses. If two back-to-back '
+                    'classes are on different campuses, allow for the travel '
+                    'time.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🔁 재수강 여부를 확인하세요',
+              titleEn: '🔁 Check how a retake is counted',
+              linesKo: [
+                '동일 교과목 또는 유사·대체교과목을 재수강하는 경우 재수강 처리 여부를 '
+                    '확인하세요.',
+                '2024학년도 안내서에서는 재수강 횟수에 제한을 두고 F 성적에 예외를 두고 '
+                    '있었습니다. 재수강 규정은 변경될 수 있으므로 최신 학사안내를 확인하세요.',
+              ],
+              linesEn: [
+                'If you retake the same course, or a similar/substitute course, '
+                    'check whether it is processed as a retake.',
+                'The 2024 booklet limited how often a course could be retaken, '
+                    'with an exception for an F grade. Retake rules can change '
+                    '— check the latest academic guidance.',
+              ],
+            ),
+          ],
+          footnoteKo: '외국인 유학생의 학사 및 학교생활 관련 문의는 동아대학교 국제교류과 또는 '
+              '소속 학과사무실에서 확인할 수 있습니다.',
+          footnoteEn: 'For academic or student-life questions, international '
+              'students can ask the Dong-A University Office of International '
+              'Affairs or their own department office.',
+        ),
+      ],
+      links: [
+        // Current registration portal — this is what 학사안내 → 수강신청 및 수강정정 on
+        // donga.ac.kr points at (the legacy sugang.donga.ac.kr host no longer
+        // serves it).
+        GuideLink(
+          labelKo: '동아대학교 수강신청',
+          labelEn: 'Dong-A University course registration',
+          descriptionKo: '교과목 신청 · 수강확정 확인',
+          descriptionEn: 'Register for courses and check the result',
+          url: 'https://dxsugang.donga.ac.kr/',
+          iconName: 'computer',
+        ),
+        // Official single sign-on page — students sign in with their student ID
+        // number and their existing password, then reach the academic and
+        // student-information services from there.
+        GuideLink(
+          labelKo: '동아대학교 통합로그인',
+          labelEn: 'Dong-A University single sign-on',
+          descriptionKo: '학사 · 학생정보 서비스 이용',
+          descriptionEn: 'Sign in for academic and student information services',
+          url: 'https://login.donga.ac.kr/login?rd_c_p=checked',
+          iconName: 'badge',
+        ),
+        // 학사공지 board — where each semester's registration and add/drop dates
+        // are actually announced.
+        GuideLink(
+          labelKo: '동아대학교 학사공지',
+          labelEn: 'Dong-A University academic notices',
+          descriptionKo: '최신 수강신청 일정 · 학사 안내',
+          descriptionEn: 'The latest registration dates and academic notices',
+          url: 'https://www.donga.ac.kr/kor/CMS/Board/Board.do?mCode=MN171',
+        ),
+      ],
+      durationKo: '10~30분',
+      durationEn: '10–30 minutes',
+      difficulty: 2,
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'certificate-issue',
