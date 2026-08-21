@@ -34,6 +34,9 @@
   "facility_category_etc": "기타",
 
   "map_appbar_title": "지도",
+  "map_campus_seunghak": "승학",
+  "map_campus_gudeok": "구덕",
+  "map_campus_bumin": "부민",
   "map_toggle_toList": "목록",
   "map_toggle_toMap": "지도",
   "map_empty_noMarker": "이 카테고리의 시설이 없어요.",
@@ -58,6 +61,12 @@
   "facility_action_viewOnMap": "지도에서 보기",
   "facility_action_call": "전화",
   "facility_section_about": "소개",
+  "facility_floors_title": "층별 안내",
+  "facility_floors_error": "층별 정보를 불러오지 못했어요.",
+  "facility_floors_roomCount": "{count}곳",
+  "@facility_floors_roomCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "facility_detail_error": "정보를 불러오지 못했어요.",
   "facility_favorite_add": "즐겨찾기 추가",
   "facility_favorite_remove": "즐겨찾기 해제",

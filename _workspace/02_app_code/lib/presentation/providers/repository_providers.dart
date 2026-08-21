@@ -4,12 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/config/firebase_init.dart' show useFirestore;
 import '../../data/firestore/firestore_facility_repository.dart';
+import '../../data/firestore/firestore_floor_guide_repository.dart';
 import '../../data/firestore/firestore_guide_repository.dart';
 import '../../data/repositories/local_favorites_repository.dart';
 import '../../data/repositories/mock_facility_repository.dart';
+import '../../data/repositories/mock_floor_guide_repository.dart';
 import '../../data/repositories/mock_guide_repository.dart';
 import '../../domain/repositories/facility_repository.dart';
 import '../../domain/repositories/favorites_repository.dart';
+import '../../domain/repositories/floor_guide_repository.dart';
 import '../../domain/repositories/guide_repository.dart';
 
 /// Overridden in `main()` after async init (see main.dart).
@@ -35,6 +38,12 @@ final guideRepositoryProvider = Provider<GuideRepository>(
   (ref) => useFirestore
       ? FirestoreGuideRepository(FirebaseFirestore.instance)
       : MockGuideRepository(),
+);
+
+final floorGuideRepositoryProvider = Provider<FloorGuideRepository>(
+  (ref) => useFirestore
+      ? FirestoreFloorGuideRepository(FirebaseFirestore.instance)
+      : MockFloorGuideRepository(),
 );
 
 final favoritesRepositoryProvider = Provider<FavoritesRepository>(

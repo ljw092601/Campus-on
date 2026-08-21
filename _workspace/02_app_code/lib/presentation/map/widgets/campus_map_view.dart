@@ -43,6 +43,7 @@ class CampusMapView extends StatefulWidget {
     required this.facilities,
     required this.focusIds,
     required this.onMarkerTap,
+    this.campus,
     this.selectedId,
     this.userLocation,
     this.following = false,
@@ -55,6 +56,11 @@ class CampusMapView extends StatefulWidget {
   });
 
   final List<Facility> facilities;
+
+  /// Currently shown campus. When it CHANGES, the camera re-fits to the new
+  /// campus's markers (the plugin itself syncs the marker set).
+  final Campus? campus;
+
   final List<String> focusIds;
   final String? selectedId;
   final ValueChanged<String> onMarkerTap;
@@ -105,6 +111,10 @@ class _CampusMapViewState extends State<CampusMapView> {
   void didUpdateWidget(covariant CampusMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
     _syncHeadingSubscription(oldWidget.headingStream);
+
+    // Campus switch: chase the new campus's marker cluster. widget.facilities
+    // is already the new campus's (filtered) list in this same build.
+    if (widget.campus != oldWidget.campus) _fitToFacilities();
 
     // New search terms → search again; new results → frame them. (The plugin
     // syncs the marker list itself from the `markers` param on update.)
@@ -357,6 +367,19 @@ class _CampusMapViewState extends State<CampusMapView> {
       return kakao.LatLng(f.lat, f.lng);
     }
     return kakao.LatLng(AppConfig.campusCenterLat, AppConfig.campusCenterLng);
+  }
+
+  void _fitToFacilities() {
+    final controller = _controller;
+    if (controller == null || widget.facilities.isEmpty) return;
+    final targets = [
+      for (final f in widget.facilities) kakao.LatLng(f.lat, f.lng),
+    ];
+    if (targets.length == 1) {
+      controller.setCenter(targets.first);
+    } else {
+      controller.fitBounds(targets);
+    }
   }
 
   void _applyFocus() {

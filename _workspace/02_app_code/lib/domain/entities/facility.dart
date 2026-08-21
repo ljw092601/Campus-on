@@ -32,6 +32,23 @@ enum FacilityCategory {
   }
 }
 
+/// The three physically separate Dong-A campuses. Facilities carry this so the
+/// map can filter/center per campus (they are km apart — one viewport can't
+/// hold all three legibly).
+enum Campus {
+  seunghak,
+  gudeok,
+  bumin;
+
+  static Campus? fromId(String? id) {
+    if (id == null) return null;
+    for (final c in Campus.values) {
+      if (c.name == id) return c;
+    }
+    return null;
+  }
+}
+
 /// A single campus facility (UX doc §8 Facility schema — fields kept verbatim).
 @immutable
 class Facility {
@@ -42,6 +59,9 @@ class Facility {
     required this.category,
     required this.lat,
     required this.lng,
+    this.campus,
+    this.buildingCode,
+    this.hasFloorInfo = false,
     this.addressKo,
     this.addressEn,
     this.buildingKo,
@@ -61,6 +81,18 @@ class Facility {
   final FacilityCategory category;
   final double lat;
   final double lng;
+
+  /// Which campus the facility belongs to; null for legacy/unassigned data.
+  final Campus? campus;
+
+  /// Official campus-map building code (S01/G03/B04…); null for facilities
+  /// that aren't buildings or have no code on the campus map.
+  final String? buildingCode;
+
+  /// Whether a `building_floors` document exists for this facility (buildings
+  /// listed as "층별 정보 미등록" on the campus map have none).
+  final bool hasFloorInfo;
+
   final String? addressKo;
   final String? addressEn;
   final String? buildingKo;
@@ -96,6 +128,9 @@ class Facility {
         category: FacilityCategory.fromId((j['category'] ?? 'etc') as String),
         lat: (j['lat'] as num).toDouble(),
         lng: (j['lng'] as num).toDouble(),
+        campus: Campus.fromId(j['campus'] as String?),
+        buildingCode: j['buildingCode'] as String?,
+        hasFloorInfo: (j['hasFloorInfo'] as bool?) ?? false,
         addressKo: j['address_ko'] as String?,
         addressEn: j['address_en'] as String?,
         buildingKo: j['building_ko'] as String?,
@@ -118,6 +153,9 @@ class Facility {
         'category': category.name,
         'lat': lat,
         'lng': lng,
+        'campus': campus?.name,
+        'buildingCode': buildingCode,
+        'hasFloorInfo': hasFloorInfo,
         'address_ko': addressKo,
         'address_en': addressEn,
         'building_ko': buildingKo,

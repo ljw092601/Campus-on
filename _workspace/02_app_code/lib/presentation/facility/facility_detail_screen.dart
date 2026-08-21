@@ -12,6 +12,7 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/locale_provider.dart';
 import '../shared/category_labels.dart';
+import '../shared/widgets/floor_accordion.dart';
 import '../shared/widgets/state_views.dart';
 
 /// S4 — Facility Detail. Info + inline mini-map link + bottom CTA (responsive
@@ -149,6 +150,13 @@ class _DetailBody extends ConsumerWidget {
                       SizedBox(height: d.spaceXs),
                       Text(description,
                           style: Theme.of(context).textTheme.bodyLarge),
+                    ],
+                    if (facility.hasFloorInfo) ...[
+                      SizedBox(height: d.spaceMd),
+                      Text(l.facility_floors_title,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      SizedBox(height: d.spaceXs),
+                      FloorAccordion(facilityId: facility.id),
                     ],
                   ],
                 ),

@@ -33,12 +33,34 @@ void main() {
       for (final g in MockData.guideItems) g.id: _guideToJson(g),
     };
 
+    // Doc id == facilityId (same key convention as facilities).
+    final floors = <String, Map<String, dynamic>>{
+      for (final b in MockData.buildingFloors)
+        b.facilityId: _compact(b.toJson()..remove('facilityId')),
+    };
+
     const dir = 'tool/firestore_seed';
     _writeJson('$dir/facilities.seed.json', facilities);
     _writeJson('$dir/guide_items.seed.json', guides);
+    _writeJson('$dir/building_floors.seed.json', floors);
 
-    expect(facilities, isNotEmpty);
+    expect(facilities, hasLength(48));
+    expect(floors, hasLength(34));
+    expect(
+      floors.values.fold<int>(0, (n, d) => n + (d['floors'] as List).length),
+      249,
+    );
     expect(guides, isNotEmpty);
+    // Every floor doc must belong to a facility that advertises it.
+    final byId = {for (final f in MockData.facilities) f.id: f};
+    for (final id in floors.keys) {
+      expect(byId[id]?.hasFloorInfo, isTrue, reason: 'orphan floors doc: $id');
+    }
+    // …and every hasFloorInfo facility must have a floors doc.
+    for (final f in MockData.facilities.where((f) => f.hasFloorInfo)) {
+      expect(floors.containsKey(f.id), isTrue,
+          reason: 'missing floors doc: ${f.id}');
+    }
   });
 }
 
