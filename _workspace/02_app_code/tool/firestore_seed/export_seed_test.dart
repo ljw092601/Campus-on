@@ -14,6 +14,14 @@
 // Emitted docs omit `id` (the JSON key IS the Firestore doc id — see
 // firestore_paths.dart) and `updatedAt` (stamped server-side by seed.mjs), and
 // drop null/empty fields so absent keys exercise the fromJson defaults.
+//
+// Every guide is read back through AdminGuideItem.fromJson and compared field
+// by field against the entity it came from, so a field added to the entity but
+// forgotten here fails the run instead of silently dropping content from the
+// seed. To inspect the output before it lands on the checked-in files, send it
+// somewhere else first:
+//
+//   flutter test --dart-define=SEED_OUT=<dir> tool/firestore_seed/export_seed_test.dart
 
 import 'dart:convert';
 import 'dart:io';
@@ -39,7 +47,19 @@ void main() {
         b.facilityId: _compact(b.toJson()..remove('facilityId')),
     };
 
-    const dir = 'tool/firestore_seed';
+    // Round-trip guard: whatever we are about to write must rebuild the exact
+    // entity it came from. Runs before the files are touched, so a lossy
+    // serializer aborts the export instead of truncating the seed.
+    for (final g in MockData.guideItems) {
+      expect(
+        _dumpGuide(AdminGuideItem.fromJson({...guides[g.id]!, 'id': g.id})),
+        equals(_dumpGuide(g)),
+        reason: 'export lost or changed data for "${g.id}"',
+      );
+    }
+
+    const dir = String.fromEnvironment('SEED_OUT',
+        defaultValue: 'tool/firestore_seed');
     _writeJson('$dir/facilities.seed.json', facilities);
     _writeJson('$dir/guide_items.seed.json', guides);
     _writeJson('$dir/building_floors.seed.json', floors);
@@ -76,23 +96,149 @@ Map<String, dynamic> _guideToJson(AdminGuideItem g) {
     'categoryId': g.categoryId.name,
     'title_ko': g.titleKo,
     'title_en': g.titleEn,
+    'detail_title_ko': g.detailTitleKo,
+    'detail_title_en': g.detailTitleEn,
     'summary_ko': g.summaryKo,
     'summary_en': g.summaryEn,
+    'icon': g.iconName,
     'overview_ko': g.overviewKo,
     'overview_en': g.overviewEn,
+    'top_sections': g.topSections.map(_sectionToJson).toList(),
+    'checklist_title_ko': g.checklistTitleKo,
+    'checklist_title_en': g.checklistTitleEn,
     'checklist_ko': g.checklistKo,
     'checklist_en': g.checklistEn,
+    'checklist_optional_title_ko': g.checklistOptionalTitleKo,
+    'checklist_optional_title_en': g.checklistOptionalTitleEn,
+    'checklist_optional_ko': g.checklistOptionalKo,
+    'checklist_optional_en': g.checklistOptionalEn,
+    'checklist_note_ko': g.checklistNoteKo,
+    'checklist_note_en': g.checklistNoteEn,
     'steps_ko': g.stepsKo,
     'steps_en': g.stepsEn,
+    'sections': g.sections.map(_sectionToJson).toList(),
+    'tips_ko': g.tipsKo,
+    'tips_en': g.tipsEn,
+    'phrases': [
+      for (final p in g.phrases) {'ko': p.ko, 'en': p.en},
+    ],
     'links': [
       for (final l in g.links)
-        {'label_ko': l.labelKo, 'label_en': l.labelEn, 'url': l.url},
+        _compact({
+          'label_ko': l.labelKo,
+          'label_en': l.labelEn,
+          'url': l.url,
+          'description_ko': l.descriptionKo,
+          'description_en': l.descriptionEn,
+          'icon': l.iconName,
+        }),
     ],
     'relatedFacilityIds': g.relatedFacilityIds,
     if (meta.isNotEmpty) 'meta': meta,
     'status': g.status.name,
   });
 }
+
+/// Inverse of [GuideSection.fromJson]; shared by `top_sections` and `sections`.
+Map<String, dynamic> _sectionToJson(GuideSection s) => _compact({
+      'title_ko': s.titleKo,
+      'title_en': s.titleEn,
+      'icon': s.iconName,
+      'body_ko': s.bodyKo,
+      'body_en': s.bodyEn,
+      'steps_ko': s.stepsKo,
+      'steps_en': s.stepsEn,
+      'notes': [
+        for (final n in s.notes)
+          _compact({
+            'title_ko': n.titleKo,
+            'title_en': n.titleEn,
+            'lines_ko': n.linesKo,
+            'lines_en': n.linesEn,
+          }),
+      ],
+      'notice_ko': s.noticeKo,
+      'notice_en': s.noticeEn,
+      'notice_icon': s.noticeIconName,
+      'footnote_ko': s.footnoteKo,
+      'footnote_en': s.footnoteEn,
+    });
+
+/// Canonical text of every field [AdminGuideItem] exposes, used by the
+/// round-trip guard above. Reads the entity's own getters rather than the JSON,
+/// so a key the serializer never emitted shows up as a difference here.
+String _dumpGuide(AdminGuideItem g) =>
+    const JsonEncoder.withIndent('  ').convert({
+      'categoryId': g.categoryId.name,
+      'titleKo': g.titleKo,
+      'titleEn': g.titleEn,
+      'detailTitleKo': g.detailTitleKo,
+      'detailTitleEn': g.detailTitleEn,
+      'summaryKo': g.summaryKo,
+      'summaryEn': g.summaryEn,
+      'iconName': g.iconName,
+      'overviewKo': g.overviewKo,
+      'overviewEn': g.overviewEn,
+      'checklistTitleKo': g.checklistTitleKo,
+      'checklistTitleEn': g.checklistTitleEn,
+      'checklistKo': g.checklistKo,
+      'checklistEn': g.checklistEn,
+      'checklistOptionalTitleKo': g.checklistOptionalTitleKo,
+      'checklistOptionalTitleEn': g.checklistOptionalTitleEn,
+      'checklistOptionalKo': g.checklistOptionalKo,
+      'checklistOptionalEn': g.checklistOptionalEn,
+      'checklistNoteKo': g.checklistNoteKo,
+      'checklistNoteEn': g.checklistNoteEn,
+      'stepsKo': g.stepsKo,
+      'stepsEn': g.stepsEn,
+      'topSections': g.topSections.map(_dumpSection).toList(),
+      'sections': g.sections.map(_dumpSection).toList(),
+      'tipsKo': g.tipsKo,
+      'tipsEn': g.tipsEn,
+      'phrases': [
+        for (final p in g.phrases) {'ko': p.ko, 'en': p.en},
+      ],
+      'links': [
+        for (final l in g.links)
+          {
+            'labelKo': l.labelKo,
+            'labelEn': l.labelEn,
+            'url': l.url,
+            'descriptionKo': l.descriptionKo,
+            'descriptionEn': l.descriptionEn,
+            'iconName': l.iconName,
+          },
+      ],
+      'relatedFacilityIds': g.relatedFacilityIds,
+      'durationKo': g.durationKo,
+      'durationEn': g.durationEn,
+      'difficulty': g.difficulty,
+      'status': g.status.name,
+    });
+
+Map<String, dynamic> _dumpSection(GuideSection s) => {
+      'titleKo': s.titleKo,
+      'titleEn': s.titleEn,
+      'iconName': s.iconName,
+      'bodyKo': s.bodyKo,
+      'bodyEn': s.bodyEn,
+      'stepsKo': s.stepsKo,
+      'stepsEn': s.stepsEn,
+      'notes': [
+        for (final n in s.notes)
+          {
+            'titleKo': n.titleKo,
+            'titleEn': n.titleEn,
+            'linesKo': n.linesKo,
+            'linesEn': n.linesEn,
+          },
+      ],
+      'noticeKo': s.noticeKo,
+      'noticeEn': s.noticeEn,
+      'noticeIconName': s.noticeIconName,
+      'footnoteKo': s.footnoteKo,
+      'footnoteEn': s.footnoteEn,
+    };
 
 /// Drops null values and empty lists/strings so seed docs stay minimal.
 Map<String, dynamic> _compact(Map<String, dynamic> m) => {
