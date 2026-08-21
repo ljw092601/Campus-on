@@ -1499,13 +1499,223 @@ class MockData {
       // Reconnect once the facility list carries real campus data.
       status: GuideStatus.published,
     ),
+    // Everything below comes from the clinic's own site (health.donga.ac.kr):
+    // the two campus locations with their phone numbers, the weekday hours, and
+    // the six-item service list. Nothing about fees, prescriptions, or whether a
+    // doctor is on site is published there, so none of that is described here.
     const AdminGuideItem(
       id: 'campus-clinic',
       categoryId: GuideCategory.health,
       titleKo: '교내 보건소',
       titleEn: 'Campus Health Center',
-      summaryKo: '이용 시간·기본 진료',
-      summaryEn: 'Hours & basic care',
+      summaryKo: '위치 · 이용시간 · 보건 서비스',
+      summaryEn: 'Locations, hours & health services',
+      overviewKo: '보건진료소는 학교 안에서 응급처치와 건강상담 등 기본적인 보건 서비스를 받을 수 있는 곳입니다. '
+          '수업 중에 다치거나 몸이 좋지 않을 때 캠퍼스를 벗어나지 않고 들를 수 있습니다.\n\n'
+          '보건진료소의 공식 업무내용에 포함되지 않는 진료가 필요한 경우에는 '
+          '병원이나 의원을 이용하세요.',
+      overviewEn: 'The campus health clinic is where you can get first aid, '
+          'health advice, and other basic health services without leaving '
+          'campus — useful if you get hurt between classes or start feeling '
+          'unwell during the day.\n\n'
+          'For care that is not part of the clinic\'s official list of '
+          'services, go to a hospital or a local clinic instead.',
+      // Which campus you are on decides everything else on this page, so the
+      // two locations come before the checklist.
+      topSections: [
+        GuideSection(
+          titleKo: '어디에 있나요?',
+          titleEn: 'Where can I find it?',
+          iconName: 'location_on',
+          bodyKo: '보건진료소는 승학캠퍼스와 부민캠퍼스 두 곳에 있습니다.',
+          bodyEn: 'There are two campus health clinics — one on the Seunghak '
+              'campus and one on the Bumin campus.',
+          notes: [
+            GuideNote(
+              titleKo: '승학캠퍼스',
+              titleEn: 'Seunghak campus',
+              linesKo: ['학생회관(Q) 지하 1층', '전화 051-200-6331~2'],
+              linesEn: [
+                'Student Union Building (Q), basement floor 1',
+                'Phone: 051-200-6331~2',
+              ],
+            ),
+            GuideNote(
+              titleKo: '부민캠퍼스',
+              titleEn: 'Bumin campus',
+              linesKo: ['법학전문대학원(LS) 1층', '전화 051-200-8465'],
+              linesEn: [
+                'Law School Building (LS), 1st floor',
+                'Phone: 051-200-8465',
+              ],
+            ),
+          ],
+        ),
+      ],
+      // Not a packing list — these are things to settle before walking over.
+      checklistTitleKo: '방문 전 확인',
+      checklistTitleEn: 'Before you visit',
+      checklistKo: [
+        '이용하려는 캠퍼스와 보건진료소 위치',
+        '이용시간(월~금 09:00~17:00)',
+        '점심시간(12:00~13:00)',
+        '문의가 필요한 경우 이용할 캠퍼스 보건진료소 연락처 확인',
+        '어디가 어떻게 불편한지 미리 정리해 두기',
+      ],
+      checklistEn: [
+        'Which campus you are going to, and where the clinic is in it.',
+        'The opening hours: Monday to Friday, 09:00–17:00.',
+        'The lunch break: 12:00–13:00.',
+        'The phone number of that campus clinic, in case you need to ask first.',
+        'A short note on your symptoms or what you need help with.',
+      ],
+      checklistNoteKo: '※ 이용시간과 업무내용은 동아대학교 보건진료소 공식 홈페이지 기준입니다. '
+          '방문 전 공식 홈페이지에서 최신 안내를 확인하세요.',
+      checklistNoteEn: '※ The hours and services listed here follow the '
+          'Dong-A University Health Clinic\'s official website. Check the '
+          'official website for the latest information before you go.',
+      sections: [
+        GuideSection(
+          titleKo: '이용시간',
+          titleEn: 'Opening hours',
+          iconName: 'event_repeat',
+          notes: [
+            GuideNote(
+              titleKo: '월요일 ~ 금요일',
+              titleEn: 'Monday to Friday',
+              linesKo: ['09:00 ~ 17:00', '점심시간 12:00 ~ 13:00'],
+              linesEn: ['09:00 – 17:00', 'Lunch break 12:00 – 13:00'],
+            ),
+          ],
+          noticeKo: '공식 안내에는 평일 이용시간만 나와 있습니다. '
+              '주말과 공휴일 운영 여부는 안내되어 있지 않으므로, 평일 외에 방문해야 한다면 미리 전화로 확인하세요.',
+          noticeEn: 'The official notice lists weekday hours only — it does not '
+              'say whether the clinic opens on weekends or public holidays. '
+              'Call ahead if you need to go outside weekday hours.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '어떤 도움을 받을 수 있나요?',
+          titleEn: 'What services are available?',
+          iconName: 'info',
+          bodyKo: '보건진료소 공식 홈페이지에 안내된 업무내용은 다음과 같습니다.',
+          bodyEn: 'The clinic\'s official website lists the following services.',
+          notes: [
+            GuideNote(
+              titleKo: '업무내용',
+              titleEn: 'Services',
+              linesKo: [
+                '응급처치',
+                '외상 및 화상치료',
+                '일반의약품 투약',
+                '건강상담',
+                '보건교육',
+                '건강증진사업',
+              ],
+              linesEn: [
+                'First aid',
+                'Treatment for wounds and burns',
+                'Over-the-counter medication',
+                'Health counselling',
+                'Health education',
+                'Health promotion programmes',
+              ],
+            ),
+          ],
+          footnoteKo: '필요한 서비스가 가능한지 확실하지 않다면 방문 전에 전화로 문의하세요.',
+          footnoteEn: 'If you are not sure whether the service you need is '
+              'available, call the clinic before you go.',
+        ),
+        GuideSection(
+          titleKo: '응급상황이라면',
+          titleEn: 'In an emergency',
+          iconName: 'help',
+          bodyKo: '보건진료소는 학교 안에서 운영되는 보건 지원 시설이며, '
+              '공식 안내된 이용시간은 평일 09:00~17:00입니다.',
+          bodyEn: 'The campus clinic is a health support facility on campus, '
+              'and its published hours are 09:00–17:00 on weekdays.',
+          noticeKo: '의식이 없거나, 호흡이 어렵거나, 출혈이 심한 경우처럼 위급한 상황이라면 '
+              '보건진료소를 찾아가거나 이용시간을 기다리지 말고 즉시 119에 신고하거나 '
+              '가까운 응급의료기관으로 가세요.',
+          noticeEn: 'If the situation is urgent — someone is unconscious, '
+              'having trouble breathing, or bleeding heavily — do not go to '
+              'the campus clinic or wait for it to open. Call 119 straight '
+              'away or go to the nearest emergency room.',
+        ),
+        GuideSection(
+          titleKo: '병원 진료가 필요하다면',
+          titleEn: 'If you need to see a doctor',
+          iconName: 'compare_arrows',
+          bodyKo: '증상이 심하거나 낫지 않는 경우, 또는 보건진료소 업무내용에 없는 진료가 필요한 경우에는 '
+              '병원이나 의원을 이용해야 합니다.\n\n'
+              '한국에서 병원을 이용하는 절차가 익숙하지 않다면 아래 병원 이용 가이드를 함께 참고하세요. '
+              '건강보험에 가입되어 있으면 병원 진료비 부담을 덜 수 있습니다.',
+          bodyEn: 'If your symptoms are severe, do not improve, or need care '
+              'that is not on the clinic\'s list of services, you should visit '
+              'a hospital or a local clinic instead.\n\n'
+              'If you are not used to how hospitals work in Korea, the hospital '
+              'guide below walks through it. Being enrolled in the National '
+              'Health Insurance also lowers what you pay for treatment.',
+        ),
+        GuideSection(
+          titleKo: '문의',
+          titleEn: 'Contact',
+          iconName: 'info',
+          notes: [
+            GuideNote(
+              titleKo: '승학캠퍼스 보건진료소',
+              titleEn: 'Seunghak campus clinic',
+              linesKo: ['학생회관(Q) 지하 1층', '051-200-6331~2'],
+              linesEn: [
+                'Student Union Building (Q), basement floor 1',
+                '051-200-6331~2',
+              ],
+            ),
+            GuideNote(
+              titleKo: '부민캠퍼스 보건진료소',
+              titleEn: 'Bumin campus clinic',
+              linesKo: ['법학전문대학원(LS) 1층', '051-200-8465'],
+              linesEn: ['Law School Building (LS), 1st floor', '051-200-8465'],
+            ),
+          ],
+          footnoteKo: '위치·이용시간·업무내용은 보건진료소 공식 홈페이지에서 최신 내용을 확인할 수 있습니다.',
+          footnoteEn: 'The clinic\'s official website has the current '
+              'locations, hours, and list of services.',
+        ),
+      ],
+      links: [
+        GuideLink(
+          labelKo: '동아대학교 보건진료소',
+          labelEn: 'Dong-A University Health Clinic',
+          url: 'https://health.donga.ac.kr/',
+          descriptionKo: '캠퍼스별 위치·연락처, 이용시간과 업무내용 공식 안내',
+          descriptionEn: 'Official page with locations, phone numbers, opening '
+              'hours, and services',
+        ),
+        // In-app: the two guides a student ends up needing when the clinic is
+        // not the right place (same `/guide/item/…` route used elsewhere).
+        GuideLink(
+          labelKo: '가이드 — 병원 이용',
+          labelEn: 'Guide — Visiting a Hospital',
+          url: '/guide/item/hospital-guide',
+          descriptionKo: '보건진료소에서 해결하기 어려운 경우 병원 이용 절차를 확인하세요.',
+          descriptionEn: 'What to do when the campus clinic is not enough.',
+          iconName: 'help',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 건강보험 가입',
+          labelEn: 'Guide — National Health Insurance',
+          url: '/guide/item/health-insurance',
+          descriptionKo: '건강보험에 가입되어 있으면 병원 진료비 부담을 덜 수 있습니다.',
+          descriptionEn: 'Being enrolled lowers what you pay for treatment.',
+          iconName: 'payments',
+        ),
+      ],
+      // Both buildings are real campus-map data (coordinates auto-extracted),
+      // and the floor guide lists 보건진료소 on s02 B1F and b02 1F — so each
+      // card lands on the right building, and the map switches campus for it.
+      relatedFacilityIds: ['b02', 's02'],
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'hospital-guide',

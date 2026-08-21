@@ -1,4 +1,5 @@
 import 'package:campus_on/app.dart';
+import 'package:campus_on/data/mock/mock_data.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -504,6 +505,90 @@ void main() {
     // The credit cap is never stated as a flat rule for everyone.
     expect(find.textContaining('Not every student gets 19 credits'),
         findsOneWidget);
+  });
+
+  testWidgets('Guide detail: campus clinic shows both campuses and their maps',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 6000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Campus Health Center'));
+    await tester.pumpAndSettle();
+
+    // Published, so the coming-soon placeholder must be gone.
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    for (final title in const [
+      'Overview',
+      'Where can I find it?',
+      'Before you visit',
+      'Opening hours',
+      'What services are available?',
+      'In an emergency',
+      'If you need to see a doctor',
+      'Contact',
+      'Links & Locations',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // Which campus you are on decides the rest of the page, so the locations
+    // are rendered above the checklist and the hours.
+    final whereY = tester.getTopLeft(find.text('Where can I find it?')).dy;
+    final beforeY = tester.getTopLeft(find.text('Before you visit')).dy;
+    final hoursY = tester.getTopLeft(find.text('Opening hours')).dy;
+    expect(whereY, lessThan(beforeY));
+    expect(beforeY, lessThan(hoursY));
+
+    // Both campuses, each with its own building and phone number.
+    expect(find.text('Seunghak campus'), findsOneWidget);
+    expect(find.text('Bumin campus'), findsOneWidget);
+    expect(
+      find.textContaining('Student Union Building (Q), basement floor 1'),
+      findsWidgets,
+    );
+    expect(
+      find.textContaining('Law School Building (LS), 1st floor'),
+      findsWidgets,
+    );
+    expect(find.textContaining('051-200-6331'), findsWidgets);
+    expect(find.textContaining('051-200-8465'), findsWidgets);
+
+    // Hours are stated with the lunch break, and the emergency card sends the
+    // student to 119 rather than to the clinic.
+    expect(find.textContaining('09:00 – 17:00'), findsOneWidget);
+    expect(find.textContaining('Lunch break 12:00 – 13:00'), findsOneWidget);
+    expect(find.textContaining('Call 119 straight away'), findsOneWidget);
+
+    // Only the six services the clinic actually publishes.
+    for (final service in const [
+      'First aid',
+      'Treatment for wounds and burns',
+      'Over-the-counter medication',
+      'Health counselling',
+      'Health education',
+      'Health promotion programmes',
+    ]) {
+      expect(find.text(service), findsOneWidget, reason: service);
+    }
+
+    // One related-location card per campus, each pointing at the building the
+    // floor guide lists the clinic in.
+    final clinic =
+        MockData.guideItems.firstWhere((g) => g.id == 'campus-clinic');
+    expect(clinic.relatedFacilityIds, ['b02', 's02']);
+    expect(find.text('법학전문대학원(LS)'), findsOneWidget);
+    expect(find.text('학생회관(Q)'), findsOneWidget);
   });
 
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
