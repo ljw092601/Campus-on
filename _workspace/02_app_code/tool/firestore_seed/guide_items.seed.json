@@ -532,6 +532,7 @@
     "title_en": "Open a Bank Account",
     "summary_ko": "여권·외국인등록증 지참",
     "summary_en": "Bring passport & ARC",
+    "icon": "account_balance",
     "overview_ko": "은행 계좌는 은행 지점 방문을 통해 개설하는 것이 가장 일반적입니다. 일부 은행은 모바일 앱을 통한 비대면 계좌 개설도 지원할 수 있으나, 외국인등록증, 본인 명의 휴대폰, 모바일 외국인등록증 등 조건이 필요할 수 있습니다. 은행마다 가능 여부와 필요 서류가 다르므로 방문 또는 신청 전 확인하는 것이 좋습니다.",
     "overview_en": "Opening an account in person at a bank branch is the most common route. Some banks also offer app-based (non-face-to-face) account opening, but this may require an ARC, a phone number registered in your own name, or a mobile ARC. Availability and required documents differ by bank, so check before you visit or apply.",
     "checklist_ko": [
