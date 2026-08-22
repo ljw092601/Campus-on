@@ -507,6 +507,132 @@ void main() {
         findsOneWidget);
   });
 
+  testWidgets('Guide detail: certificate issuance renders its sections in order',
+      (tester) async {
+    // Nine section cards plus links — taller than the shared surface.
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Certificate Issuance'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.textContaining('Instant to a few days'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    for (final title in const [
+      'Overview',
+      'Certificates you can issue',
+      'The simplest way — issue it online',
+      'Certificate kiosks on campus',
+      'Other ways to get a certificate',
+      'Need an English certificate?',
+      'When you need something special',
+      'Documents available through the Integrated Information System',
+      'Good to know',
+      'Links & Locations',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    // Online issuance is recommended first, then the kiosk, then the rest.
+    final onlineY =
+        tester.getTopLeft(find.text('The simplest way — issue it online')).dy;
+    final kioskY =
+        tester.getTopLeft(find.text('Certificate kiosks on campus')).dy;
+    final otherY =
+        tester.getTopLeft(find.text('Other ways to get a certificate')).dy;
+    expect(onlineY, lessThan(kioskY));
+    expect(kioskY, lessThan(otherY));
+
+    // Kiosk locations follow the current official kiosk page. The 2024 booklet
+    // put the 승학 machine in the 본부 basement — that figure may only appear as
+    // an attributed footnote, never as the current location.
+    expect(
+      find.textContaining('lobby of the College of Humanities'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('lobby of the College of Social Sciences'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('basement of the main administration building'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('2024 international-student booklet'),
+      findsWidgets,
+    );
+
+    // 24/7 is stated together with the caveat that a locked building overrides
+    // it, so nobody walks across campus at night for nothing.
+    expect(
+      find.textContaining('You cannot use a kiosk in a locked building'),
+      findsOneWidget,
+    );
+    // English certificates hinge on the registered English name.
+    expect(
+      find.textContaining('The spelling has to match your passport'),
+      findsOneWidget,
+    );
+    // No 2024 fee is restated as a current amount.
+    expect(find.textContaining('₩'), findsNothing);
+
+    // Both kiosk buildings are linked as map locations.
+    expect(find.text('대학본부 및 인문과학대학(A)'), findsOneWidget);
+    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: certificate issuance fits a 360dp phone',
+      (tester) async {
+    // Narrowest phone width the app targets — scroll the whole page and let any
+    // RenderFlex overflow surface as an exception.
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Certificate Issuance'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+
+    // Reached the end of the page: the links section is on screen.
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    // Back out of the detail page — lands on the guide category screen.
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('School admin'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: campus clinic shows both campuses and their maps',
       (tester) async {
     tester.view.physicalSize = const Size(1080, 6000);

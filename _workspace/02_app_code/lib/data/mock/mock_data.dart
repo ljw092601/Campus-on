@@ -2320,8 +2320,574 @@ class MockData {
       categoryId: GuideCategory.school,
       titleKo: '증명서 발급',
       titleEn: 'Certificate Issuance',
-      summaryKo: '재학·성적증명 발급',
-      summaryEn: 'Enrollment & transcripts',
+      summaryKo: '온라인 · 자동발급기 · 방문 발급',
+      summaryEn: 'Online, kiosk & in-person issuance',
+      iconName: 'receipt_long',
+      overviewKo: '동아대학교에서는 재학증명서, 성적증명서, 졸업증명서 등 학교생활과 비자·취업·장학 '
+          '신청에 필요한 각종 증명서를 발급할 수 있습니다.\n\n'
+          '증명서는 인터넷, 교내 자동발급기, 어디서나민원(FAX), 우편 또는 학사관리과 방문 등 '
+          '여러 방법으로 발급할 수 있습니다.\n\n'
+          '일반적인 재학·성적·졸업 관련 증명서는 먼저 인터넷 발급 가능 여부를 확인하는 것이 가장 '
+          '편리합니다.',
+      overviewEn: 'At Dong-A University you can issue the certificates you need '
+          'for student life and for visa, job or scholarship applications — an '
+          'enrollment certificate, a transcript, a graduation certificate and '
+          'more.\n\n'
+          'There are several ways to get one: online, from a certificate kiosk '
+          'on campus, through the "certificate by fax" civil-service desks, by '
+          'post, or in person at the Office of Academic Affairs.\n\n'
+          'For the usual enrollment, transcript and graduation certificates, '
+          'the easiest thing is to check first whether you can issue it '
+          'online.',
+      // The "checklist" card is reused as the certificate menu: what you can
+      // ask for, with the caveat that availability depends on your record.
+      checklistTitleKo: '발급 가능한 증명서',
+      checklistTitleEn: 'Certificates you can issue',
+      checklistKo: [
+        '재학증명서',
+        '재적증명서',
+        '휴학증명서',
+        '제적증명서',
+        '졸업(학위수여)증명서',
+        '졸업(학위수여)예정증명서',
+        '성적증명서',
+        '수료증명서',
+        '복학예정증명서',
+      ],
+      checklistEn: [
+        'Certificate of Enrollment (재학증명서)',
+        'Certificate of Registration (재적증명서)',
+        'Certificate of Leave of Absence (휴학증명서)',
+        'Certificate of Removal from the Register (제적증명서)',
+        'Graduation / Degree Certificate (졸업증명서)',
+        'Certificate of Expected Graduation (졸업예정증명서)',
+        'Academic Transcript (성적증명서)',
+        'Certificate of Completion (수료증명서)',
+        'Certificate of Expected Reinstatement (복학예정증명서)',
+      ],
+      checklistNoteKo: '대부분의 증명서는 국문과 영문 모두 발급할 수 있습니다.\n'
+          '※ 증명서 종류와 학적 상태에 따라 인터넷 또는 자동발급기로 발급할 수 없는 경우가 '
+          '있습니다. 졸업예정증명서처럼 학부는 마지막 학기(8학기) 등록 이후에만 발급되는 등 '
+          '조건이 붙는 증명서도 있으므로, 필요한 증명서가 지금 발급 가능한지 먼저 확인하세요.',
+      checklistNoteEn: 'Most of these come in both Korean and English.\n'
+          '※ Depending on the certificate and on your enrollment status, some '
+          'cannot be issued online or at a kiosk. Some also have conditions — '
+          'an expected-graduation certificate, for instance, is only issued to '
+          'undergraduates once they have registered for their final (8th) '
+          'semester. Check that the one you need is available to you right '
+          'now.',
+      sections: [
+        // Online first: it is the only route an international student can
+        // complete without walking to a specific building.
+        GuideSection(
+          titleKo: '가장 간단한 방법 — 인터넷 발급',
+          titleEn: 'The simplest way — issue it online',
+          iconName: 'computer',
+          bodyKo: '동아대학교 인터넷 증명발급 서비스를 이용하면 필요한 증명서를 온라인으로 신청한 '
+              '뒤 파일 또는 프린터로 발급할 수 있습니다.\n\n'
+              '동아대학교 증명서발급 페이지의 「인터넷증명발급」에서 접속할 수 있습니다.',
+          bodyEn: "With Dong-A University's online certificate service you "
+              'apply for the certificate you need on the web, then save it as a '
+              'file or print it out.\n\n'
+              'You reach it from the university\'s certificate page, under '
+              '「인터넷증명발급」 (online certificate issuance).',
+          notes: [
+            GuideNote(
+              titleKo: '한눈에 보기',
+              titleEn: 'At a glance',
+              linesKo: [
+                '소요시간: 즉시 발급',
+                '결제: 휴대폰 소액결제 또는 신용카드',
+                '발급 형태: 파일 저장 또는 프린터 출력',
+              ],
+              linesEn: [
+                'How long it takes: issued immediately',
+                'Payment: mobile carrier billing or credit card',
+                'What you get: a file to save, or a printout',
+              ],
+            ),
+          ],
+          stepsKo: [
+            '동아대학교 증명서발급 페이지 접속',
+            '인터넷증명발급 선택',
+            '로그인 또는 본인확인',
+            '필요한 증명서 선택',
+            '발급 매수 및 정보 확인',
+            '수수료 결제',
+            '파일 또는 프린터로 발급',
+          ],
+          stepsEn: [
+            'Open the Dong-A University certificate page',
+            'Choose 인터넷증명발급 (online certificate issuance)',
+            'Log in, or verify your identity',
+            'Pick the certificate you need',
+            'Check the number of copies and your details',
+            'Pay the fee',
+            'Save it as a file, or print it',
+          ],
+          noticeKo: '영문 증명서를 처음 발급한다면\n'
+              '영문 증명서는 학교 시스템에 영문 성명을 먼저 등록해야 발급할 수 있습니다. '
+              '아래 「영문 증명서가 필요한가요?」를 먼저 확인하세요.',
+          noticeEn: 'Issuing an English certificate for the first time?\n'
+              'You have to register your name in English on the university '
+              'system before an English certificate can be issued. Read "Need '
+              'an English certificate?" below first.',
+          noticeIconName: 'badge',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 인터넷 증명발급 대상이 재학생·휴학생·'
+              '졸업생·제적생으로 안내되어 있었습니다. 대상과 발급 경로는 변경될 수 있으므로 학교 '
+              '증명서발급 페이지의 최신 안내를 확인하세요.',
+          footnoteEn: '※ The 2024 international-student booklet listed enrolled, '
+              'on-leave, graduated and removed students as eligible for online '
+              'issuance. Eligibility and the service itself can change — check '
+              "the latest notice on the university's certificate page.",
+        ),
+        // Kiosk locations follow the dedicated 증명서자동발급기 page, not the 2024
+        // booklet (which still puts the 승학 machine in the 본부 basement).
+        GuideSection(
+          titleKo: '교내 증명서 자동발급기',
+          titleEn: 'Certificate kiosks on campus',
+          iconName: 'location_on',
+          bodyKo: '교내 증명서 자동발급기에서도 국문·영문 증명서를 즉시 출력할 수 있습니다.\n\n'
+              '소요시간은 즉시이며, 학번과 학생정보 시스템 비밀번호로 본인 확인을 합니다.',
+          bodyEn: 'You can also print Korean and English certificates on the '
+              'spot from a certificate kiosk on campus.\n\n'
+              'It takes only a moment: you identify yourself with your student '
+              'ID number and your student-information system password.',
+          notes: [
+            GuideNote(
+              titleKo: '설치 위치',
+              titleEn: 'Where the kiosks are',
+              linesKo: [
+                '승학캠퍼스: 인문과학대학 로비',
+                '부민캠퍼스: 사회과학대학 로비',
+                '구덕캠퍼스: 구덕캠퍼스에서 증명서 발급이 필요한 경우 의과대학 행정지원실에 '
+                    '문의하세요.',
+              ],
+              linesEn: [
+                'Seunghak campus: lobby of the College of Humanities '
+                    '(인문과학대학)',
+                'Bumin campus: lobby of the College of Social Sciences '
+                    '(사회과학대학)',
+                'Gudeok campus: there is no kiosk — ask the College of Medicine '
+                    'administrative office if you need a certificate there.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '이용시간',
+              titleEn: 'When you can use them',
+              linesKo: [
+                '공식 안내상 연중 24시간 이용할 수 있습니다.',
+                '다만 건물 보안상 폐쇄에 따라 실제 이용시간이 달라질 수 있습니다.',
+              ],
+              linesEn: [
+                'The official notice says they are available 24 hours a day, '
+                    'all year round.',
+                'In practice the hours can change, because the building itself '
+                    'may be locked for security.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '결제 방법',
+              titleEn: 'How to pay',
+              linesKo: ['현금', '휴대폰', '체크카드', '신용카드'],
+              linesEn: [
+                'Cash',
+                'Mobile carrier billing',
+                'Debit card',
+                'Credit card',
+              ],
+            ),
+            GuideNote(
+              titleKo: '자동발급기로 발급할 수 없는 서류',
+              titleEn: 'What the kiosk cannot issue',
+              linesKo: [
+                '학적부 사본 — 학사관리과',
+                '장학금 수혜 확인서 — 학생복지과 장학팀',
+                '입학성적증명서 — 입학관리과',
+                '대학원 학적부 사본 — 각 대학원 행정지원실',
+              ],
+              linesEn: [
+                'A copy of your student record (학적부) — Office of Academic '
+                    'Affairs',
+                'Scholarship award confirmation — Student Welfare, scholarship '
+                    'team',
+                'Admission score certificate — Office of Admissions',
+                'Graduate-school student record — your graduate school office',
+              ],
+            ),
+          ],
+          stepsKo: [
+            '자동발급기에서 학부 또는 대학원 선택',
+            '학번과 비밀번호 입력',
+            '증명서 종류 선택',
+            '발급 매수 확인',
+            '수수료 결제',
+            '증명서 출력',
+          ],
+          stepsEn: [
+            'At the kiosk, choose undergraduate or graduate school',
+            'Enter your student ID number and password',
+            'Pick the type of certificate',
+            'Check the number of copies',
+            'Pay the fee',
+            'Take the printed certificate',
+          ],
+          noticeKo: '건물이 닫히면 이용할 수 없어요\n'
+              '연중 24시간 운영이 원칙이지만 건물 보안상 폐쇄에 따라 이용시간이 달라질 수 '
+              '있습니다.\n'
+              '늦은 시간에 방문하기 전에 건물 개방 여부를 먼저 확인하세요.',
+          noticeEn: 'You cannot use a kiosk in a locked building\n'
+              'They are meant to run 24 hours a day all year, but the hours '
+              'change when a building is closed for security.\n'
+              'Check that the building is open before going late at night.',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 승학캠퍼스 자동발급기가 본부건물 '
+              '지하 1층 ATM 옆, 이용시간 08:30~22:00으로 안내되어 있었습니다. 이 페이지는 '
+              '동아대학교 증명서자동발급기 공식 안내의 최신 위치와 이용시간을 따릅니다.',
+          footnoteEn: '※ The 2024 international-student booklet placed the '
+              'Seunghak kiosk next to the ATM in the basement of the main '
+              'administration building, open 08:30–22:00. This page follows the '
+              "location and hours on the university's current certificate-kiosk "
+              'notice instead.',
+        ),
+        GuideSection(
+          titleKo: '기타 발급 방법',
+          titleEn: 'Other ways to get a certificate',
+          iconName: 'storefront',
+          bodyKo: '인터넷 발급과 자동발급기 외에도 다음 방법을 이용할 수 있습니다.',
+          bodyEn: 'Besides online issuance and the kiosks, these routes are '
+              'available.',
+          notes: [
+            GuideNote(
+              titleKo: '어디서나민원(FAX)',
+              titleEn: 'Certificate by fax (어디서나민원)',
+              linesKo: [
+                '정부24 또는 전국 시·군·구청, 교육청, 주민센터 등을 통해 증명서 발급을 신청할 '
+                    '수 있습니다.',
+                '이용시간: 평일 09:00~17:00',
+                '소요시간: 약 2시간 이내',
+                '운영시간과 처리시간은 변경될 수 있으므로 신청 전에 최신 안내를 확인하세요.',
+              ],
+              linesEn: [
+                'You can apply through Government24 (정부24) or at a city, '
+                    'county or district office, an education office, or a '
+                    'community service center anywhere in Korea.',
+                'Hours: weekdays 09:00–17:00',
+                'How long it takes: usually within about 2 hours',
+                'Hours and processing times can change, so check the current '
+                    'notice before you go.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '온라인 우편발송',
+              titleEn: 'Online postal delivery',
+              linesKo: [
+                '학교의 우편 증명서 발송 서비스를 통해 증명서를 우편으로 받을 수 있습니다.',
+                '국내: 약 1~4일 (주말·공휴일 제외)',
+                '해외: 국가별로 다릅니다.',
+                '결제: 휴대폰 소액결제 또는 신용카드',
+              ],
+              linesEn: [
+                "The university's postal certificate service mails the "
+                    'certificate to you.',
+                'Within Korea: about 1–4 days (weekends and holidays excluded)',
+                'Overseas: it depends on the country.',
+                'Payment: mobile carrier billing or credit card',
+              ],
+            ),
+            GuideNote(
+              titleKo: '우체국 민원우편',
+              titleEn: 'Post-office civil-service mail',
+              linesKo: [
+                '전국 우체국에서 민원우편으로 증명서 발급을 신청할 수도 있습니다.',
+                '약 3~5일이 걸리며, 지역에 따라 달라질 수 있습니다.',
+              ],
+              linesEn: [
+                'Any post office in Korea can take a civil-service mail request '
+                    'for a certificate.',
+                'It takes about 3–5 days, and can be longer depending on the '
+                    'region.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '학사관리과 방문',
+              titleEn: 'In person at the Office of Academic Affairs',
+              linesKo: [
+                '인터넷이나 자동발급기로 처리하기 어려운 증명서는 학사관리과에서 직접 '
+                    '발급하거나 문의할 수 있습니다.',
+                '운영시간: 평일 09:00~17:00 (12:00~13:00 제외)',
+                '토요일·일요일·공휴일과 개교기념일에는 운영하지 않습니다.',
+                '문의: 051-200-6090~1',
+              ],
+              linesEn: [
+                'For anything the website or the kiosk cannot handle, the '
+                    'Office of Academic Affairs issues it at the counter, or '
+                    'tells you what to do.',
+                'Hours: weekdays 09:00–17:00 (closed 12:00–13:00)',
+                'Closed on Saturdays, Sundays, public holidays and the '
+                    "university's foundation day.",
+                'Phone: 051-200-6090~1',
+              ],
+            ),
+          ],
+          noticeKo: '우편이 이미 발송되었다면\n'
+              '증명서가 이미 발송 완료된 경우 발급 취소 및 결제 취소가 불가능할 수 있습니다.',
+          noticeEn: 'Once it is in the post\n'
+              'When a certificate has already been marked as sent, you may no '
+              'longer be able to cancel the request or the payment.',
+        ),
+        GuideSection(
+          titleKo: '영문 증명서가 필요한가요?',
+          titleEn: 'Need an English certificate?',
+          iconName: 'badge',
+          bodyKo: '영문 증명서를 처음 발급하는 경우 학교 시스템에 영문 성명이 등록되어 있어야 '
+              '합니다.\n\n'
+              '발급 전에 등록된 영문 이름이 여권의 영문 이름과 정확하게 일치하는지 확인하는 것을 '
+              '권장합니다.',
+          bodyEn: 'The first time you issue a certificate in English, your name '
+              'in English has to be registered on the university system.\n\n'
+              'Before you issue anything, check that the English name on record '
+              'matches the one in your passport exactly.',
+          notes: [
+            GuideNote(
+              titleKo: '영문 성명 등록 경로',
+              titleEn: 'Where to register your English name',
+              linesKo: [
+                '동아대학교 통합정보시스템에 로그인한 뒤 학생정보 → 학적변동 → 개인정보변경에서 '
+                    '영문 성명을 등록합니다.',
+                '자동발급기에서 영문 증명서를 뽑을 때에도 영문 성명이 먼저 등록되어 있어야 '
+                    '합니다.',
+              ],
+              linesEn: [
+                'Sign in to the Dong-A Integrated Information System, then go '
+                    'to Student Information → Academic Status → Personal '
+                    'Information and register your name in English.',
+                'This applies to the kiosks too — an English certificate will '
+                    'not print until the English name is registered.',
+              ],
+            ),
+          ],
+          noticeKo: '여권과 철자가 같아야 해요\n'
+              '비자·입학·취업 서류는 여권과 철자나 띄어쓰기가 다르면 반려될 수 있습니다.\n'
+              '등록할 때 여권을 보고 그대로 입력하세요.',
+          noticeEn: 'The spelling has to match your passport\n'
+              'Visa, admission and employment documents can be rejected if the '
+              'spelling or spacing differs from your passport.\n'
+              'Copy it from the passport exactly when you register it.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '특수한 증명서가 필요한 경우',
+          titleEn: 'When you need something special',
+          iconName: 'info',
+          bodyKo: '제출기관이 일반 증명서와 다른 형식을 요구하는 경우에는 발급 방법이 '
+              '달라집니다.',
+          bodyEn: 'When the institution receiving the document asks for '
+              'something other than a standard certificate, the way you get it '
+              'changes.',
+          notes: [
+            GuideNote(
+              titleKo: '석차가 표시된 성적증명서',
+              titleEn: 'A transcript showing your class rank',
+              linesKo: [
+                '성적증명서에 석차를 기재해야 하는 경우 학사관리과에 문의하세요.',
+              ],
+              linesEn: [
+                'If your transcript has to show your class rank, ask the Office '
+                    'of Academic Affairs.',
+              ],
+            ),
+            GuideNote(
+              titleKo: 'Sealing(밀봉) 또는 압인',
+              titleEn: 'Sealing or an embossed stamp',
+              linesKo: [
+                '해외 대학, 비자, 취업기관 등 제출기관에서 밀봉(Sealing)이나 압인 등 별도 '
+                    '형식을 요구하는 경우 일반 인터넷 발급만으로 충분하지 않을 수 있습니다.',
+                '제출기관의 요구사항을 먼저 확인한 뒤 학사관리과에 문의하세요.',
+              ],
+              linesEn: [
+                'Overseas universities, immigration offices and employers often '
+                    'require a sealed envelope or an embossed stamp — a plain '
+                    'online printout may not be accepted.',
+                'Find out exactly what the receiving institution requires, then '
+                    'ask the Office of Academic Affairs.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '학적부 사본',
+              titleEn: 'A copy of your student record (학적부)',
+              linesKo: [
+                '학적부 사본은 일반 인터넷 발급이나 자동발급기로 발급할 수 없는 경우가 있으며 '
+                    'FAX민원 또는 학사관리과 데스크를 이용해야 할 수 있습니다.',
+              ],
+              linesEn: [
+                'A copy of your student record often cannot be issued online or '
+                    'at a kiosk — you may have to use the certificate-by-fax '
+                    'route or the Office of Academic Affairs counter.',
+              ],
+            ),
+          ],
+          footnoteKo: '※ 학적부, 그리고 일정 시점 이전 졸업자의 증명서 등은 인터넷 발급이나 '
+              '자동발급기로 발급할 수 없는 경우가 있습니다.',
+          footnoteEn: '※ Student records, and certificates for students who '
+              'graduated before a certain date, are among the documents that '
+              'cannot always be issued online or at a kiosk.',
+        ),
+        GuideSection(
+          titleKo: '통합정보시스템에서 발급하는 서류',
+          titleEn: 'Documents available through the Integrated Information '
+              'System',
+          iconName: 'payments',
+          bodyKo: '일부 등록금·장학 관련 서류는 일반 증명서 발급 서비스가 아니라 동아대학교 '
+              '통합정보시스템에서 직접 조회하거나 출력할 수 있습니다.',
+          bodyEn: 'Some tuition and scholarship documents do not come from the '
+              'certificate service at all — you look them up and print them '
+              'yourself in the Dong-A Integrated Information System.',
+          notes: [
+            GuideNote(
+              titleKo: '여기서 발급하는 서류',
+              titleEn: 'What you get there',
+              linesKo: [
+                '등록금(학생회비) 납입 확인서',
+                '교육비 납입 증명서',
+                '장학금 수혜 확인서',
+              ],
+              linesEn: [
+                'Tuition (and student-union fee) payment confirmation',
+                'Certificate of education expenses paid',
+                'Scholarship award confirmation',
+              ],
+            ),
+          ],
+          noticeKo: '바로 발급됩니다\n'
+              '통합정보시스템에 로그인한 뒤 해당 메뉴에서 즉시 조회하고 출력할 수 있습니다.',
+          noticeEn: 'Available immediately\n'
+              'Sign in to the Integrated Information System and you can view '
+              'and print them straight away.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '꼭 알아두세요',
+          titleEn: 'Good to know',
+          iconName: 'lightbulb',
+          notes: [
+            GuideNote(
+              titleKo: '🌐 인터넷 발급부터 확인하세요',
+              titleEn: '🌐 Check online issuance first',
+              linesKo: [
+                '일반적인 재학·성적·졸업 관련 증명서는 인터넷으로 즉시 발급할 수 있는지 먼저 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'For an ordinary enrollment, transcript or graduation '
+                    'certificate, check first whether you can just issue it '
+                    'online in a minute.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🇬🇧 영문 이름을 확인하세요',
+              titleEn: '🇬🇧 Check your English name',
+              linesKo: [
+                '영문 증명서 발급 전 학교에 등록된 영문 이름과 여권의 영문 이름이 일치하는지 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'Before issuing anything in English, make sure the English name '
+                    'registered at the university matches your passport.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📄 모든 증명서가 온라인 발급되는 것은 아니에요',
+              titleEn: '📄 Not every certificate can be issued online',
+              linesKo: [
+                '학적부 사본이나 특수한 형태의 증명서는 별도의 발급 절차가 필요할 수 있습니다.',
+              ],
+              linesEn: [
+                'A copy of your student record, or a certificate in a special '
+                    'format, may need a separate procedure.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🔏 해외 제출 요건을 확인하세요',
+              titleEn: '🔏 Check the requirements of the receiving institution',
+              linesKo: [
+                '해외 대학·기관에 제출하는 경우 Sealing, 압인, 석차 표기 등 별도 요구사항이 '
+                    '있는지 먼저 확인하세요.',
+              ],
+              linesEn: [
+                'If the document goes to a university or an office abroad, ask '
+                    'them first whether they need sealing, an embossed stamp, '
+                    'or your class rank on it.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💰 수수료는 발급 전에 확인하세요',
+              titleEn: '💰 Check the fee before you issue',
+              linesKo: [
+                '증명서 수수료는 증명서 종류와 학적 상태에 따라 다릅니다.',
+                '2024학년도 외국인 유학생 안내서에 안내된 금액은 현재와 다를 수 있으므로, 실제 '
+                    '결제 단계나 동아대학교 최신 공식 안내에서 금액을 확인하세요.',
+              ],
+              linesEn: [
+                'The fee depends on the certificate and on your enrollment '
+                    'status.',
+                'The amounts printed in the 2024 international-student booklet '
+                    'may no longer be current — check the figure shown at the '
+                    "payment step, or the university's latest official notice.",
+              ],
+            ),
+          ],
+          footnoteKo: '증명서 발급 관련 문의는 동아대학교 학사관리과(051-200-6090~1)에서 확인할 '
+              '수 있습니다.',
+          footnoteEn: 'For questions about certificates, contact the Dong-A '
+              'University Office of Academic Affairs on 051-200-6090~1.',
+        ),
+      ],
+      links: [
+        // Official 생활정보 → 증명서발급 page: the certificate table, every
+        // issuing route, and the caveats live here.
+        GuideLink(
+          labelKo: '동아대학교 증명서 발급 안내',
+          labelEn: 'Dong-A University certificate issuance',
+          descriptionKo: '발급 방법 · 증명서 종류 · 유의사항',
+          descriptionEn: 'How to issue, certificate types, and what to watch for',
+          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN200',
+          iconName: 'receipt_long',
+        ),
+        // What the "인터넷증명발급 바로가기" on that page actually points at.
+        GuideLink(
+          labelKo: '인터넷 증명발급',
+          labelEn: 'Online certificate issuance',
+          descriptionKo: '온라인 즉시 발급',
+          descriptionEn: 'Issue it online, right away',
+          url: 'https://dx.donga.ac.kr/certificate/login.jsp',
+          iconName: 'computer',
+        ),
+        // Integrated Information System — where the tuition/scholarship
+        // documents and the English-name registration actually live.
+        GuideLink(
+          labelKo: '동아대학교 통합정보시스템',
+          labelEn: 'Dong-A University Integrated Information System',
+          descriptionKo: '등록금 · 교육비 · 장학 관련 증명 확인',
+          descriptionEn: 'Tuition, education-cost and scholarship documents',
+          url: 'https://dx.donga.ac.kr/',
+          iconName: 'badge',
+        ),
+        // Dedicated kiosk page — the authority for the locations above.
+        GuideLink(
+          labelKo: '증명서 자동발급기 안내',
+          labelEn: 'Certificate kiosk guide',
+          descriptionKo: '설치 위치 · 이용시간',
+          descriptionEn: 'Where the kiosks are and when they are open',
+          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN284',
+          iconName: 'location_on',
+        ),
+      ],
+      // 승학 인문과학대학 = s01(대학본부 및 인문과학대학), 부민 사회과학대학 = b04(종합강의동).
+      relatedFacilityIds: ['s01', 'b04'],
+      durationKo: '즉시~수일',
+      durationEn: 'Instant to a few days',
+      difficulty: 1,
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'library-guide',
