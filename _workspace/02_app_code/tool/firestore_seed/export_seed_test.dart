@@ -148,6 +148,17 @@ Map<String, dynamic> _sectionToJson(GuideSection s) => _compact({
       'body_en': s.bodyEn,
       'steps_ko': s.stepsKo,
       'steps_en': s.stepsEn,
+      'links': [
+        for (final l in s.links)
+          _compact({
+            'label_ko': l.labelKo,
+            'label_en': l.labelEn,
+            'url': l.url,
+            'description_ko': l.descriptionKo,
+            'description_en': l.descriptionEn,
+            'icon': l.iconName,
+          }),
+      ],
       'notes': [
         for (final n in s.notes)
           _compact({
@@ -224,6 +235,17 @@ Map<String, dynamic> _dumpSection(GuideSection s) => {
       'bodyEn': s.bodyEn,
       'stepsKo': s.stepsKo,
       'stepsEn': s.stepsEn,
+      'links': [
+        for (final l in s.links)
+          {
+            'labelKo': l.labelKo,
+            'labelEn': l.labelEn,
+            'url': l.url,
+            'descriptionKo': l.descriptionKo,
+            'descriptionEn': l.descriptionEn,
+            'iconName': l.iconName,
+          },
+      ],
       'notes': [
         for (final n in s.notes)
           {

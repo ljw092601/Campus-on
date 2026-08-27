@@ -2889,33 +2889,1173 @@ class MockData {
       difficulty: 1,
       status: GuideStatus.published,
     ),
+    // Content follows the current library site (library.donga.ac.kr), checked
+    // 2026-08-27. The 2024 international-student booklet is the background
+    // source; where the two disagree — opening hours above all — the live site
+    // wins and the booklet figure only ever appears as an attributed footnote.
     const AdminGuideItem(
       id: 'library-guide',
       categoryId: GuideCategory.school,
-      titleKo: '도서관 이용 안내',
+      titleKo: '도서관 이용안내',
       titleEn: 'Library Guide',
-      summaryKo: '대출·열람실 이용',
-      summaryEn: 'Borrowing & reading rooms',
-      relatedFacilityIds: ['s10'], // 한림도서관(승학)
+      summaryKo: '대출 · 열람실 · 모바일 이용증',
+      summaryEn: 'Borrowing, study rooms & mobile ID',
+      iconName: 'menu_book',
+      overviewKo: '동아대학교에는 승학캠퍼스의 한림도서관, 부민캠퍼스의 부민도서관과 법학도서분관, '
+          '구덕캠퍼스의 의학도서분관이 있습니다.\n\n'
+          '도서 대출과 반납뿐 아니라 열람실, 그룹스터디실, 전자자료, 학술DB, 캠퍼스간 대출 등 '
+          '다양한 서비스를 이용할 수 있습니다.\n\n'
+          '외국인 학생도 동아대학교 학생 계정과 학생증 또는 모바일 이용증을 이용하여 도서관 '
+          '서비스를 사용할 수 있습니다.',
+      overviewEn: 'Dong-A University has four libraries: Hallim Library on the '
+          'Seunghak campus, Bumin Library and the Law Library Branch on the '
+          'Bumin campus, and the Medical Library Branch on the Gudeok '
+          'campus.\n\n'
+          'They are not only for borrowing and returning books — you can also '
+          'use study rooms and group study rooms, read e-journals and academic '
+          'databases, and have a book sent over from another campus.\n\n'
+          'As an international student you use the same services as everyone '
+          'else: log in with your Dong-A University account and identify '
+          'yourself with your student ID card or with the mobile library ID in '
+          'the library app.',
+      topSections: [
+        // Which library you want comes before anything you do inside it.
+        GuideSection(
+          titleKo: '도서관 위치',
+          titleEn: 'Where the libraries are',
+          iconName: 'location_on',
+          bodyKo: '이용하려는 캠퍼스의 도서관을 먼저 확인하세요. 자료실 구성과 층 위치는 도서관마다 '
+              '다릅니다.',
+          bodyEn: 'Start with the library on your own campus — each one is laid '
+              'out differently and holds a different collection.',
+          notes: [
+            GuideNote(
+              titleKo: '승학캠퍼스 — 한림도서관',
+              titleEn: 'Seunghak campus — Hallim Library',
+              linesKo: [
+                '승학캠퍼스의 대표 도서관으로 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.',
+                '건물: S10 한림도서관',
+                '문의: 051-200-6273',
+              ],
+              linesEn: [
+                'The main library on the Seunghak campus: collections, study '
+                    'rooms and group study rooms.',
+                'Building: S10, Hallim Library',
+                'Phone: 051-200-6273',
+              ],
+            ),
+            GuideNote(
+              titleKo: '부민캠퍼스 — 부민도서관',
+              titleEn: 'Bumin campus — Bumin Library',
+              linesKo: [
+                '부민캠퍼스 국제관에 위치하며 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.',
+                '건물: B05 국제관 5~10층',
+                '문의: 051-200-8434',
+              ],
+              linesEn: [
+                'Inside the International Building on the Bumin campus: '
+                    'collections, study rooms and group study rooms.',
+                'Building: B05, International Building, floors 5–10',
+                'Phone: 051-200-8434',
+              ],
+            ),
+            GuideNote(
+              titleKo: '부민캠퍼스 — 법학도서분관',
+              titleEn: 'Bumin campus — Law Library Branch',
+              linesKo: [
+                '법학전문대학원 건물에 위치하며 법학 관련 자료를 이용할 수 있습니다.',
+                '건물: B02 법학전문대학원 1층',
+                '문의: 051-200-8441',
+              ],
+              linesEn: [
+                'In the Law School building, for legal collections.',
+                'Building: B02, Law School, 1st floor',
+                'Phone: 051-200-8441',
+              ],
+            ),
+            GuideNote(
+              titleKo: '구덕캠퍼스 — 의학도서분관',
+              titleEn: 'Gudeok campus — Medical Library Branch',
+              linesKo: [
+                '의학·간호 분야의 자료를 이용할 수 있는 도서분관입니다.',
+                '건물: G05 (구덕캠퍼스)',
+                '문의: 051-240-2938',
+              ],
+              linesEn: [
+                'A branch library for medicine and nursing.',
+                'Building: G05 (Gudeok campus)',
+                'Phone: 051-240-2938',
+              ],
+            ),
+          ],
+          footnoteKo: '※ 건물·층과 연락처는 도서관 홈페이지 「찾아오시는 길」 기준입니다. 각 층에 무엇이 '
+              '있는지는 홈페이지의 「층별 안내」에서 확인할 수 있습니다.',
+          footnoteEn: '※ Buildings, floors and phone numbers follow the '
+              '"Directions" page on the library website. What sits on each '
+              'floor is shown on its "Floor guide" page.',
+        ),
+        // The one thing to set up before a first visit.
+        GuideSection(
+          titleKo: '처음 이용한다면',
+          titleEn: 'Using the library for the first time',
+          iconName: 'smartphone',
+          bodyKo: '동아대학교 도서관 앱의 모바일 이용증을 먼저 준비해 두면 도서관에서 할 수 있는 일이 '
+              '대부분 휴대폰 하나로 해결됩니다.',
+          bodyEn: 'Set up the mobile library ID in the Dong-A University '
+              'Library app first — after that your phone covers almost '
+              'everything you do in the library.',
+          stepsKo: [
+            'App Store 또는 Google Play에서 「동아대학교 도서관」 앱 설치',
+            '동아대학교 통합정보시스템 계정으로 로그인',
+            '앱 화면 오른쪽 위의 「이용증」 메뉴 선택',
+            '모바일 이용증 확인',
+            '도서관 출입 · 도서 대출 · 좌석배정 등에 사용',
+          ],
+          stepsEn: [
+            'Install the "동아대학교 도서관" app from the App Store or Google Play',
+            'Log in with your Dong-A University integrated information system '
+                'account',
+            'Open the ID card (이용증) menu at the top right of the app',
+            'Your mobile library ID appears on screen',
+            'Show it to enter the library, borrow books and take a seat',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '학생증도 그대로 사용할 수 있어요',
+              titleEn: 'Your student ID card still works',
+              linesKo: [
+                '실물 학생증으로도 도서관에 출입하고 도서를 대출할 수 있습니다.',
+                '학생증과 모바일 이용증 중 편한 것을 사용하면 됩니다.',
+              ],
+              linesEn: [
+                'You can still use the plastic student ID card to enter the '
+                    'library and borrow books.',
+                'Use whichever is easier for you — the card or the app.',
+              ],
+            ),
+          ],
+          noticeKo: '모바일 이용증을 준비하세요\n'
+              '동아대학교 도서관 앱의 모바일 이용증은 도서관 출입, 도서 대출, 열람실 좌석배정 등에 '
+              '사용할 수 있습니다.',
+          noticeEn: 'Set up your mobile library ID\n'
+              'The mobile library ID in the app is what identifies you when you '
+              'enter the library, borrow a book or take a seat in a study room.',
+          noticeIconName: 'badge',
+          footnoteKo: '※ 학생증의 사용처(학생 확인용, 도서 대출, 열람실 이용)와 무료 발급 안내는 '
+              '2024학년도 외국인 유학생 안내서 기준입니다. 학생증 발급 절차는 학사관리과 안내를 '
+              '확인하세요.',
+          footnoteEn: '※ What the student ID card is used for (identification, '
+              'borrowing, study rooms) and the fact that it is issued free of '
+              'charge come from the 2024 international-student booklet. For how '
+              'to get one, check with the Office of Academic Affairs.',
+        ),
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '도서 대출',
+          titleEn: 'Borrowing Books',
+          iconName: 'menu_book',
+          bodyKo: '대출 데스크 또는 무인대출기를 이용하여 학생증이나 모바일 이용증으로 도서를 '
+              '대출할 수 있습니다.',
+          bodyEn: 'Borrow at the loan desk, or by yourself at a self-checkout '
+              'machine, using your student ID card or your mobile library ID.',
+          notes: [
+            GuideNote(
+              titleKo: '대출 책수와 기간',
+              titleEn: 'How many books, for how long',
+              linesKo: [
+                '학부 재학생: 10책 / 14일',
+                '대학원생: 10책 / 30일',
+                '비전임교원 · 직원: 10책 / 30일',
+                '전임교원: 30책 / 90일',
+              ],
+              linesEn: [
+                'Undergraduate students: 10 books for 14 days',
+                'Graduate students: 10 books for 30 days',
+                'Non-tenured teaching staff and staff: 10 books for 30 days',
+                'Full-time faculty: 30 books for 90 days',
+              ],
+            ),
+            GuideNote(
+              titleKo: '대출기간을 연장할 수 있어요',
+              titleEn: 'You can extend the loan',
+              linesKo: [
+                '대출한 자료는 반납예정일 전에 재대출할 수 있습니다.',
+                '재대출은 최초 대출기간과 동일한 기간으로 1회만 가능합니다.',
+                '예약자가 있거나 연체 중인 경우 재대출이 제한됩니다.',
+                '신청: 도서관 홈페이지 로그인 → My Library → 대출/재대출/예약조회 → 대출 및 재대출',
+              ],
+              linesEn: [
+                'Renew a book before its due date and you keep it longer.',
+                'You can renew once, for the same length as the original loan.',
+                'You cannot renew a book someone has reserved, or while you have '
+                    'anything overdue.',
+                'Where: log in to the library website → My Library → '
+                    '대출/재대출/예약조회 (loans, renewals & reservations) → '
+                    '대출 및 재대출',
+              ],
+            ),
+          ],
+          noticeKo: '대출할 수 없는 자료도 있어요\n'
+              '학위논문과 연속간행물은 대출되지 않습니다. 무인대출기는 기기가 설치된 도서관에서만 '
+              '이용할 수 있습니다.',
+          noticeEn: 'Some materials cannot be taken out\n'
+              'Theses and periodicals are for use inside the library only. '
+              'Self-checkout machines are available only at the libraries that '
+              'have one.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '반납 · 연체',
+          titleEn: 'Returns & Overdue Items',
+          iconName: 'event_repeat',
+          bodyKo: '대출한 도서는 한림도서관, 부민도서관, 법학도서분관, 의학도서분관 중 어느 곳에서도 '
+              '반납할 수 있습니다.\n\n'
+              '도서관이 문을 닫은 시간에는 무인반납함을 이용하세요.',
+          bodyEn: 'Return a book to any of the four libraries — Hallim, Bumin, '
+              'the Law Library Branch or the Medical Library Branch. It does '
+              'not have to go back where you borrowed it.\n\n'
+              'When the library is closed, use a book return box.',
+          notes: [
+            GuideNote(
+              titleKo: '무인반납함 위치',
+              titleEn: 'Where the return boxes are',
+              linesKo: [
+                '한림도서관: 한림도서관 2층',
+                '부민도서관: 국제관 1층, 지하 1층',
+                '법학도서분관: 도서관 입구',
+                '의학도서분관: 간호대 1층',
+              ],
+              linesEn: [
+                'Hallim Library: 2nd floor of the library',
+                'Bumin Library: International Building, 1st floor and basement '
+                    '1st floor',
+                'Law Library Branch: at the library entrance',
+                'Medical Library Branch: 1st floor of the Nursing building',
+              ],
+            ),
+          ],
+          noticeKo: '반납일을 꼭 확인하세요\n'
+              '대출한 자료를 연체하면 일정 기간 도서 대출이 제한될 수 있습니다. 현재 규정은 '
+              '1책당 연체 1일마다 대출중지 1일입니다.',
+          noticeEn: 'Keep an eye on the due date\n'
+              'Returning late suspends your borrowing for a while: the current '
+              'rule is one day of suspension per book per day overdue.',
+        ),
+        GuideSection(
+          titleKo: '열람실 이용',
+          titleEn: 'Study Room & Seat Reservation',
+          iconName: 'school',
+          bodyKo: '열람실 좌석은 동아대학교 도서관 앱에서 예약한 뒤 인증(발권확정)해야 이용할 수 '
+              '있습니다.',
+          bodyEn: 'Seats in the study rooms are booked in the library app — and '
+              'a booking only becomes a seat once you check in.',
+          stepsKo: [
+            '동아대학교 도서관 앱에 통합정보시스템 계정으로 로그인',
+            '「열람실 예약」 선택',
+            '도서관 선택',
+            '열람실 선택',
+            '좌석 선택 후 예약 완료',
+            '20분 이내에 예약 인증(발권확정)',
+            '좌석 이용',
+            '이용 종료 후 앱에서 좌석 반납',
+          ],
+          stepsEn: [
+            'Log in to the library app with your integrated information system '
+                'account',
+            'Choose 열람실 예약 (reserve a seat)',
+            'Pick the library',
+            'Pick the study room',
+            'Pick a seat and confirm the booking',
+            'Check in within 20 minutes to confirm the seat',
+            'Use your seat',
+            'Release the seat in the app when you leave',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '인증 방법은 두 가지예요',
+              titleEn: 'Two ways to check in',
+              linesKo: [
+                '열람실 안에서 앱의 「예약인증」 선택 — 비콘 인증이므로 블루투스를 켜 두세요.',
+                '도서관 안의 좌석배정기(키오스크)에서 모바일 이용증을 인식',
+              ],
+              linesEn: [
+                'Tap 예약인증 (confirm booking) in the app while you are in the '
+                    'study room — it uses Bluetooth beacons, so keep Bluetooth '
+                    'on.',
+                'Or scan your mobile library ID at a seat kiosk inside the '
+                    'library.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '이용 후 좌석을 반납하세요',
+              titleEn: 'Release your seat when you are done',
+              linesKo: [
+                '이용이 끝난 뒤 앱에서 좌석 반납을 완료하세요.',
+                '앱의 「나의자리」에서 현재 예약·발권된 좌석과 사용 이력을 확인할 수 있습니다.',
+              ],
+              linesEn: [
+                'Finish by releasing the seat in the app so someone else can '
+                    'use it.',
+                'Under 나의자리 (my seat) you can see your current booking and '
+                    'your past usage.',
+              ],
+            ),
+          ],
+          noticeKo: '예약만 하면 끝이 아니에요\n'
+              '좌석 예약 후 20분 이내에 인증하여 발권확정을 해야 이용할 수 있습니다. 정해진 시간 '
+              '안에 인증하지 않으면 예약이 취소될 수 있습니다.',
+          noticeEn: 'Booking a seat is only half of it\n'
+              'You have 20 minutes to check in and confirm the seat. If you do '
+              'not, the booking can be cancelled.',
+          footnoteKo: '※ 그룹스터디실은 도서관 홈페이지에서 별도로 신청합니다. 신청 조건과 이용 시간은 '
+              '도서관 홈페이지의 안내를 확인하세요.',
+          footnoteEn: '※ Group study rooms are booked separately on the library '
+              'website. Check the site for who can book one and for how long.',
+        ),
+        GuideSection(
+          titleKo: '캠퍼스간 대출',
+          titleEn: 'Inter-Campus Loan',
+          iconName: 'compare_arrows',
+          bodyKo: '필요한 책이 다른 캠퍼스 도서관에 있는 경우 캠퍼스간 대출을 신청하여 원하는 '
+              '도서관에서 받을 수 있습니다.\n\n'
+              '신청하려는 자료가 내가 있는 캠퍼스의 도서관에 없을 때 이용할 수 있습니다.',
+          bodyEn: 'If the book you need is held on another campus, request an '
+              'inter-campus loan and collect it at the library you choose.\n\n'
+              'It applies when the item is not held by the library on your own '
+              'campus.',
+          stepsKo: [
+            '도서관 홈페이지 로그인',
+            '자료 검색',
+            '도서 상세정보 확인',
+            '캠퍼스간 대출 신청',
+            '수령할 도서관 선택',
+            '도착 안내 확인 후 수령',
+          ],
+          stepsEn: [
+            'Log in to the library website',
+            'Search for the book',
+            'Open its detail page',
+            'Request an inter-campus loan',
+            'Choose where you want to collect it',
+            'Wait for the arrival notice, then pick it up',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '수령할 수 있는 도서관',
+              titleEn: 'Where you can collect it',
+              linesKo: [
+                '한림도서관 (승학캠퍼스)',
+                '부민도서관 (부민캠퍼스)',
+                '법학도서분관 (부민캠퍼스)',
+                '의학도서분관 (구덕캠퍼스)',
+              ],
+              linesEn: [
+                'Hallim Library (Seunghak campus)',
+                'Bumin Library (Bumin campus)',
+                'Law Library Branch (Bumin campus)',
+                'Medical Library Branch (Gudeok campus)',
+              ],
+            ),
+            GuideNote(
+              // Not "Good to know" — that is the l10n heading of the tips
+              // section further down, and the two must stay distinguishable.
+              titleKo: '알아둘 점',
+              titleEn: 'Things to know',
+              linesKo: [
+                '대출기간은 일반 대출과 동일합니다.',
+                '반납은 우리 대학의 모든 도서관에서 할 수 있습니다(취업지원실 제외).',
+                '자료 도착 후 보관 기간은 3일입니다.',
+                '금요일 오후 2시 이후 신청분은 다음 주 월요일에 처리됩니다.',
+              ],
+              linesEn: [
+                'The loan period is the same as an ordinary loan.',
+                'You can return it at any library of the university (except the '
+                    'Career Support Office).',
+                'Once it arrives it is held for 3 days.',
+                'Requests made after 2 p.m. on Friday are processed the '
+                    'following Monday.',
+              ],
+            ),
+          ],
+          noticeKo: '신청한 책은 꼭 찾아가세요\n'
+              '신청한 자료를 3회 이상 대출하지 않으면 해당 학기 동안 캠퍼스간 대출 서비스를 '
+              '이용할 수 없습니다.',
+          noticeEn: 'Do collect what you request\n'
+              'If you fail to pick up requested items three times, you lose '
+              'access to the inter-campus loan service for the rest of the '
+              'semester.',
+        ),
+        GuideSection(
+          titleKo: '전자자료 · 논문 이용',
+          titleEn: 'E-resources & Papers',
+          iconName: 'computer',
+          bodyKo: '동아대학교 도서관 홈페이지에 로그인하면 전자저널, 학술DB 등 다양한 전자자료를 '
+              '이용할 수 있습니다.\n\n'
+              '교외에서는 도서관의 교외접속 서비스를 이용해야 할 수 있습니다.',
+          bodyEn: 'Log in to the library website and you can read e-journals, '
+              'academic databases and other electronic resources.\n\n'
+              'From off campus you may need the library\'s off-campus access '
+              'service to reach them.',
+          notes: [
+            GuideNote(
+              titleKo: '교외접속 이용 방법',
+              titleEn: 'How off-campus access works',
+              linesKo: [
+                '별도의 프로그램 설치 없이 도서관 홈페이지에 로그인하면 이용할 수 있습니다.',
+                'Edge, Chrome, Safari, Firefox 등 대부분의 브라우저를 지원합니다.',
+                '전자자료에 바로 접속할 때는 도서관 홈페이지 메인의 「교외접속」을 On으로 '
+                    '설정하세요.',
+              ],
+              linesEn: [
+                'Nothing to install — just log in to the library website.',
+                'Most browsers work: Edge, Chrome, Safari and Firefox.',
+                'When you go straight to a resource, switch 교외접속 (off-campus '
+                    'access) to On on the library home page first.',
+              ],
+            ),
+          ],
+          noticeKo: '학교 밖에서도 논문을 볼 수 있어요\n'
+              '교외접속 서비스를 이용하면 학교 밖에서도 교내와 동일하게 전자저널과 학술DB를 '
+              '이용할 수 있습니다.',
+          noticeEn: 'You can read papers from outside the campus too\n'
+              'With off-campus access, e-journals and databases work from home '
+              'exactly as they do on campus.',
+          noticeIconName: 'computer',
+        ),
+        // Hours change every term. The page leads with "check before you go"
+        // and the concrete table is explicitly dated, never presented as fixed.
+        GuideSection(
+          titleKo: '운영시간',
+          titleEn: 'Opening Hours',
+          iconName: 'info',
+          bodyKo: '도서관 운영시간은 학기, 방학, 시험기간에 따라 달라집니다.\n\n'
+              '방문 전에 동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요. 홈페이지 '
+              '메인에 실시간 이용시간이 표시됩니다.',
+          bodyEn: 'Opening hours change between term time, the vacation and the '
+              'exam period.\n\n'
+              "Check today's hours on the library website before you go — the "
+              'home page shows the live opening hours.',
+          notes: [
+            GuideNote(
+              titleKo: '2026년 8월 확인 기준',
+              titleEn: 'As listed in August 2026',
+              linesKo: [
+                '자료실(한림 · 부민 · 법학도서분관): 학기 중 평일 09:00~20:00, 방학 중 평일 '
+                    '09:00~17:00',
+                '의학도서분관 자료실: 평일 09:00~17:00',
+                '열람실: 매일 07:00~24:00',
+                '자료실은 토요일 휴실, 일요일과 공휴일은 휴관',
+              ],
+              linesEn: [
+                'Collections (Hallim, Bumin, Law Branch): 09:00–20:00 on '
+                    'weekdays in term time, 09:00–17:00 during the vacation',
+                'Medical Library Branch collection: 09:00–17:00 on weekdays',
+                'Study rooms: 07:00–24:00, every day',
+                'Collections are closed on Saturdays; everything is closed on '
+                    'Sundays and public holidays',
+              ],
+            ),
+          ],
+          noticeKo: '운영시간은 방문 전에 확인하세요\n'
+              '도서관 운영시간은 학기, 방학, 시험기간에 따라 달라질 수 있습니다. 방문 전에 '
+              '동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요.',
+          noticeEn: 'Check opening hours before visiting\n'
+              'Hours change with the term, the vacation and the exam period. '
+              "Look up today's hours on the library website before you set off.",
+          noticeIconName: 'info',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 자료실 09:00~22:00, 열람실 '
+              '05:00~24:00으로 안내되어 있었습니다. 현재 도서관 홈페이지의 이용시간과 다르므로 '
+              '홈페이지의 실시간 이용시간을 기준으로 하세요.',
+          footnoteEn: '※ The 2024 international-student booklet listed '
+              '09:00–22:00 for the collections and 05:00–24:00 for the study '
+              'rooms. Those no longer match the library website — go by the '
+              'live hours shown there.',
+        ),
+      ],
+      tipsKo: [
+        '📱 모바일 이용증 — 도서관 앱의 모바일 이용증을 이용하면 출입, 대출, 좌석배정 등을 '
+            '편리하게 이용할 수 있습니다.',
+        '📚 다른 캠퍼스의 책도 신청 가능 — 필요한 자료가 다른 캠퍼스에 있다면 캠퍼스간 대출 '
+            '서비스를 확인하세요.',
+        '🔄 다른 도서관에서도 반납 가능 — 대출한 도서는 한림 · 부민 · 법학 · 의학도서분관 중 '
+            '다른 도서관에서도 반납할 수 있습니다.',
+        '⏰ 운영시간 확인 — 시험기간과 방학에는 운영시간이 달라질 수 있으므로 방문 전 '
+            '확인하세요.',
+        '💻 전자자료 — 도서관 홈페이지를 통해 전자저널, 학술DB 등 다양한 전자자료를 이용할 수 '
+            '있습니다.',
+      ],
+      tipsEn: [
+        '📱 Mobile library ID — the ID in the library app covers entry, '
+            'borrowing and seat booking in one place.',
+        '📚 Books from other campuses — if what you need is held elsewhere, use '
+            'the inter-campus loan service.',
+        '🔄 Return anywhere — a borrowed book can go back to Hallim, Bumin, the '
+            'Law Branch or the Medical Branch, whichever is closest.',
+        '⏰ Check the hours — they change during exam periods and vacations, so '
+            'look them up before you go.',
+        '💻 E-resources — e-journals and academic databases are all reachable '
+            'through the library website.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '동아대학교 도서관',
+          labelEn: 'Dong-A University Library',
+          descriptionKo: '자료검색 · 운영시간 · 도서관 서비스',
+          descriptionEn: 'Search, opening hours and library services',
+          url: 'https://library.donga.ac.kr/',
+        ),
+        GuideLink(
+          labelKo: 'DAU Library English',
+          labelEn: 'DAU Library English',
+          descriptionKo: '영문 도서관 홈페이지',
+          descriptionEn: 'Library information for international students',
+          url: 'https://library.donga.ac.kr/en/',
+        ),
+        GuideLink(
+          labelKo: '오늘의 운영시간',
+          labelEn: "Today's opening hours",
+          descriptionKo: '도서관별 · 실별 이용시간',
+          descriptionEn: 'Hours for each library and each room',
+          url: 'https://library.donga.ac.kr/about-our-library/library-hours/',
+          iconName: 'event_repeat',
+        ),
+        GuideLink(
+          labelKo: '모바일 이용증 안내',
+          labelEn: 'Mobile library ID',
+          descriptionKo: '도서관 앱 · 모바일 이용증 사용 방법',
+          descriptionEn: 'How to set up and use the ID in the app',
+          url: 'https://library.donga.ac.kr/libaray-services/mobile-service/'
+              'mobile-id-card/',
+          iconName: 'badge',
+        ),
+        GuideLink(
+          labelKo: '열람실 좌석배정 안내',
+          labelEn: 'Seat reservation',
+          descriptionKo: '좌석 예약 · 인증 · 반납 방법',
+          descriptionEn: 'Booking, checking in and releasing a seat',
+          url: 'https://library.donga.ac.kr/libaray-services/mobile-service/'
+              'mobile-seat-allocation/',
+          iconName: 'school',
+        ),
+        GuideLink(
+          labelKo: '캠퍼스간 대출 안내',
+          labelEn: 'Inter-campus loan',
+          descriptionKo: '다른 캠퍼스 도서 신청',
+          descriptionEn: 'Request a book held on another campus',
+          url: 'https://library.donga.ac.kr/libaray-services/using-materials/'
+              'inter-campus-loan/',
+          iconName: 'compare_arrows',
+        ),
+        GuideLink(
+          labelKo: '교외접속 서비스',
+          labelEn: 'Off-campus access',
+          descriptionKo: '학교 밖에서 전자저널 · 학술DB 이용',
+          descriptionEn: 'Read e-journals and databases from off campus',
+          url: 'https://library.donga.ac.kr/libaray-services/off-campus-access/',
+          iconName: 'computer',
+        ),
+      ],
+      // 한림도서관(승학) / 국제관 = 부민도서관(부민) / 법학전문대학원 = 법학도서분관(부민) /
+      // 구덕교육동 2,3호관 2F = 의학도서분관(구덕). All four already exist in the
+      // building data — no new coordinates were invented for this guide.
+      relatedFacilityIds: ['s10', 'b05', 'b02', 'g05'],
+      durationKo: '5~10분',
+      durationEn: '5–10 minutes',
+      difficulty: 1,
+      status: GuideStatus.published,
     ),
+    // Department name, phone/fax, transport and the live Q&A / 상담신청 boards
+    // follow global.donga.ac.kr, checked 2026-08-27. The room code and the team
+    // email come from the 2024 booklet and are attributed as such — the office
+    // site gives the campus address but not the room.
     const AdminGuideItem(
       id: 'oia-visit',
       categoryId: GuideCategory.school,
-      titleKo: '국제교류처 방문 안내',
-      titleEn: 'Visiting the OIA',
-      summaryKo: '위치·상담 시간',
-      summaryEn: 'Location & hours',
+      titleKo: '국제교류과 방문 안내',
+      titleEn: 'International Affairs Office',
+      detailTitleKo: '대외국제처 국제교류과 방문 안내',
+      detailTitleEn: 'International Affairs Office Guide',
+      summaryKo: '비자 · 체류 · 장학 · 유학생 지원',
+      summaryEn: 'Visa, stay, scholarships & student support',
+      iconName: 'swap_horiz',
+      overviewKo: '동아대학교 대외국제처 국제교류과는 외국인 유학생의 입학, 학사, 체류, 장학, '
+          '기숙사, 상담 및 국제교류 프로그램 등을 지원하는 부서입니다.\n\n'
+          '비자나 체류 관련 학교 확인이 필요하거나 외국인 유학생 지원 프로그램, 장학, 학교생활 '
+          '관련 문의가 있는 경우 국제교류과에 문의할 수 있습니다.\n\n'
+          '업무에 따라 담당자와 필요한 서류가 다를 수 있으므로 방문 전에 공식 공지나 담당 부서를 '
+          '확인하는 것이 좋습니다.',
+      overviewEn: 'The Office of International Affairs (대외국제처 국제교류과) is the '
+          'department that supports international students — admissions, '
+          'academic matters, stay and visa, scholarships, dormitories, '
+          'counseling and exchange programmes.\n\n'
+          'Go to them when you need the university to confirm something for a '
+          'visa or stay application, or when you have a question about student '
+          'support programmes, scholarships or life at Dong-A.\n\n'
+          'Different services are handled by different staff members and need '
+          'different documents, so check the office notices — or which '
+          'department actually handles it — before you go.',
+      topSections: [
+        // First question a student has is whether this is even the right desk.
+        GuideSection(
+          titleKo: '어떤 일로 방문할 수 있나요?',
+          titleEn: 'What can I ask about?',
+          iconName: 'help',
+          bodyKo: '문의하려는 내용이 국제교류과 업무인지 먼저 확인하세요. 국제교류과는 외국인 유학생 '
+              '유치와 지원, 해외 대학과의 협정 체결, 해외 한국어 센터 운영 등을 담당합니다.',
+          bodyEn: 'Check first that what you need is actually handled here. The '
+              'office recruits and supports international students, signs '
+              'agreements with universities abroad, and runs the Korean '
+              'language centres.',
+          notes: [
+            GuideNote(
+              titleKo: '🪪 체류 · 비자',
+              titleEn: '🪪 Stay & visa',
+              linesKo: [
+                '외국인등록 관련 문의',
+                '체류기간 연장 관련 문의',
+                '체류자격 변경',
+                '시간제취업 관련 학교 확인',
+                '기타 출입국·체류 관련 학교 지원',
+              ],
+              linesEn: [
+                'Questions about alien registration',
+                'Questions about extending your period of stay',
+                'Changing your status of stay',
+                'University confirmation for part-time work',
+                'Other university support for immigration and stay matters',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🎓 학사 · 학교생활',
+              titleEn: '🎓 Academics & student life',
+              linesKo: [
+                '외국인 유학생 학사 관련 문의',
+                '학교생활 상담',
+                '유학생 지원 프로그램',
+                '학과 또는 학교생활 관련 지원이 필요한 경우',
+              ],
+              linesEn: [
+                'Academic questions specific to international students',
+                'Counseling about student life',
+                'Support programmes for international students',
+                'When you need help with something at your department or on '
+                    'campus',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💰 장학 · 생활지원',
+              titleEn: '💰 Scholarships & living support',
+              linesKo: [
+                '외국인 유학생 장학 관련 문의',
+                '기숙사 및 생활지원 관련 안내',
+                '외국인 학생 지원제도',
+              ],
+              linesEn: [
+                'Questions about scholarships for international students',
+                'Dormitories and living support',
+                'Support schemes for international students',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🌏 국제교류',
+              titleEn: '🌏 Exchange programmes',
+              linesKo: [
+                '교환학생 프로그램',
+                '해외파견 프로그램',
+                '국제교류 프로그램',
+                '한국인·외국인 학생 교류 프로그램',
+              ],
+              linesEn: [
+                'Exchange student programmes',
+                'Overseas dispatch programmes',
+                'International exchange programmes',
+                'Programmes that bring Korean and international students '
+                    'together',
+              ],
+            ),
+          ],
+          noticeKo: '출입국 민원을 대신 처리하는 곳은 아니에요\n'
+              '국제교류과는 학교 단체접수 또는 학교 확인이 필요한 업무를 지원할 수 있습니다. '
+              '신청과 심사 자체는 출입국·외국인청에서 진행합니다.',
+          noticeEn: 'It is not an immigration office\n'
+              'The office can help where a group application through the '
+              'university, or a confirmation from the university, is needed. '
+              'The application itself is filed with — and decided by — the '
+              'immigration office.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 국제교류과가 모든 학사 업무를 처리하지는 않습니다. 전공 수강신청이나 학과 '
+              '세부 사항은 소속 학과사무실에 문의해야 할 수 있습니다.',
+          footnoteEn: '※ Not every academic matter goes through this office. '
+              'Registering for your major courses and department-specific rules '
+              'are usually handled by your own department office.',
+        ),
+        GuideSection(
+          titleKo: '위치',
+          titleEn: 'Where the office is',
+          iconName: 'location_on',
+          bodyKo: '국제교류과 사무실은 부민캠퍼스 종합강의동 1층에 있습니다. 법학전문대학원(B02) 옆, '
+              '취업지원실 인근입니다.',
+          bodyEn: 'The office is on the 1st floor of the General Lecture '
+              'Building on the Bumin campus — next to the Law School building '
+              '(B02) and near the Career Support Office.',
+          notes: [
+            GuideNote(
+              titleKo: '부민캠퍼스',
+              titleEn: 'Bumin campus',
+              linesKo: ['종합강의동 1층 BC-0116-3'],
+              linesEn: [
+                'General Lecture Building, 1st floor, room BC-0116-3',
+              ],
+            ),
+            GuideNote(
+              titleKo: '주소',
+              titleEn: 'Address',
+              linesKo: [
+                '부산광역시 서구 구덕로 225 (부민동 2가)',
+                '우편번호 49236',
+              ],
+              linesEn: [
+                '225 Gudeok-ro, Seo-gu, Busan (Bumin-dong 2-ga)',
+                'Postal code 49236',
+              ],
+            ),
+            GuideNote(
+              titleKo: '지하철',
+              titleEn: 'By subway',
+              linesKo: [
+                '부산지하철 1호선 토성역 2번 출구에서 동아대학교 부민캠퍼스 방향으로 이동하세요.',
+                '2번 출구에서 약 3분 거리입니다.',
+              ],
+              linesEn: [
+                'Take Busan Metro Line 1 to Toseong station and leave by Exit 2, '
+                    'heading towards the Dong-A University Bumin campus.',
+                'It is about a 3-minute walk from Exit 2.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '버스',
+              titleEn: 'By bus',
+              linesKo: [
+                '동아대학교 부민캠퍼스 정류소 하차',
+                '일반 15, 16, 40, 70, 81, 123, 126, 161, 190 / 좌석 58-1',
+              ],
+              linesEn: [
+                'Get off at the Dong-A University Bumin Campus stop',
+                'Regular buses 15, 16, 40, 70, 81, 123, 126, 161, 190; '
+                    'express bus 58-1',
+              ],
+            ),
+          ],
+          footnoteKo: '※ 호실 번호(BC-0116-3)는 2024학년도 외국인 유학생 안내서 기준입니다. '
+              '사무실이 이전될 수 있으므로 방문 전 국제교류과 홈페이지의 「찾아오시는 길」을 '
+              '확인하세요.',
+          footnoteEn: '※ The room number (BC-0116-3) comes from the 2024 '
+              'international-student booklet. Offices do move — check the '
+              '"Directions" page on the office website before you go.',
+        ),
+      ],
+      // The checklist card is reused as the "before you visit" list; the four
+      // items are checks to make, not documents everyone has to bring.
+      checklistTitleKo: '방문 전 확인',
+      checklistTitleEn: 'Before You Visit',
+      checklistKo: [
+        '방문 목적 확인 — 비자, 체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.',
+        '관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 '
+            '있으므로 방문 전에 국제교류과 공지를 확인하세요.',
+        '필요한 서류 확인 — 업무에 따라 여권, 외국인등록증, 신청서, 재학증명서 등 필요한 서류가 '
+            '달라질 수 있습니다.',
+        '온라인 문의 먼저 확인 — 간단한 질문은 국제교류과 홈페이지의 Q&A를 먼저 이용할 수 '
+            '있습니다.',
+      ],
+      checklistEn: [
+        'Know what you are asking about — visa and stay, scholarships, exchange '
+            'programmes and so on are each handled by a different person.',
+        'Read the notices first — alien registration and stay extensions are '
+            'sometimes filed as a group through the university within a set '
+            'period, which the office announces.',
+        'Find out which documents you need — depending on the service that may '
+            'be your passport, your ARC, an application form or an enrollment '
+            'certificate.',
+        'Try online first — for a simple question, the Q&A board on the office '
+            'website is quicker than a visit.',
+      ],
+      checklistNoteKo: '※ 위 서류가 모든 방문에 필요한 것은 아닙니다. 방문 전에 해당 업무의 공지 '
+          '또는 담당자에게 필요한 서류를 확인하세요.\n'
+          '※ 사무실 운영시간은 국제교류과 홈페이지에 별도로 안내되어 있지 않습니다. 방문 전 '
+          '국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.',
+      checklistNoteEn: '※ Those documents are not required for every visit. '
+          'Check the notice for your particular service, or ask the staff, '
+          'before you set off.\n'
+          '※ The office website does not publish opening hours. Check the '
+          'website or call before visiting.',
+      stepsKo: [
+        '문의하려는 업무 확인',
+        '국제교류과 최신 공지 확인',
+        '필요한 서류 확인',
+        '국제교류과 방문 또는 온라인 문의',
+        '담당자에게 문의',
+        '추가 제출 또는 후속 절차 확인',
+      ],
+      stepsEn: [
+        'Work out exactly what you need',
+        'Check the latest notices from the office',
+        'Find out which documents that service needs',
+        'Visit the office, or ask online',
+        'Talk to the staff member who handles it',
+        'Check what you still have to submit or do next',
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '연락처',
+          titleEn: 'Contact',
+          iconName: 'smartphone',
+          bodyKo: '국제교류과는 국제교류팀과 국제지원팀으로 구성되어 있습니다. 업무에 따라 담당자가 '
+              '다르므로 대표번호로 먼저 문의하세요.',
+          bodyEn: 'The office has two teams — the International Exchange Team '
+              'and the International Support Team. Which staff member helps you '
+              'depends on what you need, so start with the main numbers.',
+          notes: [
+            GuideNote(
+              titleKo: '국제교류과 대표 연락처',
+              titleEn: 'Main contact',
+              linesKo: [
+                '전화: 051-200-6442~4, 6446~8',
+                '팩스: 051-200-6445',
+              ],
+              linesEn: [
+                'Phone: 051-200-6442~4, 6446~8',
+                'Fax: 051-200-6445',
+              ],
+            ),
+            GuideNote(
+              titleKo: '외국인 유학생 지원 문의',
+              titleEn: 'International student support',
+              linesKo: [
+                '유학생 학사 지원·상담 및 기숙사 관련: 051-200-6447',
+              ],
+              linesEn: [
+                'Academic support, counseling and dormitory matters for '
+                    'international students: 051-200-6447',
+              ],
+            ),
+          ],
+          noticeKo: '운영시간은 미리 확인하세요\n'
+              '국제교류과 홈페이지에 사무실 운영시간이 별도로 안내되어 있지 않습니다. 방문 전 '
+              '국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.',
+          noticeEn: 'Check the opening hours in advance\n'
+              'The office website does not list its opening hours. Check the '
+              'website, or call, before you visit.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 유학생 지원(체류·장학·기숙사) 문의 '
+              '이메일이 global@donga.ac.kr로 안내되어 있었습니다. 담당자와 업무분장은 변경될 수 '
+              '있으므로 최신 정보는 국제교류과 홈페이지의 「구성원 안내」에서 확인하세요.',
+          footnoteEn: '※ The 2024 international-student booklet gave '
+              'global@donga.ac.kr as the address for student support (stay, '
+              'scholarships, dormitories). Staff and their duties change — for '
+              'the current list see "구성원 안내" (staff) on the office website.',
+        ),
+      ],
+      tipsKo: [
+        '📌 업무마다 담당자가 달라요 — 비자·체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 '
+            '다를 수 있습니다.',
+        '📄 필요한 서류를 먼저 확인하세요 — 체류 및 출입국 관련 업무는 정해진 제출서류가 있는 '
+            '경우가 많으므로 공식 공지를 먼저 확인하세요.',
+        '📅 단체접수 기간이 있을 수 있어요 — 외국인등록이나 체류기간 연장 등 일부 업무는 학교에서 '
+            '단체접수를 지원할 수 있습니다. 개인 신청 전에 해당 학기의 국제교류과 공지를 '
+            '확인하세요.',
+        '💬 간단한 질문은 온라인으로 — 국제교류과 홈페이지의 Q&A 게시판에서 방문 전에 온라인으로 '
+            '문의할 수 있습니다.',
+        '🏫 학과 업무는 학과사무실에서 — 전공 수업, 학과별 졸업요건, 과목 증원 등 학과 고유 '
+            '업무는 소속 학과사무실에 문의해야 할 수 있습니다.',
+      ],
+      tipsEn: [
+        '📌 Different services have different staff members — visa and stay, '
+            'scholarships and exchange programmes are each someone else\'s desk.',
+        '📄 Check the documents first — immigration and stay services usually '
+            'have a fixed list of what to submit, published in the notice.',
+        '📅 There may be a group application period — the university sometimes '
+            'files alien registrations or stay extensions as a group. Check the '
+            "semester's notices before you apply on your own.",
+        '💬 Ask online for small things — the Q&A board on the office website '
+            'saves you the trip.',
+        '🏫 Contact your department office for department-specific matters — '
+            'major courses, graduation requirements and adding a full class are '
+            'your department\'s business, not this office\'s.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '동아대학교 대외국제처 국제교류과',
+          labelEn: 'Dong-A University Office of International Affairs',
+          descriptionKo: '공지 · 유학생 지원 · 국제교류 프로그램',
+          descriptionEn: 'Notices, student support and exchange programmes',
+          url: 'https://global.donga.ac.kr/',
+        ),
+        GuideLink(
+          labelKo: '국제교류과 찾아오시는 길',
+          labelEn: 'Directions to the office',
+          descriptionKo: '위치 · 교통편 · 연락처',
+          descriptionEn: 'Location, transport and contact details',
+          url: 'https://global.donga.ac.kr/global/CMS/Contents/Contents.do'
+              '?mCode=MN025',
+          iconName: 'directions_transit',
+        ),
+        GuideLink(
+          labelKo: '외국인 유학생 공지',
+          labelEn: 'Notices for international students',
+          descriptionKo: '비자 · 체류 · 장학 · 학교생활 안내',
+          descriptionEn: 'Visa, stay, scholarships and campus life',
+          url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN066',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '국제교류과 Q&A',
+          labelEn: 'Office Q&A board',
+          descriptionKo: '방문 전 온라인 문의',
+          descriptionEn: 'Ask a question online before visiting',
+          url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN067',
+          iconName: 'help',
+        ),
+        GuideLink(
+          labelKo: '국제교류 프로그램 상담신청',
+          labelEn: 'Exchange programme counseling',
+          descriptionKo: '교환학생 · 어학연수 등 프로그램 상담',
+          descriptionEn: 'Counseling for exchange and language programmes',
+          url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN077',
+          iconName: 'swap_horiz',
+        ),
+        // In-app route (UX doc §3): opens the map focused on 종합강의동.
+        GuideLink(
+          labelKo: '지도에서 국제교류과 위치 보기',
+          labelEn: 'View the International Affairs Office on the map',
+          descriptionKo: '부민캠퍼스 종합강의동',
+          descriptionEn: 'General Lecture Building, Bumin campus',
+          url: '/map?focus=b04',
+          iconName: 'location_on',
+        ),
+      ],
       relatedFacilityIds: ['b04'], // 종합강의동(부민) 1F 국제교류과
+      durationKo: '10~30분',
+      durationEn: '10–30 minutes',
+      difficulty: 1,
+      status: GuideStatus.published,
     ),
 
     // ── 긴급·도움 (emergency) ──
+    // Read in an emergency, so it is deliberately short and front-loaded: the
+    // 112/119 split first, the call row inside each number's own section, and
+    // no duration/difficulty meta at all. 1345 is NOT here — it is immigration
+    // counselling, not an emergency line (it stays on the visa guides).
     const AdminGuideItem(
       id: 'emergency-contacts',
       categoryId: GuideCategory.emergency,
       titleKo: '긴급 연락처',
       titleEn: 'Emergency Contacts',
-      summaryKo: '112·119·1345 안내',
-      summaryEn: '112 · 119 · 1345',
+      summaryKo: '112 · 119 긴급신고 안내',
+      summaryEn: 'Police 112 · Fire & Ambulance 119',
+      topSections: [
+        GuideSection(
+          titleKo: '긴급상황 안내',
+          titleEn: 'In an emergency',
+          iconName: 'emergency',
+          noticeKo: '지금 즉시 위험한 상황인가요?\n'
+              '범죄 · 폭행 · 위협 등 경찰의 도움이 필요하면 112\n'
+              '화재 · 사고 · 부상 · 응급환자 · 구조가 필요하면 119',
+          noticeEn: 'Are you in immediate danger?\n'
+              'Crime, assault, threats — anything you need the police for: 112\n'
+              'Fire, an accident, an injury, a medical emergency, someone who '
+              'needs rescuing: 119',
+          noticeIconName: 'emergency',
+        ),
+        GuideSection(
+          titleKo: '112 — 경찰',
+          titleEn: '112 — Police',
+          iconName: 'local_police',
+          bodyKo: '범죄 피해를 입었거나 신변의 위협을 받고 있는 등 즉각적인 경찰 도움이 필요한 '
+              '경우 112에 신고하세요.',
+          bodyEn: 'Call 112 when you need the police right now — you have been '
+              'the victim of a crime, or you are being threatened.',
+          links: [
+            GuideLink(
+              labelKo: '112 전화하기',
+              labelEn: 'Call 112',
+              url: 'tel:112',
+              iconName: 'call',
+            ),
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '이런 상황에서 전화하세요',
+              titleEn: 'Call when',
+              linesKo: [
+                '폭행 또는 위협을 받고 있을 때',
+                '절도 · 강도 등 범죄 피해를 입었을 때',
+                '스토킹 등 즉각적인 경찰 도움이 필요할 때',
+                '위험한 범죄 상황을 목격했을 때',
+              ],
+              linesEn: [
+                'You are being assaulted or threatened',
+                'You have been robbed, or something was stolen from you',
+                'You are being stalked, or otherwise need the police now',
+                'You witness a dangerous crime',
+              ],
+            ),
+          ],
+        ),
+        GuideSection(
+          titleKo: '119 — 화재 · 구조 · 구급',
+          titleEn: '119 — Fire · Rescue · Ambulance',
+          iconName: 'local_fire_department',
+          bodyKo: '화재, 사고, 구조 또는 응급환자가 발생한 경우 119에 신고하세요.',
+          bodyEn: 'Call 119 for a fire, an accident, a rescue, or a medical '
+              'emergency.',
+          links: [
+            GuideLink(
+              labelKo: '119 전화하기',
+              labelEn: 'Call 119',
+              url: 'tel:119',
+              iconName: 'call',
+            ),
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '이런 상황에서 전화하세요',
+              titleEn: 'Call when',
+              linesKo: [
+                '불이 났을 때',
+                '사람이 크게 다쳤을 때',
+                '의식이 없거나 호흡에 문제가 있을 때',
+                '교통사고 등으로 구조가 필요할 때',
+                '즉각적인 응급의료 도움이 필요한 경우',
+              ],
+              linesEn: [
+                'There is a fire',
+                'Someone is badly injured',
+                'Someone is unconscious, or having trouble breathing',
+                'Someone has to be freed after a traffic accident',
+                'Someone needs emergency medical help right now',
+              ],
+            ),
+          ],
+        ),
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '신고할 때 알려주세요',
+          titleEn: 'What to tell the operator',
+          iconName: 'format_list_numbered',
+          stepsKo: [
+            '어떤 일이 발생했는지',
+            '현재 위치',
+            '다친 사람이 있는지',
+            '현재 상황이 계속 위험한지',
+            '신고자의 연락 가능한 전화번호',
+          ],
+          stepsEn: [
+            'What has happened',
+            'Where you are',
+            'Whether anyone is hurt',
+            'Whether the situation is still dangerous',
+            'A phone number they can reach you on',
+          ],
+          noticeKo: '위치를 먼저 알려주세요\n'
+              '정확한 주소를 모르더라도 학교 이름, 캠퍼스, 건물 이름 또는 주변의 큰 건물을 '
+              '알려주세요.\n'
+              '· 동아대학교 승학캠퍼스\n'
+              '· 동아대학교 부민캠퍼스\n'
+              '· 동아대학교 구덕캠퍼스',
+          noticeEn: 'Tell them your location first\n'
+              'You do not need the exact address — the name of the university, '
+              'the campus, the building, or a large landmark nearby is enough.\n'
+              '· Dong-A University, Seunghak Campus\n'
+              '· Dong-A University, Bumin Campus\n'
+              '· Dong-A University, Gudeok Campus',
+          noticeIconName: 'location_on',
+        ),
+        // Both languages always show: the title carries one, the line the
+        // other, so the caller can read the Korean out loud either way.
+        GuideSection(
+          titleKo: '긴급상황 표현',
+          titleEn: 'Emergency phrases',
+          iconName: 'translate',
+          bodyKo: '한국어로 말하기 어렵다면 아래 문장을 그대로 읽어도 됩니다.',
+          bodyEn: 'If speaking Korean is hard, just read the Korean line out '
+              'loud.',
+          notes: [
+            GuideNote(
+              titleKo: '경찰이 필요합니다',
+              titleEn: 'I need the police.',
+              linesKo: ['I need the police.'],
+              linesEn: ['경찰이 필요합니다'],
+            ),
+            GuideNote(
+              titleKo: '구급차를 보내주세요',
+              titleEn: 'Please send an ambulance.',
+              linesKo: ['Please send an ambulance.'],
+              linesEn: ['구급차를 보내주세요'],
+            ),
+            GuideNote(
+              titleKo: '불이 났습니다',
+              titleEn: 'There is a fire.',
+              linesKo: ['There is a fire.'],
+              linesEn: ['불이 났습니다'],
+            ),
+            GuideNote(
+              titleKo: '사람이 다쳤습니다',
+              titleEn: 'Someone is injured.',
+              linesKo: ['Someone is injured.'],
+              linesEn: ['사람이 다쳤습니다'],
+            ),
+            GuideNote(
+              titleKo: '저는 동아대학교에 있습니다',
+              titleEn: 'I am at Dong-A University.',
+              linesKo: ['I am at Dong-A University.'],
+              linesEn: ['저는 동아대학교에 있습니다'],
+            ),
+            GuideNote(
+              titleKo: '한국어를 잘 못합니다',
+              titleEn: "I don't speak Korean well.",
+              linesKo: ["I don't speak Korean well."],
+              linesEn: ['한국어를 잘 못합니다'],
+            ),
+          ],
+        ),
+      ],
+      tipsKo: [
+        '🚨 112와 119는 긴급신고 번호입니다 — 긴급한 상황에서만 이용하세요.',
+        '📍 위치를 확인하세요 — 신고하기 전에 가능하면 현재 캠퍼스와 건물 이름을 확인하세요.',
+        '📱 휴대전화로 바로 신고할 수 있습니다 — 지역번호 없이 112 또는 119를 입력하세요.',
+        '🗣 한국어가 어렵다면 — 한국어를 잘 하지 못한다고 먼저 알리고 천천히 현재 상황과 위치를 '
+            '설명하세요.',
+      ],
+      tipsEn: [
+        '🚨 112 and 119 are emergency lines — use them only for emergencies.',
+        '📍 Know where you are — check the campus and building name before you '
+            'call if you can.',
+        '📱 Dial straight from your phone — just 112 or 119, no area code.',
+        '🗣 If Korean is hard — say so first, then describe what is happening '
+            'and where you are, slowly.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '경찰청 112신고 안내',
+          labelEn: 'Korean National Police — 112',
+          descriptionKo: '범죄 · 긴급 경찰 신고',
+          descriptionEn: 'Crime and emergency police reports',
+          url: 'https://www.112.go.kr/',
+          iconName: 'local_police',
+        ),
+        GuideLink(
+          labelKo: '소방청 119신고 안내',
+          labelEn: 'National Fire Agency — 119',
+          descriptionKo: '화재 · 구조 · 구급 신고',
+          descriptionEn: 'Fire, rescue and ambulance reports',
+          url: 'https://www.nfa.go.kr/nfa/safetyinfo/emergencyservice/'
+              '119emergencydeclaration/',
+          iconName: 'local_fire_department',
+        ),
+      ],
+      status: GuideStatus.published,
     ),
     const AdminGuideItem(
       id: 'incident-response',

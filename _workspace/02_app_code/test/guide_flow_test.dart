@@ -9,8 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Week-3 guide flow (S5 categories → S6 item list → S7 detail) + favorites
 /// persistence, exercised on the mock repositories. Locale defaults to English
 /// in the test binding, so assertions use the English strings.
-Future<ProviderScope> _app() async {
-  SharedPreferences.setMockInitialValues({});
+/// [locale] seeds the persisted language so a test can start in Korean —
+/// [LocaleNotifier] reads `app_locale` from prefs on build.
+Future<ProviderScope> _app({String? locale}) async {
+  SharedPreferences.setMockInitialValues(
+      locale == null ? {} : {'app_locale': locale});
   final prefs = await SharedPreferences.getInstance();
   return ProviderScope(
     overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
@@ -633,6 +636,406 @@ void main() {
     expect(find.text('School admin'), findsOneWidget);
   });
 
+  testWidgets('Guide detail: library guide renders its sections in order',
+      (tester) async {
+    // Nine section cards plus tips and links — taller than the shared surface.
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Library Guide'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.textContaining('5–10 minutes'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    const titles = [
+      'Overview',
+      'Where the libraries are',
+      'Using the library for the first time',
+      'Borrowing Books',
+      'Returns & Overdue Items',
+      'Study Room & Seat Reservation',
+      'Inter-Campus Loan',
+      'E-resources & Papers',
+      'Opening Hours',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    // The order in the brief: locations and first-time setup lead, hours close.
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // All four libraries are listed with the building the site gives them.
+    expect(find.textContaining('Building: S10'), findsOneWidget);
+    expect(find.textContaining('floors 5–10'), findsOneWidget);
+    expect(find.textContaining('Building: B02'), findsOneWidget);
+    expect(find.textContaining('Building: G05'), findsOneWidget);
+
+    // Mobile ID setup, borrowing limits, return boxes, the overdue rule.
+    expect(find.textContaining('Set up your mobile library ID'), findsOneWidget);
+    expect(find.textContaining('Undergraduate students: 10 books for 14 days'),
+        findsOneWidget);
+    expect(find.textContaining('Graduate students: 10 books for 30 days'),
+        findsOneWidget);
+    expect(find.textContaining('renew once'), findsOneWidget);
+    expect(find.textContaining('2nd floor of the library'), findsOneWidget);
+    expect(
+      find.textContaining('one day of suspension per book per day overdue'),
+      findsOneWidget,
+    );
+
+    // Seat booking: the 20-minute check-in is the thing people get wrong.
+    expect(find.textContaining('Check in within 20 minutes'), findsOneWidget);
+    expect(find.textContaining('20 minutes to check in'), findsOneWidget);
+    // Inter-campus loan + off-campus access for papers.
+    expect(find.textContaining('request an inter-campus loan'), findsOneWidget);
+    expect(find.textContaining('off-campus access'), findsWidgets);
+
+    // Hours: the live-hours instruction is present and the 2024 booklet's
+    // figures appear only as an attributed footnote, never as current hours.
+    expect(
+      find.textContaining('Check opening hours before visiting'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('As listed in August 2026'), findsOneWidget);
+    // Two attributed footnotes: the student-ID note and the old hours.
+    expect(
+      find.textContaining('2024 international-student booklet'),
+      findsNWidgets(2),
+    );
+    expect(find.textContaining('go by the live hours'), findsOneWidget);
+    expect(find.textContaining('05:00–24:00'), findsOneWidget); // footnote only
+
+    // Official library links only, and all four libraries as map cards.
+    expect(find.text('Dong-A University Library'), findsOneWidget);
+    expect(find.text('DAU Library English'), findsOneWidget);
+    expect(find.text('Mobile library ID'), findsOneWidget);
+    expect(find.text('Seat reservation'), findsOneWidget);
+    expect(find.text('Inter-campus loan'), findsOneWidget);
+    expect(find.text('한림도서관(B)'), findsOneWidget);
+    expect(find.text('국제관'), findsOneWidget);
+    expect(find.text('법학전문대학원(LS)'), findsOneWidget);
+    expect(find.text('구덕교육동 2,3호관'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: library guide fits a 360dp phone', (tester) async {
+    // Narrowest phone width the app targets — scroll the whole page and let any
+    // RenderFlex overflow surface as an exception.
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Library Guide'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    // Back out of the detail page — lands on the guide category screen.
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('School admin'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: library guide renders in Korean', (tester) async {
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('학교 행정'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('도서관 이용안내'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '개요',
+      '도서관 위치',
+      '처음 이용한다면',
+      '도서 대출',
+      '반납 · 연체',
+      '열람실 이용',
+      '캠퍼스간 대출',
+      '전자자료 · 논문 이용',
+      '운영시간',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    expect(find.textContaining('모바일 이용증을 준비하세요'), findsOneWidget);
+    expect(find.textContaining('학부 재학생: 10책 / 14일'), findsOneWidget);
+    expect(find.textContaining('운영시간은 방문 전에 확인하세요'), findsOneWidget);
+    expect(find.textContaining('5~10분'), findsOneWidget);
+  });
+
+  testWidgets('Favorite toggle works from the library guide', (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Library Guide'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Library Guide'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: OIA guide renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('International Affairs Office'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.text('International Affairs Office Guide'), findsOneWidget);
+    expect(find.textContaining('10–30 minutes'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    const titles = [
+      'Overview',
+      'What can I ask about?',
+      'Where the office is',
+      'Before You Visit',
+      'Steps',
+      'Contact',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // The four service groups a student picks between.
+    expect(find.text('🪪 Stay & visa'), findsOneWidget);
+    expect(find.text('🎓 Academics & student life'), findsOneWidget);
+    expect(find.text('💰 Scholarships & living support'), findsOneWidget);
+    expect(find.text('🌏 Exchange programmes'), findsOneWidget);
+    // Immigration work is framed as university support, never as the office
+    // filing the application itself.
+    expect(find.textContaining('It is not an immigration office'), findsOneWidget);
+
+    // Location + transport, from the office's own directions page.
+    expect(find.textContaining('room BC-0116-3'), findsOneWidget);
+    expect(find.textContaining('225 Gudeok-ro'), findsOneWidget);
+    expect(find.textContaining('3-minute walk from Exit 2'), findsOneWidget);
+    expect(find.textContaining('express bus 58-1'), findsOneWidget);
+
+    // Contact: the published main numbers only, no invented duty split.
+    expect(find.textContaining('051-200-6442~4, 6446~8'), findsOneWidget);
+    expect(find.textContaining('Fax: 051-200-6445'), findsOneWidget);
+    expect(find.textContaining('051-200-6447'), findsOneWidget);
+    // Opening hours are not published, so none are stated as fact.
+    expect(
+      find.textContaining('does not list its opening hours'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('09:00'), findsNothing);
+
+    // Passport/ARC are never presented as required for every visit.
+    expect(
+      find.textContaining('not required for every visit'),
+      findsOneWidget,
+    );
+
+    // Official links only, plus the in-app map row.
+    expect(find.text('Dong-A University Office of International Affairs'),
+        findsOneWidget);
+    expect(find.text('Directions to the office'), findsOneWidget);
+    expect(find.text('Notices for international students'), findsOneWidget);
+    expect(find.text('Office Q&A board'), findsOneWidget);
+    expect(find.text('Exchange programme counseling'), findsOneWidget);
+    expect(find.text('View the International Affairs Office on the map'),
+        findsOneWidget);
+    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: OIA map link opens the map in-app', (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('International Affairs Office'));
+    await tester.pumpAndSettle();
+
+    // Internal route (`/map?focus=b04`) → stays in the app on the Map tab.
+    final link = find.text('View the International Affairs Office on the map');
+    await tester.scrollUntilVisible(link, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(link);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Map'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: OIA guide fits a 360dp phone', (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('International Affairs Office'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('School admin'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: OIA guide renders in Korean', (tester) async {
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('학교 행정'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('국제교류과 방문 안내'));
+    await tester.pumpAndSettle();
+
+    // The list row is short; the detail heading carries the full 공식 명칭.
+    expect(find.text('대외국제처 국제교류과 방문 안내'), findsOneWidget);
+    for (final title in const [
+      '개요',
+      '어떤 일로 방문할 수 있나요?',
+      '위치',
+      '방문 전 확인',
+      '단계',
+      '연락처',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    expect(find.textContaining('종합강의동 1층 BC-0116-3'), findsOneWidget);
+    expect(find.textContaining('051-200-6442~4, 6446~8'), findsOneWidget);
+    expect(find.text('지도에서 국제교류과 위치 보기'), findsOneWidget);
+    expect(find.textContaining('10~30분'), findsOneWidget);
+  });
+
+  testWidgets('Favorite toggle works from the OIA guide', (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('International Affairs Office'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('International Affairs Office'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: campus clinic shows both campuses and their maps',
       (tester) async {
     tester.view.physicalSize = const Size(1080, 6000);
@@ -715,6 +1118,232 @@ void main() {
     expect(clinic.relatedFacilityIds, ['b02', 's02']);
     expect(find.text('법학전문대학원(LS)'), findsOneWidget);
     expect(find.text('학생회관(Q)'), findsOneWidget);
+  });
+
+  // NOTE: the two call rows carry real emergency numbers. Nothing in this file
+  // taps them — the urls are asserted as data, and the widget tests only ever
+  // look at the labels. Never add a tap on "Call 112" / "Call 119".
+  test('Emergency contacts: call rows are tel: links, and 1345 is gone', () {
+    final item =
+        MockData.guideItems.firstWhere((g) => g.id == 'emergency-contacts');
+
+    final police = item.topSections.firstWhere((s) => s.titleEn == '112 — Police');
+    final fire = item.topSections
+        .firstWhere((s) => s.titleEn == '119 — Fire · Rescue · Ambulance');
+    expect(police.links.single.url, 'tel:112');
+    expect(police.links.single.labelKo, '112 전화하기');
+    expect(police.links.single.labelEn, 'Call 112');
+    expect(fire.links.single.url, 'tel:119');
+    expect(fire.links.single.labelKo, '119 전화하기');
+    expect(fire.links.single.labelEn, 'Call 119');
+
+    // `tel:` is external, so it hands off to the phone app instead of routing
+    // in-app. It is never auto-dialled: _LinkRow only launches from onTap.
+    expect(police.links.single.url.startsWith('/'), isFalse);
+    expect(fire.links.single.url.startsWith('/'), isFalse);
+
+    expect(item.summaryKo, '112 · 119 긴급신고 안내');
+    expect(item.summaryEn, 'Police 112 · Fire & Ambulance 119');
+
+    // 1345 is immigration counselling, not an emergency line — it must not
+    // appear anywhere in this item, in either language.
+    final dump = [
+      item.summaryKo, item.summaryEn, item.overviewKo, item.overviewEn,
+      ...item.tipsKo, ...item.tipsEn,
+      for (final s in [...item.topSections, ...item.sections]) ...[
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.noticeKo, s.noticeEn,
+        s.footnoteKo, s.footnoteEn,
+        ...s.stepsKo, ...s.stepsEn,
+        for (final l in s.links) '${l.labelKo}${l.labelEn}${l.url}',
+        for (final n in s.notes) ...[
+          n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+        ],
+      ],
+      for (final l in item.links)
+        '${l.labelKo}${l.labelEn}${l.url}${l.descriptionKo}${l.descriptionEn}',
+    ].whereType<String>().join('\n');
+    expect(dump.contains('1345'), isFalse);
+
+    // ...but the visa guides that legitimately cite 1345 keep it.
+    final elsewhere = MockData.guideItems
+        .where((g) => g.id != 'emergency-contacts')
+        .any((g) => g.sections.any((s) => (s.noticeKo ?? '').contains('1345')));
+    expect(elsewhere, isTrue);
+  });
+
+  testWidgets('Guide detail: emergency contacts renders 112 and 119',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 6000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+
+    // S6 row subtitle no longer advertises 1345.
+    expect(find.text('Police 112 · Fire & Ambulance 119'), findsOneWidget);
+    expect(find.textContaining('1345'), findsNothing);
+
+    await tester.tap(find.text('Emergency Contacts'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    const titles = [
+      'In an emergency',
+      '112 — Police',
+      '119 — Fire · Rescue · Ambulance',
+      'What to tell the operator',
+      'Emergency phrases',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // The 112/119 split is the first thing on the page, above both sections.
+    final splitY = tester.getTopLeft(
+        find.textContaining('Are you in immediate danger?')).dy;
+    expect(splitY, lessThan(tester.getTopLeft(find.text('112 — Police')).dy));
+
+    // Call rows are present (NOT tapped) inside their own number's section.
+    expect(find.text('Call 112'), findsOneWidget);
+    expect(find.text('Call 119'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Call 112')).dy,
+      lessThan(tester.getTopLeft(find.text('119 — Fire · Rescue · Ambulance')).dy),
+    );
+
+    // Location is the emphasised part of what to tell the operator.
+    expect(find.textContaining('Tell them your location first'), findsOneWidget);
+    expect(
+      find.textContaining('Dong-A University, Seunghak Campus'),
+      findsOneWidget,
+    );
+    // Phrases show both languages at once.
+    expect(find.text('I need the police.'), findsOneWidget);
+    expect(find.text('경찰이 필요합니다'), findsOneWidget);
+    expect(find.text("I don't speak Korean well."), findsOneWidget);
+
+    // Official links only.
+    expect(find.text('Korean National Police — 112'), findsOneWidget);
+    expect(find.text('National Fire Agency — 119'), findsOneWidget);
+
+    // No duration/difficulty clutter on an emergency page.
+    expect(find.textContaining('Difficulty'), findsNothing);
+    // And no trace of 1345 on the detail page either.
+    expect(find.textContaining('1345'), findsNothing);
+  });
+
+  testWidgets('Guide detail: emergency contacts fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency Contacts'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    // Scrolling only — the call rows are never tapped.
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 30; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Emergency & Help'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: emergency contacts renders in Korean',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 6000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('긴급·도움'));
+    await tester.pumpAndSettle();
+    expect(find.text('112 · 119 긴급신고 안내'), findsOneWidget);
+
+    await tester.tap(find.text('긴급 연락처'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '긴급상황 안내',
+      '112 — 경찰',
+      '119 — 화재 · 구조 · 구급',
+      '신고할 때 알려주세요',
+      '긴급상황 표현',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    expect(find.textContaining('지금 즉시 위험한 상황인가요?'), findsOneWidget);
+    expect(find.text('112 전화하기'), findsOneWidget);
+    expect(find.text('119 전화하기'), findsOneWidget);
+    expect(find.textContaining('위치를 먼저 알려주세요'), findsOneWidget);
+    expect(find.textContaining('1345'), findsNothing);
+  });
+
+  testWidgets('Favorite toggle works from the emergency contacts guide',
+      (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency Contacts'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Emergency Contacts'), findsOneWidget);
   });
 
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
