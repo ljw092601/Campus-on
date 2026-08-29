@@ -1346,6 +1346,455 @@ void main() {
     expect(find.text('Emergency Contacts'), findsOneWidget);
   });
 
+  testWidgets('Guide detail: dormitory guide renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dormitory Application'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.text('Check the dates'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    // Hall names repeat as link labels further down, so position is taken from
+    // the first (section-heading) occurrence.
+    const titles = [
+      'Overview',
+      'Which dormitory can I use?',
+      'Hanlim Residence Hall',
+      'Seokdang Global House',
+      'Before You Apply',
+      'Steps',
+      'Before Moving In',
+      'After Moving In',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsWidgets, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title).first).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // The two halls a student picks between.
+    expect(find.text('🏫 Hanlim Residence Hall'), findsOneWidget);
+    expect(find.text('🌏 Seokdang Global House'), findsOneWidget);
+
+    // Hanlim — current recruitment notice, not the 2024 booklet's routes.
+    expect(find.textContaining('apply online on the Hanlim website'),
+        findsOneWidget);
+    expect(find.textContaining('send them by email'), findsOneWidget);
+    expect(
+      find.textContaining('The application period changes every semester'),
+      findsOneWidget,
+    );
+    // Seokdang — a separate application IS required per the official page.
+    expect(find.textContaining('Hand the form in at the Seokdang Global House '
+        'office'), findsOneWidget);
+    // The 2024 "no separate application / compulsory 3 months" line is offered
+    // as something to verify, never as the current rule.
+    expect(
+      find.textContaining('may be told something different'),
+      findsOneWidget,
+    );
+
+    // No 2024 figure is restated as today's price.
+    expect(find.textContaining('756,000'), findsNothing);
+    expect(find.textContaining('800,000'), findsNothing);
+    expect(find.textContaining('For the exact amount'), findsOneWidget);
+
+    // Bedding / meals / health certificate are conditional, never universal.
+    expect(find.textContaining('Some dormitories do not provide bedding'),
+        findsOneWidget);
+    expect(find.textContaining('You may need a health-check certificate'),
+        findsOneWidget);
+
+    // Official Dong-A links only, plus the in-app map row.
+    expect(find.text('Hanlim recruitment notice'), findsOneWidget);
+    expect(find.text('Seokdang Global House — moving in and out'),
+        findsOneWidget);
+    expect(find.text('International Affairs Office — student support'),
+        findsOneWidget);
+    expect(find.text('View the dormitories on the map'), findsOneWidget);
+    // Related locations resolve to real campus facilities.
+    expect(find.text('한림생활관 승학1관'), findsOneWidget);
+    expect(find.text('한림생활관 승학2관'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: dormitory map link opens the map in-app',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dormitory Application'));
+    await tester.pumpAndSettle();
+
+    // Internal route (`/map?focus=s15,s19`) → stays in the app on the Map tab.
+    final link = find.text('View the dormitories on the map');
+    await tester.scrollUntilVisible(link, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(link);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Map'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: dormitory guide fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dormitory Application'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Housing'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: dormitory guide renders in Korean',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('주거'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('기숙사 신청'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '개요',
+      '어떤 기숙사가 있나요?',
+      '한림생활관',
+      '석당글로벌하우스',
+      '신청 전에 확인하세요',
+      '단계',
+      '입사 전 준비',
+      '입사 후 해야 할 일',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsWidgets, reason: title);
+    }
+    expect(find.textContaining('신청기간 확인 필요'), findsOneWidget);
+    expect(find.textContaining('한림생활관 최신 모집공고를 확인하세요'), findsOneWidget);
+    expect(find.textContaining('입사신청서를 작성'), findsWidgets);
+    expect(find.text('지도에서 기숙사 위치 보기'), findsOneWidget);
+    // 2024 booklet figures stay out of the body copy.
+    expect(find.textContaining('756,000'), findsNothing);
+  });
+
+  testWidgets('Favorite toggle works from the dormitory guide', (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dormitory Application'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Dormitory Application'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: off-campus housing renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 20000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Finding Off-Campus Housing'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+    expect(find.text('A few days to weeks'), findsOneWidget);
+    expect(find.textContaining('Difficulty'), findsOneWidget);
+
+    const titles = [
+      'Overview',
+      'Types of Housing in Korea',
+      'How to Find a Room',
+      'Looking Near Dong-A University',
+      'What to Check During a Viewing',
+      'Before You Sign',
+      'What to Check in the Lease',
+      'Steps',
+      'Moving In',
+      'Reporting Your Address & Protecting Your Deposit',
+      'Deposits, Rent & Fees',
+      'Using a Licensed Agent',
+      'Avoiding Rental Scams & Disputes',
+      'Words You Will See in the Lease',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsWidgets, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title).first).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // Housing types and payment models are separated, jeonse is explained but
+    // not pushed at newly-arrived students.
+    expect(find.text('🏠 Kinds of room'), findsOneWidget);
+    expect(find.text('💳 Ways of paying'), findsOneWidget);
+    expect(find.textContaining('Jeonse means a very large deposit'),
+        findsOneWidget);
+
+    // Campus-relative advice, with the three in-app map rows.
+    expect(find.text('View the Seunghak campus on the map'), findsOneWidget);
+    expect(find.text('View the Bumin campus on the map'), findsOneWidget);
+    expect(find.text('View the Gudeok campus on the map'), findsOneWidget);
+    expect(find.textContaining('Travel time matters more than distance'),
+        findsOneWidget);
+
+    // Pre-signing checks, sourced from the property register.
+    expect(find.textContaining('property register'), findsWidgets);
+    expect(find.textContaining('Korean Court Internet Registry Office'),
+        findsWidgets);
+    expect(find.textContaining('third party account'), findsOneWidget);
+    expect(find.textContaining('Do not sign what you do not understand'),
+        findsOneWidget);
+
+    // The maintenance fee is framed as "what does it cover", not a number.
+    expect(find.text('What does the maintenance fee cover?'), findsOneWidget);
+
+    // Address reporting: the 15-day deadline and the deposit link, from the
+    // official guidance.
+    expect(find.textContaining('within 15 days of moving in'), findsOneWidget);
+    expect(find.textContaining('the day AFTER you take possession'),
+        findsOneWidget);
+    expect(find.textContaining('fixed date'), findsWidgets);
+    expect(find.textContaining('Immigration Control Act arts. 36 and 88-2'),
+        findsOneWidget);
+
+    // Commission: ceiling explained, no rate table baked into the app.
+    expect(find.textContaining('There is a ceiling on the commission'),
+        findsOneWidget);
+    expect(find.textContaining('no fixed table is built into the app'),
+        findsOneWidget);
+
+    // Scam prevention, and HUG framed as "not every contract qualifies".
+    expect(find.textContaining('Do not send money for a place you have not'),
+        findsOneWidget);
+    expect(find.textContaining('Not every contract qualifies'), findsOneWidget);
+
+    // No invented prices or rates anywhere on the page.
+    expect(find.textContaining('만원'), findsNothing);
+    expect(find.textContaining('0.3%'), findsNothing);
+    expect(find.textContaining('0.5%'), findsNothing);
+
+    // Official public-body links only, plus the in-app ARC guide.
+    expect(find.text('Korean Court Internet Registry Office'), findsOneWidget);
+    expect(find.text('HUG safe-lease portal'), findsOneWidget);
+    expect(find.text('Busan Foreign Resident Call Center'), findsOneWidget);
+    expect(find.text('Korea Legal Aid Corporation'), findsOneWidget);
+    expect(find.text('HiKorea e-application — change of residence'),
+        findsOneWidget);
+    expect(find.text('Guide — Alien Registration Card'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: off-campus housing campus map link opens in-app',
+      (tester) async {
+    _useTallSurface(tester);
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Finding Off-Campus Housing'));
+    await tester.pumpAndSettle();
+
+    // Internal route (`/map?focus=s01`) → stays in the app on the Map tab.
+    final link = find.text('View the Seunghak campus on the map');
+    await tester.scrollUntilVisible(link, 400);
+    await tester.pumpAndSettle();
+    await tester.tap(link);
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(AppBar, 'Map'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: off-campus housing fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Finding Off-Campus Housing'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 80; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Housing'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: off-campus housing renders in Korean',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 20000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('주거'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('교외주거 구하기'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '개요',
+      '한국의 주거 형태',
+      '방을 찾는 방법',
+      '동아대학교 주변에서 찾을 때',
+      '집을 보러 갈 때 확인',
+      '계약 전에 확인하세요',
+      '계약서에서 확인할 내용',
+      '단계',
+      '입주 전 · 입주 후 확인',
+      '이사 후 신고와 보증금 보호',
+      '보증금 · 월세 이해하기',
+      '부동산 중개 이용',
+      '사기 · 분쟁 예방',
+      '계약에서 자주 나오는 말',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsWidgets, reason: title);
+    }
+    expect(find.text('수일~수주'), findsOneWidget);
+    expect(find.textContaining('전입한 날부터 15일 이내'), findsOneWidget);
+    expect(find.textContaining('등기사항증명서'), findsWidgets);
+    expect(find.textContaining('보증금 — Deposit'), findsOneWidget);
+    expect(find.text('지도에서 승학캠퍼스 보기'), findsOneWidget);
+    // No invented market prices.
+    expect(find.textContaining('만원'), findsNothing);
+  });
+
+  testWidgets('Favorite toggle works from the off-campus housing guide',
+      (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Housing'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Finding Off-Campus Housing'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Finding Off-Campus Housing'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
@@ -1353,10 +1802,10 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Housing → "Dormitory Application" is still a coming-soon placeholder.
-    await tester.tap(find.text('Housing'));
+    // Health & Insurance → "Visiting a Hospital" is still a placeholder.
+    await tester.tap(find.text('Health & Insurance'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Dormitory Application'));
+    await tester.tap(find.text('Visiting a Hospital'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.

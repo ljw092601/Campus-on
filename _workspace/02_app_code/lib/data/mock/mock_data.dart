@@ -658,21 +658,1502 @@ class MockData {
     ),
 
     // ── 주거 (housing) ──
+    // Two on-campus options with different owners, different application
+    // routes and per-semester notices. The 2024 국문 booklet is the base text,
+    // but 한림생활관's own 사생모집 공고 and 석당글로벌하우스's 입·퇴사 page now say
+    // different things — so amounts and dates are never restated as fact here;
+    // every figure is deferred to "the semester's own notice".
     const AdminGuideItem(
       id: 'dormitory',
       categoryId: GuideCategory.housing,
       titleKo: '기숙사 신청',
       titleEn: 'Dormitory Application',
-      summaryKo: '학기별 신청 일정 확인',
-      summaryEn: 'Check the per-semester schedule',
+      summaryKo: '한림생활관 · 석당글로벌하우스',
+      summaryEn: 'Hanlim Residence Hall · Seokdang Global House',
+      overviewKo: '동아대학교 외국인 학생은 학생 유형과 과정에 따라 한림생활관 또는 석당글로벌하우스 등 '
+          '교내 기숙사를 이용할 수 있습니다.\n\n'
+          '기숙사별 입사대상, 신청방법, 모집기간, 비용은 서로 다를 수 있습니다.\n\n'
+          '기숙사를 이용하려는 학생은 본인에게 해당하는 기숙사를 먼저 확인한 뒤, 해당 학기의 최신 '
+          '모집 공지를 확인해야 합니다.',
+      overviewEn: 'Dong-A University has more than one on-campus dormitory — '
+          'Hanlim Residence Hall and Seokdang Global House — and which one you '
+          'can use depends on the kind of student you are.\n\n'
+          'Each dormitory has its own eligibility, application route, '
+          'application period and fee.\n\n'
+          'So work out which dormitory applies to you first, then read that '
+          "semester's own recruitment notice.",
+      topSections: [
+        // The first question is "which one is even mine?" — answered before
+        // either hall is described in detail.
+        GuideSection(
+          titleKo: '어떤 기숙사가 있나요?',
+          titleEn: 'Which dormitory can I use?',
+          iconName: 'compare_arrows',
+          bodyKo: '교내 기숙사는 크게 두 곳입니다. 운영 주체와 신청 방법이 다르므로 본인이 신청할 수 '
+              '있는 곳을 먼저 확인하세요.',
+          bodyEn: 'There are two main on-campus dormitories. They are run '
+              'separately and you apply to them in different ways, so start by '
+              'working out which one is open to you.',
+          notes: [
+            GuideNote(
+              titleKo: '🏫 한림생활관',
+              titleEn: '🏫 Hanlim Residence Hall',
+              linesKo: [
+                '동아대학교 재학생 및 일부 외국인 학생이 이용할 수 있는 교내 생활관입니다.',
+                '한림생활관 홈페이지 기준으로 승학1관 · 승학2관 · 부민관 · 구덕관을 운영합니다.',
+                '학기마다 사생모집 공고로 대상과 신청방법이 안내됩니다.',
+              ],
+              linesEn: [
+                'The university\'s own residence hall, open to Dong-A students '
+                    'and to some international students.',
+                'Its website currently lists four halls — Seunghak 1, '
+                    'Seunghak 2, Bumin and Gudeok.',
+                'Eligibility and how to apply are announced in a recruitment '
+                    'notice each semester.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🌏 석당글로벌하우스',
+              titleEn: '🌏 Seokdang Global House',
+              linesKo: [
+                '외국인 유학생을 위한 기숙사입니다.',
+                '부민캠퍼스 인근(부산 중구 대청로 30-1)에 있으며 2인 1실로 운영됩니다.',
+                '입사신청서를 작성해 행정실에 제출하는 방식으로 안내되고 있습니다.',
+              ],
+              linesEn: [
+                'A dormitory for international students.',
+                'Near the Bumin campus (30-1 Daecheong-ro, Jung-gu, Busan), '
+                    'in twin rooms.',
+                'You apply by filling in an application form and handing it to '
+                    'the house office.',
+              ],
+            ),
+          ],
+          noticeKo: '본인이 신청할 수 있는 기숙사를 먼저 확인하세요\n'
+              '학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 '
+              '다를 수 있습니다. 확실하지 않다면 국제교류과에 문의하세요.',
+          noticeEn: 'Check which one is yours before anything else\n'
+              'Undergraduates, graduate students, exchange students and Korean '
+              'language students are not all eligible for the same dormitory. '
+              'If you are unsure, ask the International Affairs Office.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '한림생활관',
+          titleEn: 'Hanlim Residence Hall',
+          iconName: 'location_on',
+          bodyKo: '승학캠퍼스에 있는 교내 생활관입니다. 입사대상과 신청방법, 모집기간, 생활관비는 '
+              '학기마다 사생모집 공고로 안내됩니다.',
+          bodyEn: 'The university residence hall on the Seunghak campus. Who '
+              'may apply, how to apply, when applications open and what it '
+              'costs are all published in a recruitment notice each semester.',
+          notes: [
+            GuideNote(
+              titleKo: '입사대상',
+              titleEn: 'Who can apply',
+              linesKo: [
+                '최근 사생모집 공고 기준: 동아대학교 학부 · 대학원 신입생, 재학생, 복학예정자',
+                '교환학생 · 어학연수생 해당 여부는 공고에 별도로 안내되지 않을 수 있습니다.',
+                '본인이 대상인지 확실하지 않다면 한림생활관 또는 국제교류과에 확인하세요.',
+              ],
+              linesEn: [
+                'The current recruitment notice lists incoming and enrolled '
+                    'undergraduate and graduate students, plus students about '
+                    'to return from a leave of absence.',
+                'Exchange and language-programme students are not always named '
+                    'in that notice.',
+                'If you cannot tell whether you qualify, ask Hanlim Residence '
+                    'Hall or the International Affairs Office.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '신청 방법',
+              titleEn: 'How to apply',
+              linesKo: [
+                '신입생(수시등록자) · 재학생: 한림생활관 홈페이지에서 인터넷 원서접수',
+                '신입생(정시등록자) · 대학원생: 입사원서와 개인정보 동의서를 스캔해 이메일 접수',
+                '선발은 성적점수 · 거리점수 · 상벌점을 합산해 이루어집니다.',
+              ],
+              linesEn: [
+                'Incoming students admitted in the early round, and enrolled '
+                    'students: apply online on the Hanlim website.',
+                'Incoming students admitted in the regular round, and graduate '
+                    'students: scan the application form and the privacy '
+                    'consent form and send them by email.',
+                'Places are awarded on a score combining grades, distance from '
+                    'home and merit/demerit points.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '식사',
+              titleEn: 'Meals',
+              linesKo: [
+                '식비는 생활관비에 포함되지 않습니다.',
+                '1학기 단위로 식사권을 구입해 생활관 식당에서 이용합니다.',
+                '평일 조식 · 석식만 포함되며 중식은 별도 구매입니다. 주말 · 공휴일에는 식당을 '
+                    '운영하지 않습니다.',
+              ],
+              linesEn: [
+                'Meals are not included in the dormitory fee.',
+                'You buy a meal plan for the semester and use it in the hall '
+                    'cafeteria.',
+                'The plan covers weekday breakfast and dinner only — lunch is '
+                    'bought separately, and the cafeteria is closed at '
+                    'weekends and on public holidays.',
+              ],
+            ),
+          ],
+          noticeKo: '신청기간은 학기마다 달라요\n'
+              '신청기간은 학기마다 달라지므로 한림생활관 최신 모집공고를 확인하세요.',
+          noticeEn: 'The application period changes every semester\n'
+              'Application dates move, so always read the latest Hanlim '
+              'recruitment notice rather than last semester\'s.',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 입사대상이 「학부생, 대학원생, 교환학생, '
+              '어학연수생」, 신청방법이 「신입생은 각 과정별 합격자 발표 시 별도 신청, 재학생은 기숙사 '
+              '홈페이지에서 모집 안내문 확인」으로 안내되어 있었습니다. 현재 한림생활관 사생모집 공고와 '
+              '내용이 다르므로 앱에는 최신 공고 기준을 먼저 안내합니다.',
+          footnoteEn: '※ The 2024 international-student booklet listed '
+              'undergraduates, graduate students, exchange students and '
+              'language students as eligible, and said new students applied '
+              'when their admission results were announced. The current Hanlim '
+              'recruitment notice reads differently, so this page follows the '
+              'current notice.',
+        ),
+        GuideSection(
+          titleKo: '석당글로벌하우스',
+          titleEn: 'Seokdang Global House',
+          iconName: 'location_on',
+          bodyKo: '외국인 유학생을 위한 기숙사입니다. 부민캠퍼스 인근(부산 중구 대청로 30-1)에 '
+              '있으며 2인 1실로 운영됩니다.',
+          bodyEn: 'A dormitory for international students, near the Bumin '
+              'campus at 30-1 Daecheong-ro, Jung-gu, Busan. Rooms are twins.',
+          stepsKo: [
+            '입사신청 기간에 입사신청서 작성 (홈페이지에서 내려받기)',
+            '작성한 신청서를 석당글로벌하우스 행정실에 제출',
+            '입사 가능 여부 안내받기',
+            '기숙사비 납부',
+            '입사기간 내에 체크인',
+          ],
+          stepsEn: [
+            'Fill in the application form during the application period (it is '
+                'downloadable from the website)',
+            'Hand the form in at the Seokdang Global House office',
+            'Wait to be told whether a place is available',
+            'Pay the dormitory fee',
+            'Check in within the move-in period',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '입사대상',
+              titleEn: 'Who can apply',
+              linesKo: [
+                '국제교류과 안내 기준: 동아대학교에 재학 중인 외국인 유학생',
+                '한국어학당 학생은 입학 안내에서 별도로 안내될 수 있습니다.',
+              ],
+              linesEn: [
+                'The International Affairs Office describes it as a dormitory '
+                    'for international students enrolled at Dong-A.',
+                'Korean language students may be given separate instructions '
+                    'with their admission materials.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '시설 · 생활',
+              titleEn: 'Facilities & living',
+              linesKo: [
+                '조리실 · 세탁실 · 휴게실 등을 이용할 수 있습니다.',
+                '식사는 포함되지 않으며 취사가 가능합니다.',
+                '침구류(이불 · 패드 · 베개)는 유료로 대여할 수 있다고 안내되어 있습니다.',
+              ],
+              linesEn: [
+                'There is a kitchen, a laundry room and lounges.',
+                'Meals are not included, but you may cook for yourself.',
+                'Bedding (duvet, mattress pad, pillow) can be rented for a '
+                    'fee, according to the house guide.',
+              ],
+            ),
+          ],
+          noticeKo: '한국어학당 신입생은 안내가 다를 수 있어요\n'
+              '2024학년도 안내서에는 한국어학당 신입생이 3개월 의무 거주하며 별도 신청이 필요 없다고 '
+              '되어 있었습니다. 현재 공식 홈페이지에서는 이 내용이 확인되지 않으므로, 한국어학당 입학 '
+              '안내 또는 국제교류과에서 최신 입사방법을 확인하세요.',
+          noticeEn: 'Korean language students may be told something different\n'
+              'The 2024 booklet said new Korean language students lived here '
+              'for a compulsory three months and did not apply separately. '
+              'The current official pages do not say this, so check your '
+              'Korean language programme admission guide, or ask the '
+              'International Affairs Office, for the current arrangement.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 위 절차는 석당글로벌하우스 홈페이지의 「입·퇴사」 안내 기준입니다. 입사신청 '
+              '기간과 기숙사비는 학기에 따라 달라질 수 있습니다.',
+          footnoteEn: '※ The steps above follow the "move-in / move-out" page '
+              'on the Seokdang Global House website. Application dates and the '
+              'fee change from semester to semester.',
+        ),
+      ],
+      checklistTitleKo: '신청 전에 확인하세요',
+      checklistTitleEn: 'Before You Apply',
+      checklistKo: [
+        '본인의 학생 유형',
+        '신청 가능한 기숙사',
+        '모집기간',
+        '입사기간',
+        '기숙사비',
+        '납부기간',
+        '제출서류',
+        '식사 포함 여부',
+        '방 유형',
+        '입사 가능일',
+      ],
+      checklistEn: [
+        'What kind of student you are',
+        'Which dormitory you may apply to',
+        'When applications open and close',
+        'The move-in period',
+        'The dormitory fee',
+        'The payment deadline',
+        'What you have to submit',
+        'Whether meals are included',
+        'The room type',
+        'The earliest date you can move in',
+      ],
+      checklistNoteKo: '기숙사와 학생 유형에 따라 필요한 서류와 조건이 다를 수 있습니다. 특정 서류가 '
+          '모든 학생에게 공통으로 필요한 것은 아니므로 해당 학기 모집공고에서 본인에게 해당하는 '
+          '항목을 확인하세요.\n\n'
+          '기숙사에 따라 별도 신청 없이 배정되는 경우도 있습니다.',
+      checklistNoteEn: 'What you need differs by dormitory and by the kind of '
+          'student you are — no single document is required of everyone, so '
+          "check the semester's notice for your own case.\n\n"
+          'For some dormitories a place may be assigned without a separate '
+          'application.',
+      stepsKo: [
+        '본인의 학생 유형 확인',
+        '이용 가능한 기숙사 확인',
+        '해당 학기 모집공고 확인',
+        '신청기간 및 조건 확인',
+        '기숙사 신청',
+        '합격 / 배정 결과 확인',
+        '기숙사비 납부',
+        '입사일 및 제출서류 확인',
+      ],
+      stepsEn: [
+        'Work out what kind of student you are',
+        'Find out which dormitory you can use',
+        "Read that semester's recruitment notice",
+        'Check the application period and the conditions',
+        'Apply to the dormitory',
+        'Check the result — accepted, or a room assigned',
+        'Pay the dormitory fee',
+        'Check your move-in date and what you must submit',
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '입사 전 준비',
+          titleEn: 'Before Moving In',
+          iconName: 'receipt_long',
+          bodyKo: '입사가 확정되면 입사일 전에 아래 사항을 확인하세요. 기숙사와 학생 유형에 따라 '
+              '준비할 것이 다를 수 있습니다.',
+          bodyEn: 'Once you have a place, work through the list below before '
+              'your move-in date. What you need differs by dormitory and by '
+              'the kind of student you are.',
+          notes: [
+            GuideNote(
+              titleKo: '📋 입사 전 확인',
+              titleEn: '📋 Check before you move in',
+              linesKo: [
+                '입사일 확인',
+                '배정된 기숙사 및 방 확인',
+                '기숙사비 납부',
+                '제출서류 확인',
+                '침구류 준비 여부 확인',
+                '건강검진결과표 필요 여부 확인',
+              ],
+              linesEn: [
+                'Your move-in date',
+                'Which dormitory and room you were given',
+                'Payment of the dormitory fee',
+                'What you have to submit',
+                'Whether you need to bring bedding',
+                'Whether a health-check certificate is required',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💰 기숙사비를 확인하세요',
+              titleEn: '💰 Check the dormitory fee',
+              linesKo: [
+                '기숙사비는 기숙사, 성별, 입사기간, 학기 등에 따라 달라질 수 있습니다.',
+                '정확한 금액은 해당 학기의 공식 모집공고 또는 입사안내에서 확인하세요.',
+              ],
+              linesEn: [
+                'The fee depends on the dormitory, the hall, the length of '
+                    'stay and the semester.',
+                "For the exact amount, read that semester's official "
+                    'recruitment notice or move-in guide.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🍽 식사는 기숙사마다 달라요',
+              titleEn: '🍽 Meals differ by dormitory',
+              linesKo: [
+                '기숙사별 식사 제공 여부와 식권 구매 방법을 입사 전에 확인하세요.',
+                '한림생활관은 식비가 생활관비에 포함되지 않으며, 학기 단위로 식사권을 구입해 '
+                    '이용합니다.',
+                '석당글로벌하우스는 식사가 포함되지 않고 취사가 가능합니다.',
+              ],
+              linesEn: [
+                'Check whether your dormitory serves meals, and how meal '
+                    'tickets are bought, before you move in.',
+                'At Hanlim, meals are not part of the dormitory fee — you buy '
+                    'a meal plan for the semester.',
+                'Seokdang Global House does not serve meals, but you can cook '
+                    'for yourself.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🛏 침구류를 확인하세요',
+              titleEn: '🛏 Check the bedding',
+              linesKo: [
+                '기숙사에 따라 침구류가 제공되지 않을 수 있으므로 입사 전에 준비 여부를 '
+                    '확인하세요.',
+                '석당글로벌하우스는 이불 · 패드 · 베개를 유료로 대여할 수 있다고 안내하고 '
+                    '있습니다.',
+              ],
+              linesEn: [
+                'Some dormitories do not provide bedding, so find out before '
+                    'you arrive whether you have to bring your own.',
+                'Seokdang Global House says a duvet, mattress pad and pillow '
+                    'can be rented for a fee.',
+              ],
+            ),
+          ],
+          noticeKo: '건강검진결과표가 필요할 수 있어요\n'
+              '석당글로벌하우스는 입사 시 제출서류로 건강검진결과표(결핵 · B형간염)를 안내하고 '
+              '있습니다. 한림생활관은 최신 사생모집 공고에서 확인되지 않으므로, 본인이 입사할 '
+              '기숙사의 안내에서 필요 여부를 확인하세요.',
+          noticeEn: 'You may need a health-check certificate\n'
+              'Seokdang Global House lists a health-check certificate '
+              '(tuberculosis and hepatitis B) among its move-in documents. The '
+              'current Hanlim recruitment notice does not mention one, so '
+              "check your own dormitory's guide.",
+          noticeIconName: 'info',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 건강검진결과표를 「한림생활관 '
+              '입사자만」 제출하는 것으로 안내되어 있었고, 기숙사에는 개인이불을 제공하지 않으며 '
+              '석당글로벌하우스는 침구류 대여가 가능하다고 되어 있었습니다.',
+          footnoteEn: '※ The 2024 booklet said the health-check certificate '
+              'was for Hanlim residents only, that dormitories do not supply '
+              'bedding, and that bedding could be rented at Seokdang Global '
+              'House.',
+        ),
+        GuideSection(
+          titleKo: '입사 후 해야 할 일',
+          titleEn: 'After Moving In',
+          iconName: 'format_list_numbered',
+          bodyKo: '입사 당일과 그 직후에 처리해야 하는 일들입니다. 세부 절차는 기숙사와 학기에 따라 '
+              '달라질 수 있으므로 입사 안내를 함께 확인하세요.',
+          bodyEn: 'What to do on the day you move in and shortly after. The '
+              'details vary by dormitory and semester, so read your move-in '
+              'guide alongside this.',
+          stepsKo: [
+            '방 배정 확인',
+            '오리엔테이션 또는 입사 안내 확인',
+            '입사등록 서류 제출',
+            '기숙사비 납부 여부 확인',
+            '비품 상태 확인',
+            '필요한 경우 건강검진결과표 제출',
+            '기숙사 생활규칙 확인',
+          ],
+          stepsEn: [
+            'Confirm your room assignment',
+            'Attend the orientation, or read the move-in briefing',
+            'Hand in your registration documents',
+            'Make sure the dormitory fee has been paid',
+            'Check the condition of the room and its fittings',
+            'Submit a health-check certificate if one is required',
+            'Read the house rules',
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '🏠 기숙사 생활규칙',
+              titleEn: '🏠 House rules to check',
+              linesKo: [
+                '입 · 퇴사 시간 및 절차 확인',
+                '외부인 출입 규칙 확인',
+                '화재 및 안전수칙 준수',
+                '공용시설 사용규칙 확인',
+                '쓰레기 분리배출',
+                '금연 · 음주 관련 생활관 규정 확인',
+              ],
+              linesEn: [
+                'Check-in and check-out times and procedures',
+                'The rules on visitors',
+                'Fire and safety rules',
+                'How shared facilities may be used',
+                'How rubbish is separated for recycling',
+                'The rules on smoking and alcohol',
+              ],
+            ),
+          ],
+          noticeKo: '퇴사할 때도 신고가 필요해요\n'
+              '석당글로벌하우스는 행정실 또는 사감실에 신고한 뒤 퇴사하도록 안내하고 있으며, 중도 '
+              '퇴사 시 환불 기준이 따로 있습니다. 퇴사 전에 본인 기숙사의 규정을 확인하세요.',
+          noticeEn: 'Moving out also has to be reported\n'
+              'Seokdang Global House asks residents to report to the office or '
+              'the warden before leaving, and has its own refund rules for '
+              "leaving early. Check your dormitory's rules before you move "
+              'out.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 2024학년도 외국인 유학생 안내서의 「도착 후 해야 할 일」에는 방배정 확인 후 '
+              '오리엔테이션 참가, 입사등록 서류(서약서 · 비품점검표) 제출, 입사일 기준 최종 '
+              '입사비 확인 후 3일 이내 납부, 건강검진결과표 제출(한림생활관 입사자)이 안내되어 '
+              '있었습니다.',
+          footnoteEn: '※ The 2024 booklet\'s "after you arrive" chapter listed '
+              'attending the orientation after confirming your room, handing '
+              'in the pledge and fittings checklist, paying the final fee '
+              'within three days of moving in, and submitting a health-check '
+              'certificate (Hanlim residents).',
+        ),
+      ],
+      tipsKo: [
+        '📅 모집기간은 매 학기 달라요 — 지난 학기의 신청기간을 기준으로 판단하지 말고 최신 '
+            '모집공고를 확인하세요.',
+        '🏠 기숙사마다 대상이 달라요 — 학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 '
+            '따라 이용 가능한 기숙사가 다를 수 있습니다.',
+        '💰 비용은 최신 공지를 확인하세요 — 기숙사비는 입사기간과 기숙사에 따라 달라질 수 '
+            '있습니다.',
+        '🛏 침구류를 확인하세요 — 침구가 제공되지 않는 기숙사가 있을 수 있으므로 입사 전 '
+            '확인하세요.',
+        '📄 제출서류가 있을 수 있어요 — 기숙사와 학생 유형에 따라 건강검진결과표 등 추가 서류가 '
+            '필요할 수 있습니다.',
+      ],
+      tipsEn: [
+        '📅 Application periods change each semester — never go by last '
+            "semester's dates; read the current notice.",
+        '🏠 Each dormitory has its own eligibility — undergraduates, graduate '
+            'students, exchange students and Korean language students are not '
+            'all offered the same place.',
+        '💰 Check the fee in the current notice — it changes with the '
+            'dormitory and the length of stay.',
+        '🛏 Check the bedding — some dormitories provide none, so find out '
+            'before you arrive.',
+        '📄 There may be documents to submit — depending on the dormitory and '
+            'your student type, a health-check certificate or other papers may '
+            'be required.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '한림생활관',
+          labelEn: 'Hanlim Residence Hall',
+          descriptionKo: '모집공고 · 입사안내 · 생활관 정보',
+          descriptionEn: 'Recruitment notices, move-in guide, hall information',
+          url: 'https://hanlim.donga.ac.kr/',
+        ),
+        GuideLink(
+          labelKo: '한림생활관 사생모집',
+          labelEn: 'Hanlim recruitment notice',
+          descriptionKo: '학기별 입사대상 · 신청방법 · 일정',
+          descriptionEn: "Each semester's eligibility, how to apply, dates",
+          url: 'https://hanlim.donga.ac.kr/hanlim/CMS/Contents/Contents.do'
+              '?mCode=MN017',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '석당글로벌하우스',
+          labelEn: 'Seokdang Global House',
+          descriptionKo: '외국인 유학생 기숙사 안내',
+          descriptionEn: 'The dormitory for international students',
+          url: 'https://globalhouse.donga.ac.kr/',
+        ),
+        GuideLink(
+          labelKo: '석당글로벌하우스 입 · 퇴사 안내',
+          labelEn: 'Seokdang Global House — moving in and out',
+          descriptionKo: '입사 절차 · 제출서류 · 침구류 대여',
+          descriptionEn: 'Move-in steps, documents, bedding rental',
+          url: 'https://globalhouse.donga.ac.kr/globalhouse/CMS/Contents/'
+              'Contents.do?mCode=MN026',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '국제교류과 유학생 지원',
+          labelEn: 'International Affairs Office — student support',
+          descriptionKo: '외국인 유학생 기숙사 · 생활지원 문의',
+          descriptionEn: 'Dormitories and living support for international '
+              'students',
+          url: 'https://global.donga.ac.kr/global/CMS/Contents/Contents.do'
+              '?mCode=MN062',
+          iconName: 'swap_horiz',
+        ),
+        // In-app route (UX doc §3): fitBounds over both Seunghak halls.
+        GuideLink(
+          labelKo: '지도에서 기숙사 위치 보기',
+          labelEn: 'View the dormitories on the map',
+          descriptionKo: '승학캠퍼스 한림생활관 승학1관 · 승학2관',
+          descriptionEn: 'Hanlim Seunghak 1 and Seunghak 2, Seunghak campus',
+          url: '/map?focus=s15,s19',
+          iconName: 'location_on',
+        ),
+      ],
+      // Only halls that already exist in the campus data — 석당글로벌하우스 is off
+      // the surveyed campus map, so it gets links rather than an invented pin.
+      relatedFacilityIds: ['s15', 's19'],
+      durationKo: '신청기간 확인 필요',
+      durationEn: 'Check the dates',
+      difficulty: 1,
+      status: GuideStatus.published,
     ),
+    // Money-losing mistakes live in this guide, so every legal statement is
+    // sourced (출입국관리법 §36/§88-2, 주택임대차보호법 §3/§3-2, 공인중개사법 §25/§32) via
+    // 법제처 생활법령정보, and every figure that moves — rent levels, 중개보수
+    // 요율, 신고 대상 금액 — is deferred to the official page instead of copied.
+    // Campus-On states procedure, never legal advice.
     const AdminGuideItem(
       id: 'off-campus-housing',
       categoryId: GuideCategory.housing,
-      titleKo: '교외 주거 구하기',
-      titleEn: 'Off-campus Housing',
-      summaryKo: '원룸·하숙·보증금 안내',
-      summaryEn: 'Studios, boarding, deposits',
+      titleKo: '교외주거 구하기',
+      titleEn: 'Finding Off-Campus Housing',
+      summaryKo: '방 찾기 · 계약 · 입주 전 확인',
+      summaryEn: 'Finding a room, contracts & move-in checks',
+      iconName: 'location_on',
+      overviewKo: '기숙사를 이용하지 않는 학생은 학교 주변이나 대중교통으로 이동하기 편리한 지역에서 '
+          '원룸, 오피스텔, 고시원 등 교외주거를 구할 수 있습니다.\n\n'
+          '한국의 임대차 계약은 보증금, 월세, 관리비 등 확인해야 할 항목이 많으므로 계약 전에 '
+          '조건과 집 상태를 충분히 확인하는 것이 중요합니다.\n\n'
+          '계약서 내용을 이해하기 어렵다면 혼자 서명하기보다 한국어를 잘 아는 사람이나 공식 '
+          '상담기관의 도움을 받는 것이 좋습니다.',
+      overviewEn: 'If you are not living in a dormitory, you can rent a studio '
+          '(원룸), an officetel or a goshiwon near campus or somewhere with a '
+          'good transport link.\n\n'
+          'A Korean lease has more moving parts than you might expect — a '
+          'deposit, monthly rent and a maintenance fee — so take the time to '
+          'check both the terms and the condition of the place before you '
+          'sign.\n\n'
+          'If the contract is hard to follow, do not sign it alone. Ask '
+          'someone who reads Korean well, or one of the official advice '
+          'services listed at the bottom of this page.',
+      topSections: [
+        GuideSection(
+          titleKo: '한국의 주거 형태',
+          titleEn: 'Types of Housing in Korea',
+          iconName: 'menu_book',
+          bodyKo: '방의 형태와 임대 방식은 별개입니다. 어떤 형태의 방을 구할지, 어떤 방식으로 '
+              '임대료를 낼지를 나누어 생각하면 조건을 비교하기 쉬워집니다.',
+          bodyEn: 'The kind of room and the way you pay for it are two '
+              'separate choices. Separating them makes it much easier to '
+              'compare listings.',
+          notes: [
+            GuideNote(
+              titleKo: '🏠 방의 형태',
+              titleEn: '🏠 Kinds of room',
+              linesKo: [
+                '원룸 — 방, 주방, 욕실 등이 한 공간에 있는 1인 주거 형태입니다. 대학생이 많이 '
+                    '이용합니다.',
+                '오피스텔 — 주거와 업무 용도로 사용되는 건물 형태로, 원룸보다 시설이 다양할 수 '
+                    '있습니다.',
+                '고시원 · 고시텔 — 작은 개인실을 이용하고 주방이나 세탁실 등을 공동으로 '
+                    '사용하는 경우가 많은 주거 형태입니다.',
+                '쉐어하우스 — 여러 사람이 하나의 주택을 함께 사용하면서 개인방과 공용공간을 '
+                    '나누어 사용하는 형태입니다.',
+              ],
+              linesEn: [
+                'One-room (원룸) — a single space holding the room, kitchen and '
+                    'bathroom. The most common student option.',
+                'Officetel (오피스텔) — a building used for both living and '
+                    'work; facilities are often more varied than in a one-room.',
+                'Goshiwon / goshitel (고시원 · 고시텔) — a small private room, '
+                    'usually with a shared kitchen and laundry.',
+                'Share house (쉐어하우스) — several people share one house, each '
+                    'with a private room plus common areas.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💳 임대 방식',
+              titleEn: '💳 Ways of paying',
+              linesKo: [
+                '월세 — 보증금을 맡기고 매달 정해진 임대료를 납부하는 방식입니다.',
+                '전세 — 큰 금액의 보증금을 맡기고 계약기간 동안 거주하는 한국의 임대차 '
+                    '형태입니다.',
+              ],
+              linesEn: [
+                'Wolse (월세) — you leave a deposit and pay a set rent every '
+                    'month. This is what most students use.',
+                'Jeonse (전세) — you leave one large deposit and live there for '
+                    'the contract period instead of paying monthly rent.',
+              ],
+            ),
+          ],
+          noticeKo: '전세는 보증금이 매우 큰 계약이에요\n'
+              '전세는 맡기는 금액이 큰 만큼 확인해야 할 것도 많습니다. 보증금이 큰 계약이라면 '
+              '계약 전에 공공기관 또는 전문 상담기관을 통해 보호절차를 확인하세요.',
+          noticeEn: 'Jeonse means a very large deposit\n'
+              'Because the sum is large, there is much more to check. If you '
+              'are considering a contract with a big deposit, ask a public '
+              'body or an official advice service about how that money is '
+              'protected before you commit.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '방을 찾는 방법',
+          titleEn: 'How to Find a Room',
+          iconName: 'compare_arrows',
+          bodyKo: '어느 경로로 찾더라도 계약 전에 확인해야 할 절차는 같습니다. 여러 경로를 함께 '
+              '쓰면 조건을 비교하기 쉽습니다.',
+          bodyEn: 'Whichever route you use, the checks you make before signing '
+              'are the same. Using more than one route makes it easier to '
+              'compare.',
+          notes: [
+            GuideNote(
+              titleKo: '🏢 공인중개사 사무소',
+              titleEn: '🏢 Licensed agency office',
+              linesKo: [
+                '원하는 지역의 부동산 중개사무소를 방문하여 조건에 맞는 방을 소개받을 수 '
+                    '있습니다.',
+                '중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.',
+                '등록 여부가 확실하지 않다면 관할 시·군·구청의 부동산 담당 부서나 '
+                    '국가공간정보포털의 부동산중개업 조회에서 확인할 수 있습니다.',
+              ],
+              linesEn: [
+                'Visit an agency in the area you want and ask them to show you '
+                    'rooms that fit your conditions.',
+                'By law the office must display its commission rates and '
+                    'ceilings where you can see them.',
+                'If you are unsure the office is registered, you can check '
+                    'with the property team at the district office, or through '
+                    'the national spatial information portal.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📱 부동산 플랫폼',
+              titleEn: '📱 Online property platforms',
+              linesKo: [
+                '국내 부동산 플랫폼 등을 통해 위치, 보증금, 월세 등의 조건을 미리 확인하고 '
+                    '비교할 수 있습니다.',
+                '온라인 정보는 실제와 다를 수 있으므로 반드시 직접 방문해 확인하세요.',
+              ],
+              linesEn: [
+                'Korean property platforms let you compare location, deposit '
+                    'and rent before you go anywhere.',
+                'What is online may not match the actual room — always visit '
+                    'in person before deciding.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '👥 지인 · 학교 커뮤니티',
+              titleEn: '👥 Friends & student communities',
+              linesKo: [
+                '다른 학생에게 지역이나 평균적인 주거환경에 대한 정보를 물어보는 것도 '
+                    '도움이 됩니다.',
+                '개인 간 직거래는 중개사가 확인해 주는 절차가 없으므로, 소유자 확인과 계약서 '
+                    '작성이 더욱 중요합니다.',
+              ],
+              linesEn: [
+                'Other students are a good source for what a neighbourhood is '
+                    'actually like.',
+                'Renting directly from a person means nobody checks the '
+                    'paperwork for you — verifying the owner and putting '
+                    'everything in a written contract matters even more.',
+              ],
+            ),
+          ],
+          footnoteKo: '※ Campus-On은 특정 중개사무소나 부동산 앱을 추천하지 않습니다. 어느 경로를 '
+              '이용하든 계약 전 확인 절차는 동일합니다.',
+          footnoteEn: '※ Campus-On does not recommend any particular agency or '
+              'property app. The checks before signing are the same either way.',
+        ),
+        GuideSection(
+          titleKo: '동아대학교 주변에서 찾을 때',
+          titleEn: 'Looking Near Dong-A University',
+          iconName: 'location_on',
+          bodyKo: '동아대학교는 캠퍼스가 나뉘어 있습니다. 본인 수업이 어느 캠퍼스에서 열리는지 '
+              '먼저 확인한 뒤 그 캠퍼스를 기준으로 지역을 고르세요.',
+          bodyEn: 'Dong-A University is split across campuses. Work out where '
+              'your classes actually are first, then choose an area around '
+              'that campus.',
+          links: [
+            GuideLink(
+              labelKo: '지도에서 승학캠퍼스 보기',
+              labelEn: 'View the Seunghak campus on the map',
+              url: '/map?focus=s01',
+              iconName: 'location_on',
+            ),
+            GuideLink(
+              labelKo: '지도에서 부민캠퍼스 보기',
+              labelEn: 'View the Bumin campus on the map',
+              url: '/map?focus=b04',
+              iconName: 'location_on',
+            ),
+            GuideLink(
+              labelKo: '지도에서 구덕캠퍼스 보기',
+              labelEn: 'View the Gudeok campus on the map',
+              url: '/map?focus=g04',
+              iconName: 'location_on',
+            ),
+          ],
+          notes: [
+            GuideNote(
+              titleKo: '🚇 캠퍼스별로 확인하세요',
+              titleEn: '🚇 Check by campus',
+              linesKo: [
+                '승학캠퍼스 — 하단역 및 승학캠퍼스로 이동하기 편리한 지역인지 확인하세요.',
+                '부민캠퍼스 — 토성역 및 부민캠퍼스로 이동하기 편리한 지역인지 확인하세요.',
+                '구덕캠퍼스 — 수업이 구덕캠퍼스에 있다면 학교까지의 실제 이동시간을 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'Seunghak campus — check the area connects easily to Hadan '
+                    'station and the campus itself.',
+                'Bumin campus — check the area connects easily to Toseong '
+                    'station and the campus itself.',
+                'Gudeok campus — if your classes are here, check how long the '
+                    'trip actually takes.',
+              ],
+            ),
+          ],
+          noticeKo: '거리보다 실제 이동시간을 확인하세요\n'
+              '지도에서 가까워 보여도 버스·지하철 노선과 환승에 따라 실제 이동시간은 크게 '
+              '달라질 수 있습니다. 계약 전에 수업 시간대에 맞춰 한 번 이동해 보세요.',
+          noticeEn: 'Travel time matters more than distance\n'
+              'A place that looks close on a map can take much longer once bus '
+              'and subway routes and transfers are involved. Before you sign, '
+              'make the trip once at the time of day you would actually go.',
+          noticeIconName: 'info',
+          footnoteKo: '※ Campus-On은 부동산 매물이나 지역별 시세 정보를 제공하지 않습니다. '
+              '특정 지역의 가격이나 주거환경은 공식 부동산 정보나 중개사무소에서 확인하세요.',
+          footnoteEn: '※ Campus-On does not list properties or local price '
+              'levels. Check prices and conditions with official property '
+              'sources or an agency.',
+        ),
+        GuideSection(
+          titleKo: '집을 보러 갈 때 확인',
+          titleEn: 'What to Check During a Viewing',
+          iconName: 'help',
+          bodyKo: '사진만으로는 알 수 없는 것들이 많습니다. 방문했을 때 아래 항목을 직접 '
+              '확인하세요.',
+          bodyEn: 'Photos hide a lot. Check these yourself while you are '
+              'standing in the room.',
+          notes: [
+            GuideNote(
+              titleKo: '🚪 집 내부',
+              titleEn: '🚪 Inside the room',
+              linesKo: [
+                '창문과 환기 상태',
+                '곰팡이 또는 누수 흔적',
+                '난방 작동 여부',
+                '온수와 수압',
+                '에어컨 · 냉장고 · 세탁기',
+                '도어락',
+                '인터넷 제공 여부',
+                '가구 및 옵션 상태',
+              ],
+              linesEn: [
+                'Windows and ventilation',
+                'Any sign of mould or water damage',
+                'Whether the heating works',
+                'Hot water and water pressure',
+                'Air conditioner, fridge, washing machine',
+                'The door lock',
+                'Whether internet is included',
+                'The condition of the furniture and fittings',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🏢 건물',
+              titleEn: '🏢 The building',
+              linesKo: [
+                '건물 출입 방식과 공동현관',
+                '엘리베이터 여부',
+                '쓰레기 배출 장소',
+                '택배 수령 방법',
+                '주차가 필요한 경우 주차 조건',
+              ],
+              linesEn: [
+                'How you get in, and the main entrance',
+                'Whether there is a lift',
+                'Where rubbish goes',
+                'How parcels are received',
+                'Parking terms, if you need parking',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📍 주변 환경',
+              titleEn: '📍 The neighbourhood',
+              linesKo: [
+                '학교까지 이동시간',
+                '지하철 · 버스 이용',
+                '편의점 · 마트',
+                '늦은 시간 귀가 동선',
+              ],
+              linesEn: [
+                'How long it takes to reach campus',
+                'Subway and bus access',
+                'Convenience stores and supermarkets',
+                'The walk home late at night',
+              ],
+            ),
+          ],
+          noticeKo: '발견한 하자는 그 자리에서 기록하세요\n'
+              '곰팡이, 누수, 파손처럼 이미 있는 문제는 사진이나 동영상으로 남겨두세요. 나중에 '
+              '책임 범위를 정리할 때 근거가 됩니다.',
+          noticeEn: 'Record any damage while you are there\n'
+              'Photograph or film anything already broken — mould, leaks, '
+              'damaged fittings. It is your evidence if responsibility is '
+              'ever questioned.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '계약 전에 확인하세요',
+          titleEn: 'Before You Sign',
+          iconName: 'receipt_long',
+          bodyKo: '계약 전에 반드시 세 가지를 확인하세요 — 계약 상대방이 누구인지, 계약서의 '
+              '주소가 맞는지, 돈을 보내는 계좌가 맞는지.',
+          bodyEn: 'Three things to settle before you sign: who you are '
+              'actually contracting with, whether the address on the contract '
+              'is the right one, and whose account the money goes to.',
+          notes: [
+            GuideNote(
+              titleKo: '📄 등기사항증명서로 소유자 확인',
+              titleEn: '📄 Check the owner in the property register',
+              linesKo: [
+                '등기사항증명서(등기부등본)를 통해 집의 실제 소유자와 근저당권 등 권리관계를 '
+                    '확인할 수 있습니다.',
+                '등기사항증명서는 대한민국 법원 인터넷등기소에서 누구나 열람하거나 발급받을 '
+                    '수 있습니다.',
+                '계약하려는 사람이 등기상 소유자와 같은 사람인지 신분증으로 확인하세요.',
+                '소유자가 아닌 대리인이 계약한다면 위임장 등 위임 사실을 확인할 수 있는 '
+                    '서류와 신분 확인을 요청하세요.',
+              ],
+              linesEn: [
+                'The property register (등기사항증명서) shows who actually owns '
+                    'the place and what claims — such as a mortgage — are '
+                    'registered against it.',
+                'Anyone can view or obtain it from the Korean Court Internet '
+                    'Registry Office.',
+                'Check the ID of the person signing against the owner named in '
+                    'the register.',
+                'If an agent signs instead of the owner, ask for the power of '
+                    'attorney and for ID you can check.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🏠 주소 확인',
+              titleEn: '🏠 Check the address',
+              linesKo: [
+                '계약서의 주소와 실제 방문한 집의 주소가 동일한지 확인하세요.',
+                '건물 이름뿐 아니라 동 · 호수까지 반드시 일치하는지 확인하세요.',
+              ],
+              linesEn: [
+                'The address on the contract must be the address of the place '
+                    'you actually viewed.',
+                'Check the building AND the unit number — not just the '
+                    'building name.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '💳 송금 전 확인',
+              titleEn: '💳 Check before you transfer',
+              linesKo: [
+                '계약금과 보증금을 보내기 전에 받는 계좌의 명의가 계약 상대방과 같은지 '
+                    '확인하세요.',
+                '제3자 명의의 계좌로 보내달라고 하는 경우에는 이유와 근거를 반드시 '
+                    '확인하세요.',
+                '송금 기록은 반드시 보관하세요.',
+              ],
+              linesEn: [
+                'Before sending the down payment or deposit, check the account '
+                    'is in the name of the person you are contracting with.',
+                'If you are asked to send it to a third party account, ask why '
+                    'and get it in writing.',
+                'Keep the transfer records.',
+              ],
+            ),
+          ],
+          noticeKo: '이해하지 못한 상태로 서명하지 마세요\n'
+              '계약서 내용을 이해하기 어렵다면 혼자 서명하지 말고, 한국어를 잘 아는 사람이나 '
+              '이 페이지 아래의 공식 상담기관에 먼저 물어보세요.',
+          noticeEn: 'Do not sign what you do not understand\n'
+              'If the contract is hard to follow, do not sign it alone — ask '
+              'someone who reads Korean well, or one of the official advice '
+              'services at the bottom of this page.',
+          footnoteKo: '※ Campus-On은 법률 자문을 제공하지 않습니다. 개별 계약에 따라 적용되는 '
+              '절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.',
+          footnoteEn: '※ Campus-On does not give legal advice. What applies to '
+              'your particular contract can differ, so check with an official '
+              'body or a professional.',
+        ),
+      ],
+      checklistTitleKo: '계약서에서 확인할 내용',
+      checklistTitleEn: 'What to Check in the Lease',
+      checklistKo: [
+        '임대인 이름',
+        '임차인 이름',
+        '정확한 주소와 동 · 호수',
+        '계약기간',
+        '보증금',
+        '월세',
+        '월세 납부일',
+        '관리비',
+        '관리비에 포함되는 항목',
+        '입주일',
+        '계약 종료 조건',
+        '시설 및 옵션',
+        '수리 책임',
+        '특약사항',
+      ],
+      checklistEn: [
+        "The landlord's name",
+        'Your own name as tenant',
+        'The exact address, including the unit number',
+        'The contract period',
+        'The deposit',
+        'The monthly rent',
+        'The day rent is due each month',
+        'The maintenance fee',
+        'What that maintenance fee covers',
+        'The move-in date',
+        'How the contract can be ended',
+        'The fittings and included appliances',
+        'Who pays for repairs',
+        'Any special terms (특약사항)',
+      ],
+      checklistOptionalTitleKo: '관리비에 무엇이 포함되나요?',
+      checklistOptionalTitleEn: 'What does the maintenance fee cover?',
+      checklistOptionalKo: [
+        '수도',
+        '인터넷',
+        '공용전기',
+        '청소비',
+        '승강기 · 경비 등 공용 관리 비용',
+        '전기 · 가스 등 개별 사용료가 별도인지',
+      ],
+      checklistOptionalEn: [
+        'Water',
+        'Internet',
+        'Electricity for shared areas',
+        'Cleaning',
+        'Lift, security and other shared-building costs',
+        'Whether electricity and gas are billed to you separately',
+      ],
+      checklistNoteKo: '관리비는 금액보다 무엇이 포함되는지가 중요합니다. 포함되지 않은 항목은 매달 '
+          '따로 내야 하므로, 월세와 관리비와 개별 사용료를 합쳐 실제로 매달 나가는 금액을 계산해 '
+          '보세요.',
+      checklistNoteEn: 'With the maintenance fee, what it covers matters more '
+          'than the number. Anything not covered is billed to you separately — '
+          'so add rent, maintenance fee and utilities together to see what a '
+          'month really costs.',
+      stepsKo: [
+        '원하는 지역과 예산 정하기',
+        '여러 집을 비교하고 직접 방문하기',
+        '집 상태 확인하기',
+        '등기사항증명서로 소유자 · 권리관계 확인',
+        '계약조건과 계약서 내용 확인',
+        '계약서 작성 및 서명',
+        '계약금 · 보증금 지급 후 계약서와 송금내역 보관',
+        '입주 후 신고 및 보호 절차 확인',
+      ],
+      stepsEn: [
+        'Decide on the area and your budget',
+        'Compare several places and go and see them',
+        'Check the condition of the room',
+        'Check the owner and any claims in the property register',
+        'Go through the terms and the contract itself',
+        'Sign the contract',
+        'Pay, then keep the contract and the transfer records',
+        'Move in, then deal with the reporting and protection steps',
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '입주 전 · 입주 후 확인',
+          titleEn: 'Moving In',
+          iconName: 'info',
+          bodyKo: '입주 당일에 확인하고 기록해 두면 나중에 문제가 생겼을 때 정리하기 훨씬 '
+              '쉬워집니다.',
+          bodyEn: 'What you check and record on moving-in day is what settles '
+              'arguments later.',
+          notes: [
+            GuideNote(
+              titleKo: '📁 보관할 것',
+              titleEn: '📁 Keep these',
+              linesKo: [
+                '계약서 원본 또는 사본',
+                '보증금 · 계약금 송금내역',
+                '중개보수 등 지급 기록과 영수증',
+              ],
+              linesEn: [
+                'The contract, original or a copy',
+                'Records of the deposit and down-payment transfers',
+                'Receipts for the agency commission and anything else you paid',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📸 입주 당일 확인',
+              titleEn: '📸 Check on the day',
+              linesKo: [
+                '집 상태를 사진으로 촬영',
+                '계량기 상태 확인이 필요한지 확인',
+                '도어락 비밀번호 변경 또는 확인',
+                '전기 · 가스 · 수도 사용방법 확인',
+                '쓰레기 분리배출 방법 확인',
+                '관리인 또는 집주인 연락처 저장',
+              ],
+              linesEn: [
+                'Photograph the condition of the place',
+                'Check whether the meters need reading',
+                'Change or confirm the door lock code',
+                'Find out how the electricity, gas and water work',
+                'Find out how rubbish is separated and put out',
+                'Save the manager or landlord contact number',
+              ],
+            ),
+          ],
+          noticeKo: '기존 하자는 기록이 남는 방법으로 알리세요\n'
+              '입주 전부터 있던 손상은 문자나 메시지처럼 기록이 남는 방법으로 집주인에게 '
+              '알려두세요. 전화로만 말하면 나중에 확인하기 어렵습니다.',
+          noticeEn: 'Report existing damage in writing\n'
+              'Tell the landlord about anything already damaged by text or '
+              'message, not only by phone — you want a record with a date on '
+              'it.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '이사 후 신고와 보증금 보호',
+          titleEn: 'Reporting Your Address & Protecting Your Deposit',
+          iconName: 'badge',
+          bodyKo: '외국인등록을 한 학생이 이사하면 체류지 변경 신고가 필요합니다. 이 신고는 '
+              '체류 관리뿐 아니라 보증금을 지키는 절차와도 이어져 있습니다.',
+          bodyEn: 'If you have an alien registration and you move, you must '
+              'report your new address. That report is not only an immigration '
+              'formality — it is also part of how your deposit is protected.',
+          notes: [
+            GuideNote(
+              titleKo: '🪪 체류지 변경 신고',
+              titleEn: '🪪 Report your change of residence',
+              linesKo: [
+                '대상 — 외국인등록을 한 사람이 체류지를 옮긴 경우',
+                '기한 — 전입한 날부터 15일 이내',
+                '장소 — 새 체류지의 시·군·구 또는 읍·면·동, 또는 새 체류지를 관할하는 '
+                    '출입국·외국인청(사무소·출장소)',
+                '온라인 — 하이코리아 전자민원으로도 신청할 수 있습니다(본인 신청).',
+                '서류 — 체류지 변경신고서, 외국인등록증, 임대차계약서 등 체류지 이전을 '
+                    '확인할 수 있는 서류',
+              ],
+              linesEn: [
+                'Who — anyone with an alien registration who has moved',
+                'When — within 15 days of moving in',
+                'Where — the si/gun/gu or eup/myeon/dong office for your new '
+                    'address, or the immigration office covering it',
+                'Online — you can also file it yourself through HiKorea',
+                'What to bring — the change-of-residence form, your ARC, and '
+                    'your lease (or another document proving the new address)',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🛡 보증금 보호와 확정일자',
+              titleEn: '🛡 Your deposit and the fixed date',
+              linesKo: [
+                '주택임대차보호법의 대항력은 주택을 인도받고 주민등록(전입신고)을 마친 '
+                    '다음 날부터 생깁니다.',
+                '외국인은 출입국관리법에 따른 체류지 변경 신고가 전입신고를 갈음하므로, '
+                    '신고를 마치면 같은 보호를 받을 수 있습니다.',
+                '우선변제권은 대항요건에 더해 임대차계약서에 확정일자를 받아야 생깁니다.',
+                '확정일자는 읍·면사무소, 동 주민센터, 지방법원, 등기소, 공증인 등에서 받을 '
+                    '수 있습니다.',
+              ],
+              linesEn: [
+                'Under the Housing Lease Protection Act, protection against '
+                    'third parties starts the day AFTER you take possession and '
+                    'register your address.',
+                'For foreign nationals the immigration change-of-residence '
+                    'report stands in for the resident registration, so filing '
+                    'it gives you the same footing.',
+                'To rank ahead of later claims you also need a fixed date '
+                    '(확정일자) stamped on the lease.',
+                'You can get that stamp at a community centre, a district '
+                    'court, a registry office or a notary.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📝 주택 임대차계약 신고',
+              titleEn: '📝 Reporting the lease itself',
+              linesKo: [
+                '계약 조건과 지역에 따라 주택 임대차계약 신고가 필요할 수 있습니다.',
+                '임차인이 계약서를 첨부하면 혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 '
+                    '부여됩니다.',
+                '신고가 필요한지, 어떻게 하는지는 계약한 공인중개사 또는 관할 행정기관에서 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'Depending on the terms and the area, the lease itself may have '
+                    'to be reported.',
+                'A tenant who attaches the contract can file it alone — and the '
+                    'fixed date is then applied automatically.',
+                'Ask your agent or the local office whether your contract needs '
+                    'reporting, and how.',
+              ],
+            ),
+          ],
+          noticeKo: '신고를 미루지 마세요\n'
+              '체류지 변경 신고는 기한이 정해져 있고, 기한 내에 신고하지 않으면 불이익이 있을 '
+              '수 있습니다. 보증금 보호와도 이어지므로 이사 후 먼저 처리하세요.',
+          noticeEn: 'Do not put the report off\n'
+              'There is a deadline, and missing it can have consequences. It '
+              'also ties into how your deposit is protected — so make it the '
+              'first thing you do after moving.',
+          footnoteKo: '※ 근거: 「출입국관리법」 제36조 및 제88조의2, 「주택임대차보호법」 제3조 · '
+              '제3조의2 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 '
+              '안내 기준. 신고 대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 '
+              '확인하세요. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 '
+              '전문가에게 확인하세요.',
+          footnoteEn: '※ Based on the Immigration Control Act arts. 36 and 88-2 '
+              'and the Housing Lease Protection Act arts. 3 and 3-2, as '
+              'explained by the Korean Ministry of Government Legislation, '
+              'HiKorea and the property transaction system. Thresholds and '
+              'deadlines change — check the current official guidance, and ask '
+              'an official body about your own contract.',
+        ),
+        GuideSection(
+          titleKo: '보증금 · 월세 이해하기',
+          titleEn: 'Deposits, Rent & Fees',
+          iconName: 'payments',
+          bodyKo: '계약서에 나오는 돈은 크게 네 가지입니다. 각각 언제 내고 언제 돌려받는지가 '
+              '다릅니다.',
+          bodyEn: 'Four kinds of money appear in a lease. They are paid at '
+              'different times, and only one of them comes back.',
+          notes: [
+            GuideNote(
+              titleKo: '계약금',
+              titleEn: 'Down payment (계약금)',
+              linesKo: [
+                '계약을 진행하기로 하면서 먼저 지급하는 금액입니다.',
+              ],
+              linesEn: [
+                'Paid up front when you agree to go ahead with the contract.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '보증금',
+              titleEn: 'Deposit (보증금)',
+              linesKo: [
+                '임대인에게 맡기는 금액으로, 계약이 끝나면 미납금이나 손해 등을 제외하고 '
+                    '돌려받는 것이 일반적입니다.',
+              ],
+              linesEn: [
+                'Held by the landlord and normally returned when the contract '
+                    'ends, minus anything unpaid or any damage.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '월세',
+              titleEn: 'Monthly rent (월세)',
+              linesKo: [
+                '매달 임대인에게 납부하는 임대료입니다.',
+              ],
+              linesEn: [
+                'What you pay the landlord every month.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '관리비',
+              titleEn: 'Maintenance fee (관리비)',
+              linesKo: [
+                '건물 관리 등에 필요한 비용으로, 월세와 별도로 납부하는 경우가 많습니다.',
+              ],
+              linesEn: [
+                'The cost of running the building. Usually billed on top of '
+                    'the rent, not inside it.',
+              ],
+            ),
+          ],
+          footnoteKo: '※ 계약금이 보증금의 몇 퍼센트인지와 같은 비율은 계약마다 다릅니다. '
+              'Campus-On은 시세나 비율을 제시하지 않으므로, 실제 금액과 지급 시기는 계약 '
+              '상대방 및 중개사와 확인하세요.',
+          footnoteEn: '※ There is no fixed ratio between the down payment and '
+              'the deposit — it differs by contract. Campus-On does not quote '
+              'prices or ratios, so agree the actual amounts and dates with '
+              'the landlord and the agent.',
+        ),
+        GuideSection(
+          titleKo: '부동산 중개 이용',
+          titleEn: 'Using a Licensed Agent',
+          iconName: 'storefront',
+          bodyKo: '공인중개사를 통해 계약하면 중개보수가 발생합니다. 금액은 미리 확인하고, '
+              '지급한 기록을 남겨두세요.',
+          bodyEn: 'Going through a licensed agent means paying a commission. '
+              'Agree the amount in advance, and keep proof that you paid it.',
+          notes: [
+            GuideNote(
+              titleKo: '💵 중개보수',
+              titleEn: '💵 The commission',
+              linesKo: [
+                '중개보수는 거래금액과 계약 형태 등에 따라 상한이 정해질 수 있으며, 주택 '
+                    '임대차의 상한 요율은 시·도의 조례로 정해집니다.',
+                '그 상한 안에서 의뢰인과 개업공인중개사가 협의해 정합니다.',
+                '중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.',
+                '요율은 바뀔 수 있으므로 계약 전에 최신 공식 안내를 확인하세요.',
+              ],
+              linesEn: [
+                'There is a ceiling on the commission, set by the province or '
+                    'metropolitan city by ordinance, and it depends on the '
+                    'transaction amount and the type of contract.',
+                'Within that ceiling, you and the agent agree the figure.',
+                'The rate table must be displayed inside the agency office.',
+                'Rates change, so check the current official guidance before '
+                    'you sign.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📑 받아야 할 서류',
+              titleEn: '📑 What you should receive',
+              linesKo: [
+                '계약을 체결할 때 중개대상물 확인 · 설명서를 받게 됩니다.',
+                '현금으로 비용을 지불한 경우 영수증 등 지급 기록을 남겨두세요.',
+              ],
+              linesEn: [
+                'When the contract is made you should be given the property '
+                    'confirmation and explanation document.',
+                'If you pay in cash, get a receipt or some other record of the '
+                    'payment.',
+              ],
+            ),
+          ],
+          footnoteKo: '※ 근거: 「공인중개사법」 제25조 · 제32조 및 같은 법 시행규칙 제20조 — '
+              '법제처 「찾기쉬운 생활법령정보」 안내 기준. 요율은 시·도 조례로 정해지고 바뀔 수 '
+              '있어 앱에 고정 표를 두지 않았습니다. 아래 링크에서 최신 기준을 확인하세요.',
+          footnoteEn: '※ Based on the Licensed Real Estate Agents Act arts. 25 '
+              'and 32 and its enforcement rules art. 20, as explained by the '
+              'Korean Ministry of Government Legislation. Because the rates are '
+              'set locally and change, no fixed table is built into the app — '
+              'use the link below for the current figures.',
+        ),
+        GuideSection(
+          titleKo: '사기 · 분쟁 예방',
+          titleEn: 'Avoiding Rental Scams & Disputes',
+          iconName: 'local_police',
+          bodyKo: '대부분의 계약은 문제없이 끝납니다. 아래 네 가지만 지켜도 대부분의 문제를 '
+              '피할 수 있습니다.',
+          bodyEn: 'Most rentals go fine. These four habits prevent most of what '
+              'goes wrong.',
+          notes: [
+            GuideNote(
+              titleKo: '🚫 집을 보지 않고 큰 금액을 보내지 마세요',
+              titleEn: '🚫 Do not send money for a place you have not seen',
+              linesKo: [
+                '온라인 사진만 보고 계약하거나 큰 보증금을 먼저 송금하지 않는 것이 '
+                    '좋습니다.',
+              ],
+              linesEn: [
+                'Do not sign — or wire a large deposit — on the strength of '
+                    'photos alone.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '👤 계약 상대방을 확인하세요',
+              titleEn: '👤 Check who you are dealing with',
+              linesKo: [
+                '등기사항증명서상의 소유자와 계약자가 같은 사람인지 확인하세요.',
+                '대리인이 계약하는 경우 위임 사실을 확인할 수 있는 서류를 요청하세요.',
+              ],
+              linesEn: [
+                'The person signing should be the owner named in the property '
+                    'register.',
+                'If an agent signs for the owner, ask to see the document that '
+                    'authorises them.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🗂 계약서를 꼭 보관하세요',
+              titleEn: '🗂 Keep the contract',
+              linesKo: [
+                '계약서 원본 또는 사본과 송금내역을 보관하세요.',
+              ],
+              linesEn: [
+                'Keep the contract — original or copy — and the transfer '
+                    'records.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '🔍 너무 좋은 조건은 한 번 더 확인하세요',
+              titleEn: '🔍 Look twice at a deal that seems too good',
+              linesKo: [
+                '주변보다 지나치게 낮은 보증금이나 월세가 광고되어 있다면, 실제 조건과 집 '
+                    '상태를 다시 확인하세요.',
+              ],
+              linesEn: [
+                'If the deposit or rent is far below everything else nearby, '
+                    'go back and check the actual terms and the actual room.',
+              ],
+            ),
+          ],
+          noticeKo: '보증금이 큰 계약이라면 미리 확인하세요\n'
+              'HUG 주택도시보증공사의 안심전세포털에서 전세사기 예방 정보와 보증 안내를 볼 수 '
+              '있습니다. 다만 모든 계약에서 보증 가입이 가능한 것은 아니므로, 이용 가능 여부와 '
+              '조건은 해당 상품 안내에서 확인해야 합니다.',
+          noticeEn: 'Check in advance if the deposit is large\n'
+              'HUG (Korea Housing and Urban Guarantee Corporation) runs a '
+              'portal with scam-prevention information and guarantee products. '
+              'Not every contract qualifies, so check the eligibility and '
+              'conditions on the product page itself.',
+          noticeIconName: 'info',
+        ),
+        GuideSection(
+          titleKo: '계약에서 자주 나오는 말',
+          titleEn: 'Words You Will See in the Lease',
+          iconName: 'translate',
+          bodyKo: '계약서와 부동산에서 자주 나오는 표현입니다. 한국어 단어를 그대로 보여주면 '
+              '의사소통이 쉬워집니다.',
+          bodyEn: 'The words you will meet in the contract and at the agency. '
+              'Showing the Korean word itself is often the fastest way to make '
+              'yourself understood.',
+          notes: [
+            GuideNote(
+              titleKo: '💬 계약 용어',
+              titleEn: '💬 Lease vocabulary',
+              linesKo: [
+                '보증금 — Deposit',
+                '월세 — Monthly rent',
+                '관리비 — Maintenance fee',
+                '계약금 — Down payment (contract deposit)',
+                '임대인 — Landlord',
+                '임차인 — Tenant',
+                '공인중개사 — Licensed real estate agent',
+                '임대차계약서 — Lease agreement',
+                '등기사항증명서 — Certified copy of the property register',
+                '확정일자 — Fixed date recorded on the lease',
+                '특약사항 — Special terms',
+                '체류지 변경 신고 — Report of change of residence',
+              ],
+              linesEn: [
+                'Deposit — 보증금 (bojeunggeum)',
+                'Monthly rent — 월세 (wolse)',
+                'Maintenance fee — 관리비 (gwallibi)',
+                'Down payment — 계약금 (gyeyakgeum)',
+                'Landlord — 임대인 (imdaein)',
+                'Tenant — 임차인 (imchain)',
+                'Licensed real estate agent — 공인중개사 (gongin junggaesa)',
+                'Lease agreement — 임대차계약서 (imdaecha gyeyakseo)',
+                'Certified copy of the property register — 등기사항증명서 '
+                    '(deunggi sahang jeungmyeongseo)',
+                'Fixed date on the lease — 확정일자 (hwakjeong ilja)',
+                'Special terms — 특약사항 (teugyak sahang)',
+                'Report of change of residence — 체류지 변경 신고 (chelyuji '
+                    'byeongyeong singo)',
+              ],
+            ),
+          ],
+        ),
+      ],
+      tipsKo: [
+        '🏠 여러 집을 비교하세요 — 첫 번째로 본 집을 바로 계약하기보다 위치와 비용, 시설을 '
+            '비교해보세요.',
+        '💰 월세만 보지 마세요 — 보증금, 월세, 관리비, 전기 · 가스 등 실제 매달 부담할 비용을 '
+            '함께 확인하세요.',
+        '📄 계약서를 이해한 뒤 서명하세요 — 이해하지 못한 내용이 있다면 서명하기 전에 반드시 '
+            '확인하세요.',
+        '📸 입주 전 사진을 남겨두세요 — 기존 손상이나 시설 상태를 입주 전에 사진으로 '
+            '기록하세요.',
+        '📍 이사 후 신고를 확인하세요 — 외국인등록을 한 학생은 주소 변경 후 체류지 변경 신고가 '
+            '필요할 수 있습니다.',
+        '🧾 모든 기록을 보관하세요 — 계약서, 송금내역, 중개 관련 영수증 등 계약과 관련된 기록을 '
+            '보관하세요.',
+      ],
+      tipsEn: [
+        '🏠 Compare a few places — do not sign for the first room you see; '
+            'weigh location, cost and condition against each other.',
+        '💰 Rent is not the whole cost — add the deposit, the maintenance fee '
+            'and utilities to see what a month actually costs.',
+        '📄 Understand the contract before you sign — if any part is unclear, '
+            'ask before signing, not after.',
+        '📸 Take photos before moving in — record any existing damage and the '
+            'state of the fittings.',
+        '📍 Check your address-reporting requirements after moving — with an '
+            'alien registration, a change of address usually has to be '
+            'reported.',
+        '🧾 Keep every record — the contract, the transfers and the agency '
+            'receipts.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '주택임대차 보증금 보호 안내 (법제처)',
+          labelEn: 'Housing lease & deposit protection (Ministry of Government '
+              'Legislation)',
+          descriptionKo: '계약 전 확인 · 임차인 보호 정보',
+          descriptionEn: 'What to check before signing, and how tenants are '
+              'protected',
+          url: 'https://www.easylaw.go.kr/CSP/CnpClsMain.laf'
+              '?csmSeq=629&ccfNo=2&cciNo=3&cnpClsNo=1',
+          iconName: 'menu_book',
+        ),
+        GuideLink(
+          labelKo: '대한민국 법원 인터넷등기소',
+          labelEn: 'Korean Court Internet Registry Office',
+          descriptionKo: '등기사항증명서 — 부동산 소유자 · 권리관계 확인',
+          descriptionEn: 'The property register — owner and registered claims',
+          url: 'https://www.iros.go.kr/',
+          iconName: 'receipt_long',
+        ),
+        GuideLink(
+          labelKo: '주택 임대차계약 신고 (부동산거래관리시스템)',
+          labelEn: 'Reporting a housing lease (property transaction system)',
+          descriptionKo: '신고 대상 · 방법 · 확정일자 자동 부여 안내',
+          descriptionEn: 'Who must report, how, and the automatic fixed date',
+          url: 'https://rtms.molit.go.kr/main/serviceInfo.do',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '중개보수 · 개업공인중개사의 책임 (법제처)',
+          labelEn: 'Agency commission & agent duties (Ministry of Government '
+              'Legislation)',
+          descriptionKo: '중개보수 상한 · 확인 · 설명서 안내',
+          descriptionEn: 'Commission ceilings and the documents you should get',
+          url: 'https://www.easylaw.go.kr/CSP/CnpClsMain.laf'
+              '?csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=3',
+          iconName: 'payments',
+        ),
+        GuideLink(
+          labelKo: 'HUG 안심전세포털',
+          labelEn: 'HUG safe-lease portal',
+          descriptionKo: '보증금 보호 · 전세사기 예방 정보',
+          descriptionEn: 'Deposit protection and scam-prevention information',
+          url: 'https://www.khug.or.kr/jeonse/index_jeonse.jsp',
+          iconName: 'help',
+        ),
+        GuideLink(
+          labelKo: '하이코리아 전자민원 — 체류지 변경 신고',
+          labelEn: 'HiKorea e-application — change of residence',
+          descriptionKo: '외국인 주소(체류지) 변경 신고',
+          descriptionEn: 'Report your new address as a registered foreigner',
+          url: 'https://www.hikorea.go.kr/cvlappl/CvlapplInfoPageR.pt',
+          iconName: 'badge',
+        ),
+        GuideLink(
+          labelKo: '부산외국인통합콜센터',
+          labelEn: 'Busan Foreign Resident Call Center',
+          descriptionKo: '1600-0051 · 부동산 · 법률 등 다국어 생활상담',
+          descriptionEn: '1600-0051 — multilingual advice, property and legal '
+              'matters included',
+          url: 'https://bgcf.or.kr/sub3/subg2_1.php',
+          iconName: 'call',
+        ),
+        GuideLink(
+          labelKo: '대한법률구조공단',
+          labelEn: 'Korea Legal Aid Corporation',
+          descriptionKo: '임대차 분쟁 법률상담 (국번없이 132)',
+          descriptionEn: 'Free legal advice on lease disputes (dial 132)',
+          url: 'https://www.klac.or.kr/',
+          iconName: 'local_police',
+        ),
+        // In-app route (UX doc §3): the ARC guide covers the registration this
+        // page's change-of-residence report hangs off.
+        GuideLink(
+          labelKo: '외국인등록증 발급 안내',
+          labelEn: 'Guide — Alien Registration Card',
+          descriptionKo: '앱 안에서 바로 보기',
+          descriptionEn: 'Open the in-app guide',
+          url: '/guide/item/arc-issue',
+          iconName: 'badge',
+        ),
+      ],
+      durationKo: '수일~수주',
+      durationEn: 'A few days to weeks',
+      difficulty: 2,
+      status: GuideStatus.published,
     ),
 
     // ── 생활 인프라 (living) ──
