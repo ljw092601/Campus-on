@@ -514,17 +514,1145 @@
     "categoryId": "housing",
     "title_ko": "기숙사 신청",
     "title_en": "Dormitory Application",
-    "summary_ko": "학기별 신청 일정 확인",
-    "summary_en": "Check the per-semester schedule",
-    "status": "comingSoon"
+    "summary_ko": "한림생활관 · 석당글로벌하우스",
+    "summary_en": "Hanlim Residence Hall · Seokdang Global House",
+    "overview_ko": "동아대학교 외국인 학생은 학생 유형과 과정에 따라 한림생활관 또는 석당글로벌하우스 등 교내 기숙사를 이용할 수 있습니다.\n\n기숙사별 입사대상, 신청방법, 모집기간, 비용은 서로 다를 수 있습니다.\n\n기숙사를 이용하려는 학생은 본인에게 해당하는 기숙사를 먼저 확인한 뒤, 해당 학기의 최신 모집 공지를 확인해야 합니다.",
+    "overview_en": "Dong-A University has more than one on-campus dormitory — Hanlim Residence Hall and Seokdang Global House — and which one you can use depends on the kind of student you are.\n\nEach dormitory has its own eligibility, application route, application period and fee.\n\nSo work out which dormitory applies to you first, then read that semester's own recruitment notice.",
+    "top_sections": [
+      {
+        "title_ko": "어떤 기숙사가 있나요?",
+        "title_en": "Which dormitory can I use?",
+        "icon": "compare_arrows",
+        "body_ko": "교내 기숙사는 크게 두 곳입니다. 운영 주체와 신청 방법이 다르므로 본인이 신청할 수 있는 곳을 먼저 확인하세요.",
+        "body_en": "There are two main on-campus dormitories. They are run separately and you apply to them in different ways, so start by working out which one is open to you.",
+        "notes": [
+          {
+            "title_ko": "🏫 한림생활관",
+            "title_en": "🏫 Hanlim Residence Hall",
+            "lines_ko": [
+              "동아대학교 재학생 및 일부 외국인 학생이 이용할 수 있는 교내 생활관입니다.",
+              "한림생활관 홈페이지 기준으로 승학1관 · 승학2관 · 부민관 · 구덕관을 운영합니다.",
+              "학기마다 사생모집 공고로 대상과 신청방법이 안내됩니다."
+            ],
+            "lines_en": [
+              "The university's own residence hall, open to Dong-A students and to some international students.",
+              "Its website currently lists four halls — Seunghak 1, Seunghak 2, Bumin and Gudeok.",
+              "Eligibility and how to apply are announced in a recruitment notice each semester."
+            ]
+          },
+          {
+            "title_ko": "🌏 석당글로벌하우스",
+            "title_en": "🌏 Seokdang Global House",
+            "lines_ko": [
+              "외국인 유학생을 위한 기숙사입니다.",
+              "부민캠퍼스 인근(부산 중구 대청로 30-1)에 있으며 2인 1실로 운영됩니다.",
+              "입사신청서를 작성해 행정실에 제출하는 방식으로 안내되고 있습니다."
+            ],
+            "lines_en": [
+              "A dormitory for international students.",
+              "Near the Bumin campus (30-1 Daecheong-ro, Jung-gu, Busan), in twin rooms.",
+              "You apply by filling in an application form and handing it to the house office."
+            ]
+          }
+        ],
+        "notice_ko": "본인이 신청할 수 있는 기숙사를 먼저 확인하세요\n학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다. 확실하지 않다면 국제교류과에 문의하세요.",
+        "notice_en": "Check which one is yours before anything else\nUndergraduates, graduate students, exchange students and Korean language students are not all eligible for the same dormitory. If you are unsure, ask the International Affairs Office.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "한림생활관",
+        "title_en": "Hanlim Residence Hall",
+        "icon": "location_on",
+        "body_ko": "승학캠퍼스에 있는 교내 생활관입니다. 입사대상과 신청방법, 모집기간, 생활관비는 학기마다 사생모집 공고로 안내됩니다.",
+        "body_en": "The university residence hall on the Seunghak campus. Who may apply, how to apply, when applications open and what it costs are all published in a recruitment notice each semester.",
+        "notes": [
+          {
+            "title_ko": "입사대상",
+            "title_en": "Who can apply",
+            "lines_ko": [
+              "최근 사생모집 공고 기준: 동아대학교 학부 · 대학원 신입생, 재학생, 복학예정자",
+              "교환학생 · 어학연수생 해당 여부는 공고에 별도로 안내되지 않을 수 있습니다.",
+              "본인이 대상인지 확실하지 않다면 한림생활관 또는 국제교류과에 확인하세요."
+            ],
+            "lines_en": [
+              "The current recruitment notice lists incoming and enrolled undergraduate and graduate students, plus students about to return from a leave of absence.",
+              "Exchange and language-programme students are not always named in that notice.",
+              "If you cannot tell whether you qualify, ask Hanlim Residence Hall or the International Affairs Office."
+            ]
+          },
+          {
+            "title_ko": "신청 방법",
+            "title_en": "How to apply",
+            "lines_ko": [
+              "신입생(수시등록자) · 재학생: 한림생활관 홈페이지에서 인터넷 원서접수",
+              "신입생(정시등록자) · 대학원생: 입사원서와 개인정보 동의서를 스캔해 이메일 접수",
+              "선발은 성적점수 · 거리점수 · 상벌점을 합산해 이루어집니다."
+            ],
+            "lines_en": [
+              "Incoming students admitted in the early round, and enrolled students: apply online on the Hanlim website.",
+              "Incoming students admitted in the regular round, and graduate students: scan the application form and the privacy consent form and send them by email.",
+              "Places are awarded on a score combining grades, distance from home and merit/demerit points."
+            ]
+          },
+          {
+            "title_ko": "식사",
+            "title_en": "Meals",
+            "lines_ko": [
+              "식비는 생활관비에 포함되지 않습니다.",
+              "1학기 단위로 식사권을 구입해 생활관 식당에서 이용합니다.",
+              "평일 조식 · 석식만 포함되며 중식은 별도 구매입니다. 주말 · 공휴일에는 식당을 운영하지 않습니다."
+            ],
+            "lines_en": [
+              "Meals are not included in the dormitory fee.",
+              "You buy a meal plan for the semester and use it in the hall cafeteria.",
+              "The plan covers weekday breakfast and dinner only — lunch is bought separately, and the cafeteria is closed at weekends and on public holidays."
+            ]
+          }
+        ],
+        "notice_ko": "신청기간은 학기마다 달라요\n신청기간은 학기마다 달라지므로 한림생활관 최신 모집공고를 확인하세요.",
+        "notice_en": "The application period changes every semester\nApplication dates move, so always read the latest Hanlim recruitment notice rather than last semester's.",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 입사대상이 「학부생, 대학원생, 교환학생, 어학연수생」, 신청방법이 「신입생은 각 과정별 합격자 발표 시 별도 신청, 재학생은 기숙사 홈페이지에서 모집 안내문 확인」으로 안내되어 있었습니다. 현재 한림생활관 사생모집 공고와 내용이 다르므로 앱에는 최신 공고 기준을 먼저 안내합니다.",
+        "footnote_en": "※ The 2024 international-student booklet listed undergraduates, graduate students, exchange students and language students as eligible, and said new students applied when their admission results were announced. The current Hanlim recruitment notice reads differently, so this page follows the current notice."
+      },
+      {
+        "title_ko": "석당글로벌하우스",
+        "title_en": "Seokdang Global House",
+        "icon": "location_on",
+        "body_ko": "외국인 유학생을 위한 기숙사입니다. 부민캠퍼스 인근(부산 중구 대청로 30-1)에 있으며 2인 1실로 운영됩니다.",
+        "body_en": "A dormitory for international students, near the Bumin campus at 30-1 Daecheong-ro, Jung-gu, Busan. Rooms are twins.",
+        "steps_ko": [
+          "입사신청 기간에 입사신청서 작성 (홈페이지에서 내려받기)",
+          "작성한 신청서를 석당글로벌하우스 행정실에 제출",
+          "입사 가능 여부 안내받기",
+          "기숙사비 납부",
+          "입사기간 내에 체크인"
+        ],
+        "steps_en": [
+          "Fill in the application form during the application period (it is downloadable from the website)",
+          "Hand the form in at the Seokdang Global House office",
+          "Wait to be told whether a place is available",
+          "Pay the dormitory fee",
+          "Check in within the move-in period"
+        ],
+        "notes": [
+          {
+            "title_ko": "입사대상",
+            "title_en": "Who can apply",
+            "lines_ko": [
+              "국제교류과 안내 기준: 동아대학교에 재학 중인 외국인 유학생",
+              "한국어학당 학생은 입학 안내에서 별도로 안내될 수 있습니다."
+            ],
+            "lines_en": [
+              "The International Affairs Office describes it as a dormitory for international students enrolled at Dong-A.",
+              "Korean language students may be given separate instructions with their admission materials."
+            ]
+          },
+          {
+            "title_ko": "시설 · 생활",
+            "title_en": "Facilities & living",
+            "lines_ko": [
+              "조리실 · 세탁실 · 휴게실 등을 이용할 수 있습니다.",
+              "식사는 포함되지 않으며 취사가 가능합니다.",
+              "침구류(이불 · 패드 · 베개)는 유료로 대여할 수 있다고 안내되어 있습니다."
+            ],
+            "lines_en": [
+              "There is a kitchen, a laundry room and lounges.",
+              "Meals are not included, but you may cook for yourself.",
+              "Bedding (duvet, mattress pad, pillow) can be rented for a fee, according to the house guide."
+            ]
+          }
+        ],
+        "notice_ko": "한국어학당 신입생은 안내가 다를 수 있어요\n2024학년도 안내서에는 한국어학당 신입생이 3개월 의무 거주하며 별도 신청이 필요 없다고 되어 있었습니다. 현재 공식 홈페이지에서는 이 내용이 확인되지 않으므로, 한국어학당 입학 안내 또는 국제교류과에서 최신 입사방법을 확인하세요.",
+        "notice_en": "Korean language students may be told something different\nThe 2024 booklet said new Korean language students lived here for a compulsory three months and did not apply separately. The current official pages do not say this, so check your Korean language programme admission guide, or ask the International Affairs Office, for the current arrangement.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 위 절차는 석당글로벌하우스 홈페이지의 「입·퇴사」 안내 기준입니다. 입사신청 기간과 기숙사비는 학기에 따라 달라질 수 있습니다.",
+        "footnote_en": "※ The steps above follow the \"move-in / move-out\" page on the Seokdang Global House website. Application dates and the fee change from semester to semester."
+      }
+    ],
+    "checklist_title_ko": "신청 전에 확인하세요",
+    "checklist_title_en": "Before You Apply",
+    "checklist_ko": [
+      "본인의 학생 유형",
+      "신청 가능한 기숙사",
+      "모집기간",
+      "입사기간",
+      "기숙사비",
+      "납부기간",
+      "제출서류",
+      "식사 포함 여부",
+      "방 유형",
+      "입사 가능일"
+    ],
+    "checklist_en": [
+      "What kind of student you are",
+      "Which dormitory you may apply to",
+      "When applications open and close",
+      "The move-in period",
+      "The dormitory fee",
+      "The payment deadline",
+      "What you have to submit",
+      "Whether meals are included",
+      "The room type",
+      "The earliest date you can move in"
+    ],
+    "checklist_note_ko": "기숙사와 학생 유형에 따라 필요한 서류와 조건이 다를 수 있습니다. 특정 서류가 모든 학생에게 공통으로 필요한 것은 아니므로 해당 학기 모집공고에서 본인에게 해당하는 항목을 확인하세요.\n\n기숙사에 따라 별도 신청 없이 배정되는 경우도 있습니다.",
+    "checklist_note_en": "What you need differs by dormitory and by the kind of student you are — no single document is required of everyone, so check the semester's notice for your own case.\n\nFor some dormitories a place may be assigned without a separate application.",
+    "steps_ko": [
+      "본인의 학생 유형 확인",
+      "이용 가능한 기숙사 확인",
+      "해당 학기 모집공고 확인",
+      "신청기간 및 조건 확인",
+      "기숙사 신청",
+      "합격 / 배정 결과 확인",
+      "기숙사비 납부",
+      "입사일 및 제출서류 확인"
+    ],
+    "steps_en": [
+      "Work out what kind of student you are",
+      "Find out which dormitory you can use",
+      "Read that semester's recruitment notice",
+      "Check the application period and the conditions",
+      "Apply to the dormitory",
+      "Check the result — accepted, or a room assigned",
+      "Pay the dormitory fee",
+      "Check your move-in date and what you must submit"
+    ],
+    "sections": [
+      {
+        "title_ko": "입사 전 준비",
+        "title_en": "Before Moving In",
+        "icon": "receipt_long",
+        "body_ko": "입사가 확정되면 입사일 전에 아래 사항을 확인하세요. 기숙사와 학생 유형에 따라 준비할 것이 다를 수 있습니다.",
+        "body_en": "Once you have a place, work through the list below before your move-in date. What you need differs by dormitory and by the kind of student you are.",
+        "notes": [
+          {
+            "title_ko": "📋 입사 전 확인",
+            "title_en": "📋 Check before you move in",
+            "lines_ko": [
+              "입사일 확인",
+              "배정된 기숙사 및 방 확인",
+              "기숙사비 납부",
+              "제출서류 확인",
+              "침구류 준비 여부 확인",
+              "건강검진결과표 필요 여부 확인"
+            ],
+            "lines_en": [
+              "Your move-in date",
+              "Which dormitory and room you were given",
+              "Payment of the dormitory fee",
+              "What you have to submit",
+              "Whether you need to bring bedding",
+              "Whether a health-check certificate is required"
+            ]
+          },
+          {
+            "title_ko": "💰 기숙사비를 확인하세요",
+            "title_en": "💰 Check the dormitory fee",
+            "lines_ko": [
+              "기숙사비는 기숙사, 성별, 입사기간, 학기 등에 따라 달라질 수 있습니다.",
+              "정확한 금액은 해당 학기의 공식 모집공고 또는 입사안내에서 확인하세요."
+            ],
+            "lines_en": [
+              "The fee depends on the dormitory, the hall, the length of stay and the semester.",
+              "For the exact amount, read that semester's official recruitment notice or move-in guide."
+            ]
+          },
+          {
+            "title_ko": "🍽 식사는 기숙사마다 달라요",
+            "title_en": "🍽 Meals differ by dormitory",
+            "lines_ko": [
+              "기숙사별 식사 제공 여부와 식권 구매 방법을 입사 전에 확인하세요.",
+              "한림생활관은 식비가 생활관비에 포함되지 않으며, 학기 단위로 식사권을 구입해 이용합니다.",
+              "석당글로벌하우스는 식사가 포함되지 않고 취사가 가능합니다."
+            ],
+            "lines_en": [
+              "Check whether your dormitory serves meals, and how meal tickets are bought, before you move in.",
+              "At Hanlim, meals are not part of the dormitory fee — you buy a meal plan for the semester.",
+              "Seokdang Global House does not serve meals, but you can cook for yourself."
+            ]
+          },
+          {
+            "title_ko": "🛏 침구류를 확인하세요",
+            "title_en": "🛏 Check the bedding",
+            "lines_ko": [
+              "기숙사에 따라 침구류가 제공되지 않을 수 있으므로 입사 전에 준비 여부를 확인하세요.",
+              "석당글로벌하우스는 이불 · 패드 · 베개를 유료로 대여할 수 있다고 안내하고 있습니다."
+            ],
+            "lines_en": [
+              "Some dormitories do not provide bedding, so find out before you arrive whether you have to bring your own.",
+              "Seokdang Global House says a duvet, mattress pad and pillow can be rented for a fee."
+            ]
+          }
+        ],
+        "notice_ko": "건강검진결과표가 필요할 수 있어요\n석당글로벌하우스는 입사 시 제출서류로 건강검진결과표(결핵 · B형간염)를 안내하고 있습니다. 한림생활관은 최신 사생모집 공고에서 확인되지 않으므로, 본인이 입사할 기숙사의 안내에서 필요 여부를 확인하세요.",
+        "notice_en": "You may need a health-check certificate\nSeokdang Global House lists a health-check certificate (tuberculosis and hepatitis B) among its move-in documents. The current Hanlim recruitment notice does not mention one, so check your own dormitory's guide.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 건강검진결과표를 「한림생활관 입사자만」 제출하는 것으로 안내되어 있었고, 기숙사에는 개인이불을 제공하지 않으며 석당글로벌하우스는 침구류 대여가 가능하다고 되어 있었습니다.",
+        "footnote_en": "※ The 2024 booklet said the health-check certificate was for Hanlim residents only, that dormitories do not supply bedding, and that bedding could be rented at Seokdang Global House."
+      },
+      {
+        "title_ko": "입사 후 해야 할 일",
+        "title_en": "After Moving In",
+        "icon": "format_list_numbered",
+        "body_ko": "입사 당일과 그 직후에 처리해야 하는 일들입니다. 세부 절차는 기숙사와 학기에 따라 달라질 수 있으므로 입사 안내를 함께 확인하세요.",
+        "body_en": "What to do on the day you move in and shortly after. The details vary by dormitory and semester, so read your move-in guide alongside this.",
+        "steps_ko": [
+          "방 배정 확인",
+          "오리엔테이션 또는 입사 안내 확인",
+          "입사등록 서류 제출",
+          "기숙사비 납부 여부 확인",
+          "비품 상태 확인",
+          "필요한 경우 건강검진결과표 제출",
+          "기숙사 생활규칙 확인"
+        ],
+        "steps_en": [
+          "Confirm your room assignment",
+          "Attend the orientation, or read the move-in briefing",
+          "Hand in your registration documents",
+          "Make sure the dormitory fee has been paid",
+          "Check the condition of the room and its fittings",
+          "Submit a health-check certificate if one is required",
+          "Read the house rules"
+        ],
+        "notes": [
+          {
+            "title_ko": "🏠 기숙사 생활규칙",
+            "title_en": "🏠 House rules to check",
+            "lines_ko": [
+              "입 · 퇴사 시간 및 절차 확인",
+              "외부인 출입 규칙 확인",
+              "화재 및 안전수칙 준수",
+              "공용시설 사용규칙 확인",
+              "쓰레기 분리배출",
+              "금연 · 음주 관련 생활관 규정 확인"
+            ],
+            "lines_en": [
+              "Check-in and check-out times and procedures",
+              "The rules on visitors",
+              "Fire and safety rules",
+              "How shared facilities may be used",
+              "How rubbish is separated for recycling",
+              "The rules on smoking and alcohol"
+            ]
+          }
+        ],
+        "notice_ko": "퇴사할 때도 신고가 필요해요\n석당글로벌하우스는 행정실 또는 사감실에 신고한 뒤 퇴사하도록 안내하고 있으며, 중도 퇴사 시 환불 기준이 따로 있습니다. 퇴사 전에 본인 기숙사의 규정을 확인하세요.",
+        "notice_en": "Moving out also has to be reported\nSeokdang Global House asks residents to report to the office or the warden before leaving, and has its own refund rules for leaving early. Check your dormitory's rules before you move out.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서의 「도착 후 해야 할 일」에는 방배정 확인 후 오리엔테이션 참가, 입사등록 서류(서약서 · 비품점검표) 제출, 입사일 기준 최종 입사비 확인 후 3일 이내 납부, 건강검진결과표 제출(한림생활관 입사자)이 안내되어 있었습니다.",
+        "footnote_en": "※ The 2024 booklet's \"after you arrive\" chapter listed attending the orientation after confirming your room, handing in the pledge and fittings checklist, paying the final fee within three days of moving in, and submitting a health-check certificate (Hanlim residents)."
+      }
+    ],
+    "tips_ko": [
+      "📅 모집기간은 매 학기 달라요 — 지난 학기의 신청기간을 기준으로 판단하지 말고 최신 모집공고를 확인하세요.",
+      "🏠 기숙사마다 대상이 달라요 — 학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다.",
+      "💰 비용은 최신 공지를 확인하세요 — 기숙사비는 입사기간과 기숙사에 따라 달라질 수 있습니다.",
+      "🛏 침구류를 확인하세요 — 침구가 제공되지 않는 기숙사가 있을 수 있으므로 입사 전 확인하세요.",
+      "📄 제출서류가 있을 수 있어요 — 기숙사와 학생 유형에 따라 건강검진결과표 등 추가 서류가 필요할 수 있습니다."
+    ],
+    "tips_en": [
+      "📅 Application periods change each semester — never go by last semester's dates; read the current notice.",
+      "🏠 Each dormitory has its own eligibility — undergraduates, graduate students, exchange students and Korean language students are not all offered the same place.",
+      "💰 Check the fee in the current notice — it changes with the dormitory and the length of stay.",
+      "🛏 Check the bedding — some dormitories provide none, so find out before you arrive.",
+      "📄 There may be documents to submit — depending on the dormitory and your student type, a health-check certificate or other papers may be required."
+    ],
+    "links": [
+      {
+        "label_ko": "한림생활관",
+        "label_en": "Hanlim Residence Hall",
+        "url": "https://hanlim.donga.ac.kr/",
+        "description_ko": "모집공고 · 입사안내 · 생활관 정보",
+        "description_en": "Recruitment notices, move-in guide, hall information"
+      },
+      {
+        "label_ko": "한림생활관 사생모집",
+        "label_en": "Hanlim recruitment notice",
+        "url": "https://hanlim.donga.ac.kr/hanlim/CMS/Contents/Contents.do?mCode=MN017",
+        "description_ko": "학기별 입사대상 · 신청방법 · 일정",
+        "description_en": "Each semester's eligibility, how to apply, dates",
+        "icon": "info"
+      },
+      {
+        "label_ko": "석당글로벌하우스",
+        "label_en": "Seokdang Global House",
+        "url": "https://globalhouse.donga.ac.kr/",
+        "description_ko": "외국인 유학생 기숙사 안내",
+        "description_en": "The dormitory for international students"
+      },
+      {
+        "label_ko": "석당글로벌하우스 입 · 퇴사 안내",
+        "label_en": "Seokdang Global House — moving in and out",
+        "url": "https://globalhouse.donga.ac.kr/globalhouse/CMS/Contents/Contents.do?mCode=MN026",
+        "description_ko": "입사 절차 · 제출서류 · 침구류 대여",
+        "description_en": "Move-in steps, documents, bedding rental",
+        "icon": "info"
+      },
+      {
+        "label_ko": "국제교류과 유학생 지원",
+        "label_en": "International Affairs Office — student support",
+        "url": "https://global.donga.ac.kr/global/CMS/Contents/Contents.do?mCode=MN062",
+        "description_ko": "외국인 유학생 기숙사 · 생활지원 문의",
+        "description_en": "Dormitories and living support for international students",
+        "icon": "swap_horiz"
+      },
+      {
+        "label_ko": "지도에서 기숙사 위치 보기",
+        "label_en": "View the dormitories on the map",
+        "url": "/map?focus=s15,s19",
+        "description_ko": "승학캠퍼스 한림생활관 승학1관 · 승학2관",
+        "description_en": "Hanlim Seunghak 1 and Seunghak 2, Seunghak campus",
+        "icon": "location_on"
+      }
+    ],
+    "relatedFacilityIds": [
+      "s15",
+      "s19"
+    ],
+    "meta": {
+      "durationText_ko": "신청기간 확인 필요",
+      "durationText_en": "Check the dates",
+      "difficulty": 1
+    },
+    "status": "published"
   },
   "off-campus-housing": {
     "categoryId": "housing",
-    "title_ko": "교외 주거 구하기",
-    "title_en": "Off-campus Housing",
-    "summary_ko": "원룸·하숙·보증금 안내",
-    "summary_en": "Studios, boarding, deposits",
-    "status": "comingSoon"
+    "title_ko": "교외주거 구하기",
+    "title_en": "Finding Off-Campus Housing",
+    "summary_ko": "방 찾기 · 계약 · 입주 전 확인",
+    "summary_en": "Finding a room, contracts & move-in checks",
+    "icon": "location_on",
+    "overview_ko": "기숙사를 이용하지 않는 학생은 학교 주변이나 대중교통으로 이동하기 편리한 지역에서 원룸, 오피스텔, 고시원 등 교외주거를 구할 수 있습니다.\n\n한국의 임대차 계약은 보증금, 월세, 관리비 등 확인해야 할 항목이 많으므로 계약 전에 조건과 집 상태를 충분히 확인하는 것이 중요합니다.\n\n계약서 내용을 이해하기 어렵다면 혼자 서명하기보다 한국어를 잘 아는 사람이나 공식 상담기관의 도움을 받는 것이 좋습니다.",
+    "overview_en": "If you are not living in a dormitory, you can rent a studio (원룸), an officetel or a goshiwon near campus or somewhere with a good transport link.\n\nA Korean lease has more moving parts than you might expect — a deposit, monthly rent and a maintenance fee — so take the time to check both the terms and the condition of the place before you sign.\n\nIf the contract is hard to follow, do not sign it alone. Ask someone who reads Korean well, or one of the official advice services listed at the bottom of this page.",
+    "top_sections": [
+      {
+        "title_ko": "한국의 주거 형태",
+        "title_en": "Types of Housing in Korea",
+        "icon": "menu_book",
+        "body_ko": "방의 형태와 임대 방식은 별개입니다. 어떤 형태의 방을 구할지, 어떤 방식으로 임대료를 낼지를 나누어 생각하면 조건을 비교하기 쉬워집니다.",
+        "body_en": "The kind of room and the way you pay for it are two separate choices. Separating them makes it much easier to compare listings.",
+        "notes": [
+          {
+            "title_ko": "🏠 방의 형태",
+            "title_en": "🏠 Kinds of room",
+            "lines_ko": [
+              "원룸 — 방, 주방, 욕실 등이 한 공간에 있는 1인 주거 형태입니다. 대학생이 많이 이용합니다.",
+              "오피스텔 — 주거와 업무 용도로 사용되는 건물 형태로, 원룸보다 시설이 다양할 수 있습니다.",
+              "고시원 · 고시텔 — 작은 개인실을 이용하고 주방이나 세탁실 등을 공동으로 사용하는 경우가 많은 주거 형태입니다.",
+              "쉐어하우스 — 여러 사람이 하나의 주택을 함께 사용하면서 개인방과 공용공간을 나누어 사용하는 형태입니다."
+            ],
+            "lines_en": [
+              "One-room (원룸) — a single space holding the room, kitchen and bathroom. The most common student option.",
+              "Officetel (오피스텔) — a building used for both living and work; facilities are often more varied than in a one-room.",
+              "Goshiwon / goshitel (고시원 · 고시텔) — a small private room, usually with a shared kitchen and laundry.",
+              "Share house (쉐어하우스) — several people share one house, each with a private room plus common areas."
+            ]
+          },
+          {
+            "title_ko": "💳 임대 방식",
+            "title_en": "💳 Ways of paying",
+            "lines_ko": [
+              "월세 — 보증금을 맡기고 매달 정해진 임대료를 납부하는 방식입니다.",
+              "전세 — 큰 금액의 보증금을 맡기고 계약기간 동안 거주하는 한국의 임대차 형태입니다."
+            ],
+            "lines_en": [
+              "Wolse (월세) — you leave a deposit and pay a set rent every month. This is what most students use.",
+              "Jeonse (전세) — you leave one large deposit and live there for the contract period instead of paying monthly rent."
+            ]
+          }
+        ],
+        "notice_ko": "전세는 보증금이 매우 큰 계약이에요\n전세는 맡기는 금액이 큰 만큼 확인해야 할 것도 많습니다. 보증금이 큰 계약이라면 계약 전에 공공기관 또는 전문 상담기관을 통해 보호절차를 확인하세요.",
+        "notice_en": "Jeonse means a very large deposit\nBecause the sum is large, there is much more to check. If you are considering a contract with a big deposit, ask a public body or an official advice service about how that money is protected before you commit.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "방을 찾는 방법",
+        "title_en": "How to Find a Room",
+        "icon": "compare_arrows",
+        "body_ko": "어느 경로로 찾더라도 계약 전에 확인해야 할 절차는 같습니다. 여러 경로를 함께 쓰면 조건을 비교하기 쉽습니다.",
+        "body_en": "Whichever route you use, the checks you make before signing are the same. Using more than one route makes it easier to compare.",
+        "notes": [
+          {
+            "title_ko": "🏢 공인중개사 사무소",
+            "title_en": "🏢 Licensed agency office",
+            "lines_ko": [
+              "원하는 지역의 부동산 중개사무소를 방문하여 조건에 맞는 방을 소개받을 수 있습니다.",
+              "중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.",
+              "등록 여부가 확실하지 않다면 관할 시·군·구청의 부동산 담당 부서나 국가공간정보포털의 부동산중개업 조회에서 확인할 수 있습니다."
+            ],
+            "lines_en": [
+              "Visit an agency in the area you want and ask them to show you rooms that fit your conditions.",
+              "By law the office must display its commission rates and ceilings where you can see them.",
+              "If you are unsure the office is registered, you can check with the property team at the district office, or through the national spatial information portal."
+            ]
+          },
+          {
+            "title_ko": "📱 부동산 플랫폼",
+            "title_en": "📱 Online property platforms",
+            "lines_ko": [
+              "국내 부동산 플랫폼 등을 통해 위치, 보증금, 월세 등의 조건을 미리 확인하고 비교할 수 있습니다.",
+              "온라인 정보는 실제와 다를 수 있으므로 반드시 직접 방문해 확인하세요."
+            ],
+            "lines_en": [
+              "Korean property platforms let you compare location, deposit and rent before you go anywhere.",
+              "What is online may not match the actual room — always visit in person before deciding."
+            ]
+          },
+          {
+            "title_ko": "👥 지인 · 학교 커뮤니티",
+            "title_en": "👥 Friends & student communities",
+            "lines_ko": [
+              "다른 학생에게 지역이나 평균적인 주거환경에 대한 정보를 물어보는 것도 도움이 됩니다.",
+              "개인 간 직거래는 중개사가 확인해 주는 절차가 없으므로, 소유자 확인과 계약서 작성이 더욱 중요합니다."
+            ],
+            "lines_en": [
+              "Other students are a good source for what a neighbourhood is actually like.",
+              "Renting directly from a person means nobody checks the paperwork for you — verifying the owner and putting everything in a written contract matters even more."
+            ]
+          }
+        ],
+        "footnote_ko": "※ Campus-On은 특정 중개사무소나 부동산 앱을 추천하지 않습니다. 어느 경로를 이용하든 계약 전 확인 절차는 동일합니다.",
+        "footnote_en": "※ Campus-On does not recommend any particular agency or property app. The checks before signing are the same either way."
+      },
+      {
+        "title_ko": "동아대학교 주변에서 찾을 때",
+        "title_en": "Looking Near Dong-A University",
+        "icon": "location_on",
+        "body_ko": "동아대학교는 캠퍼스가 나뉘어 있습니다. 본인 수업이 어느 캠퍼스에서 열리는지 먼저 확인한 뒤 그 캠퍼스를 기준으로 지역을 고르세요.",
+        "body_en": "Dong-A University is split across campuses. Work out where your classes actually are first, then choose an area around that campus.",
+        "links": [
+          {
+            "label_ko": "지도에서 승학캠퍼스 보기",
+            "label_en": "View the Seunghak campus on the map",
+            "url": "/map?focus=s01",
+            "icon": "location_on"
+          },
+          {
+            "label_ko": "지도에서 부민캠퍼스 보기",
+            "label_en": "View the Bumin campus on the map",
+            "url": "/map?focus=b04",
+            "icon": "location_on"
+          },
+          {
+            "label_ko": "지도에서 구덕캠퍼스 보기",
+            "label_en": "View the Gudeok campus on the map",
+            "url": "/map?focus=g04",
+            "icon": "location_on"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "🚇 캠퍼스별로 확인하세요",
+            "title_en": "🚇 Check by campus",
+            "lines_ko": [
+              "승학캠퍼스 — 하단역 및 승학캠퍼스로 이동하기 편리한 지역인지 확인하세요.",
+              "부민캠퍼스 — 토성역 및 부민캠퍼스로 이동하기 편리한 지역인지 확인하세요.",
+              "구덕캠퍼스 — 수업이 구덕캠퍼스에 있다면 학교까지의 실제 이동시간을 확인하세요."
+            ],
+            "lines_en": [
+              "Seunghak campus — check the area connects easily to Hadan station and the campus itself.",
+              "Bumin campus — check the area connects easily to Toseong station and the campus itself.",
+              "Gudeok campus — if your classes are here, check how long the trip actually takes."
+            ]
+          }
+        ],
+        "notice_ko": "거리보다 실제 이동시간을 확인하세요\n지도에서 가까워 보여도 버스·지하철 노선과 환승에 따라 실제 이동시간은 크게 달라질 수 있습니다. 계약 전에 수업 시간대에 맞춰 한 번 이동해 보세요.",
+        "notice_en": "Travel time matters more than distance\nA place that looks close on a map can take much longer once bus and subway routes and transfers are involved. Before you sign, make the trip once at the time of day you would actually go.",
+        "notice_icon": "info",
+        "footnote_ko": "※ Campus-On은 부동산 매물이나 지역별 시세 정보를 제공하지 않습니다. 특정 지역의 가격이나 주거환경은 공식 부동산 정보나 중개사무소에서 확인하세요.",
+        "footnote_en": "※ Campus-On does not list properties or local price levels. Check prices and conditions with official property sources or an agency."
+      },
+      {
+        "title_ko": "집을 보러 갈 때 확인",
+        "title_en": "What to Check During a Viewing",
+        "icon": "help",
+        "body_ko": "사진만으로는 알 수 없는 것들이 많습니다. 방문했을 때 아래 항목을 직접 확인하세요.",
+        "body_en": "Photos hide a lot. Check these yourself while you are standing in the room.",
+        "notes": [
+          {
+            "title_ko": "🚪 집 내부",
+            "title_en": "🚪 Inside the room",
+            "lines_ko": [
+              "창문과 환기 상태",
+              "곰팡이 또는 누수 흔적",
+              "난방 작동 여부",
+              "온수와 수압",
+              "에어컨 · 냉장고 · 세탁기",
+              "도어락",
+              "인터넷 제공 여부",
+              "가구 및 옵션 상태"
+            ],
+            "lines_en": [
+              "Windows and ventilation",
+              "Any sign of mould or water damage",
+              "Whether the heating works",
+              "Hot water and water pressure",
+              "Air conditioner, fridge, washing machine",
+              "The door lock",
+              "Whether internet is included",
+              "The condition of the furniture and fittings"
+            ]
+          },
+          {
+            "title_ko": "🏢 건물",
+            "title_en": "🏢 The building",
+            "lines_ko": [
+              "건물 출입 방식과 공동현관",
+              "엘리베이터 여부",
+              "쓰레기 배출 장소",
+              "택배 수령 방법",
+              "주차가 필요한 경우 주차 조건"
+            ],
+            "lines_en": [
+              "How you get in, and the main entrance",
+              "Whether there is a lift",
+              "Where rubbish goes",
+              "How parcels are received",
+              "Parking terms, if you need parking"
+            ]
+          },
+          {
+            "title_ko": "📍 주변 환경",
+            "title_en": "📍 The neighbourhood",
+            "lines_ko": [
+              "학교까지 이동시간",
+              "지하철 · 버스 이용",
+              "편의점 · 마트",
+              "늦은 시간 귀가 동선"
+            ],
+            "lines_en": [
+              "How long it takes to reach campus",
+              "Subway and bus access",
+              "Convenience stores and supermarkets",
+              "The walk home late at night"
+            ]
+          }
+        ],
+        "notice_ko": "발견한 하자는 그 자리에서 기록하세요\n곰팡이, 누수, 파손처럼 이미 있는 문제는 사진이나 동영상으로 남겨두세요. 나중에 책임 범위를 정리할 때 근거가 됩니다.",
+        "notice_en": "Record any damage while you are there\nPhotograph or film anything already broken — mould, leaks, damaged fittings. It is your evidence if responsibility is ever questioned.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "계약 전에 확인하세요",
+        "title_en": "Before You Sign",
+        "icon": "receipt_long",
+        "body_ko": "계약 전에 반드시 세 가지를 확인하세요 — 계약 상대방이 누구인지, 계약서의 주소가 맞는지, 돈을 보내는 계좌가 맞는지.",
+        "body_en": "Three things to settle before you sign: who you are actually contracting with, whether the address on the contract is the right one, and whose account the money goes to.",
+        "notes": [
+          {
+            "title_ko": "📄 등기사항증명서로 소유자 확인",
+            "title_en": "📄 Check the owner in the property register",
+            "lines_ko": [
+              "등기사항증명서(등기부등본)를 통해 집의 실제 소유자와 근저당권 등 권리관계를 확인할 수 있습니다.",
+              "등기사항증명서는 대한민국 법원 인터넷등기소에서 누구나 열람하거나 발급받을 수 있습니다.",
+              "계약하려는 사람이 등기상 소유자와 같은 사람인지 신분증으로 확인하세요.",
+              "소유자가 아닌 대리인이 계약한다면 위임장 등 위임 사실을 확인할 수 있는 서류와 신분 확인을 요청하세요."
+            ],
+            "lines_en": [
+              "The property register (등기사항증명서) shows who actually owns the place and what claims — such as a mortgage — are registered against it.",
+              "Anyone can view or obtain it from the Korean Court Internet Registry Office.",
+              "Check the ID of the person signing against the owner named in the register.",
+              "If an agent signs instead of the owner, ask for the power of attorney and for ID you can check."
+            ]
+          },
+          {
+            "title_ko": "🏠 주소 확인",
+            "title_en": "🏠 Check the address",
+            "lines_ko": [
+              "계약서의 주소와 실제 방문한 집의 주소가 동일한지 확인하세요.",
+              "건물 이름뿐 아니라 동 · 호수까지 반드시 일치하는지 확인하세요."
+            ],
+            "lines_en": [
+              "The address on the contract must be the address of the place you actually viewed.",
+              "Check the building AND the unit number — not just the building name."
+            ]
+          },
+          {
+            "title_ko": "💳 송금 전 확인",
+            "title_en": "💳 Check before you transfer",
+            "lines_ko": [
+              "계약금과 보증금을 보내기 전에 받는 계좌의 명의가 계약 상대방과 같은지 확인하세요.",
+              "제3자 명의의 계좌로 보내달라고 하는 경우에는 이유와 근거를 반드시 확인하세요.",
+              "송금 기록은 반드시 보관하세요."
+            ],
+            "lines_en": [
+              "Before sending the down payment or deposit, check the account is in the name of the person you are contracting with.",
+              "If you are asked to send it to a third party account, ask why and get it in writing.",
+              "Keep the transfer records."
+            ]
+          }
+        ],
+        "notice_ko": "이해하지 못한 상태로 서명하지 마세요\n계약서 내용을 이해하기 어렵다면 혼자 서명하지 말고, 한국어를 잘 아는 사람이나 이 페이지 아래의 공식 상담기관에 먼저 물어보세요.",
+        "notice_en": "Do not sign what you do not understand\nIf the contract is hard to follow, do not sign it alone — ask someone who reads Korean well, or one of the official advice services at the bottom of this page.",
+        "footnote_ko": "※ Campus-On은 법률 자문을 제공하지 않습니다. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.",
+        "footnote_en": "※ Campus-On does not give legal advice. What applies to your particular contract can differ, so check with an official body or a professional."
+      }
+    ],
+    "checklist_title_ko": "계약서에서 확인할 내용",
+    "checklist_title_en": "What to Check in the Lease",
+    "checklist_ko": [
+      "임대인 이름",
+      "임차인 이름",
+      "정확한 주소와 동 · 호수",
+      "계약기간",
+      "보증금",
+      "월세",
+      "월세 납부일",
+      "관리비",
+      "관리비에 포함되는 항목",
+      "입주일",
+      "계약 종료 조건",
+      "시설 및 옵션",
+      "수리 책임",
+      "특약사항"
+    ],
+    "checklist_en": [
+      "The landlord's name",
+      "Your own name as tenant",
+      "The exact address, including the unit number",
+      "The contract period",
+      "The deposit",
+      "The monthly rent",
+      "The day rent is due each month",
+      "The maintenance fee",
+      "What that maintenance fee covers",
+      "The move-in date",
+      "How the contract can be ended",
+      "The fittings and included appliances",
+      "Who pays for repairs",
+      "Any special terms (특약사항)"
+    ],
+    "checklist_optional_title_ko": "관리비에 무엇이 포함되나요?",
+    "checklist_optional_title_en": "What does the maintenance fee cover?",
+    "checklist_optional_ko": [
+      "수도",
+      "인터넷",
+      "공용전기",
+      "청소비",
+      "승강기 · 경비 등 공용 관리 비용",
+      "전기 · 가스 등 개별 사용료가 별도인지"
+    ],
+    "checklist_optional_en": [
+      "Water",
+      "Internet",
+      "Electricity for shared areas",
+      "Cleaning",
+      "Lift, security and other shared-building costs",
+      "Whether electricity and gas are billed to you separately"
+    ],
+    "checklist_note_ko": "관리비는 금액보다 무엇이 포함되는지가 중요합니다. 포함되지 않은 항목은 매달 따로 내야 하므로, 월세와 관리비와 개별 사용료를 합쳐 실제로 매달 나가는 금액을 계산해 보세요.",
+    "checklist_note_en": "With the maintenance fee, what it covers matters more than the number. Anything not covered is billed to you separately — so add rent, maintenance fee and utilities together to see what a month really costs.",
+    "steps_ko": [
+      "원하는 지역과 예산 정하기",
+      "여러 집을 비교하고 직접 방문하기",
+      "집 상태 확인하기",
+      "등기사항증명서로 소유자 · 권리관계 확인",
+      "계약조건과 계약서 내용 확인",
+      "계약서 작성 및 서명",
+      "계약금 · 보증금 지급 후 계약서와 송금내역 보관",
+      "입주 후 신고 및 보호 절차 확인"
+    ],
+    "steps_en": [
+      "Decide on the area and your budget",
+      "Compare several places and go and see them",
+      "Check the condition of the room",
+      "Check the owner and any claims in the property register",
+      "Go through the terms and the contract itself",
+      "Sign the contract",
+      "Pay, then keep the contract and the transfer records",
+      "Move in, then deal with the reporting and protection steps"
+    ],
+    "sections": [
+      {
+        "title_ko": "입주 전 · 입주 후 확인",
+        "title_en": "Moving In",
+        "icon": "info",
+        "body_ko": "입주 당일에 확인하고 기록해 두면 나중에 문제가 생겼을 때 정리하기 훨씬 쉬워집니다.",
+        "body_en": "What you check and record on moving-in day is what settles arguments later.",
+        "notes": [
+          {
+            "title_ko": "📁 보관할 것",
+            "title_en": "📁 Keep these",
+            "lines_ko": [
+              "계약서 원본 또는 사본",
+              "보증금 · 계약금 송금내역",
+              "중개보수 등 지급 기록과 영수증"
+            ],
+            "lines_en": [
+              "The contract, original or a copy",
+              "Records of the deposit and down-payment transfers",
+              "Receipts for the agency commission and anything else you paid"
+            ]
+          },
+          {
+            "title_ko": "📸 입주 당일 확인",
+            "title_en": "📸 Check on the day",
+            "lines_ko": [
+              "집 상태를 사진으로 촬영",
+              "계량기 상태 확인이 필요한지 확인",
+              "도어락 비밀번호 변경 또는 확인",
+              "전기 · 가스 · 수도 사용방법 확인",
+              "쓰레기 분리배출 방법 확인",
+              "관리인 또는 집주인 연락처 저장"
+            ],
+            "lines_en": [
+              "Photograph the condition of the place",
+              "Check whether the meters need reading",
+              "Change or confirm the door lock code",
+              "Find out how the electricity, gas and water work",
+              "Find out how rubbish is separated and put out",
+              "Save the manager or landlord contact number"
+            ]
+          }
+        ],
+        "notice_ko": "기존 하자는 기록이 남는 방법으로 알리세요\n입주 전부터 있던 손상은 문자나 메시지처럼 기록이 남는 방법으로 집주인에게 알려두세요. 전화로만 말하면 나중에 확인하기 어렵습니다.",
+        "notice_en": "Report existing damage in writing\nTell the landlord about anything already damaged by text or message, not only by phone — you want a record with a date on it.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "이사 후 신고와 보증금 보호",
+        "title_en": "Reporting Your Address & Protecting Your Deposit",
+        "icon": "badge",
+        "body_ko": "외국인등록을 한 학생이 이사하면 체류지 변경 신고가 필요합니다. 이 신고는 체류 관리뿐 아니라 보증금을 지키는 절차와도 이어져 있습니다.",
+        "body_en": "If you have an alien registration and you move, you must report your new address. That report is not only an immigration formality — it is also part of how your deposit is protected.",
+        "notes": [
+          {
+            "title_ko": "🪪 체류지 변경 신고",
+            "title_en": "🪪 Report your change of residence",
+            "lines_ko": [
+              "대상 — 외국인등록을 한 사람이 체류지를 옮긴 경우",
+              "기한 — 전입한 날부터 15일 이내",
+              "장소 — 새 체류지의 시·군·구 또는 읍·면·동, 또는 새 체류지를 관할하는 출입국·외국인청(사무소·출장소)",
+              "온라인 — 하이코리아 전자민원으로도 신청할 수 있습니다(본인 신청).",
+              "서류 — 체류지 변경신고서, 외국인등록증, 임대차계약서 등 체류지 이전을 확인할 수 있는 서류"
+            ],
+            "lines_en": [
+              "Who — anyone with an alien registration who has moved",
+              "When — within 15 days of moving in",
+              "Where — the si/gun/gu or eup/myeon/dong office for your new address, or the immigration office covering it",
+              "Online — you can also file it yourself through HiKorea",
+              "What to bring — the change-of-residence form, your ARC, and your lease (or another document proving the new address)"
+            ]
+          },
+          {
+            "title_ko": "🛡 보증금 보호와 확정일자",
+            "title_en": "🛡 Your deposit and the fixed date",
+            "lines_ko": [
+              "주택임대차보호법의 대항력은 주택을 인도받고 주민등록(전입신고)을 마친 다음 날부터 생깁니다.",
+              "외국인은 출입국관리법에 따른 체류지 변경 신고가 전입신고를 갈음하므로, 신고를 마치면 같은 보호를 받을 수 있습니다.",
+              "우선변제권은 대항요건에 더해 임대차계약서에 확정일자를 받아야 생깁니다.",
+              "확정일자는 읍·면사무소, 동 주민센터, 지방법원, 등기소, 공증인 등에서 받을 수 있습니다."
+            ],
+            "lines_en": [
+              "Under the Housing Lease Protection Act, protection against third parties starts the day AFTER you take possession and register your address.",
+              "For foreign nationals the immigration change-of-residence report stands in for the resident registration, so filing it gives you the same footing.",
+              "To rank ahead of later claims you also need a fixed date (확정일자) stamped on the lease.",
+              "You can get that stamp at a community centre, a district court, a registry office or a notary."
+            ]
+          },
+          {
+            "title_ko": "📝 주택 임대차계약 신고",
+            "title_en": "📝 Reporting the lease itself",
+            "lines_ko": [
+              "계약 조건과 지역에 따라 주택 임대차계약 신고가 필요할 수 있습니다.",
+              "임차인이 계약서를 첨부하면 혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 부여됩니다.",
+              "신고가 필요한지, 어떻게 하는지는 계약한 공인중개사 또는 관할 행정기관에서 확인하세요."
+            ],
+            "lines_en": [
+              "Depending on the terms and the area, the lease itself may have to be reported.",
+              "A tenant who attaches the contract can file it alone — and the fixed date is then applied automatically.",
+              "Ask your agent or the local office whether your contract needs reporting, and how."
+            ]
+          }
+        ],
+        "notice_ko": "신고를 미루지 마세요\n체류지 변경 신고는 기한이 정해져 있고, 기한 내에 신고하지 않으면 불이익이 있을 수 있습니다. 보증금 보호와도 이어지므로 이사 후 먼저 처리하세요.",
+        "notice_en": "Do not put the report off\nThere is a deadline, and missing it can have consequences. It also ties into how your deposit is protected — so make it the first thing you do after moving.",
+        "footnote_ko": "※ 근거: 「출입국관리법」 제36조 및 제88조의2, 「주택임대차보호법」 제3조 · 제3조의2 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 안내 기준. 신고 대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 확인하세요. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.",
+        "footnote_en": "※ Based on the Immigration Control Act arts. 36 and 88-2 and the Housing Lease Protection Act arts. 3 and 3-2, as explained by the Korean Ministry of Government Legislation, HiKorea and the property transaction system. Thresholds and deadlines change — check the current official guidance, and ask an official body about your own contract."
+      },
+      {
+        "title_ko": "보증금 · 월세 이해하기",
+        "title_en": "Deposits, Rent & Fees",
+        "icon": "payments",
+        "body_ko": "계약서에 나오는 돈은 크게 네 가지입니다. 각각 언제 내고 언제 돌려받는지가 다릅니다.",
+        "body_en": "Four kinds of money appear in a lease. They are paid at different times, and only one of them comes back.",
+        "notes": [
+          {
+            "title_ko": "계약금",
+            "title_en": "Down payment (계약금)",
+            "lines_ko": [
+              "계약을 진행하기로 하면서 먼저 지급하는 금액입니다."
+            ],
+            "lines_en": [
+              "Paid up front when you agree to go ahead with the contract."
+            ]
+          },
+          {
+            "title_ko": "보증금",
+            "title_en": "Deposit (보증금)",
+            "lines_ko": [
+              "임대인에게 맡기는 금액으로, 계약이 끝나면 미납금이나 손해 등을 제외하고 돌려받는 것이 일반적입니다."
+            ],
+            "lines_en": [
+              "Held by the landlord and normally returned when the contract ends, minus anything unpaid or any damage."
+            ]
+          },
+          {
+            "title_ko": "월세",
+            "title_en": "Monthly rent (월세)",
+            "lines_ko": [
+              "매달 임대인에게 납부하는 임대료입니다."
+            ],
+            "lines_en": [
+              "What you pay the landlord every month."
+            ]
+          },
+          {
+            "title_ko": "관리비",
+            "title_en": "Maintenance fee (관리비)",
+            "lines_ko": [
+              "건물 관리 등에 필요한 비용으로, 월세와 별도로 납부하는 경우가 많습니다."
+            ],
+            "lines_en": [
+              "The cost of running the building. Usually billed on top of the rent, not inside it."
+            ]
+          }
+        ],
+        "footnote_ko": "※ 계약금이 보증금의 몇 퍼센트인지와 같은 비율은 계약마다 다릅니다. Campus-On은 시세나 비율을 제시하지 않으므로, 실제 금액과 지급 시기는 계약 상대방 및 중개사와 확인하세요.",
+        "footnote_en": "※ There is no fixed ratio between the down payment and the deposit — it differs by contract. Campus-On does not quote prices or ratios, so agree the actual amounts and dates with the landlord and the agent."
+      },
+      {
+        "title_ko": "부동산 중개 이용",
+        "title_en": "Using a Licensed Agent",
+        "icon": "storefront",
+        "body_ko": "공인중개사를 통해 계약하면 중개보수가 발생합니다. 금액은 미리 확인하고, 지급한 기록을 남겨두세요.",
+        "body_en": "Going through a licensed agent means paying a commission. Agree the amount in advance, and keep proof that you paid it.",
+        "notes": [
+          {
+            "title_ko": "💵 중개보수",
+            "title_en": "💵 The commission",
+            "lines_ko": [
+              "중개보수는 거래금액과 계약 형태 등에 따라 상한이 정해질 수 있으며, 주택 임대차의 상한 요율은 시·도의 조례로 정해집니다.",
+              "그 상한 안에서 의뢰인과 개업공인중개사가 협의해 정합니다.",
+              "중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.",
+              "요율은 바뀔 수 있으므로 계약 전에 최신 공식 안내를 확인하세요."
+            ],
+            "lines_en": [
+              "There is a ceiling on the commission, set by the province or metropolitan city by ordinance, and it depends on the transaction amount and the type of contract.",
+              "Within that ceiling, you and the agent agree the figure.",
+              "The rate table must be displayed inside the agency office.",
+              "Rates change, so check the current official guidance before you sign."
+            ]
+          },
+          {
+            "title_ko": "📑 받아야 할 서류",
+            "title_en": "📑 What you should receive",
+            "lines_ko": [
+              "계약을 체결할 때 중개대상물 확인 · 설명서를 받게 됩니다.",
+              "현금으로 비용을 지불한 경우 영수증 등 지급 기록을 남겨두세요."
+            ],
+            "lines_en": [
+              "When the contract is made you should be given the property confirmation and explanation document.",
+              "If you pay in cash, get a receipt or some other record of the payment."
+            ]
+          }
+        ],
+        "footnote_ko": "※ 근거: 「공인중개사법」 제25조 · 제32조 및 같은 법 시행규칙 제20조 — 법제처 「찾기쉬운 생활법령정보」 안내 기준. 요율은 시·도 조례로 정해지고 바뀔 수 있어 앱에 고정 표를 두지 않았습니다. 아래 링크에서 최신 기준을 확인하세요.",
+        "footnote_en": "※ Based on the Licensed Real Estate Agents Act arts. 25 and 32 and its enforcement rules art. 20, as explained by the Korean Ministry of Government Legislation. Because the rates are set locally and change, no fixed table is built into the app — use the link below for the current figures."
+      },
+      {
+        "title_ko": "사기 · 분쟁 예방",
+        "title_en": "Avoiding Rental Scams & Disputes",
+        "icon": "local_police",
+        "body_ko": "대부분의 계약은 문제없이 끝납니다. 아래 네 가지만 지켜도 대부분의 문제를 피할 수 있습니다.",
+        "body_en": "Most rentals go fine. These four habits prevent most of what goes wrong.",
+        "notes": [
+          {
+            "title_ko": "🚫 집을 보지 않고 큰 금액을 보내지 마세요",
+            "title_en": "🚫 Do not send money for a place you have not seen",
+            "lines_ko": [
+              "온라인 사진만 보고 계약하거나 큰 보증금을 먼저 송금하지 않는 것이 좋습니다."
+            ],
+            "lines_en": [
+              "Do not sign — or wire a large deposit — on the strength of photos alone."
+            ]
+          },
+          {
+            "title_ko": "👤 계약 상대방을 확인하세요",
+            "title_en": "👤 Check who you are dealing with",
+            "lines_ko": [
+              "등기사항증명서상의 소유자와 계약자가 같은 사람인지 확인하세요.",
+              "대리인이 계약하는 경우 위임 사실을 확인할 수 있는 서류를 요청하세요."
+            ],
+            "lines_en": [
+              "The person signing should be the owner named in the property register.",
+              "If an agent signs for the owner, ask to see the document that authorises them."
+            ]
+          },
+          {
+            "title_ko": "🗂 계약서를 꼭 보관하세요",
+            "title_en": "🗂 Keep the contract",
+            "lines_ko": [
+              "계약서 원본 또는 사본과 송금내역을 보관하세요."
+            ],
+            "lines_en": [
+              "Keep the contract — original or copy — and the transfer records."
+            ]
+          },
+          {
+            "title_ko": "🔍 너무 좋은 조건은 한 번 더 확인하세요",
+            "title_en": "🔍 Look twice at a deal that seems too good",
+            "lines_ko": [
+              "주변보다 지나치게 낮은 보증금이나 월세가 광고되어 있다면, 실제 조건과 집 상태를 다시 확인하세요."
+            ],
+            "lines_en": [
+              "If the deposit or rent is far below everything else nearby, go back and check the actual terms and the actual room."
+            ]
+          }
+        ],
+        "notice_ko": "보증금이 큰 계약이라면 미리 확인하세요\nHUG 주택도시보증공사의 안심전세포털에서 전세사기 예방 정보와 보증 안내를 볼 수 있습니다. 다만 모든 계약에서 보증 가입이 가능한 것은 아니므로, 이용 가능 여부와 조건은 해당 상품 안내에서 확인해야 합니다.",
+        "notice_en": "Check in advance if the deposit is large\nHUG (Korea Housing and Urban Guarantee Corporation) runs a portal with scam-prevention information and guarantee products. Not every contract qualifies, so check the eligibility and conditions on the product page itself.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "계약에서 자주 나오는 말",
+        "title_en": "Words You Will See in the Lease",
+        "icon": "translate",
+        "body_ko": "계약서와 부동산에서 자주 나오는 표현입니다. 한국어 단어를 그대로 보여주면 의사소통이 쉬워집니다.",
+        "body_en": "The words you will meet in the contract and at the agency. Showing the Korean word itself is often the fastest way to make yourself understood.",
+        "notes": [
+          {
+            "title_ko": "💬 계약 용어",
+            "title_en": "💬 Lease vocabulary",
+            "lines_ko": [
+              "보증금 — Deposit",
+              "월세 — Monthly rent",
+              "관리비 — Maintenance fee",
+              "계약금 — Down payment (contract deposit)",
+              "임대인 — Landlord",
+              "임차인 — Tenant",
+              "공인중개사 — Licensed real estate agent",
+              "임대차계약서 — Lease agreement",
+              "등기사항증명서 — Certified copy of the property register",
+              "확정일자 — Fixed date recorded on the lease",
+              "특약사항 — Special terms",
+              "체류지 변경 신고 — Report of change of residence"
+            ],
+            "lines_en": [
+              "Deposit — 보증금 (bojeunggeum)",
+              "Monthly rent — 월세 (wolse)",
+              "Maintenance fee — 관리비 (gwallibi)",
+              "Down payment — 계약금 (gyeyakgeum)",
+              "Landlord — 임대인 (imdaein)",
+              "Tenant — 임차인 (imchain)",
+              "Licensed real estate agent — 공인중개사 (gongin junggaesa)",
+              "Lease agreement — 임대차계약서 (imdaecha gyeyakseo)",
+              "Certified copy of the property register — 등기사항증명서 (deunggi sahang jeungmyeongseo)",
+              "Fixed date on the lease — 확정일자 (hwakjeong ilja)",
+              "Special terms — 특약사항 (teugyak sahang)",
+              "Report of change of residence — 체류지 변경 신고 (chelyuji byeongyeong singo)"
+            ]
+          }
+        ]
+      }
+    ],
+    "tips_ko": [
+      "🏠 여러 집을 비교하세요 — 첫 번째로 본 집을 바로 계약하기보다 위치와 비용, 시설을 비교해보세요.",
+      "💰 월세만 보지 마세요 — 보증금, 월세, 관리비, 전기 · 가스 등 실제 매달 부담할 비용을 함께 확인하세요.",
+      "📄 계약서를 이해한 뒤 서명하세요 — 이해하지 못한 내용이 있다면 서명하기 전에 반드시 확인하세요.",
+      "📸 입주 전 사진을 남겨두세요 — 기존 손상이나 시설 상태를 입주 전에 사진으로 기록하세요.",
+      "📍 이사 후 신고를 확인하세요 — 외국인등록을 한 학생은 주소 변경 후 체류지 변경 신고가 필요할 수 있습니다.",
+      "🧾 모든 기록을 보관하세요 — 계약서, 송금내역, 중개 관련 영수증 등 계약과 관련된 기록을 보관하세요."
+    ],
+    "tips_en": [
+      "🏠 Compare a few places — do not sign for the first room you see; weigh location, cost and condition against each other.",
+      "💰 Rent is not the whole cost — add the deposit, the maintenance fee and utilities to see what a month actually costs.",
+      "📄 Understand the contract before you sign — if any part is unclear, ask before signing, not after.",
+      "📸 Take photos before moving in — record any existing damage and the state of the fittings.",
+      "📍 Check your address-reporting requirements after moving — with an alien registration, a change of address usually has to be reported.",
+      "🧾 Keep every record — the contract, the transfers and the agency receipts."
+    ],
+    "links": [
+      {
+        "label_ko": "주택임대차 보증금 보호 안내 (법제처)",
+        "label_en": "Housing lease & deposit protection (Ministry of Government Legislation)",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=629&ccfNo=2&cciNo=3&cnpClsNo=1",
+        "description_ko": "계약 전 확인 · 임차인 보호 정보",
+        "description_en": "What to check before signing, and how tenants are protected",
+        "icon": "menu_book"
+      },
+      {
+        "label_ko": "대한민국 법원 인터넷등기소",
+        "label_en": "Korean Court Internet Registry Office",
+        "url": "https://www.iros.go.kr/",
+        "description_ko": "등기사항증명서 — 부동산 소유자 · 권리관계 확인",
+        "description_en": "The property register — owner and registered claims",
+        "icon": "receipt_long"
+      },
+      {
+        "label_ko": "주택 임대차계약 신고 (부동산거래관리시스템)",
+        "label_en": "Reporting a housing lease (property transaction system)",
+        "url": "https://rtms.molit.go.kr/main/serviceInfo.do",
+        "description_ko": "신고 대상 · 방법 · 확정일자 자동 부여 안내",
+        "description_en": "Who must report, how, and the automatic fixed date",
+        "icon": "info"
+      },
+      {
+        "label_ko": "중개보수 · 개업공인중개사의 책임 (법제처)",
+        "label_en": "Agency commission & agent duties (Ministry of Government Legislation)",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=3",
+        "description_ko": "중개보수 상한 · 확인 · 설명서 안내",
+        "description_en": "Commission ceilings and the documents you should get",
+        "icon": "payments"
+      },
+      {
+        "label_ko": "HUG 안심전세포털",
+        "label_en": "HUG safe-lease portal",
+        "url": "https://www.khug.or.kr/jeonse/index_jeonse.jsp",
+        "description_ko": "보증금 보호 · 전세사기 예방 정보",
+        "description_en": "Deposit protection and scam-prevention information",
+        "icon": "help"
+      },
+      {
+        "label_ko": "하이코리아 전자민원 — 체류지 변경 신고",
+        "label_en": "HiKorea e-application — change of residence",
+        "url": "https://www.hikorea.go.kr/cvlappl/CvlapplInfoPageR.pt",
+        "description_ko": "외국인 주소(체류지) 변경 신고",
+        "description_en": "Report your new address as a registered foreigner",
+        "icon": "badge"
+      },
+      {
+        "label_ko": "부산외국인통합콜센터",
+        "label_en": "Busan Foreign Resident Call Center",
+        "url": "https://bgcf.or.kr/sub3/subg2_1.php",
+        "description_ko": "1600-0051 · 부동산 · 법률 등 다국어 생활상담",
+        "description_en": "1600-0051 — multilingual advice, property and legal matters included",
+        "icon": "call"
+      },
+      {
+        "label_ko": "대한법률구조공단",
+        "label_en": "Korea Legal Aid Corporation",
+        "url": "https://www.klac.or.kr/",
+        "description_ko": "임대차 분쟁 법률상담 (국번없이 132)",
+        "description_en": "Free legal advice on lease disputes (dial 132)",
+        "icon": "local_police"
+      },
+      {
+        "label_ko": "외국인등록증 발급 안내",
+        "label_en": "Guide — Alien Registration Card",
+        "url": "/guide/item/arc-issue",
+        "description_ko": "앱 안에서 바로 보기",
+        "description_en": "Open the in-app guide",
+        "icon": "badge"
+      }
+    ],
+    "meta": {
+      "durationText_ko": "수일~수주",
+      "durationText_en": "A few days to weeks",
+      "difficulty": 2
+    },
+    "status": "published"
   },
   "bank-account": {
     "categoryId": "living",
@@ -1798,39 +2926,1387 @@
     "categoryId": "school",
     "title_ko": "증명서 발급",
     "title_en": "Certificate Issuance",
-    "summary_ko": "재학·성적증명 발급",
-    "summary_en": "Enrollment & transcripts",
-    "status": "comingSoon"
+    "summary_ko": "온라인 · 자동발급기 · 방문 발급",
+    "summary_en": "Online, kiosk & in-person issuance",
+    "icon": "receipt_long",
+    "overview_ko": "동아대학교에서는 재학증명서, 성적증명서, 졸업증명서 등 학교생활과 비자·취업·장학 신청에 필요한 각종 증명서를 발급할 수 있습니다.\n\n증명서는 인터넷, 교내 자동발급기, 어디서나민원(FAX), 우편 또는 학사관리과 방문 등 여러 방법으로 발급할 수 있습니다.\n\n일반적인 재학·성적·졸업 관련 증명서는 먼저 인터넷 발급 가능 여부를 확인하는 것이 가장 편리합니다.",
+    "overview_en": "At Dong-A University you can issue the certificates you need for student life and for visa, job or scholarship applications — an enrollment certificate, a transcript, a graduation certificate and more.\n\nThere are several ways to get one: online, from a certificate kiosk on campus, through the \"certificate by fax\" civil-service desks, by post, or in person at the Office of Academic Affairs.\n\nFor the usual enrollment, transcript and graduation certificates, the easiest thing is to check first whether you can issue it online.",
+    "checklist_title_ko": "발급 가능한 증명서",
+    "checklist_title_en": "Certificates you can issue",
+    "checklist_ko": [
+      "재학증명서",
+      "재적증명서",
+      "휴학증명서",
+      "제적증명서",
+      "졸업(학위수여)증명서",
+      "졸업(학위수여)예정증명서",
+      "성적증명서",
+      "수료증명서",
+      "복학예정증명서"
+    ],
+    "checklist_en": [
+      "Certificate of Enrollment (재학증명서)",
+      "Certificate of Registration (재적증명서)",
+      "Certificate of Leave of Absence (휴학증명서)",
+      "Certificate of Removal from the Register (제적증명서)",
+      "Graduation / Degree Certificate (졸업증명서)",
+      "Certificate of Expected Graduation (졸업예정증명서)",
+      "Academic Transcript (성적증명서)",
+      "Certificate of Completion (수료증명서)",
+      "Certificate of Expected Reinstatement (복학예정증명서)"
+    ],
+    "checklist_note_ko": "대부분의 증명서는 국문과 영문 모두 발급할 수 있습니다.\n※ 증명서 종류와 학적 상태에 따라 인터넷 또는 자동발급기로 발급할 수 없는 경우가 있습니다. 졸업예정증명서처럼 학부는 마지막 학기(8학기) 등록 이후에만 발급되는 등 조건이 붙는 증명서도 있으므로, 필요한 증명서가 지금 발급 가능한지 먼저 확인하세요.",
+    "checklist_note_en": "Most of these come in both Korean and English.\n※ Depending on the certificate and on your enrollment status, some cannot be issued online or at a kiosk. Some also have conditions — an expected-graduation certificate, for instance, is only issued to undergraduates once they have registered for their final (8th) semester. Check that the one you need is available to you right now.",
+    "sections": [
+      {
+        "title_ko": "가장 간단한 방법 — 인터넷 발급",
+        "title_en": "The simplest way — issue it online",
+        "icon": "computer",
+        "body_ko": "동아대학교 인터넷 증명발급 서비스를 이용하면 필요한 증명서를 온라인으로 신청한 뒤 파일 또는 프린터로 발급할 수 있습니다.\n\n동아대학교 증명서발급 페이지의 「인터넷증명발급」에서 접속할 수 있습니다.",
+        "body_en": "With Dong-A University's online certificate service you apply for the certificate you need on the web, then save it as a file or print it out.\n\nYou reach it from the university's certificate page, under 「인터넷증명발급」 (online certificate issuance).",
+        "steps_ko": [
+          "동아대학교 증명서발급 페이지 접속",
+          "인터넷증명발급 선택",
+          "로그인 또는 본인확인",
+          "필요한 증명서 선택",
+          "발급 매수 및 정보 확인",
+          "수수료 결제",
+          "파일 또는 프린터로 발급"
+        ],
+        "steps_en": [
+          "Open the Dong-A University certificate page",
+          "Choose 인터넷증명발급 (online certificate issuance)",
+          "Log in, or verify your identity",
+          "Pick the certificate you need",
+          "Check the number of copies and your details",
+          "Pay the fee",
+          "Save it as a file, or print it"
+        ],
+        "notes": [
+          {
+            "title_ko": "한눈에 보기",
+            "title_en": "At a glance",
+            "lines_ko": [
+              "소요시간: 즉시 발급",
+              "결제: 휴대폰 소액결제 또는 신용카드",
+              "발급 형태: 파일 저장 또는 프린터 출력"
+            ],
+            "lines_en": [
+              "How long it takes: issued immediately",
+              "Payment: mobile carrier billing or credit card",
+              "What you get: a file to save, or a printout"
+            ]
+          }
+        ],
+        "notice_ko": "영문 증명서를 처음 발급한다면\n영문 증명서는 학교 시스템에 영문 성명을 먼저 등록해야 발급할 수 있습니다. 아래 「영문 증명서가 필요한가요?」를 먼저 확인하세요.",
+        "notice_en": "Issuing an English certificate for the first time?\nYou have to register your name in English on the university system before an English certificate can be issued. Read \"Need an English certificate?\" below first.",
+        "notice_icon": "badge",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 인터넷 증명발급 대상이 재학생·휴학생·졸업생·제적생으로 안내되어 있었습니다. 대상과 발급 경로는 변경될 수 있으므로 학교 증명서발급 페이지의 최신 안내를 확인하세요.",
+        "footnote_en": "※ The 2024 international-student booklet listed enrolled, on-leave, graduated and removed students as eligible for online issuance. Eligibility and the service itself can change — check the latest notice on the university's certificate page."
+      },
+      {
+        "title_ko": "교내 증명서 자동발급기",
+        "title_en": "Certificate kiosks on campus",
+        "icon": "location_on",
+        "body_ko": "교내 증명서 자동발급기에서도 국문·영문 증명서를 즉시 출력할 수 있습니다.\n\n소요시간은 즉시이며, 학번과 학생정보 시스템 비밀번호로 본인 확인을 합니다.",
+        "body_en": "You can also print Korean and English certificates on the spot from a certificate kiosk on campus.\n\nIt takes only a moment: you identify yourself with your student ID number and your student-information system password.",
+        "steps_ko": [
+          "자동발급기에서 학부 또는 대학원 선택",
+          "학번과 비밀번호 입력",
+          "증명서 종류 선택",
+          "발급 매수 확인",
+          "수수료 결제",
+          "증명서 출력"
+        ],
+        "steps_en": [
+          "At the kiosk, choose undergraduate or graduate school",
+          "Enter your student ID number and password",
+          "Pick the type of certificate",
+          "Check the number of copies",
+          "Pay the fee",
+          "Take the printed certificate"
+        ],
+        "notes": [
+          {
+            "title_ko": "설치 위치",
+            "title_en": "Where the kiosks are",
+            "lines_ko": [
+              "승학캠퍼스: 인문과학대학 로비",
+              "부민캠퍼스: 사회과학대학 로비",
+              "구덕캠퍼스: 구덕캠퍼스에서 증명서 발급이 필요한 경우 의과대학 행정지원실에 문의하세요."
+            ],
+            "lines_en": [
+              "Seunghak campus: lobby of the College of Humanities (인문과학대학)",
+              "Bumin campus: lobby of the College of Social Sciences (사회과학대학)",
+              "Gudeok campus: there is no kiosk — ask the College of Medicine administrative office if you need a certificate there."
+            ]
+          },
+          {
+            "title_ko": "이용시간",
+            "title_en": "When you can use them",
+            "lines_ko": [
+              "공식 안내상 연중 24시간 이용할 수 있습니다.",
+              "다만 건물 보안상 폐쇄에 따라 실제 이용시간이 달라질 수 있습니다."
+            ],
+            "lines_en": [
+              "The official notice says they are available 24 hours a day, all year round.",
+              "In practice the hours can change, because the building itself may be locked for security."
+            ]
+          },
+          {
+            "title_ko": "결제 방법",
+            "title_en": "How to pay",
+            "lines_ko": [
+              "현금",
+              "휴대폰",
+              "체크카드",
+              "신용카드"
+            ],
+            "lines_en": [
+              "Cash",
+              "Mobile carrier billing",
+              "Debit card",
+              "Credit card"
+            ]
+          },
+          {
+            "title_ko": "자동발급기로 발급할 수 없는 서류",
+            "title_en": "What the kiosk cannot issue",
+            "lines_ko": [
+              "학적부 사본 — 학사관리과",
+              "장학금 수혜 확인서 — 학생복지과 장학팀",
+              "입학성적증명서 — 입학관리과",
+              "대학원 학적부 사본 — 각 대학원 행정지원실"
+            ],
+            "lines_en": [
+              "A copy of your student record (학적부) — Office of Academic Affairs",
+              "Scholarship award confirmation — Student Welfare, scholarship team",
+              "Admission score certificate — Office of Admissions",
+              "Graduate-school student record — your graduate school office"
+            ]
+          }
+        ],
+        "notice_ko": "건물이 닫히면 이용할 수 없어요\n연중 24시간 운영이 원칙이지만 건물 보안상 폐쇄에 따라 이용시간이 달라질 수 있습니다.\n늦은 시간에 방문하기 전에 건물 개방 여부를 먼저 확인하세요.",
+        "notice_en": "You cannot use a kiosk in a locked building\nThey are meant to run 24 hours a day all year, but the hours change when a building is closed for security.\nCheck that the building is open before going late at night.",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 승학캠퍼스 자동발급기가 본부건물 지하 1층 ATM 옆, 이용시간 08:30~22:00으로 안내되어 있었습니다. 이 페이지는 동아대학교 증명서자동발급기 공식 안내의 최신 위치와 이용시간을 따릅니다.",
+        "footnote_en": "※ The 2024 international-student booklet placed the Seunghak kiosk next to the ATM in the basement of the main administration building, open 08:30–22:00. This page follows the location and hours on the university's current certificate-kiosk notice instead."
+      },
+      {
+        "title_ko": "기타 발급 방법",
+        "title_en": "Other ways to get a certificate",
+        "icon": "storefront",
+        "body_ko": "인터넷 발급과 자동발급기 외에도 다음 방법을 이용할 수 있습니다.",
+        "body_en": "Besides online issuance and the kiosks, these routes are available.",
+        "notes": [
+          {
+            "title_ko": "어디서나민원(FAX)",
+            "title_en": "Certificate by fax (어디서나민원)",
+            "lines_ko": [
+              "정부24 또는 전국 시·군·구청, 교육청, 주민센터 등을 통해 증명서 발급을 신청할 수 있습니다.",
+              "이용시간: 평일 09:00~17:00",
+              "소요시간: 약 2시간 이내",
+              "운영시간과 처리시간은 변경될 수 있으므로 신청 전에 최신 안내를 확인하세요."
+            ],
+            "lines_en": [
+              "You can apply through Government24 (정부24) or at a city, county or district office, an education office, or a community service center anywhere in Korea.",
+              "Hours: weekdays 09:00–17:00",
+              "How long it takes: usually within about 2 hours",
+              "Hours and processing times can change, so check the current notice before you go."
+            ]
+          },
+          {
+            "title_ko": "온라인 우편발송",
+            "title_en": "Online postal delivery",
+            "lines_ko": [
+              "학교의 우편 증명서 발송 서비스를 통해 증명서를 우편으로 받을 수 있습니다.",
+              "국내: 약 1~4일 (주말·공휴일 제외)",
+              "해외: 국가별로 다릅니다.",
+              "결제: 휴대폰 소액결제 또는 신용카드"
+            ],
+            "lines_en": [
+              "The university's postal certificate service mails the certificate to you.",
+              "Within Korea: about 1–4 days (weekends and holidays excluded)",
+              "Overseas: it depends on the country.",
+              "Payment: mobile carrier billing or credit card"
+            ]
+          },
+          {
+            "title_ko": "우체국 민원우편",
+            "title_en": "Post-office civil-service mail",
+            "lines_ko": [
+              "전국 우체국에서 민원우편으로 증명서 발급을 신청할 수도 있습니다.",
+              "약 3~5일이 걸리며, 지역에 따라 달라질 수 있습니다."
+            ],
+            "lines_en": [
+              "Any post office in Korea can take a civil-service mail request for a certificate.",
+              "It takes about 3–5 days, and can be longer depending on the region."
+            ]
+          },
+          {
+            "title_ko": "학사관리과 방문",
+            "title_en": "In person at the Office of Academic Affairs",
+            "lines_ko": [
+              "인터넷이나 자동발급기로 처리하기 어려운 증명서는 학사관리과에서 직접 발급하거나 문의할 수 있습니다.",
+              "운영시간: 평일 09:00~17:00 (12:00~13:00 제외)",
+              "토요일·일요일·공휴일과 개교기념일에는 운영하지 않습니다.",
+              "문의: 051-200-6090~1"
+            ],
+            "lines_en": [
+              "For anything the website or the kiosk cannot handle, the Office of Academic Affairs issues it at the counter, or tells you what to do.",
+              "Hours: weekdays 09:00–17:00 (closed 12:00–13:00)",
+              "Closed on Saturdays, Sundays, public holidays and the university's foundation day.",
+              "Phone: 051-200-6090~1"
+            ]
+          }
+        ],
+        "notice_ko": "우편이 이미 발송되었다면\n증명서가 이미 발송 완료된 경우 발급 취소 및 결제 취소가 불가능할 수 있습니다.",
+        "notice_en": "Once it is in the post\nWhen a certificate has already been marked as sent, you may no longer be able to cancel the request or the payment."
+      },
+      {
+        "title_ko": "영문 증명서가 필요한가요?",
+        "title_en": "Need an English certificate?",
+        "icon": "badge",
+        "body_ko": "영문 증명서를 처음 발급하는 경우 학교 시스템에 영문 성명이 등록되어 있어야 합니다.\n\n발급 전에 등록된 영문 이름이 여권의 영문 이름과 정확하게 일치하는지 확인하는 것을 권장합니다.",
+        "body_en": "The first time you issue a certificate in English, your name in English has to be registered on the university system.\n\nBefore you issue anything, check that the English name on record matches the one in your passport exactly.",
+        "notes": [
+          {
+            "title_ko": "영문 성명 등록 경로",
+            "title_en": "Where to register your English name",
+            "lines_ko": [
+              "동아대학교 통합정보시스템에 로그인한 뒤 학생정보 → 학적변동 → 개인정보변경에서 영문 성명을 등록합니다.",
+              "자동발급기에서 영문 증명서를 뽑을 때에도 영문 성명이 먼저 등록되어 있어야 합니다."
+            ],
+            "lines_en": [
+              "Sign in to the Dong-A Integrated Information System, then go to Student Information → Academic Status → Personal Information and register your name in English.",
+              "This applies to the kiosks too — an English certificate will not print until the English name is registered."
+            ]
+          }
+        ],
+        "notice_ko": "여권과 철자가 같아야 해요\n비자·입학·취업 서류는 여권과 철자나 띄어쓰기가 다르면 반려될 수 있습니다.\n등록할 때 여권을 보고 그대로 입력하세요.",
+        "notice_en": "The spelling has to match your passport\nVisa, admission and employment documents can be rejected if the spelling or spacing differs from your passport.\nCopy it from the passport exactly when you register it.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "특수한 증명서가 필요한 경우",
+        "title_en": "When you need something special",
+        "icon": "info",
+        "body_ko": "제출기관이 일반 증명서와 다른 형식을 요구하는 경우에는 발급 방법이 달라집니다.",
+        "body_en": "When the institution receiving the document asks for something other than a standard certificate, the way you get it changes.",
+        "notes": [
+          {
+            "title_ko": "석차가 표시된 성적증명서",
+            "title_en": "A transcript showing your class rank",
+            "lines_ko": [
+              "성적증명서에 석차를 기재해야 하는 경우 학사관리과에 문의하세요."
+            ],
+            "lines_en": [
+              "If your transcript has to show your class rank, ask the Office of Academic Affairs."
+            ]
+          },
+          {
+            "title_ko": "Sealing(밀봉) 또는 압인",
+            "title_en": "Sealing or an embossed stamp",
+            "lines_ko": [
+              "해외 대학, 비자, 취업기관 등 제출기관에서 밀봉(Sealing)이나 압인 등 별도 형식을 요구하는 경우 일반 인터넷 발급만으로 충분하지 않을 수 있습니다.",
+              "제출기관의 요구사항을 먼저 확인한 뒤 학사관리과에 문의하세요."
+            ],
+            "lines_en": [
+              "Overseas universities, immigration offices and employers often require a sealed envelope or an embossed stamp — a plain online printout may not be accepted.",
+              "Find out exactly what the receiving institution requires, then ask the Office of Academic Affairs."
+            ]
+          },
+          {
+            "title_ko": "학적부 사본",
+            "title_en": "A copy of your student record (학적부)",
+            "lines_ko": [
+              "학적부 사본은 일반 인터넷 발급이나 자동발급기로 발급할 수 없는 경우가 있으며 FAX민원 또는 학사관리과 데스크를 이용해야 할 수 있습니다."
+            ],
+            "lines_en": [
+              "A copy of your student record often cannot be issued online or at a kiosk — you may have to use the certificate-by-fax route or the Office of Academic Affairs counter."
+            ]
+          }
+        ],
+        "footnote_ko": "※ 학적부, 그리고 일정 시점 이전 졸업자의 증명서 등은 인터넷 발급이나 자동발급기로 발급할 수 없는 경우가 있습니다.",
+        "footnote_en": "※ Student records, and certificates for students who graduated before a certain date, are among the documents that cannot always be issued online or at a kiosk."
+      },
+      {
+        "title_ko": "통합정보시스템에서 발급하는 서류",
+        "title_en": "Documents available through the Integrated Information System",
+        "icon": "payments",
+        "body_ko": "일부 등록금·장학 관련 서류는 일반 증명서 발급 서비스가 아니라 동아대학교 통합정보시스템에서 직접 조회하거나 출력할 수 있습니다.",
+        "body_en": "Some tuition and scholarship documents do not come from the certificate service at all — you look them up and print them yourself in the Dong-A Integrated Information System.",
+        "notes": [
+          {
+            "title_ko": "여기서 발급하는 서류",
+            "title_en": "What you get there",
+            "lines_ko": [
+              "등록금(학생회비) 납입 확인서",
+              "교육비 납입 증명서",
+              "장학금 수혜 확인서"
+            ],
+            "lines_en": [
+              "Tuition (and student-union fee) payment confirmation",
+              "Certificate of education expenses paid",
+              "Scholarship award confirmation"
+            ]
+          }
+        ],
+        "notice_ko": "바로 발급됩니다\n통합정보시스템에 로그인한 뒤 해당 메뉴에서 즉시 조회하고 출력할 수 있습니다.",
+        "notice_en": "Available immediately\nSign in to the Integrated Information System and you can view and print them straight away.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "꼭 알아두세요",
+        "title_en": "Good to know",
+        "icon": "lightbulb",
+        "notes": [
+          {
+            "title_ko": "🌐 인터넷 발급부터 확인하세요",
+            "title_en": "🌐 Check online issuance first",
+            "lines_ko": [
+              "일반적인 재학·성적·졸업 관련 증명서는 인터넷으로 즉시 발급할 수 있는지 먼저 확인하세요."
+            ],
+            "lines_en": [
+              "For an ordinary enrollment, transcript or graduation certificate, check first whether you can just issue it online in a minute."
+            ]
+          },
+          {
+            "title_ko": "🇬🇧 영문 이름을 확인하세요",
+            "title_en": "🇬🇧 Check your English name",
+            "lines_ko": [
+              "영문 증명서 발급 전 학교에 등록된 영문 이름과 여권의 영문 이름이 일치하는지 확인하세요."
+            ],
+            "lines_en": [
+              "Before issuing anything in English, make sure the English name registered at the university matches your passport."
+            ]
+          },
+          {
+            "title_ko": "📄 모든 증명서가 온라인 발급되는 것은 아니에요",
+            "title_en": "📄 Not every certificate can be issued online",
+            "lines_ko": [
+              "학적부 사본이나 특수한 형태의 증명서는 별도의 발급 절차가 필요할 수 있습니다."
+            ],
+            "lines_en": [
+              "A copy of your student record, or a certificate in a special format, may need a separate procedure."
+            ]
+          },
+          {
+            "title_ko": "🔏 해외 제출 요건을 확인하세요",
+            "title_en": "🔏 Check the requirements of the receiving institution",
+            "lines_ko": [
+              "해외 대학·기관에 제출하는 경우 Sealing, 압인, 석차 표기 등 별도 요구사항이 있는지 먼저 확인하세요."
+            ],
+            "lines_en": [
+              "If the document goes to a university or an office abroad, ask them first whether they need sealing, an embossed stamp, or your class rank on it."
+            ]
+          },
+          {
+            "title_ko": "💰 수수료는 발급 전에 확인하세요",
+            "title_en": "💰 Check the fee before you issue",
+            "lines_ko": [
+              "증명서 수수료는 증명서 종류와 학적 상태에 따라 다릅니다.",
+              "2024학년도 외국인 유학생 안내서에 안내된 금액은 현재와 다를 수 있으므로, 실제 결제 단계나 동아대학교 최신 공식 안내에서 금액을 확인하세요."
+            ],
+            "lines_en": [
+              "The fee depends on the certificate and on your enrollment status.",
+              "The amounts printed in the 2024 international-student booklet may no longer be current — check the figure shown at the payment step, or the university's latest official notice."
+            ]
+          }
+        ],
+        "footnote_ko": "증명서 발급 관련 문의는 동아대학교 학사관리과(051-200-6090~1)에서 확인할 수 있습니다.",
+        "footnote_en": "For questions about certificates, contact the Dong-A University Office of Academic Affairs on 051-200-6090~1."
+      }
+    ],
+    "links": [
+      {
+        "label_ko": "동아대학교 증명서 발급 안내",
+        "label_en": "Dong-A University certificate issuance",
+        "url": "https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN200",
+        "description_ko": "발급 방법 · 증명서 종류 · 유의사항",
+        "description_en": "How to issue, certificate types, and what to watch for",
+        "icon": "receipt_long"
+      },
+      {
+        "label_ko": "인터넷 증명발급",
+        "label_en": "Online certificate issuance",
+        "url": "https://dx.donga.ac.kr/certificate/login.jsp",
+        "description_ko": "온라인 즉시 발급",
+        "description_en": "Issue it online, right away",
+        "icon": "computer"
+      },
+      {
+        "label_ko": "동아대학교 통합정보시스템",
+        "label_en": "Dong-A University Integrated Information System",
+        "url": "https://dx.donga.ac.kr/",
+        "description_ko": "등록금 · 교육비 · 장학 관련 증명 확인",
+        "description_en": "Tuition, education-cost and scholarship documents",
+        "icon": "badge"
+      },
+      {
+        "label_ko": "증명서 자동발급기 안내",
+        "label_en": "Certificate kiosk guide",
+        "url": "https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN284",
+        "description_ko": "설치 위치 · 이용시간",
+        "description_en": "Where the kiosks are and when they are open",
+        "icon": "location_on"
+      }
+    ],
+    "relatedFacilityIds": [
+      "s01",
+      "b04"
+    ],
+    "meta": {
+      "durationText_ko": "즉시~수일",
+      "durationText_en": "Instant to a few days",
+      "difficulty": 1
+    },
+    "status": "published"
   },
   "library-guide": {
     "categoryId": "school",
-    "title_ko": "도서관 이용 안내",
+    "title_ko": "도서관 이용안내",
     "title_en": "Library Guide",
-    "summary_ko": "대출·열람실 이용",
-    "summary_en": "Borrowing & reading rooms",
-    "relatedFacilityIds": [
-      "s10"
+    "summary_ko": "대출 · 열람실 · 모바일 이용증",
+    "summary_en": "Borrowing, study rooms & mobile ID",
+    "icon": "menu_book",
+    "overview_ko": "동아대학교에는 승학캠퍼스의 한림도서관, 부민캠퍼스의 부민도서관과 법학도서분관, 구덕캠퍼스의 의학도서분관이 있습니다.\n\n도서 대출과 반납뿐 아니라 열람실, 그룹스터디실, 전자자료, 학술DB, 캠퍼스간 대출 등 다양한 서비스를 이용할 수 있습니다.\n\n외국인 학생도 동아대학교 학생 계정과 학생증 또는 모바일 이용증을 이용하여 도서관 서비스를 사용할 수 있습니다.",
+    "overview_en": "Dong-A University has four libraries: Hallim Library on the Seunghak campus, Bumin Library and the Law Library Branch on the Bumin campus, and the Medical Library Branch on the Gudeok campus.\n\nThey are not only for borrowing and returning books — you can also use study rooms and group study rooms, read e-journals and academic databases, and have a book sent over from another campus.\n\nAs an international student you use the same services as everyone else: log in with your Dong-A University account and identify yourself with your student ID card or with the mobile library ID in the library app.",
+    "top_sections": [
+      {
+        "title_ko": "도서관 위치",
+        "title_en": "Where the libraries are",
+        "icon": "location_on",
+        "body_ko": "이용하려는 캠퍼스의 도서관을 먼저 확인하세요. 자료실 구성과 층 위치는 도서관마다 다릅니다.",
+        "body_en": "Start with the library on your own campus — each one is laid out differently and holds a different collection.",
+        "notes": [
+          {
+            "title_ko": "승학캠퍼스 — 한림도서관",
+            "title_en": "Seunghak campus — Hallim Library",
+            "lines_ko": [
+              "승학캠퍼스의 대표 도서관으로 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.",
+              "건물: S10 한림도서관",
+              "문의: 051-200-6273"
+            ],
+            "lines_en": [
+              "The main library on the Seunghak campus: collections, study rooms and group study rooms.",
+              "Building: S10, Hallim Library",
+              "Phone: 051-200-6273"
+            ]
+          },
+          {
+            "title_ko": "부민캠퍼스 — 부민도서관",
+            "title_en": "Bumin campus — Bumin Library",
+            "lines_ko": [
+              "부민캠퍼스 국제관에 위치하며 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.",
+              "건물: B05 국제관 5~10층",
+              "문의: 051-200-8434"
+            ],
+            "lines_en": [
+              "Inside the International Building on the Bumin campus: collections, study rooms and group study rooms.",
+              "Building: B05, International Building, floors 5–10",
+              "Phone: 051-200-8434"
+            ]
+          },
+          {
+            "title_ko": "부민캠퍼스 — 법학도서분관",
+            "title_en": "Bumin campus — Law Library Branch",
+            "lines_ko": [
+              "법학전문대학원 건물에 위치하며 법학 관련 자료를 이용할 수 있습니다.",
+              "건물: B02 법학전문대학원 1층",
+              "문의: 051-200-8441"
+            ],
+            "lines_en": [
+              "In the Law School building, for legal collections.",
+              "Building: B02, Law School, 1st floor",
+              "Phone: 051-200-8441"
+            ]
+          },
+          {
+            "title_ko": "구덕캠퍼스 — 의학도서분관",
+            "title_en": "Gudeok campus — Medical Library Branch",
+            "lines_ko": [
+              "의학·간호 분야의 자료를 이용할 수 있는 도서분관입니다.",
+              "건물: G05 (구덕캠퍼스)",
+              "문의: 051-240-2938"
+            ],
+            "lines_en": [
+              "A branch library for medicine and nursing.",
+              "Building: G05 (Gudeok campus)",
+              "Phone: 051-240-2938"
+            ]
+          }
+        ],
+        "footnote_ko": "※ 건물·층과 연락처는 도서관 홈페이지 「찾아오시는 길」 기준입니다. 각 층에 무엇이 있는지는 홈페이지의 「층별 안내」에서 확인할 수 있습니다.",
+        "footnote_en": "※ Buildings, floors and phone numbers follow the \"Directions\" page on the library website. What sits on each floor is shown on its \"Floor guide\" page."
+      },
+      {
+        "title_ko": "처음 이용한다면",
+        "title_en": "Using the library for the first time",
+        "icon": "smartphone",
+        "body_ko": "동아대학교 도서관 앱의 모바일 이용증을 먼저 준비해 두면 도서관에서 할 수 있는 일이 대부분 휴대폰 하나로 해결됩니다.",
+        "body_en": "Set up the mobile library ID in the Dong-A University Library app first — after that your phone covers almost everything you do in the library.",
+        "steps_ko": [
+          "App Store 또는 Google Play에서 「동아대학교 도서관」 앱 설치",
+          "동아대학교 통합정보시스템 계정으로 로그인",
+          "앱 화면 오른쪽 위의 「이용증」 메뉴 선택",
+          "모바일 이용증 확인",
+          "도서관 출입 · 도서 대출 · 좌석배정 등에 사용"
+        ],
+        "steps_en": [
+          "Install the \"동아대학교 도서관\" app from the App Store or Google Play",
+          "Log in with your Dong-A University integrated information system account",
+          "Open the ID card (이용증) menu at the top right of the app",
+          "Your mobile library ID appears on screen",
+          "Show it to enter the library, borrow books and take a seat"
+        ],
+        "notes": [
+          {
+            "title_ko": "학생증도 그대로 사용할 수 있어요",
+            "title_en": "Your student ID card still works",
+            "lines_ko": [
+              "실물 학생증으로도 도서관에 출입하고 도서를 대출할 수 있습니다.",
+              "학생증과 모바일 이용증 중 편한 것을 사용하면 됩니다."
+            ],
+            "lines_en": [
+              "You can still use the plastic student ID card to enter the library and borrow books.",
+              "Use whichever is easier for you — the card or the app."
+            ]
+          }
+        ],
+        "notice_ko": "모바일 이용증을 준비하세요\n동아대학교 도서관 앱의 모바일 이용증은 도서관 출입, 도서 대출, 열람실 좌석배정 등에 사용할 수 있습니다.",
+        "notice_en": "Set up your mobile library ID\nThe mobile library ID in the app is what identifies you when you enter the library, borrow a book or take a seat in a study room.",
+        "notice_icon": "badge",
+        "footnote_ko": "※ 학생증의 사용처(학생 확인용, 도서 대출, 열람실 이용)와 무료 발급 안내는 2024학년도 외국인 유학생 안내서 기준입니다. 학생증 발급 절차는 학사관리과 안내를 확인하세요.",
+        "footnote_en": "※ What the student ID card is used for (identification, borrowing, study rooms) and the fact that it is issued free of charge come from the 2024 international-student booklet. For how to get one, check with the Office of Academic Affairs."
+      }
     ],
-    "status": "comingSoon"
+    "sections": [
+      {
+        "title_ko": "도서 대출",
+        "title_en": "Borrowing Books",
+        "icon": "menu_book",
+        "body_ko": "대출 데스크 또는 무인대출기를 이용하여 학생증이나 모바일 이용증으로 도서를 대출할 수 있습니다.",
+        "body_en": "Borrow at the loan desk, or by yourself at a self-checkout machine, using your student ID card or your mobile library ID.",
+        "notes": [
+          {
+            "title_ko": "대출 책수와 기간",
+            "title_en": "How many books, for how long",
+            "lines_ko": [
+              "학부 재학생: 10책 / 14일",
+              "대학원생: 10책 / 30일",
+              "비전임교원 · 직원: 10책 / 30일",
+              "전임교원: 30책 / 90일"
+            ],
+            "lines_en": [
+              "Undergraduate students: 10 books for 14 days",
+              "Graduate students: 10 books for 30 days",
+              "Non-tenured teaching staff and staff: 10 books for 30 days",
+              "Full-time faculty: 30 books for 90 days"
+            ]
+          },
+          {
+            "title_ko": "대출기간을 연장할 수 있어요",
+            "title_en": "You can extend the loan",
+            "lines_ko": [
+              "대출한 자료는 반납예정일 전에 재대출할 수 있습니다.",
+              "재대출은 최초 대출기간과 동일한 기간으로 1회만 가능합니다.",
+              "예약자가 있거나 연체 중인 경우 재대출이 제한됩니다.",
+              "신청: 도서관 홈페이지 로그인 → My Library → 대출/재대출/예약조회 → 대출 및 재대출"
+            ],
+            "lines_en": [
+              "Renew a book before its due date and you keep it longer.",
+              "You can renew once, for the same length as the original loan.",
+              "You cannot renew a book someone has reserved, or while you have anything overdue.",
+              "Where: log in to the library website → My Library → 대출/재대출/예약조회 (loans, renewals & reservations) → 대출 및 재대출"
+            ]
+          }
+        ],
+        "notice_ko": "대출할 수 없는 자료도 있어요\n학위논문과 연속간행물은 대출되지 않습니다. 무인대출기는 기기가 설치된 도서관에서만 이용할 수 있습니다.",
+        "notice_en": "Some materials cannot be taken out\nTheses and periodicals are for use inside the library only. Self-checkout machines are available only at the libraries that have one.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "반납 · 연체",
+        "title_en": "Returns & Overdue Items",
+        "icon": "event_repeat",
+        "body_ko": "대출한 도서는 한림도서관, 부민도서관, 법학도서분관, 의학도서분관 중 어느 곳에서도 반납할 수 있습니다.\n\n도서관이 문을 닫은 시간에는 무인반납함을 이용하세요.",
+        "body_en": "Return a book to any of the four libraries — Hallim, Bumin, the Law Library Branch or the Medical Library Branch. It does not have to go back where you borrowed it.\n\nWhen the library is closed, use a book return box.",
+        "notes": [
+          {
+            "title_ko": "무인반납함 위치",
+            "title_en": "Where the return boxes are",
+            "lines_ko": [
+              "한림도서관: 한림도서관 2층",
+              "부민도서관: 국제관 1층, 지하 1층",
+              "법학도서분관: 도서관 입구",
+              "의학도서분관: 간호대 1층"
+            ],
+            "lines_en": [
+              "Hallim Library: 2nd floor of the library",
+              "Bumin Library: International Building, 1st floor and basement 1st floor",
+              "Law Library Branch: at the library entrance",
+              "Medical Library Branch: 1st floor of the Nursing building"
+            ]
+          }
+        ],
+        "notice_ko": "반납일을 꼭 확인하세요\n대출한 자료를 연체하면 일정 기간 도서 대출이 제한될 수 있습니다. 현재 규정은 1책당 연체 1일마다 대출중지 1일입니다.",
+        "notice_en": "Keep an eye on the due date\nReturning late suspends your borrowing for a while: the current rule is one day of suspension per book per day overdue."
+      },
+      {
+        "title_ko": "열람실 이용",
+        "title_en": "Study Room & Seat Reservation",
+        "icon": "school",
+        "body_ko": "열람실 좌석은 동아대학교 도서관 앱에서 예약한 뒤 인증(발권확정)해야 이용할 수 있습니다.",
+        "body_en": "Seats in the study rooms are booked in the library app — and a booking only becomes a seat once you check in.",
+        "steps_ko": [
+          "동아대학교 도서관 앱에 통합정보시스템 계정으로 로그인",
+          "「열람실 예약」 선택",
+          "도서관 선택",
+          "열람실 선택",
+          "좌석 선택 후 예약 완료",
+          "20분 이내에 예약 인증(발권확정)",
+          "좌석 이용",
+          "이용 종료 후 앱에서 좌석 반납"
+        ],
+        "steps_en": [
+          "Log in to the library app with your integrated information system account",
+          "Choose 열람실 예약 (reserve a seat)",
+          "Pick the library",
+          "Pick the study room",
+          "Pick a seat and confirm the booking",
+          "Check in within 20 minutes to confirm the seat",
+          "Use your seat",
+          "Release the seat in the app when you leave"
+        ],
+        "notes": [
+          {
+            "title_ko": "인증 방법은 두 가지예요",
+            "title_en": "Two ways to check in",
+            "lines_ko": [
+              "열람실 안에서 앱의 「예약인증」 선택 — 비콘 인증이므로 블루투스를 켜 두세요.",
+              "도서관 안의 좌석배정기(키오스크)에서 모바일 이용증을 인식"
+            ],
+            "lines_en": [
+              "Tap 예약인증 (confirm booking) in the app while you are in the study room — it uses Bluetooth beacons, so keep Bluetooth on.",
+              "Or scan your mobile library ID at a seat kiosk inside the library."
+            ]
+          },
+          {
+            "title_ko": "이용 후 좌석을 반납하세요",
+            "title_en": "Release your seat when you are done",
+            "lines_ko": [
+              "이용이 끝난 뒤 앱에서 좌석 반납을 완료하세요.",
+              "앱의 「나의자리」에서 현재 예약·발권된 좌석과 사용 이력을 확인할 수 있습니다."
+            ],
+            "lines_en": [
+              "Finish by releasing the seat in the app so someone else can use it.",
+              "Under 나의자리 (my seat) you can see your current booking and your past usage."
+            ]
+          }
+        ],
+        "notice_ko": "예약만 하면 끝이 아니에요\n좌석 예약 후 20분 이내에 인증하여 발권확정을 해야 이용할 수 있습니다. 정해진 시간 안에 인증하지 않으면 예약이 취소될 수 있습니다.",
+        "notice_en": "Booking a seat is only half of it\nYou have 20 minutes to check in and confirm the seat. If you do not, the booking can be cancelled.",
+        "footnote_ko": "※ 그룹스터디실은 도서관 홈페이지에서 별도로 신청합니다. 신청 조건과 이용 시간은 도서관 홈페이지의 안내를 확인하세요.",
+        "footnote_en": "※ Group study rooms are booked separately on the library website. Check the site for who can book one and for how long."
+      },
+      {
+        "title_ko": "캠퍼스간 대출",
+        "title_en": "Inter-Campus Loan",
+        "icon": "compare_arrows",
+        "body_ko": "필요한 책이 다른 캠퍼스 도서관에 있는 경우 캠퍼스간 대출을 신청하여 원하는 도서관에서 받을 수 있습니다.\n\n신청하려는 자료가 내가 있는 캠퍼스의 도서관에 없을 때 이용할 수 있습니다.",
+        "body_en": "If the book you need is held on another campus, request an inter-campus loan and collect it at the library you choose.\n\nIt applies when the item is not held by the library on your own campus.",
+        "steps_ko": [
+          "도서관 홈페이지 로그인",
+          "자료 검색",
+          "도서 상세정보 확인",
+          "캠퍼스간 대출 신청",
+          "수령할 도서관 선택",
+          "도착 안내 확인 후 수령"
+        ],
+        "steps_en": [
+          "Log in to the library website",
+          "Search for the book",
+          "Open its detail page",
+          "Request an inter-campus loan",
+          "Choose where you want to collect it",
+          "Wait for the arrival notice, then pick it up"
+        ],
+        "notes": [
+          {
+            "title_ko": "수령할 수 있는 도서관",
+            "title_en": "Where you can collect it",
+            "lines_ko": [
+              "한림도서관 (승학캠퍼스)",
+              "부민도서관 (부민캠퍼스)",
+              "법학도서분관 (부민캠퍼스)",
+              "의학도서분관 (구덕캠퍼스)"
+            ],
+            "lines_en": [
+              "Hallim Library (Seunghak campus)",
+              "Bumin Library (Bumin campus)",
+              "Law Library Branch (Bumin campus)",
+              "Medical Library Branch (Gudeok campus)"
+            ]
+          },
+          {
+            "title_ko": "알아둘 점",
+            "title_en": "Things to know",
+            "lines_ko": [
+              "대출기간은 일반 대출과 동일합니다.",
+              "반납은 우리 대학의 모든 도서관에서 할 수 있습니다(취업지원실 제외).",
+              "자료 도착 후 보관 기간은 3일입니다.",
+              "금요일 오후 2시 이후 신청분은 다음 주 월요일에 처리됩니다."
+            ],
+            "lines_en": [
+              "The loan period is the same as an ordinary loan.",
+              "You can return it at any library of the university (except the Career Support Office).",
+              "Once it arrives it is held for 3 days.",
+              "Requests made after 2 p.m. on Friday are processed the following Monday."
+            ]
+          }
+        ],
+        "notice_ko": "신청한 책은 꼭 찾아가세요\n신청한 자료를 3회 이상 대출하지 않으면 해당 학기 동안 캠퍼스간 대출 서비스를 이용할 수 없습니다.",
+        "notice_en": "Do collect what you request\nIf you fail to pick up requested items three times, you lose access to the inter-campus loan service for the rest of the semester."
+      },
+      {
+        "title_ko": "전자자료 · 논문 이용",
+        "title_en": "E-resources & Papers",
+        "icon": "computer",
+        "body_ko": "동아대학교 도서관 홈페이지에 로그인하면 전자저널, 학술DB 등 다양한 전자자료를 이용할 수 있습니다.\n\n교외에서는 도서관의 교외접속 서비스를 이용해야 할 수 있습니다.",
+        "body_en": "Log in to the library website and you can read e-journals, academic databases and other electronic resources.\n\nFrom off campus you may need the library's off-campus access service to reach them.",
+        "notes": [
+          {
+            "title_ko": "교외접속 이용 방법",
+            "title_en": "How off-campus access works",
+            "lines_ko": [
+              "별도의 프로그램 설치 없이 도서관 홈페이지에 로그인하면 이용할 수 있습니다.",
+              "Edge, Chrome, Safari, Firefox 등 대부분의 브라우저를 지원합니다.",
+              "전자자료에 바로 접속할 때는 도서관 홈페이지 메인의 「교외접속」을 On으로 설정하세요."
+            ],
+            "lines_en": [
+              "Nothing to install — just log in to the library website.",
+              "Most browsers work: Edge, Chrome, Safari and Firefox.",
+              "When you go straight to a resource, switch 교외접속 (off-campus access) to On on the library home page first."
+            ]
+          }
+        ],
+        "notice_ko": "학교 밖에서도 논문을 볼 수 있어요\n교외접속 서비스를 이용하면 학교 밖에서도 교내와 동일하게 전자저널과 학술DB를 이용할 수 있습니다.",
+        "notice_en": "You can read papers from outside the campus too\nWith off-campus access, e-journals and databases work from home exactly as they do on campus.",
+        "notice_icon": "computer"
+      },
+      {
+        "title_ko": "운영시간",
+        "title_en": "Opening Hours",
+        "icon": "info",
+        "body_ko": "도서관 운영시간은 학기, 방학, 시험기간에 따라 달라집니다.\n\n방문 전에 동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요. 홈페이지 메인에 실시간 이용시간이 표시됩니다.",
+        "body_en": "Opening hours change between term time, the vacation and the exam period.\n\nCheck today's hours on the library website before you go — the home page shows the live opening hours.",
+        "notes": [
+          {
+            "title_ko": "2026년 8월 확인 기준",
+            "title_en": "As listed in August 2026",
+            "lines_ko": [
+              "자료실(한림 · 부민 · 법학도서분관): 학기 중 평일 09:00~20:00, 방학 중 평일 09:00~17:00",
+              "의학도서분관 자료실: 평일 09:00~17:00",
+              "열람실: 매일 07:00~24:00",
+              "자료실은 토요일 휴실, 일요일과 공휴일은 휴관"
+            ],
+            "lines_en": [
+              "Collections (Hallim, Bumin, Law Branch): 09:00–20:00 on weekdays in term time, 09:00–17:00 during the vacation",
+              "Medical Library Branch collection: 09:00–17:00 on weekdays",
+              "Study rooms: 07:00–24:00, every day",
+              "Collections are closed on Saturdays; everything is closed on Sundays and public holidays"
+            ]
+          }
+        ],
+        "notice_ko": "운영시간은 방문 전에 확인하세요\n도서관 운영시간은 학기, 방학, 시험기간에 따라 달라질 수 있습니다. 방문 전에 동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요.",
+        "notice_en": "Check opening hours before visiting\nHours change with the term, the vacation and the exam period. Look up today's hours on the library website before you set off.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 자료실 09:00~22:00, 열람실 05:00~24:00으로 안내되어 있었습니다. 현재 도서관 홈페이지의 이용시간과 다르므로 홈페이지의 실시간 이용시간을 기준으로 하세요.",
+        "footnote_en": "※ The 2024 international-student booklet listed 09:00–22:00 for the collections and 05:00–24:00 for the study rooms. Those no longer match the library website — go by the live hours shown there."
+      }
+    ],
+    "tips_ko": [
+      "📱 모바일 이용증 — 도서관 앱의 모바일 이용증을 이용하면 출입, 대출, 좌석배정 등을 편리하게 이용할 수 있습니다.",
+      "📚 다른 캠퍼스의 책도 신청 가능 — 필요한 자료가 다른 캠퍼스에 있다면 캠퍼스간 대출 서비스를 확인하세요.",
+      "🔄 다른 도서관에서도 반납 가능 — 대출한 도서는 한림 · 부민 · 법학 · 의학도서분관 중 다른 도서관에서도 반납할 수 있습니다.",
+      "⏰ 운영시간 확인 — 시험기간과 방학에는 운영시간이 달라질 수 있으므로 방문 전 확인하세요.",
+      "💻 전자자료 — 도서관 홈페이지를 통해 전자저널, 학술DB 등 다양한 전자자료를 이용할 수 있습니다."
+    ],
+    "tips_en": [
+      "📱 Mobile library ID — the ID in the library app covers entry, borrowing and seat booking in one place.",
+      "📚 Books from other campuses — if what you need is held elsewhere, use the inter-campus loan service.",
+      "🔄 Return anywhere — a borrowed book can go back to Hallim, Bumin, the Law Branch or the Medical Branch, whichever is closest.",
+      "⏰ Check the hours — they change during exam periods and vacations, so look them up before you go.",
+      "💻 E-resources — e-journals and academic databases are all reachable through the library website."
+    ],
+    "links": [
+      {
+        "label_ko": "동아대학교 도서관",
+        "label_en": "Dong-A University Library",
+        "url": "https://library.donga.ac.kr/",
+        "description_ko": "자료검색 · 운영시간 · 도서관 서비스",
+        "description_en": "Search, opening hours and library services"
+      },
+      {
+        "label_ko": "DAU Library English",
+        "label_en": "DAU Library English",
+        "url": "https://library.donga.ac.kr/en/",
+        "description_ko": "영문 도서관 홈페이지",
+        "description_en": "Library information for international students"
+      },
+      {
+        "label_ko": "오늘의 운영시간",
+        "label_en": "Today's opening hours",
+        "url": "https://library.donga.ac.kr/about-our-library/library-hours/",
+        "description_ko": "도서관별 · 실별 이용시간",
+        "description_en": "Hours for each library and each room",
+        "icon": "event_repeat"
+      },
+      {
+        "label_ko": "모바일 이용증 안내",
+        "label_en": "Mobile library ID",
+        "url": "https://library.donga.ac.kr/libaray-services/mobile-service/mobile-id-card/",
+        "description_ko": "도서관 앱 · 모바일 이용증 사용 방법",
+        "description_en": "How to set up and use the ID in the app",
+        "icon": "badge"
+      },
+      {
+        "label_ko": "열람실 좌석배정 안내",
+        "label_en": "Seat reservation",
+        "url": "https://library.donga.ac.kr/libaray-services/mobile-service/mobile-seat-allocation/",
+        "description_ko": "좌석 예약 · 인증 · 반납 방법",
+        "description_en": "Booking, checking in and releasing a seat",
+        "icon": "school"
+      },
+      {
+        "label_ko": "캠퍼스간 대출 안내",
+        "label_en": "Inter-campus loan",
+        "url": "https://library.donga.ac.kr/libaray-services/using-materials/inter-campus-loan/",
+        "description_ko": "다른 캠퍼스 도서 신청",
+        "description_en": "Request a book held on another campus",
+        "icon": "compare_arrows"
+      },
+      {
+        "label_ko": "교외접속 서비스",
+        "label_en": "Off-campus access",
+        "url": "https://library.donga.ac.kr/libaray-services/off-campus-access/",
+        "description_ko": "학교 밖에서 전자저널 · 학술DB 이용",
+        "description_en": "Read e-journals and databases from off campus",
+        "icon": "computer"
+      }
+    ],
+    "relatedFacilityIds": [
+      "s10",
+      "b05",
+      "b02",
+      "g05"
+    ],
+    "meta": {
+      "durationText_ko": "5~10분",
+      "durationText_en": "5–10 minutes",
+      "difficulty": 1
+    },
+    "status": "published"
   },
   "oia-visit": {
     "categoryId": "school",
-    "title_ko": "국제교류처 방문 안내",
-    "title_en": "Visiting the OIA",
-    "summary_ko": "위치·상담 시간",
-    "summary_en": "Location & hours",
+    "title_ko": "국제교류과 방문 안내",
+    "title_en": "International Affairs Office",
+    "detail_title_ko": "대외국제처 국제교류과 방문 안내",
+    "detail_title_en": "International Affairs Office Guide",
+    "summary_ko": "비자 · 체류 · 장학 · 유학생 지원",
+    "summary_en": "Visa, stay, scholarships & student support",
+    "icon": "swap_horiz",
+    "overview_ko": "동아대학교 대외국제처 국제교류과는 외국인 유학생의 입학, 학사, 체류, 장학, 기숙사, 상담 및 국제교류 프로그램 등을 지원하는 부서입니다.\n\n비자나 체류 관련 학교 확인이 필요하거나 외국인 유학생 지원 프로그램, 장학, 학교생활 관련 문의가 있는 경우 국제교류과에 문의할 수 있습니다.\n\n업무에 따라 담당자와 필요한 서류가 다를 수 있으므로 방문 전에 공식 공지나 담당 부서를 확인하는 것이 좋습니다.",
+    "overview_en": "The Office of International Affairs (대외국제처 국제교류과) is the department that supports international students — admissions, academic matters, stay and visa, scholarships, dormitories, counseling and exchange programmes.\n\nGo to them when you need the university to confirm something for a visa or stay application, or when you have a question about student support programmes, scholarships or life at Dong-A.\n\nDifferent services are handled by different staff members and need different documents, so check the office notices — or which department actually handles it — before you go.",
+    "top_sections": [
+      {
+        "title_ko": "어떤 일로 방문할 수 있나요?",
+        "title_en": "What can I ask about?",
+        "icon": "help",
+        "body_ko": "문의하려는 내용이 국제교류과 업무인지 먼저 확인하세요. 국제교류과는 외국인 유학생 유치와 지원, 해외 대학과의 협정 체결, 해외 한국어 센터 운영 등을 담당합니다.",
+        "body_en": "Check first that what you need is actually handled here. The office recruits and supports international students, signs agreements with universities abroad, and runs the Korean language centres.",
+        "notes": [
+          {
+            "title_ko": "🪪 체류 · 비자",
+            "title_en": "🪪 Stay & visa",
+            "lines_ko": [
+              "외국인등록 관련 문의",
+              "체류기간 연장 관련 문의",
+              "체류자격 변경",
+              "시간제취업 관련 학교 확인",
+              "기타 출입국·체류 관련 학교 지원"
+            ],
+            "lines_en": [
+              "Questions about alien registration",
+              "Questions about extending your period of stay",
+              "Changing your status of stay",
+              "University confirmation for part-time work",
+              "Other university support for immigration and stay matters"
+            ]
+          },
+          {
+            "title_ko": "🎓 학사 · 학교생활",
+            "title_en": "🎓 Academics & student life",
+            "lines_ko": [
+              "외국인 유학생 학사 관련 문의",
+              "학교생활 상담",
+              "유학생 지원 프로그램",
+              "학과 또는 학교생활 관련 지원이 필요한 경우"
+            ],
+            "lines_en": [
+              "Academic questions specific to international students",
+              "Counseling about student life",
+              "Support programmes for international students",
+              "When you need help with something at your department or on campus"
+            ]
+          },
+          {
+            "title_ko": "💰 장학 · 생활지원",
+            "title_en": "💰 Scholarships & living support",
+            "lines_ko": [
+              "외국인 유학생 장학 관련 문의",
+              "기숙사 및 생활지원 관련 안내",
+              "외국인 학생 지원제도"
+            ],
+            "lines_en": [
+              "Questions about scholarships for international students",
+              "Dormitories and living support",
+              "Support schemes for international students"
+            ]
+          },
+          {
+            "title_ko": "🌏 국제교류",
+            "title_en": "🌏 Exchange programmes",
+            "lines_ko": [
+              "교환학생 프로그램",
+              "해외파견 프로그램",
+              "국제교류 프로그램",
+              "한국인·외국인 학생 교류 프로그램"
+            ],
+            "lines_en": [
+              "Exchange student programmes",
+              "Overseas dispatch programmes",
+              "International exchange programmes",
+              "Programmes that bring Korean and international students together"
+            ]
+          }
+        ],
+        "notice_ko": "출입국 민원을 대신 처리하는 곳은 아니에요\n국제교류과는 학교 단체접수 또는 학교 확인이 필요한 업무를 지원할 수 있습니다. 신청과 심사 자체는 출입국·외국인청에서 진행합니다.",
+        "notice_en": "It is not an immigration office\nThe office can help where a group application through the university, or a confirmation from the university, is needed. The application itself is filed with — and decided by — the immigration office.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 국제교류과가 모든 학사 업무를 처리하지는 않습니다. 전공 수강신청이나 학과 세부 사항은 소속 학과사무실에 문의해야 할 수 있습니다.",
+        "footnote_en": "※ Not every academic matter goes through this office. Registering for your major courses and department-specific rules are usually handled by your own department office."
+      },
+      {
+        "title_ko": "위치",
+        "title_en": "Where the office is",
+        "icon": "location_on",
+        "body_ko": "국제교류과 사무실은 부민캠퍼스 종합강의동 1층에 있습니다. 법학전문대학원(B02) 옆, 취업지원실 인근입니다.",
+        "body_en": "The office is on the 1st floor of the General Lecture Building on the Bumin campus — next to the Law School building (B02) and near the Career Support Office.",
+        "notes": [
+          {
+            "title_ko": "부민캠퍼스",
+            "title_en": "Bumin campus",
+            "lines_ko": [
+              "종합강의동 1층 BC-0116-3"
+            ],
+            "lines_en": [
+              "General Lecture Building, 1st floor, room BC-0116-3"
+            ]
+          },
+          {
+            "title_ko": "주소",
+            "title_en": "Address",
+            "lines_ko": [
+              "부산광역시 서구 구덕로 225 (부민동 2가)",
+              "우편번호 49236"
+            ],
+            "lines_en": [
+              "225 Gudeok-ro, Seo-gu, Busan (Bumin-dong 2-ga)",
+              "Postal code 49236"
+            ]
+          },
+          {
+            "title_ko": "지하철",
+            "title_en": "By subway",
+            "lines_ko": [
+              "부산지하철 1호선 토성역 2번 출구에서 동아대학교 부민캠퍼스 방향으로 이동하세요.",
+              "2번 출구에서 약 3분 거리입니다."
+            ],
+            "lines_en": [
+              "Take Busan Metro Line 1 to Toseong station and leave by Exit 2, heading towards the Dong-A University Bumin campus.",
+              "It is about a 3-minute walk from Exit 2."
+            ]
+          },
+          {
+            "title_ko": "버스",
+            "title_en": "By bus",
+            "lines_ko": [
+              "동아대학교 부민캠퍼스 정류소 하차",
+              "일반 15, 16, 40, 70, 81, 123, 126, 161, 190 / 좌석 58-1"
+            ],
+            "lines_en": [
+              "Get off at the Dong-A University Bumin Campus stop",
+              "Regular buses 15, 16, 40, 70, 81, 123, 126, 161, 190; express bus 58-1"
+            ]
+          }
+        ],
+        "footnote_ko": "※ 호실 번호(BC-0116-3)는 2024학년도 외국인 유학생 안내서 기준입니다. 사무실이 이전될 수 있으므로 방문 전 국제교류과 홈페이지의 「찾아오시는 길」을 확인하세요.",
+        "footnote_en": "※ The room number (BC-0116-3) comes from the 2024 international-student booklet. Offices do move — check the \"Directions\" page on the office website before you go."
+      }
+    ],
+    "checklist_title_ko": "방문 전 확인",
+    "checklist_title_en": "Before You Visit",
+    "checklist_ko": [
+      "방문 목적 확인 — 비자, 체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.",
+      "관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 있으므로 방문 전에 국제교류과 공지를 확인하세요.",
+      "필요한 서류 확인 — 업무에 따라 여권, 외국인등록증, 신청서, 재학증명서 등 필요한 서류가 달라질 수 있습니다.",
+      "온라인 문의 먼저 확인 — 간단한 질문은 국제교류과 홈페이지의 Q&A를 먼저 이용할 수 있습니다."
+    ],
+    "checklist_en": [
+      "Know what you are asking about — visa and stay, scholarships, exchange programmes and so on are each handled by a different person.",
+      "Read the notices first — alien registration and stay extensions are sometimes filed as a group through the university within a set period, which the office announces.",
+      "Find out which documents you need — depending on the service that may be your passport, your ARC, an application form or an enrollment certificate.",
+      "Try online first — for a simple question, the Q&A board on the office website is quicker than a visit."
+    ],
+    "checklist_note_ko": "※ 위 서류가 모든 방문에 필요한 것은 아닙니다. 방문 전에 해당 업무의 공지 또는 담당자에게 필요한 서류를 확인하세요.\n※ 사무실 운영시간은 국제교류과 홈페이지에 별도로 안내되어 있지 않습니다. 방문 전 국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.",
+    "checklist_note_en": "※ Those documents are not required for every visit. Check the notice for your particular service, or ask the staff, before you set off.\n※ The office website does not publish opening hours. Check the website or call before visiting.",
+    "steps_ko": [
+      "문의하려는 업무 확인",
+      "국제교류과 최신 공지 확인",
+      "필요한 서류 확인",
+      "국제교류과 방문 또는 온라인 문의",
+      "담당자에게 문의",
+      "추가 제출 또는 후속 절차 확인"
+    ],
+    "steps_en": [
+      "Work out exactly what you need",
+      "Check the latest notices from the office",
+      "Find out which documents that service needs",
+      "Visit the office, or ask online",
+      "Talk to the staff member who handles it",
+      "Check what you still have to submit or do next"
+    ],
+    "sections": [
+      {
+        "title_ko": "연락처",
+        "title_en": "Contact",
+        "icon": "smartphone",
+        "body_ko": "국제교류과는 국제교류팀과 국제지원팀으로 구성되어 있습니다. 업무에 따라 담당자가 다르므로 대표번호로 먼저 문의하세요.",
+        "body_en": "The office has two teams — the International Exchange Team and the International Support Team. Which staff member helps you depends on what you need, so start with the main numbers.",
+        "notes": [
+          {
+            "title_ko": "국제교류과 대표 연락처",
+            "title_en": "Main contact",
+            "lines_ko": [
+              "전화: 051-200-6442~4, 6446~8",
+              "팩스: 051-200-6445"
+            ],
+            "lines_en": [
+              "Phone: 051-200-6442~4, 6446~8",
+              "Fax: 051-200-6445"
+            ]
+          },
+          {
+            "title_ko": "외국인 유학생 지원 문의",
+            "title_en": "International student support",
+            "lines_ko": [
+              "유학생 학사 지원·상담 및 기숙사 관련: 051-200-6447"
+            ],
+            "lines_en": [
+              "Academic support, counseling and dormitory matters for international students: 051-200-6447"
+            ]
+          }
+        ],
+        "notice_ko": "운영시간은 미리 확인하세요\n국제교류과 홈페이지에 사무실 운영시간이 별도로 안내되어 있지 않습니다. 방문 전 국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.",
+        "notice_en": "Check the opening hours in advance\nThe office website does not list its opening hours. Check the website, or call, before you visit.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 2024학년도 외국인 유학생 안내서에는 유학생 지원(체류·장학·기숙사) 문의 이메일이 global@donga.ac.kr로 안내되어 있었습니다. 담당자와 업무분장은 변경될 수 있으므로 최신 정보는 국제교류과 홈페이지의 「구성원 안내」에서 확인하세요.",
+        "footnote_en": "※ The 2024 international-student booklet gave global@donga.ac.kr as the address for student support (stay, scholarships, dormitories). Staff and their duties change — for the current list see \"구성원 안내\" (staff) on the office website."
+      }
+    ],
+    "tips_ko": [
+      "📌 업무마다 담당자가 달라요 — 비자·체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.",
+      "📄 필요한 서류를 먼저 확인하세요 — 체류 및 출입국 관련 업무는 정해진 제출서류가 있는 경우가 많으므로 공식 공지를 먼저 확인하세요.",
+      "📅 단체접수 기간이 있을 수 있어요 — 외국인등록이나 체류기간 연장 등 일부 업무는 학교에서 단체접수를 지원할 수 있습니다. 개인 신청 전에 해당 학기의 국제교류과 공지를 확인하세요.",
+      "💬 간단한 질문은 온라인으로 — 국제교류과 홈페이지의 Q&A 게시판에서 방문 전에 온라인으로 문의할 수 있습니다.",
+      "🏫 학과 업무는 학과사무실에서 — 전공 수업, 학과별 졸업요건, 과목 증원 등 학과 고유 업무는 소속 학과사무실에 문의해야 할 수 있습니다."
+    ],
+    "tips_en": [
+      "📌 Different services have different staff members — visa and stay, scholarships and exchange programmes are each someone else's desk.",
+      "📄 Check the documents first — immigration and stay services usually have a fixed list of what to submit, published in the notice.",
+      "📅 There may be a group application period — the university sometimes files alien registrations or stay extensions as a group. Check the semester's notices before you apply on your own.",
+      "💬 Ask online for small things — the Q&A board on the office website saves you the trip.",
+      "🏫 Contact your department office for department-specific matters — major courses, graduation requirements and adding a full class are your department's business, not this office's."
+    ],
+    "links": [
+      {
+        "label_ko": "동아대학교 대외국제처 국제교류과",
+        "label_en": "Dong-A University Office of International Affairs",
+        "url": "https://global.donga.ac.kr/",
+        "description_ko": "공지 · 유학생 지원 · 국제교류 프로그램",
+        "description_en": "Notices, student support and exchange programmes"
+      },
+      {
+        "label_ko": "국제교류과 찾아오시는 길",
+        "label_en": "Directions to the office",
+        "url": "https://global.donga.ac.kr/global/CMS/Contents/Contents.do?mCode=MN025",
+        "description_ko": "위치 · 교통편 · 연락처",
+        "description_en": "Location, transport and contact details",
+        "icon": "directions_transit"
+      },
+      {
+        "label_ko": "외국인 유학생 공지",
+        "label_en": "Notices for international students",
+        "url": "https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN066",
+        "description_ko": "비자 · 체류 · 장학 · 학교생활 안내",
+        "description_en": "Visa, stay, scholarships and campus life",
+        "icon": "info"
+      },
+      {
+        "label_ko": "국제교류과 Q&A",
+        "label_en": "Office Q&A board",
+        "url": "https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN067",
+        "description_ko": "방문 전 온라인 문의",
+        "description_en": "Ask a question online before visiting",
+        "icon": "help"
+      },
+      {
+        "label_ko": "국제교류 프로그램 상담신청",
+        "label_en": "Exchange programme counseling",
+        "url": "https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN077",
+        "description_ko": "교환학생 · 어학연수 등 프로그램 상담",
+        "description_en": "Counseling for exchange and language programmes",
+        "icon": "swap_horiz"
+      },
+      {
+        "label_ko": "지도에서 국제교류과 위치 보기",
+        "label_en": "View the International Affairs Office on the map",
+        "url": "/map?focus=b04",
+        "description_ko": "부민캠퍼스 종합강의동",
+        "description_en": "General Lecture Building, Bumin campus",
+        "icon": "location_on"
+      }
+    ],
     "relatedFacilityIds": [
       "b04"
     ],
-    "status": "comingSoon"
+    "meta": {
+      "durationText_ko": "10~30분",
+      "durationText_en": "10–30 minutes",
+      "difficulty": 1
+    },
+    "status": "published"
   },
   "emergency-contacts": {
     "categoryId": "emergency",
     "title_ko": "긴급 연락처",
     "title_en": "Emergency Contacts",
-    "summary_ko": "112·119·1345 안내",
-    "summary_en": "112 · 119 · 1345",
-    "status": "comingSoon"
+    "summary_ko": "112 · 119 긴급신고 안내",
+    "summary_en": "Police 112 · Fire & Ambulance 119",
+    "top_sections": [
+      {
+        "title_ko": "긴급상황 안내",
+        "title_en": "In an emergency",
+        "icon": "emergency",
+        "notice_ko": "지금 즉시 위험한 상황인가요?\n범죄 · 폭행 · 위협 등 경찰의 도움이 필요하면 112\n화재 · 사고 · 부상 · 응급환자 · 구조가 필요하면 119",
+        "notice_en": "Are you in immediate danger?\nCrime, assault, threats — anything you need the police for: 112\nFire, an accident, an injury, a medical emergency, someone who needs rescuing: 119",
+        "notice_icon": "emergency"
+      },
+      {
+        "title_ko": "112 — 경찰",
+        "title_en": "112 — Police",
+        "icon": "local_police",
+        "body_ko": "범죄 피해를 입었거나 신변의 위협을 받고 있는 등 즉각적인 경찰 도움이 필요한 경우 112에 신고하세요.",
+        "body_en": "Call 112 when you need the police right now — you have been the victim of a crime, or you are being threatened.",
+        "links": [
+          {
+            "label_ko": "112 전화하기",
+            "label_en": "Call 112",
+            "url": "tel:112",
+            "icon": "call"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "이런 상황에서 전화하세요",
+            "title_en": "Call when",
+            "lines_ko": [
+              "폭행 또는 위협을 받고 있을 때",
+              "절도 · 강도 등 범죄 피해를 입었을 때",
+              "스토킹 등 즉각적인 경찰 도움이 필요할 때",
+              "위험한 범죄 상황을 목격했을 때"
+            ],
+            "lines_en": [
+              "You are being assaulted or threatened",
+              "You have been robbed, or something was stolen from you",
+              "You are being stalked, or otherwise need the police now",
+              "You witness a dangerous crime"
+            ]
+          }
+        ]
+      },
+      {
+        "title_ko": "119 — 화재 · 구조 · 구급",
+        "title_en": "119 — Fire · Rescue · Ambulance",
+        "icon": "local_fire_department",
+        "body_ko": "화재, 사고, 구조 또는 응급환자가 발생한 경우 119에 신고하세요.",
+        "body_en": "Call 119 for a fire, an accident, a rescue, or a medical emergency.",
+        "links": [
+          {
+            "label_ko": "119 전화하기",
+            "label_en": "Call 119",
+            "url": "tel:119",
+            "icon": "call"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "이런 상황에서 전화하세요",
+            "title_en": "Call when",
+            "lines_ko": [
+              "불이 났을 때",
+              "사람이 크게 다쳤을 때",
+              "의식이 없거나 호흡에 문제가 있을 때",
+              "교통사고 등으로 구조가 필요할 때",
+              "즉각적인 응급의료 도움이 필요한 경우"
+            ],
+            "lines_en": [
+              "There is a fire",
+              "Someone is badly injured",
+              "Someone is unconscious, or having trouble breathing",
+              "Someone has to be freed after a traffic accident",
+              "Someone needs emergency medical help right now"
+            ]
+          }
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "title_ko": "신고할 때 알려주세요",
+        "title_en": "What to tell the operator",
+        "icon": "format_list_numbered",
+        "steps_ko": [
+          "어떤 일이 발생했는지",
+          "현재 위치",
+          "다친 사람이 있는지",
+          "현재 상황이 계속 위험한지",
+          "신고자의 연락 가능한 전화번호"
+        ],
+        "steps_en": [
+          "What has happened",
+          "Where you are",
+          "Whether anyone is hurt",
+          "Whether the situation is still dangerous",
+          "A phone number they can reach you on"
+        ],
+        "notice_ko": "위치를 먼저 알려주세요\n정확한 주소를 모르더라도 학교 이름, 캠퍼스, 건물 이름 또는 주변의 큰 건물을 알려주세요.\n· 동아대학교 승학캠퍼스\n· 동아대학교 부민캠퍼스\n· 동아대학교 구덕캠퍼스",
+        "notice_en": "Tell them your location first\nYou do not need the exact address — the name of the university, the campus, the building, or a large landmark nearby is enough.\n· Dong-A University, Seunghak Campus\n· Dong-A University, Bumin Campus\n· Dong-A University, Gudeok Campus",
+        "notice_icon": "location_on"
+      },
+      {
+        "title_ko": "긴급상황 표현",
+        "title_en": "Emergency phrases",
+        "icon": "translate",
+        "body_ko": "한국어로 말하기 어렵다면 아래 문장을 그대로 읽어도 됩니다.",
+        "body_en": "If speaking Korean is hard, just read the Korean line out loud.",
+        "notes": [
+          {
+            "title_ko": "경찰이 필요합니다",
+            "title_en": "I need the police.",
+            "lines_ko": [
+              "I need the police."
+            ],
+            "lines_en": [
+              "경찰이 필요합니다"
+            ]
+          },
+          {
+            "title_ko": "구급차를 보내주세요",
+            "title_en": "Please send an ambulance.",
+            "lines_ko": [
+              "Please send an ambulance."
+            ],
+            "lines_en": [
+              "구급차를 보내주세요"
+            ]
+          },
+          {
+            "title_ko": "불이 났습니다",
+            "title_en": "There is a fire.",
+            "lines_ko": [
+              "There is a fire."
+            ],
+            "lines_en": [
+              "불이 났습니다"
+            ]
+          },
+          {
+            "title_ko": "사람이 다쳤습니다",
+            "title_en": "Someone is injured.",
+            "lines_ko": [
+              "Someone is injured."
+            ],
+            "lines_en": [
+              "사람이 다쳤습니다"
+            ]
+          },
+          {
+            "title_ko": "저는 동아대학교에 있습니다",
+            "title_en": "I am at Dong-A University.",
+            "lines_ko": [
+              "I am at Dong-A University."
+            ],
+            "lines_en": [
+              "저는 동아대학교에 있습니다"
+            ]
+          },
+          {
+            "title_ko": "한국어를 잘 못합니다",
+            "title_en": "I don't speak Korean well.",
+            "lines_ko": [
+              "I don't speak Korean well."
+            ],
+            "lines_en": [
+              "한국어를 잘 못합니다"
+            ]
+          }
+        ]
+      }
+    ],
+    "tips_ko": [
+      "🚨 112와 119는 긴급신고 번호입니다 — 긴급한 상황에서만 이용하세요.",
+      "📍 위치를 확인하세요 — 신고하기 전에 가능하면 현재 캠퍼스와 건물 이름을 확인하세요.",
+      "📱 휴대전화로 바로 신고할 수 있습니다 — 지역번호 없이 112 또는 119를 입력하세요.",
+      "🗣 한국어가 어렵다면 — 한국어를 잘 하지 못한다고 먼저 알리고 천천히 현재 상황과 위치를 설명하세요."
+    ],
+    "tips_en": [
+      "🚨 112 and 119 are emergency lines — use them only for emergencies.",
+      "📍 Know where you are — check the campus and building name before you call if you can.",
+      "📱 Dial straight from your phone — just 112 or 119, no area code.",
+      "🗣 If Korean is hard — say so first, then describe what is happening and where you are, slowly."
+    ],
+    "links": [
+      {
+        "label_ko": "경찰청 112신고 안내",
+        "label_en": "Korean National Police — 112",
+        "url": "https://www.112.go.kr/",
+        "description_ko": "범죄 · 긴급 경찰 신고",
+        "description_en": "Crime and emergency police reports",
+        "icon": "local_police"
+      },
+      {
+        "label_ko": "소방청 119신고 안내",
+        "label_en": "National Fire Agency — 119",
+        "url": "https://www.nfa.go.kr/nfa/safetyinfo/emergencyservice/119emergencydeclaration/",
+        "description_ko": "화재 · 구조 · 구급 신고",
+        "description_en": "Fire, rescue and ambulance reports",
+        "icon": "local_fire_department"
+      }
+    ],
+    "status": "published"
   },
   "incident-response": {
     "categoryId": "emergency",
