@@ -78,6 +78,9 @@ flutter:
   # on the Kakao map (S2). See lib/presentation/map/widgets/marker_icons.dart.
   assets:
     - assets/markers/
+    # Wordmark logo for the in-app opening overlay (BrandSplashOverlay in
+    # app.dart) — Android 12+ system splash can only show the round emblem.
+    - assets/branding/
 
   # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
   # fonts:
