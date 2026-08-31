@@ -21,10 +21,12 @@ import '../../presentation/shell/app_shell.dart';
 ///
 /// Layout: a [StatefulShellRoute.indexedStack] with 3 branches (Home / Map /
 /// Settings), each an independent Navigator stack so the bottom tab bar
-/// stays visible on detail screens (UX doc §3). The guide routes (`/guide` and
-/// its children) live inside the home branch, so `context.go('/guide')` from
-/// the home "Admin guide" card keeps the Home tab active. Search and classroom
-/// search are root-navigator routes rendered full-screen above the shell (S8).
+/// stays visible on detail screens (UX doc §3). The guide routes are children
+/// of `/home` (canonical URL `/home/guide/...`), so the system back button
+/// walks guide detail → hub → home instead of exiting the app; the legacy
+/// `/guide/...` form used by in-app links (mock data, seeds) is kept working
+/// by a top-level redirect. Search and classroom search are root-navigator
+/// routes rendered full-screen above the shell (S8).
 ///
 /// Deep link contract (UX doc §3): `/map?focus=<id1>,<id2>,...` focuses those
 /// markers, fitBounds, and auto-opens the first marker's Peek sheet.
@@ -38,14 +40,22 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: _rootKey,
     initialLocation: '/home',
+    // In-app links and old bookmarks still say `/guide/...`; the routes now
+    // live under `/home` so the back stack includes the home screen.
+    redirect: (context, state) {
+      final uri = state.uri;
+      if (uri.path == '/guide' || uri.path.startsWith('/guide/')) {
+        return uri.replace(path: '/home${uri.path}').toString();
+      }
+      return null;
+    },
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navShell) =>
             AppShell(navigationShell: navShell),
         branches: [
-          // Branch 0 — Home (+ dining placeholder + guide routes S5→S6→S7,
-          // moved here from the removed Guide tab so the Home tab stays
-          // active while browsing guides).
+          // Branch 0 — Home (+ dining + guide routes S5→S6→S7 as children,
+          // so back from the guide hub lands on home, not out of the app).
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -56,23 +66,23 @@ class AppRouter {
                     path: 'dining',
                     builder: (context, state) => const DiningMenuScreen(),
                   ),
-                ],
-              ),
-              GoRoute(
-                path: '/guide',
-                builder: (context, state) => const GuideCategoryScreen(),
-                routes: [
                   GoRoute(
-                    path: 'category/:id',
-                    builder: (context, state) => GuideItemListScreen(
-                      category:
-                          GuideCategory.fromId(state.pathParameters['id']!),
-                    ),
-                  ),
-                  GoRoute(
-                    path: 'item/:id',
-                    builder: (context, state) =>
-                        GuideDetailScreen(itemId: state.pathParameters['id']!),
+                    path: 'guide',
+                    builder: (context, state) => const GuideCategoryScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'category/:id',
+                        builder: (context, state) => GuideItemListScreen(
+                          category:
+                              GuideCategory.fromId(state.pathParameters['id']!),
+                        ),
+                      ),
+                      GoRoute(
+                        path: 'item/:id',
+                        builder: (context, state) => GuideDetailScreen(
+                            itemId: state.pathParameters['id']!),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -102,9 +112,8 @@ class AppRouter {
                   return MapScreen(
                     focusIds: ids,
                     nearbyQueries: queries,
-                    focusFloorCode: (floor == null || floor.isEmpty)
-                        ? null
-                        : floor,
+                    focusFloorCode:
+                        (floor == null || floor.isEmpty) ? null : floor,
                   );
                 },
                 routes: [
