@@ -1,4 +1,4 @@
-name: campus_on
+﻿name: campus_on
 description: "Campus-On — 외국인 유학생 캠퍼스 안내 앱 (Flutter)."
 publish_to: "none"
 version: 0.2.0+2
@@ -55,7 +55,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   # Launcher icon generation (config below). Source emblem is
   # assets/icon/donga-mate-icon.png; the two app_icon*.png files are 1024px
-  # white-canvas derivatives (94% emblem for regular icons, 60% for the
+  # white-canvas derivatives (94% emblem for regular icons, 65% for the
   # adaptive foreground so the circle survives round launcher masks).
   # Regenerate with: dart run flutter_launcher_icons
   flutter_launcher_icons: ^0.14.1
