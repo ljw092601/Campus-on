@@ -3198,13 +3198,429 @@ class MockData {
       relatedFacilityIds: ['b02', 's02'],
       status: GuideStatus.published,
     ),
+    // Every claim on this page is limited to what an official source states:
+    //  · 보건복지부 「5월 20일부터 병·의원 진료 시 신분증을 챙겨주세요」
+    //    (건강보험 본인확인 의무화 — 인정 신분증 목록과 면제 대상)
+    //  · 보건복지부 「의약분업」 정책 안내 (처방전 · 전문/일반의약품)
+    //  · 보건복지부 E-Gen 안내 보도자료 (문 여는 병·의원과 약국, 119·129·120)
+    //  · 국민건강보험공단 「요양급여의 담당 및 절차」
+    //    (1·2단계 요양급여, 요양급여의뢰서와 그 예외)
+    //  · Study in Korea (내국인과 동일한 급여 혜택, 비급여의 존재)
+    //
+    // Deliberately absent, and deliberately NOT to be added later without a
+    // source: symptom lists, "go to a clinic first if it is mild", department
+    // recommendations, named hospitals, and any price. Those are medical or
+    // commercial judgements, not procedure. `relatedFacilityIds` is empty for
+    // the same reason — the university publishes no designated-hospital
+    // scheme, so a location card here would read as a recommendation.
     const AdminGuideItem(
       id: 'hospital-guide',
       categoryId: GuideCategory.health,
       titleKo: '병원 이용',
       titleEn: 'Visiting a Hospital',
-      summaryKo: '진료 절차·통역 지원',
-      summaryEn: 'Process & interpretation',
+      summaryKo: '접수 · 진료 · 처방전 · 야간 진료',
+      summaryEn: 'Care, prescriptions & after-hours help',
+      overviewKo: '한국에서 병원이나 의원을 이용할 때는 보통 의료기관을 찾아 접수하고, 진료를 받은 뒤 '
+          '수납하고, 처방전이 나오면 약국에서 약을 받는 순서로 진행됩니다. 검사가 필요한 경우에는 '
+          '진료와 수납 사이에 검사가 들어갑니다.\n\n'
+          '건강보험 급여가 적용되는 진료에서는 접수할 때 본인확인이 필요한 경우가 있습니다. '
+          '어떤 신분증을 쓸 수 있는지와 확인이 면제되는 경우는 아래에서 설명합니다.\n\n'
+          '예약 방법과 접수 · 수납 방식은 의료기관마다 다를 수 있으므로, 방문하려는 곳의 안내를 '
+          '미리 확인해 두면 도움이 됩니다.',
+      overviewEn: 'A visit to a Korean hospital or clinic usually runs in the '
+          'same order: find a clinic, register at the desk, see the doctor, pay '
+          'at the cashier, and — if you were given a prescription — collect the '
+          'medicine at a pharmacy. Any tests the doctor orders happen between '
+          'the consultation and the payment.\n\n'
+          'For insured care, you may need to verify your identity at reception. '
+          'Which documents count, and when the check is waived, are covered '
+          'further down.\n\n'
+          'How a place takes bookings, registers you and collects payment '
+          'differs from one to the next, so it is worth reading that clinic\'s '
+          'own information before you go.',
+      // Emergencies come before anything procedural on this page — same
+      // treatment the emergency-contacts guide gives them.
+      topSections: [
+        GuideSection(
+          titleKo: '응급이라면 먼저',
+          titleEn: 'If it is an emergency',
+          iconName: 'emergency',
+          bodyKo: '위급한 상황이라면 이 가이드의 절차를 따라가기보다 먼저 119에 연락하세요.\n\n'
+              '어느 병원으로 가야 할지 스스로 판단하기 어려울 때도 119에 연락하면 상담을 받고 '
+              '적합한 병원으로 이송될 수 있습니다.',
+          bodyEn: 'If the situation is urgent, call 119 first rather than '
+              'working through the steps on this page.\n\n'
+              'You can also call 119 when you cannot judge where to go: they '
+              'will talk it through with you and take you to a hospital that '
+              'can treat it.',
+          links: [
+            GuideLink(
+              labelKo: '119 전화하기',
+              labelEn: 'Call 119',
+              url: 'tel:119',
+              iconName: 'call',
+            ),
+          ],
+          noticeKo: '판단이 어렵다면 기다리지 말고 119에 연락하세요.\n'
+              '응급환자는 아래에서 설명하는 본인확인과 진료의뢰서 절차에서 예외로 인정됩니다.',
+          noticeEn: 'If you are unsure, do not wait — call 119.\n'
+              'Emergency patients are exempt from both the ID check and the '
+              'referral rule described below.',
+          noticeIconName: 'emergency',
+        ),
+      ],
+      // Not a packing list — these are the things worth settling beforehand.
+      checklistTitleKo: '병원에 가기 전 확인',
+      checklistTitleEn: 'Before you go',
+      checklistKo: [
+        '본인확인에 사용할 신분증 — 외국인등록증이나 여권 등을 사용할 수 있습니다',
+        '모바일 건강보험증처럼 전자적인 본인확인 수단을 이용할 수도 있습니다',
+        '방문하려는 의료기관의 예약 · 접수 방법 (기관마다 다를 수 있습니다)',
+        '상급종합병원에 갈 예정이라면 진료의뢰서가 필요한지',
+        '외국어 지원이 필요하다면 어떤 언어가 가능한지 전화로 미리 확인',
+      ],
+      checklistEn: [
+        'ID for the insurance check — a Residence Card (ARC) or a passport '
+            'both work',
+        'Or an electronic alternative, such as the mobile health insurance card',
+        'How that clinic takes bookings and registrations — it differs from '
+            'place to place',
+        'Whether you need a referral, if you are heading to a tertiary hospital',
+        'Which languages the staff can work in, if you would like support — '
+            'call ahead and ask',
+      ],
+      checklistNoteKo: '※ 본인확인은 건강보험 급여를 적용받기 위한 절차입니다. 신분증이 없다고 해서 '
+          '진료를 받을 수 없는 것은 아니며, 6개월 이내 재진이나 응급환자 등 본인확인이 면제되는 '
+          '경우도 있습니다.',
+      checklistNoteEn: '※ The ID check is what applies your insurance to the '
+          'bill — it is not a condition for being seen at all. Some visits are '
+          'exempt from it anyway, including a follow-up within six months and '
+          'emergency care.',
+      stepsKo: [
+        '이용할 의료기관 찾기',
+        '접수하고 신분증으로 본인확인하기',
+        '진료받기',
+        '필요한 경우 검사받기',
+        '수납하기',
+        '처방전을 받았다면 처방전 챙기기',
+        '약국에서 약 조제받기',
+      ],
+      stepsEn: [
+        'Find a hospital or clinic to go to',
+        'Register at the desk and show your ID for the insurance check',
+        'See the doctor',
+        'Have any tests the doctor orders',
+        'Pay at the cashier',
+        'Take your prescription with you, if you were given one',
+        'Have it filled at a pharmacy',
+      ],
+      sections: [
+        GuideSection(
+          titleKo: '접수할 때',
+          titleEn: 'At the reception desk',
+          iconName: 'receipt_long',
+          bodyKo: '병·의원에서 건강보험 급여가 적용되는 진료를 받을 때에는 신분증 등으로 본인확인을 '
+              '해야 건강보험 급여를 적용받을 수 있습니다.',
+          bodyEn: 'When you receive care that your National Health Insurance is '
+              'meant to cover, the clinic has to confirm your identity before '
+              'the insurance can be applied.',
+          notes: [
+            GuideNote(
+              titleKo: '사용할 수 있는 신분증',
+              titleEn: 'What counts as ID',
+              linesKo: [
+                '외국인등록증',
+                '여권',
+                '건강보험증',
+                '국내거소신고증 · 영주증',
+                '그 밖에 행정 · 공공기관이 발행한 사진이 있는 증명서',
+              ],
+              linesEn: [
+                'Residence Card (ARC)',
+                'Passport',
+                'Health insurance card',
+                'Overseas Korean residence report card, permanent residence card',
+                'Other photo ID issued by a government or public body',
+              ],
+            ),
+            GuideNote(
+              titleKo: '전자적인 방법도 가능합니다',
+              titleEn: 'Electronic options also work',
+              linesKo: [
+                '모바일 건강보험증(앱) 또는 QR코드',
+                '모바일 운전면허증',
+                '공동인증서 · 금융인증서 · 간편인증',
+                '통신사 · 신용카드사 · 은행의 본인확인 서비스',
+              ],
+              linesEn: [
+                'The mobile health insurance card app, or its QR code',
+                'A mobile driver\'s licence',
+                'Joint, financial or simple certificates (전자서명)',
+                'Identity checks run by a mobile carrier, card company or bank',
+              ],
+            ),
+            GuideNote(
+              titleKo: '본인확인이 면제되는 경우',
+              titleEn: 'When the check is waived',
+              linesKo: [
+                '19세 미만',
+                '같은 병원에서 6개월 이내에 다시 진료받는 경우(재진)',
+                '처방약을 조제받는 경우',
+                '다른 의료기관에서 진료를 의뢰받거나 회송된 경우',
+                '응급환자',
+              ],
+              linesEn: [
+                'You are under 19',
+                'A follow-up at the same clinic within six months',
+                'Having a prescription filled',
+                'You were referred or sent back from another clinic',
+                'You are an emergency patient',
+              ],
+            ),
+          ],
+          noticeKo: '신분증을 가져가지 않았다고 해서 진료 자체를 받을 수 없는 것은 아닙니다. '
+              '다만 건강보험 급여를 적용받지 못할 수 있으므로 챙겨 가는 것이 좋습니다.',
+          noticeEn: 'Turning up without ID does not mean you will be turned '
+              'away. It may mean the visit is not covered by your insurance, '
+              'though, so it is worth bringing something.',
+          noticeIconName: 'info',
+          footnoteKo: '본인확인 제도와 인정되는 신분증은 보건복지부 안내 기준입니다.',
+          footnoteEn: 'The identity-check rule and the list of accepted ID '
+              'follow the Ministry of Health and Welfare\'s guidance.',
+        ),
+        GuideSection(
+          titleKo: '상급종합병원에 가기 전에',
+          titleEn: 'Before going to a tertiary hospital',
+          iconName: 'compare_arrows',
+          bodyKo: '건강보험 제도에서 상급종합병원 진료는 2단계 요양급여로 구분됩니다. 원칙적으로 '
+              '상급종합병원이 아닌 의료기관에서 먼저 진료를 받은 뒤, 요양급여의뢰서를 신분증과 '
+              '함께 제출해야 건강보험이 적용됩니다.\n\n'
+              '큰 병원에 바로 갔다가 의뢰서가 없어 보험 적용을 받지 못하는 일을 피하려면, '
+              '방문하려는 병원에 미리 확인해 보세요.',
+          bodyEn: 'Under the insurance rules, treatment at a tertiary hospital '
+              'counts as "stage two" care. As a rule you are expected to be '
+              'seen somewhere else first and to bring a referral form '
+              '(요양급여의뢰서) along with your ID — that is what makes the '
+              'insurance apply.\n\n'
+              'To avoid arriving at a large hospital without one, ask that '
+              'hospital beforehand whether you need a referral.',
+          notes: [
+            GuideNote(
+              titleKo: '의뢰서 없이도 이용할 수 있는 경우',
+              titleEn: 'Cases that need no referral',
+              linesKo: [
+                '응급환자',
+                '분만',
+                '치과 진료',
+                '등록 장애인이 재활의학과에서 진료받는 경우',
+                '가정의학과 진료',
+                '혈우병 환자',
+              ],
+              linesEn: [
+                'Emergency patients',
+                'Childbirth',
+                'Dental treatment',
+                'A registered person with a disability seen in rehabilitation '
+                    'medicine',
+                'Family medicine',
+                'Patients with haemophilia',
+              ],
+            ),
+          ],
+          noticeKo: '어떤 병원이 상급종합병원인지는 이 앱이 판단하지 않습니다. '
+              '방문하려는 병원의 안내를 확인하거나 직접 전화로 문의하세요.',
+          noticeEn: 'This app does not tell you which hospitals are tertiary '
+              'hospitals. Check the hospital\'s own information, or call and '
+              'ask.',
+          noticeIconName: 'info',
+          footnoteKo: '요양급여 절차와 예외는 국민건강보험공단 안내 기준입니다.',
+          footnoteEn: 'The stage-one/stage-two rule and its exceptions follow '
+              'the National Health Insurance Service\'s guidance.',
+        ),
+        GuideSection(
+          titleKo: '건강보험과 진료비',
+          titleEn: 'Insurance and what you pay',
+          iconName: 'payments',
+          bodyKo: '건강보험에 가입되어 있으면 급여가 적용되는 진료에 대해 정해진 본인부담만 '
+              '내면 됩니다.\n\n'
+              '다만 모든 의료비가 건강보험으로 처리되는 것은 아닙니다. 건강보험이 적용되지 않는 '
+              '비급여 항목이 있으며, 예를 들어 미용을 목적으로 하는 시술 등이 여기에 해당합니다.\n\n'
+              '실제로 내는 금액은 진료 내용과 의료기관 등에 따라 달라지므로, 궁금한 항목이 있다면 '
+              '접수하거나 수납할 때 물어보세요.',
+          bodyEn: 'If you are enrolled, you pay only your share of the cost for '
+              'care the insurance covers.\n\n'
+              'Not everything is covered, though. Some treatments fall outside '
+              'the scheme — cosmetic procedures, for instance — and you pay for '
+              'those in full.\n\n'
+              'What you actually pay depends on the treatment and the clinic, '
+              'so ask at the desk if you want to know before going ahead.',
+          links: [
+            GuideLink(
+              labelKo: '가이드 — 건강보험 가입',
+              labelEn: 'Guide — National Health Insurance',
+              url: '/guide/item/health-insurance',
+              descriptionKo: '가입 시기 · 보험료 · 체납 등 자세한 내용',
+              descriptionEn: 'When you are enrolled, premiums, and what happens '
+                  'if you fall behind',
+              iconName: 'payments',
+            ),
+          ],
+        ),
+        GuideSection(
+          titleKo: '처방전과 약국',
+          titleEn: 'Prescriptions and pharmacies',
+          iconName: 'storefront',
+          bodyKo: '한국은 진료 · 처방은 의사가, 약 조제는 약사가 맡는 구조입니다. 그래서 진료를 '
+              '받은 병원에서 약을 바로 받는 것이 아니라, 처방전을 들고 약국에 가야 합니다.',
+          bodyEn: 'In Korea the doctor prescribes and the pharmacist dispenses. '
+              'That means you do not collect medicine at the clinic where you '
+              'were seen — you take the prescription to a pharmacy instead.',
+          notes: [
+            GuideNote(
+              titleKo: '처방전이 필요한 약',
+              titleEn: 'Medicine that needs a prescription',
+              linesKo: [
+                '전문의약품은 의사에게 처방전을 받은 뒤 약국에서 조제받습니다.',
+                '병원과 약국 두 곳을 방문하게 됩니다.',
+              ],
+              linesEn: [
+                'Prescription-only medicine is dispensed at a pharmacy against '
+                    'a doctor\'s prescription.',
+                'So a single course of treatment means two stops — the clinic, '
+                    'then the pharmacy.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '처방전 없이 살 수 있는 약',
+              titleEn: 'Medicine you can buy without one',
+              linesKo: [
+                '일반의약품은 처방전 없이 약국에서 구입할 수 있는 경우가 있습니다.',
+                '어떤 약이 필요한지 확실하지 않다면 약사에게 문의하세요.',
+              ],
+              linesEn: [
+                'Some medicine is classed as over-the-counter and can be bought '
+                    'at a pharmacy without a prescription.',
+                'If you are not sure what you need, ask the pharmacist.',
+              ],
+            ),
+          ],
+          footnoteKo: '의약분업 제도에 대한 설명은 보건복지부 안내 기준입니다.',
+          footnoteEn: 'The split between prescribing and dispensing follows the '
+              'Ministry of Health and Welfare\'s policy guidance.',
+        ),
+        GuideSection(
+          titleKo: '야간 · 휴일에 병원이 필요할 때',
+          titleEn: 'Nights, weekends and holidays',
+          iconName: 'event_repeat',
+          bodyKo: '밤이나 휴일에는 문을 닫는 병·의원과 약국이 많습니다. 이럴 때는 응급의료포털 '
+              'E-Gen에서 지금 문을 연 병·의원과 약국을 찾을 수 있고, 응급실 정보도 확인할 수 '
+              '있습니다.\n\n'
+              '전화로 확인하려면 보건복지상담센터 129 또는 시 · 도 콜센터 120에 문의할 수 '
+              '있습니다. 스마트폰에서는 「응급의료정보제공」 앱을 이용할 수 있습니다.',
+          bodyEn: 'Plenty of clinics and pharmacies close at night and over '
+              'holidays. E-Gen, the national emergency medical portal, lists '
+              'the ones that are open right now, along with emergency room '
+              'information.\n\n'
+              'You can also ask by phone — 129 for the health and welfare call '
+              'centre, or 120 for your city or province. On a phone, the app is '
+              'called 응급의료정보제공.',
+          links: [
+            GuideLink(
+              labelKo: '응급의료포털 E-Gen',
+              labelEn: 'E-Gen emergency medical portal',
+              url: 'https://www.e-gen.or.kr/',
+              descriptionKo: '지금 문을 연 병·의원과 약국, 응급실 정보',
+              descriptionEn: 'Clinics and pharmacies open now, plus emergency '
+                  'room information — the site is in Korean',
+              iconName: 'info',
+            ),
+          ],
+        ),
+        GuideSection(
+          titleKo: '언어가 걱정될 때',
+          titleEn: 'If you are worried about the language',
+          iconName: 'translate',
+          // Scope is deliberately narrow — it answers one question only: what
+          // languages a place supports, and how to find that out. The campus
+          // clinic is NOT mentioned here, in either language: it is not a
+          // foreign-language service, and naming it in this section would
+          // suggest otherwise. It stays a general-help link in the block at
+          // the bottom of the page, and nowhere else.
+          bodyKo: '의료기관마다 지원할 수 있는 언어가 다릅니다. 외국어로 진료받고 싶다면 방문 전에 '
+              '해당 병원이나 의원에 전화해 어떤 언어가 가능한지 확인해 보세요.',
+          bodyEn: 'What languages a clinic can work in varies from place to '
+              'place. If you would rather be seen in a language other than '
+              'Korean, call ahead and ask what they can offer.',
+        ),
+      ],
+      tipsKo: [
+        '🪪 신분증을 챙기세요 — 접수할 때 본인확인을 해야 건강보험 급여가 적용됩니다. '
+            '외국인등록증이나 여권, 모바일 건강보험증 등을 사용할 수 있습니다.',
+        '🏥 큰 병원에 가기 전 확인하세요 — 상급종합병원은 원칙적으로 다른 의료기관의 '
+            '요양급여의뢰서가 있어야 건강보험이 적용됩니다.',
+        '🧾 모든 진료가 보험 적용은 아닙니다 — 비급여 항목이 있으므로 궁금하면 접수 · 수납할 때 '
+            '물어보세요.',
+        '💊 약은 약국에서 받습니다 — 처방전을 받았다면 잊지 말고 챙겨 가세요.',
+        '🌙 야간 · 휴일에는 E-Gen을 확인하세요 — 지금 문을 연 병·의원과 약국을 찾을 수 있습니다.',
+        '🚑 위급하거나 판단이 어렵다면 119 — 상담을 받고 적합한 병원으로 이송될 수 있습니다.',
+      ],
+      tipsEn: [
+        '🪪 Bring ID — the identity check at the desk is what applies your '
+            'insurance. A Residence Card (ARC), a passport or the mobile '
+            'health insurance card all work.',
+        '🏥 Check before a large hospital — a tertiary hospital normally needs '
+            'a referral from another clinic for the insurance to apply.',
+        '🧾 Not everything is covered — some treatments sit outside the scheme, '
+            'so ask at the desk if you want to know first.',
+        '💊 Medicine comes from a pharmacy — if you were given a prescription, '
+            'do not leave it behind.',
+        '🌙 Out of hours, check E-Gen — it lists the clinics and pharmacies '
+            'that are open right now.',
+        '🚑 Urgent, or simply not sure? Call 119 — they will advise you and '
+            'take you somewhere that can treat it.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '응급의료포털 E-Gen',
+          labelEn: 'E-Gen emergency medical portal',
+          url: 'https://www.e-gen.or.kr/',
+          descriptionKo: '문 여는 병·의원과 약국, 응급실 정보 검색',
+          descriptionEn: 'Search for clinics and pharmacies that are open, and '
+              'for emergency rooms — the site is in Korean',
+          iconName: 'info',
+        ),
+        // In-app: the three guides a student needs around a hospital visit.
+        // campus-clinic links back here, so the pair is symmetric.
+        GuideLink(
+          labelKo: '가이드 — 교내 보건소',
+          labelEn: 'Guide — Campus Health Center',
+          url: '/guide/item/campus-clinic',
+          descriptionKo: '캠퍼스 안에서 받을 수 있는 기본 보건 서비스',
+          descriptionEn: 'Basic health services you can get without leaving '
+              'campus',
+          iconName: 'location_on',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 건강보험 가입',
+          labelEn: 'Guide — National Health Insurance',
+          url: '/guide/item/health-insurance',
+          descriptionKo: '가입 시기 · 보험료 · 체납 등 자세한 내용',
+          descriptionEn: 'When you are enrolled, premiums, and what happens if '
+              'you fall behind',
+          iconName: 'payments',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 긴급 연락처',
+          labelEn: 'Guide — Emergency Contacts',
+          url: '/guide/item/emergency-contacts',
+          descriptionKo: '119 · 112 신고 방법과 긴급상황 표현',
+          descriptionEn: 'How to call 119 and 112, and what to say',
+          iconName: 'emergency',
+        ),
+      ],
+      // Left empty on purpose — see the note above this item. No hospital is
+      // shown as a "related location" because none is officially recommended.
+      status: GuideStatus.published,
     ),
 
     // ── 학교 행정 (school) ──

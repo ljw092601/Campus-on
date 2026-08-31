@@ -1,5 +1,6 @@
 import 'package:campus_on/app.dart';
 import 'package:campus_on/data/mock/mock_data.dart';
+import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -1120,6 +1121,509 @@ void main() {
     expect(find.text('학생회관(Q)'), findsOneWidget);
   });
 
+  // ── hospital-guide ────────────────────────────────────────────────────────
+  // NOTE: the emergency section carries a real `tel:119` row. Nothing here taps
+  // it — the url is asserted as data and the widget tests only read the label.
+  // Never add a tap on "Call 119".
+
+  test('Hospital guide: data-level guarantees (no recommendation, no price)',
+      () {
+    final item =
+        MockData.guideItems.firstWhere((g) => g.id == 'hospital-guide');
+
+    expect(item.status, GuideStatus.published);
+    expect(item.categoryId, GuideCategory.health);
+
+    // No hospital is presented as a related location: the university publishes
+    // no designated-hospital scheme, so a location card would read as advice.
+    expect(item.relatedFacilityIds, isEmpty);
+
+    // The emergency block is the first thing on the page and owns the 119 row.
+    final urgent = item.topSections.single;
+    expect(urgent.titleKo, '응급이라면 먼저');
+    expect(urgent.titleEn, 'If it is an emergency');
+    expect(urgent.links.single.url, 'tel:119');
+    expect(urgent.links.single.labelKo, '119 전화하기');
+    expect(urgent.links.single.labelEn, 'Call 119');
+    expect(urgent.links.single.url.startsWith('/'), isFalse);
+    expect(urgent.noticeKo, isNotNull);
+    expect(urgent.noticeEn, isNotNull);
+
+    // Bottom links: E-Gen plus the three in-app guides, no duplicates.
+    expect(
+      item.links.map((l) => l.url).toList(),
+      const [
+        'https://www.e-gen.or.kr/',
+        '/guide/item/campus-clinic',
+        '/guide/item/health-insurance',
+        '/guide/item/emergency-contacts',
+      ],
+    );
+    // campus-clinic links here, so the pair is symmetric.
+    final clinic =
+        MockData.guideItems.firstWhere((g) => g.id == 'campus-clinic');
+    expect(
+      clinic.links.any((l) => l.url == '/guide/item/hospital-guide'),
+      isTrue,
+    );
+
+    // The campus clinic is linked exactly once, from the bottom block — never
+    // from inside the language section, where it would read as a language
+    // service rather than general help.
+    final allLinkUrls = [
+      for (final s in [...item.topSections, ...item.sections])
+        ...s.links.map((l) => l.url),
+      ...item.links.map((l) => l.url),
+    ];
+    expect(
+      allLinkUrls.where((u) => u == '/guide/item/campus-clinic').length,
+      1,
+    );
+    final language = item.sections
+        .firstWhere((s) => s.titleEn == 'If you are worried about the language');
+    expect(language.links, isEmpty);
+    // …and the section does not name the clinic in prose either. It is not a
+    // foreign-language service, so mentioning it here would mislead.
+    final languageText = [
+      language.titleKo, language.titleEn, language.bodyKo, language.bodyEn,
+      language.noticeKo, language.noticeEn,
+      language.footnoteKo, language.footnoteEn,
+      ...language.stepsKo, ...language.stepsEn,
+      for (final n in language.notes) ...[
+        n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+      ],
+    ].whereType<String>().join('\n');
+    for (final banned in const [
+      '보건진료소',
+      '보건소',
+      'campus health clinic',
+      'Campus Health Center',
+      'campus-clinic',
+    ]) {
+      expect(languageText.contains(banned), isFalse, reason: banned);
+    }
+    // It says exactly one thing: languages differ, so ring ahead and ask.
+    expect(language.bodyKo, contains('전화해 어떤 언어가 가능한지 확인'));
+    expect(language.bodyEn, contains('call ahead and ask'));
+    // One paragraph only — the clinic paragraph was removed from both.
+    expect(language.bodyKo!.contains('\n\n'), isFalse);
+    expect(language.bodyEn!.contains('\n\n'), isFalse);
+
+    // The section-level links that do remain: 119, the insurance guide, E-Gen.
+    expect(
+      [
+        for (final s in [...item.topSections, ...item.sections])
+          ...s.links.map((l) => l.url),
+      ],
+      const [
+        'tel:119',
+        '/guide/item/health-insurance',
+        'https://www.e-gen.or.kr/',
+      ],
+    );
+
+    // Every string this item renders, in both languages.
+    final dump = [
+      item.titleKo, item.titleEn, item.summaryKo, item.summaryEn,
+      item.overviewKo, item.overviewEn,
+      item.checklistTitleKo, item.checklistTitleEn,
+      item.checklistNoteKo, item.checklistNoteEn,
+      ...item.checklistKo, ...item.checklistEn,
+      ...item.stepsKo, ...item.stepsEn,
+      ...item.tipsKo, ...item.tipsEn,
+      for (final s in [...item.topSections, ...item.sections]) ...[
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.noticeKo, s.noticeEn,
+        s.footnoteKo, s.footnoteEn,
+        ...s.stepsKo, ...s.stepsEn,
+        for (final l in s.links)
+          '${l.labelKo}${l.labelEn}${l.url}'
+              '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+        for (final n in s.notes) ...[
+          n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+        ],
+      ],
+      for (final l in item.links)
+        '${l.labelKo}${l.labelEn}${l.url}'
+            '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+    ].whereType<String>().join('\n');
+
+    // No money anywhere — amounts depend on the treatment and the clinic, and
+    // the insurance guide owns premiums.
+    expect(RegExp(r'[0-9][0-9,]*\s*원').hasMatch(dump), isFalse);
+    expect(dump.contains('₩'), isFalse);
+    expect(dump.contains('KRW'), isFalse);
+    expect(dump.contains('%'), isFalse);
+
+    // No named hospital, and no Dong-A hospital building in particular.
+    expect(dump.contains('동아대학교병원'), isFalse);
+    expect(dump.contains('대신요양병원'), isFalse);
+
+    // No medical judgement: no symptom triage, no department steering. The
+    // page never grades how severe anything is — "증상이 가볍" in particular was
+    // removed from the language section for exactly that reason.
+    for (final banned in const [
+      '가벼운 증상',
+      '증상이 가벼우면',
+      '증상이 가볍',
+      '경미한',
+      '내과',
+      '피부과',
+      '이비인후과',
+      '정형외과',
+      'if it is mild',
+      'minor symptoms',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: banned);
+    }
+
+    // English ARC wording matches the rest of the app ("Residence Card (ARC)",
+    // as used by the ARC / visa / stay-extension guides).
+    expect(dump.toLowerCase().contains('alien registration'), isFalse);
+    expect(dump.contains('Residence Card (ARC)'), isTrue);
+    // Korean keeps 외국인등록증.
+    expect(item.checklistKo.join('\n'), contains('외국인등록증'));
+
+    // The overview states the ID check as conditional, so it cannot contradict
+    // the waivers spelled out further down.
+    expect(item.overviewKo, contains('경우가 있습니다'));
+    expect(item.overviewKo!.contains('본인확인을 합니다'), isFalse);
+    expect(item.overviewEn, contains('may need to'));
+    expect(item.overviewEn!.contains('you will be asked for ID'), isFalse);
+
+    // The ID rule is stated as an insurance condition, never as a bar to care:
+    // no document is called mandatory, and wherever "cannot be treated" appears
+    // it is inside a negation ("…있는 것은 아니며 / 아닙니다").
+    expect(dump.contains('반드시 필요'), isFalse);
+    for (final m in RegExp(r'진료를? ?자체를? ?받을 수 없[^.\n]*')
+        .allMatches(dump)) {
+      expect(m.group(0), contains('것은 아'), reason: m.group(0));
+    }
+    expect(item.checklistNoteKo, contains('면제'));
+
+    // ID is offered as alternatives, not a single mandatory document.
+    final checklistKo = item.checklistKo.join('\n');
+    expect(checklistKo, contains('외국인등록증'));
+    expect(checklistKo, contains('여권'));
+    expect(checklistKo, contains('모바일 건강보험증'));
+
+    // Nothing claims E-Gen has an English site — that was never verified.
+    expect(dump.contains('English version'), isFalse);
+    final egen = item.links.first;
+    expect(egen.descriptionEn, contains('in Korean'));
+
+    // Dropped on purpose: dated Busan pharmacy hours and the surcharge figure.
+    expect(dump.contains('야간약국'), isFalse);
+    expect(dump.contains('할증'), isFalse);
+    // And no nearby-map buttons: the search is pinned to the Seunghak campus.
+    expect(dump.contains('/map?nearby='), isFalse);
+    expect(dump.contains('/map?focus='), isFalse);
+  });
+
+  testWidgets('Guide detail: hospital guide renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Care, prescriptions & after-hours help'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    const titles = [
+      'Overview',
+      'If it is an emergency',
+      'Before you go',
+      'Steps',
+      'At the reception desk',
+      'Before going to a tertiary hospital',
+      'Insurance and what you pay',
+      'Prescriptions and pharmacies',
+      'Nights, weekends and holidays',
+      'If you are worried about the language',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // The 119 row sits inside the emergency block, above the procedure.
+    expect(find.text('Call 119'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Call 119')).dy,
+      lessThan(tester.getTopLeft(find.text('Steps')).dy),
+    );
+
+    // The ID rule reads as an insurance condition, with the waiver stated.
+    expect(
+      find.textContaining('not a condition for being seen at all'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('Turning up without ID does not mean you will be '
+          'turned away'),
+      findsOneWidget,
+    );
+    // Referral rule present, with the app explicitly declining to judge.
+    expect(
+      find.textContaining('This app does not tell you which hospitals are '
+          'tertiary hospitals'),
+      findsOneWidget,
+    );
+    // Non-covered care is acknowledged rather than glossed over (stated in the
+    // section, repeated once in the tips).
+    expect(find.textContaining('Not everything is covered'), findsNWidgets(2));
+
+    // E-Gen and the insurance guide appear twice — once in the section that
+    // needs them, once in the bottom links block.
+    expect(find.text('E-Gen emergency medical portal'), findsNWidgets(2));
+    expect(find.text('Guide — National Health Insurance'), findsNWidgets(2));
+    // The campus clinic and emergency contacts are bottom-block only.
+    expect(find.text('Guide — Campus Health Center'), findsOneWidget);
+    expect(find.text('Guide — Emergency Contacts'), findsOneWidget);
+
+    // The language section carries no link rows and never names the clinic —
+    // it only says to ring ahead and ask, so nothing there reads as a
+    // foreign-language service.
+    final languageY =
+        tester.getTopLeft(find.text('If you are worried about the language')).dy;
+    final tipsY = tester.getTopLeft(find.text('Good to know')).dy;
+    final clinicRowY =
+        tester.getTopLeft(find.text('Guide — Campus Health Center')).dy;
+    expect(clinicRowY, greaterThan(tipsY),
+        reason: 'the clinic row must sit in the bottom links, not the '
+            'language section');
+    expect(languageY, lessThan(tipsY));
+    // Nothing between the language heading and the tips heading mentions it.
+    expect(
+      find.textContaining('campus health clinic'),
+      findsNothing,
+      reason: 'the clinic is only ever a link label, never prose',
+    );
+
+    // English ARC wording matches the rest of the app.
+    expect(find.textContaining('Residence Card (ARC)'), findsWidgets);
+    expect(find.textContaining('Alien registration card'), findsNothing);
+    // The overview no longer states the ID check unconditionally.
+    expect(
+      find.textContaining('you may need to verify your identity at reception'),
+      findsOneWidget,
+    );
+
+    // No related-location card, so no hospital looks recommended.
+    expect(find.text('동아대학교병원(본관)'), findsNothing);
+  });
+
+  testWidgets('Guide detail: hospital guide in-app links route in-app',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.pumpAndSettle();
+
+    // Both rows appear twice — once inside their own section, once in the
+    // bottom links block. `.first` is the section copy, which is what this
+    // test exercises (the bottom block is covered by the ARC guide's test).
+    expect(find.text('Guide — National Health Insurance'), findsNWidgets(2));
+
+    // The insurance row inside "Insurance and what you pay" opens that guide
+    // without leaving the app. `pumpAndSettle` returns while the mock repo's
+    // delayed load is still pending (a Future schedules no frames), so the
+    // destination has to be given that time before it is asserted on.
+    await tester.tap(find.text('Guide — National Health Insurance').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('National Health Insurance for International Students'),
+      findsOneWidget,
+    );
+
+    // Back to the hospital guide. `_LinkRow` uses `context.go`, which replaces
+    // the route rather than pushing one, so re-enter from the tab instead of
+    // popping.
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.pumpAndSettle();
+
+    // …and so does the campus-clinic row in the bottom links block (the only
+    // place it appears).
+    expect(find.text('Guide — Campus Health Center'), findsOneWidget);
+    await tester.tap(find.text('Guide — Campus Health Center'));
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('Where can I find it?'), findsOneWidget);
+
+    // Drain the clinic page's related-location lookup so no timer outlives
+    // the widget tree.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('Guide detail: hospital guide fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    // Scrolling only — the 119 row is never tapped.
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Health & Insurance'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: hospital guide renders in Korean', (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('건강·보험'));
+    await tester.pumpAndSettle();
+    expect(find.text('접수 · 진료 · 처방전 · 야간 진료'), findsOneWidget);
+
+    await tester.tap(find.text('병원 이용'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '응급이라면 먼저',
+      '병원에 가기 전 확인',
+      '접수할 때',
+      '상급종합병원에 가기 전에',
+      '건강보험과 진료비',
+      '처방전과 약국',
+      '야간 · 휴일에 병원이 필요할 때',
+      '언어가 걱정될 때',
+      '알아두면 좋은 점',
+      '관련 링크 · 위치',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    expect(find.text('119 전화하기'), findsOneWidget);
+    expect(find.textContaining('판단이 어렵다면 기다리지 말고 119에 연락하세요'), findsOneWidget);
+    expect(
+      find.textContaining('신분증을 가져가지 않았다고 해서 진료 자체를 받을 수 없는 것은 아닙니다'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('어떤 병원이 상급종합병원인지는 이 앱이 판단하지 않습니다'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('요양급여의뢰서'), findsWidgets);
+    expect(find.text('응급의료포털 E-Gen'), findsNWidgets(2));
+
+    // The overview states the ID check as conditional, matching the waivers.
+    expect(
+      find.textContaining('접수할 때 본인확인이 필요한 경우가 있습니다'),
+      findsOneWidget,
+    );
+    // The language section grades nothing, carries no link rows, and does not
+    // mention the campus clinic; the clinic appears once, as a link label in
+    // the bottom block.
+    expect(find.textContaining('증상이 가볍'), findsNothing);
+    expect(find.textContaining('보건진료소'), findsNothing);
+    expect(
+      find.textContaining('전화해 어떤 언어가 가능한지 확인해 보세요'),
+      findsOneWidget,
+    );
+    expect(find.text('가이드 — 교내 보건소'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('가이드 — 교내 보건소')).dy,
+      greaterThan(tester.getTopLeft(find.text('알아두면 좋은 점')).dy),
+    );
+
+    // No amounts leak onto the Korean page either.
+    expect(find.textContaining('원)'), findsNothing);
+  });
+
+  testWidgets('Favorite toggle works from the hospital guide', (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health & Insurance'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Visiting a Hospital'), findsOneWidget);
+  });
+
   // NOTE: the two call rows carry real emergency numbers. Nothing in this file
   // taps them — the urls are asserted as data, and the widget tests only ever
   // look at the labels. Never add a tap on "Call 112" / "Call 119".
@@ -1802,10 +2306,12 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Health & Insurance → "Visiting a Hospital" is still a placeholder.
-    await tester.tap(find.text('Health & Insurance'));
+    // Emergency & Help → "Counseling" is still a placeholder. (Health &
+    // Insurance no longer has one — its last stub, the hospital guide, is
+    // written.)
+    await tester.tap(find.text('Emergency & Help'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Visiting a Hospital'));
+    await tester.tap(find.text('Counseling'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.
