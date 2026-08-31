@@ -29,15 +29,25 @@ void _useTallSurface(WidgetTester tester) {
   });
 }
 
+/// Opens the guide category hub (S5) from the home "Admin guide" card (the
+/// Guide bottom tab was removed; /guide now lives inside the Home branch).
+/// `AppRouter.router` is a static singleton, so a later test boots wherever the
+/// previous one navigated to — tapping the Home tab first pops the home branch
+/// back to its root so the card is on screen.
+Future<void> _openGuideHub(WidgetTester tester) async {
+  await tester.tap(find.text('Home'));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text('Admin guide'));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('Guide tab: categories → item list → detail', (tester) async {
     _useTallSurface(tester);
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    // Open the Guide tab (bottom navigation label).
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
 
     // S5 — the 6 categories render (hardcoded).
     expect(find.text('Immigration & Stay'), findsOneWidget);
@@ -62,8 +72,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Living'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Open a Bank Account'));
@@ -89,8 +98,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Living'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Get a Mobile Plan'));
@@ -121,8 +129,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Living'));
     await tester.pumpAndSettle();
     // The list row keeps the short title; the detail heading is the fuller one.
@@ -157,8 +164,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Extension of Stay'));
@@ -201,8 +207,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Living'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Get a Mobile Plan'));
@@ -224,8 +229,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Visa Types'));
@@ -286,8 +290,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Health & Insurance'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
@@ -363,8 +366,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Health & Insurance'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
@@ -395,8 +397,7 @@ void main() {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Health & Insurance'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
@@ -417,11 +418,11 @@ void main() {
   });
 
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
 
     // Housing → "Dormitory Application" is still a coming-soon placeholder.
     await tester.tap(find.text('Housing'));
@@ -438,11 +439,11 @@ void main() {
 
   testWidgets('Favorite toggle from guide detail persists to Favorites (S10)',
       (tester) async {
+    _useTallSurface(tester);
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Guide'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester);
     await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Alien Registration Card (ARC)'));

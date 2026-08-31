@@ -26,6 +26,19 @@
   "home_section_guide": "행정 가이드",
   "home_empty_noFacility": "표시할 시설 정보가 아직 없어요.",
 
+  "home_hero_title_line1": "동아대학교에서",
+  "home_hero_title_highlight": "새로운 시작",
+  "home_hero_title_suffix": "을 응원합니다!",
+  "home_hero_subtitle": "국제학생을 위한 필수 정보와 서비스를\n한국에서 쉽고 빠르게 확인하세요.",
+  "home_card_guide_desc": "입국·비자, 등록, 증명서 발급 등 행정 안내를 확인하세요.",
+  "home_card_facility_desc": "식당, 편의시설, 도서관 등 캠퍼스 시설 정보를 확인하세요.",
+  "home_card_map_title": "캠퍼스 지도",
+  "home_card_map_desc": "캠퍼스 지도에서 건물과 주요 위치를 확인하세요.",
+  "home_card_dining_title": "오늘의 학식",
+  "home_card_dining_desc": "식단별 메뉴와 영업시간을 확인하세요.",
+
+  "classroom_search_title": "강의실 위치 검색",
+
   "facility_category_building": "건물",
   "facility_category_classroom": "강의실",
   "facility_category_dining": "식당",

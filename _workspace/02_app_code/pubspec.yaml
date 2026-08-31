@@ -81,6 +81,10 @@ flutter:
     # Wordmark logo for the in-app opening overlay (BrandSplashOverlay in
     # app.dart) — Android 12+ system splash can only show the round emblem.
     - assets/branding/
+    # Home hero photo + 3D illustrations cropped from design_template.png,
+    # plus app_emblem.png (transparent 128px emblem for the home AppBar —
+    # assets/icon/ stays unbundled: those launcher sources are build-time only).
+    - assets/home/
 
   # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
   # fonts:

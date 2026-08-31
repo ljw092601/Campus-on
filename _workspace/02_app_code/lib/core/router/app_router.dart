@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/admin_guide.dart';
+import '../../presentation/classroom/classroom_search_screen.dart';
+import '../../presentation/dining/dining_menu_screen.dart';
 import '../../presentation/facility/facility_detail_screen.dart';
 import '../../presentation/facility/facility_list_screen.dart';
 import '../../presentation/guide/guide_category_screen.dart';
@@ -17,10 +19,12 @@ import '../../presentation/shell/app_shell.dart';
 
 /// go_router configuration.
 ///
-/// Layout: a [StatefulShellRoute.indexedStack] with 4 branches (Home / Map /
-/// Guide / Settings), each an independent Navigator stack so the bottom tab bar
-/// stays visible on detail screens (UX doc §3). Search is a root-navigator
-/// route rendered full-screen above the shell (S8).
+/// Layout: a [StatefulShellRoute.indexedStack] with 3 branches (Home / Map /
+/// Settings), each an independent Navigator stack so the bottom tab bar
+/// stays visible on detail screens (UX doc §3). The guide routes (`/guide` and
+/// its children) live inside the home branch, so `context.go('/guide')` from
+/// the home "Admin guide" card keeps the Home tab active. Search and classroom
+/// search are root-navigator routes rendered full-screen above the shell (S8).
 ///
 /// Deep link contract (UX doc §3): `/map?focus=<id1>,<id2>,...` focuses those
 /// markers, fitBounds, and auto-opens the first marker's Peek sheet.
@@ -36,14 +40,41 @@ class AppRouter {
     initialLocation: '/home',
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navShell) => AppShell(navigationShell: navShell),
+        builder: (context, state, navShell) =>
+            AppShell(navigationShell: navShell),
         branches: [
-          // Branch 0 — Home
+          // Branch 0 — Home (+ dining placeholder + guide routes S5→S6→S7,
+          // moved here from the removed Guide tab so the Home tab stays
+          // active while browsing guides).
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/home',
                 builder: (context, state) => const HomeScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'dining',
+                    builder: (context, state) => const DiningMenuScreen(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: '/guide',
+                builder: (context, state) => const GuideCategoryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'category/:id',
+                    builder: (context, state) => GuideItemListScreen(
+                      category:
+                          GuideCategory.fromId(state.pathParameters['id']!),
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'item/:id',
+                    builder: (context, state) =>
+                        GuideDetailScreen(itemId: state.pathParameters['id']!),
+                  ),
+                ],
               ),
             ],
           ),
@@ -74,36 +105,14 @@ class AppRouter {
                   ),
                   GoRoute(
                     path: 'facility/:id',
-                    builder: (context, state) =>
-                        FacilityDetailScreen(facilityId: state.pathParameters['id']!),
+                    builder: (context, state) => FacilityDetailScreen(
+                        facilityId: state.pathParameters['id']!),
                   ),
                 ],
               ),
             ],
           ),
-          // Branch 2 — Guide (S5 categories → S6 item list → S7 detail)
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/guide',
-                builder: (context, state) => const GuideCategoryScreen(),
-                routes: [
-                  GoRoute(
-                    path: 'category/:id',
-                    builder: (context, state) => GuideItemListScreen(
-                      category: GuideCategory.fromId(state.pathParameters['id']!),
-                    ),
-                  ),
-                  GoRoute(
-                    path: 'item/:id',
-                    builder: (context, state) =>
-                        GuideDetailScreen(itemId: state.pathParameters['id']!),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          // Branch 3 — Settings (+ favorites S10 + info sub-pages)
+          // Branch 2 — Settings (+ favorites S10 + info sub-pages)
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -116,8 +125,8 @@ class AppRouter {
                   ),
                   GoRoute(
                     path: 'about',
-                    builder: (context, state) => const SettingsInfoScreen(
-                        type: SettingsInfoType.about),
+                    builder: (context, state) =>
+                        const SettingsInfoScreen(type: SettingsInfoType.about),
                   ),
                   GoRoute(
                     path: 'data-source',
@@ -140,6 +149,12 @@ class AppRouter {
         parentNavigatorKey: _rootKey,
         path: '/search',
         builder: (context, state) => const SearchScreen(),
+      ),
+      // Full-screen classroom-location search above the shell (placeholder).
+      GoRoute(
+        parentNavigatorKey: _rootKey,
+        path: '/classroom-search',
+        builder: (context, state) => const ClassroomSearchScreen(),
       ),
     ],
   );

@@ -106,10 +106,28 @@ class AppTheme {
       chipTheme: base.chipTheme.copyWith(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
+      // Flat tab bar per design_template.png: no indicator pill, primary-blue
+      // icon+label when selected, muted gray otherwise.
       navigationBarTheme: base.navigationBarTheme.copyWith(
         backgroundColor: scheme.surface,
-        indicatorColor: scheme.primaryContainer,
+        indicatorColor: Colors.transparent,
         elevation: 3,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? scheme.primary
+                : scheme.outline,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: states.contains(WidgetState.selected)
+                ? scheme.primary
+                : scheme.outline,
+          ),
+        ),
       ),
     );
   }

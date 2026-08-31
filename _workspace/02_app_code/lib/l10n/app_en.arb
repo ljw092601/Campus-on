@@ -27,6 +27,19 @@
   "home_section_guide": "Admin guide",
   "home_empty_noFacility": "No facility info yet.",
 
+  "home_hero_title_line1": "Dong-A University cheers on",
+  "home_hero_title_highlight": "your new beginning",
+  "home_hero_title_suffix": "!",
+  "home_hero_subtitle": "Essential info and services for international students,\nquick and easy in Korea.",
+  "home_card_guide_desc": "Entry & visa, enrollment, certificates — all the admin how-tos.",
+  "home_card_facility_desc": "Dining, amenities, library — browse campus facility info.",
+  "home_card_map_title": "Campus map",
+  "home_card_map_desc": "Find buildings and key spots on the campus map.",
+  "home_card_dining_title": "Today's menu",
+  "home_card_dining_desc": "Check cafeteria menus and opening hours.",
+
+  "classroom_search_title": "Classroom search",
+
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",
   "facility_category_dining": "Dining",

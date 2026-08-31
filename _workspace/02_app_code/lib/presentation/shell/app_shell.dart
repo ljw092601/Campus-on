@@ -8,7 +8,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../l10n/gen/app_localizations.dart';
 
-/// Root shell hosting the 4 bottom tabs. Adaptive bottom bar (UX doc §7):
+/// Root shell hosting the 3 bottom tabs. Adaptive bottom bar (UX doc §7):
 /// Material [NavigationBar] on Android, [CupertinoTabBar] look on iOS.
 class AppShell extends StatelessWidget {
   const AppShell({super.key, required this.navigationShell});
@@ -29,7 +29,6 @@ class AppShell extends StatelessWidget {
     final items = <_TabItem>[
       _TabItem(Symbols.home, l.tab_home_label),
       _TabItem(Symbols.map, l.tab_map_label),
-      _TabItem(Symbols.checklist, l.tab_guide_label),
       _TabItem(Symbols.settings, l.tab_settings_label),
     ];
 
