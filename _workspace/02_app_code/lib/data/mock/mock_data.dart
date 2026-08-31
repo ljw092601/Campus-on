@@ -5962,6 +5962,27 @@ class MockData {
       summaryKo: '분실·도난·사고 시 대응',
       summaryEn: 'Loss, theft, accidents',
     ),
+    // This page answers one question — where you can take a problem — and
+    // nothing else. Every claim is limited to what an official source states:
+    //  · 동아대학교 학생상담센터 이용안내 / Q&A / 개인상담 / 찾아오시는 길 /
+    //    고민 우체통 (guide.donga.ac.kr) — 서비스 목록, 회기, "본교 구성원
+    //    누구나", 무료, 비밀보장과 그 예외, 두 캠퍼스 위치와 전화, 운영시간
+    //  · 동아대학교 인권센터 (human.donga.ac.kr) — 인권침해 상담·신고 접수와
+    //    해결방안 제공, 대학본부 503호, 051-200-5711
+    //  · 대외국제처 국제교류과 구성원 안내 (global.donga.ac.kr) —
+    //    "유학생 학사 지원 및 상담" 051-200-6447
+    //  · 보건복지부 / 보건복지상담센터 — 자살예방상담전화 109, 24시간 운영
+    //
+    // Deliberately absent, and deliberately NOT to be added later without a
+    // source: symptom lists, any grading of how serious a problem is, a
+    // suicide-risk checklist, a diagnosis, a treatment recommendation, the
+    // claim that the counselling centre handles crisis work, the claim that a
+    // desk can counsel in English or any other language, and the flat claim
+    // that international students may use the centre — the centre's own
+    // wording is "본교 구성원 누구나" and this page does not go past it.
+    // `relatedFacilityIds` carries the two counselling offices only; the
+    // 인권센터 building (s01) stays out of it so one map card never mixes two
+    // services with very different purposes.
     const AdminGuideItem(
       id: 'counseling',
       categoryId: GuideCategory.emergency,
@@ -5969,6 +5990,450 @@ class MockData {
       titleEn: 'Counseling',
       summaryKo: '심리·생활 상담 안내',
       summaryEn: 'Wellbeing & life support',
+      // No list of what the centre will talk about: it publishes no such list,
+      // and naming topics would read as a scope the centre never stated.
+      overviewKo: '학교생활을 하다 보면 혼자 정리하기 어려운 고민이나 도움이 필요한 일이 생길 수 '
+          '있습니다. 학교 안에는 이런 이야기를 나누고 도움을 요청할 수 있는 공식 창구가 '
+          '있습니다.\n\n'
+          '이 가이드는 학생상담센터를 중심으로, 어떤 고민을 어디에 이야기하면 되는지 안내합니다. '
+          '학생상담센터는 본교 구성원 누구나 이용할 수 있다고 안내하고 있습니다.\n\n'
+          '상담 내용과 인적 사항은 비밀보장을 원칙으로 합니다. 다만 본인 또는 타인의 안전과 '
+          '관련된 경우 등에는 비밀보장이 제한될 수 있습니다.',
+      overviewEn: 'University life can throw up something you cannot sort out '
+          'on your own, or a situation where you need help. There are official '
+          'places on campus to talk it through and ask for support.\n\n'
+          'This guide is built around the student counseling centre '
+          '(학생상담센터), and points you to the right desk for the other kinds '
+          'of help. The centre says its services are open to 본교 구성원 '
+          '누구나 — anyone who belongs to the university.\n\n'
+          'What you say, and your personal details, are treated as '
+          'confidential. The centre notes that this can be limited in some '
+          'cases, such as where your safety or someone else\'s is at stake.',
+      // Safety comes before anything else on the page — same treatment the
+      // emergency-contacts and hospital guides give it. No list of what counts
+      // as dangerous: that judgement is not this app's to make.
+      topSections: [
+        GuideSection(
+          titleKo: '지금 즉시 위험한 상황이라면',
+          titleEn: 'If you are in immediate danger',
+          iconName: 'emergency',
+          bodyKo: '본인이나 다른 사람의 안전이 지금 위협받고 있다면 상담을 기다리지 말고 112 또는 '
+              '119에 연락하세요.\n\n'
+              '경찰의 도움이 필요하면 112, 화재 · 사고 · 부상 등 구조나 구급이 필요하면 119입니다.',
+          bodyEn: 'If your safety or someone else\'s is under threat right '
+              'now, do not wait for a counselling appointment — call 112 or '
+              '119.\n\n'
+              '112 reaches the police. 119 reaches the fire, rescue and '
+              'ambulance service.',
+          links: [
+            GuideLink(
+              labelKo: '112 전화하기',
+              labelEn: 'Call 112',
+              url: 'tel:112',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '119 전화하기',
+              labelEn: 'Call 119',
+              url: 'tel:119',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '가이드 — 긴급 연락처',
+              labelEn: 'Guide — Emergency Contacts',
+              url: '/guide/item/emergency-contacts',
+              descriptionKo: '112 · 119에 신고할 때 무엇을 말해야 하는지 확인하세요.',
+              descriptionEn: 'What to say when you call 112 or 119.',
+              iconName: 'emergency',
+            ),
+          ],
+        ),
+      ],
+      sections: [
+        // The core of the page. Services, session format, eligibility wording,
+        // cost and confidentiality are all quoted from the centre's own pages.
+        GuideSection(
+          titleKo: '학생상담센터',
+          titleEn: 'Student counseling centre',
+          iconName: 'help',
+          bodyKo: '학생상담센터는 심리 · 생활 상담을 비롯한 여러 상담 프로그램을 운영하는 학교의 '
+              '공식 기관입니다. 공식 안내에 따르면 본교 구성원 누구나 이용할 수 있고, 센터의 '
+              '모든 프로그램은 무료입니다.',
+          bodyEn: 'The student counseling centre (학생상담센터) is the '
+              'university\'s own counselling service. Its published '
+              'information says the centre is open to 본교 구성원 누구나 — '
+              'anyone who belongs to the university — and that every '
+              'programme it runs is free.',
+          notes: [
+            GuideNote(
+              titleKo: '무엇을 받을 수 있나요',
+              titleEn: 'What the centre offers',
+              linesKo: [
+                '개인상담',
+                '집단상담',
+                '심리검사와 해석상담',
+                '상담 · 지원 프로그램',
+                '예방교육',
+              ],
+              linesEn: [
+                'One-to-one counselling',
+                'Group counselling',
+                'Psychological tests, with a session to go through the results',
+                'Counselling and support programmes',
+                'Prevention education',
+              ],
+            ),
+            GuideNote(
+              titleKo: '개인상담은 이렇게 진행됩니다',
+              titleEn: 'How one-to-one counselling runs',
+              linesKo: [
+                '주 1회',
+                '한 회기 약 50분',
+                '접수면접을 포함해 11회기 이내',
+              ],
+              linesEn: [
+                'Once a week',
+                'About 50 minutes a session',
+                'Up to 11 sessions in total, including the intake interview',
+              ],
+            ),
+          ],
+          noticeKo: '비밀보장이 원칙입니다\n'
+              '인적 사항과 상담 내용은 비밀보장을 원칙으로 합니다. 다만 본인 또는 타인의 안전을 '
+              '해칠 수 있는 경우 등에 한하여 비밀보장이 제한될 수 있습니다.',
+          noticeEn: 'Confidentiality is the rule\n'
+              'Your personal details and what you talk about are kept '
+              'confidential. The centre states that this can be limited in '
+              'some cases, such as where your own or someone else\'s safety '
+              'could be harmed.',
+          noticeIconName: 'info',
+          footnoteKo: '※ 이 페이지는 문제의 심각도나 필요한 도움의 종류를 판단하지 않습니다.',
+          footnoteEn: '※ This page does not judge how serious a problem is, or '
+              'what kind of help you need.',
+        ),
+        GuideSection(
+          titleKo: '어디에서 상담받나요?',
+          titleEn: 'Where to go, and when',
+          iconName: 'location_on',
+          bodyKo: '학생상담센터는 승학캠퍼스와 부민캠퍼스 두 곳에 있습니다.',
+          bodyEn: 'The centre has offices on the Seunghak and Bumin campuses.',
+          notes: [
+            GuideNote(
+              titleKo: '승학캠퍼스',
+              titleEn: 'Seunghak campus',
+              linesKo: [
+                '학생회관(Q) 3층 308호',
+                '학생상담센터 사무실 051-200-6070',
+              ],
+              linesEn: [
+                'Student Union Building (Q), 3rd floor, room 308',
+                'Counselling centre office 051-200-6070',
+              ],
+            ),
+            // Two official pages label the same building differently — the
+            // campus map (and facility b04) say 종합강의동, the counselling
+            // centre's own page says 중앙강의동 — and neither carries a date
+            // that would show which came first. So both labels are printed,
+            // with no claim that either is the older or the current one. The
+            // room number BC-B102-1 matches on both, so it is one building.
+            GuideNote(
+              titleKo: '부민캠퍼스',
+              titleEn: 'Bumin campus',
+              linesKo: [
+                '종합강의동 BC-B102-1호',
+                '※ 학생상담센터 안내 페이지에는 「중앙강의동」으로 표기되어 있습니다',
+                '학생상담센터 051-200-8775~6',
+              ],
+              linesEn: [
+                'General Lecture Building, room BC-B102-1',
+                '※ The counselling centre\'s own page labels this building '
+                    '중앙강의동.',
+                'Counselling centre 051-200-8775~6',
+              ],
+            ),
+            GuideNote(
+              titleKo: '운영시간',
+              titleEn: 'Opening hours',
+              linesKo: [
+                '학기 중: 평일 09:00~17:00',
+                '방학 중: 평일 10:00~15:00',
+                '점심시간 12:00~13:00',
+              ],
+              linesEn: [
+                'Term time: weekdays 09:00–17:00',
+                'Vacation: weekdays 10:00–15:00',
+                'Lunch break 12:00–13:00',
+              ],
+            ),
+          ],
+          links: [
+            GuideLink(
+              labelKo: '승학캠퍼스 상담센터 전화하기',
+              labelEn: 'Call the Seunghak office',
+              url: 'tel:0512006070',
+              descriptionKo: '051-200-6070',
+              descriptionEn: '051-200-6070',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '부민캠퍼스 상담센터 전화하기',
+              labelEn: 'Call the Bumin office',
+              url: 'tel:0512008775',
+              descriptionKo: '051-200-8775~6 중 첫 번째 번호로 연결됩니다.',
+              descriptionEn: 'Dials the first of 051-200-8775~6.',
+              iconName: 'call',
+            ),
+          ],
+          noticeKo: '운영시간은 바뀔 수 있어요\n'
+              '방문 전에 학생상담센터 공식 홈페이지에서 최신 운영시간을 확인하세요.',
+          noticeEn: 'Hours can change\n'
+              'Check the centre\'s own website for the current opening hours '
+              'before you go.',
+          noticeIconName: 'info',
+        ),
+        // The centre publishes the one-to-one booking flow as an image only, so
+        // there is no text to quote. This section says where to look rather
+        // than inventing a procedure.
+        GuideSection(
+          titleKo: '상담 신청 방법',
+          titleEn: 'How to book',
+          iconName: 'format_list_numbered',
+          bodyKo: '개인상담 신청 방법은 학생상담센터 공식 홈페이지에서 최신 안내를 확인하거나 센터에 '
+              '문의하세요.\n\n'
+              '집단상담과 상담 · 지원 프로그램은 학교의 DECO 시스템에서 신청할 수 있습니다.',
+          bodyEn: 'For one-to-one counselling, check the centre\'s website for '
+              'the current instructions, or ring the office and ask.\n\n'
+              'Group counselling and the centre\'s programmes are booked '
+              'through DECO, the university\'s programme system.',
+          notes: [
+            GuideNote(
+              titleKo: '고민 우체통',
+              titleEn: 'The 고민 우체통 message box',
+              linesKo: [
+                '센터를 직접 찾아가기가 망설여질 때 글로 고민을 남길 수 있습니다',
+                '작성자란에 「익명」이라고 적으면 익명으로 남길 수 있습니다',
+                '비밀글로 작성하면 센터 담당자와 본인만 볼 수 있습니다',
+                '답변은 센터 운영시간 내에 올라옵니다',
+              ],
+              linesEn: [
+                'A way to write your problem down when walking in feels like '
+                    'too much',
+                'Write 익명 in the name field to post anonymously',
+                'Marked as a private post, it is visible only to you and the '
+                    'centre',
+                'Replies are posted within the centre\'s opening hours',
+              ],
+            ),
+          ],
+          links: [
+            GuideLink(
+              labelKo: '학생상담센터 홈페이지',
+              labelEn: 'Student counseling centre website',
+              url: 'https://guide.donga.ac.kr/',
+              descriptionKo: '상담 안내와 프로그램 소식',
+              descriptionEn: 'Counselling information and programme notices',
+              iconName: 'info',
+            ),
+            GuideLink(
+              labelKo: '고민 우체통',
+              labelEn: 'The 고민 우체통 message box',
+              url: 'https://guide.donga.ac.kr/guide/CMS/Board/Board.do'
+                  '?mCode=MN046',
+              descriptionKo: '익명 · 비밀글로 고민을 남길 수 있는 게시판',
+              descriptionEn: 'Post anonymously, as a private message',
+              iconName: 'info',
+            ),
+            GuideLink(
+              labelKo: 'DECO 시스템',
+              labelEn: 'DECO programme system',
+              url: 'https://deco.donga.ac.kr/',
+              descriptionKo: '집단상담 · 프로그램 신청',
+              descriptionEn: 'Where group counselling and programmes are '
+                  'booked',
+              iconName: 'computer',
+            ),
+          ],
+          footnoteKo: '※ 고민 우체통은 글로 이야기를 시작할 수 있는 창구이며, 개인상담을 대신하는 '
+              '것은 아닙니다.',
+          footnoteEn: '※ The message box is a way to start in writing. It does '
+              'not stand in for a counselling session.',
+        ),
+        // Scope is deliberately narrow: the only counselling role this office
+        // states for itself is academic support for international students.
+        GuideSection(
+          titleKo: '유학생 학사 · 학교생활 문의',
+          titleEn: 'Academic support for international students',
+          iconName: 'school',
+          bodyKo: '학사나 외국인 유학생 관련 학교 행정 문제는 대외국제처 국제교류과에 문의할 수 '
+              '있습니다. 국제교류과는 유학생 학사 지원 및 상담을 담당하는 직원을 두고 있습니다.',
+          bodyEn: 'For coursework questions and the university paperwork that '
+              'comes with being an international student, the desk to ask is '
+              'the International Affairs office / 국제교류과. It lists a staff '
+              'member whose job is academic support and counselling for '
+              'international students.',
+          notes: [
+            GuideNote(
+              titleKo: '유학생 학사 지원 및 상담',
+              titleEn: 'Academic support and counselling',
+              linesKo: ['전화 051-200-6447'],
+              linesEn: ['Phone 051-200-6447'],
+            ),
+          ],
+          links: [
+            GuideLink(
+              labelKo: '유학생 담당자에게 전화하기',
+              labelEn: 'Call the international student desk',
+              url: 'tel:0512006447',
+              descriptionKo: '051-200-6447',
+              descriptionEn: '051-200-6447',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '가이드 — 국제교류과 방문 안내',
+              labelEn: 'Guide — International Affairs Office',
+              url: '/guide/item/oia-visit',
+              descriptionKo: '사무실 위치와 담당 업무를 확인하세요.',
+              descriptionEn: 'Where the office is, and what it handles.',
+              iconName: 'school',
+            ),
+          ],
+          footnoteKo: '※ 국제교류과가 안내하는 상담은 유학생 학사 지원에 관한 것입니다. 심리 · 생활 '
+              '상담은 학생상담센터에서 진행합니다.',
+          footnoteEn: '※ The counselling this office lists is about academic '
+              'support. Personal and wellbeing counselling is what the '
+              'student counseling centre handles.',
+        ),
+        // Kept as its own section because it is a different kind of help with a
+        // different desk. How a case is investigated or decided is not
+        // described here — the centre owns that procedure.
+        GuideSection(
+          titleKo: '인권침해 · 성희롱 · 성폭력 문제라면',
+          titleEn: 'Harassment, sexual violence and rights violations',
+          iconName: 'info',
+          bodyKo: '인권침해나 성희롱 · 성폭력 문제는 동아대학교 인권센터에서 상담과 신고를 접수하고 '
+              '사건 처리를 지원합니다.',
+          bodyEn: 'Harassment, sexual violence and other violations of your '
+              'rights go to the university\'s human rights centre (인권센터). '
+              'It takes both counselling requests and formal reports, and '
+              'supports the handling of a case.',
+          notes: [
+            GuideNote(
+              titleKo: '동아대학교 인권센터',
+              titleEn: '동아대학교 인권센터',
+              linesKo: [
+                '승학캠퍼스 대학본부 및 인문과학대학 503호',
+                '전화 051-200-5711',
+              ],
+              linesEn: [
+                'Seunghak campus — College of Humanities building, room 503',
+                'Phone 051-200-5711',
+              ],
+            ),
+          ],
+          links: [
+            GuideLink(
+              labelKo: '인권센터 전화하기',
+              labelEn: 'Call the 인권센터',
+              url: 'tel:0512005711',
+              descriptionKo: '051-200-5711',
+              descriptionEn: '051-200-5711',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '동아대학교 인권센터 홈페이지',
+              labelEn: 'Human rights centre (인권센터) website',
+              url: 'https://human.donga.ac.kr/',
+              descriptionKo: '센터 소개와 이용 안내',
+              descriptionEn: 'About the centre and how to reach it',
+              iconName: 'info',
+            ),
+          ],
+          footnoteKo: '※ 조사나 처리 절차가 어떻게 진행되는지는 이 페이지에서 다루지 않습니다. '
+              '절차는 인권센터에 문의하세요.',
+          footnoteEn: '※ How an investigation or a case is handled is not '
+              'described here. Ask the centre about the procedure.',
+        ),
+        // 109 is officially a suicide-prevention line, so the section is
+        // scoped to exactly that. It is deliberately NOT presented as an
+        // after-hours substitute for the counselling centre.
+        GuideSection(
+          titleKo: '24시간 자살예방 상담',
+          titleEn: '24-hour suicide-prevention support',
+          iconName: 'event_repeat',
+          bodyKo: '자살예방 관련 상담이 필요할 경우, 24시간 운영되는 자살예방상담전화 109에 '
+              '연락할 수 있습니다.',
+          bodyEn: 'For suicide-prevention support, the national 109 '
+              'counselling line is available 24 hours a day.',
+          links: [
+            GuideLink(
+              labelKo: '109 전화하기',
+              labelEn: 'Call 109',
+              url: 'tel:109',
+              iconName: 'call',
+            ),
+            GuideLink(
+              labelKo: '자살예방상담전화 109 안내',
+              labelEn: 'About the 109 counselling line',
+              url: 'https://www.129.go.kr/109',
+              descriptionKo: '보건복지상담센터 공식 안내',
+              descriptionEn: 'Official information from the national health '
+                  'and welfare call centre',
+              iconName: 'info',
+            ),
+          ],
+        ),
+      ],
+      tipsKo: [
+        '학생상담센터의 모든 프로그램은 무료라고 안내되어 있습니다.',
+        '운영시간과 신청 방법은 바뀔 수 있으므로 방문 전에 공식 홈페이지에서 확인하세요.',
+        '지금 안전이 위협받는 상황이라면 상담을 기다리지 말고 112 또는 119에 연락하세요.',
+      ],
+      tipsEn: [
+        'The centre states that every programme it runs is free.',
+        'Opening hours and booking steps can change — check the official site '
+            'before you go.',
+        'If your safety is under threat right now, do not wait for an '
+            'appointment: call 112 or 119.',
+      ],
+      links: [
+        GuideLink(
+          labelKo: '학생상담센터 홈페이지',
+          labelEn: 'Student counseling centre website',
+          url: 'https://guide.donga.ac.kr/',
+          descriptionKo: '상담 안내와 프로그램 소식',
+          descriptionEn: 'Counselling information and programme notices',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '동아대학교 인권센터 홈페이지',
+          labelEn: 'Human rights centre (인권센터) website',
+          url: 'https://human.donga.ac.kr/',
+          descriptionKo: '센터 소개와 이용 안내',
+          descriptionEn: 'About the centre and how to reach it',
+          iconName: 'info',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 국제교류과 방문 안내',
+          labelEn: 'Guide — International Affairs Office',
+          url: '/guide/item/oia-visit',
+          descriptionKo: '사무실 위치와 담당 업무를 확인하세요.',
+          descriptionEn: 'Where the office is, and what it handles.',
+          iconName: 'school',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 긴급 연락처',
+          labelEn: 'Guide — Emergency Contacts',
+          url: '/guide/item/emergency-contacts',
+          descriptionKo: '112 · 119에 신고할 때 무엇을 말해야 하는지 확인하세요.',
+          descriptionEn: 'What to say when you call 112 or 119.',
+          iconName: 'emergency',
+        ),
+      ],
+      // Both offices are real campus-map data, and the floor guide lists
+      // 학생상담센터 on s02 3F and b04 B1F — so each card lands on the right
+      // building and the map switches campus for it.
+      relatedFacilityIds: ['s02', 'b04'],
+      status: GuideStatus.published,
     ),
   ];
 }

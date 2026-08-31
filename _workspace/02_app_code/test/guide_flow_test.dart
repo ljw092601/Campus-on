@@ -2299,6 +2299,591 @@ void main() {
     expect(find.text('Finding Off-Campus Housing'), findsOneWidget);
   });
 
+  // ── counseling ────────────────────────────────────────────────────────────
+  // NOTE: this page carries real emergency and counselling numbers (112, 119,
+  // 109 and four university lines). Nothing here taps a `tel:` row — the urls
+  // are asserted as data and the widget tests only read the labels.
+  test('Counseling guide: data-level guarantees (no judgement, no guessing)',
+      () {
+    final item = MockData.guideItems.firstWhere((g) => g.id == 'counseling');
+
+    expect(item.status, GuideStatus.published);
+    expect(item.categoryId, GuideCategory.emergency);
+    expect(item.titleKo, '상담 창구');
+    expect(item.titleEn, 'Counseling');
+    expect(item.summaryKo, '심리·생활 상담 안내');
+    expect(item.summaryEn, 'Wellbeing & life support');
+
+    // The two counselling offices, and only those — the human rights centre
+    // sits in s01 but stays out of the map cards on purpose.
+    expect(item.relatedFacilityIds, ['s02', 'b04']);
+    expect(item.relatedFacilityIds.contains('s01'), isFalse);
+
+    // Safety block first, owning 112/119 and the emergency-contacts route.
+    final urgent = item.topSections.single;
+    expect(urgent.titleKo, '지금 즉시 위험한 상황이라면');
+    expect(urgent.titleEn, 'If you are in immediate danger');
+    expect(
+      urgent.links.map((l) => l.url).toList(),
+      const ['tel:112', 'tel:119', '/guide/item/emergency-contacts'],
+    );
+
+    // Section order, and the desk each one belongs to.
+    expect(
+      item.sections.map((s) => s.titleKo).toList(),
+      const [
+        '학생상담센터',
+        '어디에서 상담받나요?',
+        '상담 신청 방법',
+        '유학생 학사 · 학교생활 문의',
+        '인권침해 · 성희롱 · 성폭력 문제라면',
+        '24시간 자살예방 상담',
+      ],
+    );
+
+    // Every link on the page, section-level and bottom block.
+    final allUrls = [
+      for (final s in [...item.topSections, ...item.sections])
+        ...s.links.map((l) => l.url),
+      ...item.links.map((l) => l.url),
+    ];
+    // Each phone row the brief asks for is present, exactly as a tel: url.
+    for (final tel in const [
+      'tel:112',
+      'tel:119',
+      'tel:0512006070',
+      'tel:0512008775',
+      'tel:0512006447',
+      'tel:0512005711',
+      'tel:109',
+    ]) {
+      expect(allUrls.contains(tel), isTrue, reason: tel);
+    }
+    // No other tel: row slipped in.
+    expect(allUrls.where((u) => u.startsWith('tel:')).length, 7);
+
+    // Bottom block: four rows, in the agreed order.
+    expect(
+      item.links.map((l) => l.url).toList(),
+      const [
+        'https://guide.donga.ac.kr/',
+        'https://human.donga.ac.kr/',
+        '/guide/item/oia-visit',
+        '/guide/item/emergency-contacts',
+      ],
+    );
+    // incident-response is still a stub, and the campus clinic is not a
+    // counselling desk — neither is linked from here.
+    expect(allUrls.any((u) => u.contains('incident-response')), isFalse);
+    expect(allUrls.any((u) => u.contains('campus-clinic')), isFalse);
+
+    // Every renderable string of this item, both languages.
+    final dump = [
+      item.titleKo, item.titleEn, item.summaryKo, item.summaryEn,
+      item.overviewKo, item.overviewEn,
+      ...item.tipsKo, ...item.tipsEn,
+      for (final s in [...item.topSections, ...item.sections]) ...[
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.noticeKo, s.noticeEn,
+        s.footnoteKo, s.footnoteEn,
+        ...s.stepsKo, ...s.stepsEn,
+        for (final l in s.links)
+          '${l.labelKo}${l.labelEn}${l.url}'
+              '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+        for (final n in s.notes) ...[
+          n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+        ],
+      ],
+      for (final l in item.links)
+        '${l.labelKo}${l.labelEn}${l.url}'
+            '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+    ].whereType<String>().join('\n');
+
+    // No language support is claimed anywhere — no official source states
+    // which languages any of these desks can work in.
+    for (final banned in const [
+      '영어 상담',
+      '영어로 상담',
+      '외국어 상담',
+      '다국어',
+      '통역',
+      'English',
+      'in your own language',
+      'interpreter',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'language claim: $banned');
+    }
+
+    // Eligibility is quoted, never widened: the centre says "본교 구성원
+    // 누구나", so the page never states that international students may use it.
+    expect(item.overviewKo, contains('본교 구성원 누구나'));
+    expect(item.overviewEn, contains('본교 구성원 누구나'));
+    expect(item.sections.first.bodyKo, contains('본교 구성원 누구나'));
+    for (final banned in const [
+      '외국인 유학생도 이용',
+      '유학생도 이용할 수 있',
+      '유학생도 무료로',
+      'international students can use',
+      'open to international students',
+      'available to international students',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'widened claim: $banned');
+    }
+
+    // The centre publishes no crisis service, so the page never implies one.
+    for (final banned in const [
+      '위기상담',
+      '긴급상담',
+      '24시간 상담을 제공',
+      'crisis counselling',
+      'crisis counseling',
+      'emergency counselling',
+      'emergency counseling',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'crisis claim: $banned');
+    }
+
+    // No diagnosis, no symptom list, no grading of how bad a problem is.
+    for (final banned in const [
+      '진단',
+      '증상',
+      '우울증',
+      '불안장애',
+      '자해',
+      '위험도',
+      '치료를 받으세요',
+      '병원에 가야',
+      'diagnos',
+      'symptom',
+      'self-harm',
+      'risk assessment',
+      'you should see a doctor',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'judgement: $banned');
+    }
+    // …and the page says so out loud, in both languages.
+    expect(dump, contains('문제의 심각도나 필요한 도움의 종류를 판단하지 않습니다'));
+    expect(dump, contains('does not judge how serious a problem is'));
+    // The overview names no counselling topics: the centre publishes no such
+    // list, so listing any would invent a scope for it.
+    for (final banned in const [
+      '학업이나 진로',
+      '사람 사이의 관계',
+      '한국 생활 적응',
+      'coursework and career worries',
+      'settling into',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'invented scope: $banned');
+    }
+    // No advice of the app's own making about when or whether to seek help.
+    for (final banned in const [
+      '먼저 이야기해',
+      '얼마나 큰지',
+      'Anything is worth bringing up',
+      'how serious it is before you book',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'app advice: $banned');
+    }
+
+    // No counselling body beyond the five the brief settled on.
+    for (final banned in const [
+      '1345',
+      '1600-0051',
+      '1577-0199',
+      '1577-1366',
+      '1393',
+      '정신건강복지센터',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'extra body: $banned');
+    }
+
+    // ── 학생상담센터 ────────────────────────────────────────────────────────
+    final centre = item.sections[0];
+    expect(centre.titleEn, 'Student counseling centre');
+    // Only the five services the centre publishes.
+    expect(
+      centre.notes.first.linesKo,
+      const ['개인상담', '집단상담', '심리검사와 해석상담', '상담 · 지원 프로그램', '예방교육'],
+    );
+    expect(centre.notes[1].linesKo,
+        const ['주 1회', '한 회기 약 50분', '접수면접을 포함해 11회기 이내']);
+    // Free, as officially stated.
+    expect(centre.bodyKo, contains('무료'));
+    expect(centre.bodyEn, contains('free'));
+    // Confidentiality, with the safety exception the centre itself states.
+    expect(centre.noticeKo, contains('비밀보장'));
+    expect(centre.noticeKo, contains('안전'));
+    expect(centre.noticeEn, contains('confidential'));
+    expect(centre.noticeEn, contains('safety'));
+
+    // ── 위치 · 운영시간 ─────────────────────────────────────────────────────
+    final where = item.sections[1];
+    expect(where.notes.map((n) => n.titleKo).toList(),
+        const ['승학캠퍼스', '부민캠퍼스', '운영시간']);
+    expect(where.notes[0].linesKo.first, contains('학생회관(Q) 3층 308호'));
+    // Two official pages label the same Bumin building differently, so both
+    // labels are printed. The map-facing one (종합강의동, matching facility
+    // b04) leads, and the counselling centre's own wording follows it.
+    expect(where.notes[1].linesKo.first, '종합강의동 BC-B102-1호');
+    expect(where.notes[1].linesKo[1], contains('중앙강의동'));
+    expect(where.notes[1].linesKo[1], contains('학생상담센터 안내 페이지'));
+    expect(where.notes[1].linesEn.first,
+        'General Lecture Building, room BC-B102-1');
+    expect(where.notes[1].linesEn[1], contains('중앙강의동'));
+    expect(where.notes[1].linesKo.any((l) => l.contains('BC-B102-1')), isTrue);
+    // Neither label is presented as the old or the new one, and the two are
+    // never treated as separate buildings.
+    for (final banned in const [
+      '구명칭',
+      '옛 이름',
+      '이전 명칭',
+      '새 이름',
+      '변경되었',
+      'former name',
+      'formerly',
+      'renamed',
+      'used to be called',
+      'a different building',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'name claim: $banned');
+    }
+    expect(where.notes[2].linesKo,
+        const ['학기 중: 평일 09:00~17:00', '방학 중: 평일 10:00~15:00', '점심시간 12:00~13:00']);
+    // Hours are stated as changeable, with where to re-check them.
+    expect(where.noticeKo, contains('최신 운영시간을 확인'));
+    // 6070 is the centre office line, never described as a main university one.
+    expect(dump.contains('대표전화'), isFalse);
+
+    // ── 상담 신청 ───────────────────────────────────────────────────────────
+    final booking = item.sections[2];
+    // The one-to-one booking flow is published as an image only, so the page
+    // points at the source instead of inventing steps.
+    expect(booking.stepsKo, isEmpty);
+    expect(booking.bodyKo, contains('최신 안내를 확인'));
+    expect(booking.bodyKo, contains('DECO'));
+    expect(booking.notes.single.titleKo, '고민 우체통');
+    expect(booking.footnoteKo, contains('개인상담을 대신하는 것은 아닙니다'));
+
+    // ── 국제교류과 ──────────────────────────────────────────────────────────
+    final oia = item.sections[3];
+    // Its stated counselling role is academic support, and the body says only
+    // that — the split from wellbeing counselling is spelled out in the note.
+    expect(oia.bodyKo, contains('유학생 학사 지원 및 상담'));
+    expect(oia.bodyKo!.contains('심리'), isFalse);
+    expect(oia.footnoteKo, contains('학생상담센터에서 진행합니다'));
+
+    // ── 인권센터 ────────────────────────────────────────────────────────────
+    final rights = item.sections[4];
+    expect(rights.bodyKo, contains('상담과 신고를 접수'));
+    expect(rights.notes.single.linesKo.first, contains('503호'));
+    expect(rights.notes.single.linesKo, contains('전화 051-200-5711'));
+    // The page does not restate an investigation or disciplinary procedure.
+    expect(rights.footnoteKo, contains('이 페이지에서 다루지 않습니다'));
+
+    // ── 109 ─────────────────────────────────────────────────────────────────
+    final always = item.sections[5];
+    expect(always.titleKo, '24시간 자살예방 상담');
+    expect(always.titleEn, '24-hour suicide-prevention support');
+    expect(always.bodyKo, contains('자살예방 관련 상담이 필요할 경우'));
+    expect(always.bodyKo, contains('24시간'));
+    expect(always.bodyEn, contains('suicide-prevention support'));
+    expect(always.bodyEn, contains('24 hours a day'));
+    // 109 is a suicide-prevention line, not an after-hours stand-in for the
+    // counselling centre — nothing here frames it as one.
+    for (final banned in const [
+      '문을 닫는 시간',
+      '학생상담센터가 문을 닫',
+      'when the campus offices are closed',
+      'after hours',
+      'at any hour',
+    ]) {
+      expect(always.bodyKo!.contains(banned), isFalse, reason: '109: $banned');
+      expect(always.bodyEn!.contains(banned), isFalse, reason: '109: $banned');
+      expect(always.titleKo.contains(banned), isFalse, reason: '109: $banned');
+      expect(always.titleEn.contains(banned), isFalse, reason: '109: $banned');
+    }
+    expect(always.links.map((l) => l.url).toList(),
+        const ['tel:109', 'https://www.129.go.kr/109']);
+    // Nothing about who may call it or in what language.
+    final alwaysText = [
+      always.bodyKo, always.bodyEn, always.noticeKo, always.noticeEn,
+      for (final l in always.links)
+        '${l.labelKo}${l.labelEn}${l.descriptionKo ?? ''}'
+            '${l.descriptionEn ?? ''}',
+    ].whereType<String>().join('\n');
+    for (final banned in const ['영어', 'English', '외국인', '지원 언어']) {
+      expect(alwaysText.contains(banned), isFalse, reason: '109: $banned');
+    }
+  });
+
+  testWidgets('Guide detail: counseling guide renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    expect(find.text('Wellbeing & life support'), findsOneWidget);
+
+    await tester.tap(find.text('Counseling'));
+    await tester.pumpAndSettle();
+    // Published now — the placeholder must be gone.
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    const titles = [
+      'Overview',
+      'If you are in immediate danger',
+      'Student counseling centre',
+      'Where to go, and when',
+      'How to book',
+      'Academic support for international students',
+      'Harassment, sexual violence and rights violations',
+      '24-hour suicide-prevention support',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // The safety rows sit in the top block, above the counselling centre.
+    expect(find.text('Call 112'), findsOneWidget);
+    expect(find.text('Call 119'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Call 119')).dy,
+      lessThan(tester.getTopLeft(find.text('Student counseling centre')).dy),
+    );
+
+    // Eligibility is quoted, not widened, and the cost is the published one.
+    expect(find.textContaining('본교 구성원 누구나'), findsWidgets);
+    expect(find.textContaining('every programme it runs is free'), findsWidgets);
+    expect(
+      find.textContaining('does not judge how serious a problem is'),
+      findsOneWidget,
+    );
+    // Both campuses are named rather than counted — the university has three.
+    expect(
+      find.text('The centre has offices on the Seunghak and Bumin campuses.'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('each of the two campuses'), findsNothing);
+
+    // Both offices, with the building the floor guide lists them in.
+    expect(
+      find.text('Student Union Building (Q), 3rd floor, room 308'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('General Lecture Building, room BC-B102-1'),
+      findsOneWidget,
+    );
+    // …and the label the counselling centre's own page uses, so a student
+    // who arrives from that page recognises the building.
+    expect(
+      find.textContaining('labels this building 중앙강의동'),
+      findsOneWidget,
+    );
+    expect(find.text('Term time: weekdays 09:00–17:00'), findsOneWidget);
+    expect(find.text('Lunch break 12:00–13:00'), findsOneWidget);
+
+    // Rows that appear both in their own section and in the bottom block.
+    expect(find.text('Guide — Emergency Contacts'), findsNWidgets(2));
+    expect(find.text('Guide — International Affairs Office'), findsNWidgets(2));
+    expect(find.text('Student counseling centre website'), findsNWidgets(2));
+    expect(find.text('Human rights centre (인권센터) website'), findsNWidgets(2));
+
+    // One related-location card per counselling office, and no third one.
+    expect(find.text('학생회관(Q)'), findsOneWidget);
+    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+    expect(find.text('대학본부 및 인문과학대학(A)'), findsNothing);
+  });
+
+  testWidgets('Guide detail: counseling guide in-app links route in-app',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Counseling'));
+    await tester.pumpAndSettle();
+
+    // The emergency-contacts row inside the safety block. `pumpAndSettle`
+    // returns while the mock repo's delayed load is still pending, so the
+    // destination needs that time before it is asserted on.
+    await tester.tap(find.text('Guide — Emergency Contacts').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('In an emergency'), findsOneWidget);
+
+    // `_LinkRow` uses `context.go`, which replaces the route rather than
+    // pushing one, so re-enter from the tab instead of popping.
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Counseling'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide — International Affairs Office').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('What can I ask about?'), findsOneWidget);
+
+    // Drain the OIA page's related-location lookup so no timer outlives the
+    // widget tree.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('Guide detail: counseling guide fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Counseling'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    // Scrolling only — no call row is ever tapped.
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Emergency & Help'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: counseling guide renders in Korean',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('긴급·도움'));
+    await tester.pumpAndSettle();
+    expect(find.text('심리·생활 상담 안내'), findsOneWidget);
+
+    await tester.tap(find.text('상담 창구'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '지금 즉시 위험한 상황이라면',
+      '학생상담센터',
+      '어디에서 상담받나요?',
+      '상담 신청 방법',
+      '유학생 학사 · 학교생활 문의',
+      '인권침해 · 성희롱 · 성폭력 문제라면',
+      '24시간 자살예방 상담',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    expect(find.text('112 전화하기'), findsOneWidget);
+    expect(find.text('119 전화하기'), findsOneWidget);
+    expect(find.text('109 전화하기'), findsOneWidget);
+    expect(find.textContaining('본교 구성원 누구나'), findsWidgets);
+    expect(find.text('학생회관(Q) 3층 308호'), findsOneWidget);
+    // Both official labels for the same building, map-facing one first.
+    expect(find.text('종합강의동 BC-B102-1호'), findsOneWidget);
+    expect(
+      find.textContaining('학생상담센터 안내 페이지에는 「중앙강의동」으로 표기'),
+      findsOneWidget,
+    );
+    // The map card still carries the facility name, so b04 is unambiguous.
+    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+    expect(find.text('학기 중: 평일 09:00~17:00'), findsOneWidget);
+    expect(find.textContaining('최신 운영시간을 확인'), findsOneWidget);
+    expect(find.text('전화 051-200-5711'), findsOneWidget);
+    expect(find.text('전화 051-200-6447'), findsOneWidget);
+
+    // Nothing on the Korean page grades a problem or names a symptom.
+    expect(find.textContaining('증상'), findsNothing);
+    expect(find.textContaining('진단'), findsNothing);
+    expect(find.textContaining('위기상담'), findsNothing);
+    expect(find.textContaining('외국어 상담'), findsNothing);
+    // …and the line stating that the app itself judges nothing is shown.
+    expect(
+      find.textContaining('문제의 심각도나 필요한 도움의 종류를 판단하지 않습니다'),
+      findsOneWidget,
+    );
+    // 109 appears as a suicide-prevention line only.
+    expect(find.textContaining('자살예방 관련 상담이 필요할 경우'), findsOneWidget);
+    expect(find.textContaining('문을 닫는 시간'), findsNothing);
+  });
+
+  testWidgets('Favorite toggle works from the counseling guide',
+      (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Counseling'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Counseling'), findsOneWidget);
+  });
+
   testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
@@ -2306,12 +2891,11 @@ void main() {
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
 
-    // Emergency & Help → "Counseling" is still a placeholder. (Health &
-    // Insurance no longer has one — its last stub, the hospital guide, is
-    // written.)
+    // Emergency & Help → "Incident Response" is the last placeholder left.
+    // (Counseling used to be one; it is written now, so the check moved here.)
     await tester.tap(find.text('Emergency & Help'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Counseling'));
+    await tester.tap(find.text('Incident Response'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.

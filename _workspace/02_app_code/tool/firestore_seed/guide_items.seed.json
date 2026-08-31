@@ -4608,6 +4608,361 @@
     "title_en": "Counseling",
     "summary_ko": "심리·생활 상담 안내",
     "summary_en": "Wellbeing & life support",
-    "status": "comingSoon"
+    "overview_ko": "학교생활을 하다 보면 혼자 정리하기 어려운 고민이나 도움이 필요한 일이 생길 수 있습니다. 학교 안에는 이런 이야기를 나누고 도움을 요청할 수 있는 공식 창구가 있습니다.\n\n이 가이드는 학생상담센터를 중심으로, 어떤 고민을 어디에 이야기하면 되는지 안내합니다. 학생상담센터는 본교 구성원 누구나 이용할 수 있다고 안내하고 있습니다.\n\n상담 내용과 인적 사항은 비밀보장을 원칙으로 합니다. 다만 본인 또는 타인의 안전과 관련된 경우 등에는 비밀보장이 제한될 수 있습니다.",
+    "overview_en": "University life can throw up something you cannot sort out on your own, or a situation where you need help. There are official places on campus to talk it through and ask for support.\n\nThis guide is built around the student counseling centre (학생상담센터), and points you to the right desk for the other kinds of help. The centre says its services are open to 본교 구성원 누구나 — anyone who belongs to the university.\n\nWhat you say, and your personal details, are treated as confidential. The centre notes that this can be limited in some cases, such as where your safety or someone else's is at stake.",
+    "top_sections": [
+      {
+        "title_ko": "지금 즉시 위험한 상황이라면",
+        "title_en": "If you are in immediate danger",
+        "icon": "emergency",
+        "body_ko": "본인이나 다른 사람의 안전이 지금 위협받고 있다면 상담을 기다리지 말고 112 또는 119에 연락하세요.\n\n경찰의 도움이 필요하면 112, 화재 · 사고 · 부상 등 구조나 구급이 필요하면 119입니다.",
+        "body_en": "If your safety or someone else's is under threat right now, do not wait for a counselling appointment — call 112 or 119.\n\n112 reaches the police. 119 reaches the fire, rescue and ambulance service.",
+        "links": [
+          {
+            "label_ko": "112 전화하기",
+            "label_en": "Call 112",
+            "url": "tel:112",
+            "icon": "call"
+          },
+          {
+            "label_ko": "119 전화하기",
+            "label_en": "Call 119",
+            "url": "tel:119",
+            "icon": "call"
+          },
+          {
+            "label_ko": "가이드 — 긴급 연락처",
+            "label_en": "Guide — Emergency Contacts",
+            "url": "/guide/item/emergency-contacts",
+            "description_ko": "112 · 119에 신고할 때 무엇을 말해야 하는지 확인하세요.",
+            "description_en": "What to say when you call 112 or 119.",
+            "icon": "emergency"
+          }
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "title_ko": "학생상담센터",
+        "title_en": "Student counseling centre",
+        "icon": "help",
+        "body_ko": "학생상담센터는 심리 · 생활 상담을 비롯한 여러 상담 프로그램을 운영하는 학교의 공식 기관입니다. 공식 안내에 따르면 본교 구성원 누구나 이용할 수 있고, 센터의 모든 프로그램은 무료입니다.",
+        "body_en": "The student counseling centre (학생상담센터) is the university's own counselling service. Its published information says the centre is open to 본교 구성원 누구나 — anyone who belongs to the university — and that every programme it runs is free.",
+        "notes": [
+          {
+            "title_ko": "무엇을 받을 수 있나요",
+            "title_en": "What the centre offers",
+            "lines_ko": [
+              "개인상담",
+              "집단상담",
+              "심리검사와 해석상담",
+              "상담 · 지원 프로그램",
+              "예방교육"
+            ],
+            "lines_en": [
+              "One-to-one counselling",
+              "Group counselling",
+              "Psychological tests, with a session to go through the results",
+              "Counselling and support programmes",
+              "Prevention education"
+            ]
+          },
+          {
+            "title_ko": "개인상담은 이렇게 진행됩니다",
+            "title_en": "How one-to-one counselling runs",
+            "lines_ko": [
+              "주 1회",
+              "한 회기 약 50분",
+              "접수면접을 포함해 11회기 이내"
+            ],
+            "lines_en": [
+              "Once a week",
+              "About 50 minutes a session",
+              "Up to 11 sessions in total, including the intake interview"
+            ]
+          }
+        ],
+        "notice_ko": "비밀보장이 원칙입니다\n인적 사항과 상담 내용은 비밀보장을 원칙으로 합니다. 다만 본인 또는 타인의 안전을 해칠 수 있는 경우 등에 한하여 비밀보장이 제한될 수 있습니다.",
+        "notice_en": "Confidentiality is the rule\nYour personal details and what you talk about are kept confidential. The centre states that this can be limited in some cases, such as where your own or someone else's safety could be harmed.",
+        "notice_icon": "info",
+        "footnote_ko": "※ 이 페이지는 문제의 심각도나 필요한 도움의 종류를 판단하지 않습니다.",
+        "footnote_en": "※ This page does not judge how serious a problem is, or what kind of help you need."
+      },
+      {
+        "title_ko": "어디에서 상담받나요?",
+        "title_en": "Where to go, and when",
+        "icon": "location_on",
+        "body_ko": "학생상담센터는 승학캠퍼스와 부민캠퍼스 두 곳에 있습니다.",
+        "body_en": "The centre has offices on the Seunghak and Bumin campuses.",
+        "links": [
+          {
+            "label_ko": "승학캠퍼스 상담센터 전화하기",
+            "label_en": "Call the Seunghak office",
+            "url": "tel:0512006070",
+            "description_ko": "051-200-6070",
+            "description_en": "051-200-6070",
+            "icon": "call"
+          },
+          {
+            "label_ko": "부민캠퍼스 상담센터 전화하기",
+            "label_en": "Call the Bumin office",
+            "url": "tel:0512008775",
+            "description_ko": "051-200-8775~6 중 첫 번째 번호로 연결됩니다.",
+            "description_en": "Dials the first of 051-200-8775~6.",
+            "icon": "call"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "승학캠퍼스",
+            "title_en": "Seunghak campus",
+            "lines_ko": [
+              "학생회관(Q) 3층 308호",
+              "학생상담센터 사무실 051-200-6070"
+            ],
+            "lines_en": [
+              "Student Union Building (Q), 3rd floor, room 308",
+              "Counselling centre office 051-200-6070"
+            ]
+          },
+          {
+            "title_ko": "부민캠퍼스",
+            "title_en": "Bumin campus",
+            "lines_ko": [
+              "종합강의동 BC-B102-1호",
+              "※ 학생상담센터 안내 페이지에는 「중앙강의동」으로 표기되어 있습니다",
+              "학생상담센터 051-200-8775~6"
+            ],
+            "lines_en": [
+              "General Lecture Building, room BC-B102-1",
+              "※ The counselling centre's own page labels this building 중앙강의동.",
+              "Counselling centre 051-200-8775~6"
+            ]
+          },
+          {
+            "title_ko": "운영시간",
+            "title_en": "Opening hours",
+            "lines_ko": [
+              "학기 중: 평일 09:00~17:00",
+              "방학 중: 평일 10:00~15:00",
+              "점심시간 12:00~13:00"
+            ],
+            "lines_en": [
+              "Term time: weekdays 09:00–17:00",
+              "Vacation: weekdays 10:00–15:00",
+              "Lunch break 12:00–13:00"
+            ]
+          }
+        ],
+        "notice_ko": "운영시간은 바뀔 수 있어요\n방문 전에 학생상담센터 공식 홈페이지에서 최신 운영시간을 확인하세요.",
+        "notice_en": "Hours can change\nCheck the centre's own website for the current opening hours before you go.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "상담 신청 방법",
+        "title_en": "How to book",
+        "icon": "format_list_numbered",
+        "body_ko": "개인상담 신청 방법은 학생상담센터 공식 홈페이지에서 최신 안내를 확인하거나 센터에 문의하세요.\n\n집단상담과 상담 · 지원 프로그램은 학교의 DECO 시스템에서 신청할 수 있습니다.",
+        "body_en": "For one-to-one counselling, check the centre's website for the current instructions, or ring the office and ask.\n\nGroup counselling and the centre's programmes are booked through DECO, the university's programme system.",
+        "links": [
+          {
+            "label_ko": "학생상담센터 홈페이지",
+            "label_en": "Student counseling centre website",
+            "url": "https://guide.donga.ac.kr/",
+            "description_ko": "상담 안내와 프로그램 소식",
+            "description_en": "Counselling information and programme notices",
+            "icon": "info"
+          },
+          {
+            "label_ko": "고민 우체통",
+            "label_en": "The 고민 우체통 message box",
+            "url": "https://guide.donga.ac.kr/guide/CMS/Board/Board.do?mCode=MN046",
+            "description_ko": "익명 · 비밀글로 고민을 남길 수 있는 게시판",
+            "description_en": "Post anonymously, as a private message",
+            "icon": "info"
+          },
+          {
+            "label_ko": "DECO 시스템",
+            "label_en": "DECO programme system",
+            "url": "https://deco.donga.ac.kr/",
+            "description_ko": "집단상담 · 프로그램 신청",
+            "description_en": "Where group counselling and programmes are booked",
+            "icon": "computer"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "고민 우체통",
+            "title_en": "The 고민 우체통 message box",
+            "lines_ko": [
+              "센터를 직접 찾아가기가 망설여질 때 글로 고민을 남길 수 있습니다",
+              "작성자란에 「익명」이라고 적으면 익명으로 남길 수 있습니다",
+              "비밀글로 작성하면 센터 담당자와 본인만 볼 수 있습니다",
+              "답변은 센터 운영시간 내에 올라옵니다"
+            ],
+            "lines_en": [
+              "A way to write your problem down when walking in feels like too much",
+              "Write 익명 in the name field to post anonymously",
+              "Marked as a private post, it is visible only to you and the centre",
+              "Replies are posted within the centre's opening hours"
+            ]
+          }
+        ],
+        "footnote_ko": "※ 고민 우체통은 글로 이야기를 시작할 수 있는 창구이며, 개인상담을 대신하는 것은 아닙니다.",
+        "footnote_en": "※ The message box is a way to start in writing. It does not stand in for a counselling session."
+      },
+      {
+        "title_ko": "유학생 학사 · 학교생활 문의",
+        "title_en": "Academic support for international students",
+        "icon": "school",
+        "body_ko": "학사나 외국인 유학생 관련 학교 행정 문제는 대외국제처 국제교류과에 문의할 수 있습니다. 국제교류과는 유학생 학사 지원 및 상담을 담당하는 직원을 두고 있습니다.",
+        "body_en": "For coursework questions and the university paperwork that comes with being an international student, the desk to ask is the International Affairs office / 국제교류과. It lists a staff member whose job is academic support and counselling for international students.",
+        "links": [
+          {
+            "label_ko": "유학생 담당자에게 전화하기",
+            "label_en": "Call the international student desk",
+            "url": "tel:0512006447",
+            "description_ko": "051-200-6447",
+            "description_en": "051-200-6447",
+            "icon": "call"
+          },
+          {
+            "label_ko": "가이드 — 국제교류과 방문 안내",
+            "label_en": "Guide — International Affairs Office",
+            "url": "/guide/item/oia-visit",
+            "description_ko": "사무실 위치와 담당 업무를 확인하세요.",
+            "description_en": "Where the office is, and what it handles.",
+            "icon": "school"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "유학생 학사 지원 및 상담",
+            "title_en": "Academic support and counselling",
+            "lines_ko": [
+              "전화 051-200-6447"
+            ],
+            "lines_en": [
+              "Phone 051-200-6447"
+            ]
+          }
+        ],
+        "footnote_ko": "※ 국제교류과가 안내하는 상담은 유학생 학사 지원에 관한 것입니다. 심리 · 생활 상담은 학생상담센터에서 진행합니다.",
+        "footnote_en": "※ The counselling this office lists is about academic support. Personal and wellbeing counselling is what the student counseling centre handles."
+      },
+      {
+        "title_ko": "인권침해 · 성희롱 · 성폭력 문제라면",
+        "title_en": "Harassment, sexual violence and rights violations",
+        "icon": "info",
+        "body_ko": "인권침해나 성희롱 · 성폭력 문제는 동아대학교 인권센터에서 상담과 신고를 접수하고 사건 처리를 지원합니다.",
+        "body_en": "Harassment, sexual violence and other violations of your rights go to the university's human rights centre (인권센터). It takes both counselling requests and formal reports, and supports the handling of a case.",
+        "links": [
+          {
+            "label_ko": "인권센터 전화하기",
+            "label_en": "Call the 인권센터",
+            "url": "tel:0512005711",
+            "description_ko": "051-200-5711",
+            "description_en": "051-200-5711",
+            "icon": "call"
+          },
+          {
+            "label_ko": "동아대학교 인권센터 홈페이지",
+            "label_en": "Human rights centre (인권센터) website",
+            "url": "https://human.donga.ac.kr/",
+            "description_ko": "센터 소개와 이용 안내",
+            "description_en": "About the centre and how to reach it",
+            "icon": "info"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "동아대학교 인권센터",
+            "title_en": "동아대학교 인권센터",
+            "lines_ko": [
+              "승학캠퍼스 대학본부 및 인문과학대학 503호",
+              "전화 051-200-5711"
+            ],
+            "lines_en": [
+              "Seunghak campus — College of Humanities building, room 503",
+              "Phone 051-200-5711"
+            ]
+          }
+        ],
+        "footnote_ko": "※ 조사나 처리 절차가 어떻게 진행되는지는 이 페이지에서 다루지 않습니다. 절차는 인권센터에 문의하세요.",
+        "footnote_en": "※ How an investigation or a case is handled is not described here. Ask the centre about the procedure."
+      },
+      {
+        "title_ko": "24시간 자살예방 상담",
+        "title_en": "24-hour suicide-prevention support",
+        "icon": "event_repeat",
+        "body_ko": "자살예방 관련 상담이 필요할 경우, 24시간 운영되는 자살예방상담전화 109에 연락할 수 있습니다.",
+        "body_en": "For suicide-prevention support, the national 109 counselling line is available 24 hours a day.",
+        "links": [
+          {
+            "label_ko": "109 전화하기",
+            "label_en": "Call 109",
+            "url": "tel:109",
+            "icon": "call"
+          },
+          {
+            "label_ko": "자살예방상담전화 109 안내",
+            "label_en": "About the 109 counselling line",
+            "url": "https://www.129.go.kr/109",
+            "description_ko": "보건복지상담센터 공식 안내",
+            "description_en": "Official information from the national health and welfare call centre",
+            "icon": "info"
+          }
+        ]
+      }
+    ],
+    "tips_ko": [
+      "학생상담센터의 모든 프로그램은 무료라고 안내되어 있습니다.",
+      "운영시간과 신청 방법은 바뀔 수 있으므로 방문 전에 공식 홈페이지에서 확인하세요.",
+      "지금 안전이 위협받는 상황이라면 상담을 기다리지 말고 112 또는 119에 연락하세요."
+    ],
+    "tips_en": [
+      "The centre states that every programme it runs is free.",
+      "Opening hours and booking steps can change — check the official site before you go.",
+      "If your safety is under threat right now, do not wait for an appointment: call 112 or 119."
+    ],
+    "links": [
+      {
+        "label_ko": "학생상담센터 홈페이지",
+        "label_en": "Student counseling centre website",
+        "url": "https://guide.donga.ac.kr/",
+        "description_ko": "상담 안내와 프로그램 소식",
+        "description_en": "Counselling information and programme notices",
+        "icon": "info"
+      },
+      {
+        "label_ko": "동아대학교 인권센터 홈페이지",
+        "label_en": "Human rights centre (인권센터) website",
+        "url": "https://human.donga.ac.kr/",
+        "description_ko": "센터 소개와 이용 안내",
+        "description_en": "About the centre and how to reach it",
+        "icon": "info"
+      },
+      {
+        "label_ko": "가이드 — 국제교류과 방문 안내",
+        "label_en": "Guide — International Affairs Office",
+        "url": "/guide/item/oia-visit",
+        "description_ko": "사무실 위치와 담당 업무를 확인하세요.",
+        "description_en": "Where the office is, and what it handles.",
+        "icon": "school"
+      },
+      {
+        "label_ko": "가이드 — 긴급 연락처",
+        "label_en": "Guide — Emergency Contacts",
+        "url": "/guide/item/emergency-contacts",
+        "description_ko": "112 · 119에 신고할 때 무엇을 말해야 하는지 확인하세요.",
+        "description_en": "What to say when you call 112 or 119.",
+        "icon": "emergency"
+      }
+    ],
+    "relatedFacilityIds": [
+      "s02",
+      "b04"
+    ],
+    "status": "published"
   }
 }
