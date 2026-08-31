@@ -84,7 +84,7 @@ class SettingsScreen extends ConsumerWidget {
             trailing: const Icon(Symbols.chevron_right),
             onTap: () => showLicensePage(
               context: context,
-              applicationName: 'Campus-On',
+              applicationName: l.appTitle,
               applicationVersion: l.settings_version_value,
             ),
           ),

@@ -19,7 +19,10 @@ void main() {
     );
     await tester.pump();
 
-    // Home hub renders its branded title.
-    expect(find.text('Campus-On'), findsWidgets);
+    // Home hub renders its branded title (동아메이트 / Dong-A Mate by locale).
+    expect(
+      find.textContaining(RegExp('동아메이트|Dong-A Mate')),
+      findsWidgets,
+    );
   });
 }

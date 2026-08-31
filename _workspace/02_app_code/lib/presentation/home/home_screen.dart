@@ -23,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Campus-On'),
+        title: Text(l.appTitle),
         actions: [
           _LangToggle(),
           SizedBox(width: d.spaceSm),

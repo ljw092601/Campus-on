@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appTitle": "Campus-On",
+  "appTitle": "Dong-A Mate",
   "@appTitle": {},
 
   "tab_home_label": "Home",
@@ -148,7 +148,7 @@
   "settings_licenses": "Open-source licenses",
   "settings_version": "Version",
   "settings_version_value": "0.2.0 (MVP)",
-  "settings_about_body": "Campus-On helps international students find campus facilities and administrative procedures in one place, in Korean and English. Browse the map and admin guides without signing in.",
+  "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place, in Korean and English. Browse the map and admin guides without signing in.",
   "settings_dataSource_body": "Facility and administrative information is compiled from materials provided by the Office of International Affairs. Please also check the university's official notices for the latest updates. Maps are powered by Kakao Maps.",
   "settings_contact_body": "For bugs or content corrections, please email us below.",
   "settings_contact_emailLabel": "Send email",

@@ -60,7 +60,7 @@ class SettingsInfoScreen extends StatelessWidget {
     final uri = Uri(
       scheme: 'mailto',
       path: email,
-      query: 'subject=${Uri.encodeComponent('[Campus-On] Feedback')}',
+      query: 'subject=${Uri.encodeComponent('[Dong-A Mate] Feedback')}',
     );
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
