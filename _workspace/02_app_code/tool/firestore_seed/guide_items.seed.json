@@ -4600,7 +4600,250 @@
     "title_en": "Incident Response",
     "summary_ko": "분실·도난·사고 시 대응",
     "summary_en": "Loss, theft, accidents",
-    "status": "comingSoon"
+    "overview_ko": "분실 · 도난 · 사고는 겪는 순간에는 비슷해 보여도 연락해야 하는 곳이 서로 다릅니다. 어디에 연락할지부터 정하면 나머지는 훨씬 수월합니다.\n\n· 어디에서 잃어버렸는지 모르는 단순 분실 — 경찰민원24의 분실물 신고와 습득물 검색\n· 누군가 가져갔거나 범죄 피해를 입은 경우 — 112 또는 가까운 경찰관서\n· 사람이 다쳤거나 구조가 필요한 경우 — 119\n· 여권이나 외국인등록증을 잃어버린 경우 — 본국 공관, 하이코리아, 출입국 문의\n\n이 페이지는 어디에 연락하면 되는지를 안내할 뿐, 무슨 일이 있었는지의 법적 성격이나 책임을 판단하지 않습니다.",
+    "overview_en": "Losing something, having something taken and getting hurt can feel much the same in the moment, but each one goes to a different desk. Working out who to contact first makes the rest far easier.\n\n· Something you simply lost, with no idea where — a lost-property report and the found-item search on 경찰민원24, the national police civil-services portal\n· Something taken from you, or any other crime — 112, or your nearest police office\n· Someone hurt, or anyone who needs rescuing — 119\n· A lost passport or Residence Card (ARC) — your own country's mission in Korea, HiKorea, and immigration enquiries\n\nThis page only points you to the right desk. It does not judge the legal nature of what happened, or who is responsible for it.",
+    "top_sections": [
+      {
+        "title_ko": "지금 즉시 위험하다면",
+        "title_en": "If you are in immediate danger",
+        "icon": "emergency",
+        "body_ko": "본인이나 다른 사람의 안전이 지금 위협받고 있다면 아래 절차를 읽기보다 먼저 112 또는 119에 연락하세요.\n\n경찰의 도움이 필요하면 112, 부상 · 화재 · 구조 · 구급이 필요하면 119입니다.",
+        "body_en": "If your safety or someone else's is under threat right now, call 112 or 119 before working through anything on this page.\n\n112 reaches the police. 119 is the number for injuries, fire, rescue and ambulances.",
+        "links": [
+          {
+            "label_ko": "112 전화하기",
+            "label_en": "Call 112",
+            "url": "tel:112",
+            "icon": "call"
+          },
+          {
+            "label_ko": "119 전화하기",
+            "label_en": "Call 119",
+            "url": "tel:119",
+            "icon": "call"
+          },
+          {
+            "label_ko": "가이드 — 긴급 연락처",
+            "label_en": "Guide — Emergency Contacts",
+            "url": "/guide/item/emergency-contacts",
+            "description_ko": "112 · 119에 신고할 때 무엇을 말해야 하는지 확인하세요.",
+            "description_en": "What to say when you call 112 or 119.",
+            "icon": "emergency"
+          }
+        ]
+      }
+    ],
+    "sections": [
+      {
+        "title_ko": "물건을 잃어버렸다면",
+        "title_en": "If you lost an item",
+        "icon": "help",
+        "body_ko": "어디에서 잃어버렸는지 알기 어려운 단순 분실은 경찰민원24에서 처리합니다. 온라인으로 분실물을 신고하고, 경찰관서와 연계기관에 들어온 습득물을 검색할 수 있습니다.\n\n온라인 대신 가까운 경찰관서(경찰서 · 지구대 · 파출소)를 방문해 신고할 수도 있습니다.",
+        "body_en": "Something you simply lost — where you could not say where it went — is handled by 경찰민원24. You can file a lost-property report online, and search what has been handed in to police offices and partner organisations.\n\nYou can also report it in person at your nearest police office — a police station, district police unit (지구대), or police box (파출소).",
+        "links": [
+          {
+            "label_ko": "경찰민원24 분실물 신고 안내",
+            "label_en": "경찰민원24 — Lost-property reports",
+            "url": "https://minwon24.police.go.kr/cvlcpt/cvlcptGdInfo.do?cvlcptId=MW-001",
+            "description_ko": "신고 방법과 습득물 검색 안내",
+            "description_en": "How to file, and how to search found items",
+            "icon": "info"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "신고할 때 알아두면 좋은 것",
+            "title_en": "Worth knowing before you file",
+            "lines_ko": [
+              "신고에 수수료는 없습니다",
+              "경찰관서에서 접수한 신고는 접수증의 관리번호로 온라인에서 신고 상태를 다시 확인할 수 있습니다",
+              "온라인 신고는 수정할 수 없어, 고치려면 취소한 뒤 다시 신고해야 합니다",
+              "화면은 여러 언어로 볼 수 있습니다"
+            ],
+            "lines_en": [
+              "There is no fee for filing a report",
+              "For a report filed at a police office, the management number on the receipt can be used to check its status online.",
+              "An online report cannot be edited — cancel it and file again instead",
+              "The site can be viewed in a number of languages"
+            ]
+          }
+        ],
+        "notice_ko": "훔쳐 간 것 같다면 분실물 신고가 아닙니다\n경찰민원24의 분실물 신고는 단순 분실을 위한 것이고 도난은 제외됩니다. 누군가 가져갔다고 생각되면 112 또는 가까운 경찰관서로 연락하세요.",
+        "notice_en": "If you think it was taken, this is not the right form\nThe lost-property report on 경찰민원24 is for things you simply lost — theft is excluded from it. If you believe someone took it, contact 112 or your nearest police office instead.",
+        "notice_icon": "info"
+      },
+      {
+        "title_ko": "도난이나 범죄 피해를 입었다면",
+        "title_en": "If you were affected by theft or a crime",
+        "icon": "local_police",
+        "body_ko": "위험이 계속되고 있다면 즉시 112에 연락하세요.\n\n상황이 이미 끝났더라도 112에 신고하거나 가까운 경찰관서에 문의할 수 있습니다. 분실물 신고는 도난을 처리하는 경로가 아니므로, 도난이라고 생각되면 경찰에 알리는 쪽이 맞습니다.",
+        "body_en": "If it is still happening, call 112 straight away.\n\nEven after the immediate danger has passed, you can call 112 to report it or contact your nearest police office. A lost-property report is not used for theft, so contact the police instead.",
+        "notice_ko": "직접 쫓아가거나 상대와 마주하려 하지 마세요\n상대를 추적하거나 대치하는 것은 위험할 수 있습니다. 경찰에 연락하세요.",
+        "notice_en": "Do not follow or confront anyone\nGoing after the person, or facing them yourself, can put you in danger. Contact the police instead.",
+        "notice_icon": "local_police",
+        "footnote_ko": "※ 신고 여부와 이후 절차는 사건의 상황에 따라 달라질 수 있습니다. 이 페이지는 이용할 수 있는 공식 창구만 안내하며, 피해자의 선택을 평가하지 않습니다.",
+        "footnote_en": "※ Whether and how to report can depend on the situation. This page only lists the official channels available and does not judge the choices a victim makes."
+      },
+      {
+        "title_ko": "여권 · 외국인등록증을 잃어버렸다면",
+        "title_en": "If you lost your passport or Residence Card",
+        "icon": "badge",
+        "body_ko": "두 가지는 담당하는 곳이 다릅니다. 외국인등록증은 출입국 기관에서, 여권은 본국의 주한 공관에서 처리합니다.",
+        "body_en": "These two go to different places. The Residence Card (ARC) is handled by Korean immigration; your passport is handled by your own country's mission in Korea.",
+        "links": [
+          {
+            "label_ko": "하이코리아 — 외국인등록증 분실신고",
+            "label_en": "HiKorea — report a lost Residence Card",
+            "url": "https://www.hikorea.go.kr/info/InfoFrnReportLostPageR.pt",
+            "description_ko": "등록번호와 휴대폰 인증으로 온라인 신고",
+            "description_en": "File online with your registration number and a phone verification",
+            "icon": "badge"
+          },
+          {
+            "label_ko": "1345 출입국 문의",
+            "label_en": "Call 1345 for immigration enquiries",
+            "url": "tel:1345",
+            "description_ko": "Residence Card 재발급 · 출입국 문의(유료)",
+            "description_en": "Residence Card replacement and immigration enquiries (paid call)",
+            "icon": "call"
+          }
+        ],
+        "notes": [
+          {
+            "title_ko": "외국인등록증 (Residence Card)",
+            "title_en": "Residence Card (ARC)",
+            "lines_ko": [
+              "하이코리아에서 온라인으로 분실 신고를 할 수 있습니다",
+              "분실 신고는 부정 사용을 막기 위해 분실 사실을 알리는 절차이며, 신고만으로 카드의 효력이 정지되거나 회복되는 것은 아닙니다",
+              "신고한 뒤 24시간 이내에는 철회할 수 있습니다",
+              "온라인 신고가 어려우면 관할 출입국 · 외국인관서를 방문해 신고할 수 있습니다",
+              "재발급은 사유가 발생한 날부터 14일 이내에 신청합니다",
+              "구비서류와 수수료는 하이코리아 또는 1345에서 최신 안내를 확인하세요"
+            ],
+            "lines_en": [
+              "You can file a loss report online on HiKorea",
+              "The report records that the card was lost to help prevent misuse. It does not, by itself, suspend or restore the card.",
+              "You can withdraw the report within 24 hours of filing it",
+              "If filing online does not work, you can report it at the immigration office for your area",
+              "A replacement is applied for within 14 days of the loss",
+              "Check HiKorea, or call 1345, for the current documents and fee"
+            ]
+          },
+          {
+            "title_ko": "여권",
+            "title_en": "Passport",
+            "lines_ko": [
+              "여권 재발급 절차는 국적마다 다릅니다",
+              "본국의 주한 대사관 또는 영사관에 먼저 문의하세요",
+              "새 여권을 받아 여권번호 · 발급일 · 유효기간이 바뀌면 외국인등록사항 변경신고가 필요합니다",
+              "변경신고는 사유가 발생한 날부터 15일 이내에 합니다"
+            ],
+            "lines_en": [
+              "How a passport is replaced depends on your nationality",
+              "Start by asking your own country's embassy or consulate in Korea",
+              "Once a new passport changes your passport number, issue date or expiry, your registration details have to be updated",
+              "That update is reported within 15 days of the change"
+            ]
+          }
+        ]
+      },
+      {
+        "title_ko": "사고가 났다면",
+        "title_en": "If an accident happens",
+        "icon": "local_fire_department",
+        "body_ko": "사람이 다쳤거나 구조가 필요하면 119, 경찰의 도움이 필요하면 112에 연락하세요.\n\n가능하다면 추가 위험이 없는 안전한 곳에서 도움을 기다리세요. 보험에 가입되어 있다면 가입한 보험사에도 연락하세요.",
+        "body_en": "If someone is hurt or needs rescuing, call 119. If you need the police, call 112.\n\nWhere you can, wait somewhere clear of further danger. If you are insured, contact your own insurer as well.",
+        "links": [
+          {
+            "label_ko": "가이드 — 병원 이용",
+            "label_en": "Guide — Visiting a Hospital",
+            "url": "/guide/item/hospital-guide",
+            "description_ko": "진료가 필요할 때의 접수 · 진료 · 수납 절차",
+            "description_en": "How a visit to a hospital or clinic works.",
+            "icon": "info"
+          }
+        ],
+        "footnote_ko": "※ 사고 이후에 무엇이 어떻게 정리되는지는 상황마다 다릅니다. 이 페이지는 법적인 판단을 하지 않습니다.",
+        "footnote_en": "※ What happens after an accident varies from case to case. This page makes no legal judgement."
+      },
+      {
+        "title_ko": "사건 이후 도움이 필요하다면",
+        "title_en": "If you need support afterwards",
+        "icon": "info",
+        "body_ko": "인권침해나 성희롱 · 성폭력 문제의 학교 상담 · 신고 창구는 상담 창구 가이드에서 확인할 수 있습니다.\n\n사건 이후 마음이나 학교생활이 힘들 때 이야기할 수 있는 창구도 같은 가이드에 정리되어 있습니다.",
+        "body_en": "The university desks that take counselling requests and reports about harassment, sexual violence and other violations of your rights are listed in the counselling guide.\n\nThe same guide lists where to talk to someone if things are hard afterwards, in yourself or at university.",
+        "links": [
+          {
+            "label_ko": "가이드 — 상담 창구",
+            "label_en": "Guide — Counseling",
+            "url": "/guide/item/counseling",
+            "description_ko": "학생상담센터 · 인권센터 등 상담과 신고 창구",
+            "description_en": "Counselling and reporting desks, on campus and off.",
+            "icon": "help"
+          }
+        ],
+        "notice_ko": "지금 위험한 상황이라면 이 섹션보다 112가 먼저입니다.",
+        "notice_en": "If you are in danger right now, 112 comes before anything in this section.",
+        "notice_icon": "emergency"
+      }
+    ],
+    "tips_ko": [
+      "휴대폰을 잃어버렸다면 가입한 통신사에 분실신고와 이용정지를 문의하세요.",
+      "은행카드나 신용카드를 잃어버렸다면 해당 카드사에 바로 분실신고를 하세요.",
+      "외국인등록증과 카드가 함께 든 지갑을 잃어버렸다면 출입국기관과 해당 카드사에 각각 별도로 조치하세요. 휴대폰도 함께 분실했다면 가입한 통신사에 따로 신고하세요.",
+      "통신사와 카드사마다 절차가 다를 수 있으므로 해당 기관의 공식 안내를 확인하세요.",
+      "재발급 서류 · 기한 · 수수료는 바뀔 수 있으므로 최신 공식 안내를 확인하세요."
+    ],
+    "tips_en": [
+      "If you lost your phone, ask your own mobile carrier about reporting it and suspending the line.",
+      "If you lost a bank or credit card, report it to that card company straight away.",
+      "If your wallet contained both your Residence Card and bank cards, report each loss separately to immigration and the relevant card company. If your phone was lost as well, contact your mobile carrier separately.",
+      "Carriers and card companies each have their own steps — check that company's own information.",
+      "Documents, deadlines and fees for a replacement can change, so check the current official information."
+    ],
+    "links": [
+      {
+        "label_ko": "경찰민원24",
+        "label_en": "경찰민원24 — Police civil-services portal",
+        "url": "https://minwon24.police.go.kr/",
+        "description_ko": "분실물 신고와 습득물 검색",
+        "description_en": "Lost-property reports and the found-item search",
+        "icon": "local_police"
+      },
+      {
+        "label_ko": "하이코리아 — 외국인등록증 분실신고",
+        "label_en": "HiKorea — report a lost Residence Card",
+        "url": "https://www.hikorea.go.kr/info/InfoFrnReportLostPageR.pt",
+        "description_ko": "외국인등록증을 잃어버렸을 때",
+        "description_en": "When your Residence Card (ARC) is gone",
+        "icon": "badge"
+      },
+      {
+        "label_ko": "가이드 — 긴급 연락처",
+        "label_en": "Guide — Emergency Contacts",
+        "url": "/guide/item/emergency-contacts",
+        "description_ko": "112 · 119에 신고할 때",
+        "description_en": "When you are calling 112 or 119",
+        "icon": "emergency"
+      },
+      {
+        "label_ko": "가이드 — 상담 창구",
+        "label_en": "Guide — Counseling",
+        "url": "/guide/item/counseling",
+        "description_ko": "사건 이후 상담과 인권 관련 창구",
+        "description_en": "Counselling and rights desks for afterwards",
+        "icon": "help"
+      },
+      {
+        "label_ko": "가이드 — 병원 이용",
+        "label_en": "Guide — Visiting a Hospital",
+        "url": "/guide/item/hospital-guide",
+        "description_ko": "다쳐서 진료가 필요할 때",
+        "description_en": "When an injury needs treating",
+        "icon": "info"
+      }
+    ],
+    "status": "published"
   },
   "counseling": {
     "categoryId": "emergency",

@@ -1,6 +1,7 @@
 import 'package:campus_on/app.dart';
 import 'package:campus_on/data/mock/mock_data.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
+import 'package:campus_on/domain/repositories/guide_repository.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -2884,18 +2885,668 @@ void main() {
     expect(find.text('Counseling'), findsOneWidget);
   });
 
-  testWidgets('Guide detail: coming-soon item shows placeholder', (tester) async {
+  // ── incident-response ─────────────────────────────────────────────────────
+  // NOTE: this page carries 112, 119 and 1345 as real `tel:` rows. Nothing here
+  // taps one — the urls are asserted as data, the widget tests read labels only.
+  test('Incident response: data-level guarantees (no judgement, no guessing)',
+      () {
+    final item =
+        MockData.guideItems.firstWhere((g) => g.id == 'incident-response');
+
+    expect(item.status, GuideStatus.published);
+    expect(item.categoryId, GuideCategory.emergency);
+    expect(item.titleKo, '사건·사고 대응');
+    expect(item.titleEn, 'Incident Response');
+    expect(item.summaryKo, '분실·도난·사고 시 대응');
+    expect(item.summaryEn, 'Loss, theft, accidents');
+
+    // No map card: there is no police facility in the data, and any card here
+    // would read as "go to this one".
+    expect(item.relatedFacilityIds, isEmpty);
+
+    // Safety block first, owning 112/119 and the emergency-contacts route.
+    final urgent = item.topSections.single;
+    expect(urgent.titleKo, '지금 즉시 위험하다면');
+    expect(urgent.titleEn, 'If you are in immediate danger');
+    expect(
+      urgent.links.map((l) => l.url).toList(),
+      const ['tel:112', 'tel:119', '/guide/item/emergency-contacts'],
+    );
+
+    expect(
+      item.sections.map((s) => s.titleEn).toList(),
+      const [
+        'If you lost an item',
+        'If you were affected by theft or a crime',
+        'If you lost your passport or Residence Card',
+        'If an accident happens',
+        'If you need support afterwards',
+      ],
+    );
+
+    final allUrls = [
+      for (final s in [...item.topSections, ...item.sections])
+        ...s.links.map((l) => l.url),
+      ...item.links.map((l) => l.url),
+    ];
+    // Exactly the three phone rows the brief settled on.
+    expect(
+      allUrls.where((u) => u.startsWith('tel:')).toSet(),
+      {'tel:112', 'tel:119', 'tel:1345'},
+    );
+    expect(allUrls.where((u) => u.startsWith('tel:')).length, 3);
+    // External links: the police portal and HiKorea only. The 외교부 mission
+    // directory is absent on purpose — mofa.go.kr could not be reached to
+    // verify the URL, and a broken link is worse than none.
+    expect(
+      allUrls.where((u) => u.startsWith('http')).toList(),
+      const [
+        'https://minwon24.police.go.kr/cvlcpt/cvlcptGdInfo.do?cvlcptId=MW-001',
+        'https://www.hikorea.go.kr/info/InfoFrnReportLostPageR.pt',
+        'https://minwon24.police.go.kr/',
+        'https://www.hikorea.go.kr/info/InfoFrnReportLostPageR.pt',
+      ],
+    );
+    expect(allUrls.any((u) => u.contains('mofa.go.kr')), isFalse);
+    // In-app routes.
+    for (final route in const [
+      '/guide/item/emergency-contacts',
+      '/guide/item/counseling',
+      '/guide/item/hospital-guide',
+    ]) {
+      expect(allUrls.contains(route), isTrue, reason: route);
+    }
+    // arc-issue is the first-issue guide, not a replacement guide.
+    expect(allUrls.any((u) => u.contains('arc-issue')), isFalse);
+    // Bottom block, in the agreed order.
+    expect(
+      item.links.map((l) => l.url).toList(),
+      const [
+        'https://minwon24.police.go.kr/',
+        'https://www.hikorea.go.kr/info/InfoFrnReportLostPageR.pt',
+        '/guide/item/emergency-contacts',
+        '/guide/item/counseling',
+        '/guide/item/hospital-guide',
+      ],
+    );
+
+    // Every renderable string of this item, both languages.
+    final dump = [
+      item.titleKo, item.titleEn, item.summaryKo, item.summaryEn,
+      item.overviewKo, item.overviewEn,
+      ...item.tipsKo, ...item.tipsEn,
+      for (final s in [...item.topSections, ...item.sections]) ...[
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.noticeKo, s.noticeEn,
+        s.footnoteKo, s.footnoteEn,
+        ...s.stepsKo, ...s.stepsEn,
+        for (final l in s.links)
+          '${l.labelKo}${l.labelEn}${l.url}'
+              '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+        for (final n in s.notes) ...[
+          n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+        ],
+      ],
+      for (final l in item.links)
+        '${l.labelKo}${l.labelEn}${l.url}'
+            '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+    ].whereType<String>().join('\n');
+
+    // No amount anywhere — the ARC replacement fee could not be confirmed.
+    expect(RegExp(r'[0-9][0-9,]*\s*원').hasMatch(dump), isFalse);
+    expect(dump.contains('₩'), isFalse);
+    expect(dump.contains('KRW'), isFalse);
+
+    // Retired or unverified services, and the desks the brief excluded.
+    for (final banned in const [
+      'LOST112',
+      'lost112',
+      '182',
+      '02-2011-0700',
+      '여신금융협회',
+      '일괄',
+      'Migrant Rights',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'excluded: $banned');
+    }
+
+    // No claim about which languages 112 or 119 can work in — the site's own
+    // multilingual screen is the only language fact stated, and it is about
+    // 경찰민원24, not about a call.
+    for (final banned in const [
+      '통역',
+      'interpreter',
+      'interpretation',
+      '영어',
+      'English',
+      '중국어',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'language claim: $banned');
+    }
+
+    // No named organisation of any kind.
+    for (final banned in const [
+      '사하경찰서',
+      '서부경찰서',
+      '동아대학교병원',
+      'SKT',
+      'KT',
+      'LG U+',
+      '국민은행',
+      '신한',
+      '삼성',
+      '현대',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'named org: $banned');
+    }
+
+    // No legal judgement, and no driver-only accident procedure.
+    for (final banned in const [
+      '과실',
+      '합의',
+      '보상',
+      '책임 비율',
+      'at fault',
+      'liable',
+      'settlement',
+      'compensation',
+      '삼각대',
+      '갓길',
+      'warning triangle',
+      'hard shoulder',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'judgement: $banned');
+    }
+
+    // Nothing pressures a victim: no duty to report, no duty to keep evidence.
+    for (final banned in const [
+      '반드시',
+      '증거',
+      'you must',
+      'be sure to',
+      'make sure you report',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'pressure: $banned');
+    }
+    // …and the page says so out loud.
+    // Reporting is described as situation-dependent, never as the victim's
+    // burden and never as a blanket rule about every case.
+    expect(dump, contains('신고 여부와 이후 절차는 사건의 상황에 따라 달라질 수 있습니다'));
+    expect(dump, contains('피해자의 선택을 평가하지 않습니다'));
+    expect(dump, contains('Whether and how to report can depend on the '
+        'situation'));
+    expect(dump, contains('does not judge the choices a victim makes'));
+    for (final banned in const [
+      '신고할지 여부는 본인이 정하는 일',
+      'Whether to report is yours to decide',
+      'does not judge what you should have done',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'superseded: $banned');
+    }
+    expect(dump, contains('법적인 판단을 하지 않습니다'));
+    expect(dump, contains('makes no legal judgement'));
+
+    // ── 분실 vs 도난, the distinction this page exists for ──────────────────
+    final lost = item.sections[0];
+    final theft = item.sections[1];
+    expect(lost.noticeKo, contains('도난은 제외'));
+    expect(lost.noticeKo, contains('112'));
+    expect(lost.noticeEn, contains('theft is excluded'));
+    expect(lost.bodyKo, contains('단순 분실'));
+    expect(lost.bodyEn, contains('simply lost'));
+    expect(lost.notes.single.linesKo, contains('신고에 수수료는 없습니다'));
+    // The management number checks a report's status — it is not the
+    // found-item search key, which the earlier wording implied.
+    final numberKo =
+        lost.notes.single.linesKo.singleWhere((l) => l.contains('관리번호'));
+    expect(numberKo, contains('경찰관서에서 접수한 신고'));
+    expect(numberKo, contains('신고 상태를 다시 확인'));
+    final numberEn = lost.notes.single.linesEn
+        .singleWhere((l) => l.contains('management number'));
+    expect(numberEn, contains('filed at a police office'));
+    expect(numberEn, contains('check its status online'));
+    for (final banned in const [
+      '관리번호로 습득물을 검색',
+      'is what you search found items with',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'superseded: $banned');
+    }
+    // The found-item search itself still exists, stated in the body.
+    expect(lost.bodyKo, contains('습득물을 검색'));
+    expect(lost.bodyEn, contains('search what has been handed in'));
+    expect(theft.bodyKo, contains('분실물 신고는 도난을 처리하는 경로가 아니'));
+    expect(theft.bodyEn, contains('not used for theft'));
+    expect(theft.bodyEn, contains('Even after the immediate danger has passed'));
+    expect(theft.bodyEn, contains('contact the police instead'));
+    for (final banned in const [
+      'report it on 112',
+      'the police are where it goes',
+      'not the route for theft',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'superseded: $banned');
+    }
+    // Never send anyone after the person.
+    expect(theft.noticeKo, contains('직접 쫓아가거나'));
+    expect(theft.noticeEn, contains('Do not follow or confront'));
+
+    // ── Naming: 경찰민원24 has no confirmed official English name ───────────
+    // It is introduced once, descriptively, and referred to by its Korean
+    // name after that. "Police Minwon 24" must never appear as if official.
+    expect(dump.contains('Police Minwon 24'), isFalse);
+    expect(dump.contains('Police Minwon24'), isFalse);
+    expect(item.overviewEn,
+        contains('경찰민원24, the national police civil-services portal'));
+    expect(lost.bodyEn, contains('is handled by 경찰민원24.'));
+    expect(lost.links.single.labelEn, '경찰민원24 — Lost-property reports');
+    expect(item.links.first.labelEn, '경찰민원24 — Police civil-services portal');
+    // Korean police-office types are explained rather than left untranslated.
+    expect(
+      lost.bodyEn,
+      contains('a police station, district police unit (지구대), or police '
+          'box (파출소)'),
+    );
+
+    // ── Residence Card ─────────────────────────────────────────────────────
+    final ids = item.sections[2];
+    final arc = ids.notes.first;
+    expect(arc.titleEn, 'Residence Card (ARC)');
+    expect(arc.linesKo.any((l) => l.contains('효력이 정지되거나 회복되는 것은 아닙니다')),
+        isTrue);
+    // The English must not promise that reporting makes misuse impossible.
+    expect(
+        arc.linesEn.any((l) =>
+            l.contains('records that the card was lost to help prevent '
+                'misuse') &&
+            l.contains('does not, by itself, suspend or restore the card')),
+        isTrue);
+    for (final banned in const [
+      'so it cannot be misused',
+      'neither suspends nor restores',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'superseded: $banned');
+    }
+    expect(arc.linesKo.any((l) => l.contains('24시간 이내에는 철회')), isTrue);
+    expect(arc.linesKo.any((l) => l.contains('14일 이내')), isTrue);
+    expect(arc.linesEn.any((l) => l.contains('within 14 days')), isTrue);
+    expect(arc.linesKo.any((l) => l.contains('하이코리아 또는 1345')), isTrue);
+    expect(dump.contains('Residence Card (ARC)'), isTrue);
+    expect(dump.toLowerCase().contains('alien registration'), isFalse);
+
+    // ── Passport: nationality-dependent, never generalised ──────────────────
+    final passport = ids.notes[1];
+    expect(passport.linesKo.first, contains('국적마다 다릅니다'));
+    expect(passport.linesEn.first, contains('depends on your nationality'));
+    expect(passport.linesKo.any((l) => l.contains('주한 대사관 또는 영사관')), isTrue);
+    expect(passport.linesKo.any((l) => l.contains('15일 이내')), isTrue);
+    expect(passport.linesEn.any((l) => l.contains('within 15 days')), isTrue);
+    // Korean police reporting is never stated as an obligation for a passport.
+    for (final banned in const [
+      '경찰에 분실신고를 해야',
+      '경찰 신고가 필요합니다',
+      'you must report it to the police',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'passport duty: $banned');
+    }
+
+    // 1345 only ever appears in the Residence Card / immigration context.
+    final sectionsWithout1345 = [
+      ...item.topSections,
+      item.sections[0],
+      item.sections[1],
+      item.sections[3],
+      item.sections[4],
+    ];
+    for (final s in sectionsWithout1345) {
+      final text = [
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.noticeKo, s.noticeEn,
+        s.footnoteKo, s.footnoteEn,
+        for (final l in s.links) '${l.labelKo}${l.labelEn}${l.url}',
+        for (final n in s.notes) ...[n.titleKo, ...n.linesKo, ...n.linesEn],
+      ].whereType<String>().join('\n');
+      expect(text.contains('1345'), isFalse, reason: '1345 in ${s.titleEn}');
+    }
+    expect(item.overviewKo!.contains('1345'), isFalse);
+    expect(item.tipsKo.join().contains('1345'), isFalse);
+
+    // ── Accident: minimum response only ────────────────────────────────────
+    final accident = item.sections[3];
+    expect(accident.bodyKo, contains('119'));
+    expect(accident.bodyKo, contains('112'));
+    expect(accident.bodyKo, contains('보험사'));
+    expect(accident.bodyEn, contains('your own insurer'));
+    expect(accident.links.single.url, '/guide/item/hospital-guide');
+
+    // ── Afterwards: counseling owns the detail, this page just points ───────
+    final after = item.sections[4];
+    expect(after.links.single.url, '/guide/item/counseling');
+    // The human-rights centre's phone, room and role stay in the counseling
+    // guide. It may be *named* once, in the link description that says what
+    // that guide contains — but none of its details are repeated here.
+    for (final banned in const [
+      '051-200-5711',
+      '503호',
+      '대학본부',
+      '상담과 신고를 접수',
+      'human rights centre',
+    ]) {
+      expect(dump.contains(banned), isFalse, reason: 'duplicated: $banned');
+    }
+    expect(RegExp('인권센터').allMatches(dump).length, 1);
+    expect(after.links.single.descriptionKo, contains('인권센터'));
+    // The section body itself does not name it.
+    expect(after.bodyKo!.contains('인권센터'), isFalse);
+    expect(after.noticeKo, contains('112'));
+
+    // Tips carry the phone/card advice, and no company is named.
+    expect(item.tipsKo.length, 5);
+    expect(item.tipsEn.length, 5);
+    expect(item.tipsKo.first, contains('통신사'));
+    expect(item.tipsKo[1], contains('카드사'));
+    // The wallet tip splits the three actions explicitly.
+    expect(item.tipsKo[2], contains('출입국기관'));
+    expect(item.tipsKo[2], contains('해당 카드사'));
+    expect(item.tipsKo[2], contains('가입한 통신사'));
+    expect(item.tipsEn[2], contains('report each loss separately to '
+        'immigration and the relevant card company'));
+    expect(item.tipsEn[2], contains('contact your mobile carrier separately'));
+    expect(dump.contains('phone details'), isFalse);
+  });
+
+  testWidgets('Guide detail: incident response renders its sections in order',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
     await tester.pumpWidget(await _app());
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Guide'));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    expect(find.text('Loss, theft, accidents'), findsOneWidget);
 
-    // Emergency & Help → "Incident Response" is the last placeholder left.
-    // (Counseling used to be one; it is written now, so the check moved here.)
+    await tester.tap(find.text('Incident Response'));
+    await tester.pumpAndSettle();
+    // Published now — the placeholder must be gone.
+    expect(find.textContaining('coming soon', findRichText: true), findsNothing);
+
+    const titles = [
+      'Overview',
+      'If you are in immediate danger',
+      'If you lost an item',
+      'If you were affected by theft or a crime',
+      'If you lost your passport or Residence Card',
+      'If an accident happens',
+      'If you need support afterwards',
+      'Good to know',
+      'Links & Locations',
+    ];
+    for (final title in titles) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+    var previous = -1.0;
+    for (final title in titles) {
+      final y = tester.getTopLeft(find.text(title)).dy;
+      expect(y, greaterThan(previous), reason: title);
+      previous = y;
+    }
+
+    // Safety rows sit at the top, above the procedure.
+    expect(find.text('Call 112'), findsOneWidget);
+    expect(find.text('Call 119'), findsOneWidget);
+    expect(
+      tester.getTopLeft(find.text('Call 119')).dy,
+      lessThan(tester.getTopLeft(find.text('If you lost an item')).dy),
+    );
+
+    // The lost-vs-theft distinction is on screen in English.
+    expect(
+      find.textContaining('theft is excluded from it'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('not used for theft'), findsOneWidget);
+    expect(find.textContaining('not the route for theft'), findsNothing);
+    expect(find.textContaining('Do not follow or confront anyone'),
+        findsOneWidget);
+
+    // Residence Card facts, stated without a fee.
+    expect(
+      find.textContaining('does not, by itself, suspend or restore the card'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('so it cannot be misused'), findsNothing);
+    // The English never presents a name for 경찰민원24 that is not official.
+    expect(find.textContaining('Police Minwon 24'), findsNothing);
+    expect(
+      find.textContaining('the national police civil-services portal'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('district police unit (지구대)'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('within 24 hours'), findsOneWidget);
+    expect(find.textContaining('within 14 days'), findsOneWidget);
+    expect(find.textContaining('within 15 days'), findsOneWidget);
+    expect(find.textContaining('depends on your nationality'), findsOneWidget);
+
+    // Rows that appear both in their own section and in the bottom block.
+    expect(find.text('HiKorea — report a lost Residence Card'),
+        findsNWidgets(2));
+    expect(find.text('Guide — Emergency Contacts'), findsNWidgets(2));
+    expect(find.text('Guide — Counseling'), findsNWidgets(2));
+    expect(find.text('Guide — Visiting a Hospital'), findsNWidgets(2));
+    // …and the two police-portal rows, each appearing once.
+    expect(find.text('경찰민원24 — Lost-property reports'), findsOneWidget);
+    expect(
+      find.text('경찰민원24 — Police civil-services portal'),
+      findsOneWidget,
+    );
+    expect(find.text('Call 1345 for immigration enquiries'), findsOneWidget);
+
+    // No related-location card at all.
+    expect(find.text('학생회관(Q)'), findsNothing);
+    expect(find.text('종합강의동(BA-BD)'), findsNothing);
+  });
+
+  testWidgets('Guide detail: incident response in-app links route in-app',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    Future<void> openGuide() async {
+      await tester.tap(find.text('Guide'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Emergency & Help'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Incident Response'));
+      await tester.pumpAndSettle();
+    }
+
+    // `pumpAndSettle` returns while the mock repo's delayed load is still
+    // pending, so each destination needs that time before it is asserted on.
+    // `_LinkRow` uses `context.go`, which replaces the route rather than
+    // pushing one, so re-enter from the tab instead of popping.
+    await openGuide();
+    await tester.tap(find.text('Guide — Counseling').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('Student counseling centre'), findsOneWidget);
+
+    await openGuide();
+    await tester.tap(find.text('Guide — Visiting a Hospital').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('At the reception desk'), findsOneWidget);
+
+    await openGuide();
+    await tester.tap(find.text('Guide — Emergency Contacts').first);
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+    expect(find.text('In an emergency'), findsOneWidget);
+
+    // Drain the destination's related-location lookup so no timer outlives
+    // the widget tree.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('Guide detail: incident response fits a 360dp phone',
+      (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Emergency & Help'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Incident Response'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+
+    // Scrolling only — no call row is ever tapped.
+    final list = find.byType(ListView).last;
+    for (var i = 0; i < 40; i++) {
+      await tester.drag(list, const Offset(0, -600));
+      await tester.pump();
+      expect(tester.takeException(), isNull, reason: 'scroll step $i');
+    }
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Links & Locations'), findsNothing);
+    expect(find.text('Emergency & Help'), findsOneWidget);
+  });
+
+  testWidgets('Guide detail: incident response renders in Korean',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 8000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app(locale: 'ko'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('가이드'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('긴급·도움'));
+    await tester.pumpAndSettle();
+    expect(find.text('분실·도난·사고 시 대응'), findsOneWidget);
+
+    await tester.tap(find.text('사건·사고 대응'));
+    await tester.pumpAndSettle();
+
+    for (final title in const [
+      '지금 즉시 위험하다면',
+      '물건을 잃어버렸다면',
+      '도난이나 범죄 피해를 입었다면',
+      '여권 · 외국인등록증을 잃어버렸다면',
+      '사고가 났다면',
+      '사건 이후 도움이 필요하다면',
+    ]) {
+      expect(find.text(title), findsOneWidget, reason: title);
+    }
+
+    expect(find.text('112 전화하기'), findsOneWidget);
+    expect(find.text('119 전화하기'), findsOneWidget);
+    expect(find.text('1345 출입국 문의'), findsOneWidget);
+    // The distinction, in Korean.
+    expect(find.textContaining('도난은 제외됩니다'), findsOneWidget);
+    expect(find.textContaining('단순 분실'), findsWidgets);
+    expect(find.textContaining('신고에 수수료는 없습니다'), findsOneWidget);
+    expect(find.textContaining('국적마다 다릅니다'), findsOneWidget);
+    expect(find.textContaining('14일 이내'), findsOneWidget);
+    expect(find.textContaining('15일 이내'), findsOneWidget);
+    // Nothing pressures, judges or names a company.
+    expect(find.textContaining('반드시'), findsNothing);
+    expect(find.textContaining('증거'), findsNothing);
+    expect(find.textContaining('과실'), findsNothing);
+    expect(find.textContaining('LOST112'), findsNothing);
+    expect(
+      find.textContaining('신고 여부와 이후 절차는 사건의 상황에 따라 달라질 수 있습니다'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('피해자의 선택을 평가하지 않습니다'), findsOneWidget);
+    expect(find.textContaining('신고할지 여부는 본인이 정하는 일'), findsNothing);
+    // The management number is described as a status check, not a search key.
+    expect(find.textContaining('신고 상태를 다시 확인'), findsOneWidget);
+    expect(find.textContaining('관리번호로 습득물을 검색'), findsNothing);
+    // The wallet tip separates the three actions.
+    expect(find.textContaining('출입국기관과 해당 카드사에 각각 별도로'), findsOneWidget);
+  });
+
+  testWidgets('Favorite toggle works from the incident response guide',
+      (tester) async {
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Incident Response'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Add to favorites'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Guides'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Incident Response'), findsOneWidget);
+  });
+
+  // Every real guide is written now, so no production item can exercise the
+  // coming-soon path any more. The path itself still ships — a Firestore
+  // document with no body renders it — so it is covered here with a synthetic
+  // item served by a test-only repository. Nothing about this fixture exists
+  // in mock_data or in the seed.
+  testWidgets('Guide detail: an item with no content shows the placeholder',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(prefs),
+          guideRepositoryProvider.overrideWithValue(_StubGuideRepository()),
+        ],
+        child: const CampusOnApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Guide'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Emergency & Help'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Test Coming Soon'));
     await tester.pumpAndSettle();
 
     // No sectioned content → the standard coming-soon copy is shown.
@@ -2903,6 +3554,32 @@ void main() {
       find.textContaining('coming soon', findRichText: true),
       findsWidgets,
     );
+  });
+
+  test('hasNoContent drives the placeholder, and no real guide hits it', () {
+    // The fixture the widget test above renders: title and summary only.
+    expect(_StubGuideRepository.stub.hasNoContent, isTrue);
+    expect(_StubGuideRepository.stub.isComingSoon, isTrue);
+
+    // Anything with a body is not empty, whatever its status says.
+    const withOverview = AdminGuideItem(
+      id: 'x',
+      categoryId: GuideCategory.emergency,
+      titleKo: 'ㄱ',
+      titleEn: 'x',
+      summaryKo: 'ㄱ',
+      summaryEn: 'x',
+      overviewKo: '내용',
+    );
+    expect(withOverview.hasNoContent, isFalse);
+
+    // …and every shipped guide is written and published: 18 / 18.
+    expect(MockData.guideItems.length, 18);
+    for (final g in MockData.guideItems) {
+      expect(g.hasNoContent, isFalse, reason: g.id);
+      expect(g.status, GuideStatus.published, reason: g.id);
+      expect(g.isComingSoon, isFalse, reason: g.id);
+    }
   });
 
   testWidgets('Favorite toggle from guide detail persists to Favorites (S10)',
@@ -2931,4 +3608,33 @@ void main() {
 
     expect(find.text('Alien Registration Card (ARC)'), findsOneWidget);
   });
+}
+
+/// Test-only repository serving a single content-free guide, so the
+/// coming-soon render path stays covered now that every shipped guide is
+/// written. This fixture lives in the test file on purpose: it is never in
+/// `MockData`, and never in the Firestore seed.
+class _StubGuideRepository implements GuideRepository {
+  static const stub = AdminGuideItem(
+    id: 'test-coming-soon',
+    categoryId: GuideCategory.emergency,
+    titleKo: '테스트 준비 중 항목',
+    titleEn: 'Test Coming Soon',
+    summaryKo: '테스트 픽스처',
+    summaryEn: 'Test fixture',
+  );
+
+  @override
+  Future<List<AdminGuideItem>> getAllItems() async => const [stub];
+
+  @override
+  Future<List<AdminGuideItem>> getByCategory(GuideCategory category) async =>
+      category == GuideCategory.emergency ? const [stub] : const [];
+
+  @override
+  Future<AdminGuideItem?> getById(String id) async =>
+      id == stub.id ? stub : null;
+
+  @override
+  Future<List<AdminGuideItem>> search(String query) async => const [];
 }
