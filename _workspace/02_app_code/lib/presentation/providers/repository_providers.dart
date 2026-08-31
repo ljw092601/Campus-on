@@ -7,9 +7,11 @@ import '../../data/firestore/firestore_facility_repository.dart';
 import '../../data/firestore/firestore_floor_guide_repository.dart';
 import '../../data/firestore/firestore_guide_repository.dart';
 import '../../data/repositories/local_favorites_repository.dart';
+import '../../data/repositories/mock_dining_repository.dart';
 import '../../data/repositories/mock_facility_repository.dart';
 import '../../data/repositories/mock_floor_guide_repository.dart';
 import '../../data/repositories/mock_guide_repository.dart';
+import '../../domain/repositories/dining_repository.dart';
 import '../../domain/repositories/facility_repository.dart';
 import '../../domain/repositories/favorites_repository.dart';
 import '../../domain/repositories/floor_guide_repository.dart';
@@ -48,4 +50,11 @@ final floorGuideRepositoryProvider = Provider<FloorGuideRepository>(
 
 final favoritesRepositoryProvider = Provider<FavoritesRepository>(
   (ref) => LocalFavoritesRepository(ref.watch(sharedPreferencesProvider)),
+);
+
+/// Cafeteria menus — mock only for now. TODO(dining-api): when the school's
+/// menu API contract arrives, add an ApiDiningRepository and swap here
+/// (screens/providers stay untouched).
+final diningRepositoryProvider = Provider<DiningRepository>(
+  (ref) => MockDiningRepository(),
 );

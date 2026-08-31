@@ -46,6 +46,19 @@
   "classroom_suggestions_empty": "No matching rooms.",
   "classroom_noRoomData": "Room numbers for this building aren't registered yet. You can still search with a 4-digit number.",
 
+  "dining_meal_breakfast": "Breakfast",
+  "dining_meal_lunch": "Lunch",
+  "dining_meal_dinner": "Dinner",
+  "dining_closed": "Closed today.",
+  "dining_price": "₩{price}",
+  "@dining_price": {
+    "placeholders": { "price": { "type": "int" } }
+  },
+  "dining_placeholder_notice": "Sample menus for now — real menus will appear once the school API is connected.",
+  "dining_prevDay": "Previous day",
+  "dining_nextDay": "Next day",
+  "dining_error_loadFailed": "Couldn't load the menus.",
+
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",
   "facility_category_dining": "Dining",

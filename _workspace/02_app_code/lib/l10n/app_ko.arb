@@ -45,6 +45,19 @@
   "classroom_suggestions_empty": "일치하는 호수가 없어요.",
   "classroom_noRoomData": "이 건물은 호수 정보가 아직 준비 중이에요. 4자리 번호로 바로 검색할 수 있어요.",
 
+  "dining_meal_breakfast": "조식",
+  "dining_meal_lunch": "중식",
+  "dining_meal_dinner": "석식",
+  "dining_closed": "오늘은 운영하지 않아요.",
+  "dining_price": "{price}원",
+  "@dining_price": {
+    "placeholders": { "price": { "type": "int" } }
+  },
+  "dining_placeholder_notice": "지금은 예시 식단이에요. 학교 API 연동 후 실제 메뉴가 표시됩니다.",
+  "dining_prevDay": "이전 날짜",
+  "dining_nextDay": "다음 날짜",
+  "dining_error_loadFailed": "식단을 불러오지 못했어요.",
+
   "facility_category_building": "건물",
   "facility_category_classroom": "강의실",
   "facility_category_dining": "식당",
