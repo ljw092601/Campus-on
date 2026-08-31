@@ -14,7 +14,7 @@ abstract final class BuildingData {
     Facility(
       id: 's01',
       nameKo: '대학본부 및 인문과학대학(A)',
-      nameEn: '',
+      nameEn: 'University Administration & College of Humanities (A)',
       category: FacilityCategory.building,
       lat: 35.11467114988958,
       lng: 128.96549766927106,
@@ -26,7 +26,7 @@ abstract final class BuildingData {
     Facility(
       id: 's02',
       nameKo: '학생회관(Q)',
-      nameEn: '',
+      nameEn: 'Student Union Building (Q)',
       category: FacilityCategory.building,
       lat: 35.11558536131743,
       lng: 128.96594462594888,
@@ -37,7 +37,7 @@ abstract final class BuildingData {
     Facility(
       id: 's03',
       nameKo: '공과대학1호관(P1)',
-      nameEn: '',
+      nameEn: 'Engineering Building 1 (P1)',
       category: FacilityCategory.building,
       lat: 35.11598166380311,
       lng: 128.96651349790017,
@@ -48,7 +48,7 @@ abstract final class BuildingData {
     Facility(
       id: 's04',
       nameKo: '공과대학2호관(P2)',
-      nameEn: '',
+      nameEn: 'Engineering Building 2 (P2)',
       category: FacilityCategory.building,
       lat: 35.116455923647756,
       lng: 128.9672761843048,
@@ -59,7 +59,7 @@ abstract final class BuildingData {
     Facility(
       id: 's05',
       nameKo: '공과대학3호관(P3)',
-      nameEn: '',
+      nameEn: 'Engineering Building 3 (P3)',
       category: FacilityCategory.building,
       lat: 35.1169032605884,
       lng: 128.9678929093368,
@@ -70,7 +70,7 @@ abstract final class BuildingData {
     Facility(
       id: 's06',
       nameKo: '공과대학5호관(RS)',
-      nameEn: '',
+      nameEn: 'Engineering Building 5 (RS)',
       category: FacilityCategory.building,
       lat: 35.1172749166863,
       lng: 128.96775926839615,
@@ -81,7 +81,7 @@ abstract final class BuildingData {
     Facility(
       id: 's07',
       nameKo: '예술체육대학1관',
-      nameEn: '',
+      nameEn: 'Arts & Sports Building 1',
       category: FacilityCategory.building,
       lat: 35.11432660394371,
       lng: 128.9664600068146,
@@ -92,7 +92,7 @@ abstract final class BuildingData {
     Facility(
       id: 's08',
       nameKo: '교수회관(W)',
-      nameEn: '',
+      nameEn: 'Faculty Hall (W)',
       category: FacilityCategory.building,
       lat: 35.11425392116053,
       lng: 128.96788402010404,
@@ -103,7 +103,7 @@ abstract final class BuildingData {
     Facility(
       id: 's09',
       nameKo: '생명자원과학대학 및 건강과학대학',
-      nameEn: '',
+      nameEn: 'Colleges of Life Resource Science & Health Sciences',
       category: FacilityCategory.building,
       lat: 35.114910298505684,
       lng: 128.96853043765964,
@@ -114,7 +114,7 @@ abstract final class BuildingData {
     Facility(
       id: 's10',
       nameKo: '한림도서관(B)',
-      nameEn: '',
+      nameEn: 'Hanlim Library (B)',
       category: FacilityCategory.library,
       lat: 35.11550178886394,
       lng: 128.96762339547058,
@@ -125,7 +125,7 @@ abstract final class BuildingData {
     Facility(
       id: 's11',
       nameKo: '자연과학대학(E)',
-      nameEn: '',
+      nameEn: 'College of Natural Sciences (E)',
       category: FacilityCategory.building,
       lat: 35.115687874758684,
       lng: 128.96795689829986,
@@ -136,7 +136,7 @@ abstract final class BuildingData {
     Facility(
       id: 'p4',
       nameKo: '공과대학4호관(P4)',
-      nameEn: '',
+      nameEn: 'Engineering Building 4 (P4)',
       category: FacilityCategory.building,
       lat: 35.1160873732028,
       lng: 128.9683284400812,
@@ -146,7 +146,7 @@ abstract final class BuildingData {
     Facility(
       id: 's13',
       nameKo: '창업관',
-      nameEn: '',
+      nameEn: 'Startup Hall',
       category: FacilityCategory.building,
       lat: 35.1162097721076,
       lng: 128.96966943765634,
@@ -157,7 +157,7 @@ abstract final class BuildingData {
     Facility(
       id: 's14',
       nameKo: '산학관(SM)',
-      nameEn: '',
+      nameEn: 'Industry-Academic Cooperation Building (SM)',
       category: FacilityCategory.building,
       lat: 35.117361540556615,
       lng: 128.96949974839012,
@@ -168,7 +168,7 @@ abstract final class BuildingData {
     Facility(
       id: 's15',
       nameKo: '한림생활관 승학1관',
-      nameEn: '',
+      nameEn: 'Hanlim Dormitory Seunghak Hall 1',
       category: FacilityCategory.building,
       lat: 35.11876001285098,
       lng: 128.96939906028723,
@@ -179,7 +179,7 @@ abstract final class BuildingData {
     Facility(
       id: 's16',
       nameKo: '학생군사교육단(DE)',
-      nameEn: '',
+      nameEn: 'ROTC Building (DE)',
       category: FacilityCategory.building,
       lat: 35.119207606476486,
       lng: 128.9687517535152,
@@ -190,7 +190,7 @@ abstract final class BuildingData {
     Facility(
       id: 's17',
       nameKo: '예술체육대학2관',
-      nameEn: '',
+      nameEn: 'Arts & Sports Building 2',
       category: FacilityCategory.building,
       lat: 35.11546888503327,
       lng: 128.96867823054578,
@@ -201,7 +201,7 @@ abstract final class BuildingData {
     Facility(
       id: 's18',
       nameKo: '예술체육대학 실습동',
-      nameEn: '',
+      nameEn: 'Arts & Sports Practice Building',
       category: FacilityCategory.building,
       lat: 35.115201892559284,
       lng: 128.96874857838637,
@@ -212,7 +212,7 @@ abstract final class BuildingData {
     Facility(
       id: 's19',
       nameKo: '한림생활관 승학2관',
-      nameEn: '',
+      nameEn: 'Hanlim Dormitory Seunghak Hall 2',
       category: FacilityCategory.building,
       lat: 35.11813154344573,
       lng: 128.96814455687274,
@@ -223,7 +223,7 @@ abstract final class BuildingData {
     Facility(
       id: 's20',
       nameKo: '한림생활관 승학2관',
-      nameEn: '',
+      nameEn: 'Hanlim Dormitory Seunghak Hall 2',
       category: FacilityCategory.building,
       lat: 35.11843328505629,
       lng: 128.96843149923154,
@@ -234,7 +234,7 @@ abstract final class BuildingData {
     Facility(
       id: 's31',
       nameKo: '수위실',
-      nameEn: '',
+      nameEn: 'Security Office',
       category: FacilityCategory.etc,
       lat: 35.11386873848791,
       lng: 128.96593627898181,
@@ -245,7 +245,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc059',
       nameKo: '정문',
-      nameEn: '',
+      nameEn: 'Main Gate',
       category: FacilityCategory.etc,
       lat: 35.11366960778213,
       lng: 128.96571214796595,
@@ -254,7 +254,7 @@ abstract final class BuildingData {
     Facility(
       id: 's22',
       nameKo: 'L2M Platform(S22)',
-      nameEn: '',
+      nameEn: 'L2M Platform (S22)',
       category: FacilityCategory.building,
       lat: 35.1167269930644,
       lng: 128.96972850335627,
@@ -264,7 +264,7 @@ abstract final class BuildingData {
     Facility(
       id: 's21',
       nameKo: '고압수소시험동(S21)',
-      nameEn: '',
+      nameEn: 'High-Pressure Hydrogen Test Building (S21)',
       category: FacilityCategory.building,
       lat: 35.11610969588139,
       lng: 128.9694504175016,
@@ -274,7 +274,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g03',
       nameKo: '석당기념관',
-      nameEn: '',
+      nameEn: 'Seokdang Memorial Hall',
       category: FacilityCategory.building,
       lat: 35.1214380891332,
       lng: 129.01818194495007,
@@ -285,7 +285,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g01',
       nameKo: '구덕연구동 1호관',
-      nameEn: '',
+      nameEn: 'Gudeok Research Building 1',
       category: FacilityCategory.building,
       lat: 35.121500367478696,
       lng: 129.01863592166714,
@@ -296,7 +296,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc062',
       nameKo: '의과대학(S2)',
-      nameEn: '',
+      nameEn: 'College of Medicine (S2)',
       category: FacilityCategory.building,
       lat: 35.12103827708294,
       lng: 129.01892065818467,
@@ -305,7 +305,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g02',
       nameKo: '의과대학',
-      nameEn: '',
+      nameEn: 'College of Medicine',
       category: FacilityCategory.building,
       lat: 35.12103827708294,
       lng: 129.01892065818467,
@@ -316,7 +316,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g04',
       nameKo: '구덕교육동 1호관',
-      nameEn: '',
+      nameEn: 'Gudeok Education Building 1',
       category: FacilityCategory.building,
       lat: 35.120635651904436,
       lng: 129.01915201894838,
@@ -327,7 +327,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g05',
       nameKo: '구덕교육동 2,3호관',
-      nameEn: '',
+      nameEn: 'Gudeok Education Buildings 2 & 3',
       category: FacilityCategory.building,
       lat: 35.12116219735184,
       lng: 129.01905533530316,
@@ -338,7 +338,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g06',
       nameKo: '구덕연구동 2호관',
-      nameEn: '',
+      nameEn: 'Gudeok Research Building 2',
       category: FacilityCategory.building,
       lat: 35.12081746194128,
       lng: 129.0182461505754,
@@ -349,7 +349,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g11',
       nameKo: '구덕교육동 4호관',
-      nameEn: '',
+      nameEn: 'Gudeok Education Building 4',
       category: FacilityCategory.building,
       lat: 35.12072540879912,
       lng: 129.02160561270586,
@@ -360,7 +360,7 @@ abstract final class BuildingData {
     Facility(
       id: 'g12',
       nameKo: '구덕학생회관',
-      nameEn: '',
+      nameEn: 'Gudeok Student Union Building',
       category: FacilityCategory.building,
       lat: 35.12026398712133,
       lng: 129.02171485719055,
@@ -371,7 +371,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc068',
       nameKo: '동아대학교병원(본관)',
-      nameEn: '',
+      nameEn: 'Dong-A University Hospital (Main)',
       category: FacilityCategory.building,
       lat: 35.12021118361715,
       lng: 129.01758407481896,
@@ -380,7 +380,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc069',
       nameKo: '동아대학교병원(서관)',
-      nameEn: '',
+      nameEn: 'Dong-A University Hospital (West Wing)',
       category: FacilityCategory.building,
       lat: 35.120305827885936,
       lng: 129.017312207212,
@@ -389,7 +389,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc070',
       nameKo: '동아대학교병원(동관)',
-      nameEn: '',
+      nameEn: 'Dong-A University Hospital (East Wing)',
       category: FacilityCategory.building,
       lat: 35.120226613064396,
       lng: 129.01828092804342,
@@ -398,7 +398,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc071',
       nameKo: '동아대학교병원(중앙관)',
-      nameEn: '',
+      nameEn: 'Dong-A University Hospital (Central Wing)',
       category: FacilityCategory.building,
       lat: 35.120037502882745,
       lng: 129.01719042506875,
@@ -407,7 +407,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc072',
       nameKo: '동아대학교대신요양병원',
-      nameEn: '',
+      nameEn: 'Dong-A University Daesin Long-term Care Hospital',
       category: FacilityCategory.building,
       lat: 35.120139268079484,
       lng: 129.0189258883675,
@@ -416,7 +416,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc073',
       nameKo: '정문',
-      nameEn: '',
+      nameEn: 'Main Gate',
       category: FacilityCategory.etc,
       lat: 35.11935453657375,
       lng: 129.01829231417284,
@@ -425,7 +425,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b01',
       nameKo: '석당박물관(BM)',
-      nameEn: '',
+      nameEn: 'Seokdang Museum (BM)',
       category: FacilityCategory.building,
       lat: 35.10504925133331,
       lng: 129.01932119056167,
@@ -436,7 +436,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b02',
       nameKo: '법학전문대학원(LS)',
-      nameEn: '',
+      nameEn: 'Law School (LS)',
       category: FacilityCategory.building,
       lat: 35.10382461110717,
       lng: 129.01926356068935,
@@ -447,7 +447,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b03',
       nameKo: '글로벌인재관',
-      nameEn: '',
+      nameEn: 'Global Leadership Hall',
       category: FacilityCategory.building,
       lat: 35.103898106902186,
       lng: 129.01890898288548,
@@ -458,7 +458,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b04',
       nameKo: '종합강의동(BA-BD)',
-      nameEn: '',
+      nameEn: 'General Lecture Building (BA-BD)',
       category: FacilityCategory.building,
       lat: 35.104910114736306,
       lng: 129.01874752481584,
@@ -469,7 +469,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b05',
       nameKo: '국제관',
-      nameEn: '',
+      nameEn: 'International Hall',
       category: FacilityCategory.building,
       lat: 35.10557947700048,
       lng: 129.0196797055009,
@@ -480,7 +480,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b31',
       nameKo: '수위실',
-      nameEn: '',
+      nameEn: 'Security Office',
       category: FacilityCategory.etc,
       lat: 35.10497365327198,
       lng: 129.0198018302774,
@@ -490,7 +490,7 @@ abstract final class BuildingData {
     Facility(
       id: 'b32',
       nameKo: '동아한국어학당',
-      nameEn: '',
+      nameEn: 'Dong-A Korean Language Institute',
       category: FacilityCategory.building,
       lat: 35.10345818749041,
       lng: 129.0189447360873,
@@ -501,7 +501,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc082',
       nameKo: '한림생활관 부민관',
-      nameEn: '',
+      nameEn: 'Hanlim Dormitory Bumin Hall',
       category: FacilityCategory.building,
       lat: 35.105726927217574,
       lng: 129.01853738434755,
@@ -510,7 +510,7 @@ abstract final class BuildingData {
     Facility(
       id: 'loc083',
       nameKo: '정문',
-      nameEn: '',
+      nameEn: 'Main Gate',
       category: FacilityCategory.etc,
       lat: 35.104777970268586,
       lng: 129.0199176269351,

@@ -362,7 +362,8 @@
     ],
     "lat": 35.11467114988958,
     "lng": 128.96549766927106,
-    "id": "s01"
+    "id": "s01",
+    "name_en": "University Administration & College of Humanities (A)"
   },
   {
     "campus": "seunghak",
@@ -540,7 +541,8 @@
     ],
     "lat": 35.11558536131743,
     "lng": 128.96594462594888,
-    "id": "s02"
+    "id": "s02",
+    "name_en": "Student Union Building (Q)"
   },
   {
     "campus": "seunghak",
@@ -701,7 +703,8 @@
     ],
     "lat": 35.11598166380311,
     "lng": 128.96651349790017,
-    "id": "s03"
+    "id": "s03",
+    "name_en": "Engineering Building 1 (P1)"
   },
   {
     "campus": "seunghak",
@@ -871,7 +874,8 @@
     ],
     "lat": 35.116455923647756,
     "lng": 128.9672761843048,
-    "id": "s04"
+    "id": "s04",
+    "name_en": "Engineering Building 2 (P2)"
   },
   {
     "campus": "seunghak",
@@ -987,7 +991,8 @@
     ],
     "lat": 35.1169032605884,
     "lng": 128.9678929093368,
-    "id": "s05"
+    "id": "s05",
+    "name_en": "Engineering Building 3 (P3)"
   },
   {
     "campus": "seunghak",
@@ -1300,7 +1305,8 @@
     ],
     "lat": 35.1172749166863,
     "lng": 128.96775926839615,
-    "id": "s06"
+    "id": "s06",
+    "name_en": "Engineering Building 5 (RS)"
   },
   {
     "campus": "seunghak",
@@ -1500,7 +1506,8 @@
     ],
     "lat": 35.11432660394371,
     "lng": 128.9664600068146,
-    "id": "s07"
+    "id": "s07",
+    "name_en": "Arts & Sports Building 1"
   },
   {
     "campus": "seunghak",
@@ -1594,7 +1601,8 @@
     ],
     "lat": 35.11425392116053,
     "lng": 128.96788402010404,
-    "id": "s08"
+    "id": "s08",
+    "name_en": "Faculty Hall (W)"
   },
   {
     "campus": "seunghak",
@@ -1787,7 +1795,8 @@
     ],
     "lat": 35.114910298505684,
     "lng": 128.96853043765964,
-    "id": "s09"
+    "id": "s09",
+    "name_en": "Colleges of Life Resource Science & Health Sciences"
   },
   {
     "campus": "seunghak",
@@ -1899,7 +1908,8 @@
     ],
     "lat": 35.11550178886394,
     "lng": 128.96762339547058,
-    "id": "s10"
+    "id": "s10",
+    "name_en": "Hanlim Library (B)"
   },
   {
     "campus": "seunghak",
@@ -2079,7 +2089,8 @@
     ],
     "lat": 35.115687874758684,
     "lng": 128.96795689829986,
-    "id": "s11"
+    "id": "s11",
+    "name_en": "College of Natural Sciences (E)"
   },
   {
     "campus": "seunghak",
@@ -2089,7 +2100,8 @@
     "floors": [],
     "lat": 35.1160873732028,
     "lng": 128.9683284400812,
-    "id": "p4"
+    "id": "p4",
+    "name_en": "Engineering Building 4 (P4)"
   },
   {
     "campus": "seunghak",
@@ -2173,7 +2185,8 @@
     ],
     "lat": 35.1162097721076,
     "lng": 128.96966943765634,
-    "id": "s13"
+    "id": "s13",
+    "name_en": "Startup Hall"
   },
   {
     "campus": "seunghak",
@@ -2347,7 +2360,8 @@
     ],
     "lat": 35.117361540556615,
     "lng": 128.96949974839012,
-    "id": "s14"
+    "id": "s14",
+    "name_en": "Industry-Academic Cooperation Building (SM)"
   },
   {
     "campus": "seunghak",
@@ -2457,7 +2471,8 @@
     ],
     "lat": 35.11876001285098,
     "lng": 128.96939906028723,
-    "id": "s15"
+    "id": "s15",
+    "name_en": "Hanlim Dormitory Seunghak Hall 1"
   },
   {
     "campus": "seunghak",
@@ -2514,7 +2529,8 @@
     ],
     "lat": 35.119207606476486,
     "lng": 128.9687517535152,
-    "id": "s16"
+    "id": "s16",
+    "name_en": "ROTC Building (DE)"
   },
   {
     "campus": "seunghak",
@@ -2670,7 +2686,8 @@
     ],
     "lat": 35.11546888503327,
     "lng": 128.96867823054578,
-    "id": "s17"
+    "id": "s17",
+    "name_en": "Arts & Sports Building 2"
   },
   {
     "campus": "seunghak",
@@ -2731,7 +2748,8 @@
     ],
     "lat": 35.115201892559284,
     "lng": 128.96874857838637,
-    "id": "s18"
+    "id": "s18",
+    "name_en": "Arts & Sports Practice Building"
   },
   {
     "campus": "seunghak",
@@ -2826,7 +2844,8 @@
     ],
     "lat": 35.11813154344573,
     "lng": 128.96814455687274,
-    "id": "s19"
+    "id": "s19",
+    "name_en": "Hanlim Dormitory Seunghak Hall 2"
   },
   {
     "campus": "seunghak",
@@ -2932,7 +2951,8 @@
     ],
     "lat": 35.11843328505629,
     "lng": 128.96843149923154,
-    "id": "s20"
+    "id": "s20",
+    "name_en": "Hanlim Dormitory Seunghak Hall 2"
   },
   {
     "campus": "seunghak",
@@ -2949,7 +2969,8 @@
     ],
     "lat": 35.11386873848791,
     "lng": 128.96593627898181,
-    "id": "s31"
+    "id": "s31",
+    "name_en": "Security Office"
   },
   {
     "campus": "seunghak",
@@ -2959,7 +2980,8 @@
     "floors": [],
     "lat": 35.11366960778213,
     "lng": 128.96571214796595,
-    "id": "loc059"
+    "id": "loc059",
+    "name_en": "Main Gate"
   },
   {
     "campus": "seunghak",
@@ -2969,7 +2991,8 @@
     "floors": [],
     "lat": 35.1167269930644,
     "lng": 128.96972850335627,
-    "id": "s22"
+    "id": "s22",
+    "name_en": "L2M Platform (S22)"
   },
   {
     "campus": "seunghak",
@@ -2979,7 +3002,8 @@
     "floors": [],
     "lat": 35.11610969588139,
     "lng": 128.9694504175016,
-    "id": "s21"
+    "id": "s21",
+    "name_en": "High-Pressure Hydrogen Test Building (S21)"
   },
   {
     "campus": "gudeok",
@@ -3072,7 +3096,8 @@
     ],
     "lat": 35.1214380891332,
     "lng": 129.01818194495007,
-    "id": "g03"
+    "id": "g03",
+    "name_en": "Seokdang Memorial Hall"
   },
   {
     "campus": "gudeok",
@@ -3138,7 +3163,8 @@
     ],
     "lat": 35.121500367478696,
     "lng": 129.01863592166714,
-    "id": "g01"
+    "id": "g01",
+    "name_en": "Gudeok Research Building 1"
   },
   {
     "campus": "gudeok",
@@ -3148,7 +3174,8 @@
     "floors": [],
     "lat": 35.12103827708294,
     "lng": 129.01892065818467,
-    "id": "loc062"
+    "id": "loc062",
+    "name_en": "College of Medicine (S2)"
   },
   {
     "campus": "gudeok",
@@ -3210,7 +3237,8 @@
     ],
     "lat": 35.12103827708294,
     "lng": 129.01892065818467,
-    "id": "g02"
+    "id": "g02",
+    "name_en": "College of Medicine"
   },
   {
     "campus": "gudeok",
@@ -3269,7 +3297,8 @@
     ],
     "lat": 35.120635651904436,
     "lng": 129.01915201894838,
-    "id": "g04"
+    "id": "g04",
+    "name_en": "Gudeok Education Building 1"
   },
   {
     "campus": "gudeok",
@@ -3447,7 +3476,8 @@
     ],
     "lat": 35.12116219735184,
     "lng": 129.01905533530316,
-    "id": "g05"
+    "id": "g05",
+    "name_en": "Gudeok Education Buildings 2 & 3"
   },
   {
     "campus": "gudeok",
@@ -3490,7 +3520,8 @@
     ],
     "lat": 35.12081746194128,
     "lng": 129.0182461505754,
-    "id": "g06"
+    "id": "g06",
+    "name_en": "Gudeok Research Building 2"
   },
   {
     "campus": "gudeok",
@@ -3543,7 +3574,8 @@
     ],
     "lat": 35.12072540879912,
     "lng": 129.02160561270586,
-    "id": "g11"
+    "id": "g11",
+    "name_en": "Gudeok Education Building 4"
   },
   {
     "campus": "gudeok",
@@ -3578,7 +3610,8 @@
     ],
     "lat": 35.12026398712133,
     "lng": 129.02171485719055,
-    "id": "g12"
+    "id": "g12",
+    "name_en": "Gudeok Student Union Building"
   },
   {
     "campus": "gudeok",
@@ -3588,7 +3621,8 @@
     "floors": [],
     "lat": 35.12021118361715,
     "lng": 129.01758407481896,
-    "id": "loc068"
+    "id": "loc068",
+    "name_en": "Dong-A University Hospital (Main)"
   },
   {
     "campus": "gudeok",
@@ -3598,7 +3632,8 @@
     "floors": [],
     "lat": 35.120305827885936,
     "lng": 129.017312207212,
-    "id": "loc069"
+    "id": "loc069",
+    "name_en": "Dong-A University Hospital (West Wing)"
   },
   {
     "campus": "gudeok",
@@ -3608,7 +3643,8 @@
     "floors": [],
     "lat": 35.120226613064396,
     "lng": 129.01828092804342,
-    "id": "loc070"
+    "id": "loc070",
+    "name_en": "Dong-A University Hospital (East Wing)"
   },
   {
     "campus": "gudeok",
@@ -3618,7 +3654,8 @@
     "floors": [],
     "lat": 35.120037502882745,
     "lng": 129.01719042506875,
-    "id": "loc071"
+    "id": "loc071",
+    "name_en": "Dong-A University Hospital (Central Wing)"
   },
   {
     "campus": "gudeok",
@@ -3628,7 +3665,8 @@
     "floors": [],
     "lat": 35.120139268079484,
     "lng": 129.0189258883675,
-    "id": "loc072"
+    "id": "loc072",
+    "name_en": "Dong-A University Daesin Long-term Care Hospital"
   },
   {
     "campus": "gudeok",
@@ -3638,7 +3676,8 @@
     "floors": [],
     "lat": 35.11935453657375,
     "lng": 129.01829231417284,
-    "id": "loc073"
+    "id": "loc073",
+    "name_en": "Main Gate"
   },
   {
     "campus": "bumin",
@@ -3699,7 +3738,8 @@
     ],
     "lat": 35.10504925133331,
     "lng": 129.01932119056167,
-    "id": "b01"
+    "id": "b01",
+    "name_en": "Seokdang Museum (BM)"
   },
   {
     "campus": "bumin",
@@ -3854,7 +3894,8 @@
     ],
     "lat": 35.10382461110717,
     "lng": 129.01926356068935,
-    "id": "b02"
+    "id": "b02",
+    "name_en": "Law School (LS)"
   },
   {
     "campus": "bumin",
@@ -3917,7 +3958,8 @@
     ],
     "lat": 35.103898106902186,
     "lng": 129.01890898288548,
-    "id": "b03"
+    "id": "b03",
+    "name_en": "Global Leadership Hall"
   },
   {
     "campus": "bumin",
@@ -4349,7 +4391,8 @@
     ],
     "lat": 35.104910114736306,
     "lng": 129.01874752481584,
-    "id": "b04"
+    "id": "b04",
+    "name_en": "General Lecture Building (BA-BD)"
   },
   {
     "campus": "bumin",
@@ -4559,7 +4602,8 @@
     ],
     "lat": 35.10557947700048,
     "lng": 129.0196797055009,
-    "id": "b05"
+    "id": "b05",
+    "name_en": "International Hall"
   },
   {
     "campus": "bumin",
@@ -4569,7 +4613,8 @@
     "floors": [],
     "lat": 35.10497365327198,
     "lng": 129.0198018302774,
-    "id": "b31"
+    "id": "b31",
+    "name_en": "Security Office"
   },
   {
     "campus": "bumin",
@@ -4612,7 +4657,8 @@
     ],
     "lat": 35.10345818749041,
     "lng": 129.0189447360873,
-    "id": "b32"
+    "id": "b32",
+    "name_en": "Dong-A Korean Language Institute"
   },
   {
     "campus": "bumin",
@@ -4622,7 +4668,8 @@
     "floors": [],
     "lat": 35.105726927217574,
     "lng": 129.01853738434755,
-    "id": "loc082"
+    "id": "loc082",
+    "name_en": "Hanlim Dormitory Bumin Hall"
   },
   {
     "campus": "bumin",
@@ -4632,6 +4679,7 @@
     "floors": [],
     "lat": 35.104777970268586,
     "lng": 129.0199176269351,
-    "id": "loc083"
+    "id": "loc083",
+    "name_en": "Main Gate"
   }
 ]

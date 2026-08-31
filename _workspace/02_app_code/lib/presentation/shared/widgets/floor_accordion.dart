@@ -11,9 +11,14 @@ import '../../providers/facility_providers.dart';
 /// sit inside any parent scrollable. Floors keep source order (deepest basement
 /// → rooftop). Room names are Korean-only for now (plan §9).
 class FloorAccordion extends ConsumerWidget {
-  const FloorAccordion({super.key, required this.facilityId});
+  const FloorAccordion(
+      {super.key, required this.facilityId, this.expandedFloor});
 
   final String facilityId;
+
+  /// Floor label (e.g. "3F") whose tile starts expanded — used by the
+  /// classroom-search deep link so the target floor is open on arrival.
+  final String? expandedFloor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,6 +66,7 @@ class FloorAccordion extends ConsumerWidget {
           children: [
             for (final floor in building.floors)
               ExpansionTile(
+                initiallyExpanded: floor.floor == expandedFloor,
                 tilePadding: EdgeInsets.symmetric(horizontal: d.spaceSm),
                 childrenPadding: EdgeInsets.fromLTRB(
                     d.spaceMd, 0, d.spaceMd, d.spaceMd),

@@ -38,6 +38,12 @@
   "home_card_dining_desc": "식단별 메뉴와 영업시간을 확인하세요.",
 
   "classroom_search_title": "강의실 위치 검색",
+  "classroom_help": "건물을 선택하고 4자리 호수를 입력하세요.\n예) S01 - 0301 (앞 2자리 = 층)",
+  "classroom_hint_building": "건물 선택",
+  "classroom_hint_room": "호수",
+  "classroom_action_search": "위치 보기",
+  "classroom_suggestions_empty": "일치하는 호수가 없어요.",
+  "classroom_noRoomData": "이 건물은 호수 정보가 아직 준비 중이에요. 4자리 번호로 바로 검색할 수 있어요.",
 
   "facility_category_building": "건물",
   "facility_category_classroom": "강의실",

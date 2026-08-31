@@ -35,6 +35,59 @@ EXPECT_FLOORS = 249
 
 CAMPUS_MAP = {"승학캠퍼스": "seunghak", "구덕캠퍼스": "gudeok", "부민캠퍼스": "bumin"}
 
+# 영어 건물명 — id 기준, 앱 EN 모드 표기용 서술형 번역(공식 영문 표기가
+# 확인되는 건물은 그 표기로 갱신할 것). 누락 시 생성이 즉시 실패한다.
+EN_NAMES = {
+    "s01": "University Administration & College of Humanities (A)",
+    "s02": "Student Union Building (Q)",
+    "s03": "Engineering Building 1 (P1)",
+    "s04": "Engineering Building 2 (P2)",
+    "s05": "Engineering Building 3 (P3)",
+    "s06": "Engineering Building 5 (RS)",
+    "s07": "Arts & Sports Building 1",
+    "s08": "Faculty Hall (W)",
+    "s09": "Colleges of Life Resource Science & Health Sciences",
+    "s10": "Hanlim Library (B)",
+    "s11": "College of Natural Sciences (E)",
+    "p4": "Engineering Building 4 (P4)",
+    "s13": "Startup Hall",
+    "s14": "Industry-Academic Cooperation Building (SM)",
+    "s15": "Hanlim Dormitory Seunghak Hall 1",
+    "s16": "ROTC Building (DE)",
+    "s17": "Arts & Sports Building 2",
+    "s18": "Arts & Sports Practice Building",
+    "s19": "Hanlim Dormitory Seunghak Hall 2",
+    "s20": "Hanlim Dormitory Seunghak Hall 2",
+    "s31": "Security Office",
+    "loc059": "Main Gate",
+    "s22": "L2M Platform (S22)",
+    "s21": "High-Pressure Hydrogen Test Building (S21)",
+    "g03": "Seokdang Memorial Hall",
+    "g01": "Gudeok Research Building 1",
+    "loc062": "College of Medicine (S2)",
+    "g02": "College of Medicine",
+    "g04": "Gudeok Education Building 1",
+    "g05": "Gudeok Education Buildings 2 & 3",
+    "g06": "Gudeok Research Building 2",
+    "g11": "Gudeok Education Building 4",
+    "g12": "Gudeok Student Union Building",
+    "loc068": "Dong-A University Hospital (Main)",
+    "loc069": "Dong-A University Hospital (West Wing)",
+    "loc070": "Dong-A University Hospital (East Wing)",
+    "loc071": "Dong-A University Hospital (Central Wing)",
+    "loc072": "Dong-A University Daesin Long-term Care Hospital",
+    "loc073": "Main Gate",
+    "b01": "Seokdang Museum (BM)",
+    "b02": "Law School (LS)",
+    "b03": "Global Leadership Hall",
+    "b04": "General Lecture Building (BA-BD)",
+    "b05": "International Hall",
+    "b31": "Security Office",
+    "b32": "Dong-A Korean Language Institute",
+    "loc082": "Hanlim Dormitory Bumin Hall",
+    "loc083": "Main Gate",
+}
+
 
 def parse_md(md: str) -> list[dict]:
     """본문 h1(캠퍼스)/h2(건물) 구조를 순서대로 파싱."""
@@ -136,6 +189,9 @@ def validate(buildings: list[dict]) -> None:
     if len(set(ids)) != len(ids):
         dupes = sorted({i for i in ids if ids.count(i) > 1})
         raise SystemExit(f"id 중복: {dupes}")
+    missing_en = [i for i in ids if i not in EN_NAMES]
+    if missing_en:
+        raise SystemExit(f"EN_NAMES 누락: {missing_en}")
 
 
 def dstr(s: str) -> str:
@@ -163,7 +219,7 @@ def emit_dart(buildings: list[dict]) -> str:
         w("    Facility(")
         w(f"      id: {dstr(b['id'])},")
         w(f"      nameKo: {dstr(b['name'])},")
-        w("      nameEn: '',")
+        w(f"      nameEn: {dstr(EN_NAMES[b['id']])},")
         w(f"      category: FacilityCategory.{category_for(b['name'])},")
         w(f"      lat: {b['lat']},")
         w(f"      lng: {b['lng']},")
@@ -199,6 +255,8 @@ def main() -> None:
     buildings = parse_md(MD_PATH.read_text(encoding="utf-8"))
     merge_coords(buildings)
     validate(buildings)
+    for b in buildings:
+        b["name_en"] = EN_NAMES[b["id"]]
 
     OUT_DART.write_text(emit_dart(buildings), encoding="utf-8")
     print(f"생성: {OUT_DART.relative_to(APP_ROOT)}")

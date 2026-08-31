@@ -23,11 +23,15 @@ class PeekSheet extends ConsumerWidget {
     required this.facility,
     required this.onViewDetail,
     required this.scrollController,
+    this.expandedFloor,
   });
 
   final Facility facility;
   final VoidCallback onViewDetail;
   final ScrollController scrollController;
+
+  /// Floor label to open pre-expanded (classroom search deep link).
+  final String? expandedFloor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,7 +78,8 @@ class PeekSheet extends ConsumerWidget {
           Text(l.facility_floors_title,
               style: Theme.of(context).textTheme.titleSmall),
           SizedBox(height: d.spaceXs),
-          FloorAccordion(facilityId: facility.id),
+          FloorAccordion(
+              facilityId: facility.id, expandedFloor: expandedFloor),
         ],
       ],
     );

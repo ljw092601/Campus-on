@@ -96,7 +96,16 @@ class AppRouter {
                           .map((e) => e.trim())
                           .where((e) => e.isNotEmpty)
                           .toList();
-                  return MapScreen(focusIds: ids, nearbyQueries: queries);
+                  // `?floor=03` (classroom search): open the focused
+                  // building's peek sheet expanded at that floor.
+                  final floor = state.uri.queryParameters['floor'];
+                  return MapScreen(
+                    focusIds: ids,
+                    nearbyQueries: queries,
+                    focusFloorCode: (floor == null || floor.isEmpty)
+                        ? null
+                        : floor,
+                  );
                 },
                 routes: [
                   GoRoute(

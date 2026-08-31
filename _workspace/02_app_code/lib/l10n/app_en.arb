@@ -39,6 +39,12 @@
   "home_card_dining_desc": "Check cafeteria menus and opening hours.",
 
   "classroom_search_title": "Classroom search",
+  "classroom_help": "Pick a building and type the 4-digit room number.\ne.g. S01 - 0301 (first 2 digits = floor)",
+  "classroom_hint_building": "Select a building",
+  "classroom_hint_room": "Room",
+  "classroom_action_search": "Show location",
+  "classroom_suggestions_empty": "No matching rooms.",
+  "classroom_noRoomData": "Room numbers for this building aren't registered yet. You can still search with a 4-digit number.",
 
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",

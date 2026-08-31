@@ -32,10 +32,15 @@ class MapScreen extends ConsumerStatefulWidget {
     super.key,
     this.focusIds = const [],
     this.nearbyQueries = const [],
+    this.focusFloorCode,
   });
 
   final List<String> focusIds;
   final List<String> nearbyQueries;
+
+  /// 2-digit floor code from `/map?floor=` (classroom search deep link):
+  /// opens the focused building's peek sheet expanded at that floor.
+  final String? focusFloorCode;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -198,6 +203,22 @@ class _MapScreenState extends ConsumerState<MapScreen>
       case LocationReady():
         break; // not an error — caller proceeds
     }
+  }
+
+  /// Floor label ("3F") for the `?floor=` deep link, but only while the
+  /// deep-linked building itself is the selected one — tapping another pin
+  /// goes back to the normal collapsed peek.
+  String? _floorLabelFor(Facility selected) {
+    final code = widget.focusFloorCode;
+    if (code == null ||
+        widget.focusIds.isEmpty ||
+        selected.id != widget.focusIds.first ||
+        !selected.hasFloorInfo) {
+      return null;
+    }
+    final n = int.tryParse(code);
+    if (n == null || n <= 0) return null;
+    return '${n}F';
   }
 
   Facility? _find(List<Facility> list, String? id) {
@@ -397,7 +418,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
               // Key resets the sheet extent when another pin is tapped.
               child: DraggableScrollableSheet(
                 key: ValueKey(selected.id),
-                initialChildSize: _peekMin,
+                // A `?floor=` deep link lands with the guide already open.
+                initialChildSize: _floorLabelFor(selected) != null
+                    ? _peekMax
+                    : _peekMin,
                 minChildSize: _peekMin,
                 // No floor info → nothing below the header; lock the sheet.
                 maxChildSize: selected.hasFloorInfo ? _peekMax : _peekMin,
@@ -407,6 +431,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 builder: (context, scrollController) => PeekSheet(
                   facility: selected,
                   scrollController: scrollController,
+                  expandedFloor: _floorLabelFor(selected),
                   onViewDetail: () =>
                       context.go('/map/facility/${selected.id}'),
                 ),
