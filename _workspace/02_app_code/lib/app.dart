@@ -45,8 +45,8 @@ class BrandSplashOverlay extends StatefulWidget {
 
   final Widget child;
 
-  static const holdDuration = Duration(milliseconds: 1400);
-  static const fadeDuration = Duration(milliseconds: 400);
+  static const holdDuration = Duration(milliseconds: 2000);
+  static const fadeDuration = Duration(milliseconds: 500);
 
   @override
   State<BrandSplashOverlay> createState() => _BrandSplashOverlayState();
@@ -92,7 +92,7 @@ class _BrandSplashOverlayState extends State<BrandSplashOverlay> {
                 alignment: Alignment.center,
                 child: Image.asset(
                   'assets/branding/donga_mate_full.png',
-                  width: 280,
+                  width: 340,
                   excludeFromSemantics: true,
                 ),
               ),
