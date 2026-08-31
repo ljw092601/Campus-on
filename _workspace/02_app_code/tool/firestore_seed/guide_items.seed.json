@@ -2222,7 +2222,9 @@
           {
             "title_ko": "D-4 일반연수 비자",
             "title_en": "D-4 General Training Visa",
-            "lines_ko": ["입국일로부터 6개월이 지난 후 가입"],
+            "lines_ko": [
+              "입국일로부터 6개월이 지난 후 가입"
+            ],
             "lines_en": [
               "Enrollment generally begins six months after the date of entry into Korea."
             ]

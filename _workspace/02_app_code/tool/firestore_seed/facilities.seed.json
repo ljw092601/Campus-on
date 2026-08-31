@@ -1,6 +1,7 @@
 {
   "s01": {
     "name_ko": "대학본부 및 인문과학대학(A)",
+    "name_en": "University Administration & College of Humanities (A)",
     "category": "building",
     "lat": 35.11467114988958,
     "lng": 128.96549766927106,
@@ -11,6 +12,7 @@
   },
   "s02": {
     "name_ko": "학생회관(Q)",
+    "name_en": "Student Union Building (Q)",
     "category": "building",
     "lat": 35.11558536131743,
     "lng": 128.96594462594888,
@@ -20,6 +22,7 @@
   },
   "s03": {
     "name_ko": "공과대학1호관(P1)",
+    "name_en": "Engineering Building 1 (P1)",
     "category": "building",
     "lat": 35.11598166380311,
     "lng": 128.96651349790017,
@@ -29,6 +32,7 @@
   },
   "s04": {
     "name_ko": "공과대학2호관(P2)",
+    "name_en": "Engineering Building 2 (P2)",
     "category": "building",
     "lat": 35.116455923647756,
     "lng": 128.9672761843048,
@@ -38,6 +42,7 @@
   },
   "s05": {
     "name_ko": "공과대학3호관(P3)",
+    "name_en": "Engineering Building 3 (P3)",
     "category": "building",
     "lat": 35.1169032605884,
     "lng": 128.9678929093368,
@@ -47,6 +52,7 @@
   },
   "s06": {
     "name_ko": "공과대학5호관(RS)",
+    "name_en": "Engineering Building 5 (RS)",
     "category": "building",
     "lat": 35.1172749166863,
     "lng": 128.96775926839615,
@@ -56,6 +62,7 @@
   },
   "s07": {
     "name_ko": "예술체육대학1관",
+    "name_en": "Arts & Sports Building 1",
     "category": "building",
     "lat": 35.11432660394371,
     "lng": 128.9664600068146,
@@ -65,6 +72,7 @@
   },
   "s08": {
     "name_ko": "교수회관(W)",
+    "name_en": "Faculty Hall (W)",
     "category": "building",
     "lat": 35.11425392116053,
     "lng": 128.96788402010404,
@@ -74,6 +82,7 @@
   },
   "s09": {
     "name_ko": "생명자원과학대학 및 건강과학대학",
+    "name_en": "Colleges of Life Resource Science & Health Sciences",
     "category": "building",
     "lat": 35.114910298505684,
     "lng": 128.96853043765964,
@@ -83,6 +92,7 @@
   },
   "s10": {
     "name_ko": "한림도서관(B)",
+    "name_en": "Hanlim Library (B)",
     "category": "library",
     "lat": 35.11550178886394,
     "lng": 128.96762339547058,
@@ -92,6 +102,7 @@
   },
   "s11": {
     "name_ko": "자연과학대학(E)",
+    "name_en": "College of Natural Sciences (E)",
     "category": "building",
     "lat": 35.115687874758684,
     "lng": 128.96795689829986,
@@ -101,6 +112,7 @@
   },
   "p4": {
     "name_ko": "공과대학4호관(P4)",
+    "name_en": "Engineering Building 4 (P4)",
     "category": "building",
     "lat": 35.1160873732028,
     "lng": 128.9683284400812,
@@ -110,6 +122,7 @@
   },
   "s13": {
     "name_ko": "창업관",
+    "name_en": "Startup Hall",
     "category": "building",
     "lat": 35.1162097721076,
     "lng": 128.96966943765634,
@@ -119,6 +132,7 @@
   },
   "s14": {
     "name_ko": "산학관(SM)",
+    "name_en": "Industry-Academic Cooperation Building (SM)",
     "category": "building",
     "lat": 35.117361540556615,
     "lng": 128.96949974839012,
@@ -128,6 +142,7 @@
   },
   "s15": {
     "name_ko": "한림생활관 승학1관",
+    "name_en": "Hanlim Dormitory Seunghak Hall 1",
     "category": "building",
     "lat": 35.11876001285098,
     "lng": 128.96939906028723,
@@ -137,6 +152,7 @@
   },
   "s16": {
     "name_ko": "학생군사교육단(DE)",
+    "name_en": "ROTC Building (DE)",
     "category": "building",
     "lat": 35.119207606476486,
     "lng": 128.9687517535152,
@@ -146,6 +162,7 @@
   },
   "s17": {
     "name_ko": "예술체육대학2관",
+    "name_en": "Arts & Sports Building 2",
     "category": "building",
     "lat": 35.11546888503327,
     "lng": 128.96867823054578,
@@ -155,6 +172,7 @@
   },
   "s18": {
     "name_ko": "예술체육대학 실습동",
+    "name_en": "Arts & Sports Practice Building",
     "category": "building",
     "lat": 35.115201892559284,
     "lng": 128.96874857838637,
@@ -164,6 +182,7 @@
   },
   "s19": {
     "name_ko": "한림생활관 승학2관",
+    "name_en": "Hanlim Dormitory Seunghak Hall 2",
     "category": "building",
     "lat": 35.11813154344573,
     "lng": 128.96814455687274,
@@ -173,6 +192,7 @@
   },
   "s20": {
     "name_ko": "한림생활관 승학2관",
+    "name_en": "Hanlim Dormitory Seunghak Hall 2",
     "category": "building",
     "lat": 35.11843328505629,
     "lng": 128.96843149923154,
@@ -182,6 +202,7 @@
   },
   "s31": {
     "name_ko": "수위실",
+    "name_en": "Security Office",
     "category": "etc",
     "lat": 35.11386873848791,
     "lng": 128.96593627898181,
@@ -191,6 +212,7 @@
   },
   "loc059": {
     "name_ko": "정문",
+    "name_en": "Main Gate",
     "category": "etc",
     "lat": 35.11366960778213,
     "lng": 128.96571214796595,
@@ -199,6 +221,7 @@
   },
   "s22": {
     "name_ko": "L2M Platform(S22)",
+    "name_en": "L2M Platform (S22)",
     "category": "building",
     "lat": 35.1167269930644,
     "lng": 128.96972850335627,
@@ -208,6 +231,7 @@
   },
   "s21": {
     "name_ko": "고압수소시험동(S21)",
+    "name_en": "High-Pressure Hydrogen Test Building (S21)",
     "category": "building",
     "lat": 35.11610969588139,
     "lng": 128.9694504175016,
@@ -217,6 +241,7 @@
   },
   "g03": {
     "name_ko": "석당기념관",
+    "name_en": "Seokdang Memorial Hall",
     "category": "building",
     "lat": 35.1214380891332,
     "lng": 129.01818194495007,
@@ -226,6 +251,7 @@
   },
   "g01": {
     "name_ko": "구덕연구동 1호관",
+    "name_en": "Gudeok Research Building 1",
     "category": "building",
     "lat": 35.121500367478696,
     "lng": 129.01863592166714,
@@ -235,6 +261,7 @@
   },
   "loc062": {
     "name_ko": "의과대학(S2)",
+    "name_en": "College of Medicine (S2)",
     "category": "building",
     "lat": 35.12103827708294,
     "lng": 129.01892065818467,
@@ -243,6 +270,7 @@
   },
   "g02": {
     "name_ko": "의과대학",
+    "name_en": "College of Medicine",
     "category": "building",
     "lat": 35.12103827708294,
     "lng": 129.01892065818467,
@@ -252,6 +280,7 @@
   },
   "g04": {
     "name_ko": "구덕교육동 1호관",
+    "name_en": "Gudeok Education Building 1",
     "category": "building",
     "lat": 35.120635651904436,
     "lng": 129.01915201894838,
@@ -261,6 +290,7 @@
   },
   "g05": {
     "name_ko": "구덕교육동 2,3호관",
+    "name_en": "Gudeok Education Buildings 2 & 3",
     "category": "building",
     "lat": 35.12116219735184,
     "lng": 129.01905533530316,
@@ -270,6 +300,7 @@
   },
   "g06": {
     "name_ko": "구덕연구동 2호관",
+    "name_en": "Gudeok Research Building 2",
     "category": "building",
     "lat": 35.12081746194128,
     "lng": 129.0182461505754,
@@ -279,6 +310,7 @@
   },
   "g11": {
     "name_ko": "구덕교육동 4호관",
+    "name_en": "Gudeok Education Building 4",
     "category": "building",
     "lat": 35.12072540879912,
     "lng": 129.02160561270586,
@@ -288,6 +320,7 @@
   },
   "g12": {
     "name_ko": "구덕학생회관",
+    "name_en": "Gudeok Student Union Building",
     "category": "building",
     "lat": 35.12026398712133,
     "lng": 129.02171485719055,
@@ -297,6 +330,7 @@
   },
   "loc068": {
     "name_ko": "동아대학교병원(본관)",
+    "name_en": "Dong-A University Hospital (Main)",
     "category": "building",
     "lat": 35.12021118361715,
     "lng": 129.01758407481896,
@@ -305,6 +339,7 @@
   },
   "loc069": {
     "name_ko": "동아대학교병원(서관)",
+    "name_en": "Dong-A University Hospital (West Wing)",
     "category": "building",
     "lat": 35.120305827885936,
     "lng": 129.017312207212,
@@ -313,6 +348,7 @@
   },
   "loc070": {
     "name_ko": "동아대학교병원(동관)",
+    "name_en": "Dong-A University Hospital (East Wing)",
     "category": "building",
     "lat": 35.120226613064396,
     "lng": 129.01828092804342,
@@ -321,6 +357,7 @@
   },
   "loc071": {
     "name_ko": "동아대학교병원(중앙관)",
+    "name_en": "Dong-A University Hospital (Central Wing)",
     "category": "building",
     "lat": 35.120037502882745,
     "lng": 129.01719042506875,
@@ -329,6 +366,7 @@
   },
   "loc072": {
     "name_ko": "동아대학교대신요양병원",
+    "name_en": "Dong-A University Daesin Long-term Care Hospital",
     "category": "building",
     "lat": 35.120139268079484,
     "lng": 129.0189258883675,
@@ -337,6 +375,7 @@
   },
   "loc073": {
     "name_ko": "정문",
+    "name_en": "Main Gate",
     "category": "etc",
     "lat": 35.11935453657375,
     "lng": 129.01829231417284,
@@ -345,6 +384,7 @@
   },
   "b01": {
     "name_ko": "석당박물관(BM)",
+    "name_en": "Seokdang Museum (BM)",
     "category": "building",
     "lat": 35.10504925133331,
     "lng": 129.01932119056167,
@@ -354,6 +394,7 @@
   },
   "b02": {
     "name_ko": "법학전문대학원(LS)",
+    "name_en": "Law School (LS)",
     "category": "building",
     "lat": 35.10382461110717,
     "lng": 129.01926356068935,
@@ -363,6 +404,7 @@
   },
   "b03": {
     "name_ko": "글로벌인재관",
+    "name_en": "Global Leadership Hall",
     "category": "building",
     "lat": 35.103898106902186,
     "lng": 129.01890898288548,
@@ -372,6 +414,7 @@
   },
   "b04": {
     "name_ko": "종합강의동(BA-BD)",
+    "name_en": "General Lecture Building (BA-BD)",
     "category": "building",
     "lat": 35.104910114736306,
     "lng": 129.01874752481584,
@@ -381,6 +424,7 @@
   },
   "b05": {
     "name_ko": "국제관",
+    "name_en": "International Hall",
     "category": "building",
     "lat": 35.10557947700048,
     "lng": 129.0196797055009,
@@ -390,6 +434,7 @@
   },
   "b31": {
     "name_ko": "수위실",
+    "name_en": "Security Office",
     "category": "etc",
     "lat": 35.10497365327198,
     "lng": 129.0198018302774,
@@ -399,6 +444,7 @@
   },
   "b32": {
     "name_ko": "동아한국어학당",
+    "name_en": "Dong-A Korean Language Institute",
     "category": "building",
     "lat": 35.10345818749041,
     "lng": 129.0189447360873,
@@ -408,6 +454,7 @@
   },
   "loc082": {
     "name_ko": "한림생활관 부민관",
+    "name_en": "Hanlim Dormitory Bumin Hall",
     "category": "building",
     "lat": 35.105726927217574,
     "lng": 129.01853738434755,
@@ -416,6 +463,7 @@
   },
   "loc083": {
     "name_ko": "정문",
+    "name_en": "Main Gate",
     "category": "etc",
     "lat": 35.104777970268586,
     "lng": 129.0199176269351,

@@ -40,10 +40,10 @@ void _useTallSurface(WidgetTester tester) {
 /// `AppRouter.router` is a static singleton, so a later test boots wherever the
 /// previous one navigated to — tapping the Home tab first pops the home branch
 /// back to its root so the card is on screen.
-Future<void> _openGuideHub(WidgetTester tester) async {
-  await tester.tap(find.text('Home'));
+Future<void> _openGuideHub(WidgetTester tester, {bool ko = false}) async {
+  await tester.tap(find.text(ko ? '홈' : 'Home'));
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Admin guide'));
+  await tester.tap(find.text(ko ? '행정 가이드' : 'Admin guide'));
   await tester.pumpAndSettle();
 }
 
@@ -599,8 +599,8 @@ void main() {
     expect(find.textContaining('₩'), findsNothing);
 
     // Both kiosk buildings are linked as map locations.
-    expect(find.text('대학본부 및 인문과학대학(A)'), findsOneWidget);
-    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+    expect(find.text('University Administration & College of Humanities (A)'), findsOneWidget);
+    expect(find.text('General Lecture Building (BA-BD)'), findsOneWidget);
   });
 
   testWidgets('Guide detail: certificate issuance fits a 360dp phone',
@@ -734,10 +734,10 @@ void main() {
     expect(find.text('Mobile library ID'), findsOneWidget);
     expect(find.text('Seat reservation'), findsOneWidget);
     expect(find.text('Inter-campus loan'), findsOneWidget);
-    expect(find.text('한림도서관(B)'), findsOneWidget);
-    expect(find.text('국제관'), findsOneWidget);
-    expect(find.text('법학전문대학원(LS)'), findsOneWidget);
-    expect(find.text('구덕교육동 2,3호관'), findsOneWidget);
+    expect(find.text('Hanlim Library (B)'), findsOneWidget);
+    expect(find.text('International Hall'), findsOneWidget);
+    expect(find.text('Law School (LS)'), findsOneWidget);
+    expect(find.text('Gudeok Education Buildings 2 & 3'), findsOneWidget);
   });
 
   testWidgets('Guide detail: library guide fits a 360dp phone', (tester) async {
@@ -785,8 +785,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('학교 행정'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('도서관 이용안내'));
@@ -919,7 +918,7 @@ void main() {
     expect(find.text('Exchange programme counseling'), findsOneWidget);
     expect(find.text('View the International Affairs Office on the map'),
         findsOneWidget);
-    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
+    expect(find.text('General Lecture Building (BA-BD)'), findsOneWidget);
   });
 
   testWidgets('Guide detail: OIA map link opens the map in-app', (tester) async {
@@ -984,8 +983,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('학교 행정'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('국제교류과 방문 안내'));
@@ -1113,8 +1111,8 @@ void main() {
     final clinic =
         MockData.guideItems.firstWhere((g) => g.id == 'campus-clinic');
     expect(clinic.relatedFacilityIds, ['b02', 's02']);
-    expect(find.text('법학전문대학원(LS)'), findsOneWidget);
-    expect(find.text('학생회관(Q)'), findsOneWidget);
+    expect(find.text('Law School (LS)'), findsOneWidget);
+    expect(find.text('Student Union Building (Q)'), findsOneWidget);
   });
 
   // ── hospital-guide ────────────────────────────────────────────────────────
@@ -1426,7 +1424,7 @@ void main() {
     );
 
     // No related-location card, so no hospital looks recommended.
-    expect(find.text('동아대학교병원(본관)'), findsNothing);
+    expect(find.text('Dong-A University Hospital (Main)'), findsNothing);
   });
 
   testWidgets('Guide detail: hospital guide in-app links route in-app',
@@ -1532,8 +1530,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('건강·보험'));
     await tester.pumpAndSettle();
     expect(find.text('접수 · 진료 · 처방전 · 야간 진료'), findsOneWidget);
@@ -1787,8 +1784,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('긴급·도움'));
     await tester.pumpAndSettle();
     expect(find.text('112 · 119 긴급신고 안내'), findsOneWidget);
@@ -1924,8 +1920,8 @@ void main() {
         findsOneWidget);
     expect(find.text('View the dormitories on the map'), findsOneWidget);
     // Related locations resolve to real campus facilities.
-    expect(find.text('한림생활관 승학1관'), findsOneWidget);
-    expect(find.text('한림생활관 승학2관'), findsOneWidget);
+    expect(find.text('Hanlim Dormitory Seunghak Hall 1'), findsOneWidget);
+    expect(find.text('Hanlim Dormitory Seunghak Hall 2'), findsOneWidget);
   });
 
   testWidgets('Guide detail: dormitory map link opens the map in-app',
@@ -1993,8 +1989,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('주거'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('기숙사 신청'));
@@ -2219,8 +2214,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('주거'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('교외주거 구하기'));
@@ -2685,9 +2679,9 @@ void main() {
     expect(find.text('Human rights centre (인권센터) website'), findsNWidgets(2));
 
     // One related-location card per counselling office, and no third one.
-    expect(find.text('학생회관(Q)'), findsOneWidget);
-    expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
-    expect(find.text('대학본부 및 인문과학대학(A)'), findsNothing);
+    expect(find.text('Student Union Building (Q)'), findsOneWidget);
+    expect(find.text('General Lecture Building (BA-BD)'), findsOneWidget);
+    expect(find.text('University Administration & College of Humanities (A)'), findsNothing);
   });
 
   testWidgets('Guide detail: counseling guide in-app links route in-app',
@@ -2781,8 +2775,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('긴급·도움'));
     await tester.pumpAndSettle();
     expect(find.text('심리·생활 상담 안내'), findsOneWidget);
@@ -2813,7 +2806,8 @@ void main() {
       find.textContaining('학생상담센터 안내 페이지에는 「중앙강의동」으로 표기'),
       findsOneWidget,
     );
-    // The map card still carries the facility name, so b04 is unambiguous.
+    // The map card still carries the facility name (Korean here — ko locale),
+    // so b04 is unambiguous.
     expect(find.text('종합강의동(BA-BD)'), findsOneWidget);
     expect(find.text('학기 중: 평일 09:00~17:00'), findsOneWidget);
     expect(find.textContaining('최신 운영시간을 확인'), findsOneWidget);
@@ -3321,8 +3315,8 @@ void main() {
     expect(find.text('Call 1345 for immigration enquiries'), findsOneWidget);
 
     // No related-location card at all.
-    expect(find.text('학생회관(Q)'), findsNothing);
-    expect(find.text('종합강의동(BA-BD)'), findsNothing);
+    expect(find.text('Student Union Building (Q)'), findsNothing);
+    expect(find.text('General Lecture Building (BA-BD)'), findsNothing);
   });
 
   testWidgets('Guide detail: incident response in-app links route in-app',
@@ -3420,8 +3414,7 @@ void main() {
     await tester.pumpWidget(await _app(locale: 'ko'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('가이드'));
-    await tester.pumpAndSettle();
+    await _openGuideHub(tester, ko: true);
     await tester.tap(find.text('긴급·도움'));
     await tester.pumpAndSettle();
     expect(find.text('분실·도난·사고 시 대응'), findsOneWidget);

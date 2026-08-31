@@ -42,13 +42,20 @@ class HomeScreen extends ConsumerWidget {
               height: 30,
             ),
             const SizedBox(width: 8),
-            Text(
-              l.appTitle,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: titleColor,
-                letterSpacing: -0.5,
+            // Flexible + scaleDown: on a 360dp phone the actions leave the
+            // title box ~108dp, so the wordmark shrinks instead of overflowing.
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  l.appTitle,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: titleColor,
+                    letterSpacing: -0.5,
+                  ),
+                ),
               ),
             ),
           ],
@@ -338,6 +345,10 @@ class _FeatureCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 data.description,
+                // Capped: at 360dp the English copy wraps past the cell height
+                // and the Column overflows; the card is a teaser, not the doc.
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 12.5,
                   height: 1.45,
