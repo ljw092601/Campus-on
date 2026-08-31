@@ -52,10 +52,10 @@ void main() {
     // → S6 item list for Immigration.
     await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
-    expect(find.text('Alien Registration Card (ARC)'), findsOneWidget);
+    expect(find.text('Residence Card (ARC)'), findsOneWidget);
 
     // → S7 detail: the published exemplar shows its sections.
-    await tester.tap(find.text('Alien Registration Card (ARC)'));
+    await tester.tap(find.text('Residence Card (ARC)'));
     await tester.pumpAndSettle();
     expect(find.text('Overview'), findsOneWidget);
     expect(find.text('What to prepare'), findsOneWidget);
@@ -273,12 +273,12 @@ void main() {
     }
 
     // `/guide/item/...` is internal, so it opens the ARC guide in-app.
-    final arcLink = find.text('Guide — Alien Registration Card (ARC)');
+    final arcLink = find.text('Guide — Residence Card (ARC)');
     await tester.scrollUntilVisible(arcLink, 400);
     await tester.pumpAndSettle();
     await tester.tap(arcLink);
     await tester.pumpAndSettle();
-    expect(find.text('Alien Registration Card (ARC)'), findsWidgets);
+    expect(find.text('Residence Card (ARC)'), findsWidgets);
 
     // Drain the ARC page's related-location lookup (mock repo delay) so no
     // timer outlives the widget tree.
@@ -408,13 +408,15 @@ void main() {
     await tester.tap(find.text('National Health Insurance'));
     await tester.pumpAndSettle();
 
-    // `/guide/item/...` is internal, so it opens the ARC guide in-app.
+    // `/guide/item/...` is internal, so it opens the ARC guide in-app. The
+    // health-insurance link keeps its own (older) label — the target page is
+    // what carries the official card name.
     final arcLink = find.text('Guide — Alien Registration Card (ARC)');
     await tester.scrollUntilVisible(arcLink, 400);
     await tester.pumpAndSettle();
     await tester.tap(arcLink);
     await tester.pumpAndSettle();
-    expect(find.text('Alien Registration Card (ARC)'), findsWidgets);
+    expect(find.text('Residence Card (ARC)'), findsWidgets);
 
     // Drain the ARC page's related-location lookup (mock repo delay) so no
     // timer outlives the widget tree.
@@ -3591,7 +3593,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Immigration & Stay'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Alien Registration Card (ARC)'));
+    await tester.tap(find.text('Residence Card (ARC)'));
     await tester.pumpAndSettle();
 
     // Star it from the detail app bar.
@@ -3606,9 +3608,406 @@ void main() {
     await tester.tap(find.text('Guides'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Alien Registration Card (ARC)'), findsOneWidget);
+    expect(find.text('Residence Card (ARC)'), findsOneWidget);
+  });
+
+  // ── 입국·체류 accuracy guards ────────────────────────────────────────────
+  // These three guides restate published rules, so their wording IS the
+  // contract: the 90-day duty only binds stays over 90 days, the registration
+  // fee is the 2025 one, an extension cannot be filed from abroad (but can be
+  // filed by a representative otherwise), and part-time work needs permission
+  // first. Each assertion below is a fact a future edit must not quietly undo.
+
+  test('ARC issue: conditional 90-day duty, 2025 fee, no invented timeline',
+      () {
+    final item = MockData.guideItems.firstWhere((g) => g.id == 'arc-issue');
+    expect(item.status, GuideStatus.published);
+    expect(item.categoryId, GuideCategory.immigration);
+
+    // 법무부 renamed the card's English designation; "Alien" is gone from every
+    // user-facing string on this page.
+    expect(item.titleKo, '외국인등록증(ARC) 발급');
+    expect(item.titleEn, 'Residence Card (ARC)');
+    expect(_guideTextEn(item), isNot(contains('Alien Registration Card')));
+
+    // The duty is conditional: "over 90 days" must travel with "within 90
+    // days", in both languages, or the page reads as binding everyone.
+    final ko = _guideTextKo(item);
+    final en = _guideTextEn(item);
+    expect(ko, contains('90일을 초과해'));
+    expect(ko, contains('90일 이내'));
+    expect(en, contains('more than 90 days'));
+    expect(en, contains('within 90 days of entry'));
+
+    // Core documents, per HiKorea's 외국인등록 제출서류 list. The form is named by its
+    // statutory title, not as a generic "신청서".
+    expect(item.checklistKo, contains('통합신청서(신고서)'));
+    expect(item.checklistEn, contains('Application Form (Report Form)'));
+    expect(item.checklistKo, contains('여권'));
+    expect(item.checklistEn, contains('Passport'));
+    // Every condition of the 표준 사진규격: age, size, background, color, pose.
+    final photoKo = item.checklistKo.singleWhere((s) => s.contains('사진'));
+    for (final spec in const [
+      '6개월 이내 촬영한',
+      '흰색 배경',
+      '3.5×4.5cm',
+      '컬러',
+      '정면사진',
+    ]) {
+      expect(photoKo, contains(spec), reason: spec);
+    }
+    final photoEn = item.checklistEn.singleWhere((s) => s.contains('photo'));
+    for (final spec in const [
+      'within the last 6 months',
+      'white background',
+      '3.5×4.5cm',
+      'color',
+      'front-facing',
+    ]) {
+      expect(photoEn, contains(spec), reason: spec);
+    }
+    // 재학증명서 has to be the one issued after entry; 연구생증명서 is named as the
+    // research-course variant, not as a second requirement.
+    expect(
+      item.checklistKo.any(
+          (s) => s.contains('입국 후 발급된 재학증명서') && s.contains('연구생증명서')),
+      isTrue,
+    );
+    expect(item.checklistKo.any((s) => s.contains('체류지 입증서류')), isTrue);
+    expect(
+      item.checklistEn.any((s) => s.contains('Proof of where you live in Korea')),
+      isTrue,
+    );
+
+    // 표준입학허가서 is not a general 외국인등록 document — it must not be back in the
+    // core list.
+    expect(item.checklistKo, isNot(contains('재학증명서 또는 표준입학허가서')));
+    expect(item.checklistKo.any((s) => s.contains('표준입학허가서')), isFalse);
+
+    // Fee: 35,000원 since 2025-01-01, with the effective date stated.
+    expect(item.checklistKo.any((s) => s.contains('35,000원')), isTrue);
+    expect(item.checklistEn.any((s) => s.contains('KRW 35,000')), isTrue);
+    expect(item.checklistNoteKo, contains('2025년 1월 1일'));
+    expect(item.checklistNoteEn, contains('1 January 2025'));
+    // 1345 is a paid call; if the page tells you to ring it, it says so — in
+    // both languages, everywhere it is named.
+    for (final line in ko.split('\n').where((l) => l.contains('1345'))) {
+      expect(line, contains('1345(유료)'), reason: line);
+    }
+    for (final line in en.split('\n').where((l) => l.contains('1345'))) {
+      expect(line, contains('1345 (paid call)'), reason: line);
+    }
+    for (final stale in const ['30,000', '3만원', '3만 원']) {
+      expect(ko, isNot(contains(stale)), reason: stale);
+      expect(en, isNot(contains(stale)), reason: stale);
+    }
+
+    // Tuberculosis paperwork is for whoever it applies to — never a blanket
+    // student requirement.
+    // …and it is the narrow document (결핵검진 확인서), never a broad "health check"
+    // bucket that would read as a general student requirement.
+    expect(item.checklistKo.where((s) => s.contains('결핵')), isEmpty);
+    final tbKo = item.checklistOptionalKo.singleWhere((s) => s.contains('결핵'));
+    expect(tbKo, '결핵검진 확인서(공식 안내상 해당자만)');
+    expect(tbKo, contains('해당자만'));
+    final tbEn = item.checklistOptionalEn
+        .singleWhere((s) => s.contains('Tuberculosis'));
+    expect(
+      tbEn,
+      'Tuberculosis examination confirmation (only if it applies under the '
+          'current official guidance)',
+    );
+    expect(tbEn, contains('only if it applies'));
+    for (final broad in const ['건강진단', '건강검진']) {
+      expect(ko, isNot(contains(broad)), reason: broad);
+    }
+    for (final broad in const ['health-check', 'health check']) {
+      expect(en, isNot(contains(broad)), reason: broad);
+    }
+    // Whether it applies is something to confirm, and the note says where.
+    expect(item.checklistNoteKo, contains('관할 출입국·외국인관서 또는 공식 안내에서 확인'));
+    expect(item.checklistNoteEn,
+        contains('whether this applies to you'));
+
+    // No processing time is published as one national figure, so the page
+    // states none — neither as a duration chip nor as a step.
+    expect(item.durationKo, isNull);
+    expect(item.durationEn, isNull);
+    for (final invented in const [
+      '2–3주',
+      '2-3주',
+      '2~3주',
+      '2–3 weeks',
+      '2-3 weeks',
+    ]) {
+      expect(ko, isNot(contains(invented)), reason: invented);
+      expect(en, isNot(contains(invented)), reason: invented);
+    }
+
+    // The application is filed at a 지방출입국·외국인관서, not on campus: no map card,
+    // and the 국제교류과 link says what that office actually does.
+    expect(item.relatedFacilityIds, isEmpty);
+    // CAT_SEQ=180 is HiKorea's 변경신고 page, not the registration one, and
+    // CAT_SEQ=176 still shows an image quoting the old 30,000원 fee — neither
+    // belongs on this page.
+    for (final l in item.links) {
+      expect(l.url, isNot(contains('CAT_SEQ=180')), reason: l.url);
+      expect(l.url, isNot(contains('CAT_SEQ=176')), reason: l.url);
+      expect(l.url, isNot(contains('CAT_SEQ=177')), reason: l.url);
+    }
+    // The plain page URL: the site honours no `tab` parameter, and the
+    // registration block is the first thing on the page.
+    final sik = item.links.singleWhere(
+        (l) => l.url.startsWith('https://www.studyinkorea.go.kr'));
+    expect(
+      sik.url,
+      'https://www.studyinkorea.go.kr/eng/life/residenceAndStayInfo.do',
+    );
+    expect(sik.url, isNot(contains('?tab=foreigner-registration')));
+    expect(sik.url, isNot(contains('#foreigner-registration')));
+    expect(sik.labelKo, 'Study in Korea 외국인등록 안내');
+    expect(sik.labelEn, 'Study in Korea — Foreigner Registration');
+    expect(sik.descriptionKo, '등록 대상 · 신청 시기 · 준비서류');
+    expect(sik.descriptionEn,
+        'Who must register, when to apply, and what to prepare');
+    // The fee figure above has to be traceable to the notice it came from.
+    expect(
+      item.links.any((l) =>
+          l.url == 'https://www.moj.go.kr/bbs/immigration/47/590299/artclView.do'),
+      isTrue,
+      reason: 'Ministry of Justice fee notice link missing',
+    );
+    // The reservation link points at the 방문예약 guidance page, not the portal
+    // front door.
+    final resv = item.links
+        .singleWhere((l) => l.url.startsWith('https://www.hikorea.go.kr'));
+    expect(resv.url, 'https://www.hikorea.go.kr/resv/ResvIntroR.pt');
+    final oia =
+        item.links.firstWhere((l) => l.url == '/guide/item/oia-visit');
+    expect(oia.descriptionKo, '학교 서류와 유학생 행정 절차를 문의할 때');
+    expect(
+      oia.descriptionEn,
+      'For questions about university documents and '
+          'international-student administration',
+    );
+    for (final claim in const [
+      '국제교류과에서 신청',
+      '국제교류과에 신청',
+      '국제교류과에서 외국인등록',
+    ]) {
+      expect(ko, isNot(contains(claim)), reason: claim);
+    }
+  });
+
+  test('Stay extension: filing window, being in Korea, and the 15-day move',
+      () {
+    final item =
+        MockData.guideItems.firstWhere((g) => g.id == 'stay-extension');
+    expect(item.status, GuideStatus.published);
+
+    final ko = _guideTextKo(item);
+    final en = _guideTextEn(item);
+
+    // Kept: the 4-months-before window and the fine after expiry.
+    expect(ko, contains('만료 4개월 전부터 만료일까지'));
+    expect(en, contains('four months before'));
+    expect(ko, contains('범칙금'));
+
+    // Added: the applicant has to be in Korea on the filing day.
+    expect(ko, contains('신청 당일에는 본인이 한국에 체류 중이어야 합니다'));
+    expect(en, contains('You must be in Korea on the day the application is filed'));
+
+    // …and the reason it matters: no online or proxy filing FROM ABROAD. Every
+    // mention of 대리/representative has to carry that condition, so the page
+    // never reads as "a representative can never file".
+    expect(ko, contains('해외에'));
+    expect(en, contains('while the applicant is overseas'));
+    for (final line in ko.split('\n').where((l) => l.contains('대리'))) {
+      expect(line, contains('해외'), reason: line);
+    }
+    for (final line
+        in en.split('\n').where((l) => l.contains('representative'))) {
+      expect(line, contains('overseas'), reason: line);
+    }
+
+    // Change of address: an obligation with a deadline, not a "check whether".
+    final moved = item.sections
+        .expand((s) => s.notes)
+        .firstWhere((n) => n.titleKo.contains('체류지가 바뀌었다면'));
+    expect(moved.titleKo, contains('15일 이내'));
+    expect(moved.titleEn, contains('within 15 days'));
+    expect(moved.linesKo.first, contains('전입한 날부터 15일 이내'));
+    expect(moved.linesEn.first, contains('within 15 days of moving'));
+    expect(moved.linesKo.first, contains('해야 합니다'));
+    expect(moved.linesEn.first, contains('must be reported'));
+    // Both places you can report it, in both languages.
+    expect(moved.linesKo[1], contains('출입국·외국인관서'));
+    expect(moved.linesKo[1], contains('읍·면·동'));
+    expect(moved.linesEn[1], contains('immigration office'));
+    expect(moved.linesEn[1], contains('local administrative office'));
+    // KO and EN say the same number of things.
+    expect(moved.linesEn, hasLength(moved.linesKo.length));
+    expect(ko, isNot(contains('체류지 변경 신고가 필요한지 확인')));
+  });
+
+  test('Visa types: official D-2 name, the 90-day rule, and work permission',
+      () {
+    final item = MockData.guideItems.firstWhere((g) => g.id == 'visa-types');
+    expect(item.status, GuideStatus.published);
+
+    final ko = _guideTextKo(item);
+    final en = _guideTextEn(item);
+
+    // Study in Korea's own labels — "Study Abroad (D-2)" is not one of them.
+    expect(en, contains('Study (D-2)'));
+    expect(en, contains('General Training (D-4)'));
+    expect(en, isNot(contains('Study Abroad (D-2)')));
+    expect(en, isNot(contains('Alien Registration Card')));
+
+    // The sub-type breakdown this page is built around stays intact.
+    for (final sub in const [
+      'D-2-2',
+      'D-2-3',
+      'D-2-4',
+      'D-2-6',
+      'D-4-1',
+      'D-4-2',
+    ]) {
+      expect(ko, contains(sub), reason: sub);
+      expect(en, contains(sub), reason: sub);
+    }
+
+    // Registration: the same conditional rule the ARC guide states.
+    expect(ko, contains('90일을 초과해'));
+    expect(ko, contains('90일 이내'));
+    expect(en, contains('more than 90 days'));
+    expect(en, contains('within 90 days of entry'));
+    final arcLink =
+        item.links.firstWhere((l) => l.url == '/guide/item/arc-issue');
+    expect(arcLink.labelKo, '가이드 — 외국인등록증(ARC) 발급');
+    expect(arcLink.labelEn, 'Guide — Residence Card (ARC)');
+
+    // Part-time work: not automatic, permission first, eligibility conditional
+    // — and no bare "D-2/D-4 students can work" claim, and no hour or
+    // proficiency figures this guide is not the source for.
+    final work = item.sections
+        .expand((s) => s.notes)
+        .firstWhere((n) => n.titleKo.contains('아르바이트'));
+    expect(work.linesKo.first, contains('자동으로 허용되는 것은 아닙니다'));
+    expect(work.linesEn.first, contains('does not automatically allow'));
+    expect(
+      work.linesKo.any((l) => l.contains('일을 시작하기 전에 허가를 받아야')),
+      isTrue,
+    );
+    expect(
+      work.linesEn.any((l) => l.contains('need permission before starting')),
+      isTrue,
+    );
+    expect(
+      work.linesKo.any((l) => l.contains('여러 조건에 따라 달라질 수 있습니다')),
+      isTrue,
+    );
+    expect(
+      work.linesEn.any((l) => l.contains('Eligibility and permitted hours can depend')),
+      isTrue,
+    );
+    expect(work.linesEn, hasLength(work.linesKo.length));
+    expect(RegExp(r'\d+\s*시간').hasMatch(ko), isFalse, reason: 'hour figure');
+    expect(RegExp(r'\d+\s*hours').hasMatch(en), isFalse, reason: 'hour figure');
+    expect(ko, isNot(contains('TOPIK')));
+
+    // Visa documents. 사증발급신청서 is the form filed at the 재외공관 — a different
+    // form from the ARC guide's 통합신청서(신고서), which is filed inside Korea.
+    expect(item.checklistKo, contains('사증발급신청서'));
+    expect(item.checklistEn, contains('Visa application form'));
+    expect(item.checklistKo, isNot(contains('통합신청서(신고서)')));
+    expect(item.checklistEn, isNot(contains('Application Form (Report Form)')));
+
+    // …the photo spec, and the school-issued institution certificate — in the
+    // core list, labelled as something the school provides.
+    expect(item.checklistKo, isNot(contains('증명사진')));
+    expect(item.checklistKo, contains('6개월 이내 촬영한 증명사진'));
+    expect(
+      item.checklistEn,
+      contains('One passport-size photo taken within the last 6 months'),
+    );
+    final institutionKo = item.checklistKo
+        .singleWhere((s) => s.contains('사업자등록증 또는 고유번호증 사본'));
+    expect(institutionKo, contains('학교에서 제공하는 서류'));
+    final institutionEn = item.checklistEn.singleWhere(
+        (s) => s.contains('business registration') && s.contains('registration-number'));
+    expect(institutionEn, contains('provided by the school'));
+    // Kept: documents differ by sub-type, nationality and mission.
+    expect(item.checklistNoteKo, contains('재외공관'));
+
+    // The reading time read as the visa's processing time, so it is gone.
+    expect(item.durationKo, isNull);
+    expect(item.durationEn, isNull);
+  });
+
+  test('Guide catalogue: 18 items, all published, reterm scoped to three', () {
+    expect(MockData.guideItems, hasLength(18));
+    expect(
+      MockData.guideItems.where((g) => g.status == GuideStatus.comingSoon),
+      isEmpty,
+    );
+    expect(
+      MockData.guideItems.where((g) => g.status == GuideStatus.published),
+      hasLength(18),
+    );
+    // The Residence Card reterm covers the immigration trio only; the other
+    // guides are corrected in their own category reviews.
+    for (final id in const ['arc-issue', 'stay-extension', 'visa-types']) {
+      final g = MockData.guideItems.firstWhere((g) => g.id == id);
+      expect(_guideTextEn(g), isNot(contains('Alien Registration Card')),
+          reason: id);
+      expect(_guideTextEn(g), isNot(contains('Study Abroad (D-2)')),
+          reason: id);
+    }
   });
 }
+
+/// Every Korean user-facing string an item carries, newline-joined — the
+/// immigration guides restate published rules, so their assertions are about
+/// the text a reader actually sees rather than any one field.
+String _guideTextKo(AdminGuideItem g) => _guideText(g, ko: true);
+
+/// English counterpart of [_guideTextKo].
+String _guideTextEn(AdminGuideItem g) => _guideText(g, ko: false);
+
+String _guideText(AdminGuideItem g, {required bool ko}) => <String?>[
+      ko ? g.titleKo : g.titleEn,
+      ko ? g.detailTitleKo : g.detailTitleEn,
+      ko ? g.summaryKo : g.summaryEn,
+      ko ? g.overviewKo : g.overviewEn,
+      ko ? g.checklistTitleKo : g.checklistTitleEn,
+      ...(ko ? g.checklistKo : g.checklistEn),
+      ko ? g.checklistOptionalTitleKo : g.checklistOptionalTitleEn,
+      ...(ko ? g.checklistOptionalKo : g.checklistOptionalEn),
+      ko ? g.checklistNoteKo : g.checklistNoteEn,
+      ...(ko ? g.stepsKo : g.stepsEn),
+      ...(ko ? g.tipsKo : g.tipsEn),
+      for (final p in g.phrases) ko ? p.ko : p.en,
+      for (final l in g.links) ...[
+        ko ? l.labelKo : l.labelEn,
+        ko ? l.descriptionKo : l.descriptionEn,
+      ],
+      for (final s in [...g.topSections, ...g.sections]) ...[
+        ko ? s.titleKo : s.titleEn,
+        ko ? s.bodyKo : s.bodyEn,
+        ...(ko ? s.stepsKo : s.stepsEn),
+        for (final l in s.links) ...[
+          ko ? l.labelKo : l.labelEn,
+          ko ? l.descriptionKo : l.descriptionEn,
+        ],
+        for (final n in s.notes) ...[
+          ko ? n.titleKo : n.titleEn,
+          ...(ko ? n.linesKo : n.linesEn),
+        ],
+        ko ? s.noticeKo : s.noticeEn,
+        ko ? s.footnoteKo : s.footnoteEn,
+      ],
+    ].whereType<String>().join('\n');
 
 /// Test-only repository serving a single content-free guide, so the
 /// coming-soon render path stays covered now that every shipped guide is

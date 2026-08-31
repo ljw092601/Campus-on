@@ -19,55 +19,161 @@ class MockData {
 
   static final List<AdminGuideItem> guideItems = [
     // ── 입국·체류 (immigration) ──
-    // Fully-published exemplar: exercises every S7 section so the template is
-    // demonstrable end-to-end. All other items stay `comingSoon` placeholders
-    // per the "틀 우선(structure-first)" scope.
+    // All 18 administrative guides are published.
+    // Test-only coming-soon coverage lives in guide_flow_test.dart.
     const AdminGuideItem(
       id: 'arc-issue',
       categoryId: GuideCategory.immigration,
       titleKo: '외국인등록증(ARC) 발급',
-      titleEn: 'Alien Registration Card (ARC)',
-      summaryKo: '입국 90일 이내 신청',
-      summaryEn: 'Apply within 90 days of entry',
-      overviewKo: '외국인등록증은 국내 체류·은행·통신 등 대부분의 생활 절차에 필요한 '
-          '기본 신분증입니다. 입국 후 90일 이내에 신청해야 합니다.',
-      overviewEn: 'The ARC is the core ID needed for most everyday procedures in '
-          'Korea (banking, mobile plans, and more). Apply within 90 days of entry.',
+      titleEn: 'Residence Card (ARC)',
+      summaryKo: '90일 초과 체류 시 90일 이내 등록',
+      summaryEn: 'Register within 90 days for stays over 90 days',
+      // The 90-day duty is conditional (HiKorea 외국인등록 대상 및 시기): it binds
+      // people staying MORE than 90 days, so the condition is stated rather than
+      // implied. The card's uses are listed as uses, not as "required for
+      // everything".
+      overviewKo: '한국에서 90일을 초과해 체류하려는 외국인은 입국한 날부터 90일 이내에 '
+          '외국인등록을 해야 합니다.\n\n'
+          '발급받은 외국인등록증은 은행, 통신, 건강보험, 학교생활 등 여러 절차에서 신분확인에 '
+          '사용될 수 있습니다.',
+      overviewEn: 'If you plan to stay in Korea for more than 90 days, you must '
+          'register within 90 days of entry.\n\n'
+          'The Residence Card you receive can then be used to confirm who you '
+          'are in many procedures — banking, mobile plans, health insurance and '
+          'university life among them.',
+      // 통합신청서(신고서) is the 법무부 statutory form name — the same one used for
+      // re-issue and for an extension of stay. The photo conditions are the
+      // HiKorea 외국인등록증 표준 사진규격.
       checklistKo: [
+        '통합신청서(신고서)',
         '여권',
-        '표준규격 증명사진 1매 (3.5×4.5cm)',
-        '수수료 3만원',
-        '재학증명서 또는 표준입학허가서',
+        '6개월 이내 촬영한 흰색 배경의 3.5×4.5cm 컬러 정면사진 1매',
+        '입국 후 발급된 재학증명서 (연구과정 등은 연구생증명서)',
+        '체류지 입증서류 (임대차계약서, 숙소제공확인서 등)',
+        '발급 수수료 35,000원',
       ],
       checklistEn: [
+        'Application Form (Report Form)',
         'Passport',
-        'One standard ID photo (3.5×4.5cm)',
-        'Fee: KRW 30,000',
-        'Certificate of enrollment or admission',
+        'One 3.5×4.5cm color, front-facing photo on a white background, taken '
+            'within the last 6 months',
+        'Certificate of enrollment issued after your entry (a research-student '
+            'certificate for research courses)',
+        'Proof of where you live in Korea (a lease, an accommodation '
+            'confirmation, and the like)',
+        'Issuance fee: KRW 35,000',
       ],
+      checklistOptionalTitleKo: '체류자격과 개인 상황에 따라 필요할 수 있어요',
+      checklistOptionalTitleEn: 'You may also need these depending on your '
+          'status of stay and your situation',
+      // 표준입학허가서 lives here rather than in the core list: the official 외국인등록
+      // document list names 재학증명서 for 유학(D-2), not the admission letter.
+      checklistOptionalKo: [
+        '결핵검진 확인서(공식 안내상 해당자만)',
+        '체류자격별 추가서류',
+        '체류자격과 개인 상황에 따라 학교에서 받은 추가서류',
+        '관할 기관이 추가로 요구하는 서류',
+      ],
+      checklistOptionalEn: [
+        'Tuberculosis examination confirmation (only if it applies under the '
+            'current official guidance)',
+        'Any other document your status of stay calls for',
+        'School documents your status of stay or your own situation calls for',
+        'Anything else the office handling your case asks for',
+      ],
+      // 35,000원 = 법무부 「외국인등록증 발급 수수료 인상 안내」, 2025. 1. 1. 시행. The date is
+      // stated rather than implied so a later change reads as a change.
+      checklistNoteKo: '※ 2025년 1월 1일 시행 기준입니다.\n'
+          '수수료와 제출서류는 변경될 수 있으므로 신청 전에 HiKorea 또는 외국인종합안내센터 '
+          '1345(유료)에서 최신 안내를 확인하세요.\n'
+          '결핵검진 확인서처럼 해당자에게만 필요한 서류도 있습니다. 해당 여부는 신청 전에 '
+          '관할 출입국·외국인관서 또는 공식 안내에서 확인하세요.',
+      checklistNoteEn: '※ This fee has applied since 1 January 2025.\n'
+          'Fees and required documents can change, so check HiKorea or call the '
+          'Immigration Contact Center 1345 (paid call) before applying.\n'
+          'Some documents, such as the tuberculosis examination confirmation, '
+          'are only asked of certain applicants. Check the current official '
+          'guidance or ask your immigration office whether this applies to you.',
       stepsKo: [
-        '하이코리아(hikorea.go.kr)에서 방문 예약',
-        '관할 출입국·외국인청 방문 및 신청서 제출',
+        '본인이 외국인등록 대상인지, 관할 출입국·외국인관서가 어디인지 확인',
+        'HiKorea에서 방문 예약이 필요한지 확인',
+        '최신 제출서류 확인 후 준비',
+        '관할 출입국·외국인관서에 신청',
         '수수료 납부 후 접수증 수령',
-        '약 2–3주 후 등록증 수령(우편 또는 방문)',
+        '접수증 또는 담당기관 안내에서 발급 예정일과 수령방법 확인',
       ],
       stepsEn: [
-        'Book a visit on HiKorea (hikorea.go.kr)',
-        'Visit the immigration office and submit the application',
+        'Check whether you have to register, and which immigration office '
+            'covers you',
+        'Check on HiKorea whether you need to book a visit',
+        'Check the current document list and get those documents ready',
+        'Apply at your immigration office',
         'Pay the fee and receive the receipt',
-        'Pick up the card in about 2–3 weeks (mail or in person)',
+        "Check the receipt, or the office's own guidance, for when the card "
+            'will be ready and how to collect it',
+      ],
+      sections: [
+        // Neither the processing time nor the collection method is published as
+        // one national figure, so the page points at the receipt instead of
+        // restating "2–3 weeks" as if it applied to every application.
+        GuideSection(
+          titleKo: '처리기간과 수령방법',
+          titleEn: 'Processing time and collection',
+          iconName: 'info',
+          bodyKo: '발급까지 걸리는 기간과 등록증을 받는 방법은 관할 출입국·외국인관서와 신청 '
+              '상황에 따라 달라질 수 있습니다.',
+          bodyEn: 'How long the card takes, and how you receive it, can differ '
+              'by immigration office and by your own application.',
+          noticeKo: '접수증에 안내된 내용 또는 관할 기관의 안내를 기준으로 확인하세요.',
+          noticeEn: 'Go by what your receipt says, or by the guidance your own '
+              'immigration office gives you.',
+          noticeIconName: 'info',
+        ),
       ],
       links: [
+        // Study in Korea (NIIED, Ministry of Education). HiKorea's own 외국인등록
+        // pages are deliberately NOT linked here: CAT_SEQ=180 is the 변경신고 page,
+        // and CAT_SEQ=176 still carries an old image quoting the 30,000원 fee,
+        // which would contradict the 35,000원 stated above.
+        GuideLink(
+          labelKo: 'Study in Korea 외국인등록 안내',
+          labelEn: 'Study in Korea — Foreigner Registration',
+          descriptionKo: '등록 대상 · 신청 시기 · 준비서류',
+          descriptionEn: 'Who must register, when to apply, and what to prepare',
+          // Plain page URL: the site takes no `tab` parameter, and foreigner
+          // registration is the first block on the page anyway.
+          url: 'https://www.studyinkorea.go.kr/eng/life/residenceAndStayInfo.do',
+        ),
+        // The notice the 35,000원 figure and its effective date come from.
+        GuideLink(
+          labelKo: '법무부 외국인등록증 수수료 안내',
+          labelEn: 'Ministry of Justice — Residence Card fee',
+          descriptionKo: '2025년 1월 1일부터 적용되는 발급 수수료',
+          descriptionEn: 'The issuance fee effective from 1 January 2025',
+          url: 'https://www.moj.go.kr/bbs/immigration/47/590299/artclView.do',
+        ),
         GuideLink(
           labelKo: '하이코리아 방문 예약',
           labelEn: 'HiKorea reservation',
-          url: 'https://www.hikorea.go.kr',
+          descriptionKo: '방문 예약이 필요한지 확인하고 예약하기',
+          descriptionEn: 'Check whether a visit has to be booked, and book it',
+          url: 'https://www.hikorea.go.kr/resv/ResvIntroR.pt',
+        ),
+        // In-app. The office does not file the registration — it is where the
+        // school-side paperwork and student administration are handled — so the
+        // description says exactly that.
+        GuideLink(
+          labelKo: '가이드 — 국제교류과 방문 안내',
+          labelEn: 'Guide — International Affairs Office',
+          descriptionKo: '학교 서류와 유학생 행정 절차를 문의할 때',
+          descriptionEn: 'For questions about university documents and '
+              'international-student administration',
+          url: '/guide/item/oia-visit',
+          iconName: 'school',
         ),
       ],
-      // b04 = 종합강의동(부민) — 국제교류과가 1F에 위치.
-      relatedFacilityIds: ['b04'],
-      durationKo: '예상 2–3주',
-      durationEn: 'Approx. 2–3 weeks',
+      // No related location: the registration is filed at a 지방출입국·외국인관서, not
+      // on campus, so a campus map card would read as the place to apply.
       difficulty: 2,
       status: GuideStatus.published,
     ),
@@ -101,11 +207,17 @@ class MockData {
           iconName: 'event_repeat',
           bodyKo: '체류기간 연장은 현재 체류기간 만료 4개월 전부터 만료일까지 신청할 수 '
               '있습니다.\n\n'
-              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고 여유 있게 준비하세요.',
+              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고 여유 있게 준비하세요.\n\n'
+              '신청 당일에는 본인이 한국에 체류 중이어야 합니다. HiKorea는 신청인이 해외에 '
+              '있는 동안에는 온라인 민원신청이나 대리인을 통한 신청이 불가능하다고 안내하고 '
+              '있습니다.',
           bodyEn: 'You can apply from four months before your current stay '
               'period expires, up to the expiry date itself.\n\n'
               'Check the expiry date printed on your Residence Card (ARC) and '
-              'give yourself plenty of time to get ready.',
+              'give yourself plenty of time to get ready.\n\n'
+              'You must be in Korea on the day the application is filed. '
+              'HiKorea states that the application cannot be filed online or by '
+              'a representative while the applicant is overseas.',
           noticeKo: '체류기간 만료 전에 신청하세요.\n'
               '체류기간이 만료된 뒤 연장을 신청하면 범칙금 등 불이익이 발생할 수 있습니다.',
           noticeEn: 'Apply before your current stay period expires.\n'
@@ -199,9 +311,10 @@ class MockData {
               'situation actually require.',
           // 1345 is shown as text: the app has no tel: launch path yet, and this
           // guide is not the place to add one.
-          noticeKo: '최신 정보는 HiKorea 또는 외국인종합안내센터 1345에서 확인할 수 있습니다.',
+          noticeKo: '최신 정보는 HiKorea 또는 외국인종합안내센터 1345(유료)에서 확인할 수 '
+              '있습니다.',
           noticeEn: 'For the latest information, check HiKorea or call the '
-              'Immigration Contact Center at 1345.',
+              'Immigration Contact Center 1345 (paid call).',
         ),
         GuideSection(
           titleKo: '알아두면 좋은 점',
@@ -221,15 +334,22 @@ class MockData {
               ],
             ),
             GuideNote(
-              titleKo: '🏠 주소가 바뀌었다면 확인하세요',
-              titleEn: '🏠 If your address has changed',
+              titleKo: '🏠 체류지가 바뀌었다면 15일 이내 신고',
+              titleEn: '🏠 If you move, report it within 15 days',
               linesKo: [
-                '한국에서 체류지가 변경되었다면 체류지 변경 신고가 필요한지 확인하세요.',
+                '등록외국인이 한국에서 체류지를 옮겼다면 새 주소로 전입한 날부터 15일 이내에 '
+                    '체류지 변경신고를 해야 합니다.',
+                '신고는 새 체류지를 관할하는 출입국·외국인관서나 새 주소지의 읍·면·동 '
+                    '행정기관에서 할 수 있습니다.',
                 '체류기간 연장 과정에서 현재 체류지를 증명하는 서류가 필요할 수 있습니다.',
               ],
               linesEn: [
-                'If you have moved within Korea, check whether you need to '
-                    'report the change of address.',
+                'If a registered foreign resident moves to a new address in '
+                    'Korea, the change of address must be reported within 15 '
+                    'days of moving.',
+                'You can report it to the immigration office responsible for '
+                    'the new address, or to the local administrative office '
+                    '(읍·면·동) for that address.',
                 'You may be asked for a document proving where you currently '
                     'live.',
               ],
@@ -319,15 +439,18 @@ class MockData {
       overviewKo: '한국에서 공부하려는 외국인 학생은 본인의 학업 형태에 맞는 체류자격과 비자를 '
           '준비해야 합니다.\n\n'
           '동아대학교 외국인 학생에게 가장 관련이 큰 체류자격은 유학(D-2)과 일반연수(D-4)입니다.\n\n'
-          'D-2는 주로 학위과정과 교환학생 과정에 참여하는 학생에게, D-4는 한국어연수 등 비학위 '
-          '연수과정에 참여하는 학생에게 해당합니다.',
+          'D-2는 전문학사·학사·석사·박사 등 정규 학위과정과 연구과정, 교환학생 과정을 포함하며, '
+          'D-4는 한국어연수 등 비학위 연수과정에 해당합니다.',
+      // "Study (D-2)" / "General Training (D-4)" are the labels Study in Korea
+      // (NIIED) uses; "Study Abroad" is not the official English name.
       overviewEn: 'To study in Korea you need the status of stay — and the visa '
           'that goes with it — that matches the kind of study you will be '
           'doing.\n\n'
           'For international students at Dong-A University the two that matter '
-          'most are Study Abroad (D-2) and General Training (D-4).\n\n'
-          'D-2 is generally for students on a degree or exchange program; D-4 is '
-          'for students on a non-degree course such as Korean language training.',
+          'most are Study (D-2) and General Training (D-4).\n\n'
+          "D-2 covers formal degree programs — associate, bachelor's, master's "
+          'and doctoral — along with research courses and exchange students. '
+          'D-4 covers non-degree courses such as Korean language training.',
       // The two visa types and the comparison have to land before the document
       // checklist — which of the two you are decides what you prepare.
       topSections: [
@@ -486,16 +609,28 @@ class MockData {
               'of your own embassy or consulate before you apply.',
         ),
       ],
+      // 교육기관 사업자등록증/고유번호증 사본 is on the official D-2 and D-4 document
+      // lists, but the school issues it — the label says so, so nobody goes
+      // looking for a certificate of their own.
+      // 사증발급신청서 — the visa application form filed at the 재외공관. Not to be
+      // confused with the 통합신청서(신고서) the ARC guide lists: that one is filed
+      // inside Korea at an immigration office.
       checklistKo: [
+        '사증발급신청서',
         '여권',
-        '증명사진',
+        '6개월 이내 촬영한 증명사진',
         '표준입학허가서',
+        '교육기관 사업자등록증 또는 고유번호증 사본 (학교에서 제공하는 서류)',
         '재정능력 입증서류',
       ],
       checklistEn: [
+        'Visa application form',
         'Passport',
-        'ID photo',
+        'One passport-size photo taken within the last 6 months',
         'Certificate of Admission',
+        "A copy of the educational institution's business registration "
+            'certificate or registration-number certificate (a document '
+            'provided by the school)',
         'Proof that you can support yourself financially',
       ],
       checklistOptionalTitleKo: '체류자격과 상황에 따라 추가될 수 있어요',
@@ -533,28 +668,39 @@ class MockData {
               titleEn: '🪪 A visa is not a Residence Card',
               linesKo: [
                 '비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.',
-                '한국에서 장기간 체류하는 학생은 입국 후 별도의 외국인등록 절차가 필요할 수 '
-                    '있습니다.',
+                '한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 '
+                    '해야 합니다.',
               ],
               linesEn: [
                 'A visa and a Residence Card (ARC) are two different things.',
-                'If you are staying in Korea long term you may need to register '
-                    'as a foreign resident after you arrive.',
+                'If you plan to stay in Korea for more than 90 days, you must '
+                    'register within 90 days of entry.',
               ],
             ),
             GuideNote(
               titleKo: '💼 아르바이트는 자동으로 허용되지 않아요',
               titleEn: '💼 Part-time work is not automatic',
               linesKo: [
-                'D-2 또는 D-4 비자를 가지고 있다고 해서 자유롭게 아르바이트를 할 수 있는 '
-                    '것은 아닙니다.',
-                '학생의 체류자격과 조건에 따라 시간제취업 허가가 필요할 수 있습니다.',
+                'D-2 또는 D-4 체류자격만으로 시간제취업이 자동으로 허용되는 것은 아닙니다.',
+                '시간제취업이 허용되는 대상 학생이 일반적인 아르바이트를 하려면 원칙적으로 '
+                    '일을 시작하기 전에 허가를 받아야 합니다.',
+                '허용 대상과 근무 가능 시간은 세부 체류자격, 과정, 학년, 한국어 능력, 학교 '
+                    '유학생 담당자의 확인 등 여러 조건에 따라 달라질 수 있습니다.',
+                '근무를 시작하기 전에 HiKorea와 학교 국제교류과에서 본인에게 적용되는 조건을 '
+                    '확인하세요.',
               ],
               linesEn: [
-                'Holding a D-2 or D-4 visa does not by itself let you work part '
-                    'time.',
-                'Depending on your status and its conditions, you may need a '
-                    'part-time work permit first.',
+                'A D-2 or D-4 status does not automatically allow part-time '
+                    'work.',
+                'Eligible students generally need permission before starting '
+                    'ordinary part-time employment.',
+                'Eligibility and permitted hours can depend on the exact status '
+                    'of stay, the program, the year of study, Korean '
+                    "proficiency and confirmation from the university's "
+                    'international student adviser.',
+                'Check the rules that apply to you with HiKorea and the '
+                    "university's international affairs office before starting "
+                    'work.',
               ],
             ),
             GuideNote(
@@ -635,8 +781,8 @@ class MockData {
         // In-app: the two guides this page keeps pointing at. Same `/`-prefixed
         // internal-route convention the map links use (_LinkRow._isInternal).
         GuideLink(
-          labelKo: '외국인등록증(ARC) 발급 안내',
-          labelEn: 'Guide — Alien Registration Card (ARC)',
+          labelKo: '가이드 — 외국인등록증(ARC) 발급',
+          labelEn: 'Guide — Residence Card (ARC)',
           descriptionKo: '앱 안에서 바로 보기',
           descriptionEn: 'Open the in-app guide',
           url: '/guide/item/arc-issue',
@@ -651,8 +797,8 @@ class MockData {
           iconName: 'event_repeat',
         ),
       ],
-      durationKo: '예상 5~10분',
-      durationEn: 'Approx. 5–10 min',
+      // No duration: the only number this page could carry would be the reading
+      // time, and on a visa guide that reads as the processing time.
       difficulty: 1,
       status: GuideStatus.published,
     ),
