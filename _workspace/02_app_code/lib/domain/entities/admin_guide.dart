@@ -62,6 +62,11 @@ const Map<String, IconData> _guideIcons = {
   'school': Symbols.school,
   'menu_book': Symbols.menu_book,
   'compare_arrows': Symbols.compare_arrows,
+  'call': Symbols.call,
+  'local_police': Symbols.local_police,
+  'local_fire_department': Symbols.local_fire_department,
+  'emergency': Symbols.emergency,
+  'translate': Symbols.translate,
 };
 
 /// Resolves a Material Symbols name to its icon, or null when unknown/absent.
@@ -174,6 +179,7 @@ class GuideSection {
     this.bodyEn,
     this.stepsKo = const [],
     this.stepsEn = const [],
+    this.links = const [],
     this.notes = const [],
     this.noticeKo,
     this.noticeEn,
@@ -197,6 +203,12 @@ class GuideSection {
   /// card's "how to buy" vs. "how to recharge").
   final List<String> stepsKo;
   final List<String> stepsEn;
+
+  /// Actions belonging to this section, rendered as link rows in a tinted block
+  /// right under the lead paragraph — for sections whose point IS the action
+  /// (e.g. "112 — 경찰" carrying a `tel:112` row). Same [GuideLink] as the
+  /// item-level links, so `/`-prefixed urls still route in-app.
+  final List<GuideLink> links;
 
   final List<GuideNote> notes;
 
@@ -242,6 +254,11 @@ class GuideSection {
         bodyEn: j['body_en'] as String?,
         stepsKo: _strList(j['steps_ko']),
         stepsEn: _strList(j['steps_en']),
+        links: (j['links'] as List?)
+                ?.map((e) =>
+                    GuideLink.fromJson((e as Map).cast<String, dynamic>()))
+                .toList() ??
+            const [],
         notes: (j['notes'] as List?)
                 ?.map((e) =>
                     GuideNote.fromJson((e as Map).cast<String, dynamic>()))

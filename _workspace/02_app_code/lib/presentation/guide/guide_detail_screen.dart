@@ -359,7 +359,8 @@ class _ExtraSection extends StatelessWidget {
     final notice = section.notice(locale);
     final footnote = section.footnote(locale);
     // Anything above the first note needs a gap before it.
-    final hasLead = body != null || steps.isNotEmpty;
+    final hasLead =
+        body != null || steps.isNotEmpty || section.links.isNotEmpty;
 
     return _Section(
       title: section.title(locale),
@@ -370,8 +371,34 @@ class _ExtraSection extends StatelessWidget {
         children: [
           if (body != null)
             Text(body, style: Theme.of(context).textTheme.bodyLarge),
-          if (steps.isNotEmpty) ...[
+          // Section actions sit directly under the lead paragraph, in the same
+          // tinted block as a notice card so they read as the thing to tap
+          // (the emergency page's "Call 112" row above all).
+          if (section.links.isNotEmpty) ...[
             if (body != null) SizedBox(height: d.spaceMd),
+            // Material (not a plain Container) so the rows keep their tap ink —
+            // a tinted DecoratedBox would paint over the nearest Material and
+            // swallow the splash.
+            Material(
+              color: accent.withValues(alpha: 0.10),
+              shape: RoundedRectangleBorder(
+                borderRadius: d.brSm,
+                side: BorderSide(color: accent.withValues(alpha: 0.30)),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: d.spaceMd),
+                child: Column(
+                  children: [
+                    for (final link in section.links) _LinkRow(link: link),
+                  ],
+                ),
+              ),
+            ),
+          ],
+          if (steps.isNotEmpty) ...[
+            if (body != null || section.links.isNotEmpty)
+              SizedBox(height: d.spaceMd),
             for (var i = 0; i < steps.length; i++)
               _StepRow(index: i + 1, text: steps[i], color: accent),
           ],
