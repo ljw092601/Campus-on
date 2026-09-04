@@ -28,75 +28,104 @@ class MockData {
       titleEn: 'Residence Card (ARC)',
       summaryKo: '90일 초과 체류 시 90일 이내 등록',
       summaryEn: 'Register within 90 days for stays over 90 days',
-      // The 90-day duty is conditional (HiKorea 외국인등록 대상 및 시기): it binds
-      // people staying MORE than 90 days, so the condition is stated rather than
-      // implied. The card's uses are listed as uses, not as "required for
-      // everything".
+      // The 90-day duty is conditional (출입국관리법 §31①): it binds people staying
+      // MORE than 90 days, so the condition is stated rather than implied.
+      // §31③④ put a DIFFERENT clock on anyone who receives a status of stay or a
+      // change of status while already in Korea — they register when that
+      // permission is granted, not 90 days from entry. D-4 어학연수 → D-2 is a
+      // common Dong-A route, so that branch is spelled out instead of leaving
+      // "입국한 날" to read as the only rule. The card's uses are listed as uses,
+      // not as "required for everything".
       overviewKo: '한국에서 90일을 초과해 체류하려는 외국인은 입국한 날부터 90일 이내에 '
           '외국인등록을 해야 합니다.\n\n'
+          '다만 한국에 들어온 뒤 국내에서 체류자격을 받거나 체류자격 변경허가를 받은 '
+          '경우에는(예: 어학연수 D-4에서 유학 D-2로 변경) 입국일 기준 90일이 아니라 그 '
+          '허가를 받는 때에 외국인등록을 해야 합니다. 본인이 어느 경우인지 확실하지 않다면 '
+          '관할 출입국·외국인관서에 확인하세요.\n\n'
           '발급받은 외국인등록증은 은행, 통신, 건강보험, 학교생활 등 여러 절차에서 신분확인에 '
           '사용될 수 있습니다.',
       overviewEn: 'If you plan to stay in Korea for more than 90 days, you must '
           'register within 90 days of entry.\n\n'
+          'If instead you received your status of stay, or a change of status, '
+          'while already in Korea — moving from a D-4 language course to a D-2 '
+          'degree program, for example — you register at the time that '
+          'permission is granted, not within 90 days of your original entry. If '
+          'you are not sure which case applies to you, ask your immigration '
+          'office.\n\n'
           'The Residence Card you receive can then be used to confirm who you '
           'are in many procedures — banking, mobile plans, health insurance and '
           'university life among them.',
-      // 통합신청서(신고서) is the 법무부 statutory form name — the same one used for
-      // re-issue and for an extension of stay. The photo conditions are the
-      // HiKorea 외국인등록증 표준 사진규격.
+      // 통합신청서(신고서) is the 법무부 statutory form name printed on 시행규칙 별지
+      // 제34호서식 ("APPLICATION FORM (REPORT FORM)") — the same one used for
+      // re-issue and for an extension of stay.
+      // The passport copies come from HiKorea 「외국인등록시 제출서류」 공통제출서류
+      // ("여권(여권인적면 및 비자면 사본 각1부 포함)") — the office's own document
+      // list, which the shorter summaries elsewhere leave out.
+      // Photo conditions are 법무부 「외국인등록용 사진규격 안내」: "흰색바탕, 무배경으로
+      // 테두리가 없어야 한다", rendered officially as "White background and
+      // frameless" — so white is the background, and 무배경 is "nothing behind
+      // you", never an alternative to white.
+      // Cash-only comes from HiKorea 「체류허가 수수료」, which carries it on the
+      // CURRENT 3만5천원 line (not the stale 3만원 image on CAT_SEQ=176).
       checklistKo: [
         '통합신청서(신고서)',
-        '여권',
-        '6개월 이내 촬영한 흰색 배경의 3.5×4.5cm 컬러 정면사진 1매',
+        '여권 (여권 인적사항면·사증면 사본 각 1부 포함)',
+        '6개월 이내 촬영한 3.5×4.5cm 컬러 정면사진 1매 '
+            '(흰색 바탕, 배경에 아무것도 없고 테두리가 없어야 합니다)',
         '입국 후 발급된 재학증명서 (연구과정 등은 연구생증명서)',
         '체류지 입증서류 (임대차계약서, 숙소제공확인서 등)',
-        '발급 수수료 35,000원',
+        '발급 수수료 35,000원 (공식 안내상 현금 수납만 가능 — 현금을 준비해 가세요)',
       ],
       checklistEn: [
         'Application Form (Report Form)',
-        'Passport',
-        'One 3.5×4.5cm color, front-facing photo on a white background, taken '
-            'within the last 6 months',
+        'Passport, plus one copy each of the photo page and the visa page',
+        'One 3.5×4.5cm color, front-facing photo taken within the last '
+            '6 months — plain white background, no border',
         'Certificate of enrollment issued after your entry (a research-student '
             'certificate for research courses)',
         'Proof of where you live in Korea (a lease, an accommodation '
             'confirmation, and the like)',
-        'Issuance fee: KRW 35,000',
+        'Issuance fee: KRW 35,000 — official guidance says cash only, so bring '
+            'cash',
       ],
       checklistOptionalTitleKo: '체류자격과 개인 상황에 따라 필요할 수 있어요',
       checklistOptionalTitleEn: 'You may also need these depending on your '
           'status of stay and your situation',
       // 표준입학허가서 lives here rather than in the core list: the official 외국인등록
       // document list names 재학증명서 for 유학(D-2), not the admission letter.
+      // 결핵검진 확인서 is deliberately ABSENT. HiKorea 「외국인등록시 제출서류」 does not
+      // list it at all, and the only source that does (Study in Korea) scopes it
+      // to "'16.7.1. 이전 사증 발급자" — a transitional clause no 2026 intake can
+      // fall under. The 결핵고위험국가 rule people reach for belongs to 사증 발급 /
+      // 체류자격 변경 / 기간 연장, not to first registration; do not import it here.
       checklistOptionalKo: [
-        '결핵검진 확인서(공식 안내상 해당자만)',
         '체류자격별 추가서류',
         '체류자격과 개인 상황에 따라 학교에서 받은 추가서류',
         '관할 기관이 추가로 요구하는 서류',
       ],
       checklistOptionalEn: [
-        'Tuberculosis examination confirmation (only if it applies under the '
-            'current official guidance)',
         'Any other document your status of stay calls for',
         'School documents your status of stay or your own situation calls for',
-        'Anything else the office handling your case asks for',
+        'Any additional document the office handling your case requests during '
+            'review',
       ],
       // 35,000원 = 법무부 「외국인등록증 발급 수수료 인상 안내」, 2025. 1. 1. 시행. The date is
       // stated rather than implied so a later change reads as a change.
       checklistNoteKo: '※ 2025년 1월 1일 시행 기준입니다.\n'
           '수수료와 제출서류는 변경될 수 있으므로 신청 전에 HiKorea 또는 외국인종합안내센터 '
           '1345(유료)에서 최신 안내를 확인하세요.\n'
-          '결핵검진 확인서처럼 해당자에게만 필요한 서류도 있습니다. 해당 여부는 신청 전에 '
+          '체류자격과 개인 상황에 따라 관할 관서가 추가서류를 요구할 수 있습니다. 신청 전에 '
           '관할 출입국·외국인관서 또는 공식 안내에서 확인하세요.',
       checklistNoteEn: '※ This fee has applied since 1 January 2025.\n'
           'Fees and required documents can change, so check HiKorea or call the '
           'Immigration Contact Center 1345 (paid call) before applying.\n'
-          'Some documents, such as the tuberculosis examination confirmation, '
-          'are only asked of certain applicants. Check the current official '
-          'guidance or ask your immigration office whether this applies to you.',
+          'Depending on your status of stay and your situation, the office '
+          'handling your case may ask for extra documents. Check with your '
+          'immigration office, or the current official guidance, before you '
+          'apply.',
       stepsKo: [
         '본인이 외국인등록 대상인지, 관할 출입국·외국인관서가 어디인지 확인',
-        'HiKorea에서 방문 예약이 필요한지 확인',
+        'HiKorea에서 방문 예약하기 — 관서를 직접 방문해 신청한다면 예약 없이는 접수되지 않습니다',
         '최신 제출서류 확인 후 준비',
         '관할 출입국·외국인관서에 신청',
         '수수료 납부 후 접수증 수령',
@@ -105,7 +134,8 @@ class MockData {
       stepsEn: [
         'Check whether you have to register, and which immigration office '
             'covers you',
-        'Check on HiKorea whether you need to book a visit',
+        'Book your visit on HiKorea — if you apply in person, offices cannot '
+            'accept your application without a reservation',
         'Check the current document list and get those documents ready',
         'Apply at your immigration office',
         'Pay the fee and receive the receipt',
@@ -155,8 +185,9 @@ class MockData {
         GuideLink(
           labelKo: '하이코리아 방문 예약',
           labelEn: 'HiKorea reservation',
-          descriptionKo: '방문 예약이 필요한지 확인하고 예약하기',
-          descriptionEn: 'Check whether a visit has to be booked, and book it',
+          descriptionKo: '방문 예약하기 — 직접 방문 신청은 예약이 필요합니다',
+          descriptionEn: 'Book your visit — applying in person requires a '
+              'reservation',
           url: 'https://www.hikorea.go.kr/resv/ResvIntroR.pt',
         ),
         // In-app. The office does not file the registration — it is where the

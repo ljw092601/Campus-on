@@ -3599,32 +3599,62 @@ void main() {
     expect(en, contains('more than 90 days'));
     expect(en, contains('within 90 days of entry'));
 
+    // …but the entry-date clock is not the only one. 출입국관리법 §31③④ move
+    // registration to the moment a status of stay, or a change of status, is
+    // granted inside Korea — the D-4 → D-2 route many Dong-A students take.
+    expect(ko, contains('체류자격 변경허가'));
+    expect(ko, contains('허가를 받는 때'));
+    expect(ko, contains('D-4'));
+    expect(en, contains('change of status'));
+    expect(en, contains('at the time that permission is granted'));
+    expect(en, contains('D-4'));
+
     // Core documents, per HiKorea's 외국인등록 제출서류 list. The form is named by its
     // statutory title, not as a generic "신청서".
     expect(item.checklistKo, contains('통합신청서(신고서)'));
     expect(item.checklistEn, contains('Application Form (Report Form)'));
-    expect(item.checklistKo, contains('여권'));
-    expect(item.checklistEn, contains('Passport'));
-    // Every condition of the 표준 사진규격: age, size, background, color, pose.
+    // The office's own list asks for the passport AND copies of two of its
+    // pages; "여권" alone sends students back for a second appointment.
+    final passportKo = item.checklistKo.singleWhere((s) => s.contains('여권'));
+    for (final spec in const ['인적사항면', '사증면', '사본', '각 1부']) {
+      expect(passportKo, contains(spec), reason: spec);
+    }
+    final passportEn =
+        item.checklistEn.singleWhere((s) => s.startsWith('Passport'));
+    for (final spec in const ['photo page', 'visa page', 'one copy each']) {
+      expect(passportEn, contains(spec), reason: spec);
+    }
+    // Every condition of the 표준 사진규격: age, size, background, color, pose,
+    // and the frameless/plain requirement ("흰색바탕, 무배경으로 테두리가 없어야 한다"
+    // → officially "White background and frameless").
     final photoKo = item.checklistKo.singleWhere((s) => s.contains('사진'));
     for (final spec in const [
       '6개월 이내 촬영한',
-      '흰색 배경',
+      '흰색 바탕',
+      '테두리가 없어야',
       '3.5×4.5cm',
       '컬러',
       '정면사진',
     ]) {
       expect(photoKo, contains(spec), reason: spec);
     }
-    final photoEn = item.checklistEn.singleWhere((s) => s.contains('photo'));
+    final photoEn =
+        item.checklistEn.singleWhere((s) => s.contains('front-facing photo'));
     for (final spec in const [
       'within the last 6 months',
       'white background',
+      'no border',
       '3.5×4.5cm',
       'color',
       'front-facing',
     ]) {
       expect(photoEn, contains(spec), reason: spec);
+    }
+    // 무배경 is "nothing behind you", not a second background option — the app
+    // must never offer a non-white background.
+    expect(ko, isNot(contains('무배경도')));
+    for (final wrong in const ['plain or white', 'no background']) {
+      expect(en, isNot(contains(wrong)), reason: wrong);
     }
     // 재학증명서 has to be the one issued after entry; 연구생증명서 is named as the
     // research-course variant, not as a second requirement.
@@ -3644,9 +3674,13 @@ void main() {
     expect(item.checklistKo, isNot(contains('재학증명서 또는 표준입학허가서')));
     expect(item.checklistKo.any((s) => s.contains('표준입학허가서')), isFalse);
 
-    // Fee: 35,000원 since 2025-01-01, with the effective date stated.
-    expect(item.checklistKo.any((s) => s.contains('35,000원')), isTrue);
-    expect(item.checklistEn.any((s) => s.contains('KRW 35,000')), isTrue);
+    // Fee: 35,000원 since 2025-01-01, with the effective date stated, and the
+    // cash-only condition HiKorea 「체류허가 수수료」 carries on that same line.
+    final feeKo = item.checklistKo.singleWhere((s) => s.contains('35,000원'));
+    expect(feeKo, contains('현금'));
+    expect(feeKo, contains('현금 수납만 가능'));
+    final feeEn = item.checklistEn.singleWhere((s) => s.contains('KRW 35,000'));
+    expect(feeEn, contains('cash only'));
     expect(item.checklistNoteKo, contains('2025년 1월 1일'));
     expect(item.checklistNoteEn, contains('1 January 2025'));
     // 1345 is a paid call; if the page tells you to ring it, it says so — in
@@ -3662,32 +3696,34 @@ void main() {
       expect(en, isNot(contains(stale)), reason: stale);
     }
 
-    // Tuberculosis paperwork is for whoever it applies to — never a blanket
-    // student requirement.
-    // …and it is the narrow document (결핵검진 확인서), never a broad "health check"
-    // bucket that would read as a general student requirement.
-    expect(item.checklistKo.where((s) => s.contains('결핵')), isEmpty);
-    final tbKo = item.checklistOptionalKo.singleWhere((s) => s.contains('결핵'));
-    expect(tbKo, '결핵검진 확인서(공식 안내상 해당자만)');
-    expect(tbKo, contains('해당자만'));
-    final tbEn = item.checklistOptionalEn
-        .singleWhere((s) => s.contains('Tuberculosis'));
-    expect(
-      tbEn,
-      'Tuberculosis examination confirmation (only if it applies under the '
-          'current official guidance)',
-    );
-    expect(tbEn, contains('only if it applies'));
+    // Tuberculosis paperwork is gone from this page entirely. HiKorea's
+    // 「외국인등록시 제출서류」 does not list it, and the one source that does
+    // (Study in Korea) scopes it to "'16.7.1. 이전 사증 발급자" — a transitional
+    // clause no current intake falls under. The 결핵고위험국가 rule belongs to
+    // 사증 발급 / 체류자격 변경 / 기간 연장, a different procedure; it must not be
+    // imported here, and neither must a broad "health check" bucket.
+    expect(ko, isNot(contains('결핵')));
+    expect(en.toLowerCase(), isNot(contains('tuberculosis')));
     for (final broad in const ['건강진단', '건강검진']) {
       expect(ko, isNot(contains(broad)), reason: broad);
     }
     for (final broad in const ['health-check', 'health check']) {
       expect(en, isNot(contains(broad)), reason: broad);
     }
-    // Whether it applies is something to confirm, and the note says where.
+    // The note now carries the generic "the office may ask for more" line, and
+    // still says where to confirm.
+    expect(item.checklistNoteKo, contains('추가서류를 요구할 수 있습니다'));
     expect(item.checklistNoteKo, contains('관할 출입국·외국인관서 또는 공식 안내에서 확인'));
-    expect(item.checklistNoteEn,
-        contains('whether this applies to you'));
+    expect(item.checklistNoteEn, contains('may ask for extra documents'));
+    expect(item.checklistNoteEn, contains('before you apply'));
+    // The optional list's catch-all is bounded in English too — "anything else"
+    // read as unlimited discretion the Korean never granted.
+    final catchAllEn = item.checklistOptionalEn
+        .singleWhere((s) => s.contains('the office handling your case'));
+    expect(catchAllEn,
+        'Any additional document the office handling your case requests during '
+        'review');
+    expect(en, isNot(contains('Anything else')));
 
     // No processing time is published as one national figure, so the page
     // states none — neither as a duration chip nor as a step.
@@ -3742,6 +3778,21 @@ void main() {
     final resv = item.links
         .singleWhere((l) => l.url.startsWith('https://www.hikorea.go.kr'));
     expect(resv.url, 'https://www.hikorea.go.kr/resv/ResvIntroR.pt');
+    // HiKorea: "예약을 하지 않고 관서를 방문할 경우 민원 접수가 불가합니다" — booking is
+    // required for an in-person 외국인등록, not something to "check". The step and
+    // the link description both have to say so, and neither may hedge it back
+    // into optional.
+    final resvStepKo = item.stepsKo.singleWhere((s) => s.contains('HiKorea'));
+    expect(resvStepKo, contains('예약 없이는 접수되지 않습니다'));
+    final resvStepEn = item.stepsEn.singleWhere((s) => s.contains('HiKorea'));
+    expect(resvStepEn, contains('cannot accept your application without a '
+        'reservation'));
+    expect(resv.descriptionKo, contains('예약이 필요합니다'));
+    expect(resv.descriptionEn, contains('requires a reservation'));
+    for (final hedge in const ['예약이 필요한지 확인', '필요한지 확인하고']) {
+      expect(ko, isNot(contains(hedge)), reason: hedge);
+    }
+    expect(en, isNot(contains('whether you need to book')));
     final oia =
         item.links.firstWhere((l) => l.url == '/guide/item/oia-visit');
     expect(oia.descriptionKo, '학교 서류와 유학생 행정 절차를 문의할 때');
