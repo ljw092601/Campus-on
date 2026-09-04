@@ -183,6 +183,20 @@ void main() {
     final prepareY = tester.getTopLeft(find.text('What to prepare')).dy;
     expect(whenY, lessThan(prepareY));
 
+    // Item-specific heading for the second checklist group. 체류자격 is a status
+    // of stay, not a visa.
+    expect(
+      find.text('You may also need these depending on your status of stay and '
+          'your situation'),
+      findsOneWidget,
+    );
+    // The online-application section heading, near the top of the page. The
+    // link row of the same name lives at the bottom and is checked after the
+    // scroll below — the page is now too long for both to render at once.
+    expect(find.text('HiKorea e-Application'), findsWidgets);
+
+    // The tail of the page runs past the viewport even on the tall surface —
+    // the Government24 link made it longer still.
     for (final title in const [
       'Overview',
       'How to apply',
@@ -190,16 +204,23 @@ void main() {
       'Good to know',
       'Links & Locations',
     ]) {
+      await tester.scrollUntilVisible(find.text(title), 400);
+      await tester.pumpAndSettle();
       expect(find.text(title), findsOneWidget, reason: title);
     }
-    // Twice: the online-application section, and the link row of the same name.
-    expect(find.text('HiKorea e-Application'), findsNWidgets(2));
-
-    // Item-specific heading for the second checklist group.
-    expect(
-      find.text('You may also need these depending on your visa and situation'),
-      findsOneWidget,
-    );
+    // Both official sources are linked: HiKorea for the conditions, and the
+    // Government24 listing for the filing window, documents, fee and timing.
+    for (final label in const [
+      'HiKorea — extension of stay',
+      'Government24 — Extension of Stay for Registered Foreign Residents',
+    ]) {
+      await tester.scrollUntilVisible(find.text(label), 400);
+      await tester.pumpAndSettle();
+      expect(find.text(label), findsOneWidget, reason: label);
+    }
+    // The e-Application link row shares its label with the section heading
+    // above, so it is identified by its own description instead.
+    expect(find.text('Apply online'), findsOneWidget);
     // Expiry warning card.
     expect(
       find.textContaining('Apply before your current stay period expires'),
@@ -3819,10 +3840,96 @@ void main() {
     final ko = _guideTextKo(item);
     final en = _guideTextEn(item);
 
-    // Kept: the 4-months-before window and the fine after expiry.
-    expect(ko, contains('만료 4개월 전부터 만료일까지'));
-    expect(en, contains('four months before'));
+    // The filing window now follows Government24 (법무부 체류관리과, 2026-07-29):
+    // e-Application 3–60 days before expiry, a booked visit up to 1 day before.
+    // HiKorea CAT_SEQ=181's 2013 "4 months → expiry day" text is not used.
+    expect(ko, contains('만료일 당일에는 신청할 수 없습니다'));
+    expect(ko, contains('3~60일 전'));
+    expect(ko, contains('만료일 1일 전'));
+    expect(en, contains('cannot apply on the expiry date itself'));
+    expect(en, contains('60 days down to 3 days'));
+    expect(en, contains('up to 1 day'));
+    // The stale window must never come back in either language.
+    for (final stale in const ['4개월 전부터', '만료 4개월']) {
+      expect(ko, isNot(contains(stale)), reason: stale);
+    }
+    for (final stale in const [
+      'four months before',
+      'up to the expiry date itself',
+    ]) {
+      expect(en, isNot(contains(stale)), reason: stale);
+    }
+    // Kept: the fine after expiry.
     expect(ko, contains('범칙금'));
+
+    // The legal duty is split in two: file before expiry, and only a granted
+    // extension lets you stay on. What happens between filing and the decision
+    // is deliberately not described — no official basis was found for it.
+    expect(ko, contains('신청은 체류기간이 끝나기 전에 마쳐야'));
+    expect(ko, contains('허가를 받아야 연장된 기간까지 체류할 수 있습니다'));
+    expect(en, contains('File your application before the current period ends'));
+    expect(en, contains('only once the extension is granted'));
+
+    // Proof of address is a common document on Government24's list, so it sits
+    // in the required checklist — never in the "you may also need" one.
+    expect(item.checklistKo.any((s) => s.contains('체류지 입증서류')), isTrue);
+    expect(item.checklistEn.any((s) => s.contains('Proof of where you live')),
+        isTrue);
+    expect(item.checklistOptionalKo.any((s) => s.contains('체류지 입증서류')), isFalse);
+    expect(
+        item.checklistOptionalEn.any((s) => s.contains('Proof of where you '
+            'live')),
+        isFalse);
+
+    // Fee: 60,000원 with the e-Application reduction, per Government24 and the
+    // Dong-A international office alike.
+    final feeKo = item.checklistKo.singleWhere((s) => s.contains('수수료'));
+    expect(feeKo, contains('60,000원'));
+    expect(feeKo, contains('20% 경감'));
+    final feeEn = item.checklistEn.singleWhere((s) => s.contains('fee'));
+    expect(feeEn, contains('KRW 60,000'));
+    expect(feeEn, contains('20% reduction'));
+
+    // Enrollment is a basic document for degree students, not a loose option;
+    // the transcript is the university's own requirement, said as such.
+    final enrolKo =
+        item.checklistOptionalKo.singleWhere((s) => s.contains('재학증명서'));
+    expect(enrolKo, contains('학위과정 재학생은 기본 제출'));
+    final transcriptKo =
+        item.checklistOptionalKo.singleWhere((s) => s.contains('성적증명서'));
+    expect(transcriptKo, contains('동아대학교 국제교류과'));
+    final transcriptEn =
+        item.checklistOptionalEn.singleWhere((s) => s.contains('transcript'));
+    expect(transcriptEn, contains("Dong-A University's own guidance"));
+    // Tuition-payment proof had no independent basis; it lives inside the
+    // financial-means item now and must not reappear as its own document.
+    expect(item.checklistOptionalKo.any((s) => s == '등록금 납입 관련 증명서'), isFalse);
+    expect(item.checklistOptionalEn.any((s) => s == 'Proof of tuition payment'),
+        isFalse);
+
+    // E-Application closes before a booked visit does.
+    expect(ko, contains('전자민원은 방문 예약보다 먼저 마감됩니다'));
+    expect(en, contains('E-Application closes earlier than a booked office '
+        'visit'));
+
+    // 체류자격 is a status of stay, not a visa.
+    expect(item.checklistOptionalTitleEn, contains('status of stay'));
+    expect(item.checklistOptionalTitleEn, isNot(contains('visa')));
+
+    // The Government24 listing is linked as the current basis for the window,
+    // the common documents, the fee and the processing time.
+    expect(
+      item.links.any((l) =>
+          l.url == 'https://www.gov.kr/portal/service/serviceInfo/PTR000050530'),
+      isTrue,
+      reason: 'Government24 extension-of-stay link missing',
+    );
+    // HiKorea's guidance page stays — it is still the basis for the fine, the
+    // in-Korea condition and the no-filing-from-abroad rule.
+    expect(
+      item.links.any((l) => l.url.contains('CAT_SEQ=181')),
+      isTrue,
+    );
 
     // Added: the applicant has to be in Korea on the filing day.
     expect(ko, contains('신청 당일에는 본인이 한국에 체류 중이어야 합니다'));
@@ -3851,11 +3958,19 @@ void main() {
     expect(moved.linesEn.first, contains('within 15 days of moving'));
     expect(moved.linesKo.first, contains('해야 합니다'));
     expect(moved.linesEn.first, contains('must be reported'));
-    // Both places you can report it, in both languages.
+    // Every place you can report it, in both languages. 출입국관리법 §36① names
+    // 시·군·구 alongside 읍·면·동 — Busan is a 자치구 city, so the district office is
+    // the one a Dong-A student actually walks into.
     expect(moved.linesKo[1], contains('출입국·외국인관서'));
+    expect(moved.linesKo[1], contains('시·군·구'));
     expect(moved.linesKo[1], contains('읍·면·동'));
     expect(moved.linesEn[1], contains('immigration office'));
+    expect(moved.linesEn[1], contains('시·군·구'));
     expect(moved.linesEn[1], contains('local administrative office'));
+    // The address-proof line states the requirement instead of hedging it.
+    expect(moved.linesKo[2], contains('공통 제출서류'));
+    expect(moved.linesEn[2], contains('one of the standard documents'));
+    expect(ko, isNot(contains('현재 체류지를 증명하는 서류가 필요할 수 있습니다')));
     // KO and EN say the same number of things.
     expect(moved.linesEn, hasLength(moved.linesKo.length));
     expect(ko, isNot(contains('체류지 변경 신고가 필요한지 확인')));

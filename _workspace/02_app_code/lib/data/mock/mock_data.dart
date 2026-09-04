@@ -216,14 +216,21 @@ class MockData {
       summaryKo: '신청 시기 · 준비서류 · 연장 방법',
       summaryEn: 'When to apply, required documents & process',
       iconName: 'event_repeat',
-      overviewKo: '현재 허가받은 체류기간을 넘어서 한국에 계속 머무르려면 체류기간이 끝나기 전에 '
-          '체류기간 연장 허가를 받아야 합니다.\n\n'
+      // 법 제25조는 "체류기간 연장허가를 받아야 한다"(취득)이고 시행령 제31조①은 "만료 전에
+      // 신청서를 제출하여야 한다"(신청)로 층위가 다르다. 신청 접수 후 심사 중에 기존
+      // 체류기간이 만료될 때의 법적 지위는 공식 근거를 확보하지 못했으므로, 두 문장으로
+      // 나누기만 하고 그 사이의 효과를 새로 설명하지 않는다.
+      overviewKo: '현재 허가받은 체류기간을 넘어서 한국에 계속 머무르려면 체류기간 연장 허가가 '
+          '필요합니다.\n\n'
+          '신청은 체류기간이 끝나기 전에 마쳐야 하며, 허가를 받아야 연장된 기간까지 체류할 수 '
+          '있습니다.\n\n'
           '유학생은 본인의 체류자격(D-2, D-4 등)과 개인 상황에 따라 필요한 서류와 연장 가능 '
           '기간이 달라질 수 있습니다.\n\n'
           '체류기간이 만료되기 전에 필요한 서류와 신청 방법을 미리 확인하는 것이 중요합니다.',
       overviewEn: 'To keep living in Korea beyond the stay period you were '
-          'granted, you need an extension of stay — and you have to get it '
-          'before the current period ends.\n\n'
+          'granted, you need an extension of stay.\n\n'
+          'File your application before the current period ends; you may stay '
+          'for the extended period only once the extension is granted.\n\n'
           'For students, the documents you need and how long you can extend for '
           'depend on your status of stay (D-2, D-4, and so on) and on your own '
           'situation.\n\n'
@@ -236,16 +243,31 @@ class MockData {
           titleKo: '언제 신청해야 하나요?',
           titleEn: 'When should I apply?',
           iconName: 'event_repeat',
-          bodyKo: '체류기간 연장은 현재 체류기간 만료 4개월 전부터 만료일까지 신청할 수 '
-              '있습니다.\n\n'
-              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고 여유 있게 준비하세요.\n\n'
+          // 정부24 「등록 외국인의 체류 기간 연장 허가」(담당 법무부 체류관리과, 최종수정
+          // 2026-07-29): 전자민원 "만료일 3~60일 전까지", 방문 예약 "만료일 1일 전까지".
+          // HiKorea CAT_SEQ=181의 "4개월 전부터 만료 당일까지"는 2013년 작성분이라 쓰지
+          // 않는다 — 아래 links 주석 참조. 근거가 말하는 것은 '방문 예약' 신청 가능
+          // 기간이므로 표현도 그대로 '방문 예약'으로 유지한다.
+          bodyKo: '체류기간 연장은 만료일 당일에는 신청할 수 없습니다.\n\n'
+              '정부24 안내(2026년 7월 기준)에 따르면 HiKorea 전자민원은 체류기간 만료일 '
+              '3~60일 전까지, 방문 예약은 만료일 1일 전까지 신청할 수 있습니다. 만료가 '
+              '60일 넘게 남은 날짜로 방문 예약을 잡으면 특별한 사정이 없는 한 민원신청이 '
+              '되지 않을 수 있습니다.\n\n'
+              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고, 준비는 일찍 시작하되 '
+              '본인이 실제로 신청할 수 있는 날짜는 HiKorea 또는 정부24에서 확인하세요.\n\n'
               '신청 당일에는 본인이 한국에 체류 중이어야 합니다. HiKorea는 신청인이 해외에 '
               '있는 동안에는 온라인 민원신청이나 대리인을 통한 신청이 불가능하다고 안내하고 '
               '있습니다.',
-          bodyEn: 'You can apply from four months before your current stay '
-              'period expires, up to the expiry date itself.\n\n'
-              'Check the expiry date printed on your Residence Card (ARC) and '
-              'give yourself plenty of time to get ready.\n\n'
+          bodyEn: 'You cannot apply on the expiry date itself.\n\n'
+              'According to the Government24 listing (as of July 2026), HiKorea '
+              'e-Application accepts an extension from 60 days down to 3 days '
+              'before your expiry date, and a booked office visit up to 1 day '
+              'before. If the date of your booked visit is more than 60 days '
+              'before your expiry date, the application may not be accepted '
+              'without a special reason.\n\n'
+              'Check the expiry date printed on your Residence Card (ARC). '
+              'Start preparing early, but confirm the dates you can actually '
+              'apply on with HiKorea or Government24.\n\n'
               'You must be in Korea on the day the application is filed. '
               'HiKorea states that the application cannot be filed online or by '
               'a representative while the applicant is overseas.',
@@ -256,43 +278,65 @@ class MockData {
               'penalties.',
         ),
       ],
+      // 체류지 입증서류는 정부24 「등록 외국인의 체류 기간 연장 허가」의 공통서류
+      // ("신청서(제34호 서식), 여권 또는 외국인 입국허가서, 외국인 등록증, 체류지 입증서류")
+      // 이므로 필수 목록에 둔다. 전자민원 업로드나 행정정보 공동이용은 제출 '방식/면제'의
+      // 문제이지 필요 여부의 문제가 아니므로 "필요할 수 있음"으로 낮추지 않는다.
+      // 수수료 6만원 역시 정부24와 동아대 국제교류과 안내가 일치한다.
       checklistKo: [
         '여권',
         '외국인등록증(Residence Card / ARC)',
         '체류기간 연장허가 신청서',
-        '수수료',
+        '체류지 입증서류 (임대차계약서, 기숙사 입사확인서, 거주숙소제공사실확인서 등)',
+        '수수료 60,000원 (HiKorea 전자민원으로 신청하면 공식 안내상 20% 경감)',
       ],
       checklistEn: [
         'Passport',
         'Residence Card (ARC)',
         'Application form for extension of stay',
-        'The application fee',
+        'Proof of where you live in Korea (a lease, a dormitory confirmation, '
+            'an accommodation confirmation, and the like)',
+        'Application fee: KRW 60,000 (official guidance states a 20% reduction '
+            'for HiKorea e-Application)',
       ],
       checklistOptionalTitleKo: '체류자격과 상황에 따라 필요할 수 있어요',
-      checklistOptionalTitleEn: 'You may also need these depending on your visa '
-          'and situation',
+      checklistOptionalTitleEn: 'You may also need these depending on your '
+          'status of stay and your situation',
+      // 재학증명서는 시행규칙 별표 5의2 유학(D-2) 연장란과 동아대 국제교류과 안내 양쪽에
+      // 있으므로 학위과정 재학생의 기본 서류로 표현하고, 논문준비·수료·초과학기의 대체
+      // 서류를 함께 적는다. 성적증명서는 법무부 법정 서류가 아니라 동아대 요구 서류이므로
+      // 출처를 분리해 표기한다. '등록금 납입 관련 증명서'는 별표 연장란에도 동아대 목록에도
+      // 단독 항목으로 없어 재정능력 항목으로 흡수했다.
       checklistOptionalKo: [
-        '재학증명서',
-        '성적증명서',
-        '등록금 납입 관련 증명서',
-        '체류지 입증서류',
-        '재정능력 입증서류',
+        '재학증명서 (학위과정 재학생은 기본 제출 — 석·박사 논문 준비 중이면 지도교수 '
+            '추천서 등으로 갈음할 수 있고, 수료·초과학기자는 졸업예정증명서나 수료증명서 등 '
+            '본인 학적상태에 맞는 서류를 준비하세요)',
+        '성적증명서 (동아대학교 국제교류과 안내 기준 — 학교 접수 시 요구)',
+        '재정능력 입증서류 (학비·체재비 관련 — 은행잔고증명 등, 본인의 학적상태와 심사 '
+            '상황에 따라 추가 증빙이 요구될 수 있습니다)',
         '기타 체류자격별 추가서류',
       ],
       checklistOptionalEn: [
-        'Certificate of enrollment',
-        'Academic transcript',
-        'Proof of tuition payment',
-        'Proof of where you live in Korea',
-        'Proof that you can support yourself financially',
+        'Certificate of enrollment (a basic document for degree-program '
+            'students; if you are writing a thesis, have completed your '
+            'coursework, or are in an extra semester, bring the substitute '
+            'document your academic status calls for)',
+        "Academic transcript (required under Dong-A University's own guidance)",
+        'Proof that you can cover tuition and living costs (a bank balance '
+            'certificate and the like; further evidence can be asked for '
+            'depending on your academic status and how your case is reviewed)',
         'Any other document your status of stay calls for',
       ],
       checklistNoteKo: '※ 필요한 서류는 D-2, D-4 등 체류자격과 개인 상황에 따라 달라질 수 '
-          '있습니다. 신청 전에 HiKorea 또는 학교 국제교류 관련 부서에서 최신 서류를 확인하세요.',
+          '있습니다.\n'
+          '출입국·외국인관서가 요구하는 서류와 학교가 접수 때 요구하는 서류는 다를 수 '
+          '있으므로, 신청 전에 HiKorea·정부24와 학교 국제교류 관련 부서에서 각각 확인하세요.',
       checklistNoteEn: '※ Which documents you need depends on your status of '
-          'stay (D-2, D-4, and so on) and on your own situation. Check the '
-          'current list on HiKorea, or with your university\'s international '
-          'office, before you apply.',
+          'stay (D-2, D-4, and so on) and on your own situation.\n'
+          'What the immigration office asks for and what your university asks '
+          'for when it takes your application are not always the same, so check '
+          'HiKorea or Government24 and your international office separately '
+          'before you apply.',
       sections: [
         GuideSection(
           titleKo: '신청 방법',
@@ -325,9 +369,14 @@ class MockData {
               '있습니다.',
           bodyEn: 'Some extension-of-stay applications can be submitted online '
               'through HiKorea e-Application.',
-          noticeKo: '온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 '
+          noticeKo: '전자민원은 방문 예약보다 먼저 마감됩니다. 만료일이 가까우면 온라인 신청 '
+              '기간이 이미 끝났을 수 있으므로 방법별 마감일을 각각 확인하세요.\n'
+              '온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 '
               '있으므로 신청 전에 확인하세요.',
-          noticeEn: 'Whether you can apply online — and which documents you have '
+          noticeEn: 'E-Application closes earlier than a booked office visit. If '
+              'your expiry date is close, the online window may already have '
+              'passed, so check the deadline for each route separately.\n'
+              'Whether you can apply online — and which documents you have '
               'to submit — depends on your status of stay and your situation, so '
               'check before you start.',
         ),
@@ -370,19 +419,26 @@ class MockData {
               linesKo: [
                 '등록외국인이 한국에서 체류지를 옮겼다면 새 주소로 전입한 날부터 15일 이내에 '
                     '체류지 변경신고를 해야 합니다.',
-                '신고는 새 체류지를 관할하는 출입국·외국인관서나 새 주소지의 읍·면·동 '
-                    '행정기관에서 할 수 있습니다.',
-                '체류기간 연장 과정에서 현재 체류지를 증명하는 서류가 필요할 수 있습니다.',
+                // 법 제36조①은 신고처를 "시·군·구 또는 읍·면·동의 장이나 그 체류지를
+                // 관할하는 지방출입국·외국인관서의 장"으로 정한다. 부산은 자치구 체계라
+                // 구청이 실제 선택지인데 앱이 읍·면·동만 안내하고 있었다. 온라인 신고
+                // 경로는 근거가 갈려 이번에는 넣지 않는다.
+                '신고는 새 체류지를 관할하는 출입국·외국인관서, 또는 새 주소지의 시·군·구청이나 '
+                    '읍·면·동 행정기관에서 할 수 있습니다.',
+                '체류지 입증서류는 체류기간 연장의 공통 제출서류입니다. 이사를 했다면 '
+                    '변경신고를 먼저 마치고 새 주소 기준 서류를 준비하세요.',
               ],
               linesEn: [
                 'If a registered foreign resident moves to a new address in '
                     'Korea, the change of address must be reported within 15 '
                     'days of moving.',
                 'You can report it to the immigration office responsible for '
-                    'the new address, or to the local administrative office '
-                    '(읍·면·동) for that address.',
-                'You may be asked for a document proving where you currently '
-                    'live.',
+                    'the new address, or to the district/city office (시·군·구) '
+                    'or the local administrative office (읍·면·동) for that '
+                    'address.',
+                'Proof of your address is one of the standard documents for an '
+                    'extension. If you have moved, report the change first and '
+                    'prepare the document for your new address.',
               ],
             ),
             GuideNote(
@@ -426,15 +482,31 @@ class MockData {
         ),
       ],
       links: [
-        // Official 출입국/체류안내 → 체류기간연장 → 체류기간연장허가 절차/방법 page: the
-        // 4-months-before window, the fine after expiry, and where to apply.
+        // 출입국/체류안내 → 체류기간연장 → 체류기간연장허가 절차/방법 (CAT_SEQ=181).
+        // ⚠ 작성일 2013-01-01. 이 페이지의 "만료 4개월 전부터 만료 당일까지"는 정부24
+        // 「등록 외국인의 체류 기간 연장 허가」(법무부 체류관리과, 최종수정 2026-07-29)의
+        // 전자민원 3~60일 전 / 방문 예약 1일 전과 충돌하므로 앱의 신청기간 근거로 쓰지
+        // 않는다. 신청처도 구 명칭 "출입국관리사무소"로 안내한다.
+        // 여전히 유효한 근거: 만료 후 신청 시 범칙금, 신청 당일 국내 체류 조건,
+        // 해외 체류 중 민원신청·대리 불가.
         GuideLink(
           labelKo: 'HiKorea 체류기간 연장 안내',
           labelEn: 'HiKorea — extension of stay',
-          descriptionKo: '신청 시기 · 절차 · 체류자격별 안내',
-          descriptionEn: 'When to apply, the procedure, and per-status guidance',
+          descriptionKo: '신청 조건 · 절차 · 체류자격별 안내',
+          descriptionEn: 'Conditions, the procedure, and per-status guidance',
           url: 'https://www.hikorea.go.kr/info/InfoDatail.pt'
               '?CAT_SEQ=181&PARENT_ID=140',
+        ),
+        // 신청 가능 기간·공통서류·수수료·처리기간의 현재 근거. 담당기관이 법무부
+        // 출입국·외국인정책본부 체류관리과로 명시되어 있고 2026-07-29에 갱신되었다.
+        GuideLink(
+          labelKo: '정부24 — 등록 외국인의 체류 기간 연장 허가',
+          labelEn: 'Government24 — Extension of Stay for Registered Foreign '
+              'Residents',
+          descriptionKo: '신청 가능 기간 · 공통서류 · 수수료 · 처리기간',
+          descriptionEn: 'When you can apply, the common documents, the fee, '
+              'and the processing time',
+          url: 'https://www.gov.kr/portal/service/serviceInfo/PTR000050530',
         ),
         GuideLink(
           labelKo: 'HiKorea 전자민원',

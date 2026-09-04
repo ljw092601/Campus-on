@@ -108,15 +108,15 @@
     "summary_ko": "신청 시기 · 준비서류 · 연장 방법",
     "summary_en": "When to apply, required documents & process",
     "icon": "event_repeat",
-    "overview_ko": "현재 허가받은 체류기간을 넘어서 한국에 계속 머무르려면 체류기간이 끝나기 전에 체류기간 연장 허가를 받아야 합니다.\n\n유학생은 본인의 체류자격(D-2, D-4 등)과 개인 상황에 따라 필요한 서류와 연장 가능 기간이 달라질 수 있습니다.\n\n체류기간이 만료되기 전에 필요한 서류와 신청 방법을 미리 확인하는 것이 중요합니다.",
-    "overview_en": "To keep living in Korea beyond the stay period you were granted, you need an extension of stay — and you have to get it before the current period ends.\n\nFor students, the documents you need and how long you can extend for depend on your status of stay (D-2, D-4, and so on) and on your own situation.\n\nCheck what you need and how to apply well before your stay period expires.",
+    "overview_ko": "현재 허가받은 체류기간을 넘어서 한국에 계속 머무르려면 체류기간 연장 허가가 필요합니다.\n\n신청은 체류기간이 끝나기 전에 마쳐야 하며, 허가를 받아야 연장된 기간까지 체류할 수 있습니다.\n\n유학생은 본인의 체류자격(D-2, D-4 등)과 개인 상황에 따라 필요한 서류와 연장 가능 기간이 달라질 수 있습니다.\n\n체류기간이 만료되기 전에 필요한 서류와 신청 방법을 미리 확인하는 것이 중요합니다.",
+    "overview_en": "To keep living in Korea beyond the stay period you were granted, you need an extension of stay.\n\nFile your application before the current period ends; you may stay for the extended period only once the extension is granted.\n\nFor students, the documents you need and how long you can extend for depend on your status of stay (D-2, D-4, and so on) and on your own situation.\n\nCheck what you need and how to apply well before your stay period expires.",
     "top_sections": [
       {
         "title_ko": "언제 신청해야 하나요?",
         "title_en": "When should I apply?",
         "icon": "event_repeat",
-        "body_ko": "체류기간 연장은 현재 체류기간 만료 4개월 전부터 만료일까지 신청할 수 있습니다.\n\n외국인등록증에 표시된 체류기간 만료일을 미리 확인하고 여유 있게 준비하세요.\n\n신청 당일에는 본인이 한국에 체류 중이어야 합니다. HiKorea는 신청인이 해외에 있는 동안에는 온라인 민원신청이나 대리인을 통한 신청이 불가능하다고 안내하고 있습니다.",
-        "body_en": "You can apply from four months before your current stay period expires, up to the expiry date itself.\n\nCheck the expiry date printed on your Residence Card (ARC) and give yourself plenty of time to get ready.\n\nYou must be in Korea on the day the application is filed. HiKorea states that the application cannot be filed online or by a representative while the applicant is overseas.",
+        "body_ko": "체류기간 연장은 만료일 당일에는 신청할 수 없습니다.\n\n정부24 안내(2026년 7월 기준)에 따르면 HiKorea 전자민원은 체류기간 만료일 3~60일 전까지, 방문 예약은 만료일 1일 전까지 신청할 수 있습니다. 만료가 60일 넘게 남은 날짜로 방문 예약을 잡으면 특별한 사정이 없는 한 민원신청이 되지 않을 수 있습니다.\n\n외국인등록증에 표시된 체류기간 만료일을 미리 확인하고, 준비는 일찍 시작하되 본인이 실제로 신청할 수 있는 날짜는 HiKorea 또는 정부24에서 확인하세요.\n\n신청 당일에는 본인이 한국에 체류 중이어야 합니다. HiKorea는 신청인이 해외에 있는 동안에는 온라인 민원신청이나 대리인을 통한 신청이 불가능하다고 안내하고 있습니다.",
+        "body_en": "You cannot apply on the expiry date itself.\n\nAccording to the Government24 listing (as of July 2026), HiKorea e-Application accepts an extension from 60 days down to 3 days before your expiry date, and a booked office visit up to 1 day before. If the date of your booked visit is more than 60 days before your expiry date, the application may not be accepted without a special reason.\n\nCheck the expiry date printed on your Residence Card (ARC). Start preparing early, but confirm the dates you can actually apply on with HiKorea or Government24.\n\nYou must be in Korea on the day the application is filed. HiKorea states that the application cannot be filed online or by a representative while the applicant is overseas.",
         "notice_ko": "체류기간 만료 전에 신청하세요.\n체류기간이 만료된 뒤 연장을 신청하면 범칙금 등 불이익이 발생할 수 있습니다.",
         "notice_en": "Apply before your current stay period expires.\nApplying after the expiry date can result in a fine and other penalties."
       }
@@ -125,34 +125,32 @@
       "여권",
       "외국인등록증(Residence Card / ARC)",
       "체류기간 연장허가 신청서",
-      "수수료"
+      "체류지 입증서류 (임대차계약서, 기숙사 입사확인서, 거주숙소제공사실확인서 등)",
+      "수수료 60,000원 (HiKorea 전자민원으로 신청하면 공식 안내상 20% 경감)"
     ],
     "checklist_en": [
       "Passport",
       "Residence Card (ARC)",
       "Application form for extension of stay",
-      "The application fee"
+      "Proof of where you live in Korea (a lease, a dormitory confirmation, an accommodation confirmation, and the like)",
+      "Application fee: KRW 60,000 (official guidance states a 20% reduction for HiKorea e-Application)"
     ],
     "checklist_optional_title_ko": "체류자격과 상황에 따라 필요할 수 있어요",
-    "checklist_optional_title_en": "You may also need these depending on your visa and situation",
+    "checklist_optional_title_en": "You may also need these depending on your status of stay and your situation",
     "checklist_optional_ko": [
-      "재학증명서",
-      "성적증명서",
-      "등록금 납입 관련 증명서",
-      "체류지 입증서류",
-      "재정능력 입증서류",
+      "재학증명서 (학위과정 재학생은 기본 제출 — 석·박사 논문 준비 중이면 지도교수 추천서 등으로 갈음할 수 있고, 수료·초과학기자는 졸업예정증명서나 수료증명서 등 본인 학적상태에 맞는 서류를 준비하세요)",
+      "성적증명서 (동아대학교 국제교류과 안내 기준 — 학교 접수 시 요구)",
+      "재정능력 입증서류 (학비·체재비 관련 — 은행잔고증명 등, 본인의 학적상태와 심사 상황에 따라 추가 증빙이 요구될 수 있습니다)",
       "기타 체류자격별 추가서류"
     ],
     "checklist_optional_en": [
-      "Certificate of enrollment",
-      "Academic transcript",
-      "Proof of tuition payment",
-      "Proof of where you live in Korea",
-      "Proof that you can support yourself financially",
+      "Certificate of enrollment (a basic document for degree-program students; if you are writing a thesis, have completed your coursework, or are in an extra semester, bring the substitute document your academic status calls for)",
+      "Academic transcript (required under Dong-A University's own guidance)",
+      "Proof that you can cover tuition and living costs (a bank balance certificate and the like; further evidence can be asked for depending on your academic status and how your case is reviewed)",
       "Any other document your status of stay calls for"
     ],
-    "checklist_note_ko": "※ 필요한 서류는 D-2, D-4 등 체류자격과 개인 상황에 따라 달라질 수 있습니다. 신청 전에 HiKorea 또는 학교 국제교류 관련 부서에서 최신 서류를 확인하세요.",
-    "checklist_note_en": "※ Which documents you need depends on your status of stay (D-2, D-4, and so on) and on your own situation. Check the current list on HiKorea, or with your university's international office, before you apply.",
+    "checklist_note_ko": "※ 필요한 서류는 D-2, D-4 등 체류자격과 개인 상황에 따라 달라질 수 있습니다.\n출입국·외국인관서가 요구하는 서류와 학교가 접수 때 요구하는 서류는 다를 수 있으므로, 신청 전에 HiKorea·정부24와 학교 국제교류 관련 부서에서 각각 확인하세요.",
+    "checklist_note_en": "※ Which documents you need depends on your status of stay (D-2, D-4, and so on) and on your own situation.\nWhat the immigration office asks for and what your university asks for when it takes your application are not always the same, so check HiKorea or Government24 and your international office separately before you apply.",
     "sections": [
       {
         "title_ko": "신청 방법",
@@ -183,8 +181,8 @@
         "icon": "computer",
         "body_ko": "일부 체류기간 연장 업무는 HiKorea 전자민원을 통해 온라인으로 신청할 수 있습니다.",
         "body_en": "Some extension-of-stay applications can be submitted online through HiKorea e-Application.",
-        "notice_ko": "온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 있으므로 신청 전에 확인하세요.",
-        "notice_en": "Whether you can apply online — and which documents you have to submit — depends on your status of stay and your situation, so check before you start."
+        "notice_ko": "전자민원은 방문 예약보다 먼저 마감됩니다. 만료일이 가까우면 온라인 신청 기간이 이미 끝났을 수 있으므로 방법별 마감일을 각각 확인하세요.\n온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 있으므로 신청 전에 확인하세요.",
+        "notice_en": "E-Application closes earlier than a booked office visit. If your expiry date is close, the online window may already have passed, so check the deadline for each route separately.\nWhether you can apply online — and which documents you have to submit — depends on your status of stay and your situation, so check before you start."
       },
       {
         "title_ko": "서류는 학생마다 다를 수 있습니다",
@@ -215,13 +213,13 @@
             "title_en": "🏠 If you move, report it within 15 days",
             "lines_ko": [
               "등록외국인이 한국에서 체류지를 옮겼다면 새 주소로 전입한 날부터 15일 이내에 체류지 변경신고를 해야 합니다.",
-              "신고는 새 체류지를 관할하는 출입국·외국인관서나 새 주소지의 읍·면·동 행정기관에서 할 수 있습니다.",
-              "체류기간 연장 과정에서 현재 체류지를 증명하는 서류가 필요할 수 있습니다."
+              "신고는 새 체류지를 관할하는 출입국·외국인관서, 또는 새 주소지의 시·군·구청이나 읍·면·동 행정기관에서 할 수 있습니다.",
+              "체류지 입증서류는 체류기간 연장의 공통 제출서류입니다. 이사를 했다면 변경신고를 먼저 마치고 새 주소 기준 서류를 준비하세요."
             ],
             "lines_en": [
               "If a registered foreign resident moves to a new address in Korea, the change of address must be reported within 15 days of moving.",
-              "You can report it to the immigration office responsible for the new address, or to the local administrative office (읍·면·동) for that address.",
-              "You may be asked for a document proving where you currently live."
+              "You can report it to the immigration office responsible for the new address, or to the district/city office (시·군·구) or the local administrative office (읍·면·동) for that address.",
+              "Proof of your address is one of the standard documents for an extension. If you have moved, report the change first and prepare the document for your new address."
             ]
           },
           {
@@ -262,8 +260,15 @@
         "label_ko": "HiKorea 체류기간 연장 안내",
         "label_en": "HiKorea — extension of stay",
         "url": "https://www.hikorea.go.kr/info/InfoDatail.pt?CAT_SEQ=181&PARENT_ID=140",
-        "description_ko": "신청 시기 · 절차 · 체류자격별 안내",
-        "description_en": "When to apply, the procedure, and per-status guidance"
+        "description_ko": "신청 조건 · 절차 · 체류자격별 안내",
+        "description_en": "Conditions, the procedure, and per-status guidance"
+      },
+      {
+        "label_ko": "정부24 — 등록 외국인의 체류 기간 연장 허가",
+        "label_en": "Government24 — Extension of Stay for Registered Foreign Residents",
+        "url": "https://www.gov.kr/portal/service/serviceInfo/PTR000050530",
+        "description_ko": "신청 가능 기간 · 공통서류 · 수수료 · 처리기간",
+        "description_en": "When you can apply, the common documents, the fee, and the processing time"
       },
       {
         "label_ko": "HiKorea 전자민원",
