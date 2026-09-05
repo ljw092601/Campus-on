@@ -3620,15 +3620,27 @@ void main() {
     expect(en, contains('more than 90 days'));
     expect(en, contains('within 90 days of entry'));
 
-    // …but the entry-date clock is not the only one. 출입국관리법 §31③④ move
-    // registration to the moment a status of stay, or a change of status, is
-    // granted inside Korea — the D-4 → D-2 route many Dong-A students take.
+    // …but the entry-date clock is not the only one. 출입국관리법 §31③④ substitute
+    // that DEADLINE — moving it earlier — for someone who has NOT registered yet
+    // and is granted a status of stay, or a change of status, inside Korea.
     expect(ko, contains('체류자격 변경허가'));
-    expect(ko, contains('허가를 받는 때'));
-    expect(ko, contains('D-4'));
-    expect(en, contains('change of status'));
-    expect(en, contains('at the time that permission is granted'));
-    expect(en, contains('D-4'));
+    expect(ko, contains('아직 외국인등록을 하지 않은'));
+    expect(ko, contains('허가를 받는 때에 외국인등록'));
+    expect(en, contains('If you have not registered yet'));
+    expect(en, contains('when that permission is granted'));
+
+    // §31④ never creates a second registration — §31⑤ gives one 등록번호 per
+    // person. An already-registered student files a change of status instead.
+    expect(ko, contains('새로 외국인등록을 하는 것이 아니라'));
+    expect(en, contains('not a new foreigner registration'));
+
+    // D-4 → D-2 is a 체류자격 변경 example, not a registration-timing one: on this
+    // page it read to the already-registered majority as "register again".
+    // visa-types keeps it, correctly, so this ban is scoped to arc-issue only.
+    expect(ko, isNot(contains('어학연수 D-4에서 유학 D-2')));
+    expect(en, isNot(contains('moving from a D-4 language course to a D-2')));
+    expect(ko, isNot(contains('D-4')), reason: 'no sub-type example here');
+    expect(en, isNot(contains('D-4')), reason: 'no sub-type example here');
 
     // Core documents, per HiKorea's 외국인등록 제출서류 list. The form is named by its
     // statutory title, not as a generic "신청서".

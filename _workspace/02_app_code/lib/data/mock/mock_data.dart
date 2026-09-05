@@ -30,26 +30,36 @@ class MockData {
       summaryEn: 'Register within 90 days for stays over 90 days',
       // The 90-day duty is conditional (출입국관리법 §31①): it binds people staying
       // MORE than 90 days, so the condition is stated rather than implied.
-      // §31③④ put a DIFFERENT clock on anyone who receives a status of stay or a
-      // change of status while already in Korea — they register when that
-      // permission is granted, not 90 days from entry. D-4 어학연수 → D-2 is a
-      // common Dong-A route, so that branch is spelled out instead of leaving
-      // "입국한 날" to read as the only rule. The card's uses are listed as uses,
-      // not as "required for everything".
+      // §31③④ open with "제1항 각 호 외의 부분 본문에도 불구하고" — they substitute the
+      // DEADLINE of that one registration, moving it EARLIER, and never create a
+      // second registration duty. §31⑤ gives each person one 고유한 등록번호, so
+      // re-registering is not a thing that exists.
+      // So §31③④ bind someone who has NOT registered yet — HiKorea's own worked
+      // example is a B-2 holder changing status. A D-4 student who already
+      // registered and moves to D-2 files 정부24 「등록 외국인의 체류자격 변경허가」
+      // (PTR000050536) with their existing card; they do not register again.
+      // D-4 → D-2 is therefore NOT used as the example here: on a page titled
+      // 외국인등록증 발급 it reads to the already-registered majority as "do it
+      // again". visa-types states the same rule the same way — keep them aligned.
+      // The card's uses are listed as uses, not as "required for everything".
       overviewKo: '한국에서 90일을 초과해 체류하려는 외국인은 입국한 날부터 90일 이내에 '
           '외국인등록을 해야 합니다.\n\n'
-          '다만 한국에 들어온 뒤 국내에서 체류자격을 받거나 체류자격 변경허가를 받은 '
-          '경우에는(예: 어학연수 D-4에서 유학 D-2로 변경) 입국일 기준 90일이 아니라 그 '
-          '허가를 받는 때에 외국인등록을 해야 합니다. 본인이 어느 경우인지 확실하지 않다면 '
+          '다만 아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 '
+          '변경허가를 받은 경우에는, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 때에 '
+          '외국인등록을 해야 합니다.\n\n'
+          '이미 외국인등록을 마친 뒤 체류자격이 바뀌는 경우에는 새로 외국인등록을 하는 것이 '
+          '아니라 체류자격 변경허가 절차를 따릅니다. 본인이 어느 경우인지 확실하지 않다면 '
           '관할 출입국·외국인관서에 확인하세요.\n\n'
           '발급받은 외국인등록증은 은행, 통신, 건강보험, 학교생활 등 여러 절차에서 신분확인에 '
           '사용될 수 있습니다.',
       overviewEn: 'If you plan to stay in Korea for more than 90 days, you must '
-          'register within 90 days of entry.\n\n'
-          'If instead you received your status of stay, or a change of status, '
-          'while already in Korea — moving from a D-4 language course to a D-2 '
-          'degree program, for example — you register at the time that '
-          'permission is granted, not within 90 days of your original entry. If '
+          'complete foreigner registration within 90 days of entry.\n\n'
+          'If you have not registered yet and you are granted a status of stay, '
+          'or permission to change your status, while in Korea, you must '
+          'register when that permission is granted rather than waiting out the '
+          '90 days.\n\n'
+          'If you are already registered and your status changes later, that is '
+          'a change-of-status procedure, not a new foreigner registration. If '
           'you are not sure which case applies to you, ask your immigration '
           'office.\n\n'
           'The Residence Card you receive can then be used to confirm who you '
