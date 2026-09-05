@@ -343,12 +343,10 @@
             "title_ko": "대표적인 유형",
             "title_en": "Common sub-types",
             "lines_ko": [
-              "D-4-1 — 한국어연수",
-              "D-4-2 — 외국어연수"
+              "D-4-1 — 한국어연수"
             ],
             "lines_en": [
-              "D-4-1 — Korean language training",
-              "D-4-2 — Foreign language training"
+              "D-4-1 — Korean language training"
             ]
           }
         ],
@@ -399,8 +397,8 @@
         "notice_ko": "정규 학위과정 → D-2\n한국어 등 비학위 연수과정 → D-4",
         "notice_en": "Degree program → D-2\nNon-degree training such as Korean language study → D-4",
         "notice_icon": "lightbulb",
-        "footnote_ko": "실제 체류자격은 학교에서 발급받은 입학서류와 본인의 교육과정을 기준으로 확인하세요.",
-        "footnote_en": "Confirm your actual status against the admission documents your school issued and the course you are really taking."
+        "footnote_ko": "연수 기간이 90일 이하인 단기 과정은 D-4가 아니라 단기방문(C-3) 사증이 적용될 수 있습니다.\n실제 체류자격은 학교에서 발급받은 입학서류와 본인의 교육과정을 기준으로 확인하세요.",
+        "footnote_en": "A short course of 90 days or less may fall under a Short-Term Visit (C-3) visa rather than D-4.\nConfirm your actual status against the admission documents your school issued and the course you are really taking."
       },
       {
         "title_ko": "비자 신청 기본 흐름",
@@ -420,46 +418,46 @@
           "Check whether your course means D-2 or D-4",
           "Prepare the Certificate of Admission and other documents",
           "Check what extra documents the visa application needs",
-          "Apply at a Korean embassy or consulate",
+          "Apply for the visa at a Korean embassy or consulate",
           "Check the result of your application",
           "Enter Korea once the visa has been issued"
         ],
-        "notice_ko": "신청 방법과 필요서류는 국적, 세부 체류자격, 신청하는 재외공관에 따라 달라질 수 있습니다.\n위 흐름은 일반적인 순서이며, 신청 전에 해당 공관의 공식 안내를 확인하세요.",
-        "notice_en": "How you apply, and what you have to submit, can differ by nationality, by the exact status of stay, and by the mission you apply to.\nThe steps above are the usual order — check the official guidance of your own embassy or consulate before you apply."
+        "notice_ko": "신청 방법과 필요서류는 국적, 세부 체류자격, 신청하는 재외공관에 따라 달라질 수 있습니다.\n이미 한국에 체류 중이라면 재외공관 사증 신청이 아니라 국내에서 체류자격 변경허가를 받는 경우가 있습니다(예: 어학연수 D-4에서 유학 D-2로 진학).\n위 흐름은 일반적인 순서이며, 신청 전에 해당 공관의 공식 안내를 확인하세요.",
+        "notice_en": "How you apply, and what you have to submit, can differ by nationality, by the exact status of stay, and by the mission you apply to.\nIf you are already living in Korea, you may not apply for a visa abroad at all — you apply inside Korea for a change of status instead (moving from a D-4 language course to a D-2 degree program, for example).\nThe steps above are the usual order — check the official guidance of your own embassy or consulate before you apply."
       }
     ],
     "checklist_ko": [
       "사증발급신청서",
-      "여권",
-      "6개월 이내 촬영한 증명사진",
-      "표준입학허가서",
+      "여권 및 여권 사본",
+      "6개월 이내 촬영한 증명사진 1매 (규격은 신청할 재외공관 안내를 확인하세요)",
+      "표준입학허가서 (D-4 어학연수는 세부 유형과 재외공관에 따라 요구 서류가 다르니 신청할 공관의 목록을 확인하세요)",
       "교육기관 사업자등록증 또는 고유번호증 사본 (학교에서 제공하는 서류)",
       "재정능력 입증서류"
     ],
     "checklist_en": [
       "Visa application form",
-      "Passport",
-      "One passport-size photo taken within the last 6 months",
-      "Certificate of Admission",
+      "Passport, and a copy of it",
+      "One photo taken within the last 6 months — check the size your embassy or consulate asks for",
+      "Certificate of Admission (for D-4, what you must submit varies by sub-type and by mission — check your own mission's list)",
       "A copy of the educational institution's business registration certificate or registration-number certificate (a document provided by the school)",
       "Proof that you can support yourself financially"
     ],
     "checklist_optional_title_ko": "체류자격과 상황에 따라 추가될 수 있어요",
-    "checklist_optional_title_en": "These may be added depending on your visa and situation",
+    "checklist_optional_title_en": "These may be added depending on your status of stay and your situation",
     "checklist_optional_ko": [
       "최종학력 입증서류",
       "재학 또는 학력 관련 증명서",
       "연수계획서",
-      "가족관계 입증서류",
-      "결핵검사 관련 서류",
+      "가족관계 입증서류 (부모 명의 잔고증명 등을 재정능력 서류로 제출하는 경우)",
+      "결핵검사 관련 서류 (결핵 고위험 국가 국민이 해당 국가에 거주하면서 90일을 초과해 체류할 목적으로 사증을 신청하는 경우 등에 해당하며, 재외공관 지정병원에서 발급받습니다)",
       "기타 체류자격별 추가서류"
     ],
     "checklist_optional_en": [
       "Proof of your highest level of education",
       "Enrollment or academic certificates",
       "A study or training plan",
-      "Proof of family relationship",
-      "Tuberculosis screening documents",
+      "Proof of family relationship — if you submit a parent's bank balance as your financial proof",
+      "Tuberculosis screening documents — for cases such as a national of a designated high-risk country who lives in that country and is applying for a visa to stay longer than 90 days; issued by a hospital your mission designates",
       "Any other document your status of stay calls for"
     ],
     "checklist_note_ko": "※ 실제 필요서류는 D-2 / D-4 세부 유형, 국적, 교육과정, 재외공관 등에 따라 달라질 수 있습니다. 신청 전에 공식 안내를 확인하세요.",
@@ -475,11 +473,15 @@
             "title_en": "🪪 A visa is not a Residence Card",
             "lines_ko": [
               "비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.",
-              "한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 해야 합니다."
+              "한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 해야 합니다.",
+              "아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 변경허가를 받았다면, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 때에 외국인등록을 해야 합니다.",
+              "이미 외국인등록을 마친 뒤에 체류자격이 바뀌는 경우는 새로 등록하는 것이 아니라 체류자격 변경허가 절차를 따릅니다."
             ],
             "lines_en": [
               "A visa and a Residence Card (ARC) are two different things.",
-              "If you plan to stay in Korea for more than 90 days, you must register within 90 days of entry."
+              "If you plan to stay in Korea for more than 90 days, you must register within 90 days of entry.",
+              "If you have not registered yet and you are granted a status of stay, or a change of status, while in Korea, you register at the time that permission is granted rather than waiting out the 90 days.",
+              "If you are already registered and your status changes later, that is a change-of-status application, not a new registration."
             ]
           },
           {
@@ -489,12 +491,14 @@
               "D-2 또는 D-4 체류자격만으로 시간제취업이 자동으로 허용되는 것은 아닙니다.",
               "시간제취업이 허용되는 대상 학생이 일반적인 아르바이트를 하려면 원칙적으로 일을 시작하기 전에 허가를 받아야 합니다.",
               "허용 대상과 근무 가능 시간은 세부 체류자격, 과정, 학년, 한국어 능력, 학교 유학생 담당자의 확인 등 여러 조건에 따라 달라질 수 있습니다.",
+              "특히 어학연수(D-4) 학생은 입국일 또는 자격 변경일부터 일정 기간이 지나야 신청할 수 있습니다.",
               "근무를 시작하기 전에 HiKorea와 학교 국제교류과에서 본인에게 적용되는 조건을 확인하세요."
             ],
             "lines_en": [
               "A D-2 or D-4 status does not automatically allow part-time work.",
               "Eligible students generally need permission before starting ordinary part-time employment.",
               "Eligibility and permitted hours can depend on the exact status of stay, the program, the year of study, Korean proficiency and confirmation from the university's international student adviser.",
+              "D-4 language students in particular can only apply once a set period has passed since entry, or since their status was changed.",
               "Check the rules that apply to you with HiKorea and the university's international affairs office before starting work."
             ]
           },
@@ -503,11 +507,13 @@
             "title_en": "🔄 If your course changes",
             "lines_ko": [
               "한국어연수에서 학부과정으로 진학하는 것처럼 학업 형태가 달라지면 현재 체류자격이 새로운 활동에 맞는지 확인해야 합니다.",
-              "체류자격 변경이 필요한지 HiKorea 또는 학교 국제교류 관련 부서에서 확인하세요."
+              "현재 체류자격과 다른 체류자격에 해당하는 활동을 하려면 미리 체류자격 변경허가를 받아야 합니다.",
+              "변경이 필요한지, 언제까지 신청해야 하는지 새 과정을 시작하기 전에 HiKorea 또는 학교 국제교류 관련 부서에서 확인하세요."
             ],
             "lines_en": [
               "If the kind of study changes — moving from a Korean language course into a degree program, say — check that your current status still fits what you will be doing.",
-              "Ask HiKorea or your university's international office whether you need to change your status of stay."
+              "If what you will be doing falls under a different status of stay, you must obtain permission to change your status before you start.",
+              "Ask HiKorea or your university's international office whether you need to change, and by when, before the new course begins."
             ]
           },
           {
@@ -526,8 +532,8 @@
         "title_ko": "내 비자를 정확히 확인하세요",
         "title_en": "Check your exact visa status",
         "icon": "help",
-        "body_ko": "친구나 다른 학생의 비자 종류를 기준으로 판단하지 말고 본인의 여권, 사증발급 내용, 외국인등록정보 또는 학교에서 받은 서류를 확인하세요.",
-        "body_en": "Do not go by what a friend or another student has. Check your own passport, the visa that was issued to you, your foreign-resident record, or the documents your school gave you.",
+        "body_ko": "친구나 다른 학생의 비자 종류를 기준으로 판단하지 마세요.\n현재 체류자격은 외국인등록증(Residence Card / ARC)과 외국인등록정보에서 확인하는 것이 가장 정확합니다. 여권에 붙은 사증은 입국 당시 정보여서, 국내에서 체류자격 변경허가를 받았다면 지금 자격과 다를 수 있습니다.",
+        "body_en": "Do not go by what a friend or another student has.\nYour Residence Card (ARC) and your foreign-resident record are the most reliable place to check your current status. The visa in your passport shows what you were given on entry — if you changed your status inside Korea, it will not match what you hold now.",
         "notice_ko": "세부 체류자격과 필요한 절차는 학생마다 다를 수 있습니다.",
         "notice_en": "The exact status of stay — and the steps that go with it — can differ from student to student."
       }
@@ -551,8 +557,8 @@
         "label_ko": "HiKorea 사증(비자) 안내",
         "label_en": "HiKorea — visas (사증)",
         "url": "https://www.hikorea.go.kr/info/InfoDatail.pt?CAT_SEQ=144&PARENT_ID=11",
-        "description_ko": "사증의 의미 · 발급절차 · 체류자격별 안내",
-        "description_en": "What a visa is, how it is issued, and per-status guidance"
+        "description_ko": "사증의 의미와 기본 안내",
+        "description_en": "What a visa is, and where the detailed guidance lives"
       },
       {
         "label_ko": "가이드 — 외국인등록증(ARC) 발급",

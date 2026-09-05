@@ -545,7 +545,10 @@ class MockData {
           'D-2는 전문학사·학사·석사·박사 등 정규 학위과정과 연구과정, 교환학생 과정을 포함하며, '
           'D-4는 한국어연수 등 비학위 연수과정에 해당합니다.',
       // "Study (D-2)" / "General Training (D-4)" are the labels Study in Korea
-      // (NIIED) uses; "Study Abroad" is not the official English name.
+      // (NIIED) uses. "Study Abroad" is not one of them — but it is not wrong
+      // either: 주홍콩 총영사관, among others, prints "Study-Abroad" for D-2, and no
+      // 법령 영문본 or 법무부 고시 fixes one official English name. So this is a house
+      // style choice, not a legal name; do not restate it as the latter.
       overviewEn: 'To study in Korea you need the status of stay — and the visa '
           'that goes with it — that matches the kind of study you will be '
           'doing.\n\n'
@@ -604,17 +607,23 @@ class MockData {
               '체류자격입니다.',
           bodyEn: 'D-4 is the status of stay for students on a language course or '
               'another training course rather than a formal degree program.',
+          // 외국어연수의 세부약호는 D-4-7이지 D-4-2가 아니다. 법제처 찾기쉬운 생활법령정보
+          // (최종 업데이트 2026. 8. 15.)는 "D-4-2: 일반연수 / D-4-7: 외국어 연수"로,
+          // 재외공관(주로스앤젤레스 "D-4-2: 국방부 초청 외국군 수탁교육생에 대한 기타 연수 /
+          // D-4-7: 외국어연수", 주센다이 "외국어연수: D-4-7")도 같은 방향으로 교차확인된다.
+          // Study in Korea는 /eng/·/en/ 두 경로 모두 "D-4-2 외국어 연수"로 잘못 적고 있으므로
+          // 세부약호의 정본으로 쓰지 않는다.
+          // D-4-7은 동아대 유학생에게 해당자가 사실상 없어 새로 노출하지 않고, 잘못된 D-4-2
+          // 줄만 지운다. 나머지 세부 유형은 아래 footnote가 이미 신호한다.
           notes: [
             GuideNote(
               titleKo: '대표적인 유형',
               titleEn: 'Common sub-types',
               linesKo: [
                 'D-4-1 — 한국어연수',
-                'D-4-2 — 외국어연수',
               ],
               linesEn: [
                 'D-4-1 — Korean language training',
-                'D-4-2 — Foreign language training',
               ],
             ),
           ],
@@ -675,9 +684,17 @@ class MockData {
           noticeEn: 'Degree program → D-2\n'
               'Non-degree training such as Korean language study → D-4',
           noticeIconName: 'lightbulb',
-          footnoteKo: '실제 체류자격은 학교에서 발급받은 입학서류와 본인의 교육과정을 기준으로 '
+          // 법제처 찾기쉬운 생활법령정보(2026. 8. 15.): "연수 기간을 90일 이하로 짧게
+          // 계획하고 있는 경우에는 '단기방문(C-3)'비자를 발급받을 수 있습니다." 동아대도
+          // 단기어학연수 과정을 운영하므로 학위/비학위 축만으로는 갈리지 않는 경계다.
+          // 세부약호 C-3-1은 2016년 공관 페이지 표기이므로 쓰지 않고 C-3까지만 적는다.
+          footnoteKo: '연수 기간이 90일 이하인 단기 과정은 D-4가 아니라 단기방문(C-3) 사증이 '
+              '적용될 수 있습니다.\n'
+              '실제 체류자격은 학교에서 발급받은 입학서류와 본인의 교육과정을 기준으로 '
               '확인하세요.',
-          footnoteEn: 'Confirm your actual status against the admission documents '
+          footnoteEn: 'A short course of 90 days or less may fall under a '
+              'Short-Term Visit (C-3) visa rather than D-4.\n'
+              'Confirm your actual status against the admission documents '
               'your school issued and the course you are really taking.',
         ),
         GuideSection(
@@ -698,61 +715,101 @@ class MockData {
             'Check whether your course means D-2 or D-4',
             'Prepare the Certificate of Admission and other documents',
             'Check what extra documents the visa application needs',
-            'Apply at a Korean embassy or consulate',
+            'Apply for the visa at a Korean embassy or consulate',
             'Check the result of your application',
             'Enter Korea once the visa has been issued',
           ],
+          // 이 흐름은 해외에서 처음 사증을 받는 경우다. 이미 국내에 있는 사람이 다른
+          // 체류자격 활동을 하려면 「출입국관리법」 제24조①에 따라 미리 체류자격 변경허가를
+          // 받는 것이 원칙이고, 시행규칙 [별표 5의2]에도 유학(D-2) 「체류자격 변경허가」란이
+          // 따로 있다. 동아대 국제교류과도 "D4→D2 변경"을 자체 안내로 운영한다.
           noticeKo: '신청 방법과 필요서류는 국적, 세부 체류자격, 신청하는 재외공관에 따라 '
               '달라질 수 있습니다.\n'
+              '이미 한국에 체류 중이라면 재외공관 사증 신청이 아니라 국내에서 체류자격 '
+              '변경허가를 받는 경우가 있습니다(예: 어학연수 D-4에서 유학 D-2로 진학).\n'
               '위 흐름은 일반적인 순서이며, 신청 전에 해당 공관의 공식 안내를 확인하세요.',
           noticeEn: 'How you apply, and what you have to submit, can differ by '
               'nationality, by the exact status of stay, and by the mission you '
               'apply to.\n'
+              'If you are already living in Korea, you may not apply for a visa '
+              'abroad at all — you apply inside Korea for a change of status '
+              'instead (moving from a D-4 language course to a D-2 degree '
+              'program, for example).\n'
               'The steps above are the usual order — check the official guidance '
               'of your own embassy or consulate before you apply.',
         ),
       ],
-      // 교육기관 사업자등록증/고유번호증 사본 is on the official D-2 and D-4 document
-      // lists, but the school issues it — the label says so, so nobody goes
-      // looking for a certificate of their own.
+      // 교육기관 사업자등록증/고유번호증 사본 is on the 사증발급 안내와 공관 제출목록
+      // (Study in Korea; 주시카고 "인증대학: 입학허가서와 사업자등록증만 필요"), NOT on the
+      // 법령 list — 시행규칙 [별표 5]와 법제처 사증 구비서류 어디에도 없다. 학교가 발급하는
+      // 서류이므로 라벨에 그렇게 적어, 본인 명의 서류를 찾아 헤매지 않게 한다.
       // 사증발급신청서 — the visa application form filed at the 재외공관. Not to be
       // confused with the 통합신청서(신고서) the ARC guide lists: that one is filed
       // inside Korea at an immigration office.
+      // 여권 사본: 법제처 사증 발급 공통 구비서류가 "여권 및 여권 사본"으로 사본까지 함께
+      // 요구한다. 패치된 arc-issue도 사본을 따로 적고 있어 표기를 맞춘다.
+      // 사진 크기는 적지 않는다. 중앙 서식(시행규칙 별지 제17호서식)은 "PHOTO (35㎜×45㎜)"를
+      // 인쇄하지만 주시카고는 2"x2"를 요구한다 — 어느 쪽도 전국 공통이 아니므로 6개월·1매만
+      // 남기고 규격은 공관 확인으로 넘긴다.
+      // 표준입학허가서: 법제처(2026. 8. 15.)는 이를 유학(D-2) 정규과정 서류로만 적고 D-4에는
+      // "입학/재학 입증서류"를 둔다. 그런데 주타이베이·주로스앤젤레스는 D-4에도 표준입학허가서를
+      // 명시한다. 두 사실 모두 참이므로 "D-4는 불필요"로 단정하지 않고 공관 목록 확인으로 보낸다.
       checklistKo: [
         '사증발급신청서',
-        '여권',
-        '6개월 이내 촬영한 증명사진',
-        '표준입학허가서',
+        '여권 및 여권 사본',
+        '6개월 이내 촬영한 증명사진 1매 (규격은 신청할 재외공관 안내를 확인하세요)',
+        '표준입학허가서 (D-4 어학연수는 세부 유형과 재외공관에 따라 요구 서류가 다르니 '
+            '신청할 공관의 목록을 확인하세요)',
         '교육기관 사업자등록증 또는 고유번호증 사본 (학교에서 제공하는 서류)',
         '재정능력 입증서류',
       ],
       checklistEn: [
         'Visa application form',
-        'Passport',
-        'One passport-size photo taken within the last 6 months',
-        'Certificate of Admission',
+        'Passport, and a copy of it',
+        'One photo taken within the last 6 months — check the size your '
+            'embassy or consulate asks for',
+        'Certificate of Admission (for D-4, what you must submit varies by '
+            "sub-type and by mission — check your own mission's list)",
         "A copy of the educational institution's business registration "
             'certificate or registration-number certificate (a document '
             'provided by the school)',
         'Proof that you can support yourself financially',
       ],
       checklistOptionalTitleKo: '체류자격과 상황에 따라 추가될 수 있어요',
-      checklistOptionalTitleEn: 'These may be added depending on your visa and '
-          'situation',
+      // "status of stay", not "visa" — the same wording arc-issue and
+      // stay-extension use, and the distinction this guide is built on.
+      checklistOptionalTitleEn: 'These may be added depending on your status of '
+          'stay and your situation',
+      // 가족관계 입증서류의 발동 조건은 Study in Korea 본문이 괄호로 적고 있다 —
+      // "가족관계 입증 서류(부모의 잔고증명 등을 제출한 경우에 한함)" — 재외공관 실무도
+      // 부모 명의 잔고증명을 낼 때 관계 증명을 함께 요구한다. 조건을 함께 적어야 학생이
+      // 본인 해당 여부를 판단할 수 있다.
+      // 결핵검사: 시행규칙 [별표 5] 공통사항 — "재외공관 지정병원에서 발급한 결핵
+      // 건강진단서 … 결핵 고위험 국가에 거주하는 결핵 고위험 국가의 국민이 대한민국에
+      // 90일을 초과하여 체류할 목적으로 사증을 신청하는 등 법무부장관이 정하는 요건에
+      // 해당하는 경우에만 제출한다." 원문이 "등"으로 열린 조건이므로 완결 목록처럼 쓰지
+      // 않는다. 이는 사증 발급 단계의 요건이며, arc-issue가 지운 최초 외국인등록 단계의
+      // 결핵검진 확인서와는 절차가 다르다 — 두 가이드의 모순이 아니다.
       checklistOptionalKo: [
         '최종학력 입증서류',
         '재학 또는 학력 관련 증명서',
         '연수계획서',
-        '가족관계 입증서류',
-        '결핵검사 관련 서류',
+        '가족관계 입증서류 (부모 명의 잔고증명 등을 재정능력 서류로 제출하는 경우)',
+        '결핵검사 관련 서류 (결핵 고위험 국가 국민이 해당 국가에 거주하면서 90일을 초과해 '
+            '체류할 목적으로 사증을 신청하는 경우 등에 해당하며, 재외공관 지정병원에서 '
+            '발급받습니다)',
         '기타 체류자격별 추가서류',
       ],
       checklistOptionalEn: [
         'Proof of your highest level of education',
         'Enrollment or academic certificates',
         'A study or training plan',
-        'Proof of family relationship',
-        'Tuberculosis screening documents',
+        "Proof of family relationship — if you submit a parent's bank balance "
+            'as your financial proof',
+        'Tuberculosis screening documents — for cases such as a national of a '
+            'designated high-risk country who lives in that country and is '
+            'applying for a visa to stay longer than 90 days; issued by a '
+            'hospital your mission designates',
         'Any other document your status of stay calls for',
       ],
       checklistNoteKo: '※ 실제 필요서류는 D-2 / D-4 세부 유형, 국적, 교육과정, 재외공관 '
@@ -766,6 +823,16 @@ class MockData {
           titleEn: 'Good to know',
           iconName: 'lightbulb',
           notes: [
+            // 「출입국관리법」 제31조④는 "제1항 각 호 외의 부분 본문에도 불구하고"로 시작한다 —
+            // 하나의 등록 의무에 대해 §31①의 기한을 대체할 뿐, 두 번째 등록 의무를 만들지
+            // 않는다. 그리고 그 방향은 기한을 앞당기는 쪽이다. §31⑤가 "개인별로 고유한
+            // 등록번호"를 규정하므로 재등록 자체가 성립하지 않는다.
+            // 따라서 §31④의 수범자는 아직 등록하지 않은 사람이다 — HiKorea 「외국인등록」이
+            // 드는 예시도 B-2 소지자가 다른 자격으로 바꾸는 경우다. 이미 등록을 마친 D-4
+            // 학생이 D-2로 가는 것은 신규 등록이 아니라 정부24 「등록 외국인의 체류자격
+            // 변경허가」(PTR000050536) 절차이고, 기존 외국인등록증을 제출한다.
+            // 그래서 D-4 → D-2를 §31④의 예시로 쓰지 않는다. 그 예시는 이미 등록을 마친
+            // 다수 독자에게 "다시 등록해야 한다"로 읽힌다.
             GuideNote(
               titleKo: '🪪 비자와 외국인등록증은 달라요',
               titleEn: '🪪 A visa is not a Residence Card',
@@ -773,11 +840,23 @@ class MockData {
                 '비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.',
                 '한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 '
                     '해야 합니다.',
+                '아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 '
+                    '변경허가를 받았다면, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 '
+                    '때에 외국인등록을 해야 합니다.',
+                '이미 외국인등록을 마친 뒤에 체류자격이 바뀌는 경우는 새로 등록하는 것이 '
+                    '아니라 체류자격 변경허가 절차를 따릅니다.',
               ],
               linesEn: [
                 'A visa and a Residence Card (ARC) are two different things.',
                 'If you plan to stay in Korea for more than 90 days, you must '
                     'register within 90 days of entry.',
+                'If you have not registered yet and you are granted a status of '
+                    'stay, or a change of status, while in Korea, you register '
+                    'at the time that permission is granted rather than waiting '
+                    'out the 90 days.',
+                'If you are already registered and your status changes later, '
+                    'that is a change-of-status application, not a new '
+                    'registration.',
               ],
             ),
             GuideNote(
@@ -789,6 +868,8 @@ class MockData {
                     '일을 시작하기 전에 허가를 받아야 합니다.',
                 '허용 대상과 근무 가능 시간은 세부 체류자격, 과정, 학년, 한국어 능력, 학교 '
                     '유학생 담당자의 확인 등 여러 조건에 따라 달라질 수 있습니다.',
+                '특히 어학연수(D-4) 학생은 입국일 또는 자격 변경일부터 일정 기간이 지나야 '
+                    '신청할 수 있습니다.',
                 '근무를 시작하기 전에 HiKorea와 학교 국제교류과에서 본인에게 적용되는 조건을 '
                     '확인하세요.',
               ],
@@ -801,25 +882,40 @@ class MockData {
                     'of stay, the program, the year of study, Korean '
                     "proficiency and confirmation from the university's "
                     'international student adviser.',
+                'D-4 language students in particular can only apply once a set '
+                    'period has passed since entry, or since their status was '
+                    'changed.',
                 'Check the rules that apply to you with HiKorea and the '
                     "university's international affairs office before starting "
                     'work.',
               ],
             ),
+            // 「출입국관리법」 제24조① — "그 체류자격과 다른 체류자격에 해당하는 활동을
+            // 하려면 … 미리 법무부장관의 체류자격 변경허가를 받아야 한다." 사전허가가
+            // 원칙이므로 "필요한지 확인하세요"로만 두지 않고 의무와 시점을 함께 적는다.
+            // 다만 어떤 과정 변경이 자격 변경에 해당하는지는 학생이 스스로 판단할 수 없으므로
+            // 판단 주체는 그대로 HiKorea·학교에 남긴다.
             GuideNote(
               titleKo: '🔄 교육과정이 바뀌면 확인하세요',
               titleEn: '🔄 If your course changes',
               linesKo: [
                 '한국어연수에서 학부과정으로 진학하는 것처럼 학업 형태가 달라지면 현재 '
                     '체류자격이 새로운 활동에 맞는지 확인해야 합니다.',
-                '체류자격 변경이 필요한지 HiKorea 또는 학교 국제교류 관련 부서에서 확인하세요.',
+                '현재 체류자격과 다른 체류자격에 해당하는 활동을 하려면 미리 체류자격 '
+                    '변경허가를 받아야 합니다.',
+                '변경이 필요한지, 언제까지 신청해야 하는지 새 과정을 시작하기 전에 HiKorea '
+                    '또는 학교 국제교류 관련 부서에서 확인하세요.',
               ],
               linesEn: [
                 'If the kind of study changes — moving from a Korean language '
                     'course into a degree program, say — check that your current '
                     'status still fits what you will be doing.',
+                'If what you will be doing falls under a different status of '
+                    'stay, you must obtain permission to change your status '
+                    'before you start.',
                 "Ask HiKorea or your university's international office whether "
-                    'you need to change your status of stay.',
+                    'you need to change, and by when, before the new course '
+                    'begins.',
               ],
             ),
             GuideNote(
@@ -841,19 +937,32 @@ class MockData {
           titleKo: '내 비자를 정확히 확인하세요',
           titleEn: 'Check your exact visa status',
           iconName: 'help',
-          bodyKo: '친구나 다른 학생의 비자 종류를 기준으로 판단하지 말고 본인의 여권, '
-              '사증발급 내용, 외국인등록정보 또는 학교에서 받은 서류를 확인하세요.',
-          bodyEn: 'Do not go by what a friend or another student has. Check your '
-              'own passport, the visa that was issued to you, your '
-              'foreign-resident record, or the documents your school gave you.',
+          // 네 가지 정보원을 "또는"으로 나란히 두면 안 된다. 여권에 붙은 사증은 입국 당시
+          // 정보이고, 국내에서 체류자격 변경허가(법 제24조)를 받으면 현재 자격과 어긋난다.
+          // 현재 자격의 권위 있는 증빙은 외국인등록(법 제31조) 결과인 외국인등록증·등록정보다.
+          bodyKo: '친구나 다른 학생의 비자 종류를 기준으로 판단하지 마세요.\n'
+              '현재 체류자격은 외국인등록증(Residence Card / ARC)과 외국인등록정보에서 '
+              '확인하는 것이 가장 정확합니다. 여권에 붙은 사증은 입국 당시 정보여서, '
+              '국내에서 체류자격 변경허가를 받았다면 지금 자격과 다를 수 있습니다.',
+          bodyEn: 'Do not go by what a friend or another student has.\n'
+              'Your Residence Card (ARC) and your foreign-resident record are '
+              'the most reliable place to check your current status. The visa '
+              'in your passport shows what you were given on entry — if you '
+              'changed your status inside Korea, it will not match what you '
+              'hold now.',
           noticeKo: '세부 체류자격과 필요한 절차는 학생마다 다를 수 있습니다.',
           noticeEn: 'The exact status of stay — and the steps that go with it — '
               'can differ from student to student.',
         ),
       ],
       links: [
-        // Study in Korea (NIIED, Ministry of Education) — "학생비자 및 체류자격";
-        // names the same D-2/D-4 sub-types listed above.
+        // Study in Korea (NIIED, Ministry of Education) — "학생비자 및 체류자격".
+        // Kept for the student-visa overview only. NOT the source of record for
+        // sub-type codes: the page prints "D-4-2 외국어 연수" on both /eng/ and /en/,
+        // which 법제처(2026. 8. 15.) and the 재외공관 both give as D-4-7. Sub-type codes
+        // in this guide come from 법제처 찾기쉬운 생활법령정보, not from here.
+        // Switching /eng/ → /en/ fixes nothing: neither redirects, both render in
+        // Korean, and both carry the same error.
         GuideLink(
           labelKo: 'Study in Korea 비자 · 체류 안내',
           labelEn: 'Study in Korea — student visa & stay',
@@ -870,14 +979,15 @@ class MockData {
           descriptionEn: 'Official Korean visa information & Visa Navigator',
           url: 'https://www.visa.go.kr/openPage.do?MENU_ID=10101',
         ),
-        // HiKorea 출입국/체류안내 → 사증(VISA): what a visa is, how it is issued,
-        // fees, and the per-status issuance manual.
+        // HiKorea 출입국/체류안내 → 사증(VISA): what a visa is. 작성일 2013.01.01, and
+        // the page itself carries no fee amounts (only a link to 사증발급 수수료,
+        // CAT_SEQ=147) and never mentions D-2 or D-4. 발급절차·체류자격별 안내는 하위
+        // 링크에 있으므로, description은 이 페이지가 실제로 담고 있는 것까지만 말한다.
         GuideLink(
           labelKo: 'HiKorea 사증(비자) 안내',
           labelEn: 'HiKorea — visas (사증)',
-          descriptionKo: '사증의 의미 · 발급절차 · 체류자격별 안내',
-          descriptionEn: 'What a visa is, how it is issued, and per-status '
-              'guidance',
+          descriptionKo: '사증의 의미와 기본 안내',
+          descriptionEn: 'What a visa is, and where the detailed guidance lives',
           url: 'https://www.hikorea.go.kr/info/InfoDatail.pt'
               '?CAT_SEQ=144&PARENT_ID=11',
         ),

@@ -3997,21 +3997,50 @@ void main() {
       'D-2-4',
       'D-2-6',
       'D-4-1',
-      'D-4-2',
     ]) {
       expect(ko, contains(sub), reason: sub);
       expect(en, contains(sub), reason: sub);
     }
 
-    // Registration: the same conditional rule the ARC guide states.
+    // 외국어연수 is D-4-7, not D-4-2 — 법제처(2026.8.15) and the 재외공관 agree, and
+    // Study in Korea is wrong on both /eng/ and /en/. Neither code is shown:
+    // D-4-7 has no Dong-A audience, so the line is gone rather than corrected.
+    expect(ko, isNot(contains('D-4-2')));
+    expect(en, isNot(contains('D-4-2')));
+
+    // Registration: §31① sets the 90-day clock, §31④ replaces that DEADLINE for
+    // someone not yet registered — it never creates a second registration, so
+    // an already-registered D-4 → D-2 student files a change of status instead.
     expect(ko, contains('90일을 초과해'));
     expect(ko, contains('90일 이내'));
     expect(en, contains('more than 90 days'));
     expect(en, contains('within 90 days of entry'));
+    expect(ko, contains('아직 외국인등록을 하지 않은'));
+    expect(en, contains('If you have not registered yet'));
+    expect(ko, contains('허가를 받는 때에 외국인등록'));
+    expect(en, contains('at the time that permission is granted'));
+    expect(ko, contains('새로 등록하는 것이 아니라'));
+    expect(en, contains('not a new registration'));
     final arcLink =
         item.links.firstWhere((l) => l.url == '/guide/item/arc-issue');
     expect(arcLink.labelKo, '가이드 — 외국인등록증(ARC) 발급');
     expect(arcLink.labelEn, 'Guide — Residence Card (ARC)');
+
+    // §24① makes a change of status a PRIOR permission, not a thing to look
+    // into after the fact.
+    expect(ko, contains('미리 체류자격 변경허가'));
+    expect(en, contains('before you start'));
+
+    // Already in Korea? Then the visa-abroad flow above is not yours.
+    expect(ko, contains('국내에서 체류자격 변경허가를 받는 경우가 있습니다'));
+    expect(en, contains('you apply inside Korea for a change of status'));
+
+    // A course of 90 days or less can be C-3, not D-4 — 법제처, 2026.8.15. The
+    // sub-code C-3-1 comes from a 2016 mission page and is deliberately unused.
+    expect(ko, contains('단기방문(C-3)'));
+    expect(en, contains('Short-Term Visit (C-3)'));
+    expect(ko, isNot(contains('C-3-1')));
+    expect(en, isNot(contains('C-3-1')));
 
     // Part-time work: not automatic, permission first, eligibility conditional
     // — and no bare "D-2/D-4 students can work" claim, and no hour or
@@ -4037,10 +4066,19 @@ void main() {
       work.linesEn.any((l) => l.contains('Eligibility and permitted hours can depend')),
       isTrue,
     );
+    // The one eligibility condition that changes what a D-4 student does —
+    // stated without the figure, which 법제처 and 동아대 word differently and which
+    // the dedicated part-time-work guide will own.
+    expect(work.linesKo.any((l) => l.contains('일정 기간이 지나야')), isTrue);
+    expect(
+      work.linesEn.any((l) => l.contains('once a set period has passed')),
+      isTrue,
+    );
     expect(work.linesEn, hasLength(work.linesKo.length));
     expect(RegExp(r'\d+\s*시간').hasMatch(ko), isFalse, reason: 'hour figure');
     expect(RegExp(r'\d+\s*hours').hasMatch(en), isFalse, reason: 'hour figure');
     expect(ko, isNot(contains('TOPIK')));
+    expect(ko, isNot(contains('6개월 경과')), reason: 'part-time waiting figure');
 
     // Visa documents. 사증발급신청서 is the form filed at the 재외공관 — a different
     // form from the ARC guide's 통합신청서(신고서), which is filed inside Korea.
@@ -4049,14 +4087,44 @@ void main() {
     expect(item.checklistKo, isNot(contains('통합신청서(신고서)')));
     expect(item.checklistEn, isNot(contains('Application Form (Report Form)')));
 
-    // …the photo spec, and the school-issued institution certificate — in the
-    // core list, labelled as something the school provides.
+    // 법제처 사증 공통 구비서류 is "여권 및 여권 사본" — the copy is named, as it is in
+    // the patched ARC guide.
+    expect(item.checklistKo.any((s) => s.contains('여권 사본')), isTrue);
+    expect(item.checklistEn, contains('Passport, and a copy of it'));
+
+    // …the photo. 6 months and one print are common; the SIZE is not — 별지
+    // 제17호서식 prints 35㎜×45㎜ while 주시카고 asks for 2"x2", so no size is stated
+    // here and none may be reintroduced.
     expect(item.checklistKo, isNot(contains('증명사진')));
-    expect(item.checklistKo, contains('6개월 이내 촬영한 증명사진'));
-    expect(
-      item.checklistEn,
-      contains('One passport-size photo taken within the last 6 months'),
-    );
+    final photoKo =
+        item.checklistKo.singleWhere((s) => s.contains('6개월 이내 촬영한 증명사진'));
+    expect(photoKo, contains('재외공관 안내를 확인'));
+    final photoEn =
+        item.checklistEn.singleWhere((s) => s.contains('photo taken within'));
+    expect(photoEn, contains('check the size'));
+    for (final size in const [
+      'passport-size',
+      '35㎜',
+      '35mm',
+      '35×45',
+      '3.5×4.5',
+      '2"x2"',
+    ]) {
+      expect(ko, isNot(contains(size)), reason: size);
+      expect(en, isNot(contains(size)), reason: size);
+    }
+
+    // 표준입학허가서 is a D-2 정규과정 document in 법제처, yet 주타이베이·주로스앤젤레스 ask
+    // D-4 for it too — so the item never says a D-4 applicant can skip it.
+    final admissionEn = item.checklistEn
+        .singleWhere((s) => s.startsWith('Certificate of Admission'));
+    expect(admissionEn, contains('varies by sub-type'));
+    expect(admissionEn, isNot(contains('instead')));
+    final admissionKo =
+        item.checklistKo.singleWhere((s) => s.startsWith('표준입학허가서'));
+    expect(admissionKo, contains('공관의 목록을 확인'));
+    expect(admissionKo, isNot(contains('갈음')));
+
     final institutionKo = item.checklistKo
         .singleWhere((s) => s.contains('사업자등록증 또는 고유번호증 사본'));
     expect(institutionKo, contains('학교에서 제공하는 서류'));
@@ -4065,6 +4133,66 @@ void main() {
     expect(institutionEn, contains('provided by the school'));
     // Kept: documents differ by sub-type, nationality and mission.
     expect(item.checklistNoteKo, contains('재외공관'));
+
+    // The optional list speaks of a status of stay, the way the ARC and
+    // stay-extension guides do — this page is built on that distinction.
+    expect(item.checklistOptionalTitleEn, contains('status of stay'));
+    expect(item.checklistOptionalTitleEn, isNot(contains('your visa')));
+
+    // Family-relationship proof carries its trigger: Study in Korea scopes it
+    // to "부모의 잔고증명 등을 제출한 경우에 한함".
+    final familyKo =
+        item.checklistOptionalKo.singleWhere((s) => s.contains('가족관계'));
+    expect(familyKo, contains('부모 명의 잔고증명'));
+    final familyEn = item.checklistOptionalEn
+        .singleWhere((s) => s.contains('family relationship'));
+    expect(familyEn, contains("parent's bank balance"));
+
+    // TB screening is a 사증 발급 requirement (시행규칙 별표 5 공통사항) carrying all
+    // four conditions. The statute says "…하는 등", so the list stays open — and
+    // this is a different stage from the 결핵검진 확인서 the ARC guide dropped.
+    final tbKo = item.checklistOptionalKo.singleWhere((s) => s.contains('결핵'));
+    for (final c in const ['고위험', '거주', '90일을 초과', '지정병원', '등에 해당']) {
+      expect(tbKo, contains(c), reason: c);
+    }
+    final tbEn =
+        item.checklistOptionalEn.singleWhere((s) => s.contains('Tuberculosis'));
+    for (final c in const [
+      'high-risk',
+      'lives in that country',
+      'longer than 90 days',
+      'mission designates',
+      'such as',
+    ]) {
+      expect(tbEn, contains(c), reason: c);
+    }
+
+    // Current status is read off the card, not off the passport sticker.
+    final checkSection =
+        item.sections.singleWhere((s) => s.titleKo == '내 비자를 정확히 확인하세요');
+    expect(checkSection.bodyKo, contains('외국인등록정보에서 확인하는 것이 가장 정확'));
+    expect(checkSection.bodyEn, contains('most reliable place to check'));
+
+    // Paired KO/EN lists stay the same length.
+    expect(item.checklistEn, hasLength(item.checklistKo.length));
+    expect(item.checklistOptionalEn, hasLength(item.checklistOptionalKo.length));
+    for (final s in [...item.topSections, ...item.sections]) {
+      expect(s.stepsEn, hasLength(s.stepsKo.length), reason: s.titleKo);
+      for (final n in s.notes) {
+        expect(n.linesEn, hasLength(n.linesKo.length), reason: n.titleKo);
+      }
+    }
+
+    // The HiKorea page is a 2013 "what is a 사증" page — the description says
+    // only what the page itself carries, and the URL is unchanged.
+    final hiKorea =
+        item.links.singleWhere((l) => l.url.contains('CAT_SEQ=144&PARENT_ID=11'));
+    expect(hiKorea.descriptionKo, '사증의 의미와 기본 안내');
+    expect(hiKorea.descriptionEn, contains('where the detailed guidance lives'));
+    expect(
+      item.links.singleWhere((l) => l.labelEn.startsWith('Study in Korea')).url,
+      'https://www.studyinkorea.go.kr/eng/plan/visaAndStay.do',
+    );
 
     // The reading time read as the visa's processing time, so it is gone.
     expect(item.durationKo, isNull);
