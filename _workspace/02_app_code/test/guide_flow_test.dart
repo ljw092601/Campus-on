@@ -452,7 +452,7 @@ void main() {
   testWidgets('Guide detail: course registration renders its sections in order',
       (tester) async {
     // Taller than the shared surface: this guide runs to twelve section cards.
-    tester.view.physicalSize = const Size(1080, 9000);
+    tester.view.physicalSize = const Size(1080, 16000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() {
       tester.view.resetPhysicalSize();
@@ -468,7 +468,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('coming soon', findRichText: true), findsNothing);
-    expect(find.textContaining('10–30 minutes'), findsOneWidget);
+    // No durationText on this guide: registration is not a single sitting, it
+    // runs across several rounds, and no official source states a time.
+    expect(find.textContaining('10–30 minutes'), findsNothing);
+    expect(find.textContaining('minutes'), findsNothing);
     expect(find.textContaining('Difficulty'), findsOneWidget);
 
     // Login is a topSection: a new student cannot open the registration system
@@ -507,14 +510,31 @@ void main() {
       find.textContaining('Check your registration result'),
       findsOneWidget,
     );
+    // Missing registration ends in removal from the register, not merely in
+    // lost credits — and the later rounds are named so nobody reads the first
+    // deadline as the point of no return.
     expect(
-      find.textContaining('No registration means no credits'),
+      find.textContaining('can remove you from the register'),
       findsOneWidget,
     );
-    // 2024-only figures are attributed to the booklet, never stated as current.
+    expect(
+      find.textContaining('does not remove you on the spot'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('final registration period closes'),
+      findsOneWidget,
+    );
+    // Every figure on this page now comes from a current source, so the 2024
+    // booklet is no longer cited anywhere in this guide.
     expect(
       find.textContaining('2024 international-student booklet'),
-      findsWidgets,
+      findsNothing,
+    );
+    // Refunds are a question for the student records team, never an assertion.
+    expect(
+      find.textContaining('student records team'),
+      findsOneWidget,
     );
 
     // Carryover: the worked example, the exclusion the notice names, and the
@@ -533,9 +553,192 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('What about international students?'), findsOneWidget);
+    // 의학과 only — 의예과 keeps carryover, so the English must not widen this
+    // to the whole medical school.
+    expect(
+      find.textContaining('Department of Medicine'),
+      findsOneWidget,
+    );
+    // Leave of absence preserves carried credits; when you may spend them is
+    // not settled between the notice and the booklet, so the page asks rather
+    // than answers.
+    expect(
+      find.textContaining('does not by itself cancel existing carried credits'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('how many carried credits you can use and when'),
+      findsOneWidget,
+    );
     // The credit cap is never stated as a flat rule for everyone.
     expect(find.textContaining('Not every student gets 19 credits'),
         findsOneWidget);
+    // 자유전공학부 is a live 21-credit exception and international students are
+    // routinely placed there — it went missing while the list was attributed
+    // to the 2024 booklet.
+    expect(
+      find.textContaining('School of Interdisciplinary Studies'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+      'Guide detail: course registration scopes the designated courses by '
+      'admission year', (tester) async {
+    tester.view.physicalSize = const Size(1080, 16000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await _openGuideHub(tester);
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Course Registration'));
+    await tester.pumpAndSettle();
+
+    // Who it applies to: admission year and admission track, never "currently
+    // a freshman", never a Korean-language track, never nationality alone.
+    expect(
+      find.textContaining('international special admission from the 2023'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('transfer students are not'), findsOneWidget);
+    expect(
+      find.textContaining('does not apply automatically'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Korean language track'), findsNothing);
+    expect(find.textContaining('undergraduate freshmen'), findsNothing);
+
+    // 2026 entrants: the nine designated courses, one course per line, with the
+    // course numbers a student actually registers with.
+    expect(
+      find.text('Admitted in 2026 — required general education, 5 courses '
+          '(14 credits)'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Admitted in 2026 — foundation general education, 4 courses '
+          '(12 credits)'),
+      findsOneWidget,
+    );
+    for (final code in const [
+      '01GEN091',
+      '01GEN092',
+      '01GEN093',
+      '01GEN094',
+      '01GEN095',
+      '01BAS106',
+      '01BAS107',
+      '01BAS130',
+      '01BAS131',
+    ]) {
+      expect(find.textContaining(code), findsOneWidget, reason: code);
+    }
+    // 응용한국어 runs every semester; the rest are pinned to one.
+    expect(
+      find.textContaining('offered every semester'),
+      findsOneWidget,
+    );
+
+    // 2023–2025 entrants: the two official sources disagree, so the page sends
+    // them to confirm instead of publishing either list as settled.
+    expect(
+      find.text('Admitted in 2023–2025 — check before registering'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('list different designated courses'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('how your completed courses count'),
+      findsOneWidget,
+    );
+    // The superseded 2-credit pairing must not be republished as a current
+    // requirement for anyone.
+    expect(find.textContaining('01BAS103'), findsNothing);
+    expect(find.textContaining('01BAS104'), findsNothing);
+
+    // Core general education: the area is required; only the choice of course
+    // is open. The uncertain 융합 code never reaches a student.
+    expect(
+      find.text('Core general education is a separate requirement'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('you do not have to take all four'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('C01OR449'), findsNothing);
+
+    // TOPIK is a question for the College of General Education, not a claim
+    // that no exemption exists.
+    expect(
+      find.textContaining('whether a TOPIK score can exempt you'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Guide detail: course registration links the official sources',
+      (tester) async {
+    tester.view.physicalSize = const Size(1080, 16000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+    await tester.pumpWidget(await _app());
+    await tester.pumpAndSettle();
+
+    await _openGuideHub(tester);
+    await tester.tap(find.text('School admin'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Course Registration'));
+    await tester.pumpAndSettle();
+
+    for (final label in const [
+      'Dong-A University course registration',
+      'Dong-A University single sign-on',
+      'Dong-A University academic notices',
+      'Registration guide',
+      'Curriculum guide',
+      'Retake guidance',
+      'Removal from the register',
+      'Graduate School course registration',
+    ]) {
+      expect(find.text(label), findsOneWidget, reason: label);
+    }
+    // The graduate link is the 일반대학원 page — it must not read as covering
+    // every professional and special graduate school.
+    expect(
+      find.textContaining('professional or special graduate school'),
+      findsOneWidget,
+    );
+    // Retake thresholds are tied to the cohort they apply to.
+    expect(
+      find.textContaining('From the 2015 entering cohort'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('who entered in 2019 onwards'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('counted separately for regular and seasonal'),
+      findsOneWidget,
+    );
+    // Contact routing: the course administration team owns the rules; the
+    // international office is not the first stop for registration.
+    expect(
+      find.textContaining('051-200-6122~4'),
+      findsWidgets,
+    );
+    expect(find.textContaining('051-200-6128'), findsNothing);
   });
 
   testWidgets('Guide detail: certificate issuance renders its sections in order',
