@@ -70,6 +70,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
   // FAB starts a position stream: the blue dot follows the user in real time
   // and the camera chases every fix (follow mode). A manual map pan drops
   // follow mode (dot keeps updating); tapping the FAB again re-enables it.
+  final _zoomHandle = CampusMapZoomHandle();
+
   UserLocation? _userLocation;
   bool _locating = false; // access check / waiting for the first fix
   bool _following = false;
@@ -366,6 +368,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
               campus: campus,
               focusIds: widget.focusIds,
               selectedId: _selectedId,
+              zoomHandle: _zoomHandle,
               userLocation: _userLocation,
               following: _following,
               headingStream: _tracking ? _headingStream : null,
@@ -390,27 +393,47 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
           // "My location" FAB — starts live tracking (blue dot + heading cone
           // follow the user); while tracking, re-enables follow after a pan.
+          // Zoom in/out buttons sit right below it.
           Positioned(
             right: context.dimens.spaceMd,
             bottom: context.dimens.spaceMd +
                 (selected != null
                     ? peekHeight
                     : (selectedPlace != null ? 96 : 0)),
-            child: FloatingActionButton.small(
-              heroTag: 'myLocation',
-              tooltip: l.map_myLocation_tooltip,
-              onPressed: _locating ? null : () => _onMyLocationPressed(l),
-              child: _locating
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  // Crosshair without dot = "not locked on me" (post-pan);
-                  // matches the affordance native map apps use.
-                  : Icon(_tracking && !_following
-                      ? Symbols.location_searching
-                      : Symbols.my_location),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton.small(
+                  heroTag: 'myLocation',
+                  tooltip: l.map_myLocation_tooltip,
+                  onPressed: _locating ? null : () => _onMyLocationPressed(l),
+                  child: _locating
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      // Crosshair without dot = "not locked on me" (post-pan);
+                      // matches the affordance native map apps use.
+                      : Icon(_tracking && !_following
+                          ? Symbols.location_searching
+                          : Symbols.my_location),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
+                  heroTag: 'zoomIn',
+                  tooltip: l.map_zoomIn_tooltip,
+                  onPressed: _zoomHandle.zoomIn,
+                  child: const Icon(Symbols.add),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
+                  heroTag: 'zoomOut',
+                  tooltip: l.map_zoomOut_tooltip,
+                  onPressed: _zoomHandle.zoomOut,
+                  child: const Icon(Symbols.remove),
+                ),
+              ],
             ),
           ),
           if (selected != null)

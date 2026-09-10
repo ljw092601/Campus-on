@@ -38,6 +38,9 @@
   "home_card_dining_title": "Today's menu",
   "home_card_dining_desc": "Check cafeteria menus and opening hours.",
 
+  "map_zoomIn_tooltip": "Zoom in",
+  "map_zoomOut_tooltip": "Zoom out",
+
   "classroom_search_title": "Classroom search",
   "classroom_help": "Pick a building and type the 4-digit room number.\ne.g. S01 - 0301 (first 2 digits = floor)",
   "classroom_hint_building": "Select a building",

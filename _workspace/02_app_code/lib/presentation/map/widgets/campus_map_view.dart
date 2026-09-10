@@ -37,6 +37,15 @@ import 'marker_icons.dart';
 ///    throttled and applied straight to the overlay's DOM node, because compass
 ///    events arrive at ~30Hz — far too fast to re-add overlays through the
 ///    plugin bridge.
+/// Lets the map screen trigger zoom from its own buttons without touching the
+/// Kakao controller directly (all plugin coupling stays in this file).
+class CampusMapZoomHandle {
+  _CampusMapViewState? _state;
+
+  Future<void> zoomIn() async => _state?._zoomBy(-1);
+  Future<void> zoomOut() async => _state?._zoomBy(1);
+}
+
 class CampusMapView extends StatefulWidget {
   const CampusMapView({
     super.key,
@@ -53,6 +62,7 @@ class CampusMapView extends StatefulWidget {
     this.places = const [],
     this.onPlacesFound,
     this.onPlacesFailed,
+    this.zoomHandle,
   });
 
   final List<Facility> facilities;
@@ -76,6 +86,9 @@ class CampusMapView extends StatefulWidget {
   final List<NearbyPlace> places;
   final ValueChanged<List<NearbyPlace>>? onPlacesFound;
   final VoidCallback? onPlacesFailed;
+
+  /// Optional handle for screen-side zoom buttons.
+  final CampusMapZoomHandle? zoomHandle;
 
   @override
   State<CampusMapView> createState() => _CampusMapViewState();
@@ -104,12 +117,17 @@ class _CampusMapViewState extends State<CampusMapView> {
   @override
   void initState() {
     super.initState();
+    widget.zoomHandle?._state = this;
     _syncHeadingSubscription(null);
   }
 
   @override
   void didUpdateWidget(covariant CampusMapView oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.zoomHandle, widget.zoomHandle)) {
+      oldWidget.zoomHandle?._state = null;
+      widget.zoomHandle?._state = this;
+    }
     _syncHeadingSubscription(oldWidget.headingStream);
 
     // Campus switch: chase the new campus's marker cluster. widget.facilities
@@ -139,8 +157,17 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   @override
   void dispose() {
+    widget.zoomHandle?._state = null;
     _headingSub?.cancel();
     super.dispose();
+  }
+
+  /// Kakao zoom level: 1 = closest, larger = further out.
+  Future<void> _zoomBy(int delta) async {
+    final controller = _controller;
+    if (controller == null) return;
+    final level = await controller.getLevel();
+    controller.setLevel((level + delta).clamp(1, 14));
   }
 
   // ── User location dot + heading cone ──────────────────────────────────────
