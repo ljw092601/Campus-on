@@ -61,6 +61,7 @@
   "dining_error_loadFailed": "Couldn't load the menus.",
 
   "calendar_placeholder_notice": "Sample dates for now — the official academic calendar will appear once confirmed.",
+  "calendar_empty": "No academic calendar entries for this year yet.",
   "calendar_error_loadFailed": "Couldn't load the academic calendar.",
   "calendar_cat_semester": "Semester",
   "calendar_cat_registration": "Courses",

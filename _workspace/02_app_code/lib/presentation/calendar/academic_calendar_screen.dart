@@ -10,9 +10,11 @@ import '../providers/academic_calendar_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
 
-/// 학사일정 — semester events grouped by month. Data is mock until the
-/// official Dong-A schedule is confirmed (see AcademicCalendarRepository /
-/// TODO(calendar-data)); a notice banner tells users the dates are samples.
+/// 학사일정 — shows ONLY the current academic year (학년도, Mar–Feb),
+/// grouped by month. Other years' rows may exist in Firestore (the admin
+/// registers next year's schedule ahead of time, and past rows linger until
+/// the sheet is cleaned), but they are meaningless to students, so the app
+/// filters them out — no year switcher by design.
 /// Lives under the home branch (`/home/calendar`) so back returns home.
 class AcademicCalendarScreen extends ConsumerWidget {
   const AcademicCalendarScreen({super.key});
@@ -33,15 +35,30 @@ class AcademicCalendarScreen extends ConsumerWidget {
           onRetry: () => ref.invalidate(academicEventsProvider),
         ),
         data: (events) {
-          // Group by the month the event starts in (already start-sorted, so
-          // insertion order keeps the months chronological).
+          final currentYear = AcademicEvent.academicYearOf(DateTime.now());
+
+          // Group this year's events by start month (events arrive
+          // start-sorted, so insertion order keeps months chronological).
           final months = <DateTime, List<AcademicEvent>>{};
           for (final e in events) {
+            if (e.academicYear != currentYear) continue;
             months
                 .putIfAbsent(DateTime(e.start.year, e.start.month), () => [])
                 .add(e);
           }
           final monthFmt = DateFormat.yMMMM(locale.toLanguageTag());
+
+          if (months.isEmpty) {
+            return Center(
+              child: Text(
+                l.calendar_empty,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            );
+          }
 
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

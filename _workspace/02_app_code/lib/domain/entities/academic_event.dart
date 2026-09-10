@@ -35,6 +35,13 @@ class AcademicEvent {
 
   DateTime get endDate => end ?? start;
 
+  /// Korean academic year (학년도) a date belongs to: runs March 1 through
+  /// the end of February, so Jan/Feb count toward the previous year.
+  static int academicYearOf(DateTime d) => d.month >= 3 ? d.year : d.year - 1;
+
+  /// The 학년도 this event belongs to (by its start date).
+  int get academicYear => academicYearOf(start);
+
   String title(Locale l) => _pick(l, titleKo, titleEn) ?? id;
 
   static String? _pick(Locale l, String? ko, String? en) {

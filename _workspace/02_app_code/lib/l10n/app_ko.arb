@@ -60,6 +60,7 @@
   "dining_error_loadFailed": "식단을 불러오지 못했어요.",
 
   "calendar_placeholder_notice": "지금은 예시 일정이에요. 학교 공식 학사일정 확정 후 실제 일정이 표시됩니다.",
+  "calendar_empty": "올해 등록된 학사일정이 아직 없어요.",
   "calendar_error_loadFailed": "학사일정을 불러오지 못했어요.",
   "calendar_cat_semester": "학사",
   "calendar_cat_registration": "수강",
