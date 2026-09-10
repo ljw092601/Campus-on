@@ -1,7 +1,7 @@
 # 동아메이트(Dong-A Mate) — 외국인 유학생 학교 안내 앱 기획
 
 > 대학교 외국인 유학생을 위한 캠퍼스 생활 안내 모바일 애플리케이션
-> 작성일: 2026-07-10 · 최종 갱신: 2026-09-01 · 상태: **MVP 기능 + 행정가이드 18종 전체 콘텐츠 완성, 실기기 테스트 중**
+> 작성일: 2026-07-10 · 최종 갱신: 2026-09-10 · 상태: **MVP 기능 + 행정가이드 18종 완성 + 관리자 데이터 파이프라인(학사일정·학식) 가동, Firestore 서버 최신화 완료**
 > (구 명칭 "Campus-On" — 2026-08 앱명 **동아메이트** 확정, 저장소명은 Campus-on 유지)
 
 ### 확정된 방향 (2026-07-10)
@@ -131,7 +131,7 @@
 1. ~~초기 콘텐츠(시설·행정 정보) 정리·입력~~ → ✅ **해결** (2026-09-01): 시설 48건(공식 캠퍼스맵) + **행정가이드 18종 전체**(팀원 지환·승우 작성, 섹션 12) 완료. 국제교류처 공식 자료 협조는 콘텐츠 검수용으로 여전히 유효
 2. ~~앱 아이콘·이름 최종 확정~~ → ✅ **해결** (2026-08): **동아메이트** + 신규 엠블럼 아이콘·스플래시 적용
 3. **강의실 호수 실데이터** — 사용자가 추후 제공 예정. 그때까지 층별 안내에서 파생한 placeholder 사용 (섹션 10 참조)
-4. **학식 API 스펙** — 학교 측 제공 예정, 미확정. 그때까지 mock 예시 식단 사용 (섹션 11 참조)
+4. ~~학식 API 스펙~~ → ❌→✅ **API 제공 불가 확정** (2026-09-10): 학사일정·학식 모두 학교 API를 받을 수 없게 됨 → **관리자 직접 입력 파이프라인(Google Sheets → Firestore)으로 전환·가동** (섹션 13). 남은 건 비개발자 관리자 지정 + IAM 부여뿐
 
 > ✅ 해결됨: 플랫폼(iOS+Android), 개발방식(Flutter), MVP 기능, 확장 범위(단일 대학),
 > 지원 언어(한/영), 행정 가이드 접근(틀 우선), 지도(카카오맵), 인력/기간/예산(1인·1개월·$500)
@@ -154,10 +154,10 @@
   - **오프라인 캐싱 마감**: Firestore 영속성 명시 + 모든 읽기 경로(시설·가이드 getAll/getById/getByCategory) `Source.cache` 폴백
   - 검증: `analyze` 🟢 No issues · `test` 🟢 4건(가이드 플로우·즐겨찾기 지속·스모크) · Android 에뮬레이터 실기기 전 화면 스크린샷 확인 → `05_qa_report.md` 라운드 4
 - [ ] 국제교류처에 데이터/API 제공 가능 여부 문의 (섹션 4 액션 아이템)
-- [x] **오늘의 학식 페이지 구현** (2026-08-31, 커밋 1a90cd3) → 섹션 11 참조. 남은 것: 학교 식단 API 연동(스펙 대기)
-- [ ] **학식 API 연동** (학교 측 스펙 대기 — `ApiDiningRepository` 추가 후 `diningRepositoryProvider` 교체, 섹션 11)
+- [x] **오늘의 학식 페이지 구현** (2026-08-31, 커밋 1a90cd3) → 섹션 11 참조
+- [x] ~~학식 API 연동~~ → **API 불가 확정, 관리자 입력 파이프라인으로 대체** (2026-09-10, 섹션 13) — `FirestoreDiningRepository` + 관리자 시트 동기화로 전환 완료
 - [ ] **강의실 호수 실데이터 반영** (사용자 제공 대기 — `classroom_providers.dart` 교체, 섹션 10)
-- [ ] **Firestore 시드 재업로드** (건물 영문명 48종 + 행정가이드 18종 콘텐츠 반영 — 시드 JSON은 재생성 완료, `node tool/firestore_seed/seed.mjs --overwrite --prune` 실행만 남음)
+- [x] **Firestore 시드 전체 업로드 완료** (2026-09-10, 커밋 6a68df2): facilities 48(영문명 포함)·guide_items 18(교정 완료본)·building_floors 34·cafeterias 3 — ADC(키리스) 인증으로 실행, 서버 검증 통과. `academic_events`는 관리자 시트 소유라 시드 대상에서 영구 제외. **서버 데이터가 완전히 최신 — Firestore 모드로 실배포 가능 상태**
 - [ ] 실 이름(호실 명칭) 영문화 — 2천여 건이라 보류, 호수 실데이터 도입과 함께 재검토
 - [x] **카카오 실 키 연동 완료** (2026-07-16): JavaScript 키를 `env.json`(`--dart-define-from-file`)으로 주입 → Android 에뮬레이터에서 **실 카카오맵 타일·6색 커스텀 마커·동아대 승학캠퍼스 실좌표**가 렌더됨을 스크린샷으로 확인. 카카오 콘솔(카카오맵 활성화·Web 도메인)도 유효. `env.json`은 `.gitignore` 제외. RT-1(첫 진입 마커) 수정도 실 타일에서 재확인
   - ⚠️ **빌드 환경 이슈**: 프로젝트 경로에 한글(`추가-기능-추천`)이 있어 Gradle이 non-ASCII 경로를 거부 → 이번엔 ASCII 경로로 임시 복사해 빌드. 향후 워크트리/폴더명은 **영문으로 생성** 필요(또는 `android/gradle.properties`에 `android.overridePathCheck=true`)
@@ -201,7 +201,11 @@
 - [x] **뒤로가기 내비게이션 수정** (2026-09-01, 커밋 259200c): `/guide` 라우트를 `/home` 자식으로 이동(백스택에 홈 유지, 기존 `/guide/...` 딥링크는 redirect로 보존) + `AppShell` PopScope — pop할 게 없으면 앱 종료 대신 홈 탭 폴백, 홈 루트에서만 종료. 가이드·지도·설정 어디서든 뒤로가기가 홈으로 수렴
 - [x] **런처 아이콘 확대** (2026-09-01, 커밋 6e2807c): 어댑티브 포그라운드 엠블럼 60%→65% (런처 마스크 원의 90%→97% 채움, 테두리 링 비클리핑 최대치)
 - [x] **실기기 테스트용 릴리즈 APK** (2026-09-01): `flutter build apk --release --dart-define-from-file=env.json` — 바탕화면 `dongamate-main-<커밋>.apk`로 배포 중 (현재 6e2807c)
-- [x] **건물 영문명 48종** (2026-08-31): `parse_floor_guide.py`의 `EN_NAMES`(id 기준) 매핑으로 생성·누락 시 생성 실패 검증 — EN 모드에서 앱 전체(지도·목록·검색·강의실 검색) 영문 건물명 표기. ⚠️ Firestore 모드는 **시드 재업로드 필요**(mock은 즉시 반영)
+- [x] **건물 영문명 48종** (2026-08-31): `parse_floor_guide.py`의 `EN_NAMES`(id 기준) 매핑으로 생성·누락 시 생성 실패 검증 — EN 모드에서 앱 전체(지도·목록·검색·강의실 검색) 영문 건물명 표기. Firestore 서버에도 반영 완료(2026-09-10 시드 업로드)
+- [x] **학식 일러스트 교체** (2026-09-10, 커밋 03dea3a): 숟가락 2개 → 숟가락+젓가락 구성으로 직접 리터칭 (원본이 AI 생성 템플릿 크롭이라 소스 없음)
+- [x] **승우 가이드 추가 교정 5커밋 머지** (2026-09-10, `35a618f`~`e7d1441` fast-forward): ARC·체류연장·비자·외국인등록 시기·수강신청 최신 규정 반영 + 검증 테스트 추가 (테스트 74건)
+- [x] **홈 학사일정 카드 + 화면** (2026-09-10, 커밋 694a87c·bc3de56): 시설 카테고리 카드 제거(시설 목록은 지도 탭 유지) → 학사일정 카드(자체 제작 3D 달력 일러스트) + `/home/calendar` 화면. **현재 학년도(3월~익년 2월)만 표시**(타 연도 필터링, 전환 UI 없음 — 사용자 결정), 월별 그룹·날짜 칩·분류 배지(학사/수강/시험/휴일/졸업), ko/en
+- [x] **관리자 데이터 입력 파이프라인 구축·가동** (2026-09-10) → 섹션 13 참조
 
 ---
 
@@ -309,15 +313,15 @@
 
 홈 카드에서 진입하는 일별 학식 페이지 (`/home/dining`, 탭바 유지). 커밋 `1a90cd3`.
 
-### 11-1. 데이터 전략 — 학교 API 예정, 스펙 미정
+### 11-1. 데이터 전략 — ~~학교 API 예정~~ → 관리자 입력으로 전환 (2026-09-10)
 
-- 식단 데이터는 **학교 측 API로 수신 예정이나 스펙 미확정** (2026-08-31 기준)
-- `DiningRepository` 인터페이스(`getMenus(date)`) 뒤에 격리 — 화면·프로바이더는 인터페이스만 의존.
-  **스펙이 오면 `ApiDiningRepository` 구현체 추가 후 `repository_providers.dart`의
-  `diningRepositoryProvider` 한 줄 교체** (`TODO(dining-api)`, 기존 mock↔Firestore 스왑 패턴과 동일)
-- 그때까지 `MockDiningRepository`: 식당 3곳(승학·구덕·부민 학생식당, 임시), 날짜 기반 결정적 메뉴 순환,
-  주말 휴무. 식당명·영업시간·가격 전부 임시값 — API 데이터로 통째 교체 대상
-- `CafeteriaMenu`/`Meal` 엔티티에 `fromJson`/`toJson` 구비(API 응답 매핑 대비), 한/영 이름·영업시간 폴백 지원
+- ~~학교 측 API로 수신 예정~~ → **API 제공 불가 확정**. `FirestoreDiningRepository` 구현 완료,
+  데이터는 관리자가 Google Sheets로 입력 → Firestore `cafeterias`(정적)+`dining_menus`(일별) (섹션 13)
+- 인터페이스 격리 전략이 그대로 통함: `diningRepositoryProvider`가 `USE_FIRESTORE_DINING` 플래그로
+  mock↔Firestore 스왑 (mock은 개발 기본값 유지)
+- `DiningAvailability(open/closed/unpublished)` 추가 — **미등록≠휴무 구분** (미입력을 "휴무"로
+  잘못 안내하지 않음, 화면 문구 별도)
+- `CafeteriaMenu`/`Meal` 엔티티에 `fromJson`/`toJson` 구비, 한/영 이름·영업시간 폴백 지원
 
 ### 11-2. UI
 
@@ -328,8 +332,8 @@
 
 ### 11-3. 남은 것
 
-- [ ] 학교 식단 API 스펙 확보 → `ApiDiningRepository` 연동 (오프라인 캐싱 정책도 그때 결정)
-- [ ] 실제 식당 목록·영업시간·가격 반영 (API 또는 학교 자료)
+- [x] ~~학교 식단 API~~ → 관리자 입력 파이프라인으로 대체 완료 (섹션 13)
+- [ ] 실제 식당 영업시간·정보 확정 (현재 `cafeterias` 시드는 임시값 — 관리자/학교 자료로 갱신)
 
 ---
 
@@ -348,4 +352,43 @@
 
 - git 충돌은 `guide_flow_test.dart` 1곳 (양쪽이 같은 테스트 자리를 수정) — 브랜치 쪽 채택
 - 의미 충돌 3종 해소: ① 브랜치 테스트 44곳의 구 '가이드' 탭 내비게이션 → 새 홈 진입(`_openGuideHub`, ko 지원)으로 통일 ② 건물 영문명 도입으로 영어 로케일 assertion을 영문 건물명으로 교체 ③ 브랜치의 360dp 테스트가 새 홈 오버플로 버그를 적발 → 홈 UI 수정(앱바 워드마크 Flexible+FittedBox, 카드 설명 maxLines 3)
-- 검증: `analyze` 🟢 · `flutter test` 🟢 **72건** · exporter round-trip 🟢 (시드 재생성 — 서버 업로드는 미실행, 섹션 8 체크리스트 참조)
+- 검증: `analyze` 🟢 · `flutter test` 🟢 **72건** · exporter round-trip 🟢
+- 후속 (2026-09-10): 승우 추가 교정 5커밋(`35a618f`~`e7d1441`) fast-forward 머지 + **서버 업로드 완료** (섹션 8 체크리스트)
+
+---
+
+## 13. 관리자 데이터 입력 파이프라인 — 학사일정·학식 (2026-09-10 구축·가동)
+
+**배경**: 학사일정·학식 데이터의 학교 API 제공이 불가로 확정 → 비개발자 관리자가 직접 입력하는 구조 필요.
+**구조**: 관리자가 **Google Sheets**에 입력 → 시트의 **Apps Script**가 검증 후 **Firestore**에 게시 → 앱이 읽음.
+설계는 Claude 초안 → **Codex 교차 검토 → 2라운드 합의**(Orca 오케스트레이션)로 확정 — `_workspace/06_admin_data_pipeline.md` §7(확정 합의안) + `06_review_codex.md`(검토 기록).
+
+### 13-1. 구성 요소 (커밋 51c47e2·7698468·8432306·bc3de56·6a68df2)
+
+- **Firestore 컬렉션**: `academic_events`(문서 ID=불변 event_id) · `cafeterias`(식당 정적 정보) · `dining_menus`(`<식당>_<날짜>` 문서, `status: open/closed/unpublished` + meals) · `admin_sync_runs`(감사로그, 비공개)
+- **관리자 시트** (`tool/admin_sheets/`, 실제 생성·연동 완료): 템플릿 자동 생성(드롭다운·날짜 검증·헤더 보호·event_id 숨김 열), "동아메이트" 커스텀 메뉴에서 동기화
+  - 학사일정: 전 행 검증 통과 시에만 write+delete **단일 atomic commit**(시트 전체=최종 상태), 삭제 diff 확인 다이얼로그, 롤백은 시트 버전 기록
+  - 학식: (식당×날짜) 그룹 단위 문서 덮어쓰기, 그룹 내 한 행 오류 시 그 그룹만 실패, 게시취소=`unpublished` tombstone(삭제 아님)
+  - 엄격 enum allowlist·LockService 중복 실행 방지·행별 한국어 결과 표시·`admin_sync_runs` 기록
+  - 문서: `README.md`(개발자 설치) + `ADMIN_GUIDE.md`(비개발자용 안내)
+- **앱**: `FirestoreAcademicCalendarRepository` / `FirestoreDiningRepository` (캐시 폴백·오류 문서 격리·cafeterias 세션 캐시). 기능별 플래그 `USE_FIRESTORE_CALENDAR` / `USE_FIRESTORE_DINING`(기본 false, mock은 개발용 유지). 예시 배너는 mock 모드에서만 표시
+- **보안**: `firestore.rules` 신규 3컬렉션 공개 read·클라이언트 write 차단, `admin_sync_runs` 비공개(기본 deny) — 서버 배포 완료. 쓰기는 Apps Script OAuth(IAM) 경로만, **서비스 계정 키 미사용**
+- **키 정리**: 기존 `serviceAccount.json` 키 GCP에서 폐기 + 로컬 삭제. seed.mjs는 **ADC(gcloud) 키리스 인증**으로 전환, `.firebaserc` 추가
+
+### 13-2. 엔드투엔드 검증 완료 (2026-09-10)
+
+시트에 테스트 데이터 입력 → 동기화 → Firestore 문서·감사로그 스키마 확인 → 에뮬레이터 앱(`USE_FIRESTORE_*=true`)에서 실표시 확인:
+학사일정 1건 + 승학 중식 메뉴 표시, 구덕·부민은 "식단 미등록" 문구(휴무와 구분). `analyze` 🟢 · `flutter test` 🟢 **78건**
+
+### 13-3. 운영 절차 (관리자)
+
+1. 시트 입력 (드롭다운·날짜 형식, `ADMIN_GUIDE.md` 참조) → "동아메이트 → 동기화" 클릭이 전부
+2. 학사일정은 **연 1회 새 학년도 일정 입력** (앱은 현재 학년도만 표시하므로 3/1부터 자동 전환, 지난 행 정리는 여유 있을 때)
+3. 학식은 주간 단위로 입력 (지난주 블록 복사 → 날짜 수정이 편한 흐름)
+
+### 13-4. 남은 것
+
+- [ ] 시트의 테스트 데이터 정리 (학사일정 테스트 행 삭제 후 동기화, 학식 테스트 행 상태를 '게시취소'로)
+- [ ] 비개발자 관리자 계정 지정 → IAM 부여 (`Cloud Datastore User`, 시트 공유)
+- [ ] 실배포 빌드에 `USE_FIRESTORE=true USE_FIRESTORE_CALENDAR=true USE_FIRESTORE_DINING=true` 적용
+- [ ] (후순위) 운영자 확대 시 Cloud Functions 프록시 검토, rules emulator 테스트 자동화
