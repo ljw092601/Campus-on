@@ -36,7 +36,12 @@ class FirestoreDiningRepository implements DiningRepository {
       '${d.day.toString().padLeft(2, '0')}';
 
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> _cafeterias() {
-    return _cafeteriasFuture ??= _loadCafeterias().catchError((Object e) {
+    return _cafeteriasFuture ??= _loadCafeterias().then((docs) {
+      // An empty cafeterias collection is almost certainly "not seeded yet";
+      // don't pin it for the whole session — retry on the next request.
+      if (docs.isEmpty) _cafeteriasFuture = null;
+      return docs;
+    }).catchError((Object e) {
       _cafeteriasFuture = null; // retry next call instead of caching failure
       throw e;
     });

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/config/firebase_init.dart' show useFirestoreCalendar;
 import '../../domain/entities/academic_event.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/academic_calendar_providers.dart';
@@ -45,7 +46,10 @@ class AcademicCalendarScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
-              _NoticeBanner(text: l.calendar_placeholder_notice),
+              // Sample-data disclaimer is for mock mode only; Firestore mode
+              // shows real admin-entered schedule.
+              if (!useFirestoreCalendar)
+                _NoticeBanner(text: l.calendar_placeholder_notice),
               for (final entry in months.entries) ...[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 18, 4, 8),

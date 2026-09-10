@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/config/firebase_init.dart' show useFirestoreDining;
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -73,8 +74,12 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen> {
               data: (menus) => ListView(
                 padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
                 children: [
-                  _NoticeBanner(text: l.dining_placeholder_notice),
-                  const SizedBox(height: 12),
+                  // The sample-data disclaimer only applies to mock data; in
+                  // Firestore mode the menus are real admin-entered content.
+                  if (!useFirestoreDining) ...[
+                    _NoticeBanner(text: l.dining_placeholder_notice),
+                    const SizedBox(height: 12),
+                  ],
                   for (final c in menus) ...[
                     _CafeteriaCard(menu: c),
                     const SizedBox(height: 12),
