@@ -7,10 +7,12 @@ import '../../data/firestore/firestore_facility_repository.dart';
 import '../../data/firestore/firestore_floor_guide_repository.dart';
 import '../../data/firestore/firestore_guide_repository.dart';
 import '../../data/repositories/local_favorites_repository.dart';
+import '../../data/repositories/mock_academic_calendar_repository.dart';
 import '../../data/repositories/mock_dining_repository.dart';
 import '../../data/repositories/mock_facility_repository.dart';
 import '../../data/repositories/mock_floor_guide_repository.dart';
 import '../../data/repositories/mock_guide_repository.dart';
+import '../../domain/repositories/academic_calendar_repository.dart';
 import '../../domain/repositories/dining_repository.dart';
 import '../../domain/repositories/facility_repository.dart';
 import '../../domain/repositories/favorites_repository.dart';
@@ -57,4 +59,11 @@ final favoritesRepositoryProvider = Provider<FavoritesRepository>(
 /// (screens/providers stay untouched).
 final diningRepositoryProvider = Provider<DiningRepository>(
   (ref) => MockDiningRepository(),
+);
+
+/// Academic calendar — mock only for now. TODO(calendar-data): when the
+/// official Dong-A 학사일정 source is confirmed, add a real implementation and
+/// swap here (screens/providers stay untouched).
+final academicCalendarRepositoryProvider = Provider<AcademicCalendarRepository>(
+  (ref) => MockAcademicCalendarRepository(),
 );

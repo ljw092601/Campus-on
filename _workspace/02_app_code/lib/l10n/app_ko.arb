@@ -22,7 +22,6 @@
   "home_searchBar_hint": "시설·행정 검색",
   "home_mapBanner_title": "캠퍼스 지도 보기",
   "home_mapBanner_subtitle": "가까운 시설 찾기",
-  "home_section_facilityCategory": "시설 카테고리",
   "home_section_guide": "행정 가이드",
   "home_empty_noFacility": "표시할 시설 정보가 아직 없어요.",
 
@@ -31,7 +30,8 @@
   "home_hero_title_suffix": "을 응원합니다!",
   "home_hero_subtitle": "국제학생을 위한 필수 정보와 서비스를\n한국에서 쉽고 빠르게 확인하세요.",
   "home_card_guide_desc": "입국·비자, 등록, 증명서 발급 등 행정 안내를 확인하세요.",
-  "home_card_facility_desc": "식당, 편의시설, 도서관 등 캠퍼스 시설 정보를 확인하세요.",
+  "home_card_calendar_title": "학사일정",
+  "home_card_calendar_desc": "수강신청, 시험, 방학 등 학기 주요 일정을 확인하세요.",
   "home_card_map_title": "캠퍼스 지도",
   "home_card_map_desc": "캠퍼스 지도에서 건물과 주요 위치를 확인하세요.",
   "home_card_dining_title": "오늘의 학식",
@@ -57,6 +57,14 @@
   "dining_prevDay": "이전 날짜",
   "dining_nextDay": "다음 날짜",
   "dining_error_loadFailed": "식단을 불러오지 못했어요.",
+
+  "calendar_placeholder_notice": "지금은 예시 일정이에요. 학교 공식 학사일정 확정 후 실제 일정이 표시됩니다.",
+  "calendar_error_loadFailed": "학사일정을 불러오지 못했어요.",
+  "calendar_cat_semester": "학사",
+  "calendar_cat_registration": "수강",
+  "calendar_cat_exam": "시험",
+  "calendar_cat_holiday": "휴일",
+  "calendar_cat_graduation": "졸업",
 
   "facility_category_building": "건물",
   "facility_category_classroom": "강의실",

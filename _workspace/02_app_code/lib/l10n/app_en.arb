@@ -23,7 +23,6 @@
   "home_searchBar_hint": "Search facilities & admin",
   "home_mapBanner_title": "Open campus map",
   "home_mapBanner_subtitle": "Find nearby facilities",
-  "home_section_facilityCategory": "Facility categories",
   "home_section_guide": "Admin guide",
   "home_empty_noFacility": "No facility info yet.",
 
@@ -32,7 +31,8 @@
   "home_hero_title_suffix": "!",
   "home_hero_subtitle": "Essential info and services for international students,\nquick and easy in Korea.",
   "home_card_guide_desc": "Entry & visa, enrollment, certificates — all the admin how-tos.",
-  "home_card_facility_desc": "Dining, amenities, library — browse campus facility info.",
+  "home_card_calendar_title": "Academic calendar",
+  "home_card_calendar_desc": "Key semester dates — course registration, exams, breaks.",
   "home_card_map_title": "Campus map",
   "home_card_map_desc": "Find buildings and key spots on the campus map.",
   "home_card_dining_title": "Today's menu",
@@ -58,6 +58,14 @@
   "dining_prevDay": "Previous day",
   "dining_nextDay": "Next day",
   "dining_error_loadFailed": "Couldn't load the menus.",
+
+  "calendar_placeholder_notice": "Sample dates for now — the official academic calendar will appear once confirmed.",
+  "calendar_error_loadFailed": "Couldn't load the academic calendar.",
+  "calendar_cat_semester": "Semester",
+  "calendar_cat_registration": "Courses",
+  "calendar_cat_exam": "Exams",
+  "calendar_cat_holiday": "Holiday",
+  "calendar_cat_graduation": "Graduation",
 
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",

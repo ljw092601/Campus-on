@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/admin_guide.dart';
+import '../../presentation/calendar/academic_calendar_screen.dart';
 import '../../presentation/classroom/classroom_search_screen.dart';
 import '../../presentation/dining/dining_menu_screen.dart';
 import '../../presentation/facility/facility_detail_screen.dart';
@@ -65,6 +66,11 @@ class AppRouter {
                   GoRoute(
                     path: 'dining',
                     builder: (context, state) => const DiningMenuScreen(),
+                  ),
+                  GoRoute(
+                    path: 'calendar',
+                    builder: (context, state) =>
+                        const AcademicCalendarScreen(),
                   ),
                   GoRoute(
                     path: 'guide',

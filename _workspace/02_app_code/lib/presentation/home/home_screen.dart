@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../l10n/gen/app_localizations.dart';
-import '../providers/facility_providers.dart';
 import '../providers/locale_provider.dart';
 
 /// S1 — Home hub, restyled after design_template.png: navy hero banner with
@@ -247,13 +246,10 @@ class _FeatureGrid extends ConsumerWidget {
         onTap: () => context.go('/guide'),
       ),
       _FeatureCardData(
-        title: l.home_section_facilityCategory,
-        description: l.home_card_facility_desc,
-        asset: 'assets/home/illu_facility.png',
-        onTap: () {
-          ref.read(facilityCategoryFilterProvider.notifier).state = null;
-          context.go('/map/list');
-        },
+        title: l.home_card_calendar_title,
+        description: l.home_card_calendar_desc,
+        asset: 'assets/home/illu_calendar.png',
+        onTap: () => context.go('/home/calendar'),
       ),
       _FeatureCardData(
         title: l.home_card_map_title,
