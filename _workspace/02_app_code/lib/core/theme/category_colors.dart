@@ -41,13 +41,15 @@ class CategoryColors extends ThemeExtension<CategoryColors> {
   final Color emergency;
 
   /// Values are identical in light/dark per UX doc (single accent per category).
+  /// Facility colors are sampled from the map pin PNGs (assets/markers/,
+  /// replaced 2026-09-10) so filter chips / list icons match the pins.
   static const CategoryColors standard = CategoryColors(
-    building: Color(0xFF5B6BC0),
-    classroom: Color(0xFF00897B),
-    dining: Color(0xFFEF6C00),
-    library: Color(0xFF6A1B9A),
-    amenity: Color(0xFF00838F),
-    etc: Color(0xFF607D8B),
+    building: Color(0xFF7F77DD),
+    classroom: Color(0xFF378ADD),
+    dining: Color(0xFFD85A30),
+    library: Color(0xFF1D9E75),
+    amenity: Color(0xFFBA7517),
+    etc: Color(0xFF5F5E5A),
     immigration: Color(0xFF1565C0),
     housing: Color(0xFF5B6BC0),
     living: Color(0xFF00838F),
