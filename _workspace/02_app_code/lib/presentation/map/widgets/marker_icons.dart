@@ -14,11 +14,12 @@ class CategoryMarkerIcons {
   static Map<FacilityCategory, kakao.MarkerIcon>? _cache;
   static Future<Map<FacilityCategory, kakao.MarkerIcon>>? _inFlight;
 
-  /// Pin image is 48×60; anchor the tip (bottom-center) to the coordinate.
-  static const int width = 40;
-  static const int height = 50;
-  static const int offsetX = 20;
-  static const int offsetY = 50;
+  /// Pin PNGs are 68×84 (0.81 aspect); rendered smaller so dense campus
+  /// clusters stay readable. Anchor the tip (bottom-center) on the coordinate.
+  static const int width = 32;
+  static const int height = 40;
+  static const int offsetX = 16;
+  static const int offsetY = 40;
 
   static Future<Map<FacilityCategory, kakao.MarkerIcon>> load() {
     final cached = _cache;
