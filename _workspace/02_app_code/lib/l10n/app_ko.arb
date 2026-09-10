@@ -49,6 +49,7 @@
   "dining_meal_lunch": "중식",
   "dining_meal_dinner": "석식",
   "dining_closed": "오늘은 운영하지 않아요.",
+  "dining_unpublished": "오늘 식단이 아직 등록되지 않았어요.",
   "dining_price": "{price}원",
   "@dining_price": {
     "placeholders": { "price": { "type": "int" } }

@@ -1,0 +1,94 @@
+{
+  "fall-registration": {
+    "title_ko": "2학기 수강신청",
+    "title_en": "Fall course registration",
+    "category": "registration",
+    "start": "2026-08-10",
+    "end": "2026-08-14"
+  },
+  "fall-semester-start": {
+    "title_ko": "2학기 개강",
+    "title_en": "Fall semester begins",
+    "category": "semester",
+    "start": "2026-09-01"
+  },
+  "fall-add-drop": {
+    "title_ko": "수강신청 정정",
+    "title_en": "Course add/drop period",
+    "category": "registration",
+    "start": "2026-09-01",
+    "end": "2026-09-07"
+  },
+  "chuseok": {
+    "title_ko": "추석 연휴",
+    "title_en": "Chuseok holiday",
+    "category": "holiday",
+    "start": "2026-09-24",
+    "end": "2026-09-26"
+  },
+  "foundation-day": {
+    "title_ko": "개천절",
+    "title_en": "National Foundation Day",
+    "category": "holiday",
+    "start": "2026-10-03"
+  },
+  "hangul-day": {
+    "title_ko": "한글날",
+    "title_en": "Hangul Day",
+    "category": "holiday",
+    "start": "2026-10-09"
+  },
+  "midterm-exams": {
+    "title_ko": "중간시험",
+    "title_en": "Midterm exams",
+    "category": "exam",
+    "start": "2026-10-20",
+    "end": "2026-10-26"
+  },
+  "course-withdrawal": {
+    "title_ko": "수강 철회",
+    "title_en": "Course withdrawal period",
+    "category": "registration",
+    "start": "2026-11-02",
+    "end": "2026-11-06"
+  },
+  "final-exams": {
+    "title_ko": "기말시험",
+    "title_en": "Final exams",
+    "category": "exam",
+    "start": "2026-12-08",
+    "end": "2026-12-14"
+  },
+  "winter-break": {
+    "title_ko": "겨울방학 시작",
+    "title_en": "Winter break begins",
+    "category": "semester",
+    "start": "2026-12-15"
+  },
+  "winter-session": {
+    "title_ko": "겨울 계절수업",
+    "title_en": "Winter session",
+    "category": "semester",
+    "start": "2026-12-21",
+    "end": "2027-01-13"
+  },
+  "spring-registration": {
+    "title_ko": "1학기 수강신청",
+    "title_en": "Spring course registration",
+    "category": "registration",
+    "start": "2027-02-08",
+    "end": "2027-02-12"
+  },
+  "winter-commencement": {
+    "title_ko": "학위수여식",
+    "title_en": "Commencement",
+    "category": "graduation",
+    "start": "2027-02-19"
+  },
+  "spring-semester-start": {
+    "title_ko": "1학기 개강",
+    "title_en": "Spring semester begins",
+    "category": "semester",
+    "start": "2027-03-02"
+  }
+}

@@ -16,11 +16,18 @@ Seed the two public collections used by Campus-On:
 > `--prune` deletes docs that are no longer in the seed (used when the fake
 > week-2 fixtures were replaced by the 48 real buildings).
 
-| Collection        | Source file                  | Doc id  |
-|-------------------|------------------------------|---------|
-| `facilities`      | `facilities.seed.json`       | the JSON key (e.g. `s10`)       |
-| `guide_items`     | `guide_items.seed.json`      | the JSON key (e.g. `arc-issue`) |
-| `building_floors` | `building_floors.seed.json`  | the owning facility id (e.g. `s02`) |
+| Collection        | Source file                  | Doc id  | Prune |
+|-------------------|------------------------------|---------|-------|
+| `facilities`      | `facilities.seed.json`       | the JSON key (e.g. `s10`)       | yes |
+| `guide_items`     | `guide_items.seed.json`      | the JSON key (e.g. `arc-issue`) | yes |
+| `building_floors` | `building_floors.seed.json`  | the owning facility id (e.g. `s02`) | yes |
+| `academic_events` | `academic_events.seed.json`  | immutable event id | **never** |
+| `cafeterias`      | `cafeterias.seed.json`       | cafeteria id (e.g. `seunghak-student`) | **never** |
+
+`academic_events` / `cafeterias` are ONE-TIME starters: after that they are
+owned by the admin sheet sync (`tool/admin_sheets/`), so `--prune` skips them
+by design (see `_workspace/06_admin_data_pipeline.md` §7). `dining_menus` is
+never seeded here at all — it is daily operational data.
 
 Each JSON is `{ "<docId>": { ...fields }, ... }`. Field names match the app
 entities' `fromJson` exactly (`name_ko`, `hours_en`, `categoryId`, `relatedFacilityIds`, …).
@@ -30,11 +37,15 @@ entities' `fromJson` exactly (`name_ko`, `hours_en`, `categoryId`, `relatedFacil
 ```bash
 cd tool/firestore_seed
 npm init -y && npm install firebase-admin
-# Firebase console → Project settings → Service accounts → Generate new private
-# key → save as serviceAccount.json here.  ⚠️ DO NOT COMMIT this file.
+# Keyless auth (agreed policy — no service-account JSON keys):
+gcloud auth application-default login
+# If the project isn't inferred: set GOOGLE_CLOUD_PROJECT=<firebase-project-id>
 node seed.mjs                 # merge/upsert — safe to re-run
 node seed.mjs --overwrite     # full replace of each doc
 ```
+
+A leftover `serviceAccount.json` still works as a fallback but prints a
+warning: revoke that key in GCP IAM and delete the file (design doc §7).
 
 The Admin SDK runs server-side and bypasses `firestore.rules`, so client writes
 stay blocked while you can still seed.

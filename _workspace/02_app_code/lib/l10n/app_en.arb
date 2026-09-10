@@ -50,6 +50,7 @@
   "dining_meal_lunch": "Lunch",
   "dining_meal_dinner": "Dinner",
   "dining_closed": "Closed today.",
+  "dining_unpublished": "Today's menu hasn't been posted yet.",
   "dining_price": "₩{price}",
   "@dining_price": {
     "placeholders": { "price": { "type": "int" } }

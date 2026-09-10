@@ -194,7 +194,16 @@ class _CafeteriaCard extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 10),
-            if (menu.isClosed)
+            // Unpublished (admin hasn't entered the menu) is NOT the same as
+            // an explicit closure — see design doc §7 D1.
+            if (menu.isUnpublished)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(l.dining_unpublished,
+                    style: TextStyle(
+                        fontSize: 13.5, color: scheme.onSurfaceVariant)),
+              )
+            else if (menu.isClosed)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(l.dining_closed,

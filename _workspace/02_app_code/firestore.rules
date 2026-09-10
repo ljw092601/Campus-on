@@ -31,6 +31,26 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Admin-entered content (design doc _workspace/06_admin_data_pipeline.md
+    // §7): written only by the admin sheet sync via the Firestore REST API
+    // with IAM auth, which bypasses these rules. Clients read-only.
+    match /academic_events/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /cafeterias/{cafeteriaId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /dining_menus/{menuId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Sync audit log (admin_sync_runs) stays private: it may carry editor
+    // identities and error details. Covered by the default deny below —
+    // do NOT add a public read rule for it.
+
     // Default deny for any collection not listed above.
     match /{document=**} {
       allow read, write: if false;
