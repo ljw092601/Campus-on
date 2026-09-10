@@ -20,10 +20,13 @@ class FirestoreGuideRepository implements GuideRepository {
   CollectionReference<Map<String, dynamic>> get _col =>
       _db.collection(FirestorePaths.guideItems);
 
+  /// A malformed document is skipped (logged) instead of failing the whole
+  /// list — same policy as `FirestoreAcademicCalendarRepository`.
   Future<List<AdminGuideItem>> _loadAll() async {
     try {
       final snap = await _col.get();
-      return snap.docs.map(guideFromDoc).toList(growable: false);
+      return mapDocsSkippingMalformed(
+          snap.docs, FirestorePaths.guideItems, guideFromDoc);
     } on FirebaseException catch (e) {
       final cached = await _tryCacheAll();
       if (cached != null) return cached;
@@ -35,7 +38,8 @@ class FirestoreGuideRepository implements GuideRepository {
     try {
       final snap = await _col.get(const GetOptions(source: Source.cache));
       if (snap.docs.isEmpty) return null;
-      return snap.docs.map(guideFromDoc).toList(growable: false);
+      return mapDocsSkippingMalformed(
+          snap.docs, FirestorePaths.guideItems, guideFromDoc);
     } on FirebaseException {
       return null;
     }

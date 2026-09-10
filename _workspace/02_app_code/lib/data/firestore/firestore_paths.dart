@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show debugPrint, visibleForTesting;
 
 import '../../domain/entities/academic_event.dart';
 import '../../domain/entities/admin_guide.dart';
@@ -53,6 +54,26 @@ Map<String, dynamic> _normalize(
   return data;
 }
 
+/// Maps [docs] to entities, skipping (and logging) any document whose mapping
+/// throws — one malformed admin write must not blank the whole list. Same
+/// policy as `FirestoreAcademicCalendarRepository`'s per-document skip;
+/// [collection] only labels the log line.
+List<T> mapDocsSkippingMalformed<T>(
+  Iterable<DocumentSnapshot<Map<String, dynamic>>> docs,
+  String collection,
+  T Function(DocumentSnapshot<Map<String, dynamic>>) fromDoc,
+) {
+  final out = <T>[];
+  for (final doc in docs) {
+    try {
+      out.add(fromDoc(doc));
+    } catch (e) {
+      debugPrint('$collection/${doc.id}: skipped malformed doc ($e)');
+    }
+  }
+  return out;
+}
+
 Facility facilityFromDoc(DocumentSnapshot<Map<String, dynamic>> doc) =>
     Facility.fromJson(_normalize(doc));
 
@@ -69,21 +90,42 @@ AcademicEvent academicEventFromDoc(
         DocumentSnapshot<Map<String, dynamic>> doc) =>
     AcademicEvent.fromJson(_normalize(doc));
 
+/// Coerces a raw `status` field to one of the three values the design doc §7
+/// allows (`open`/`closed`/`unpublished`). Anything else — missing, a typo,
+/// a wrong type — becomes `unpublished`: an admin's broken input must never
+/// read as "open", nor fall through to the entity's legacy empty-meals==closed
+/// rule and get announced as a closure (D1). Firestore-adapter-only: the
+/// legacy fallback in [CafeteriaMenu.status] stays as-is for mock data.
+@visibleForTesting
+String normalizeDiningStatus(Object? raw) =>
+    raw == 'open' || raw == 'closed' || raw == 'unpublished'
+        ? raw as String
+        : 'unpublished';
+
 /// Joins one static cafeteria doc with that day's optional menu doc
 /// (design doc §7): no menu doc → `unpublished` with no meals; a doc carries
 /// `status` (open/closed/unpublished) and, when open, the `meals` array.
 CafeteriaMenu cafeteriaMenuFromDocs(
   DocumentSnapshot<Map<String, dynamic>> cafeteriaDoc,
   Map<String, dynamic>? menuData,
+) =>
+    cafeteriaMenuFromData(_normalize(cafeteriaDoc), menuData);
+
+/// Pure core of [cafeteriaMenuFromDocs]: [cafeteria] is the already-normalized
+/// cafeteria map (doc id injected as `id`). Split out so the join + status
+/// normalization are unit-testable without a Firestore instance.
+@visibleForTesting
+CafeteriaMenu cafeteriaMenuFromData(
+  Map<String, dynamic> cafeteria,
+  Map<String, dynamic>? menuData,
 ) {
-  final base = _normalize(cafeteriaDoc);
   if (menuData == null) {
     return CafeteriaMenu.fromJson(
-        {...base, 'meals': const [], 'status': 'unpublished'});
+        {...cafeteria, 'meals': const [], 'status': 'unpublished'});
   }
   return CafeteriaMenu.fromJson({
-    ...base,
+    ...cafeteria,
     'meals': menuData['meals'] ?? const [],
-    'status': menuData['status'] ?? 'open',
+    'status': normalizeDiningStatus(menuData['status']),
   });
 }

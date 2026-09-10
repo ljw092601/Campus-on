@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
@@ -93,10 +94,31 @@ class FirestoreDiningRepository implements DiningRepository {
           doc.data()['cafeteriaId'] as String: doc.data(),
     };
 
-    final menus = [
-      for (final doc in cafeterias)
-        cafeteriaMenuFromDocs(doc, menuByCafeteria[doc.id]),
-    ];
+    // Per-document malformed isolation (same policy as
+    // `FirestoreAcademicCalendarRepository`): one broken doc must not blank
+    // the other cafeteria cards. If the join fails with a menu doc present,
+    // retry cafeteria-only — the menu doc may be the malformed half, and the
+    // card should degrade to `unpublished` (D1) rather than disappear.
+    final menus = <CafeteriaMenu>[];
+    for (final doc in cafeterias) {
+      final menuData = menuByCafeteria[doc.id];
+      try {
+        menus.add(cafeteriaMenuFromDocs(doc, menuData));
+      } catch (e) {
+        if (menuData != null) {
+          try {
+            menus.add(cafeteriaMenuFromDocs(doc, null));
+            debugPrint('${FirestorePaths.diningMenus}/${doc.id}_$ymd: '
+                'skipped malformed menu doc ($e)');
+            continue;
+          } catch (_) {
+            // cafeteria doc itself is malformed — fall through to skip it
+          }
+        }
+        debugPrint('${FirestorePaths.cafeterias}/${doc.id}: '
+            'skipped malformed doc ($e)');
+      }
+    }
     menus.sort((a, b) {
       final ca = _campusOrder[a.campus] ?? 9;
       final cb = _campusOrder[b.campus] ?? 9;

@@ -28,10 +28,13 @@ class FirestoreFacilityRepository implements FacilityRepository {
   /// Loads the whole (campus-scale, small) collection once. `getByIds`/`search`
   /// filter over this in memory — one query, cache-friendly, matches the UX
   /// decision to keep search client-side and minimize Firestore reads.
+  /// A malformed document is skipped (logged) instead of failing the whole
+  /// list — same policy as `FirestoreAcademicCalendarRepository`.
   Future<List<Facility>> _loadAll() async {
     try {
       final snap = await _col.get();
-      return snap.docs.map(facilityFromDoc).toList(growable: false);
+      return mapDocsSkippingMalformed(
+          snap.docs, FirestorePaths.facilities, facilityFromDoc);
     } on FirebaseException catch (e) {
       final cached = await _tryCacheAll();
       if (cached != null) return cached;
@@ -43,7 +46,8 @@ class FirestoreFacilityRepository implements FacilityRepository {
     try {
       final snap = await _col.get(const GetOptions(source: Source.cache));
       if (snap.docs.isEmpty) return null;
-      return snap.docs.map(facilityFromDoc).toList(growable: false);
+      return mapDocsSkippingMalformed(
+          snap.docs, FirestorePaths.facilities, facilityFromDoc);
     } on FirebaseException {
       return null;
     }

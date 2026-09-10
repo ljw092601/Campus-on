@@ -86,6 +86,7 @@ class _LangToggle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
     final isKo = locale.languageCode == 'ko';
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -99,14 +100,20 @@ class _LangToggle extends ConsumerWidget {
           color: on ? active : inactive,
         );
 
-    return TextButton(
-      onPressed: () => ref.read(localeProvider.notifier).toggle(),
-      child: Text.rich(
-        TextSpan(children: [
-          TextSpan(text: 'KO', style: st(isKo)),
-          TextSpan(text: '  |  ', style: st(false)),
-          TextSpan(text: 'EN', style: st(!isKo)),
-        ]),
+    // The styled "KO | EN" spans mean nothing to a screen reader, so expose
+    // the control as a button labeled with the language-setting title.
+    return Semantics(
+      button: true,
+      label: l.settings_language_title,
+      child: TextButton(
+        onPressed: () => ref.read(localeProvider.notifier).toggle(),
+        child: Text.rich(
+          TextSpan(children: [
+            TextSpan(text: 'KO', style: st(isKo)),
+            TextSpan(text: '  |  ', style: st(false)),
+            TextSpan(text: 'EN', style: st(!isKo)),
+          ]),
+        ),
       ),
     );
   }

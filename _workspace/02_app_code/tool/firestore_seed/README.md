@@ -21,13 +21,15 @@ Seed the two public collections used by Campus-On:
 | `facilities`      | `facilities.seed.json`       | the JSON key (e.g. `s10`)       | yes |
 | `guide_items`     | `guide_items.seed.json`      | the JSON key (e.g. `arc-issue`) | yes |
 | `building_floors` | `building_floors.seed.json`  | the owning facility id (e.g. `s02`) | yes |
-| `academic_events` | `academic_events.seed.json`  | immutable event id | **never** |
+| `academic_events` | `academic_events.seed.json` — **schema doc only, `seed.mjs` does not upload it** (admin-sheet owned) | immutable event id | n/a (never seeded) |
 | `cafeterias`      | `cafeterias.seed.json`       | cafeteria id (e.g. `seunghak-student`) | **never** |
 
-`academic_events` / `cafeterias` are ONE-TIME starters: after that they are
-owned by the admin sheet sync (`tool/admin_sheets/`), so `--prune` skips them
-by design (see `_workspace/06_admin_data_pipeline.md` §7). `dining_menus` is
-never seeded here at all — it is daily operational data.
+`cafeterias` is a ONE-TIME starter: after the first upload it is owned by the
+admin sheet sync (`tool/admin_sheets/`), so `--prune` skips it by design (see
+`_workspace/06_admin_data_pipeline.md` §7). `academic_events` is admin-sheet
+owned from the start — its seed JSON is kept only as schema documentation and
+`seed.mjs` never uploads the collection (excluded since commit `6a68df2`).
+`dining_menus` is never seeded here at all — it is daily operational data.
 
 Each JSON is `{ "<docId>": { ...fields }, ... }`. Field names match the app
 entities' `fromJson` exactly (`name_ko`, `hours_en`, `categoryId`, `relatedFacilityIds`, …).

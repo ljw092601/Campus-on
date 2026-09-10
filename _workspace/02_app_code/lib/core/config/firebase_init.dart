@@ -33,10 +33,13 @@ const bool anyFirestoreEnabled =
 /// at least one Firestore flag is on. When all are off this is a no-op, so
 /// `main()` never touches Firebase and the app boots on mock data.
 ///
-/// Requires real config from `flutterfire configure` (writes `firebase_options.dart`
-/// + `google-services.json` / `GoogleService-Info.plist`). The committed
-/// `firebase_options.dart` is a placeholder; running with `USE_FIRESTORE=true`
-/// against placeholders will fail fast at init (by design — no silent bad state).
+/// Config comes from `flutterfire configure`: the committed
+/// `firebase_options.dart` carries the REAL `campus-f4748` options (Firebase
+/// app config is public by design — access control is `firestore.rules`'
+/// job), while `google-services.json` / `GoogleService-Info.plist` are
+/// gitignored, so a fresh checkout must re-fetch them before building.
+/// Careful: turning any flag on connects the app to the production Firestore
+/// of `campus-f4748`.
 Future<void> initFirebaseIfEnabled() async {
   if (!anyFirestoreEnabled) return;
 

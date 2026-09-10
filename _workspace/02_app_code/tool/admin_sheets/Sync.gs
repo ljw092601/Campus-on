@@ -8,6 +8,19 @@ function syncDiningMenus() {
 
 function runWithLock_(kind, operation) {
   const ui = SpreadsheetApp.getUi();
+  // Dates are grouped/formatted in CONFIG.timeZone; a mismatched spreadsheet
+  // time zone would shift every date, so publishing is blocked until it is fixed.
+  const spreadsheetTimeZone = SpreadsheetApp.getActive().getSpreadsheetTimeZone();
+  if (spreadsheetTimeZone !== CONFIG.timeZone) {
+    ui.alert(
+      '타임존 불일치',
+      `스프레드시트 타임존(${spreadsheetTimeZone})이 '${CONFIG.timeZone}'과 다릅니다.\n` +
+      '날짜가 밀려 저장될 수 있어 게시를 중단합니다.\n' +
+      "'동아메이트 > 시트 템플릿 만들기/정비'를 실행해 타임존을 맞춘 뒤 다시 시도하세요.",
+      ui.ButtonSet.OK,
+    );
+    return;
+  }
   const lock = LockService.getDocumentLock();
   if (!lock.tryLock(1000)) {
     ui.alert('동기화 중', '다른 관리자가 이미 동기화하고 있습니다. 잠시 후 다시 시도하세요.', ui.ButtonSet.OK);
@@ -41,36 +54,38 @@ function syncAcademicEventsLocked_(run) {
     return;
   }
 
-  const existingIds = listDocumentIds_(CONFIG.collections.academicEvents);
+  const existingDocs = listDocumentSummaries_(CONFIG.collections.academicEvents);
   const desiredIds = new Set(parsed.rows.map(row => row.id));
-  const staleIds = existingIds.filter(id => !desiredIds.has(id));
-  if (staleIds.length && !confirmAcademicDeletes_(ui, staleIds)) {
+  const staleDocs = existingDocs.filter(doc => !desiredIds.has(doc.id));
+  if (staleDocs.length && !confirmAcademicDeletes_(ui, staleDocs)) {
     parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, 6, '⏸ 삭제 확인에서 취소됨', false));
-    finishRun_(run, 'cancelled', { input: parsed.rows.length, deleted: 0 }, [`삭제 예정 ${staleIds.length}건을 사용자가 취소함`]);
+    finishRun_(run, 'cancelled', { input: parsed.rows.length, deleted: 0 }, [`삭제 예정 ${staleDocs.length}건을 사용자가 취소함`]);
     return;
   }
 
   const writes = parsed.rows.map(row => updateWrite_(CONFIG.collections.academicEvents, row.id, row.data));
-  staleIds.forEach(id => writes.push(deleteWrite_(CONFIG.collections.academicEvents, id)));
+  staleDocs.forEach(doc => writes.push(deleteWrite_(CONFIG.collections.academicEvents, doc.id)));
   if (writes.length > CONFIG.maxCommitWrites) {
-    throw new Error(`게시 ${parsed.rows.length}건 + 삭제 ${staleIds.length}건이 atomic commit 한도 ${CONFIG.maxCommitWrites}건을 넘습니다.`);
+    throw new Error(`게시 ${parsed.rows.length}건 + 삭제 ${staleDocs.length}건이 atomic commit 한도 ${CONFIG.maxCommitWrites}건을 넘습니다.`);
   }
   commitWrites_(writes);
   parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, 6, '✅ 동기화됨', false));
   finishRun_(run, 'succeeded', {
     input: parsed.rows.length,
     success: parsed.rows.length,
-    deleted: staleIds.length,
+    deleted: staleDocs.length,
   }, []);
-  ui.alert('학사일정 동기화 완료', `게시 ${parsed.rows.length}건, 삭제 ${staleIds.length}건을 하나의 atomic commit으로 반영했습니다.`, ui.ButtonSet.OK);
+  ui.alert('학사일정 동기화 완료', `게시 ${parsed.rows.length}건, 삭제 ${staleDocs.length}건을 하나의 atomic commit으로 반영했습니다.`, ui.ButtonSet.OK);
 }
 
-function confirmAcademicDeletes_(ui, staleIds) {
-  const preview = staleIds.slice(0, 20).map(id => `• ${id}`).join('\n');
-  const omitted = staleIds.length > 20 ? `\n… 외 ${staleIds.length - 20}건` : '';
+function confirmAcademicDeletes_(ui, staleDocs) {
+  const preview = staleDocs.slice(0, 20)
+    .map(doc => `• ${doc.title_ko || '(제목 없음)'} (${doc.start || '날짜 없음'}) [${doc.id.substring(0, 8)}]`)
+    .join('\n');
+  const omitted = staleDocs.length > 20 ? `\n… 외 ${staleDocs.length - 20}건` : '';
   const response = ui.alert(
     '삭제 예정 문서 확인',
-    `시트에 없는 기존 학사일정 ${staleIds.length}건을 삭제합니다.\n\n${preview}${omitted}\n\n계속하시겠습니까?`,
+    `시트에 없는 기존 학사일정 ${staleDocs.length}건을 삭제합니다.\n\n${preview}${omitted}\n\n계속하시겠습니까?`,
     ui.ButtonSet.YES_NO,
   );
   return response === ui.Button.YES;

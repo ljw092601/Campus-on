@@ -6,17 +6,26 @@ function documentName_(collection, id) {
   return `projects/${CONFIG.projectId}/databases/${CONFIG.databaseId}/documents/${collection}/${id}`;
 }
 
-function listDocumentIds_(collection) {
-  const ids = [];
+// Returns { id, title_ko, start } per document so delete confirmations can show
+// a human-readable summary instead of bare ids.
+function listDocumentSummaries_(collection) {
+  const docs = [];
   let pageToken = '';
   do {
     const query = ['pageSize=300', 'showMissing=false'];
     if (pageToken) query.push(`pageToken=${encodeURIComponent(pageToken)}`);
     const result = firestoreRequest_('get', `${firestoreBase_()}/${collection}?${query.join('&')}`);
-    (result.documents || []).forEach(doc => ids.push(doc.name.substring(doc.name.lastIndexOf('/') + 1)));
+    (result.documents || []).forEach(doc => {
+      const fields = doc.fields || {};
+      docs.push({
+        id: doc.name.substring(doc.name.lastIndexOf('/') + 1),
+        title_ko: fields.title_ko && fields.title_ko.stringValue ? fields.title_ko.stringValue : '',
+        start: fields.start && fields.start.stringValue ? fields.start.stringValue : '',
+      });
+    });
     pageToken = result.nextPageToken || '';
   } while (pageToken);
-  return ids;
+  return docs;
 }
 
 function commitWrites_(writes) {

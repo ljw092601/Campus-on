@@ -10,6 +10,7 @@ function onOpen() {
 
 function setupAdminSheets() {
   const ss = SpreadsheetApp.getActive();
+  ss.setSpreadsheetTimeZone(CONFIG.timeZone);
   setupDataSheet_(ss, CONFIG.sheets.academic, ACADEMIC_HEADERS);
   setupDataSheet_(ss, CONFIG.sheets.dining, DINING_HEADERS);
   setupGuideSheet_(ss);

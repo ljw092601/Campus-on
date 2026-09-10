@@ -21,7 +21,7 @@ function readAcademicRows_() {
     const titleKo = requiredText_(v[2], '일정명(국문)', rowErrors);
     const titleEn = requiredText_(v[3], '일정명(영문)', rowErrors);
     const category = allowlisted_(v[4], ACADEMIC_CATEGORIES, '분류', rowErrors);
-    if (!/^[0-9a-f-]{36}$/i.test(eventId)) rowErrors.push('event_id 형식이 잘못되었습니다.');
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(eventId)) rowErrors.push('event_id 형식이 잘못되었습니다.');
     if (start && end && end.getTime() < start.getTime()) rowErrors.push('종료일은 시작일보다 빠를 수 없습니다.');
     if (ids.has(eventId)) rowErrors.push(`event_id가 ${ids.get(eventId)}행과 중복됩니다.`);
     else ids.set(eventId, rowNumber);
@@ -66,6 +66,13 @@ function readDiningGroups_() {
       return;
     }
     const key = `${cafeteriaId}_${dateString}`;
+    // Defense in depth: even if the mapping step is bypassed, the final document id
+    // must be a known cafeteria id plus a yyyy-MM-dd date.
+    if (!Object.values(CAFETERIAS).includes(cafeteriaId) || !/^[a-z0-9-]+_\d{4}-\d{2}-\d{2}$/.test(key)) {
+      errors.push('식당·날짜로 만든 문서 ID가 허용 형식이 아닙니다.');
+      orphanErrors.push({ rowNumber, errors });
+      return;
+    }
     if (!grouped.has(key)) grouped.set(key, {
       id: key,
       cafeteriaId,
@@ -86,9 +93,16 @@ function readDiningGroups_() {
       if (items.some(s => !s)) errors.push('메뉴에 빈 항목이 있습니다. 쉼표를 확인하세요.');
       let price = null;
       if (!blank_(v[4])) {
-        price = Number(v[4]);
-        if (!Number.isInteger(price) || price < CONFIG.priceMin || price > CONFIG.priceMax) {
+        // Only a numeric cell or a plain digit string is accepted; Number('   ') === 0
+        // style coercions and booleans are rejected.
+        if (typeof v[4] === 'number') {
+          price = v[4];
+        } else if (typeof v[4] === 'string' && /^\d+$/.test(v[4].trim())) {
+          price = Number(v[4].trim());
+        }
+        if (price === null || !Number.isInteger(price) || price < CONFIG.priceMin || price > CONFIG.priceMax) {
           errors.push(`가격은 ${CONFIG.priceMin}~${CONFIG.priceMax} 사이의 정수여야 합니다.`);
+          price = null;
         }
       }
       if (type && group.mealTypes.has(type)) {
@@ -140,9 +154,17 @@ function requiredText_(value, label, errors) {
 
 function allowlisted_(value, allowlist, label, errors) {
   const labelValue = String(value || '').trim();
+  // Own-property check blocks Object.prototype chain lookups (toString, __proto__, ...).
+  if (!Object.prototype.hasOwnProperty.call(allowlist, labelValue)) {
+    errors.push(`${label} 값이 허용 목록에 없습니다.`);
+    return null;
+  }
   const mapped = allowlist[labelValue];
-  if (!mapped) errors.push(`${label} 값이 허용 목록에 없습니다.`);
-  return mapped || null;
+  if (typeof mapped !== 'string' || !mapped) {
+    errors.push(`${label} 값이 허용 목록에 없습니다.`);
+    return null;
+  }
+  return mapped;
 }
 
 function formatDateSeoul_(date) {
@@ -154,7 +176,9 @@ function isBlankRow_(values) {
 }
 
 function blank_(value) {
-  return value === '' || value === null || typeof value === 'undefined';
+  if (value === null || typeof value === 'undefined') return true;
+  if (typeof value === 'string') return value.trim() === '';
+  return false;
 }
 
 function requireSheet_(name) {

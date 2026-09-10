@@ -19,7 +19,6 @@
   "common_comingSoon": "Coming soon",
   "common_loadFailed": "Something went wrong.",
 
-  "home_appbar_langToggle": "KO | EN",
   "home_searchBar_hint": "Search facilities & admin",
   "home_mapBanner_title": "Open campus map",
   "home_mapBanner_subtitle": "Find nearby facilities",
@@ -58,12 +57,13 @@
   "@dining_price": {
     "placeholders": { "price": { "type": "int" } }
   },
-  "dining_placeholder_notice": "Sample menus for now — real menus will appear once the school API is connected.",
+  "dining_placeholder_notice": "Sample menus for now — real menus will appear once the cafeteria staff publish them.",
   "dining_prevDay": "Previous day",
   "dining_nextDay": "Next day",
   "dining_error_loadFailed": "Couldn't load the menus.",
+  "dining_empty": "No cafeteria info registered yet.",
 
-  "calendar_placeholder_notice": "Sample dates for now — the official academic calendar will appear once confirmed.",
+  "calendar_placeholder_notice": "Sample dates for now — the real schedule will appear once the academic calendar is published.",
   "calendar_empty": "No academic calendar entries for this year yet.",
   "calendar_error_loadFailed": "Couldn't load the academic calendar.",
   "calendar_cat_semester": "Semester",

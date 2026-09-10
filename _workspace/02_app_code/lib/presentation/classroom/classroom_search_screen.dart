@@ -9,6 +9,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../providers/classroom_providers.dart';
 import '../providers/facility_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/widgets/state_views.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
 /// `/classroom-search`).
@@ -74,7 +75,11 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
       appBar: AppBar(title: Text(l.classroom_search_title)),
       body: facilitiesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text(l.common_loadFailed)),
+        error: (e, _) => ErrorStateView(
+          message: l.common_loadFailed,
+          retryLabel: l.common_retry,
+          onRetry: () => ref.invalidate(allFacilitiesProvider),
+        ),
         data: (all) {
           final buildings = _buildings(all);
           return ListView(
