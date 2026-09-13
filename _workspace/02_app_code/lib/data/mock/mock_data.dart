@@ -42,8 +42,13 @@ class MockData {
       // 외국인등록증 발급 it reads to the already-registered majority as "do it
       // again". visa-types states the same rule the same way — keep them aligned.
       // The card's uses are listed as uses, not as "required for everything".
+      // The statutory exemptions (§31① 단서) and the consequences of missing the
+      // deadline (법제처 생활법령: 1년 이하 징역 또는 1천만원 이하 벌금, §46①12 강제퇴거)
+      // are stated. Biometrics (§38①1) apply from age 17.
       overviewKo: '한국에서 90일을 초과해 체류하려는 외국인은 입국한 날부터 90일 이내에 '
-          '외국인등록을 해야 합니다.\n\n'
+          '외국인등록을 해야 합니다(외교·공무 등 법이 정한 일부 예외 제외). 기한 안에 '
+          '등록하지 않으면 1년 이하의 징역 또는 1천만원 이하의 벌금에 처해질 수 있고, 강제퇴거될 '
+          '수도 있습니다.\n\n'
           '다만 아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 '
           '변경허가를 받은 경우에는, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 때에 '
           '외국인등록을 해야 합니다.\n\n'
@@ -53,7 +58,10 @@ class MockData {
           '발급받은 외국인등록증은 은행, 통신, 건강보험, 학교생활 등 여러 절차에서 신분확인에 '
           '사용될 수 있습니다.',
       overviewEn: 'If you plan to stay in Korea for more than 90 days, you must '
-          'complete foreigner registration within 90 days of entry.\n\n'
+          'complete foreigner registration within 90 days of entry (a few '
+          'statutory exceptions, such as diplomatic and official postings, '
+          'apply). Missing the deadline can lead to up to one year in prison or '
+          'a fine of up to 10 million won, and you can be deported.\n\n'
           'If you have not registered yet and you are granted a status of stay, '
           'or permission to change your status, while in Korea, you must '
           'register when that permission is granted rather than waiting out the '
@@ -73,15 +81,18 @@ class MockData {
       // list, which the shorter summaries elsewhere leave out.
       // Photo conditions are 법무부 「외국인등록용 사진규격 안내」: "흰색바탕, 무배경으로
       // 테두리가 없어야 한다", rendered officially as "White background and
-      // frameless" — so white is the background, and 무배경 is "nothing behind
-      // you", never an alternative to white.
+      // frameless", plus face length 2.5–3.5cm, no hat/sunglasses, no
+      // retouching. 시행규칙 별표 5의2 words the background as "무배경 또는
+      // 흰색배경"; a plain white background satisfies both texts, so the app asks
+      // for white and never offers a non-white option.
       // Cash-only comes from HiKorea 「체류허가 수수료」, which carries it on the
       // CURRENT 3만5천원 line (not the stale 3만원 image on CAT_SEQ=176).
       checklistKo: [
         '통합신청서(신고서)',
         '여권 (여권 인적사항면·사증면 사본 각 1부 포함)',
         '6개월 이내 촬영한 3.5×4.5cm 컬러 정면사진 1매 '
-            '(흰색 바탕, 배경에 아무것도 없고 테두리가 없어야 합니다)',
+            '(흰색 바탕, 배경에 아무것도 없고 테두리가 없어야 합니다. 얼굴 길이 2.5~3.5cm, '
+            '모자·색안경 착용과 사진 보정은 안 됩니다)',
         '입국 후 발급된 재학증명서 (연구과정 등은 연구생증명서)',
         '체류지 입증서류 (임대차계약서, 숙소제공확인서 등)',
         '발급 수수료 35,000원 (공식 안내상 현금 수납만 가능 — 현금을 준비해 가세요)',
@@ -90,7 +101,8 @@ class MockData {
         'Application Form (Report Form)',
         'Passport, plus one copy each of the photo page and the visa page',
         'One 3.5×4.5cm color, front-facing photo taken within the last '
-            '6 months — plain white background, no border',
+            '6 months — plain white background, no border; face 2.5–3.5cm '
+            'long, no hat or sunglasses, no retouching',
         'Certificate of enrollment issued after your entry (a research-student '
             'certificate for research courses)',
         'Proof of where you live in Korea (a lease, an accommodation '
@@ -103,18 +115,30 @@ class MockData {
           'status of stay and your situation',
       // 표준입학허가서 lives here rather than in the core list: the official 외국인등록
       // document list names 재학증명서 for 유학(D-2), not the admission letter.
-      // 결핵검진 확인서 is deliberately ABSENT. HiKorea 「외국인등록시 제출서류」 does not
-      // list it at all, and the only source that does (Study in Korea) scopes it
-      // to "'16.7.1. 이전 사증 발급자" — a transitional clause no 2026 intake can
-      // fall under. The 결핵고위험국가 rule people reach for belongs to 사증 발급 /
-      // 체류자격 변경 / 기간 연장, not to first registration; do not import it here.
+      // 결핵검진 확인서 stays ABSENT: Study in Korea scopes it to "'16.7.1. 이전 사증
+      // 발급자", and the 결핵고위험국가 rule belongs to 사증 발급 / 체류자격 변경 / 기간
+      // 연장, not to first registration.
+      // 건강진단서 is a different item. The current 시행규칙 별표 5의2 (개정 2024-12-24,
+      // attached to the rules in force from 2026-01-23) and 법제처 생활법령 (기준일
+      // 2026-08-15) both list it for 유학(D-2) 외국인등록, while HiKorea 「외국인등록시
+      // 제출서류」 (작성 2013-01-01) and Study in Korea do not. Offices may add or
+      // drop attachments, so it names D-2 directly, says to check first, and
+      // defaults to bringing one when that could not be confirmed.
       checklistOptionalKo: [
         '체류자격별 추가서류',
+        '건강진단서 — 출입국관리법 시행규칙은 유학(D-2) 외국인등록 첨부서류로 정하고 '
+            '있습니다. 관할 관서가 첨부서류를 빼기도 하므로 제출해야 하는지 관할 '
+            '출입국·외국인관서에 미리 확인하고, 확인하지 못했다면 준비해 가세요',
         '체류자격과 개인 상황에 따라 학교에서 받은 추가서류',
         '관할 기관이 추가로 요구하는 서류',
       ],
       checklistOptionalEn: [
         'Any other document your status of stay calls for',
+        'A health examination certificate — the Enforcement Rules list it as '
+            'an attachment for Study (D-2) foreigner registration. Offices can '
+            'drop attachments, so check with your immigration office in '
+            'advance whether you need to submit one, and bring one if you '
+            'could not confirm',
         'School documents your status of stay or your own situation calls for',
         'Any additional document the office handling your case requests during '
             'review',
@@ -135,27 +159,37 @@ class MockData {
           'apply.',
       stepsKo: [
         '본인이 외국인등록 대상인지, 관할 출입국·외국인관서가 어디인지 확인',
-        'HiKorea에서 방문 예약하기 — 관서를 직접 방문해 신청한다면 예약 없이는 접수되지 않습니다',
+        'HiKorea에서 방문 예약하기 — 관서를 직접 방문해 신청한다면 예약 없이는 접수되지 않습니다. '
+            '당일 예약은 안 되니 미리 예약하고, 등록 기한 안에 예약할 수 있는 날짜가 없으면 '
+            '기한이 지나기 전에 관할 관서를 방문하세요',
         '최신 제출서류 확인 후 준비',
-        '관할 출입국·외국인관서에 신청',
-        '수수료 납부 후 접수증 수령',
-        '접수증 또는 담당기관 안내에서 발급 예정일과 수령방법 확인',
+        '관할 출입국·외국인관서에 신청 — 17세 이상이면 신청할 때 지문·얼굴 등 생체정보를 '
+            '제공합니다',
+        '수수료를 내고 신청을 마칩니다',
+        '관할 관서의 안내에 따라 발급 예정일과 수령 방법 확인',
       ],
       stepsEn: [
         'Check whether you have to register, and which immigration office '
             'covers you',
         'Book your visit on HiKorea — if you apply in person, offices cannot '
-            'accept your application without a reservation',
+            'accept your application without a reservation. Same-day booking '
+            'is not possible, so book ahead; if no date is free before your '
+            'registration deadline, visit your immigration office before the '
+            'deadline',
         'Check the current document list and get those documents ready',
-        'Apply at your immigration office',
-        'Pay the fee and receive the receipt',
-        "Check the receipt, or the office's own guidance, for when the card "
-            'will be ready and how to collect it',
+        'Apply at your immigration office — if you are 17 or older, you give '
+            'biometric data such as fingerprints and a facial image when you '
+            'apply',
+        'Pay the fee and complete the application',
+        'Check with your immigration office when the card will be ready and '
+            'how to collect it',
       ],
       sections: [
         // Neither the processing time nor the collection method is published as
-        // one national figure, so the page points at the receipt instead of
-        // restating "2–3 weeks" as if it applied to every application.
+        // one national figure, so the page points at the office's guidance
+        // instead of restating "2–3 weeks" as if it applied to every
+        // application. No official source says a receipt carries the issue date,
+        // so the receipt is not named as the place to look.
         GuideSection(
           titleKo: '처리기간과 수령방법',
           titleEn: 'Processing time and collection',
@@ -164,9 +198,9 @@ class MockData {
               '상황에 따라 달라질 수 있습니다.',
           bodyEn: 'How long the card takes, and how you receive it, can differ '
               'by immigration office and by your own application.',
-          noticeKo: '접수증에 안내된 내용 또는 관할 기관의 안내를 기준으로 확인하세요.',
-          noticeEn: 'Go by what your receipt says, or by the guidance your own '
-              'immigration office gives you.',
+          noticeKo: '신청할 때 관할 기관이 안내하는 발급 예정일과 수령 방법을 확인하세요.',
+          noticeEn: 'When you apply, check the issue date and collection method '
+              'your immigration office gives you.',
           noticeIconName: 'info',
         ),
       ],
@@ -195,9 +229,11 @@ class MockData {
         GuideLink(
           labelKo: '하이코리아 방문 예약',
           labelEn: 'HiKorea reservation',
-          descriptionKo: '방문 예약하기 — 직접 방문 신청은 예약이 필요합니다',
+          descriptionKo: '방문 예약하기 — 직접 방문 신청은 예약이 필요합니다. 기한 안에 예약할 '
+              '날짜가 없을 때의 안내도 여기에 있습니다',
           descriptionEn: 'Book your visit — applying in person requires a '
-              'reservation',
+              'reservation; this page also says what to do if no date is free '
+              'before your deadline',
           url: 'https://www.hikorea.go.kr/resv/ResvIntroR.pt',
         ),
         // In-app. The office does not file the registration — it is where the
@@ -258,26 +294,35 @@ class MockData {
           // HiKorea CAT_SEQ=181의 "4개월 전부터 만료 당일까지"는 2013년 작성분이라 쓰지
           // 않는다 — 아래 links 주석 참조. 근거가 말하는 것은 '방문 예약' 신청 가능
           // 기간이므로 표현도 그대로 '방문 예약'으로 유지한다.
-          bodyKo: '체류기간 연장은 만료일 당일에는 신청할 수 없습니다.\n\n'
-              '정부24 안내(2026년 7월 기준)에 따르면 HiKorea 전자민원은 체류기간 만료일 '
-              '3~60일 전까지, 방문 예약은 만료일 1일 전까지 신청할 수 있습니다. 만료가 '
-              '60일 넘게 남은 날짜로 방문 예약을 잡으면 특별한 사정이 없는 한 민원신청이 '
-              '되지 않을 수 있습니다.\n\n'
-              '외국인등록증에 표시된 체류기간 만료일을 미리 확인하고, 준비는 일찍 시작하되 '
-              '본인이 실제로 신청할 수 있는 날짜는 HiKorea 또는 정부24에서 확인하세요.\n\n'
+          // Whether the expiry day itself is still open differs between official
+          // channels (정부24 vs HiKorea), so the page states the deadlines and
+          // says not to wait for that day, instead of asserting either reading.
+          bodyKo: '체류기간 연장은 체류기간이 끝나기 전에 신청해야 하며, 신청 방법마다 마감이 '
+              '다릅니다. 만료일 당일까지 미루지 마세요.\n\n'
+              '정부24 안내(2026년 7월 기준)에 따르면 HiKorea 전자민원은 토·일·공휴일을 포함하지 '
+              '않은 체류기간 만료일 3~60일 전까지(접수는 평일 07:00~22:00), 방문 예약은 만료일 '
+              '1일 전까지 신청할 수 있습니다. '
+              '만료가 60일 넘게 남은 날짜로 방문 예약을 잡으면 특별한 사정이 없는 한 '
+              '민원신청이 되지 않을 수 있습니다.\n\n'
+              '본인의 체류기간 만료일을 미리 확인하고, 준비는 일찍 시작하되 본인이 실제로 '
+              '신청할 수 있는 날짜는 HiKorea 또는 정부24에서 확인하세요.\n\n'
               '신청 당일에는 본인이 한국에 체류 중이어야 합니다. HiKorea는 신청인이 해외에 '
               '있는 동안에는 온라인 민원신청이나 대리인을 통한 신청이 불가능하다고 안내하고 '
               '있습니다.',
-          bodyEn: 'You cannot apply on the expiry date itself.\n\n'
+          bodyEn: 'You must apply before your stay period expires, and each '
+              'route has its own deadline — do not leave it until the expiry '
+              'date.\n\n'
               'According to the Government24 listing (as of July 2026), HiKorea '
               'e-Application accepts an extension from 60 days down to 3 days '
-              'before your expiry date, and a booked office visit up to 1 day '
-              'before. If the date of your booked visit is more than 60 days '
-              'before your expiry date, the application may not be accepted '
-              'without a special reason.\n\n'
-              'Check the expiry date printed on your Residence Card (ARC). '
-              'Start preparing early, but confirm the dates you can actually '
-              'apply on with HiKorea or Government24.\n\n'
+              'before your expiry date, not counting weekends and public '
+              'holidays (filing is open on weekdays, 07:00–22:00), and a booked '
+              'office visit up to 1 day before. If the '
+              'date of your booked visit is more than 60 days before your expiry '
+              'date, the application may not be accepted without a special '
+              'reason.\n\n'
+              'Check your stay expiry date early. Start preparing early, but '
+              'confirm the dates you can actually apply on with HiKorea or '
+              'Government24.\n\n'
               'You must be in Korea on the day the application is filed. '
               'HiKorea states that the application cannot be filed online or by '
               'a representative while the applicant is overseas.',
@@ -296,14 +341,14 @@ class MockData {
       checklistKo: [
         '여권',
         '외국인등록증(Residence Card / ARC)',
-        '체류기간 연장허가 신청서',
+        '통합신청서(신고서)',
         '체류지 입증서류 (임대차계약서, 기숙사 입사확인서, 거주숙소제공사실확인서 등)',
         '수수료 60,000원 (HiKorea 전자민원으로 신청하면 공식 안내상 20% 경감)',
       ],
       checklistEn: [
         'Passport',
         'Residence Card (ARC)',
-        'Application form for extension of stay',
+        'Application Form (Report Form)',
         'Proof of where you live in Korea (a lease, a dormitory confirmation, '
             'an accommodation confirmation, and the like)',
         'Application fee: KRW 60,000 (official guidance states a 20% reduction '
@@ -321,9 +366,19 @@ class MockData {
         '재학증명서 (학위과정 재학생은 기본 제출 — 석·박사 논문 준비 중이면 지도교수 '
             '추천서 등으로 갈음할 수 있고, 수료·초과학기자는 졸업예정증명서나 수료증명서 등 '
             '본인 학적상태에 맞는 서류를 준비하세요)',
-        '성적증명서 (동아대학교 국제교류과 안내 기준 — 학교 접수 시 요구)',
+        '성적증명서 (동아대학교 국제교류과 단체접수 안내 기준)',
         '재정능력 입증서류 (학비·체재비 관련 — 은행잔고증명 등, 본인의 학적상태와 심사 '
             '상황에 따라 추가 증빙이 요구될 수 있습니다)',
+        // 동아대 국제교류과 「2026-1학기 학부생 비자연장 단체접수 안내」(2026-01-22):
+        // 유학생 보험 미납자·직전학기 성적 2.0 미만 재학생·수료자·초과학기자는 단체접수에서
+        // 빠져 개인접수하며 잔고증명(1600만원 예치 "*동아대의 경우 인증대로 800만원" /
+        // 400만원 예치)과 사유서 등을 더 낸다. 공지 문장이 두 금액을 함께 적으므로 한쪽을
+        // 고르지 않고 그대로 옮기며, "해당 학기 공지 확인"을 붙인다.
+        '유학생 보험 미납자, 직전학기 성적 2.0 미만 재학생, 수료자·초과학기자는 동아대 '
+            '단체접수 대상이 아니며 개인접수하면서 은행잔고증명서와 사유서 등을 추가로 냅니다 '
+            '(2026-1학기 공지 기준: 성적 2.0 미만은 1,600만원 예치 — 공지에 "동아대의 경우 '
+            '인증대로 800만원"이라고 함께 적혀 있음, 수료·초과학기는 400만원 예치 — 해당 학기 '
+            '공지와 국제교류과에서 확인하세요)',
         '기타 체류자격별 추가서류',
       ],
       checklistOptionalEn: [
@@ -331,29 +386,47 @@ class MockData {
             'students; if you are writing a thesis, have completed your '
             'coursework, or are in an extra semester, bring the substitute '
             'document your academic status calls for)',
-        "Academic transcript (required under Dong-A University's own guidance)",
+        "Academic transcript (required under Dong-A University's own guidance "
+            'for its group filing)',
         'Proof that you can cover tuition and living costs (a bank balance '
             'certificate and the like; further evidence can be asked for '
             'depending on your academic status and how your case is reviewed)',
+        'Students with unpaid student insurance, students whose '
+            'previous-semester GPA is below 2.0, and students who have '
+            'completed coursework or are in an extra semester are not part of '
+            "Dong-A's group filing; they file individually and add a bank "
+            'balance certificate and a letter of explanation, among others '
+            '(per the 2026-1 notice: KRW 16 million on deposit for a GPA below '
+            '2.0 — the notice adds that Dong-A, as a certified university, '
+            'needs KRW 8 million; KRW 4 million for completion or an extra '
+            "semester — check that semester's notice and the international "
+            'office)',
         'Any other document your status of stay calls for',
       ],
+      // 수수료: 정부24 — 일반 6만원, 정상 접수 후 반환 불가. 면제: HiKorea 「체류허가
+      // 수수료」의 정부 등의 초청 국비장학생(연장·변경·재입국허가).
       checklistNoteKo: '※ 필요한 서류는 D-2, D-4 등 체류자격과 개인 상황에 따라 달라질 수 '
           '있습니다.\n'
           '출입국·외국인관서가 요구하는 서류와 학교가 접수 때 요구하는 서류는 다를 수 '
-          '있으므로, 신청 전에 HiKorea·정부24와 학교 국제교류 관련 부서에서 각각 확인하세요.',
+          '있으므로, 신청 전에 HiKorea·정부24와 학교 국제교류 관련 부서에서 각각 확인하세요.\n'
+          '정부 등의 초청 국비장학생은 연장 수수료가 면제됩니다. 정상적으로 접수된 뒤에는 '
+          '수수료가 반환되지 않습니다.',
       checklistNoteEn: '※ Which documents you need depends on your status of '
           'stay (D-2, D-4, and so on) and on your own situation.\n'
           'What the immigration office asks for and what your university asks '
           'for when it takes your application are not always the same, so check '
           'HiKorea or Government24 and your international office separately '
-          'before you apply.',
+          'before you apply.\n'
+          'Government-invited scholarship students are exempt from the '
+          'extension fee. Once the application has been accepted, the fee is '
+          'not refunded.',
       sections: [
         GuideSection(
           titleKo: '신청 방법',
           titleEn: 'How to apply',
           iconName: 'format_list_numbered',
           stepsKo: [
-            '외국인등록증에서 체류기간 만료일 확인',
+            '본인의 체류기간 만료일 확인',
             '본인의 체류자격(D-2 / D-4 등) 확인',
             'HiKorea 또는 학교에서 필요한 서류 확인',
             '필요한 서류 준비',
@@ -362,7 +435,7 @@ class MockData {
             '연장된 체류기간 확인',
           ],
           stepsEn: [
-            'Check the expiry date on your Residence Card',
+            'Check your stay expiry date',
             'Check your status of stay (D-2, D-4, etc.)',
             'Check the required documents on HiKorea or with your school',
             'Get those documents ready',
@@ -381,11 +454,16 @@ class MockData {
               'through HiKorea e-Application.',
           noticeKo: '전자민원은 방문 예약보다 먼저 마감됩니다. 만료일이 가까우면 온라인 신청 '
               '기간이 이미 끝났을 수 있으므로 방법별 마감일을 각각 확인하세요.\n'
+              '전자민원 마지막 날에 심각한 시스템 장애로 신청하지 못했다면 관할 '
+              '출입국·외국인관서를 방문해 신청하세요.\n'
               '온라인 신청 가능 여부와 제출서류는 체류자격 및 신청 상황에 따라 달라질 수 '
               '있으므로 신청 전에 확인하세요.',
           noticeEn: 'E-Application closes earlier than a booked office visit. If '
               'your expiry date is close, the online window may already have '
               'passed, so check the deadline for each route separately.\n'
+              'If a serious system failure stops you filing online on the last '
+              'e-Application day, go to your immigration office and apply '
+              'there.\n'
               'Whether you can apply online — and which documents you have '
               'to submit — depends on your status of stay and your situation, so '
               'check before you start.',
@@ -436,7 +514,7 @@ class MockData {
                 '신고는 새 체류지를 관할하는 출입국·외국인관서, 또는 새 주소지의 시·군·구청이나 '
                     '읍·면·동 행정기관에서 할 수 있습니다.',
                 '체류지 입증서류는 체류기간 연장의 공통 제출서류입니다. 이사를 했다면 '
-                    '변경신고를 먼저 마치고 새 주소 기준 서류를 준비하세요.',
+                    '15일 안에 변경신고를 하고, 연장 신청에는 새 주소 기준 서류를 준비하세요.',
               ],
               linesEn: [
                 'If a registered foreign resident moves to a new address in '
@@ -447,8 +525,8 @@ class MockData {
                     'or the local administrative office (읍·면·동) for that '
                     'address.',
                 'Proof of your address is one of the standard documents for an '
-                    'extension. If you have moved, report the change first and '
-                    'prepare the document for your new address.',
+                    'extension. If you have moved, report the change within 15 '
+                    'days and use proof of your new address for the extension.',
               ],
             ),
             GuideNote(
@@ -462,6 +540,25 @@ class MockData {
                 'If you plan to leave Korea around the time you apply, check the '
                     'procedure in advance with your immigration office or the '
                     'Immigration Contact Center.',
+              ],
+            ),
+            // 법무부 「외국인 비자연장 전 세금·건강보험료 체납 확인제도」 — the same rule
+            // health-insurance states from the premium side.
+            GuideNote(
+              titleKo: '💳 세금·건강보험료 체납이 있으면 연장이 제한될 수 있어요',
+              titleEn: '💳 Unpaid taxes or health insurance can limit your '
+                  'extension',
+              linesKo: [
+                '만 19세 이상 등록외국인은 체류기간 연장을 신청할 때 세금과 건강보험료 체납 '
+                    '여부를 확인받습니다. 체납액을 내지 않으면 원칙적으로 6개월 이하의 기간만 '
+                    '연장될 수 있으니, 신청 전에 체납액을 확인하고 납부하세요.',
+              ],
+              linesEn: [
+                'If you are a registered foreign resident aged 19 or over, '
+                    'unpaid taxes and health insurance premiums are checked '
+                    'when you apply. If they stay unpaid, the extension is in '
+                    'principle limited to 6 months or less, so check and pay '
+                    'them before you apply.',
               ],
             ),
             GuideNote(
@@ -502,8 +599,10 @@ class MockData {
         GuideLink(
           labelKo: 'HiKorea 체류기간 연장 안내',
           labelEn: 'HiKorea — extension of stay',
-          descriptionKo: '신청 조건 · 절차 · 체류자격별 안내',
-          descriptionEn: 'Conditions, the procedure, and per-status guidance',
+          descriptionKo: '절차 · 체류자격별 안내 (이 페이지의 신청 기간은 옛 안내이니 기간은 '
+              '정부24에서 확인)',
+          descriptionEn: 'The procedure and per-status guidance (its filing '
+              'window is out of date — use Government24 for the dates)',
           url: 'https://www.hikorea.go.kr/info/InfoDatail.pt'
               '?CAT_SEQ=181&PARENT_ID=140',
         ),
@@ -537,8 +636,10 @@ class MockData {
               '#stay-extension',
         ),
       ],
-      durationKo: '서류 준비 + 심사 기간 별도',
-      durationEn: 'Document prep + review time',
+      // 정부24: "접수일로부터 14일 이내 처리" — the official service time, which
+      // does not include preparing documents or any request for more.
+      durationKo: '서류 준비 + 처리 14일 이내(접수일부터)',
+      durationEn: 'Document prep + up to 14 days after filing',
       difficulty: 2,
       status: GuideStatus.published,
     ),
@@ -734,13 +835,18 @@ class MockData {
           // 받는 것이 원칙이고, 시행규칙 [별표 5의2]에도 유학(D-2) 「체류자격 변경허가」란이
           // 따로 있다. 동아대 국제교류과도 "D4→D2 변경"을 자체 안내로 운영한다.
           noticeKo: '신청 방법과 필요서류는 국적, 세부 체류자격, 신청하는 재외공관에 따라 '
-              '달라질 수 있습니다.\n'
+              '달라질 수 있습니다. 재외공관에 직접 신청하는 대신 학교(초청인)가 신청한 '
+              '사증발급인정서로 진행되는 경우도 있으니, Korea Visa Portal에서 본인 국적과 '
+              '체류자격에 맞는 경로를 확인하세요.\n'
               '이미 한국에 체류 중이라면 재외공관 사증 신청이 아니라 국내에서 체류자격 '
               '변경허가를 받는 경우가 있습니다(예: 어학연수 D-4에서 유학 D-2로 진학).\n'
               '위 흐름은 일반적인 순서이며, 신청 전에 해당 공관의 공식 안내를 확인하세요.',
           noticeEn: 'How you apply, and what you have to submit, can differ by '
               'nationality, by the exact status of stay, and by the mission you '
-              'apply to.\n'
+              'apply to. Instead of filing directly at a mission, some students '
+              'go through a Confirmation of Visa Issuance that the school '
+              'applies for as their inviter — check the route for your '
+              'nationality and status of stay on the Korea Visa Portal.\n'
               'If you are already living in Korea, you may not apply for a visa '
               'abroad at all — you apply inside Korea for a change of status '
               'instead (moving from a D-4 language course to a D-2 degree '
@@ -770,8 +876,11 @@ class MockData {
         '6개월 이내 촬영한 증명사진 1매 (규격은 신청할 재외공관 안내를 확인하세요)',
         '표준입학허가서 (D-4 어학연수는 세부 유형과 재외공관에 따라 요구 서류가 다르니 '
             '신청할 공관의 목록을 확인하세요)',
-        '교육기관 사업자등록증 또는 고유번호증 사본 (학교에서 제공하는 서류)',
-        '재정능력 입증서류',
+        '교육기관 사업자등록증 또는 고유번호증 사본 (학교에서 제공하는 서류 — 공관 목록에 '
+            '있는 경우)',
+        '재정능력 입증서류 (D-2 정규과정은 표준입학허가서에 재정능력 심사가 포함되지만 공관이 '
+            '따로 요구할 수 있고, 세부 유형과 재외공관에 따라 요구 서류와 대체 서류가 다를 수 '
+            '있습니다)',
       ],
       checklistEn: [
         'Visa application form',
@@ -782,8 +891,11 @@ class MockData {
             "sub-type and by mission — check your own mission's list)",
         "A copy of the educational institution's business registration "
             'certificate or registration-number certificate (a document '
-            'provided by the school)',
-        'Proof that you can support yourself financially',
+            "provided by the school — if it is on your mission's list)",
+        'Proof that you can support yourself financially (for a D-2 degree '
+            'program the Certificate of Admission already covers the financial '
+            'review, but a mission can still ask for it; what counts, and what '
+            'can stand in for it, can differ by sub-type and by mission)',
       ],
       checklistOptionalTitleKo: '체류자격과 상황에 따라 추가될 수 있어요',
       // "status of stay", not "visa" — the same wording arc-issue and
@@ -849,7 +961,7 @@ class MockData {
               linesKo: [
                 '비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.',
                 '한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 '
-                    '해야 합니다.',
+                    '해야 합니다(외교·공무 등 법이 정한 일부 예외 제외).',
                 '아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 '
                     '변경허가를 받았다면, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 '
                     '때에 외국인등록을 해야 합니다.',
@@ -859,7 +971,9 @@ class MockData {
               linesEn: [
                 'A visa and a Residence Card (ARC) are two different things.',
                 'If you plan to stay in Korea for more than 90 days, you must '
-                    'register within 90 days of entry.',
+                    'register within 90 days of entry (a few statutory '
+                    'exceptions, such as diplomatic and official postings, '
+                    'apply).',
                 'If you have not registered yet and you are granted a status of '
                     'stay, or a change of status, while in Korea, you register '
                     'at the time that permission is granted rather than waiting '
@@ -878,8 +992,8 @@ class MockData {
                     '일을 시작하기 전에 허가를 받아야 합니다.',
                 '허용 대상과 근무 가능 시간은 세부 체류자격, 과정, 학년, 한국어 능력, 학교 '
                     '유학생 담당자의 확인 등 여러 조건에 따라 달라질 수 있습니다.',
-                '특히 어학연수(D-4) 학생은 입국일 또는 자격 변경일부터 일정 기간이 지나야 '
-                    '신청할 수 있습니다.',
+                '특히 어학연수(D-4) 학생과 방문학생(D-2-8)은 입국일 또는 자격 변경일부터 일정 '
+                    '기간이 지나야 신청할 수 있습니다.',
                 '근무를 시작하기 전에 HiKorea와 학교 국제교류과에서 본인에게 적용되는 조건을 '
                     '확인하세요.',
               ],
@@ -892,9 +1006,9 @@ class MockData {
                     'of stay, the program, the year of study, Korean '
                     "proficiency and confirmation from the university's "
                     'international student adviser.',
-                'D-4 language students in particular can only apply once a set '
-                    'period has passed since entry, or since their status was '
-                    'changed.',
+                'D-4 language students and visiting students (D-2-8) in '
+                    'particular can only apply once a set period has passed '
+                    'since entry, or since their status was changed.',
                 'Check the rules that apply to you with HiKorea and the '
                     "university's international affairs office before starting "
                     'work.',
@@ -976,9 +1090,21 @@ class MockData {
         GuideLink(
           labelKo: 'Study in Korea 비자 · 체류 안내',
           labelEn: 'Study in Korea — student visa & stay',
-          descriptionKo: 'D-2 · D-4 종류와 유학생 체류정보',
-          descriptionEn: 'D-2 and D-4 types, plus stay information for students',
+          descriptionKo: '유학생 비자 · 체류 개요 (세부 유형 약호는 법제처 안내로 확인하세요)',
+          descriptionEn: 'Overview of student visas and stay (check the sub-type '
+              'codes on the Ministry of Government Legislation guide)',
           url: 'https://www.studyinkorea.go.kr/eng/plan/visaAndStay.do',
+        ),
+        // 법제처 찾기쉬운 생활법령정보 「비자 및 체류기간」 (기준일 2026-08-15) — the
+        // source of record for the D-2 / D-4 sub-type codes on this page.
+        GuideLink(
+          labelKo: '법제처 — 외국인유학생 비자 및 체류기간',
+          labelEn: 'Ministry of Government Legislation — student visas',
+          descriptionKo: 'D-2 · D-4 세부 유형과 체류기간',
+          descriptionEn: 'D-2 and D-4 sub-types and periods of stay',
+          url: 'https://easylaw.go.kr/CSP/CnpClsMain.laf'
+              '?popMenu=ov&csmSeq=2853&ccfNo=2&cciNo=1&cnpClsNo=1',
+          iconName: 'menu_book',
         ),
         // Korea Visa Portal (법무부) — the Visa Navigator, which filters visa
         // types by purpose of entry and length of stay.
@@ -1012,7 +1138,7 @@ class MockData {
           iconName: 'badge',
         ),
         GuideLink(
-          labelKo: '체류기간 연장 안내',
+          labelKo: '가이드 — 체류기간 연장',
           labelEn: 'Guide — Extension of Stay',
           descriptionKo: '앱 안에서 바로 보기',
           descriptionEn: 'Open the in-app guide',
@@ -1028,10 +1154,13 @@ class MockData {
 
     // ── 주거 (housing) ──
     // Two on-campus options with different owners, different application
-    // routes and per-semester notices. The 2024 국문 booklet is the base text,
-    // but 한림생활관's own 사생모집 공고 and 석당글로벌하우스's 입·퇴사 page now say
-    // different things — so amounts and dates are never restated as fact here;
-    // every figure is deferred to "the semester's own notice".
+    // routes and per-semester notices. Sources: 한림생활관 「2026년도 사생모집」
+    // (MN017: 대상·신청경로·발표·환불·관별 전화), 「입/퇴사 안내」 (MN075: 결핵검진
+    // 확인서 3개월 이내, 금지물품, 중도퇴사), 석당글로벌하우스 「입·퇴사」 (MN026: 절차·
+    // 서류·환불 — its fee table is still the 2024 one), 한국어학당 등록안내 (MN031:
+    // "기숙사비(신규생 의무거주)"). The 2024 booklet is no longer quoted — its
+    // original could not be re-checked. Amounts and dates are never restated as
+    // fact; every figure is deferred to "the semester's own notice".
     const AdminGuideItem(
       id: 'dormitory',
       categoryId: GuideCategory.housing,
@@ -1068,13 +1197,14 @@ class MockData {
               titleKo: '🏫 한림생활관',
               titleEn: '🏫 Hanlim Residence Hall',
               linesKo: [
-                '동아대학교 재학생 및 일부 외국인 학생이 이용할 수 있는 교내 생활관입니다.',
+                '동아대학교 학생이 이용하는 교내 생활관으로, 사생모집 공고에 외국인 유학생도 모집 '
+                    '대상으로 적혀 있습니다.',
                 '한림생활관 홈페이지 기준으로 승학1관 · 승학2관 · 부민관 · 구덕관을 운영합니다.',
                 '학기마다 사생모집 공고로 대상과 신청방법이 안내됩니다.',
               ],
               linesEn: [
-                'The university\'s own residence hall, open to Dong-A students '
-                    'and to some international students.',
+                "The university's own residence hall; its recruitment notice "
+                    'names international students among those it recruits.',
                 'Its website currently lists four halls — Seunghak 1, '
                     'Seunghak 2, Bumin and Gudeok.',
                 'Eligibility and how to apply are announced in a recruitment '
@@ -1111,26 +1241,31 @@ class MockData {
           titleKo: '한림생활관',
           titleEn: 'Hanlim Residence Hall',
           iconName: 'location_on',
-          bodyKo: '승학캠퍼스에 있는 교내 생활관입니다. 입사대상과 신청방법, 모집기간, 생활관비는 '
-              '학기마다 사생모집 공고로 안내됩니다.',
-          bodyEn: 'The university residence hall on the Seunghak campus. Who '
-              'may apply, how to apply, when applications open and what it '
-              'costs are all published in a recruitment notice each semester.',
+          bodyKo: '동아대학교 생활관으로, 승학캠퍼스(승학1관 · 승학2관), 부민캠퍼스(부민관)와 '
+              '캠퍼스 밖 부산 서구 서대신동의 구덕관이 있습니다. 입사대상과 신청방법, 모집기간, '
+              '생활관비는 학기마다 사생모집 공고로 안내됩니다.',
+          bodyEn: "The university's residence halls: Seunghak 1 and Seunghak 2 "
+              'on the Seunghak campus, Bumin on the Bumin campus, and Gudeok, '
+              'which is off campus in Seodaesin-dong, Seo-gu. Who may apply, how '
+              'to apply, when applications open and what it costs are published '
+              'in a recruitment notice each semester.',
           notes: [
             GuideNote(
               titleKo: '입사대상',
               titleEn: 'Who can apply',
               linesKo: [
-                '최근 사생모집 공고 기준: 동아대학교 학부 · 대학원 신입생, 재학생, 복학예정자',
-                '교환학생 · 어학연수생 해당 여부는 공고에 별도로 안내되지 않을 수 있습니다.',
+                '2026학년도 사생모집 공고 기준: 동아대학교 학부 · 대학원 신입생, 재학생, '
+                    '복학예정자와 함께 외국인 유학생 · 국내 교환학생 등도 모집 대상으로 적혀 '
+                    '있습니다.',
+                '어학연수생은 공고에 따로 적혀 있지 않습니다.',
                 '본인이 대상인지 확실하지 않다면 한림생활관 또는 국제교류과에 확인하세요.',
               ],
               linesEn: [
-                'The current recruitment notice lists incoming and enrolled '
-                    'undergraduate and graduate students, plus students about '
-                    'to return from a leave of absence.',
-                'Exchange and language-programme students are not always named '
-                    'in that notice.',
+                'The 2026 recruitment notice lists incoming and enrolled '
+                    'undergraduate and graduate students and students returning '
+                    'from leave, and also names international students and '
+                    'domestic exchange students among those it recruits.',
+                'Language-programme students are not named in the notice.',
                 'If you cannot tell whether you qualify, ask Hanlim Residence '
                     'Hall or the International Affairs Office.',
               ],
@@ -1139,18 +1274,41 @@ class MockData {
               titleKo: '신청 방법',
               titleEn: 'How to apply',
               linesKo: [
-                '신입생(수시등록자) · 재학생: 한림생활관 홈페이지에서 인터넷 원서접수',
-                '신입생(정시등록자) · 대학원생: 입사원서와 개인정보 동의서를 스캔해 이메일 접수',
+                '학부 신입생 · 재학생 · 복학예정자, 대학원 재학생: 한림생활관 홈페이지에서 인터넷 '
+                    '원서접수',
+                '대학원 신입생, 학부 편입생 · 재입학생: 입사원서와 개인정보 동의서를 관별 '
+                    '이메일로 접수',
                 '선발은 성적점수 · 거리점수 · 상벌점을 합산해 이루어집니다.',
+                '입사자는 개별 통지하지 않습니다. 재학생은 캠퍼스락 앱, 신입생은 한림생활관 '
+                    '홈페이지에서 결과를 확인하고, 납부기간 안에 생활관비를 내지 않으면 불합격 '
+                    '처리됩니다.',
               ],
               linesEn: [
-                'Incoming students admitted in the early round, and enrolled '
-                    'students: apply online on the Hanlim website.',
-                'Incoming students admitted in the regular round, and graduate '
-                    'students: scan the application form and the privacy '
-                    'consent form and send them by email.',
+                'Incoming undergraduates, enrolled or returning undergraduates, '
+                    'and enrolled graduate students: apply online on the Hanlim '
+                    'website.',
+                'Incoming graduate students, and undergraduate transfer and '
+                    're-admitted students: scan the application form and the '
+                    "privacy consent form and send them by email to your hall's "
+                    'address.',
                 'Places are awarded on a score combining grades, distance from '
                     'home and merit/demerit points.',
+                'Results are not sent to you individually — enrolled students '
+                    'check the Campus Lock app and new students check the '
+                    'Hanlim website — and an offer is cancelled if the fee is '
+                    'not paid within the payment period.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📞 문의',
+              titleEn: '📞 Contact',
+              linesKo: [
+                '승학1관 051-200-6021~6023 · 승학2관 051-200-6026~6027 · 부민관 '
+                    '051-200-8426~8427 · 구덕관 051-200-1302',
+              ],
+              linesEn: [
+                'Seunghak 1 051-200-6021–6023 · Seunghak 2 051-200-6026–6027 · '
+                    'Bumin 051-200-8426–8427 · Gudeok 051-200-1302',
               ],
             ),
             GuideNote(
@@ -1173,20 +1331,18 @@ class MockData {
             ),
           ],
           noticeKo: '신청기간은 학기마다 달라요\n'
-              '신청기간은 학기마다 달라지므로 한림생활관 최신 모집공고를 확인하세요.',
+              '신청기간은 학기마다 달라지므로 한림생활관 최신 모집공고를 확인하세요.\n'
+              '입사를 포기하려면 정규 입사일 전날 23:59까지 해당 관 이메일로 환불신청서와 학생 '
+              '명의 통장 사본을 보내야 합니다. 중도 퇴사 때는 재실일수에 위약금 10일분을 더한 '
+              '생활관비를 빼고 돌려받으며, 남은 기간이 30일 이하이면 돌려받을 수 없습니다.',
           noticeEn: 'The application period changes every semester\n'
               'Application dates move, so always read the latest Hanlim '
-              'recruitment notice rather than last semester\'s.',
-          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 입사대상이 「학부생, 대학원생, 교환학생, '
-              '어학연수생」, 신청방법이 「신입생은 각 과정별 합격자 발표 시 별도 신청, 재학생은 기숙사 '
-              '홈페이지에서 모집 안내문 확인」으로 안내되어 있었습니다. 현재 한림생활관 사생모집 공고와 '
-              '내용이 다르므로 앱에는 최신 공고 기준을 먼저 안내합니다.',
-          footnoteEn: '※ The 2024 international-student booklet listed '
-              'undergraduates, graduate students, exchange students and '
-              'language students as eligible, and said new students applied '
-              'when their admission results were announced. The current Hanlim '
-              'recruitment notice reads differently, so this page follows the '
-              'current notice.',
+              'recruitment notice rather than last semester\'s.\n'
+              'To give up your place, email the refund form and a copy of a '
+              'bankbook in your own name to your hall by 23:59 the day before '
+              'the regular move-in date. If you leave mid-semester, the fee for '
+              'the days you stayed plus a 10-day penalty is deducted, and with '
+              '30 days or less remaining nothing is refunded.',
         ),
         GuideSection(
           titleKo: '석당글로벌하우스',
@@ -1231,33 +1387,41 @@ class MockData {
               titleEn: 'Facilities & living',
               linesKo: [
                 '조리실 · 세탁실 · 휴게실 등을 이용할 수 있습니다.',
-                '식사는 포함되지 않으며 취사가 가능합니다.',
-                '침구류(이불 · 패드 · 베개)는 유료로 대여할 수 있다고 안내되어 있습니다.',
+                '취사가 가능한 조리실이 있습니다. 식사 제공 여부는 입사 전에 행정실에 '
+                    '확인하세요.',
+                '침구류(이불 · 패드 · 베개) 유료 대여가 입 · 퇴사 안내에 적혀 있으나 이 페이지의 '
+                    '일정 · 비용표는 2024학년도 기준이므로, 현재 제공 여부와 비용은 행정실에 '
+                    '확인하세요.',
+                '문의: 석당글로벌하우스 051-200-1496',
               ],
               linesEn: [
                 'There is a kitchen, a laundry room and lounges.',
-                'Meals are not included, but you may cook for yourself.',
-                'Bedding (duvet, mattress pad, pillow) can be rented for a '
-                    'fee, according to the house guide.',
+                'You can cook in the kitchen. Ask the house office before '
+                    'moving in whether meals are provided.',
+                'The move-in/out page mentions paid bedding rental (duvet, '
+                    'mattress pad, pillow), but its dates and fees are from '
+                    '2024 — ask the house office whether it is still offered '
+                    'and what it costs.',
+                'Contact: Seokdang Global House 051-200-1496',
               ],
             ),
           ],
-          noticeKo: '한국어학당 신입생은 안내가 다를 수 있어요\n'
-              '2024학년도 안내서에는 한국어학당 신입생이 3개월 의무 거주하며 별도 신청이 필요 없다고 '
-              '되어 있었습니다. 현재 공식 홈페이지에서는 이 내용이 확인되지 않으므로, 한국어학당 입학 '
-              '안내 또는 국제교류과에서 최신 입사방법을 확인하세요.',
-          noticeEn: 'Korean language students may be told something different\n'
-              'The 2024 booklet said new Korean language students lived here '
-              'for a compulsory three months and did not apply separately. '
-              'The current official pages do not say this, so check your '
-              'Korean language programme admission guide, or ask the '
-              'International Affairs Office, for the current arrangement.',
+          noticeKo: '한국어학당 신규생은 기숙사 거주가 의무예요\n'
+              '한국어학당 등록 안내는 기타 비용에 「기숙사비(신규생 의무거주)」를 적고 있습니다. 거주 '
+              '기간과 신청 방법은 한국어학당 입학 안내 또는 석당글로벌하우스에서 확인하세요.',
+          noticeEn: 'New Korean language students must live in the dormitory\n'
+              'The Korean language programme registration guide lists '
+              '"dormitory fee (compulsory residence for new students)" among '
+              'its other costs. Check the length of stay and how to apply in '
+              'your admission guide or with Seokdang Global House.',
           noticeIconName: 'info',
-          footnoteKo: '※ 위 절차는 석당글로벌하우스 홈페이지의 「입·퇴사」 안내 기준입니다. 입사신청 '
-              '기간과 기숙사비는 학기에 따라 달라질 수 있습니다.',
+          footnoteKo: '※ 위 절차는 석당글로벌하우스 홈페이지의 「입·퇴사」 안내 기준입니다. 그 페이지의 '
+              '일정 · 비용표는 2024학년도 기준이므로, 입사신청 기간과 기숙사비는 해당 학기 공지 '
+              '또는 행정실에서 확인하세요.',
           footnoteEn: '※ The steps above follow the "move-in / move-out" page '
-              'on the Seokdang Global House website. Application dates and the '
-              'fee change from semester to semester.',
+              'on the Seokdang Global House website. Its dates and fees are '
+              "from 2024, so check this semester's notice or the house office "
+              'for application dates and the fee.',
         ),
       ],
       checklistTitleKo: '신청 전에 확인하세요',
@@ -1286,15 +1450,14 @@ class MockData {
         'The room type',
         'The earliest date you can move in',
       ],
-      checklistNoteKo: '기숙사와 학생 유형에 따라 필요한 서류와 조건이 다를 수 있습니다. 특정 서류가 '
-          '모든 학생에게 공통으로 필요한 것은 아니므로 해당 학기 모집공고에서 본인에게 해당하는 '
-          '항목을 확인하세요.\n\n'
-          '기숙사에 따라 별도 신청 없이 배정되는 경우도 있습니다.',
+      checklistNoteKo: '기숙사와 학생 유형에 따라 필요한 서류와 조건이 다를 수 있으므로 해당 학기 '
+          '모집공고와 입사 안내에서 본인에게 해당하는 항목을 확인하세요.\n\n'
+          '한림생활관과 석당글로벌하우스 모두 입사할 때 결핵 검사 결과를 요구합니다.',
       checklistNoteEn: 'What you need differs by dormitory and by the kind of '
-          'student you are — no single document is required of everyone, so '
-          "check the semester's notice for your own case.\n\n"
-          'For some dormitories a place may be assigned without a separate '
-          'application.',
+          "student you are, so check the semester's notice and move-in guide "
+          'for your own case.\n\n'
+          'Both Hanlim Residence Hall and Seokdang Global House ask for a '
+          'tuberculosis test result when you move in.',
       stepsKo: [
         '본인의 학생 유형 확인',
         '이용 가능한 기숙사 확인',
@@ -1335,7 +1498,7 @@ class MockData {
                 '기숙사비 납부',
                 '제출서류 확인',
                 '침구류 준비 여부 확인',
-                '건강검진결과표 필요 여부 확인',
+                '결핵 검사 결과(건강검진결과표 · 결핵검진 확인서) 준비',
               ],
               linesEn: [
                 'Your move-in date',
@@ -1343,14 +1506,15 @@ class MockData {
                 'Payment of the dormitory fee',
                 'What you have to submit',
                 'Whether you need to bring bedding',
-                'Whether a health-check certificate is required',
+                'Your tuberculosis test result (health-check or TB screening '
+                    'certificate)',
               ],
             ),
             GuideNote(
               titleKo: '💰 기숙사비를 확인하세요',
               titleEn: '💰 Check the dormitory fee',
               linesKo: [
-                '기숙사비는 기숙사, 성별, 입사기간, 학기 등에 따라 달라질 수 있습니다.',
+                '기숙사비는 기숙사와 관, 입사기간, 학기 등에 따라 달라질 수 있습니다.',
                 '정확한 금액은 해당 학기의 공식 모집공고 또는 입사안내에서 확인하세요.',
               ],
               linesEn: [
@@ -1367,15 +1531,16 @@ class MockData {
                 '기숙사별 식사 제공 여부와 식권 구매 방법을 입사 전에 확인하세요.',
                 '한림생활관은 식비가 생활관비에 포함되지 않으며, 학기 단위로 식사권을 구입해 '
                     '이용합니다.',
-                '석당글로벌하우스는 식사가 포함되지 않고 취사가 가능합니다.',
+                '석당글로벌하우스는 취사가 가능한 조리실이 있으며, 식사 제공 여부는 행정실에 '
+                    '확인하세요.',
               ],
               linesEn: [
                 'Check whether your dormitory serves meals, and how meal '
                     'tickets are bought, before you move in.',
                 'At Hanlim, meals are not part of the dormitory fee — you buy '
                     'a meal plan for the semester.',
-                'Seokdang Global House does not serve meals, but you can cook '
-                    'for yourself.',
+                'Seokdang Global House has a kitchen where you can cook; ask '
+                    'the house office whether meals are provided.',
               ],
             ),
             GuideNote(
@@ -1384,34 +1549,31 @@ class MockData {
               linesKo: [
                 '기숙사에 따라 침구류가 제공되지 않을 수 있으므로 입사 전에 준비 여부를 '
                     '확인하세요.',
-                '석당글로벌하우스는 이불 · 패드 · 베개를 유료로 대여할 수 있다고 안내하고 '
-                    '있습니다.',
+                '석당글로벌하우스 입 · 퇴사 안내에는 이불 · 패드 · 베개 유료 대여가 적혀 있으나, '
+                    '현재 제공 여부는 행정실에 확인하세요.',
               ],
               linesEn: [
                 'Some dormitories do not provide bedding, so find out before '
                     'you arrive whether you have to bring your own.',
-                'Seokdang Global House says a duvet, mattress pad and pillow '
-                    'can be rented for a fee.',
+                "Seokdang Global House's move-in/out page mentions renting a "
+                    'duvet, mattress pad and pillow for a fee — ask the office '
+                    'whether it is still offered.',
               ],
             ),
           ],
-          noticeKo: '건강검진결과표가 필요할 수 있어요\n'
-              '석당글로벌하우스는 입사 시 제출서류로 건강검진결과표(결핵 · B형간염)를 안내하고 '
-              '있습니다. 한림생활관은 최신 사생모집 공고에서 확인되지 않으므로, 본인이 입사할 '
-              '기숙사의 안내에서 필요 여부를 확인하세요.',
-          noticeEn: 'You may need a health-check certificate\n'
-              'Seokdang Global House lists a health-check certificate '
-              '(tuberculosis and hepatitis B) among its move-in documents. The '
-              'current Hanlim recruitment notice does not mention one, so '
-              "check your own dormitory's guide.",
+          noticeKo: '입사할 때 결핵 검사 결과가 필요해요\n'
+              '한림생활관은 입사일로부터 3개월 이내에 발급받은 결핵검진 확인서(보건증 등으로 대체 '
+              '가능, 입사 당일 없으면 일주일 이내 제출)를, 석당글로벌하우스는 건강검진결과표(결핵 '
+              '· B형간염)를 입사 서류로 안내하고 있습니다. 발급에 시간이 걸릴 수 있으니 미리 '
+              '준비하세요.',
+          noticeEn: 'You need a tuberculosis test result to move in\n'
+              'Hanlim asks for a tuberculosis screening certificate issued '
+              'within 3 months of your move-in date (a health certificate can '
+              'stand in for it, and if you do not have it on the day you have '
+              'a week to hand it in), and Seokdang Global House asks for a '
+              'health-check certificate covering tuberculosis and hepatitis B. '
+              'Getting one can take time, so arrange it early.',
           noticeIconName: 'info',
-          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 건강검진결과표를 「한림생활관 '
-              '입사자만」 제출하는 것으로 안내되어 있었고, 기숙사에는 개인이불을 제공하지 않으며 '
-              '석당글로벌하우스는 침구류 대여가 가능하다고 되어 있었습니다.',
-          footnoteEn: '※ The 2024 booklet said the health-check certificate '
-              'was for Hanlim residents only, that dormitories do not supply '
-              'bedding, and that bedding could be rented at Seokdang Global '
-              'House.',
         ),
         GuideSection(
           titleKo: '입사 후 해야 할 일',
@@ -1428,7 +1590,7 @@ class MockData {
             '입사등록 서류 제출',
             '기숙사비 납부 여부 확인',
             '비품 상태 확인',
-            '필요한 경우 건강검진결과표 제출',
+            '결핵 검사 결과 제출',
             '기숙사 생활규칙 확인',
           ],
           stepsEn: [
@@ -1437,7 +1599,7 @@ class MockData {
             'Hand in your registration documents',
             'Make sure the dormitory fee has been paid',
             'Check the condition of the room and its fittings',
-            'Submit a health-check certificate if one is required',
+            'Hand in your tuberculosis test result',
             'Read the house rules',
           ],
           notes: [
@@ -1451,6 +1613,8 @@ class MockData {
                 '공용시설 사용규칙 확인',
                 '쓰레기 분리배출',
                 '금연 · 음주 관련 생활관 규정 확인',
+                '한림생활관은 전열기기, 취사기기(냉장고 · 전기밥솥 · 전기포트 등), 화재위험물, '
+                    '과도 · 도검류 등 일반위험물, 주류를 반입할 수 없습니다.',
               ],
               linesEn: [
                 'Check-in and check-out times and procedures',
@@ -1459,27 +1623,27 @@ class MockData {
                 'How shared facilities may be used',
                 'How rubbish is separated for recycling',
                 'The rules on smoking and alcohol',
+                'Hanlim does not allow electric heaters, cooking appliances '
+                    '(including fridges, rice cookers and electric kettles), '
+                    'fire hazards, knives and other dangerous items, or '
+                    'alcohol.',
               ],
             ),
           ],
           noticeKo: '퇴사할 때도 신고가 필요해요\n'
-              '석당글로벌하우스는 행정실 또는 사감실에 신고한 뒤 퇴사하도록 안내하고 있으며, 중도 '
-              '퇴사 시 환불 기준이 따로 있습니다. 퇴사 전에 본인 기숙사의 규정을 확인하세요.',
+              '석당글로벌하우스는 행정실 또는 사감실에 신고한 뒤 퇴사하도록 안내하며, 입 · 퇴사 '
+              '안내 기준(3개월분 납부 기준)으로 중도 퇴사 시 입사 후 1개월 이내면 기숙사비의 2/3, '
+              '1~2개월이면 1/3을 돌려받고 2개월이 지나면 환불되지 않으며, 사생 수칙 위반으로 강제 '
+              '퇴사하면 환불되지 않습니다. 퇴사 전에 본인 기숙사의 최신 규정을 확인하세요.',
           noticeEn: 'Moving out also has to be reported\n'
               'Seokdang Global House asks residents to report to the office or '
-              'the warden before leaving, and has its own refund rules for '
-              "leaving early. Check your dormitory's rules before you move "
-              'out.',
+              'the warden before leaving. Its move-in/out page says that, for a '
+              'three-month fee, if you leave early you get back two-thirds '
+              'within the first month, one-third in the second month, and '
+              'nothing after two months — and nothing if you are evicted for '
+              "breaking the house rules. Check your dormitory's current rules "
+              'before you move out.',
           noticeIconName: 'info',
-          footnoteKo: '※ 2024학년도 외국인 유학생 안내서의 「도착 후 해야 할 일」에는 방배정 확인 후 '
-              '오리엔테이션 참가, 입사등록 서류(서약서 · 비품점검표) 제출, 입사일 기준 최종 '
-              '입사비 확인 후 3일 이내 납부, 건강검진결과표 제출(한림생활관 입사자)이 안내되어 '
-              '있었습니다.',
-          footnoteEn: '※ The 2024 booklet\'s "after you arrive" chapter listed '
-              'attending the orientation after confirming your room, handing '
-              'in the pledge and fittings checklist, paying the final fee '
-              'within three days of moving in, and submitting a health-check '
-              'certificate (Hanlim residents).',
         ),
       ],
       tipsKo: [
@@ -1491,8 +1655,8 @@ class MockData {
             '있습니다.',
         '🛏 침구류를 확인하세요 — 침구가 제공되지 않는 기숙사가 있을 수 있으므로 입사 전 '
             '확인하세요.',
-        '📄 제출서류가 있을 수 있어요 — 기숙사와 학생 유형에 따라 건강검진결과표 등 추가 서류가 '
-            '필요할 수 있습니다.',
+        '📄 결핵 검사 결과를 준비하세요 — 한림생활관과 석당글로벌하우스 모두 입사할 때 결핵 검사 '
+            '결과를 요구합니다.',
       ],
       tipsEn: [
         '📅 Application periods change each semester — never go by last '
@@ -1504,9 +1668,8 @@ class MockData {
             'dormitory and the length of stay.',
         '🛏 Check the bedding — some dormitories provide none, so find out '
             'before you arrive.',
-        '📄 There may be documents to submit — depending on the dormitory and '
-            'your student type, a health-check certificate or other papers may '
-            'be required.',
+        '📄 Get your tuberculosis test result ready — both Hanlim Residence '
+            'Hall and Seokdang Global House ask for one when you move in.',
       ],
       links: [
         GuideLink(
@@ -1570,10 +1733,12 @@ class MockData {
       status: GuideStatus.published,
     ),
     // Money-losing mistakes live in this guide, so every legal statement is
-    // sourced (출입국관리법 §36/§88-2, 주택임대차보호법 §3/§3-2, 공인중개사법 §25/§32) via
-    // 법제처 생활법령정보, and every figure that moves — rent levels, 중개보수
-    // 요율, 신고 대상 금액 — is deferred to the official page instead of copied.
-    // Campus-On states procedure, never legal advice.
+    // sourced (출입국관리법 §36/§88-2/§98, 주택임대차보호법 §3/§3-2/§3-6/§3-7,
+    // 부동산거래신고법 §6-2, 공인중개사법 §17/§25/§30/§32, 국세징수법 §109) via
+    // 법제처 생활법령정보, 국토교통부 RTMS and 국세청 안내. Statutory thresholds
+    // (신고 대상 금액, 미납국세 열람 1천만원, 벌금 상한) are stated; market figures —
+    // rent levels, 중개보수 요율 — are deferred to the official page instead of
+    // copied. Campus-On states procedure, never legal advice.
     const AdminGuideItem(
       id: 'off-campus-housing',
       categoryId: GuideCategory.housing,
@@ -1613,8 +1778,7 @@ class MockData {
               titleKo: '🏠 방의 형태',
               titleEn: '🏠 Kinds of room',
               linesKo: [
-                '원룸 — 방, 주방, 욕실 등이 한 공간에 있는 1인 주거 형태입니다. 대학생이 많이 '
-                    '이용합니다.',
+                '원룸 — 방, 주방, 욕실 등이 한 공간에 있는 1인 주거 형태입니다.',
                 '오피스텔 — 주거와 업무 용도로 사용되는 건물 형태로, 원룸보다 시설이 다양할 수 '
                     '있습니다.',
                 '고시원 · 고시텔 — 작은 개인실을 이용하고 주방이나 세탁실 등을 공동으로 '
@@ -1624,7 +1788,7 @@ class MockData {
               ],
               linesEn: [
                 'One-room (원룸) — a single space holding the room, kitchen and '
-                    'bathroom. The most common student option.',
+                    'bathroom, meant for one person.',
                 'Officetel (오피스텔) — a building used for both living and '
                     'work; facilities are often more varied than in a one-room.',
                 'Goshiwon / goshitel (고시원 · 고시텔) — a small private room, '
@@ -1643,7 +1807,7 @@ class MockData {
               ],
               linesEn: [
                 'Wolse (월세) — you leave a deposit and pay a set rent every '
-                    'month. This is what most students use.',
+                    'month.',
                 'Jeonse (전세) — you leave one large deposit and live there for '
                     'the contract period instead of paying monthly rent.',
               ],
@@ -1716,9 +1880,10 @@ class MockData {
               linesEn: [
                 'Other students are a good source for what a neighbourhood is '
                     'actually like.',
-                'Renting directly from a person means nobody checks the '
-                    'paperwork for you — verifying the owner and putting '
-                    'everything in a written contract matters even more.',
+                'Renting directly from a person means no licensed agent checks '
+                    'and explains the paperwork for you — verifying the owner '
+                    'and putting everything in a written contract matters even '
+                    'more.',
               ],
             ),
           ],
@@ -1881,24 +2046,48 @@ class MockData {
               titleKo: '📄 등기사항증명서로 소유자 확인',
               titleEn: '📄 Check the owner in the property register',
               linesKo: [
-                '등기사항증명서(등기부등본)를 통해 집의 실제 소유자와 근저당권 등 권리관계를 '
-                    '확인할 수 있습니다.',
+                '등기사항증명서(등기부등본)를 통해 집의 등기상 소유자와 근저당권 등 등기된 '
+                    '권리관계를 확인할 수 있습니다.',
                 '등기사항증명서는 대한민국 법원 인터넷등기소에서 누구나 열람하거나 발급받을 '
                     '수 있습니다.',
                 '계약하려는 사람이 등기상 소유자와 같은 사람인지 신분증으로 확인하세요.',
                 '소유자가 아닌 대리인이 계약한다면 위임장 등 위임 사실을 확인할 수 있는 '
                     '서류와 신분 확인을 요청하세요.',
+                '등기사항증명서만으로 모든 위험을 알 수는 없습니다. 임대인의 미납 세금이나 '
+                    '다른 임차인의 보증금은 등기부에 나타나지 않을 수 있습니다.',
+                '임대인은 계약할 때 확정일자 부여일 · 보증금 등 다른 임대차 정보와 국세 · '
+                    '지방세 납세증명서를 임차인에게 보여줘야 합니다. 계약 전에 임차인이 직접 '
+                    '열람하는 데 동의하는 것으로 대신할 수도 있습니다.',
+                '임대인의 미납 국세는 세무서나 홈택스에서 열람을 신청할 수 있습니다. 계약 '
+                    '전에는 임대인의 동의가 필요하고, 계약 후 임대차 시작일까지는 보증금이 '
+                    '1천만원을 넘으면 동의 없이도, 1천만원 이하이면 동의를 받아 신청할 수 '
+                    '있습니다. 홈택스로 신청했더라도 열람은 신청한 세무서에 방문해서 합니다.',
               ],
               linesEn: [
-                'The property register (등기사항증명서) shows who actually owns '
-                    'the place and what claims — such as a mortgage — are '
-                    'registered against it.',
+                'The property register (등기사항증명서) shows the registered '
+                    'owner of the place and what claims — such as a mortgage '
+                    '— are registered against it.',
                 'Anyone can view or obtain it from the Korean Court Internet '
                     'Registry Office.',
                 'Check the ID of the person signing against the owner named in '
                     'the register.',
                 'If an agent signs instead of the owner, ask for the power of '
                     'attorney and for ID you can check.',
+                'The register does not show every risk — the landlord\'s '
+                    'unpaid taxes, or other tenants\' deposits, may not appear '
+                    'on it.',
+                'When signing, the landlord must show you information on '
+                    'other leases of the home (fixed dates, deposits and so on) '
+                    'and national and local tax payment certificates. Before '
+                    'signing, the landlord can instead consent to you viewing '
+                    'these records yourself.',
+                'You can apply at a tax office or on Hometax to see the '
+                    'landlord\'s unpaid national taxes. Before signing you need '
+                    'the landlord\'s consent; after signing and up to the lease '
+                    'start date, you can apply without consent if the deposit is '
+                    'over 10 million won, or with consent if it is 10 million '
+                    'won or less. Even if you apply on Hometax, you view the '
+                    'record in person at the tax office you applied to.',
               ],
             ),
             GuideNote(
@@ -1921,8 +2110,8 @@ class MockData {
               linesKo: [
                 '계약금과 보증금을 보내기 전에 받는 계좌의 명의가 계약 상대방과 같은지 '
                     '확인하세요.',
-                '제3자 명의의 계좌로 보내달라고 하는 경우에는 이유와 근거를 반드시 '
-                    '확인하세요.',
+                '제3자 명의의 계좌로 보내달라고 하는 경우에는 이유를 확인하고, 그 근거를 '
+                    '서면으로 받아두세요.',
                 '송금 기록은 반드시 보관하세요.',
               ],
               linesEn: [
@@ -1941,9 +2130,14 @@ class MockData {
               'If the contract is hard to follow, do not sign it alone — ask '
               'someone who reads Korean well, or one of the official advice '
               'services at the bottom of this page.',
-          footnoteKo: '※ Campus-On은 법률 자문을 제공하지 않습니다. 개별 계약에 따라 적용되는 '
-              '절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.',
-          footnoteEn: '※ Campus-On does not give legal advice. What applies to '
+          footnoteKo: '※ 근거: 「주택임대차보호법」 제3조의7, 「국세징수법」 제109조 — 법제처 '
+              '「찾기쉬운 생활법령정보」와 국세청 안내 기준. Campus-On은 법률 자문을 제공하지 '
+              '않습니다. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 '
+              '전문가에게 확인하세요.',
+          footnoteEn: '※ Based on the Housing Lease Protection Act art. 3-7 and '
+              'the National Tax Collection Act art. 109, as explained by the '
+              'Korean Ministry of Government Legislation and the National Tax '
+              'Service. Campus-On does not give legal advice. What applies to '
               'your particular contract can differ, so check with an official '
               'body or a professional.',
         ),
@@ -2034,8 +2228,8 @@ class MockData {
           iconName: 'info',
           bodyKo: '입주 당일에 확인하고 기록해 두면 나중에 문제가 생겼을 때 정리하기 훨씬 '
               '쉬워집니다.',
-          bodyEn: 'What you check and record on moving-in day is what settles '
-              'arguments later.',
+          bodyEn: 'What you check and record on moving-in day makes it much '
+              'easier to sort things out if a problem comes up later.',
           notes: [
             GuideNote(
               titleKo: '📁 보관할 것',
@@ -2119,59 +2313,73 @@ class MockData {
               linesKo: [
                 '주택임대차보호법의 대항력은 주택을 인도받고 주민등록(전입신고)을 마친 '
                     '다음 날부터 생깁니다.',
-                '외국인은 출입국관리법에 따른 체류지 변경 신고가 전입신고를 갈음하므로, '
-                    '신고를 마치면 같은 보호를 받을 수 있습니다.',
+                '외국인은 출입국관리법에 따른 외국인등록과 체류지 변경 신고가 주민등록과 '
+                    '전입신고를 갈음합니다. 주택을 인도받고 이 등록 · 신고를 마치면 같은 '
+                    '보호를 받을 수 있습니다.',
                 '우선변제권은 대항요건에 더해 임대차계약서에 확정일자를 받아야 생깁니다.',
-                '확정일자는 읍·면사무소, 동 주민센터, 지방법원, 등기소, 공증인 등에서 받을 '
-                    '수 있습니다.',
+                '확정일자는 읍·면사무소, 동 주민센터, 시·군·구의 출장소, 지방법원 · 등기소, '
+                    '공증인 등에서 받을 수 있습니다.',
               ],
               linesEn: [
                 'Under the Housing Lease Protection Act, protection against '
                     'third parties starts the day AFTER you take possession and '
                     'register your address.',
-                'For foreign nationals the immigration change-of-residence '
-                    'report stands in for the resident registration, so filing '
-                    'it gives you the same footing.',
+                'For foreign nationals, the alien registration and the '
+                    'change-of-residence report under the Immigration Control '
+                    'Act stand in for the resident registration. Once you have '
+                    'taken possession and completed them, you have the same '
+                    'footing.',
                 'To rank ahead of later claims you also need a fixed date '
                     '(확정일자) stamped on the lease.',
-                'You can get that stamp at a community centre, a district '
-                    'court, a registry office or a notary.',
+                'You can get that stamp at an eup/myeon office, a community '
+                    'centre, a si/gun/gu branch office, a district court or '
+                    'registry office, or a notary.',
               ],
             ),
             GuideNote(
               titleKo: '📝 주택 임대차계약 신고',
               titleEn: '📝 Reporting the lease itself',
               linesKo: [
-                '계약 조건과 지역에 따라 주택 임대차계약 신고가 필요할 수 있습니다.',
-                '임차인이 계약서를 첨부하면 혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 '
-                    '부여됩니다.',
-                '신고가 필요한지, 어떻게 하는지는 계약한 공인중개사 또는 관할 행정기관에서 '
-                    '확인하세요.',
+                '부산을 포함한 광역시 등에서는 보증금 6천만원 또는 월세 30만원을 넘는 주택 '
+                    '임대차계약을 계약 체결일부터 30일 이내에 신고해야 합니다. 둘 중 하나만 '
+                    '넘어도 대상입니다.',
+                '임대인과 임차인이 함께 신고하는 것이 원칙이지만, 임차인이 계약서를 첨부하면 '
+                    '혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 부여됩니다.',
+                '2025년 6월 1일 이후 체결한 계약은 신고하지 않으면 과태료가 부과될 수 '
+                    '있습니다. 신고 방법은 계약한 공인중개사나 주민센터에서 확인하세요.',
               ],
               linesEn: [
-                'Depending on the terms and the area, the lease itself may have '
-                    'to be reported.',
-                'A tenant who attaches the contract can file it alone — and the '
-                    'fixed date is then applied automatically.',
-                'Ask your agent or the local office whether your contract needs '
-                    'reporting, and how.',
+                'In Busan and other metropolitan cities, among other areas, a '
+                    'housing lease with a deposit over 60 million won or monthly '
+                    'rent over 300,000 won must be reported within 30 days of '
+                    'signing. Passing either threshold is enough.',
+                'Landlord and tenant normally report together, but a tenant who '
+                    'attaches the contract can file alone — and the fixed date '
+                    'is then applied automatically.',
+                'For contracts signed on or after 1 June 2025, failing to report '
+                    'can lead to a fine. Ask your agent or the community centre '
+                    'how to file.',
               ],
             ),
           ],
           noticeKo: '신고를 미루지 마세요\n'
-              '체류지 변경 신고는 기한이 정해져 있고, 기한 내에 신고하지 않으면 불이익이 있을 '
-              '수 있습니다. 보증금 보호와도 이어지므로 이사 후 먼저 처리하세요.',
+              '체류지 변경 신고는 전입한 날부터 15일 이내에 해야 하고, 기한을 넘기면 '
+              '출입국관리법에 따라 100만원 이하의 벌금이 부과될 수 있습니다. 보증금 보호와도 '
+              '이어지므로 이사 후 먼저 처리하세요.',
           noticeEn: 'Do not put the report off\n'
-              'There is a deadline, and missing it can have consequences. It '
-              'also ties into how your deposit is protected — so make it the '
-              'first thing you do after moving.',
-          footnoteKo: '※ 근거: 「출입국관리법」 제36조 및 제88조의2, 「주택임대차보호법」 제3조 · '
-              '제3조의2 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 '
-              '안내 기준. 신고 대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 '
-              '확인하세요. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 '
-              '전문가에게 확인하세요.',
-          footnoteEn: '※ Based on the Immigration Control Act arts. 36 and 88-2 '
-              'and the Housing Lease Protection Act arts. 3 and 3-2, as '
+              'The change-of-residence report is due within 15 days of moving '
+              'in, and missing it can mean a fine of up to 1 million won under '
+              'the Immigration Control Act. It also ties into how your deposit '
+              'is protected — so make it the first thing you do after moving.',
+          footnoteKo: '※ 근거: 「출입국관리법」 제36조 · 제88조의2 · 제98조, 「주택임대차보호법」 '
+              '제3조 · 제3조의2 · 제3조의6, 「부동산 거래신고 등에 관한 법률」 제6조의2 — 법제처 '
+              '「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 안내 기준. 신고 '
+              '대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 확인하세요. 개별 '
+              '계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 '
+              '확인하세요.',
+          footnoteEn: '※ Based on the Immigration Control Act arts. 36, 88-2 and '
+              '98, the Housing Lease Protection Act arts. 3, 3-2 and 3-6, and '
+              'the Act on Report on Real Estate Transactions art. 6-2, as '
               'explained by the Korean Ministry of Government Legislation, '
               'HiKorea and the property transaction system. Thresholds and '
               'deadlines change — check the current official guidance, and ask '
@@ -2181,19 +2389,30 @@ class MockData {
           titleKo: '보증금 · 월세 이해하기',
           titleEn: 'Deposits, Rent & Fees',
           iconName: 'payments',
-          bodyKo: '계약서에 나오는 돈은 크게 네 가지입니다. 각각 언제 내고 언제 돌려받는지가 '
-              '다릅니다.',
+          bodyKo: '계약서에 나오는 돈은 크게 네 가지입니다. 각각 언제 내고, 계약이 끝날 때 '
+              '어떻게 처리되는지가 다릅니다.',
           bodyEn: 'Four kinds of money appear in a lease. They are paid at '
-              'different times, and only one of them comes back.',
+              'different times, and what happens to each of them when the '
+              'contract ends is different.',
           notes: [
             GuideNote(
               titleKo: '계약금',
               titleEn: 'Down payment (계약금)',
               linesKo: [
                 '계약을 진행하기로 하면서 먼저 지급하는 금액입니다.',
+                '계약이 어떻게 끝나느냐에 따라 처리가 달라집니다. 특약이 없다면, 예를 들어 '
+                    '계약 이행이 시작되기 전에 임차인이 계약금을 포기하고 계약을 해제하면 계약금은 돌려받지 '
+                    '못합니다. 그 밖의 경우는 계약서의 특약과 계약이 끝난 사유에 따라 '
+                    '달라지므로 서명 전에 확인하세요.',
               ],
               linesEn: [
                 'Paid up front when you agree to go ahead with the contract.',
+                'What happens to it depends on how the contract ends. Unless '
+                    'the contract says otherwise, if for example you give it up '
+                    'to cancel the contract before performance has begun, you '
+                    'do not get it back. In other '
+                    'cases it depends on the special terms and why the contract '
+                    'ended, so check before you sign.',
               ],
             ),
             GuideNote(
@@ -2253,14 +2472,20 @@ class MockData {
               linesKo: [
                 '중개보수는 거래금액과 계약 형태 등에 따라 상한이 정해질 수 있으며, 주택 '
                     '임대차의 상한 요율은 시·도의 조례로 정해집니다.',
+                '오피스텔 등 주택이 아닌 중개대상물은 상한을 정하는 근거가 다르므로, 본인 '
+                    '계약이 어느 구분인지 중개사에게 확인하세요.',
                 '그 상한 안에서 의뢰인과 개업공인중개사가 협의해 정합니다.',
                 '중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.',
                 '요율은 바뀔 수 있으므로 계약 전에 최신 공식 안내를 확인하세요.',
               ],
               linesEn: [
-                'There is a ceiling on the commission, set by the province or '
-                    'metropolitan city by ordinance, and it depends on the '
-                    'transaction amount and the type of contract.',
+                'There is a ceiling on the commission. For housing leases it is '
+                    'set by the province or metropolitan city by ordinance, and '
+                    'it depends on the transaction amount and the type of '
+                    'contract.',
+                'An officetel or other non-housing property follows a '
+                    'different, nationally set ceiling, so ask the agent which '
+                    'category your contract falls under.',
                 'Within that ceiling, you and the agent agree the figure.',
                 'The rate table must be displayed inside the agency office.',
                 'Rates change, so check the current official guidance before '
@@ -2272,33 +2497,44 @@ class MockData {
               titleEn: '📑 What you should receive',
               linesKo: [
                 '계약을 체결할 때 중개대상물 확인 · 설명서를 받게 됩니다.',
+                '중개사의 손해배상책임을 보장하는 증서(공제증서 등)의 사본이나 전자문서도 '
+                    '받게 됩니다.',
                 '현금으로 비용을 지불한 경우 영수증 등 지급 기록을 남겨두세요.',
               ],
               linesEn: [
                 'When the contract is made you should be given the property '
                     'confirmation and explanation document.',
+                'You should also get a copy, or an electronic version, of the '
+                    'document showing the agent\'s liability guarantee, such as '
+                    'a mutual-aid certificate (공제증서).',
                 'If you pay in cash, get a receipt or some other record of the '
                     'payment.',
               ],
             ),
           ],
-          footnoteKo: '※ 근거: 「공인중개사법」 제25조 · 제32조 및 같은 법 시행규칙 제20조 — '
-              '법제처 「찾기쉬운 생활법령정보」 안내 기준. 요율은 시·도 조례로 정해지고 바뀔 수 '
-              '있어 앱에 고정 표를 두지 않았습니다. 아래 링크에서 최신 기준을 확인하세요.',
-          footnoteEn: '※ Based on the Licensed Real Estate Agents Act arts. 25 '
-              'and 32 and its enforcement rules art. 20, as explained by the '
-              'Korean Ministry of Government Legislation. Because the rates are '
-              'set locally and change, no fixed table is built into the app — '
-              'use the link below for the current figures.',
+          footnoteKo: '※ 근거: 「공인중개사법」 제17조 · 제25조 · 제30조 · 제32조 및 같은 법 '
+              '시행규칙 제20조 — 법제처 「찾기쉬운 생활법령정보」 안내 기준. 주택의 요율은 시·도 '
+              '조례로, 오피스텔 등 주택이 아닌 중개대상물의 요율은 국토교통부령으로 정해지며 '
+              '바뀔 수 있어 앱에 고정 표를 두지 않았습니다. 아래 링크에서 최신 기준을 '
+              '확인하세요.',
+          footnoteEn: '※ Based on the Licensed Real Estate Agents Act arts. 17, '
+              '25, 30 and 32 and its enforcement rules art. 20, as explained by '
+              'the Korean Ministry of Government Legislation. Housing rates are '
+              'set by each province or metropolitan city by ordinance, and '
+              'officetels and other non-housing property follow a national '
+              'rule; because rates change, no fixed table is built into the app '
+              '— use the link below for the current figures.',
         ),
         GuideSection(
           titleKo: '사기 · 분쟁 예방',
           titleEn: 'Avoiding Rental Scams & Disputes',
           iconName: 'local_police',
-          bodyKo: '대부분의 계약은 문제없이 끝납니다. 아래 네 가지만 지켜도 대부분의 문제를 '
-              '피할 수 있습니다.',
-          bodyEn: 'Most rentals go fine. These four habits prevent most of what '
-              'goes wrong.',
+          bodyKo: '아래 네 가지를 지키면 흔한 피해를 줄이는 데 도움이 됩니다. 다만 이것만으로 '
+              '모든 위험을 막을 수는 없으니, 보증금이 크거나 의심스러운 점이 있으면 공식 '
+              '상담기관에 먼저 확인하세요.',
+          bodyEn: 'These four habits help you avoid common problems. They cannot '
+              'rule out every risk, so if the deposit is large or anything '
+              'seems wrong, check with an official advice service first.',
           notes: [
             GuideNote(
               titleKo: '🚫 집을 보지 않고 큰 금액을 보내지 마세요',
@@ -2411,29 +2647,28 @@ class MockData {
       tipsKo: [
         '🏠 여러 집을 비교하세요 — 첫 번째로 본 집을 바로 계약하기보다 위치와 비용, 시설을 '
             '비교해보세요.',
-        '💰 월세만 보지 마세요 — 보증금, 월세, 관리비, 전기 · 가스 등 실제 매달 부담할 비용을 '
-            '함께 확인하세요.',
+        '💰 월세만 보지 마세요 — 보증금과 함께, 월세 · 관리비 · 전기 · 가스 등 실제로 매달 '
+            '나가는 비용을 합쳐 확인하세요.',
         '📄 계약서를 이해한 뒤 서명하세요 — 이해하지 못한 내용이 있다면 서명하기 전에 반드시 '
             '확인하세요.',
         '📸 입주 전 사진을 남겨두세요 — 기존 손상이나 시설 상태를 입주 전에 사진으로 '
             '기록하세요.',
-        '📍 이사 후 신고를 확인하세요 — 외국인등록을 한 학생은 주소 변경 후 체류지 변경 신고가 '
-            '필요할 수 있습니다.',
+        '📍 이사 후 신고를 잊지 마세요 — 외국인등록을 한 학생은 이사하면 15일 이내에 체류지 '
+            '변경 신고를 해야 합니다.',
         '🧾 모든 기록을 보관하세요 — 계약서, 송금내역, 중개 관련 영수증 등 계약과 관련된 기록을 '
             '보관하세요.',
       ],
       tipsEn: [
         '🏠 Compare a few places — do not sign for the first room you see; '
             'weigh location, cost and condition against each other.',
-        '💰 Rent is not the whole cost — add the deposit, the maintenance fee '
-            'and utilities to see what a month actually costs.',
+        '💰 Rent is not the whole cost — besides the deposit, add rent, the '
+            'maintenance fee and utilities to see what a month actually costs.',
         '📄 Understand the contract before you sign — if any part is unclear, '
             'ask before signing, not after.',
         '📸 Take photos before moving in — record any existing damage and the '
             'state of the fittings.',
-        '📍 Check your address-reporting requirements after moving — with an '
-            'alien registration, a change of address usually has to be '
-            'reported.',
+        '📍 Report your new address after moving — with an alien '
+            'registration, you must report a change of address within 15 days.',
         '🧾 Keep every record — the contract, the transfers and the agency '
             'receipts.',
       ],
@@ -2442,9 +2677,9 @@ class MockData {
           labelKo: '주택임대차 보증금 보호 안내 (법제처)',
           labelEn: 'Housing lease & deposit protection (Ministry of Government '
               'Legislation)',
-          descriptionKo: '계약 전 확인 · 임차인 보호 정보',
-          descriptionEn: 'What to check before signing, and how tenants are '
-              'protected',
+          descriptionKo: '대항력 · 확정일자 · 우선변제권 안내',
+          descriptionEn: 'How tenants gain protection: possession, '
+              'registration, fixed date and priority',
           url: 'https://www.easylaw.go.kr/CSP/CnpClsMain.laf'
               '?csmSeq=629&ccfNo=2&cciNo=3&cnpClsNo=1',
           iconName: 'menu_book',
@@ -2504,7 +2739,7 @@ class MockData {
           labelKo: '대한법률구조공단',
           labelEn: 'Korea Legal Aid Corporation',
           descriptionKo: '임대차 분쟁 법률상담 (국번없이 132)',
-          descriptionEn: 'Free legal advice on lease disputes (dial 132)',
+          descriptionEn: 'Legal advice on lease disputes (dial 132)',
           url: 'https://www.klac.or.kr/',
           iconName: 'local_police',
         ),
@@ -2512,7 +2747,7 @@ class MockData {
         // page's change-of-residence report hangs off.
         GuideLink(
           labelKo: '외국인등록증 발급 안내',
-          labelEn: 'Guide — Alien Registration Card',
+          labelEn: 'Guide — Residence Card (ARC)',
           descriptionKo: '앱 안에서 바로 보기',
           descriptionEn: 'Open the in-app guide',
           url: '/guide/item/arc-issue',
@@ -2531,72 +2766,139 @@ class MockData {
       categoryId: GuideCategory.living,
       titleKo: '은행 계좌 개설',
       titleEn: 'Open a Bank Account',
-      summaryKo: '여권·외국인등록증 지참',
-      summaryEn: 'Bring passport & ARC',
+      summaryKo: '신분증과 금융거래 목적 서류 준비',
+      summaryEn: 'Bring ID and proof of what the account is for',
       iconName: 'account_balance',
       overviewKo: '은행 계좌는 은행 지점 방문을 통해 개설하는 것이 가장 일반적입니다. '
+          '계좌를 만들 때는 여권이나 외국인등록증 같은 신분증과 금융거래 목적을 보여 주는 '
+          '서류를 제시합니다. '
           '일부 은행은 모바일 앱을 통한 비대면 계좌 개설도 지원할 수 있으나, '
           '외국인등록증, 본인 명의 휴대폰, 모바일 외국인등록증 등 조건이 필요할 수 있습니다. '
           '은행마다 가능 여부와 필요 서류가 다르므로 방문 또는 신청 전 확인하는 것이 좋습니다.',
       overviewEn: 'Opening an account in person at a bank branch is the most common '
-          'route. Some banks also offer app-based (non-face-to-face) account '
-          'opening, but this may require an ARC, a phone number registered in '
-          'your own name, or a mobile ARC. Availability and required documents '
-          'differ by bank, so check before you visit or apply.',
+          'route. To open one you show an ID such as your passport or '
+          'Residence Card, together with a document showing what the account '
+          'is for. Some banks also offer app-based (non-face-to-face) account '
+          'opening, but this may require a Residence Card (ARC), a phone number '
+          'registered in your own name, or a mobile Residence Card. '
+          'Availability and required documents differ by bank, so check before '
+          'you visit or apply.',
       checklistKo: [
-        '여권',
-        '외국인등록증(ARC)',
-        '학생증 또는 재학증명서',
-        '체류지 확인 서류: 기숙사 확인서, 임대차계약서 등',
-        '본인 명의 휴대폰 번호',
-        '금융거래 목적 확인 서류: 재학증명서, 등록금 납부 관련 서류 등',
+        '신분증: 여권 또는 외국인등록증(ARC)',
+        '금융거래 목적을 보여 주는 서류 — 은행 안내 예시: 유학 목적이라면 입학허가서 · '
+            '비자(유학), '
+            '아르바이트 급여라면 근로계약서 · 고용주 사업자등록증 사본, 공과금 · 관리비라면 '
+            '납입 영수증',
+        '한국 주소(신청서에 적습니다)',
+        '연락 가능한 휴대폰 번호',
       ],
       checklistEn: [
-        'Passport',
-        'Alien Registration Card (ARC)',
-        'Student ID or certificate of enrollment',
-        'Proof of residence: dormitory confirmation, lease contract, etc.',
-        'A phone number registered in your own name',
-        'Proof of purpose for banking: certificate of enrollment, tuition '
-            'payment documents, etc.',
+        'ID: passport or Residence Card (ARC)',
+        'A document showing what the account is for — examples banks give: '
+            'for study, your admission letter and (student) visa; for '
+            'part-time wages, '
+            "your employment contract and a copy of your employer's business "
+            'registration; for utility or maintenance bills, a payment receipt',
+        'Your address in Korea (you write it on the application form)',
+        'A mobile number you can be reached on',
       ],
-      checklistNoteKo: '※ 은행마다 요구하는 서류가 다를 수 있으므로 방문 전 은행에 확인하는 것이 좋습니다.',
-      checklistNoteEn: '※ Required documents vary by bank — check with the branch '
-          'before your visit.',
+      checklistNoteKo: '※ 필요한 서류는 은행 · 지점 · 상품과 외국인등록 여부에 따라 다르며, 위 '
+          '목록이 모두 필수는 아닙니다. 은행에 따라 본국 신분증 · 신용카드나 공과금 영수증 '
+          '같은 서류를 더 요청하기도 하므로, 학생이 어떤 서류를 내면 되는지 방문할 지점에 '
+          '미리 확인하세요.',
+      checklistNoteEn: '※ What you need depends on the bank, the branch, the '
+          'product, and whether you have registered as a foreign resident — not '
+          'every item above is required everywhere. Some banks also ask for '
+          'extra documents such as an ID or credit card from your home country '
+          'or a Korean utility bill, so ask the branch you will visit what a '
+          'student can bring.',
       stepsKo: [
         '가까운 은행 방문',
         '번호표 발급 후 대기',
         '은행 직원에게 계좌 개설 요청',
         '신분증 및 필요 서류 제출',
-        '신청서 작성',
-        '통장, 체크카드, 인터넷뱅킹 또는 모바일뱅킹 신청',
+        '신청서 작성(외국인등록번호 · 생년월일 · 주소 · 연락처 등)',
+        '통장 · 카드 비밀번호를 정하고 통장, 체크카드, 인터넷뱅킹 또는 모바일뱅킹 신청',
+        '발급된 통장과 카드 확인',
       ],
       stepsEn: [
         'Visit a nearby bank branch',
         'Take a queue ticket and wait',
         'Tell the teller you want to open an account',
         'Submit your ID and the required documents',
-        'Fill in the application form',
-        'Request a bankbook, check card, and internet or mobile banking',
+        'Fill in the application form (your foreign resident registration '
+            'number, date of birth, '
+            'address, contact number and so on)',
+        'Set PINs for your bankbook and card, and request a bankbook, check '
+            'card, and internet or mobile banking',
+        'Check the bankbook and card you are given',
       ],
       tipsKo: [
-        '일반적인 은행 영업시간은 평일 오전 9시부터 오후 4시까지입니다.',
-        '외국인등록증이 없으면 일부 은행에서 계좌 개설이 제한될 수 있습니다.',
+        '일반적인 은행 영업시간은 평일 오전 9시부터 오후 4시까지입니다. 평일 저녁이나 '
+            '주말에 여는 외국인 특화 점포도 있으니 아래 은행연합회 탄력점포 검색에서 '
+            '확인하세요.',
+        '외국인등록증이 나오기 전에도 여권을 신분증으로 쓸 수 있습니다. 다만 은행에 따라 '
+            '본국 신분증 · 신용카드나 공과금 영수증 같은 서류를 더 요청할 수 있고, 금융거래 '
+            '목적을 증빙하기 어려우면 한도제한계좌로 개설됩니다. 여권으로 개설한 뒤 '
+            '외국인등록증을 받았다면 은행에 갈 때 여권과 외국인등록증을 함께 가져가세요'
+            '(은행 안내).',
+        '모바일 외국인등록증은 외국인등록을 마친 14세 이상이 본인 명의 스마트폰으로 '
+            '발급받습니다. 이것으로 계좌를 개설할 수 있는 은행은 2025년 3월 발표 기준 '
+            '대면 6곳(신한 · 하나 · iM뱅크 · 부산 · 전북 · 제주), 비대면 1곳(전북)입니다.',
         '금융거래 목적을 증명하기 어려운 경우 한도제한계좌로 개설될 수 있습니다.',
-        '한도제한계좌는 이체나 출금 한도가 제한될 수 있습니다.',
+        '한도제한계좌는 2024년 5월 2일부터 하루에 인터넷 · 모바일뱅킹 100만 원, ATM 100만 '
+            '원, 창구 300만 원까지 거래할 수 있습니다(인터넷전문은행은 다름). 나중에 금융거래 '
+            '목적을 보여 주는 서류를 내면 은행 확인을 거쳐 한도를 풀 수 있습니다.',
         '인터넷뱅킹과 모바일뱅킹을 함께 신청하면 송금과 잔액 확인이 편리합니다.',
         '해외송금은 은행마다 수수료와 환율이 다를 수 있으므로 비교 후 이용하는 것이 좋습니다.',
+        '해외로 송금하려면 거래외국환은행을 지정해야 합니다. 연간 미화 5만 달러 범위의 '
+            '송금은 별도 입증 서류 없이 할 수 있고, 한국에서 번 소득을 그보다 많이 보낼 때는 '
+            '취득 경위를 입증하는 서류가 필요합니다.',
+        '통장이나 체크카드를 다른 사람에게 빌려주거나 팔면 안 됩니다. 남에게 넘기거나 파는 '
+            '것은 그 자체로 금지되고, 대가를 받고 빌려주거나 범죄에 쓰일 것을 알면서 '
+            '빌려주면 처벌받습니다(전자금융거래법 제6조제3항 · 제49조제4항). 사기에 쓰이면 '
+            '계좌 개설 등 금융거래가 제한될 수 있습니다. 피해가 생기면 경찰(112)이나 '
+            '금융감독원(1332)에 알리세요.',
       ],
       tipsEn: [
-        'Banks are usually open 09:00–16:00 on weekdays.',
-        'Without an ARC, some banks may restrict account opening.',
+        'Banks are usually open 09:00–16:00 on weekdays. Some branches for '
+            'foreign residents also open on weekday evenings or at weekends — '
+            'look them up in the Korea Federation of Banks branch search '
+            'below.',
+        'Before your Residence Card is issued you can use your passport as ID. '
+            'A bank may ask for extra documents such as an ID or credit card '
+            'from your home country or a Korean utility bill, and if the '
+            'purpose of banking is hard to prove you will get a '
+            'limited-transaction account. If you opened the account with your '
+            'passport and later receive your Residence Card, bring both '
+            'documents when you visit the bank (bank guidance).',
+        'A mobile Residence Card is issued to registered foreign residents '
+            'aged 14 or over, on a smartphone in their own name. As announced '
+            'in March 2025, six banks accept it at the counter (Shinhan, Hana, '
+            'iM Bank, Busan, Jeonbuk, Jeju) and one online (Jeonbuk).',
         'If the purpose of banking is hard to prove, you may receive a '
             'limited-transaction account.',
-        'A limited-transaction account can cap transfers and withdrawals.',
+        'Since 2 May 2024 a limited-transaction account allows up to '
+            '₩1,000,000 a day through internet or mobile banking, ₩1,000,000 '
+            'at ATMs and ₩3,000,000 at the counter (online-only banks '
+            'differ). You can have the limit lifted later by showing a '
+            'document that proves what the account is for, once the bank has '
+            'checked it.',
         'Applying for internet and mobile banking together makes transfers and '
             'balance checks easier.',
         'Overseas remittance fees and exchange rates differ by bank — compare '
             'before you send money.',
+        'To send money abroad you must designate one bank as your '
+            'foreign-exchange bank. Transfers of up to US\$50,000 a year need '
+            'no supporting documents; to send more of the income you earned '
+            'in Korea you must show how you earned it.',
+        'Never lend or sell your bankbook or card. Handing it over or selling '
+            'it is prohibited in itself, and lending it for payment — or '
+            'knowing it will be used for crime — is a criminal offence '
+            '(Electronic Financial Transactions Act art. 6(3), 49(4)). If it '
+            'is used for fraud your banking — including opening accounts — can '
+            'be restricted. Report fraud to the police (112) or the Financial '
+            'Supervisory Service (1332).',
       ],
       phrases: [
         GuidePhrase(
@@ -2604,8 +2906,44 @@ class MockData {
           en: 'I would like to open a bank account.',
         ),
       ],
-      durationKo: '예상 30분~1시간',
-      durationEn: 'Approx. 30 min – 1 hour',
+      links: [
+        GuideLink(
+          labelKo: '외국인유학생 은행 이용 안내',
+          labelEn: 'Banking for international students',
+          descriptionKo: '찾기쉬운 생활법령정보 — 계좌 개설 · 해외송금 · 외국어 상담 은행',
+          descriptionEn: 'Easy-to-find Law (Korean) — accounts, transfers and '
+              'bank lines with foreign-language help',
+          url: 'https://www.easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=508&ccfNo=3&cciNo=2&cnpClsNo=1',
+          iconName: 'menu_book',
+        ),
+        GuideLink(
+          labelKo: '주말 · 저녁 영업 은행 점포',
+          labelEn: 'Bank branches open evenings and weekends',
+          descriptionKo: '은행연합회 탄력점포 검색 — 외국인 특화 점포',
+          descriptionEn: 'Korea Federation of Banks — branches for foreign '
+              'residents',
+          url: 'https://portal.kfb.or.kr/consumer/freebranch_search.php?Branch_Type=B',
+          iconName: 'location_on',
+        ),
+        GuideLink(
+          labelKo: '해외송금 수수료 비교',
+          labelEn: 'Compare overseas transfer fees',
+          descriptionKo: '은행연합회 은행별 외화송금수수료 공시',
+          descriptionEn: 'Korea Federation of Banks — fees by bank',
+          url: 'https://portal.kfb.or.kr/compare/commission_exchange.php',
+          iconName: 'compare_arrows',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 외국인등록증(ARC) 발급',
+          labelEn: 'Guide — Residence Card (ARC)',
+          descriptionKo: '앱 안에서 바로 보기',
+          descriptionEn: 'Open the in-app guide',
+          url: '/guide/item/arc-issue',
+          iconName: 'badge',
+        ),
+      ],
+      // No durationText: no official source states how long opening takes —
+      // it depends on the queue and on the bank's checks.
       difficulty: 2,
       status: GuideStatus.published,
     ),
@@ -2632,27 +2970,27 @@ class MockData {
           'status can limit what is available to you.\n\n'
           'If this is your first Korean line, check which documents you need and '
           'then visit a carrier store.',
+      // The ID depends on the plan, not on the person: KT's own guide opens
+      // prepaid to a passport and requires the registration card for postpaid.
+      // Listing both as always-required contradicted the prepaid section below.
       checklistKo: [
-        '외국인등록증(ARC / Residence Card)',
-        '여권',
+        '요금제에 맞는 신분증 — 후불은 외국인등록증, 일부 선불 상품은 여권',
         '사용할 휴대폰',
         '요금 납부를 위한 결제수단',
       ],
       checklistEn: [
-        'Alien Registration Card (ARC / Residence Card)',
-        'Passport',
+        'The ID your plan needs — a Residence Card (ARC) for postpaid, a '
+            'passport for some prepaid products',
         'The phone you will use',
         'A payment method for your bill',
       ],
       checklistOptionalKo: [
         '한국 주소',
         '본인 명의 은행계좌 또는 카드',
-        '학생증 또는 재학증명서',
       ],
       checklistOptionalEn: [
         'A Korean address',
         'A bank account or card in your own name',
-        'Student ID or certificate of enrollment',
       ],
       checklistNoteKo: '※ 필요한 서류와 결제 방법은 통신사, 요금제, 체류자격에 따라 '
           '달라질 수 있으므로 방문 전에 확인하세요.',
@@ -2689,11 +3027,35 @@ class MockData {
               titleEn: "Don't have an ARC yet?",
               linesKo: [
                 '여권으로 가입 가능한 선불 SIM을 확인하세요.',
-                '단, 휴대폰 본인인증이 제한될 수 있습니다.',
+                'KT 기준 여권만으로는 선불 요금제만 가입할 수 있고, 한 사람이 가질 수 '
+                    '있는 회선은 선불 1회선·후불 1회선이며 체류자격에 따라 후불 회선이 '
+                    '더 허용될 수 있습니다.',
+                'KT 선불 이용기간 안내에 따르면 여권으로 개통한 선불 회선은 개통일부터 '
+                    '90일, 외국인등록증으로 개통한 선불 회선은 카드 만료일까지 쓸 수 '
+                    '있습니다.',
+                '기간이 끝나도 여권이나 외국인등록증을 들고 KT 매장에 가거나 고객센터'
+                    '(080-448-0100)에 연락하면 이용기간을 연장할 수 있습니다(KT 기준).',
+                '통신사에 따라 비자에 남은 기간 조건이 있습니다(KT: 90일 이상).',
+                'PASS 등 휴대폰 본인인증이 그 회선에서 되는지는 개통할 때 매장에 '
+                    '확인하세요.',
               ],
               linesEn: [
                 'Look for a prepaid SIM you can sign up for with your passport.',
-                'Note that phone identity verification may be limited.',
+                'At KT a passport alone only gets you a prepaid plan, one '
+                    'subscriber may hold one prepaid and one postpaid line, '
+                    'and more postpaid lines may be allowed depending on your '
+                    'status of stay.',
+                "KT's prepaid service periods: a prepaid line opened with a "
+                    'passport runs for 90 days from activation, while a prepaid '
+                    'line opened with a Residence Card runs until the card '
+                    'expires.',
+                'When the period ends you can extend it at KT by taking your '
+                    'passport or Residence Card to a KT store or calling the '
+                    'Global Call Center (080-448-0100).',
+                'Carriers may require a minimum time left on your visa (KT: at '
+                    'least 90 days).',
+                'Ask the store whether phone identity verification such as PASS '
+                    'works on that line.',
               ],
             ),
             GuideNote(
@@ -2733,22 +3095,25 @@ class MockData {
               ],
             ),
           ],
-          noticeKo: '여권 정보로 개통한 선불 SIM은 일부 휴대폰 본인인증 서비스나 '
-              'PASS 앱 이용이 제한될 수 있습니다.',
-          noticeEn: 'A prepaid SIM opened with passport details may not work with '
-              'some phone identity verification services or the PASS app.',
+          noticeKo: '여권으로 개통한 선불 SIM에서 휴대폰 본인인증이나 PASS 앱을 쓸 수 '
+              '있는지는 통신사마다 다를 수 있으니 개통할 때 확인하세요.',
+          noticeEn: 'Whether phone identity verification or the PASS app works on '
+              'a prepaid SIM opened with a passport can differ by carrier — '
+              'check when you sign up.',
         ),
         GuideSection(
           titleKo: '후불 요금제',
           titleEn: 'Postpaid plans',
           iconName: 'receipt_long',
           bodyKo: '후불 요금제는 한 달 동안 사용한 통신요금을 나중에 납부하는 방식입니다.\n\n'
-              '장기간 한국에서 생활하는 학생이라면 외국인등록증을 받은 후 본인 명의로 '
-              '휴대폰 번호를 개통하는 것을 권장합니다.',
+              '후불 요금제는 외국인등록증이 있어야 가입할 수 있습니다(KT 기준 — 여권만 '
+              '있으면 선불 요금제만 가능합니다). 장기간 한국에서 생활하는 학생이라면 '
+              '외국인등록증을 받은 후 본인 명의로 개통하는 것을 권장합니다.',
           bodyEn: 'With a postpaid plan you pay afterwards for the month you have '
               'used.\n\n'
-              'If you will be living in Korea long term, we recommend opening a '
-              'number in your own name once your ARC is issued.',
+              'A postpaid plan needs a Residence Card (at KT, a passport alone '
+              'only gets you a prepaid plan). If you will be living in Korea '
+              'long term, open a line in your own name once your card is issued.',
           notes: [
             GuideNote(
               titleKo: '추천 대상',
@@ -2769,17 +3134,31 @@ class MockData {
       ],
       tipsKo: [
         '한국의 주요 통신사는 SKT, KT, LG U+입니다.',
-        '알뜰폰은 비교적 저렴하지만 외국인 가입 조건을 확인해야 합니다.',
+        '알뜰폰(MVNO)은 요금제가 다양하니 요금과 외국인 가입 조건을 함께 비교하세요.',
         '휴대폰이 본인 명의로 등록되어 있는지가 중요합니다.',
         '가입 시 외국인등록증에 표시된 이름과 동일하게 정보를 등록하는 것이 좋습니다.',
+        '한국에서는 다른 사람 명의로 통신서비스를 쓰는 것이 금지되어 있습니다. 휴대폰이나 '
+            '명의를 빌려주지 마세요. 명의자가 모든 사용에 법적 책임을 집니다.',
+        '한국을 떠나기 전에는 미납요금과 기기할부 잔액을 확인하고 매장에서 해지하세요'
+            '(KT 기준 해지는 매장 방문). 미납이 있으면 이용정지나 해지가 될 수 있습니다.',
+        '만 19세 미만은 법정대리인과 함께 매장을 방문해야 합니다(KT 기준).',
         '해외에서 가져온 휴대폰은 한국 통신망 및 USIM/eSIM 지원 여부를 확인해야 합니다.',
       ],
       tipsEn: [
         'The major carriers in Korea are SKT, KT, and LG U+.',
-        'Budget (MVNO) plans are cheaper, but check their conditions for '
-            'foreign customers.',
+        'Budget (MVNO) operators offer a wide range of plans — compare both the '
+            'price and their conditions for foreign customers.',
         'Whether the line is registered in your own name matters a lot.',
-        'Register your details exactly as they appear on your ARC.',
+        'Register your details exactly as they appear on your Residence Card '
+            '(ARC).',
+        'In Korea it is prohibited to use communication services under another '
+            "person's name. Never lend your phone or your name for a line: the "
+            'registered holder is legally responsible for all use.',
+        'Before leaving Korea, check any unpaid charges and device-installment '
+            'balance and cancel the line at a store (at KT, cancellation is in '
+            'person) — unpaid charges can get the line suspended or terminated.',
+        'If you are under 19, you must visit the store with a legal guardian '
+            '(KT).',
         'If you brought a phone from abroad, check that it supports Korean '
             'networks and USIM/eSIM.',
       ],
@@ -2790,7 +3169,7 @@ class MockData {
         ),
         GuidePhrase(
           ko: '외국인등록증 없이 개통할 수 있나요?',
-          en: 'Can I sign up without an Alien Registration Card?',
+          en: 'Can I sign up without a Residence Card (ARC)?',
         ),
       ],
       links: [
@@ -2803,6 +3182,8 @@ class MockData {
           labelKo: 'KT 외국인 개통 준비사항',
           labelEn: 'KT — what to prepare for activation',
           url: 'https://globalshop.kt.com/support/supportNeed.do',
+          descriptionKo: '외국인 고객센터 080-448-0100',
+          descriptionEn: 'Global Call Center 080-448-0100',
         ),
         // Official LG U+ Global portal — the help-center article previously
         // linked here fails with Cloudflare 1034 for some users.
@@ -2822,8 +3203,9 @@ class MockData {
           iconName: 'storefront',
         ),
       ],
-      durationKo: '예상 당일',
-      durationEn: 'Same day',
+      // No durationText: no official source states how long activation takes,
+      // and it is not always same-day — store review, a number transfer, SIM
+      // delivery or an extra identity check can push it past the day.
       difficulty: 1,
       status: GuideStatus.published,
     ),
@@ -2967,10 +3349,50 @@ class MockData {
               'discount when you change between buses and the subway.\n\n'
               'To get it you must pay with the card — and tap it again when you '
               'get off the bus.',
+          notes: [
+            GuideNote(
+              titleKo: '요금은 얼마인가요?',
+              titleEn: 'What does it cost?',
+              linesKo: [
+                '도시철도는 교통카드로 어른 1구간 1,600원 · 2구간 1,800원입니다'
+                    '(부산교통공사).',
+                '시내버스는 교통카드로 어른 일반버스 1,550원 · 좌석버스 2,100원입니다'
+                    '(부산교통공사 환승운임 예시 기준).',
+                '종이 QR 승차권은 1구간 1,700원 · 2구간 1,900원으로 더 비쌉니다.',
+                '환승할 때는 이용한 수단 중 가장 높은 운임만 냅니다. 2025년 9월 19일부터 '
+                    '부산 · 김해 · 양산 광역환승운임이 없어졌습니다.',
+                '만 13~18세는 청소년 운임(1구간 1,050원 · 2구간 1,200원)이 적용됩니다. '
+                    '청소년 요금을 적용받으려면 카드에 연령 정보를 등록해야 하니 카드사 '
+                    '안내를 확인하세요.',
+              ],
+              linesEn: [
+                'With a transit card an adult pays 1,600 won for one subway '
+                    'zone and 1,800 won for two (Busan Transportation '
+                    'Corporation).',
+                'A city bus costs 1,550 won and an express-seat bus 2,100 won '
+                    'by transit card (from the same transfer-fare examples).',
+                'A paper QR ticket costs more — 1,700 and 1,900 won.',
+                'When you transfer you pay only the highest of the fares you '
+                    'used. The Busan–Gimhae–Yangsan regional transfer surcharge '
+                    'was abolished on 19 September 2025.',
+                'Ages 13–18 pay the youth fare (1,050 and 1,200 won). To get '
+                    'it the card has to carry your age details — check your '
+                    "card issuer's instructions.",
+              ],
+            ),
+          ],
           noticeKo: '버스에서 내릴 때도 꼭 카드를 찍으세요.\n'
-              '환승 할인을 받으려면 하차할 때 교통카드를 태그해야 합니다.',
+              '환승 할인은 먼저 탄 교통수단에서 내린 뒤 30분 이내에 갈아탈 때 2회까지 '
+              '적용됩니다(총 3개 수단). 같은 노선의 버스를 다시 타거나, 도시철도 개찰구 '
+              '밖으로 나온 뒤 다시 도시철도를 타면 환승 할인이 적용되지 않습니다. 서로 '
+              '다른 버스 노선 간 환승은 위 조건에 따라 할인받을 수 있습니다.',
           noticeEn: 'Remember to tap your card when getting off the bus.\n'
-              'Without that tap you lose the transfer discount.',
+              'The transfer discount applies when you board the next service '
+              'within 30 minutes of getting off the previous one, for up to two '
+              'transfers (three services in all). Reboarding the same bus '
+              'route, or re-entering the subway after leaving its paid area, '
+              'does not qualify for a transfer discount. Transfers between '
+              'different bus routes can qualify under the conditions above.',
         ),
         GuideSection(
           titleKo: '어떤 교통카드를 사야 하나요?',
@@ -2998,6 +3420,35 @@ class MockData {
               ],
               linesEn: [
                 'Make sure the card has enough balance before you board.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '충전 한도와 잔액 환불',
+              titleEn: 'Recharge limit and refunds',
+              linesKo: [
+                '이즐(캐시비) 기준 선불 교통카드 한 장에 최대 50만원까지 충전할 수 '
+                    '있습니다.',
+                '이즐(캐시비) 정상인식 카드의 환불 한도와 수수료는 환불처마다 다릅니다. 공식 '
+                    '상세 안내상 GS25 · 세븐일레븐 · 이마트24는 잔액 2만원 이하, CU는 3만원 '
+                    '이하를 수수료 500원으로 바로 환불합니다.',
+                'ATM · 은행 · 본사 접수와 고장 · 파손 카드는 조건이 따로 있으니 카드사의 '
+                    '「카드잔액환불」 안내에서 확인하세요.',
+                '환불 방법과 수수료는 카드사마다 다릅니다. 부산교통공사는 카드 잔액을 '
+                    '직접 환불하지 않으니 카드 발행사 안내를 확인하세요.',
+              ],
+              linesEn: [
+                'An EZL (Cashbee) prepaid card holds up to 500,000 won.',
+                'For an EZL (Cashbee) card that still reads normally, the '
+                    'refund limit and fee depend on where you ask. Per the '
+                    "issuer's detailed table, GS25, 7-Eleven and emart24 refund "
+                    'balances of up to 20,000 won and CU up to 30,000 won, on '
+                    'the spot, for a 500 won fee.',
+                'ATMs, banks, head-office requests and faulty or damaged cards '
+                    "have their own conditions — check the issuer's 카드잔액환불 "
+                    '(card balance refund) page.',
+                'Refund routes and fees differ by issuer. Busan Transportation '
+                    'Corporation does not refund card balances itself — check '
+                    "your card issuer's instructions.",
               ],
             ),
             GuideNote(
@@ -3054,16 +3505,28 @@ class MockData {
         GuideLink(
           labelKo: '부산광역시 교통카드 안내',
           labelEn: 'Busan city — transit card guide',
-          descriptionKo: '교통카드 종류 · 구매 · 충전 · 이용 안내',
-          descriptionEn: 'Card types, buying, recharging, and how to use them',
+          descriptionKo: '카드 종류 · 구매처 · 충전처 · 부산 밖 사용(영문, 일부 카드 이름은 옛 표기)',
+          descriptionEn: 'Card types, where to buy and recharge, use outside '
+              'Busan (English; some card names are out of date)',
           url: 'https://www.busan.go.kr/eng/bscard',
         ),
+        // The previous link went to the operator's corporate site, which has no
+        // purchase or recharge guidance; this is the card's own help page.
         GuideLink(
-          labelKo: '이즐(EZL) 교통카드 안내',
-          labelEn: 'EZL transit card',
-          descriptionKo: '교통카드 구매 · 충전 · 사용 방법',
-          descriptionEn: 'Buying, recharging, and using the card',
-          url: 'https://www.myezl.com',
+          labelKo: '이즐(캐시비) 교통카드 구입 · 충전 안내',
+          labelEn: 'EZL (Cashbee) — buying & recharging',
+          descriptionKo: '구입처 · 충전 방법 · 잔액 환불',
+          descriptionEn: 'Where to buy, how to recharge, and refunds',
+          url: 'https://www.cashbee.co.kr/cb/inforUse/buyInfo.do',
+        ),
+        // Refund limits differ by place; the detailed table (not the summary
+        // page) is the source for the per-place figures above.
+        GuideLink(
+          labelKo: '이즐(캐시비) 카드잔액환불 안내',
+          labelEn: 'EZL (Cashbee) — card balance refunds',
+          descriptionKo: '환불처별 한도 · 수수료 · 고장 카드',
+          descriptionEn: 'Limits and fees by refund place, and faulty cards',
+          url: 'https://www.cashbee.co.kr/cb/cstmInfo/custCntrRepay.do',
         ),
         // In-app: same `?nearby=` map search the mobile-plan guide uses.
         GuideLink(
@@ -3076,8 +3539,8 @@ class MockData {
           iconName: 'storefront',
         ),
       ],
-      durationKo: '예상 10~20분',
-      durationEn: 'Approx. 10–20 min',
+      // No durationText: no official source states one, and it depends on how
+      // far the store is, whether it has cards in stock, and the queue.
       difficulty: 1,
       status: GuideStatus.published,
     ),
@@ -3095,16 +3558,25 @@ class MockData {
       overviewKo: '한국에 체류하는 외국인 유학생은 체류자격과 체류기간에 따라 국민건강보험에 가입하게 됩니다. '
           '가입 후에는 병원 진료와 건강검진 등에서 내국인과 같은 기준의 건강보험 혜택을 받을 수 있습니다.\n\n'
           '별도로 가입 신청서를 제출하는 방식이 아니라, 가입 대상이 되면 '
-          '국민건강보험공단에서 자동으로 가입 처리합니다.',
+          '국민건강보험공단에서 지역가입자로 자동 가입 처리합니다.\n\n'
+          '국내 사업장에 근로자로 고용되어 직장가입자가 되었다면 보험료와 신고 방법이 '
+          '다르므로 사업장이나 공단에 확인하세요. 외국 보험 등으로 같은 수준의 의료보장을 '
+          '받는 경우에도 자동으로 빠지는 것이 아니라, 증빙을 갖춰 가입 제외를 신청해야 합니다.',
       overviewEn: 'International students staying in Korea are enrolled in the '
-          'National Health Insurance depending on their visa status and period '
-          'of stay. Once enrolled, students can receive National Health '
+          'National Health Insurance depending on their status of stay and '
+          'period of stay. Once enrolled, students can receive National Health '
           'Insurance benefits for medical treatment, health checkups, and other '
           'covered services under the same general system as Korean '
           'nationals.\n\n'
           'In most cases, eligible international students are enrolled '
-          'automatically by the National Health Insurance Service (NHIS), '
-          'without submitting a separate enrollment application.',
+          'automatically as regional subscribers by the National Health '
+          'Insurance Service (NHIS), without submitting a separate enrollment '
+          'application.\n\n'
+          'If you are employed as a worker at a workplace in Korea and become '
+          'an employee subscriber, premiums and reporting work differently, so '
+          'check with your employer or NHIS. Having equivalent cover from a '
+          'foreign insurer does not take you out automatically either — you '
+          'have to apply for an exemption with supporting documents.',
       // Enrollment timing is a precondition, not a packing list — it has to be
       // read before "what to check", so it sits above the checklist.
       topSections: [
@@ -3112,28 +3584,42 @@ class MockData {
           titleKo: '언제 가입되나요?',
           titleEn: 'When does coverage start?',
           iconName: 'event_repeat',
+          // 보건복지부고시 「장기체류 재외국민 및 외국인에 대한 건강보험 적용기준」
+          // (제2025-69호): §4①2다·§4③ put D-2 study and D-4 study at a
+          // 초·중등교육법 school on the entry/registration date, every other D-4
+          // on the 6-month rule (§4①1). §4②6 ends coverage only when you leave
+          // for a month or more, so a short trip home changes nothing.
           notes: [
             GuideNote(
-              titleKo: 'D-2 유학 비자',
-              titleEn: 'D-2 Student Visa',
+              titleKo: '유학(D-2)',
+              titleEn: 'Study (D-2)',
               linesKo: [
-                '최초 입국한 경우: 외국인등록일부터 적용',
-                '외국인등록 후 출국했다가 재입국한 경우: 재입국일부터 적용',
+                '처음 입국한 경우: 외국인등록일부터 적용',
+                '출국해 1개월 이상 해외에 머물면 출국 다음 날 자격이 끝나고, 다시 입국한 날부터 '
+                    '적용됩니다. 1개월 미만 다녀오는 경우에는 자격이 그대로 유지됩니다.',
               ],
               linesEn: [
                 'First entry into Korea: coverage begins from the date of '
                     'foreigner registration.',
-                'Re-entry after foreigner registration: coverage generally '
-                    'begins from the date of re-entry.',
+                'If you leave Korea and stay abroad for a month or more, '
+                    'coverage ends the day after you leave and starts again on '
+                    'the day you re-enter. A trip of less than a month does not '
+                    'interrupt it.',
               ],
             ),
             GuideNote(
-              titleKo: 'D-4 일반연수 비자',
-              titleEn: 'D-4 General Training Visa',
-              linesKo: ['입국일로부터 6개월이 지난 후 가입'],
+              titleKo: '일반연수(D-4)',
+              titleEn: 'General Training (D-4)',
+              linesKo: [
+                '한국어연수 등 일반연수: 국내에 6개월 거주한 다음 날부터 적용',
+                '초·중·고등학교에 다니는 일반연수: 유학(D-2)과 같이 외국인등록일부터 적용',
+              ],
               linesEn: [
-                'Enrollment generally begins six months after the date of entry '
-                    'into Korea.',
+                'Korean-language and other general training: coverage begins '
+                    'the day after you have lived in Korea for six months.',
+                'D-4 students attending a Korean elementary, middle or high '
+                    'school: coverage begins from the date of foreigner '
+                    'registration, the same as D-2.',
               ],
             ),
           ],
@@ -3157,7 +3643,7 @@ class MockData {
       ],
       checklistEn: [
         'Check whether your foreigner registration is complete.',
-        'Check your visa status, such as D-2 or D-4.',
+        'Check your status of stay, such as D-2 or D-4.',
         'Make sure your registered address in Korea is correct.',
         'Check any enrollment notice or premium bill sent by NHIS.',
         'Check how you will pay your insurance premium.',
@@ -3168,44 +3654,58 @@ class MockData {
           'registered address is updated — NHIS notices and premium bills may '
           'be sent to your registered address in Korea.',
       stepsKo: [
-        '체류자격과 가입 시기를 확인합니다. D-2와 D-4는 국민건강보험 적용 시점이 다릅니다.',
+        '체류자격과 가입 시기를 확인합니다. D-2와 D-4는 국민건강보험 적용 시점이 다를 수 '
+            '있습니다.',
         '외국인등록과 체류지 정보를 정확히 등록합니다. 공단은 등록된 체류정보를 바탕으로 가입을 처리합니다.',
         '가입 대상이 되면 자동으로 가입됩니다. 일반적으로 별도의 건강보험 가입 신청서를 제출할 필요가 없습니다.',
         '가입 안내와 보험료 고지 내용을 확인합니다. 가입 후 보험료와 납부기한을 확인합니다.',
-        '정해진 기한 내에 보험료를 납부합니다.',
-        '가입 상태에서 병원이나 약국 등 건강보험 적용 의료서비스를 이용합니다.',
+        '보험료는 미리 냅니다. 다음 달 보험료를 매월 25일까지 납부합니다.',
+        '병원이나 의원에서는 외국인등록증 등 신분증이나 모바일 건강보험증으로 본인 확인을 한 뒤 '
+            '건강보험 적용 진료를 받습니다.',
       ],
       stepsEn: [
-        'Check your visa status and enrollment date. The enrollment timing is '
-            'different for D-2 and D-4 visa holders.',
+        'Check your status of stay and enrollment date. The enrollment timing '
+            'can differ between D-2 and D-4.',
         'Complete your foreigner registration and keep your Korean address up '
             'to date.',
         'NHIS automatically enrolls you when you become eligible. A separate '
             'enrollment application is generally not required.',
         'Check your enrollment notice and premium bill.',
-        'Pay your premium by the stated due date.',
-        'Once insured, you can use covered medical services at hospitals, '
-            'clinics, pharmacies, and other eligible healthcare providers.',
+        "Premiums are paid in advance: each month you pay the next month's "
+            'premium by the 25th.',
+        'At a hospital or clinic, confirm your identity with your Residence '
+            'Card or other ID, or the mobile health insurance card, before '
+            'receiving covered treatment.',
       ],
       sections: [
         GuideSection(
           titleKo: '보험료와 유학생 경감',
           titleEn: 'Premiums and the student reduction',
           iconName: 'payments',
-          bodyKo: '외국인 지역가입자의 보험료는 소득과 재산 등을 기준으로 산정됩니다. '
-              '따라서 모든 유학생에게 동일한 고정 금액을 안내하기보다는, '
-              '국민건강보험공단에서 발송한 본인의 고지서를 확인하는 것이 가장 정확합니다.\n\n'
-              'D-2·D-4 유학생은 일정 요건을 충족하는 경우 보험료 경감 대상이 될 수 있습니다. '
-              '현재 공식 안내에서는 D-2·D-4 등 대상 유학생이 소득 및 재산 요건을 충족할 경우 '
-              '50% 경감 기준을 안내하고 있습니다.',
-          bodyEn: 'Premiums for foreign regional subscribers are calculated '
-              'based on factors such as income and property. For this reason, '
-              'students should check their individual NHIS premium bill rather '
-              'than relying on a single fixed monthly amount.\n\n'
-              'D-2 and D-4 students may qualify for a premium reduction if they '
-              'meet the applicable income and property requirements. Current '
-              'official guidance provides a 50% reduction for eligible '
-              'international students in these categories.',
+          // NHIS 「재외국민 및 외국인 지역보험료 부과기준」 and 「국내체류 외국인
+          // 가입자 안내」: calculated like a Korean regional subscriber, but never
+          // below the previous November's national average premium, which NHIS
+          // says it charges foreigners because it cannot assess home-country
+          // income. The average changes every year, so no figure is hardcoded.
+          // The same NHIS page exempts single-person households under 19 (and
+          // refugees) from that floor.
+          bodyKo: '외국인 지역가입자의 보험료는 내국인과 같은 기준(소득·재산)으로 산정하지만, '
+              '산정된 금액이 전년도 11월 전체 가입자 평균보험료보다 적으면 평균보험료가 '
+              '부과됩니다(19세 미만 단독세대 등 일부 예외 제외). 공단은 외국인의 본국 소득·재산을 파악하기 어려워 평균보험료를 '
+              '부과하고 있으며, 이 금액은 해마다 바뀝니다. 본인에게 발송된 고지서를 확인하세요.\n\n'
+              '유학(D-2)과 일반연수(D-4)는 연간 소득 360만원 이하이고 과세표준 재산이 '
+              '1억 3,500만원 이하인 경우 보험료가 50% 경감됩니다.',
+          bodyEn: 'Premiums for foreign regional subscribers are calculated the '
+              'same way as for Korean nationals, from income and property — but '
+              "if the result is lower than the previous November's average "
+              'premium across all subscribers, the average premium is charged '
+              'instead (with some exceptions, such as a single-person household '
+              'under 19). NHIS charges foreigners the average premium because it '
+              'cannot assess income and property held in their home country, and '
+              'that amount changes every year. Check the bill NHIS sends you.\n\n'
+              'For Study (D-2) and General Training (D-4), the premium is reduced '
+              'by 50% if your annual income is 3.6 million won or less and your '
+              'taxable property is 135 million won or less.',
           // Informative, not cautionary — the neutral glyph, not the warning.
           noticeKo: '보험료와 경감 기준은 변경될 수 있으므로, 고정된 월 보험료를 기준으로 삼기보다 '
               '최신 고지서 또는 국민건강보험공단 안내를 확인하세요.',
@@ -3218,11 +3718,19 @@ class MockData {
           titleEn: 'What does the insurance cover?',
           iconName: 'info',
           bodyKo: '국민건강보험에 가입하면 내국인과 같은 건강보험 제도 안에서 '
-              '병원 진료, 건강검진 등 다양한 보험 혜택을 받을 수 있습니다.',
+              '병원 진료, 건강검진 등 다양한 보험 혜택을 받을 수 있습니다.\n\n'
+              '병원이나 의원에서 건강보험을 적용받으려면 외국인등록증 등 신분증이나 모바일 '
+              '건강보험증으로 본인 확인을 해야 합니다. 신분증을 찍은 사진이나 사본은 인정되지 '
+              '않습니다. 19세 미만이거나 응급 상황인 경우 등 일부 예외가 있습니다.',
           bodyEn: 'After enrollment, international students can receive '
               'National Health Insurance benefits such as covered medical '
               'treatment and health checkups under the same national insurance '
-              'system used by Korean nationals.',
+              'system used by Korean nationals.\n\n'
+              'To have insurance applied at a hospital or clinic, you must '
+              'confirm your identity with your Residence Card or other ID, or '
+              'with the mobile health insurance card. A photo or copy of your ID '
+              'is not accepted. There are some exceptions, such as patients '
+              'under 19 or emergencies.',
           noticeKo: '다만 모든 진료가 건강보험 대상인 것은 아닙니다. '
               '예를 들어 미용 목적의 시술·수술 등 일부 비급여 의료서비스에는 '
               '건강보험이 적용되지 않을 수 있습니다.',
@@ -3235,13 +3743,29 @@ class MockData {
           titleKo: '보험료를 체납하면 주의하세요',
           titleEn: 'Unpaid premiums can restrict your benefits',
           iconName: 'receipt_long',
-          bodyKo: '보험료를 장기간 납부하지 않으면 건강보험 급여가 제한될 수 있습니다. '
-              '현재 외국인 지역가입자의 보험급여 제한과 관련한 별도 규정이 있으므로, '
-              '고지서를 받으면 납부기한을 확인하고 체납하지 않는 것이 중요합니다.',
-          bodyEn: 'If insurance premiums remain unpaid, National Health '
-              'Insurance benefits may be restricted under the rules applying to '
-              'foreign regional subscribers. Check the due date on your bill '
-              'and avoid overdue premiums.',
+          // Timing: 적용기준 §9① — unpaid by the 25th, still unpaid by the 25th
+          // of the next month, benefits stop from the month after. 시행령
+          // §76의6 allows exceptions only for the statuses in 별표 6의2, which
+          // could not be confirmed for D-2/D-4 — hence "can", not "will".
+          // Stay extension: 법무부 「외국인 비자연장 전 세금·건강보험료 체납
+          // 확인제도」 (19+, registered foreigners; unpaid → ≤6 months in
+          // principle).
+          bodyKo: '보험료를 납부기한(매월 25일)까지 내지 않고 그다음 달 25일까지도 내지 않으면, '
+              '그다음 달부터 건강보험 급여가 제한될 수 있습니다. 급여가 제한되면 병원비를 '
+              '본인이 전부 부담해야 할 수 있습니다.\n\n'
+              '체납은 체류기간 연장에도 영향을 줍니다. 만 19세 이상 등록외국인은 체류기간 '
+              '연장을 신청할 때 건강보험료 체납 여부를 확인받으며, 체납액을 모두 내지 않으면 '
+              '체류기간이 원칙적으로 6개월 이하로만 연장될 수 있습니다.',
+          bodyEn: 'If a premium is not paid by its due date (the 25th of the '
+              'month) and is still unpaid by the 25th of the following month, '
+              'your insurance benefits can be stopped from the month after that. '
+              'While they are stopped you may have to pay the full medical bill '
+              'yourself.\n\n'
+              'Unpaid premiums also affect extending your stay. Registered '
+              'foreigners aged 19 or over are checked for unpaid health '
+              'insurance premiums when they apply to extend their period of '
+              'stay, and if the arrears are not paid in full the extension may '
+              'in principle be limited to six months or less.',
           // Real consequence → keeps the default warning glyph.
           noticeKo: '보험료 체납 상태라면 병원을 이용하기 전에 국민건강보험공단에 '
               '본인의 보험 적용 상태를 확인하세요.',
@@ -3256,38 +3780,45 @@ class MockData {
             GuideNote(
               titleKo: '국민건강보험공단',
               titleEn: 'National Health Insurance Service (NHIS)',
+              // NHIS 고객센터 안내 page: the foreigner line 033-811-2000 has a
+              // language menu (1–4), and inside 1577-1000 the ARS shortcuts
+              // 61–64 reach foreign-language counselling during office hours.
+              // The old "외국인 전용 안내 선택" is not the page's wording.
               linesKo: [
-                '대표전화: 1577-1000',
-                '외국어 상담: 1577-1000 → 외국인 전용 안내 선택, 또는 033-811-2000',
-                '지원 언어: 영어, 중국어, 베트남어, 우즈베크어',
-                '상담시간: 평일 09:00~18:00',
+                '대표전화: 1577-1000 (평일 09:00~18:00)',
+                '대표전화 외국어 상담(업무시간): 단축번호 61 영어, 62 중국어, 63 베트남어, '
+                    '64 우즈베크어',
+                '외국인 고객 상담: 033-811-2000 (1번 영어, 2번 중국어, 3번 베트남어, '
+                    '4번 우즈베크어)',
                 '해외에서: +82-33-811-2001',
               ],
               linesEn: [
-                'Main line: 1577-1000',
-                'Foreign-language support: 1577-1000 → select the foreigner '
-                    'service, or 033-811-2000',
-                'Languages: English, Chinese, Vietnamese, Uzbek',
-                'Hours: weekdays 09:00–18:00',
+                'Main line: 1577-1000 (weekdays 09:00–18:00)',
+                'Foreign-language help on the main line (office hours): '
+                    'shortcut 61 English, 62 Chinese, 63 Vietnamese, 64 Uzbek',
+                'Foreign-language line: 033-811-2000 (1 English, 2 Chinese, '
+                    '3 Vietnamese, 4 Uzbek)',
                 'From outside Korea: +82-33-811-2001',
               ],
             ),
+            // 국제교류과 구성원 안내: 국제지원팀 lines are 6446–6449 and 6447 is
+            // the 유학생 학사 지원 및 상담 desk. No shared team mailbox is
+            // published there, so no email address is given.
             GuideNote(
               titleKo: '동아대학교 국제지원팀',
               titleEn: 'Dong-A University International Support Team',
               linesKo: [
                 '학교 생활·체류·유학생 지원과 관련해 학교 확인이 필요한 경우 문의할 수 있습니다.',
-                '전화: 051-200-6446~8',
-                '유학생 지원 문의: 051-200-6447',
-                '이메일: global@donga.ac.kr',
+                '전화: 051-200-6446~9',
+                '유학생 학사 지원·상담: 051-200-6447',
               ],
               linesEn: [
                 'Contact them when you need the university to confirm something '
                     'about student life, residence, or international student '
                     'support.',
-                'Phone: 051-200-6446~8',
-                'International student support: 051-200-6447',
-                'Email: global@donga.ac.kr',
+                'Phone: 051-200-6446~9',
+                'International student academic support and counseling: '
+                    '051-200-6447',
               ],
             ),
           ],
@@ -3298,19 +3829,24 @@ class MockData {
         ),
       ],
       tipsKo: [
-        'D-2와 D-4는 가입 시작 시점이 다릅니다.',
+        'D-2와 D-4는 가입 시작 시점이 다를 수 있습니다.',
         '가입 대상이 되면 일반적으로 별도의 신청 없이 자동 가입됩니다.',
         '이사했다면 체류지 주소를 정확히 변경 신고하세요.',
-        '보험료는 학생마다 달라질 수 있으므로 본인의 고지서를 기준으로 확인하세요.',
-        '보험료 경감 여부도 개인의 소득·재산 등 조건에 따라 달라질 수 있습니다.',
+        '보험료는 다음 달 치를 매월 25일까지 미리 냅니다. 체납하면 병원 이용에 불이익이 생길 수 '
+            '있고, 만 19세 이상이면 체류기간 연장에도 불이익이 생길 수 있습니다.',
+        '보험료 경감 여부는 소득·재산 요건에 따라 달라지므로 본인의 고지서를 기준으로 '
+            '확인하세요.',
         '확실하지 않은 경우 국민건강보험공단에 직접 문의하는 것이 가장 정확합니다.',
       ],
       tipsEn: [
-        'D-2 and D-4 visa holders have different enrollment starting dates.',
+        'D-2 and D-4 can have different enrollment starting dates.',
         'Eligible students are generally enrolled automatically.',
         'Update your registered address if you move.',
-        'Premium amounts can vary, so check your individual NHIS bill.',
-        'Eligibility for a premium reduction depends on applicable conditions.',
+        'Premiums are paid a month ahead, by the 25th. Unpaid premiums can '
+            'affect your medical care and, if you are 19 or over, extending '
+            'your stay.',
+        'Whether you get the reduction depends on the income and property '
+            'requirements, so go by your own NHIS bill.',
         'Contact NHIS directly if you are unsure about your status.',
       ],
       links: [
@@ -3335,12 +3871,27 @@ class MockData {
         // visa-types guide uses).
         GuideLink(
           labelKo: '가이드 — 외국인등록증(ARC) 발급',
-          labelEn: 'Guide — Alien Registration Card (ARC)',
+          labelEn: 'Guide — Residence Card (ARC)',
           url: '/guide/item/arc-issue',
-          descriptionKo: '건강보험 적용은 외국인등록과 체류지 정보를 기준으로 처리됩니다.',
-          descriptionEn: 'Coverage is processed from your foreigner '
-              'registration and registered address.',
+          descriptionKo: '건강보험 가입은 외국인등록을 기준으로 처리되고, 안내문과 고지서는 등록된 '
+              '체류지로 발송됩니다.',
+          descriptionEn: 'Enrollment is processed from your foreigner '
+              'registration, and notices and bills go to your registered '
+              'address.',
           iconName: 'badge',
+        ),
+        // Unpaid premiums are checked when a stay extension is filed, so the
+        // extension guide is the natural next read.
+        GuideLink(
+          labelKo: '가이드 — 체류기간 연장',
+          labelEn: 'Guide — Extension of Stay',
+          url: '/guide/item/stay-extension',
+          descriptionKo: '만 19세 이상 등록외국인은 연장 신청 때 건강보험료 체납 여부를 '
+              '확인합니다.',
+          descriptionEn: 'For registered foreigners aged 19 or over, unpaid '
+              'health insurance premiums are checked when you apply to extend '
+              'your stay.',
+          iconName: 'event_repeat',
         ),
       ],
       // No related location on purpose: the only candidate facility
@@ -3356,7 +3907,9 @@ class MockData {
     const AdminGuideItem(
       id: 'campus-clinic',
       categoryId: GuideCategory.health,
-      titleKo: '교내 보건소',
+      // 「보건소」 is a local-government public health centre; the university's
+      // own pages call this 보건진료소 throughout.
+      titleKo: '교내 보건진료소',
       titleEn: 'Campus Health Center',
       summaryKo: '위치 · 이용시간 · 보건 서비스',
       summaryEn: 'Locations, hours & health services',
@@ -3377,9 +3930,13 @@ class MockData {
           titleKo: '어디에 있나요?',
           titleEn: 'Where can I find it?',
           iconName: 'location_on',
-          bodyKo: '보건진료소는 승학캠퍼스와 부민캠퍼스 두 곳에 있습니다.',
+          bodyKo: '보건진료소는 승학캠퍼스와 부민캠퍼스 두 곳에 있습니다. 공식 홈페이지에 '
+              '안내된 곳은 이 둘뿐이므로, 구덕캠퍼스에서 필요하면 두 곳 중 가까운 '
+              '보건진료소에 문의하거나 병원 · 의원을 이용하세요.',
           bodyEn: 'There are two campus health clinics — one on the Seunghak '
-              'campus and one on the Bumin campus.',
+              'campus and one on the Bumin campus. Those are the only two the '
+              'official website lists, so if you are on the Gudeok campus, ask '
+              'the nearer of the two or use a hospital.',
           notes: [
             GuideNote(
               titleKo: '승학캠퍼스',
@@ -3420,10 +3977,15 @@ class MockData {
         'A short note on your symptoms or what you need help with.',
       ],
       checklistNoteKo: '※ 이용시간과 업무내용은 동아대학교 보건진료소 공식 홈페이지 기준입니다. '
-          '방문 전 공식 홈페이지에서 최신 안내를 확인하세요.',
+          '이용 대상(유학생 포함 여부) · 비용 · 학생증이나 예약이 필요한지 · 외국어 상담 '
+          '가능 여부는 공식 홈페이지에 나와 있지 않으니, 방문 전에 이용할 캠퍼스 '
+          '보건진료소에 전화로 확인하세요.',
       checklistNoteEn: '※ The hours and services listed here follow the '
-          'Dong-A University Health Clinic\'s official website. Check the '
-          'official website for the latest information before you go.',
+          'Dong-A University Health Clinic\'s official website. That site does '
+          'not say who may use the clinic (including international students), '
+          'what it costs, whether you need your student ID or an appointment, '
+          'or whether help is available in other languages — call the campus '
+          'clinic to check before you go.',
       sections: [
         GuideSection(
           titleKo: '이용시간',
@@ -3472,9 +4034,19 @@ class MockData {
               ],
             ),
           ],
-          footnoteKo: '필요한 서비스가 가능한지 확실하지 않다면 방문 전에 전화로 문의하세요.',
+          footnoteKo: '필요한 서비스가 가능한지 확실하지 않다면 방문 전에 전화로 문의하세요. '
+              '예방접종 · 결핵검진처럼 위 목록에 없는 것은 공식 안내에 없으므로 보건진료소에 '
+              '가능한 이용처를 묻거나 병원 · 의원을 이용하세요. 건강증진사업은 메뉴 페이지가 '
+              '「자료 준비중」이지만 공지사항 게시판에 심폐소생술·자동심장충격기 교육'
+              '(상시모집), 무료 체성분 측정 같은 안내가 올라오니 게시판을 확인하세요.',
           footnoteEn: 'If you are not sure whether the service you need is '
-              'available, call the clinic before you go.',
+              'available, call the clinic before you go. Anything not on the '
+              'list — vaccination or tuberculosis screening, for example — is '
+              'not covered by the official notice, so ask the clinic where to '
+              'go or use a hospital. The health promotion menu pages say '
+              '"being prepared", but the notice board does carry programmes '
+              '— CPR and AED training (rolling enrolment), free body '
+              'composition checks — so check the notices.',
         ),
         GuideSection(
           titleKo: '응급상황이라면',
@@ -3485,12 +4057,13 @@ class MockData {
           bodyEn: 'The campus clinic is a health support facility on campus, '
               'and its published hours are 09:00–17:00 on weekdays.',
           noticeKo: '의식이 없거나, 호흡이 어렵거나, 출혈이 심한 경우처럼 위급한 상황이라면 '
-              '보건진료소를 찾아가거나 이용시간을 기다리지 말고 즉시 119에 신고하거나 '
-              '가까운 응급의료기관으로 가세요.',
+              '보건진료소를 찾아가거나 이용시간을 기다리지 말고 즉시 119에 신고하고 '
+              '안내를 따르세요. 119가 환자 상태에 맞는 응급의료기관으로 이송합니다.',
           noticeEn: 'If the situation is urgent — someone is unconscious, '
               'having trouble breathing, or bleeding heavily — do not go to '
               'the campus clinic or wait for it to open. Call 119 straight '
-              'away or go to the nearest emergency room.',
+              'away and follow the dispatcher; 119 arranges transport to an '
+              'emergency facility suited to the patient.',
         ),
         GuideSection(
           titleKo: '병원 진료가 필요하다면',
@@ -3505,7 +4078,42 @@ class MockData {
               'a hospital or a local clinic instead.\n\n'
               'If you are not used to how hospitals work in Korea, the hospital '
               'guide below walks through it. Being enrolled in the National '
-              'Health Insurance also lowers what you pay for treatment.',
+              'Health Insurance also lowers what you pay for covered treatment, '
+              'though non-covered services are not reduced.',
+          notes: [
+            GuideNote(
+              titleKo: '동아대학교병원 진료비 감면',
+              titleEn: 'Fee reduction at Dong-A University Hospital',
+              linesKo: [
+                '재학생(휴학생 포함) 본인은 동아대학교병원에서 20% 감면을 받습니다'
+                    '(외래는 본인만, 입원은 본인과 직계가족 이용 시).',
+                '재학생의 직계가족은 입원만 해당하며 감면율 10% · 감면 상한액 '
+                    '20만원입니다.',
+                '감면율은 진찰료 · 비보험진료비 · 일반진료비 · 보험적용 건강진단 같은 '
+                    '항목별로 적용되며, 전체 진료비의 20%가 깎이는 것은 아닙니다.',
+                '감면 신청은 퇴원 전까지 해야 하며, 퇴원 후에는 소급 적용되지 않습니다.',
+                '상급병실료 · 식대 · 약품비 · 치료재료대 등 일부 항목은 감면에서 '
+                    '제외됩니다. 자세한 내용은 동아대학교병원 원무과'
+                    '(051-240-2321~2)에 문의하세요.',
+              ],
+              linesEn: [
+                'Enrolled students (including those on leave) get a 20% '
+                    'reduction at Dong-A University Hospital — outpatient care '
+                    'for yourself, inpatient care for you or your immediate '
+                    'family.',
+                "A student's immediate family gets 10%, for inpatient care "
+                    'only, capped at 200,000 won.',
+                'The percentage applies to particular fee categories — '
+                    'consultation, non-covered care, general treatment, '
+                    'covered health checks — not to your whole bill.',
+                'Apply before you are discharged; it cannot be applied '
+                    'retroactively afterwards.',
+                'Some items are excluded, such as upgraded rooms, meals, '
+                    "medication and treatment materials — ask the hospital's "
+                    'administration office (051-240-2321~2) for details.',
+              ],
+            ),
+          ],
         ),
         GuideSection(
           titleKo: '문의',
@@ -3528,9 +4136,11 @@ class MockData {
               linesEn: ['Law School Building (LS), 1st floor', '051-200-8465'],
             ),
           ],
-          footnoteKo: '위치·이용시간·업무내용은 보건진료소 공식 홈페이지에서 최신 내용을 확인할 수 있습니다.',
+          footnoteKo: '위치·이용시간·업무내용은 보건진료소 공식 홈페이지에서 최신 내용을 확인할 수 있습니다. '
+              '두 번호가 연결되지 않으면 보건진료소 소장실(051-200-6330)로 문의하세요.',
           footnoteEn: 'The clinic\'s official website has the current '
-              'locations, hours, and list of services.',
+              'locations, hours, and list of services. If neither number '
+              'connects, call the clinic office on 051-200-6330.',
         ),
       ],
       links: [
@@ -3659,12 +4269,13 @@ class MockData {
             'call ahead and ask',
       ],
       checklistNoteKo: '※ 본인확인은 건강보험 급여를 적용받기 위한 절차입니다. 신분증이 없다고 해서 '
-          '진료를 받을 수 없는 것은 아니며, 6개월 이내 재진이나 응급환자 등 본인확인이 면제되는 '
-          '경우도 있습니다.',
+          '진료를 받을 수 없는 것은 아니며, 그 병원에서 본인 여부와 자격을 확인한 날부터 '
+          '6개월 이내의 진료나 응급환자 등 본인확인이 면제되는 경우도 있습니다.',
       checklistNoteEn: '※ The ID check is what applies your insurance to the '
           'bill — it is not a condition for being seen at all. Some visits are '
-          'exempt from it anyway, including a follow-up within six months and '
-          'emergency care.',
+          'exempt from it anyway: care within six months of the day that '
+          'clinic verified your identity and eligibility, and emergency care, '
+          'among others.',
       stepsKo: [
         '이용할 의료기관 찾기',
         '접수하고 신분증으로 본인확인하기',
@@ -3702,14 +4313,29 @@ class MockData {
                 '여권',
                 '건강보험증',
                 '국내거소신고증 · 영주증',
-                '그 밖에 행정 · 공공기관이 발행한 사진이 있는 증명서',
+                '그 밖에 행정 · 공공기관이 발행한 증명서 — 사진과 '
+                    '외국인등록번호(주민등록번호)가 함께 있는 것만 됩니다.',
               ],
               linesEn: [
                 'Residence Card (ARC)',
                 'Passport',
                 'Health insurance card',
                 'Overseas Korean residence report card, permanent residence card',
-                'Other photo ID issued by a government or public body',
+                'Other ID issued by a government or public body — only if it '
+                    'carries both your photo and your registration number',
+              ],
+            ),
+            // Kept out of the list above so the "what counts" list holds only
+            // things that count.
+            GuideNote(
+              titleKo: '쓸 수 없는 것',
+              titleEn: 'What does not count',
+              linesKo: [
+                '신분증 사본이나 화면 캡처 · 사진, 각종 자격증은 쓸 수 없습니다.',
+              ],
+              linesEn: [
+                'Copies, screenshots or photos of an ID, and certificates of '
+                    'qualification, cannot be used',
               ],
             ),
             GuideNote(
@@ -3733,14 +4359,16 @@ class MockData {
               titleEn: 'When the check is waived',
               linesKo: [
                 '19세 미만',
-                '같은 병원에서 6개월 이내에 다시 진료받는 경우(재진)',
+                '그 병원에서 본인 여부와 자격을 확인한 날부터 6개월 이내에 다시 '
+                    '진료받는 경우',
                 '처방약을 조제받는 경우',
                 '다른 의료기관에서 진료를 의뢰받거나 회송된 경우',
                 '응급환자',
               ],
               linesEn: [
                 'You are under 19',
-                'A follow-up at the same clinic within six months',
+                'A visit within six months of the day that clinic verified '
+                    'your identity and eligibility',
                 'Having a prescription filled',
                 'You were referred or sent back from another clinic',
                 'You are an emergency patient',
@@ -3839,11 +4467,14 @@ class MockData {
           titleKo: '처방전과 약국',
           titleEn: 'Prescriptions and pharmacies',
           iconName: 'storefront',
-          bodyKo: '한국은 진료 · 처방은 의사가, 약 조제는 약사가 맡는 구조입니다. 그래서 진료를 '
-              '받은 병원에서 약을 바로 받는 것이 아니라, 처방전을 들고 약국에 가야 합니다.',
+          bodyKo: '한국은 진료 · 처방은 의사가, 약 조제는 약사가 맡는 구조입니다. 그래서 '
+              '일반적인 외래진료에서는 병원에서 약을 바로 받는 것이 아니라, 처방전을 들고 '
+              '약국에 가야 합니다(입원 · 응급 등 병원에서 직접 조제하는 예외가 있습니다).',
           bodyEn: 'In Korea the doctor prescribes and the pharmacist dispenses. '
-              'That means you do not collect medicine at the clinic where you '
-              'were seen — you take the prescription to a pharmacy instead.',
+              'For ordinary outpatient care that means you do not collect '
+              'medicine at the clinic where you were seen — you take the '
+              'prescription to a pharmacy instead. (Inpatient, emergency and '
+              'some other cases are dispensed at the hospital.)',
           notes: [
             GuideNote(
               titleKo: '처방전이 필요한 약',
@@ -3884,15 +4515,23 @@ class MockData {
           bodyKo: '밤이나 휴일에는 문을 닫는 병·의원과 약국이 많습니다. 이럴 때는 응급의료포털 '
               'E-Gen에서 지금 문을 연 병·의원과 약국을 찾을 수 있고, 응급실 정보도 확인할 수 '
               '있습니다.\n\n'
-              '전화로 확인하려면 보건복지상담센터 129 또는 시 · 도 콜센터 120에 문의할 수 '
-              '있습니다. 스마트폰에서는 「응급의료정보제공」 앱을 이용할 수 있습니다.',
+              '전화로 확인하려면 시 · 도 콜센터 「(지역번호)120」에 문의할 수 있습니다'
+              '(부산은 051-120). 휴대전화나 다른 지역에서 걸 때 지역번호를 빼면 원하는 지역 '
+              '센터로 연결되지 않을 수 있습니다. 보건복지상담센터 129는 평일 09:00~18:00에 '
+              '운영하므로(긴급복지 · 학대 · 정신건강 등 긴급지원상담만 24시간) 야간 · 휴일에 '
+              '문 연 병원 · 약국을 찾을 때는 E-Gen이나 「응급의료정보제공」 앱을 이용하세요.',
           bodyEn: 'Plenty of clinics and pharmacies close at night and over '
               'holidays. E-Gen, the national emergency medical portal, lists '
               'the ones that are open right now, along with emergency room '
               'information.\n\n'
-              'You can also ask by phone — 129 for the health and welfare call '
-              'centre, or 120 for your city or province. On a phone, the app is '
-              'called 응급의료정보제공.',
+              'You can also ask your city or province call centre by phone on '
+              '(area code) 120, which is 051-120 in Busan. Dialling 120 without '
+              'the area code from a mobile or another region may not reach the '
+              'centre you want. The 129 health and welfare call centre is open '
+              '09:00–18:00 on weekdays (only its emergency-support lines, such '
+              'as abuse and mental health, run 24 hours), so at night or on '
+              'holidays use E-Gen or the 응급의료정보제공 app to find what is '
+              'open.',
           links: [
             GuideLink(
               labelKo: '응급의료포털 E-Gen',
@@ -3961,7 +4600,7 @@ class MockData {
         // In-app: the three guides a student needs around a hospital visit.
         // campus-clinic links back here, so the pair is symmetric.
         GuideLink(
-          labelKo: '가이드 — 교내 보건소',
+          labelKo: '가이드 — 교내 보건진료소',
           labelEn: 'Guide — Campus Health Center',
           url: '/guide/item/campus-clinic',
           descriptionKo: '캠퍼스 안에서 받을 수 있는 기본 보건 서비스',
@@ -4001,8 +4640,8 @@ class MockData {
       summaryKo: '일정 · 과목 선택 · 신청 방법',
       summaryEn: 'Schedule, course selection & registration',
       iconName: 'format_list_numbered',
-      overviewKo: '수강신청은 매 학기 시작 전에 한 학기 동안 수강할 교과목을 학생이 직접 '
-          '신청하는 절차입니다.\n\n'
+      overviewKo: '수강신청은 한 학기 동안 수강할 교과목을 학생이 직접 신청하는 절차로, 개강 '
+          '전에 시작해 개강 초의 정정 기간까지 여러 차례에 걸쳐 진행됩니다.\n\n'
           '학생은 본인의 최대 수강신청 가능학점 범위 안에서 원하는 과목을 선택하고 직접 '
           '시간표를 구성합니다.\n\n'
           '수강신청 일정은 학기마다 달라질 수 있으므로 동아대학교의 최신 학사공지를 반드시 '
@@ -4010,8 +4649,8 @@ class MockData {
           '이 안내는 학부 과정 기준입니다. 대학원은 신청 학점과 절차가 다르므로 대학원 '
           '학사안내를 확인하세요.',
       overviewEn: 'Course registration is how you choose the courses you will '
-          'take for the coming semester. You do it yourself, before the '
-          'semester starts.\n\n'
+          'take for the semester. You do it yourself, in several rounds that '
+          'start before the semester and run into its first weeks.\n\n'
           'You pick the courses you want within the maximum number of credits '
           'you are allowed to take, and build your own timetable.\n\n'
           'The registration period is different every semester, so always check '
@@ -4052,6 +4691,9 @@ class MockData {
                 '초기 비밀번호: 생년월일 6자리 + 지원 당시 휴대폰번호 뒤 4자리',
                 '신입생과 편입생 모두 같은 방법으로 로그인하며, 학번이 발급된 뒤에는 학번으로 '
                     '로그인합니다.',
+                '수험번호를 모르면 수강신청 로그인 화면에 안내된 수험번호 조회(진학어플라이, '
+                    'www.jinhakapply.com)를 이용하고, 그곳에서 조회되지 않으면 지원한 입학 '
+                    '담당 부서에 확인하세요.',
               ],
               linesEn: [
                 'ID: the application (exam) number from your Dong-A University '
@@ -4061,6 +4703,10 @@ class MockData {
                     'applied',
                 'New students and transfer students both log in this way, and '
                     'you switch to your student ID number once it is issued.',
+                'If you do not know your application number, look it up through '
+                    'the link on the registration login page (Jinhakapply, '
+                    'www.jinhakapply.com); if it is not found there, ask the '
+                    'admissions office you applied through.',
               ],
             ),
           ],
@@ -4108,6 +4754,9 @@ class MockData {
                 '공과대학은 2019학년도 이전 학번 21학점, 2020학년도 이후 학번 19학점입니다.',
                 '조기졸업을 신청한 학생은 최대 신청학점에서 3학점까지 초과해 신청할 수 '
                     '있습니다.',
+                '복수(부)전공과 교직과정(연계전공 교직과정 포함)을 함께 이수하는 학생은 직전 '
+                    '학기 평점평균이 3.0 '
+                    '이상이면 3학년부터 최대 신청학점에서 3학점까지 더 신청할 수 있습니다.',
               ],
               linesEn: [
                 'The standard limit is 19 credits. Architecture, Nursing and '
@@ -4118,6 +4767,11 @@ class MockData {
                     'from 2020 onwards.',
                 'If you have applied for early graduation you may register for '
                     'up to 3 credits above your limit.',
+                'If you are taking a double major or minor together with the '
+                    'teacher-training course (including the one attached to an '
+                    'interdisciplinary major) and your grade average last '
+                    'semester was 3.0 or higher, from your third year you may '
+                    'register for up to 3 credits above your limit.',
               ],
             ),
           ],
@@ -4336,12 +4990,21 @@ class MockData {
           bodyKo: '교과목을 신청했다고 해서 모든 과목이 바로 최종 확정되는 것은 아닐 수 '
               '있습니다.\n\n'
               '신청 인원과 수강제한 인원 등에 따라 수강확정 또는 탈락 결과가 발생할 수 있으므로 '
-              '신청 후 반드시 결과를 확인해야 합니다.',
+              '신청 후 반드시 결과를 확인해야 합니다.\n\n'
+              '1차 수강신청(교과목담기)은 선착순이 아닙니다. 신청 인원이 제한인원을 넘으면 '
+              '이수구분별 수강확정 기준(4학년 F학점 재수강자, 소속학과 제1전공자, 학년순 등)에 '
+              '따라 확정되고, 2차 수강신청부터는 선착순입니다.',
           bodyEn: 'Registering for a course does not always mean your place in '
               'it is final.\n\n'
               'Depending on how many students applied and the enrollment limit, '
               'a course can come back confirmed or not confirmed — so you have '
-              'to check the result after you register.',
+              'to check the result after you register.\n\n'
+              'The first round (교과목담기) is not first-come, first-served. If '
+              'a course is oversubscribed, places are decided by set priority '
+              'rules for each course type — such as fourth-year students '
+              'retaking an F, students whose first major is the offering '
+              'department, and year of study. From the second round on, places '
+              'go first-come, first-served.',
           notes: [
             GuideNote(
               titleKo: '탈락한 과목이 있다면',
@@ -4350,8 +5013,9 @@ class MockData {
                 '개설 학과에 증원 가능 여부를 문의할 수 있습니다.',
                 '교양교과목(필수교양·토대교양·중핵교양)은 개설부서가 교양대학이므로 '
                     '교양대학(051-200-6432~4)에 문의하세요.',
-                '탈락자 수강신청 기간에 해당 과목 또는 다른 과목을 다시 신청할 수 있습니다.',
-                '탈락자 수강신청 기간에는 남은 정원에 대해 선착순으로 확정될 수 있습니다.',
+                '2차 수강신청 기간에는 탈락하거나 폐강된 과목이 있는 학생과 아직 수강신청을 '
+                    '하지 않은 학생이 해당 과목 또는 다른 과목을 다시 신청할 수 있습니다.',
+                '이 기간에는 남은 정원에 대해 선착순으로 확정됩니다.',
               ],
               linesEn: [
                 'You can ask the department that offers it whether the limit '
@@ -4359,10 +5023,10 @@ class MockData {
                 'General-education courses — required, foundation and core — '
                     'are run by the College of General Education, so ask them '
                     'instead (051-200-6432~4).',
-                'During the re-registration period for students with '
-                    'unconfirmed courses you can apply for that course again, '
-                    'or for a different one.',
-                'In that period the remaining seats can be filled on a '
+                'In the second round, students with a rejected or closed '
+                    'course, and students who have not registered yet, can '
+                    'apply for that course again or for a different one.',
+                'In that round the remaining seats are filled on a '
                     'first-come, first-served basis.',
               ],
             ),
@@ -4402,12 +5066,58 @@ class MockData {
                 '수강정정이 끝난 뒤 별도의 수강취소 기간이 있을 수 있습니다.',
                 '이 기간에는 이미 신청한 교과목의 취소만 가능하며 새로운 과목을 추가할 수 '
                     '없습니다.',
+                '수강취소는 수강신청이 확정된 과목만 할 수 있고, 취소한 뒤에는 되돌릴 수 '
+                    '없습니다. 취소 후에는 수강신청확인서를 출력해 취소가 반영되었는지 '
+                    '확인하세요.',
+                '취소 후 신청학점이 0학점이 되면 그 학기는 이수학기로 인정되지 않습니다.',
+                '재수강으로 확정된 과목을 취소하면 이전 성적은 삭제되지 않습니다.',
+                '취소로 신청학점이 장학생 선발기준 학점보다 적어지면 장학생 선발 대상에서 '
+                    '제외될 수 있고, 이수학점이 적으면 다음 학기 수강확정에서도 불리할 수 '
+                    '있습니다. 졸업을 앞둔 학생은 졸업에 차질이 생길 수 있습니다.',
               ],
               linesEn: [
                 'There may be a separate course-cancellation period after add/drop '
                     'closes.',
                 'In that period you can only cancel a course you already '
                     'registered for — you cannot add a new one.',
+                'You can only cancel a course whose registration was confirmed, '
+                    'and a cancellation cannot be undone. Afterwards, print '
+                    'your course registration confirmation to check that it '
+                    'went through.',
+                'If cancelling leaves you with 0 credits, that semester does not '
+                    'count as a completed semester.',
+                'If you cancel a course confirmed as a retake, your earlier '
+                    'grade is not removed.',
+                'If cancelling takes you below the credits a scholarship '
+                    'requires, you can lose eligibility for it, and fewer '
+                    'completed credits can count against you when places are '
+                    'decided next semester. If you are about to graduate, it '
+                    'can put your graduation at risk.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '신청한 과목이 폐강될 수 있어요',
+              titleEn: 'A course you registered for can be closed',
+              linesKo: [
+                '수강 인원이 적은 과목은 폐강될 수 있습니다. 2026학년도 2학기 기준으로 전공 · '
+                    '학과교양은 15명 미만, 필수교양 · 중핵교양 · 토대교양 · 일반선택 등은 '
+                    '20명 미만이면 폐강 대상입니다(Communication English는 유사 · 대체교과목을 '
+                    '포함해 10명 미만).',
+                '폐강 교과목 목록은 학기 초 학사공지에 여러 차례 게시됩니다. 신청한 과목이 '
+                    '폐강되었다면 이후 수강신청 기간에 다른 과목으로 정정하세요.',
+              ],
+              linesEn: [
+                'Courses with too few students can be closed. For the second '
+                    'semester of 2026, major and departmental general-education '
+                    'courses close with fewer than 15 students, and required, '
+                    'core, foundation and general-elective courses, among '
+                    'others, with fewer than 20 (Communication English, '
+                    'including its similar and substitute courses, with fewer '
+                    'than 10).',
+                'Lists of closed courses are posted several times in the '
+                    'academic notices around the start of the semester. If one '
+                    'of your courses is closed, switch to another course in a '
+                    'later registration round.',
               ],
             ),
           ],
@@ -4421,6 +5131,26 @@ class MockData {
           titleKo: '최종 수강신청 확인',
           titleEn: 'Check your final registration',
           iconName: 'receipt_long',
+          notes: [
+            GuideNote(
+              titleKo: '개강 후 출석부에 이름이 없다면',
+              titleEn: 'If your name is not on the class list after term starts',
+              linesKo: [
+                '수강정정 등으로 출석부에 이름이 아직 없으면 담당 교수님께 미리 양해를 구한 뒤 '
+                    '수업에 참석하세요. 그렇게 하지 않아 출석하지 못하면 원칙적으로 결석으로 '
+                    '처리됩니다.',
+                '같은 과목이라도 신청한 분반이 아닌 다른 분반의 수업을 들으면 성적과 학점을 '
+                    '받을 수 없습니다.',
+              ],
+              linesEn: [
+                'If your name is not yet on the class list because of add/drop, '
+                    'ask the professor first and then attend. Classes you miss '
+                    'for this reason are, as a rule, recorded as absences.',
+                'Attending a different section of the same course than the one '
+                    'you registered for does not earn you a grade or credits.',
+              ],
+            ),
+          ],
           noticeKo: '최종 수강신청 내역을 확인하세요\n'
               '수강확정 후에는 수강신청 확인서를 확인하여 교과목, 분반, 재수강 여부 등을 '
               '정확하게 확인하세요.\n'
@@ -4601,12 +5331,12 @@ class MockData {
               'registration or changes are allowed at all — so if you have '
               'missed it, contact your department office or the Office of '
               'Academic Affairs immediately.',
-          footnoteKo: '※ 이미 납부한 등록금이 반환되는지, 반환된다면 금액과 신청 절차가 어떻게 '
-              '되는지는 학사관리과 학적팀(051-200-6126)에 확인하세요.',
-          footnoteEn: '※ Whether any tuition you have already paid is refunded '
-              '— and if so, how much and how you apply for it — should be '
-              'checked with the student records team at the Office of Academic '
-              'Affairs (051-200-6126).',
+          footnoteKo: '※ 이미 납부한 등록금을 돌려받을 수 있는지와 그 절차는 소속 대학 행정실 '
+              '또는 학사관리과 학적팀(051-200-6126)에 확인하세요.',
+          footnoteEn: '※ Whether any tuition you have already paid can be '
+              'refunded, and how to apply, should be checked with your '
+              "college's administration office or the student records team at "
+              'the Office of Academic Affairs (051-200-6126).',
         ),
         GuideSection(
           titleKo: '꼭 알아두세요',
@@ -4700,14 +5430,17 @@ class MockData {
               ],
             ),
           ],
-          footnoteKo: '수강신청 규정과 절차는 학사관리과 수업팀(051-200-6122~4), 전공 과목은 '
-              '소속 학과사무실, 교양교과목과 증원은 교양대학(051-200-6432~4) 또는 해당 과목 '
-              '개설학과에 문의하세요. 국제교류과는 유학생 생활 전반을 지원하는 창구입니다.',
-          footnoteEn: 'For registration rules and procedures ask the course '
-              'administration team at the Office of Academic Affairs '
-              '(051-200-6122~4); for major courses your own department office; '
-              'for general-education courses and enrollment-cap increases the '
-              'College of General Education (051-200-6432~4) or the department '
+          footnoteKo: '수강신청 관련 문의는 먼저 소속 학부(과) 또는 전공 사무실에 하세요. '
+              '수강신청 규정과 절차는 학사관리과 수업팀(051-200-6122~4), 교양교과목의 '
+              '제한인원 · 증원은 교양대학(051-200-6432~4), 전공 과목의 제한인원 · 증원은 해당 '
+              '과목의 개설학과에 문의하세요. 국제교류과는 유학생 생활 전반을 지원하는 '
+              '창구입니다.',
+          footnoteEn: 'For registration questions, start with your own '
+              'department or major office. For registration rules and '
+              'procedures ask the course administration team at the Office of '
+              'Academic Affairs (051-200-6122~4); for enrollment caps and '
+              'increases on general-education courses, the College of General '
+              'Education (051-200-6432~4); and on major courses, the department '
               'that offers the course. The Office of International Affairs is '
               'your support desk for student life in general.',
         ),
@@ -4858,14 +5591,15 @@ class MockData {
       ],
       checklistNoteKo: '대부분의 증명서는 국문과 영문 모두 발급할 수 있습니다.\n'
           '※ 증명서 종류와 학적 상태에 따라 인터넷 또는 자동발급기로 발급할 수 없는 경우가 '
-          '있습니다. 졸업예정증명서처럼 학부는 마지막 학기(8학기) 등록 이후에만 발급되는 등 '
+          '있습니다. 졸업예정증명서처럼 학부는 마지막 학기(8학기) 등록 후 개강해야 발급되는 등 '
           '조건이 붙는 증명서도 있으므로, 필요한 증명서가 지금 발급 가능한지 먼저 확인하세요.',
       checklistNoteEn: 'Most of these come in both Korean and English.\n'
           '※ Depending on the certificate and on your enrollment status, some '
           'cannot be issued online or at a kiosk. Some also have conditions — '
           'an expected-graduation certificate, for instance, is only issued to '
           'undergraduates once they have registered for their final (8th) '
-          'semester. Check that the one you need is available to you right '
+          'semester and that semester has started. Check that the one you need '
+          'is available to you right '
           'now.',
       sections: [
         // Online first: it is the only route an international student can
@@ -4949,18 +5683,26 @@ class MockData {
               titleKo: '설치 위치',
               titleEn: 'Where the kiosks are',
               linesKo: [
-                '승학캠퍼스: 인문과학대학 로비',
+                // The university's two current pages disagree on Seunghak
+                // (kiosk page: 인문과학대학 로비 / certificate page: 인문대학
+                // 지하1층), so both are shown rather than picking one.
+                '승학캠퍼스: 학교 공식 안내 두 곳의 표기가 다릅니다 — 자동발급기 안내는 '
+                    '「인문과학대학 로비」, 증명서 발급 안내는 「인문대학 지하1층」. 가기 전에 '
+                    '학사관리과에 위치를 확인하세요.',
                 '부민캠퍼스: 사회과학대학 로비',
-                '구덕캠퍼스: 구덕캠퍼스에서 증명서 발급이 필요한 경우 의과대학 행정지원실에 '
-                    '문의하세요.',
+                '구덕캠퍼스: 구덕캠퍼스에서 증명서 발급이 필요한 경우 의과대학 행정지원실'
+                    '(051-240-2903)에 문의하세요.',
               ],
               linesEn: [
-                'Seunghak campus: lobby of the College of Humanities '
-                    '(인문과학대학)',
+                "Seunghak campus: the university's two official pages disagree — "
+                    'the kiosk page says the lobby of the College of Humanities '
+                    '(인문과학대학 로비), the certificate page says basement 1 of '
+                    'the Humanities building (인문대학 지하1층). Check the location '
+                    'with the Office of Academic Affairs before you go.',
                 'Bumin campus: lobby of the College of Social Sciences '
                     '(사회과학대학)',
-                'Gudeok campus: there is no kiosk — ask the College of Medicine '
-                    'administrative office if you need a certificate there.',
+                'Gudeok campus: if you need a certificate there, ask the College '
+                    'of Medicine administrative office (051-240-2903).',
               ],
             ),
             GuideNote(
@@ -5033,12 +5775,17 @@ class MockData {
               'Check that the building is open before going late at night.',
           footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 승학캠퍼스 자동발급기가 본부건물 '
               '지하 1층 ATM 옆, 이용시간 08:30~22:00으로 안내되어 있었습니다. 이 페이지는 '
-              '동아대학교 증명서자동발급기 공식 안내의 최신 위치와 이용시간을 따릅니다.',
+              '이용시간은 동아대학교 증명서자동발급기 공식 안내를 따르고, 승학 위치는 학교 공식 '
+              '안내 두 곳의 표기를 함께 적습니다.\n'
+              '※ 증명서를 발급받으러 오면 주차료가 2시간까지 무료입니다(자동발급기 안내).',
           footnoteEn: '※ The 2024 international-student booklet placed the '
               'Seunghak kiosk next to the ATM in the basement of the main '
               'administration building, open 08:30–22:00. This page follows the '
-              "location and hours on the university's current certificate-kiosk "
-              'notice instead.',
+              "hours on the university's current certificate-kiosk notice, and "
+              "gives both of the university's current wordings for the Seunghak "
+              'location.\n'
+              '※ Parking is free for up to 2 hours when you come for a '
+              'certificate (kiosk notice).',
         ),
         GuideSection(
           titleKo: '기타 발급 방법',
@@ -5055,7 +5802,8 @@ class MockData {
                 '정부24 또는 전국 시·군·구청, 교육청, 주민센터 등을 통해 증명서 발급을 신청할 '
                     '수 있습니다.',
                 '이용시간: 평일 09:00~17:00',
-                '소요시간: 약 2시간 이내',
+                '소요시간: 정부24 안내는 근무시간 기준 3시간(2026-06-30 변경)이고, 학교 안내에는 '
+                    '2시간 이내로 적혀 있어 서로 다릅니다.',
                 '운영시간과 처리시간은 변경될 수 있으므로 신청 전에 최신 안내를 확인하세요.',
               ],
               linesEn: [
@@ -5063,7 +5811,9 @@ class MockData {
                     'county or district office, an education office, or a '
                     'community service center anywhere in Korea.',
                 'Hours: weekdays 09:00–17:00',
-                'How long it takes: usually within about 2 hours',
+                'How long it takes: Government24 says 3 hours within working '
+                    'hours (changed 2026-06-30), while the university page says '
+                    'within 2 hours — the two differ.',
                 'Hours and processing times can change, so check the current '
                     'notice before you go.',
               ],
@@ -5108,6 +5858,9 @@ class MockData {
                 '운영시간: 평일 09:00~17:00 (12:00~13:00 제외)',
                 '토요일·일요일·공휴일과 개교기념일에는 운영하지 않습니다.',
                 '문의: 051-200-6090~1',
+                '본인이 갈 수 없으면 대리인이 신청할 수 있습니다 — 위임인의 신분증 사본, '
+                    '대리인의 신분증, 위임장이 필요합니다.',
+                '증명서를 발급받으러 오면 주차료가 2시간까지 무료입니다.',
               ],
               linesEn: [
                 'For anything the website or the kiosk cannot handle, the '
@@ -5117,6 +5870,11 @@ class MockData {
                 'Closed on Saturdays, Sundays, public holidays and the '
                     "university's foundation day.",
                 'Phone: 051-200-6090~1',
+                'If you cannot go yourself, someone can apply for you — they '
+                    "need a copy of your ID, their own ID and a letter of "
+                    'authorisation.',
+                'Parking is free for up to 2 hours when you come for a '
+                    'certificate.',
               ],
             ),
           ],
@@ -5196,9 +5954,10 @@ class MockData {
                 '제출기관의 요구사항을 먼저 확인한 뒤 학사관리과에 문의하세요.',
               ],
               linesEn: [
-                'Overseas universities, immigration offices and employers often '
-                    'require a sealed envelope or an embossed stamp — a plain '
-                    'online printout may not be accepted.',
+                'If the receiving institution — an overseas university, a visa '
+                    'office or an employer, for example — asks for a sealed '
+                    'envelope or an embossed stamp, a plain online printout may '
+                    'not be enough.',
                 'Find out exactly what the receiving institution requires, then '
                     'ask the Office of Academic Affairs.',
               ],
@@ -5353,6 +6112,16 @@ class MockData {
           url: 'https://dx.donga.ac.kr/certificate/login.jsp',
           iconName: 'computer',
         ),
+        // The university's certificate page lists this as the alternative
+        // online route next to the dx link above.
+        GuideLink(
+          labelKo: '웹민원센터(인터넷 증명발급)',
+          labelEn: 'Web civil-service center (online certificates)',
+          descriptionKo: '학교 증명서 발급 안내에 함께 안내된 인터넷 발급 경로',
+          descriptionEn: 'The other online route listed on the university page',
+          url: 'https://unc.doculink.co.kr/index/main.do',
+          iconName: 'computer',
+        ),
         // Integrated Information System — where the tuition/scholarship
         // documents and the English-name registration actually live.
         GuideLink(
@@ -5390,25 +6159,29 @@ class MockData {
       titleKo: '도서관 이용안내',
       titleEn: 'Library Guide',
       summaryKo: '대출 · 열람실 · 모바일 이용증',
-      summaryEn: 'Borrowing, study rooms & mobile ID',
+      summaryEn: 'Borrowing, reading rooms & mobile ID',
       iconName: 'menu_book',
       overviewKo: '동아대학교에는 승학캠퍼스의 한림도서관, 부민캠퍼스의 부민도서관과 법학도서분관, '
           '구덕캠퍼스의 의학도서분관이 있습니다.\n\n'
           '도서 대출과 반납뿐 아니라 열람실, 그룹스터디실, 전자자료, 학술DB, 캠퍼스간 대출 등 '
           '다양한 서비스를 이용할 수 있습니다.\n\n'
-          '외국인 학생도 동아대학교 학생 계정과 학생증 또는 모바일 이용증을 이용하여 도서관 '
-          '서비스를 사용할 수 있습니다.',
+          '동아대학교에 재학 중인 외국인 학생은 다른 재학생과 같은 기준으로 통합정보시스템 계정과 '
+          '모바일 이용증(또는 학생증)을 이용하여 도서관 서비스를 사용할 수 있습니다. 교환학생이나 '
+          '한국어교육과정 학생은 이용 범위를 도서관(051-200-6273)에 확인하세요.',
       overviewEn: 'Dong-A University has four libraries: Hallim Library on the '
           'Seunghak campus, Bumin Library and the Law Library Branch on the '
           'Bumin campus, and the Medical Library Branch on the Gudeok '
           'campus.\n\n'
           'They are not only for borrowing and returning books — you can also '
-          'use study rooms and group study rooms, read e-journals and academic '
+          'use reading rooms and group study rooms, read e-journals and academic '
           'databases, and have a book sent over from another campus.\n\n'
-          'As an international student you use the same services as everyone '
-          'else: log in with your Dong-A University account and identify '
-          'yourself with your student ID card or with the mobile library ID in '
-          'the library app.',
+          'If you are enrolled at Dong-A University as an international '
+          'student, you use the library on the same terms as other enrolled '
+          'students: log in with your integrated information system account '
+          'and identify yourself with the mobile library ID in the library app '
+          '(or your student ID card). Exchange students and Korean-language '
+          'program students should check what they can use with the library '
+          '(051-200-6273).',
       topSections: [
         // Which library you want comes before anything you do inside it.
         GuideSection(
@@ -5429,7 +6202,7 @@ class MockData {
                 '문의: 051-200-6273',
               ],
               linesEn: [
-                'The main library on the Seunghak campus: collections, study '
+                'The main library on the Seunghak campus: collections, reading '
                     'rooms and group study rooms.',
                 'Building: S10, Hallim Library',
                 'Phone: 051-200-6273',
@@ -5445,7 +6218,7 @@ class MockData {
               ],
               linesEn: [
                 'Inside the International Building on the Bumin campus: '
-                    'collections, study rooms and group study rooms.',
+                    'collections, reading rooms and group study rooms.',
                 'Building: B05, International Building, floors 5–10',
                 'Phone: 051-200-8434',
               ],
@@ -5512,16 +6285,52 @@ class MockData {
           ],
           notes: [
             GuideNote(
-              titleKo: '학생증도 그대로 사용할 수 있어요',
-              titleEn: 'Your student ID card still works',
+              titleKo: '학생증으로도 대출할 수 있어요',
+              titleEn: 'Your student ID card works for borrowing',
               linesKo: [
-                '실물 학생증으로도 도서관에 출입하고 도서를 대출할 수 있습니다.',
-                '학생증과 모바일 이용증 중 편한 것을 사용하면 됩니다.',
+                '실물 학생증도 대출 창구의 리더기에서 인식되어 도서를 대출할 수 있습니다.',
+                '출입과 좌석배정은 도서관 안내에 모바일 이용증 기준으로 적혀 있습니다. 실물 학생증으로 '
+                    '출입할 수 있는지는 도서관에 확인하세요.',
               ],
               linesEn: [
-                'You can still use the plastic student ID card to enter the '
-                    'library and borrow books.',
-                'Use whichever is easier for you — the card or the app.',
+                'The plastic student ID card is also read at the loan desk, so '
+                    'you can borrow with it.',
+                'For entry and seat booking the library describes the mobile '
+                    'library ID. Whether the plastic card opens the entry gate '
+                    'is not stated — ask the library.',
+              ],
+            ),
+            // Lead-verified 2026-09-13 on the library's 특별회원 page.
+            GuideNote(
+              titleKo: '졸업 · 휴학 후에는 특별회원으로',
+              titleEn: 'After graduating or while on leave',
+              linesKo: [
+                '졸업생 · 대학원 수료생 · 휴학생은 재학생과 같은 조건이 아니라 도서관 특별회원으로 '
+                    '가입해 이용합니다.',
+                '가입 신청서 작성 → 발급비 입금(해당자) → 신분증을 가지고 대출/반납 데스크 방문 → '
+                    '모바일 이용증 사용',
+                '졸업동문 · 대학원 수료생: 5책 / 14일, 발급비 50,000원(2년, 환급 불가) · 휴학생: '
+                    '5책 / 14일, 무료(휴학 기간)',
+                '열람실은 시험기간을 제외하고 이용할 수 있습니다.',
+                '도서관 규정상 졸업 · 수료 · 휴학할 때는 빌린 자료를 즉시 반납해야 하며, 연체자료가 '
+                    '남아 있으면 증명서 발급이 보류될 수 있습니다(규정 제21조 · 제32조).',
+              ],
+              linesEn: [
+                'Graduates, graduate students who have completed coursework and '
+                    'students on leave do not keep student borrowing rights — '
+                    'they join the library as special members.',
+                'Fill in the membership form → pay the fee if one applies → '
+                    'bring your ID to the loan/return desk → use the mobile '
+                    'library ID',
+                'Graduates and course-completed graduate students: 5 books for '
+                    '14 days, fee 50,000 won for 2 years (non-refundable) · '
+                    'Students on leave: 5 books for 14 days, free for the leave '
+                    'period',
+                'Reading rooms are open to them except during exam periods.',
+                'Library rules require you to return borrowed items as soon as '
+                    'you graduate, complete coursework or take leave; if anything '
+                    'is still overdue, the library can ask for your certificates '
+                    'to be held back (rules, Articles 21 and 32).',
               ],
             ),
           ],
@@ -5530,13 +6339,14 @@ class MockData {
               '사용할 수 있습니다.',
           noticeEn: 'Set up your mobile library ID\n'
               'The mobile library ID in the app is what identifies you when you '
-              'enter the library, borrow a book or take a seat in a study room.',
+              'enter the library, borrow a book or take a seat in a reading '
+              'room.',
           noticeIconName: 'badge',
           footnoteKo: '※ 학생증의 사용처(학생 확인용, 도서 대출, 열람실 이용)와 무료 발급 안내는 '
               '2024학년도 외국인 유학생 안내서 기준입니다. 학생증 발급 절차는 학사관리과 안내를 '
               '확인하세요.',
           footnoteEn: '※ What the student ID card is used for (identification, '
-              'borrowing, study rooms) and the fact that it is issued free of '
+              'borrowing, reading rooms) and the fact that it is issued free of '
               'charge come from the 2024 international-student booklet. For how '
               'to get one, check with the Office of Academic Affairs.',
         ),
@@ -5559,12 +6369,18 @@ class MockData {
                 '대학원생: 10책 / 30일',
                 '비전임교원 · 직원: 10책 / 30일',
                 '전임교원: 30책 / 90일',
+                '책 수와 기간은 한림 · 부민 · 법학 · 의학도서분관에서 빌린 것을 합산해 적용합니다.',
+                '참고도서는 당일만 대출되고, DVD는 최대 3점을 2주 동안 빌릴 수 있습니다.',
               ],
               linesEn: [
                 'Undergraduate students: 10 books for 14 days',
                 'Graduate students: 10 books for 30 days',
                 'Non-tenured teaching staff and staff: 10 books for 30 days',
                 'Full-time faculty: 30 books for 90 days',
+                'The limits count what you borrow from all four libraries '
+                    'together.',
+                'Reference books are same-day loans only; DVDs are up to 3 '
+                    'items for 2 weeks.',
               ],
             ),
             GuideNote(
@@ -5602,11 +6418,12 @@ class MockData {
           iconName: 'event_repeat',
           bodyKo: '대출한 도서는 한림도서관, 부민도서관, 법학도서분관, 의학도서분관 중 어느 곳에서도 '
               '반납할 수 있습니다.\n\n'
-              '도서관이 문을 닫은 시간에는 무인반납함을 이용하세요.',
+              '무인반납함에 넣어 반납할 수도 있습니다. 위치는 아래를 확인하세요.',
           bodyEn: 'Return a book to any of the four libraries — Hallim, Bumin, '
               'the Law Library Branch or the Medical Library Branch. It does '
               'not have to go back where you borrowed it.\n\n'
-              'When the library is closed, use a book return box.',
+              'You can also drop a book in a return box — see below for where '
+              'they are.',
           notes: [
             GuideNote(
               titleKo: '무인반납함 위치',
@@ -5635,12 +6452,12 @@ class MockData {
         ),
         GuideSection(
           titleKo: '열람실 이용',
-          titleEn: 'Study Room & Seat Reservation',
+          titleEn: 'Reading Room & Seat Reservation',
           iconName: 'school',
           bodyKo: '열람실 좌석은 동아대학교 도서관 앱에서 예약한 뒤 인증(발권확정)해야 이용할 수 '
               '있습니다.',
-          bodyEn: 'Seats in the study rooms are booked in the library app — and '
-              'a booking only becomes a seat once you check in.',
+          bodyEn: 'Seats in the reading rooms are booked in the library app — '
+              'and a booking only becomes a seat once you check in.',
           stepsKo: [
             '동아대학교 도서관 앱에 통합정보시스템 계정으로 로그인',
             '「열람실 예약」 선택',
@@ -5656,7 +6473,7 @@ class MockData {
                 'account',
             'Choose 열람실 예약 (reserve a seat)',
             'Pick the library',
-            'Pick the study room',
+            'Pick the reading room',
             'Pick a seat and confirm the booking',
             'Check in within 20 minutes to confirm the seat',
             'Use your seat',
@@ -5672,8 +6489,8 @@ class MockData {
               ],
               linesEn: [
                 'Tap 예약인증 (confirm booking) in the app while you are in the '
-                    'study room — it uses Bluetooth beacons, so keep Bluetooth '
-                    'on.',
+                    'reading room — it uses Bluetooth beacons, so keep '
+                    'Bluetooth on.',
                 'Or scan your mobile library ID at a seat kiosk inside the '
                     'library.',
               ],
@@ -5684,25 +6501,39 @@ class MockData {
               linesKo: [
                 '이용이 끝난 뒤 앱에서 좌석 반납을 완료하세요.',
                 '앱의 「나의자리」에서 현재 예약·발권된 좌석과 사용 이력을 확인할 수 있습니다.',
+                '「나의자리」에서 좌석 연장도 할 수 있습니다.',
               ],
               linesEn: [
                 'Finish by releasing the seat in the app so someone else can '
                     'use it.',
                 'Under 나의자리 (my seat) you can see your current booking and '
                     'your past usage.',
+                'You can also extend your seat under 나의자리.',
               ],
             ),
           ],
           noticeKo: '예약만 하면 끝이 아니에요\n'
-              '좌석 예약 후 20분 이내에 인증하여 발권확정을 해야 이용할 수 있습니다. 정해진 시간 '
-              '안에 인증하지 않으면 예약이 취소될 수 있습니다.',
+              '좌석 예약 후 20분 이내에 앱의 「예약인증」이나 좌석배정기에서 인증해 발권확정을 해야 '
+              '좌석을 이용할 수 있습니다.',
           noticeEn: 'Booking a seat is only half of it\n'
-              'You have 20 minutes to check in and confirm the seat. If you do '
-              'not, the booking can be cancelled.',
-          footnoteKo: '※ 그룹스터디실은 도서관 홈페이지에서 별도로 신청합니다. 신청 조건과 이용 시간은 '
-              '도서관 홈페이지의 안내를 확인하세요.',
+              'You have 20 minutes to check in — with 예약인증 in the app or at '
+              'a seat kiosk — before the seat is really yours.',
+          footnoteKo: '※ 그룹스터디실은 재학생과 교직원이 도서관 홈페이지에서 별도로 신청합니다. 평일 '
+              '09:00~20:00(토 · 일 휴실), 1회 2시간, 1일 1회 · 월 10회까지이며, 이용자 모두 '
+              '학생증을 지참해야 합니다. 예약 후 동행인 전원이 예약을 승인해야 하고(동행인은 도서관 '
+              '홈페이지에 한 번 이상 로그인해 두어야 합니다), 예약하고 무단으로 불참해 30분이 지나면 '
+              '1개월 동안 그룹스터디실을 이용할 수 없습니다. 시험기간 1주 전부터 종료일까지는 예약 대신 '
+              '좌석배정으로 일반 열람실처럼 운영합니다.',
           footnoteEn: '※ Group study rooms are booked separately on the library '
-              'website. Check the site for who can book one and for how long.',
+              'website by enrolled students and staff: weekdays 09:00–20:00 '
+              '(closed at weekends), 2 hours per booking, once a day and up to '
+              '10 times a month, and everyone using the room brings a student '
+              'ID card. Everyone you add has to approve the booking (and must '
+              'have logged in to the library website at least once), and an '
+              'unannounced no-show (30 minutes past the start) bars you from '
+              'group study rooms for a month. From one week before exams until '
+              'they end, the rooms are allocated like ordinary reading-room '
+              'seats instead of being booked.',
         ),
         GuideSection(
           titleKo: '캠퍼스간 대출',
@@ -5795,14 +6626,21 @@ class MockData {
               linesKo: [
                 '별도의 프로그램 설치 없이 도서관 홈페이지에 로그인하면 이용할 수 있습니다.',
                 'Edge, Chrome, Safari, Firefox 등 대부분의 브라우저를 지원합니다.',
-                '전자자료에 바로 접속할 때는 도서관 홈페이지 메인의 「교외접속」을 On으로 '
-                    '설정하세요.',
+                '도서관 홈페이지에 로그인한 뒤 메인 화면 위쪽의 「교외접속」이 On으로 되어 있는지 '
+                    '확인하고 전자자료를 이용하세요.',
+                '전자자료 주소(URL)를 직접 입력해 들어갈 때는 주소 앞에 '
+                    'https://libproxy.donga.ac.kr/_Lib_Proxy_Url 을 붙여야 합니다.',
+                '문의: 전자자료 이용 051-200-6272 · 교외접속 오류 051-200-8430',
               ],
               linesEn: [
                 'Nothing to install — just log in to the library website.',
                 'Most browsers work: Edge, Chrome, Safari and Firefox.',
-                'When you go straight to a resource, switch 교외접속 (off-campus '
-                    'access) to On on the library home page first.',
+                'After logging in, check that 교외접속 (off-campus access) at the '
+                    'top of the library home page is On, then open the resource.',
+                'If you type a resource\'s address directly, put '
+                    'https://libproxy.donga.ac.kr/_Lib_Proxy_Url in front of it.',
+                'Questions: e-resources 051-200-6272 · off-campus access errors '
+                    '051-200-8430',
               ],
             ),
           ],
@@ -5829,22 +6667,43 @@ class MockData {
               'home page shows the live opening hours.',
           notes: [
             GuideNote(
-              titleKo: '2026년 8월 확인 기준',
-              titleEn: 'As listed in August 2026',
+              titleKo: '2026년 9월 확인 기준',
+              titleEn: 'As listed in September 2026',
               linesKo: [
                 '자료실(한림 · 부민 · 법학도서분관): 학기 중 평일 09:00~20:00, 방학 중 평일 '
                     '09:00~17:00',
                 '의학도서분관 자료실: 평일 09:00~17:00',
-                '열람실: 매일 07:00~24:00',
-                '자료실은 토요일 휴실, 일요일과 공휴일은 휴관',
+                '열람실(한림 · 부민 · 구덕): 일요일 · 공휴일 포함 매일 07:00~24:00',
+                '자료실은 토요일 · 일요일 · 공휴일에 닫습니다. 열람실은 일요일과 공휴일에도 '
+                    '운영합니다.',
               ],
               linesEn: [
                 'Collections (Hallim, Bumin, Law Branch): 09:00–20:00 on '
                     'weekdays in term time, 09:00–17:00 during the vacation',
                 'Medical Library Branch collection: 09:00–17:00 on weekdays',
-                'Study rooms: 07:00–24:00, every day',
-                'Collections are closed on Saturdays; everything is closed on '
-                    'Sundays and public holidays',
+                'Reading rooms (Hallim, Bumin, Gudeok): 07:00–24:00 every day, '
+                    'including Sundays and public holidays',
+                'The collections are closed on Saturdays, Sundays and public '
+                    'holidays. The reading rooms stay open on Sundays and public '
+                    'holidays.',
+              ],
+            ),
+            // Exam-period rows exist only in the live-hours box on the home
+            // page, so they carry their own date.
+            GuideNote(
+              titleKo: '시험기간 열람실',
+              titleEn: 'Reading rooms during exams',
+              linesKo: [
+                '한림 · 부민: 24시간',
+                '구덕: 07:00~익일 02:00',
+                '2026년 9월 도서관 홈페이지 실시간 이용시간 기준입니다. 방문 전 홈페이지에서 다시 '
+                    '확인하세요.',
+              ],
+              linesEn: [
+                'Hallim and Bumin: open 24 hours',
+                'Gudeok: 07:00–02:00 the next day',
+                'From the live hours on the library website, September 2026. '
+                    'Check the website again before you go.',
               ],
             ),
           ],
@@ -5855,13 +6714,17 @@ class MockData {
               'Hours change with the term, the vacation and the exam period. '
               "Look up today's hours on the library website before you set off.",
           noticeIconName: 'info',
-          footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 자료실 09:00~22:00, 열람실 '
-              '05:00~24:00으로 안내되어 있었습니다. 현재 도서관 홈페이지의 이용시간과 다르므로 '
-              '홈페이지의 실시간 이용시간을 기준으로 하세요.',
-          footnoteEn: '※ The 2024 international-student booklet listed '
-              '09:00–22:00 for the collections and 05:00–24:00 for the study '
-              'rooms. Those no longer match the library website — go by the '
-              'live hours shown there.',
+          footnoteKo: '※ 도서관 「이용시간」 페이지와 메인의 실시간 이용시간은 열람실을 '
+              '07:00~24:00으로 적지만, 같은 홈페이지의 「열람실 이용」 페이지는 05:00~24:00으로 '
+              '적고 있습니다(2024학년도 외국인 유학생 안내서도 열람실 05:00~24:00, 자료실 '
+              '09:00~22:00). 공식 페이지끼리 다르므로 방문 전 메인의 실시간 이용시간을 기준으로 '
+              '하세요.',
+          footnoteEn: '※ The library\'s "Library hours" page and the live hours '
+              'on its home page give 07:00–24:00 for the reading rooms, but its '
+              '"Reading room" page gives 05:00–24:00 (as did the 2024 '
+              'international-student booklet, with 09:00–22:00 for the '
+              'collections). The official pages disagree, so go by the live '
+              'hours on the home page before you visit.',
         ),
       ],
       tipsKo: [
@@ -5899,8 +6762,9 @@ class MockData {
         GuideLink(
           labelKo: 'DAU Library English',
           labelEn: 'DAU Library English',
-          descriptionKo: '영문 도서관 홈페이지',
-          descriptionEn: 'Library information for international students',
+          descriptionKo: '영문 도서관 홈페이지 (일부 공지는 한국어)',
+          descriptionEn: 'The library website in English (some notices are in '
+              'Korean)',
           url: 'https://library.donga.ac.kr/en/',
         ),
         GuideLink(
@@ -5956,10 +6820,11 @@ class MockData {
       difficulty: 1,
       status: GuideStatus.published,
     ),
-    // Department name, phone/fax, transport and the live Q&A / 상담신청 boards
-    // follow global.donga.ac.kr, checked 2026-08-27. The room code and the team
-    // email come from the 2024 booklet and are attributed as such — the office
-    // site gives the campus address but not the room.
+    // Department name, phone/fax, transport, staff numbers and the Q&A /
+    // 상담신청 boards follow global.donga.ac.kr, rechecked 2026-09-13. The
+    // office moved in 2025: its room (B03-0202) and hours come from the office's
+    // own 2026 notices, because the Directions page gives only the campus
+    // address. The team email is from the 2024 booklet and is attributed.
     const AdminGuideItem(
       id: 'oia-visit',
       categoryId: GuideCategory.school,
@@ -5996,8 +6861,8 @@ class MockData {
               '유치와 지원, 해외 대학과의 협정 체결, 해외 한국어 센터 운영 등을 담당합니다.',
           bodyEn: 'Check first that what you need is actually handled here. The '
               'office recruits and supports international students, signs '
-              'agreements with universities abroad, and runs the Korean '
-              'language centres.',
+              'agreements with universities abroad, and runs Korean language '
+              'centres overseas.',
           notes: [
             GuideNote(
               titleKo: '🪪 체류 · 비자',
@@ -6008,6 +6873,7 @@ class MockData {
                 '체류자격 변경',
                 '시간제취업 관련 학교 확인',
                 '기타 출입국·체류 관련 학교 지원',
+                '통합신고서 · 지도교수확인서 · 사유서 양식은 국제교류과에 있습니다.',
               ],
               linesEn: [
                 'Questions about alien registration',
@@ -6015,6 +6881,8 @@ class MockData {
                 'Changing your status of stay',
                 'University confirmation for part-time work',
                 'Other university support for immigration and stay matters',
+                'The integrated application form, the advisor confirmation form '
+                    'and the statement-of-reason form are kept at the office.',
               ],
             ),
             GuideNote(
@@ -6085,18 +6953,22 @@ class MockData {
           titleKo: '위치',
           titleEn: 'Where the office is',
           iconName: 'location_on',
-          bodyKo: '국제교류과 사무실은 부민캠퍼스 종합강의동 1층에 있습니다. 법학전문대학원(B02) 옆, '
-              '취업지원실 인근입니다.',
-          bodyEn: 'The office is on the 1st floor of the General Lecture '
-              'Building on the Bumin campus — next to the Law School building '
-              '(B02) and near the Career Support Office.',
+          bodyKo: '국제교류과 사무실은 부민캠퍼스 글로벌인재관(B03) 2층에 있습니다. 국제교류과는 '
+              '2025년 8월 공지부터 사무실이 이전했다고 안내했으므로, 종합강의동 1층으로 적힌 예전 '
+              '안내를 보고 찾아가지 않도록 주의하세요.',
+          bodyEn: 'The office is on the 2nd floor of the Global Leadership Hall '
+              '(글로벌인재관, B03) on the Bumin campus. Its notices have said '
+              'since August 2025 that the office has moved, so ignore older '
+              'directions that send you to the 1st floor of the General Lecture '
+              'Building.',
           notes: [
             GuideNote(
               titleKo: '부민캠퍼스',
               titleEn: 'Bumin campus',
-              linesKo: ['종합강의동 1층 BC-0116-3'],
+              linesKo: ['글로벌인재관(B03) 2층 B03-0202'],
               linesEn: [
-                'General Lecture Building, 1st floor, room BC-0116-3',
+                'Global Leadership Hall (글로벌인재관, B03), 2nd floor, room '
+                    'B03-0202',
               ],
             ),
             GuideNote(
@@ -6138,12 +7010,13 @@ class MockData {
               ],
             ),
           ],
-          footnoteKo: '※ 호실 번호(BC-0116-3)는 2024학년도 외국인 유학생 안내서 기준입니다. '
-              '사무실이 이전될 수 있으므로 방문 전 국제교류과 홈페이지의 「찾아오시는 길」을 '
-              '확인하세요.',
-          footnoteEn: '※ The room number (BC-0116-3) comes from the 2024 '
-              'international-student booklet. Offices do move — check the '
-              '"Directions" page on the office website before you go.',
+          footnoteKo: '※ 사무실 위치(B03-0202)는 2026년 7~8월 국제교류과 공지 기준입니다. 홈페이지 '
+              '「찾아오시는 길」에는 캠퍼스 주소만 있고 건물 · 호실은 나오지 않으므로, 방문 전 '
+              '최신 공지나 전화로 위치를 확인하세요.',
+          footnoteEn: '※ The room (B03-0202) is taken from the office\'s notices '
+              'of July–August 2026. The "Directions" page gives only the campus '
+              'address, not the building or room, so check the latest notice '
+              'or call before you go.',
         ),
       ],
       // The checklist card is reused as the "before you visit" list; the four
@@ -6153,10 +7026,12 @@ class MockData {
       checklistKo: [
         '방문 목적 확인 — 비자, 체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.',
         '관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 '
-            '있으므로 방문 전에 국제교류과 공지를 확인하세요.',
+            '있으므로 방문 전에 국제교류과 공지를 확인하세요. 단체접수 서류는 사무실이 아니라 '
+            '공지에 적힌 장소에서 받을 수 있습니다.',
         '필요한 서류 확인 — 업무에 따라 여권, 외국인등록증, 신청서, 재학증명서 등 필요한 서류가 '
             '달라질 수 있습니다.',
-        '온라인 문의 먼저 확인 — 간단한 질문은 국제교류과 홈페이지의 Q&A를 먼저 이용할 수 '
+        '담당 번호 확인 — 비자 · 체류 · 학사 문의는 아래 「연락처」의 업무별 번호로 먼저 '
+            '문의하세요. 홈페이지 Q&A · 상담신청 게시판은 「국제교류 프로그램」 메뉴 아래에 '
             '있습니다.',
       ],
       checklistEn: [
@@ -6164,22 +7039,35 @@ class MockData {
             'programmes and so on are each handled by a different person.',
         'Read the notices first — alien registration and stay extensions are '
             'sometimes filed as a group through the university within a set '
-            'period, which the office announces.',
+            'period, which the office announces. Group applications may be '
+            'collected at the place given in the notice rather than the office.',
         'Find out which documents you need — depending on the service that may '
             'be your passport, your ARC, an application form or an enrollment '
             'certificate.',
-        'Try online first — for a simple question, the Q&A board on the office '
-            'website is quicker than a visit.',
+        'Find the right number — for visa, stay and academic questions, call '
+            'the number for that service under Contact below. The Q&A and '
+            'counseling boards on the website sit under the exchange '
+            'programmes menu.',
       ],
       checklistNoteKo: '※ 위 서류가 모든 방문에 필요한 것은 아닙니다. 방문 전에 해당 업무의 공지 '
           '또는 담당자에게 필요한 서류를 확인하세요.\n'
-          '※ 사무실 운영시간은 국제교류과 홈페이지에 별도로 안내되어 있지 않습니다. 방문 전 '
-          '국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.',
+          '※ 2026년 국제교류과 공지에는 사무실 업무시간이 10:00~15:00(점심시간 '
+          '12:00~13:00)으로 적혀 있습니다. 입학 안내 공지에 함께 적힌 시간이라 업무나 시기에 '
+          '따라 다를 수 있으므로 방문 전 전화로 확인하세요.\n'
+          '※ 유학생 보험료 미납자, 수료생(초과학기자), 직전학기 성적 2.0 미만인 학생은 비자연장 '
+          '단체접수를 할 수 없고 개인접수를 해야 합니다(2026-2학기 학부생 · 9월 30일 만료자 '
+          '단체접수 공지 기준).',
       checklistNoteEn: '※ Those documents are not required for every visit. '
           'Check the notice for your particular service, or ask the staff, '
           'before you set off.\n'
-          '※ The office website does not publish opening hours. Check the '
-          'website or call before visiting.',
+          '※ The office\'s 2026 notices give its hours as 10:00–15:00, closed '
+          '12:00–13:00 for lunch. Those hours appear on admissions notices and '
+          'may differ by service or time of year, so call before you visit.\n'
+          '※ Students with unpaid student insurance, students past their final '
+          'semester, and students whose last-semester GPA was below 2.0 cannot '
+          'use the group visa extension and must apply on their own (notice for '
+          'undergraduates whose visas expire on 30 September, 2026 fall '
+          'semester).',
       stepsKo: [
         '문의하려는 업무 확인',
         '국제교류과 최신 공지 확인',
@@ -6220,31 +7108,46 @@ class MockData {
               ],
             ),
             GuideNote(
-              titleKo: '외국인 유학생 지원 문의',
-              titleEn: 'International student support',
+              titleKo: '업무별 연락처',
+              titleEn: 'Numbers by service',
               linesKo: [
-                '유학생 학사 지원·상담 및 기숙사 관련: 051-200-6447',
+                '유학생 학사 지원·상담, 유학생 외부 기숙사 관리: 051-200-6447',
+                '석당 글로벌하우스 운영: 051-200-1496 · 사생 관리: 051-200-1510',
+                '학부 · 대학원 외국인 입시: 051-200-6444',
+                '정부초청장학생(GKS), 유학생 학습지원 · 적응 프로그램: 051-200-6449',
+                '한국어학당: 051-200-6446',
               ],
               linesEn: [
-                'Academic support, counseling and dormitory matters for '
+                'Academic support and counseling, and off-campus dormitories, for '
                     'international students: 051-200-6447',
+                'Seokdang Global House — management: 051-200-1496 · residents: '
+                    '051-200-1510',
+                'Undergraduate and graduate admissions for international '
+                    'students: 051-200-6444',
+                'Global Korea Scholarship (GKS), and learning-support and '
+                    'adjustment programmes: 051-200-6449',
+                'Korean language school (한국어학당): 051-200-6446',
               ],
             ),
           ],
-          noticeKo: '운영시간은 미리 확인하세요\n'
-              '국제교류과 홈페이지에 사무실 운영시간이 별도로 안내되어 있지 않습니다. 방문 전 '
-              '국제교류과 홈페이지 또는 전화로 운영시간을 확인하세요.',
-          noticeEn: 'Check the opening hours in advance\n'
-              'The office website does not list its opening hours. Check the '
-              'website, or call, before you visit.',
+          noticeKo: '방문 시간을 확인하세요\n'
+              '2026년 국제교류과 공지에 적힌 업무시간은 10:00~15:00(점심시간 12:00~13:00)입니다. '
+              '업무에 따라 다를 수 있으므로 방문 전에 전화로 한 번 더 확인하세요.',
+          noticeEn: 'Check the office hours\n'
+              'The office\'s 2026 notices list 10:00–15:00, with a 12:00–13:00 '
+              'lunch break. They may differ by service, so call ahead before you '
+              'visit.',
           noticeIconName: 'info',
           footnoteKo: '※ 2024학년도 외국인 유학생 안내서에는 유학생 지원(체류·장학·기숙사) 문의 '
-              '이메일이 global@donga.ac.kr로 안내되어 있었습니다. 담당자와 업무분장은 변경될 수 '
-              '있으므로 최신 정보는 국제교류과 홈페이지의 「구성원 안내」에서 확인하세요.',
+              '이메일이 global@donga.ac.kr로 안내되어 있었습니다. 현재 홈페이지 「구성원 안내」에는 '
+              '이 주소가 없으므로 이메일을 보내기 전에 해당 공지나 전화로 담당자를 확인하세요. '
+              '업무별 번호는 2026년 9월 「구성원 안내」 기준입니다.',
           footnoteEn: '※ The 2024 international-student booklet gave '
               'global@donga.ac.kr as the address for student support (stay, '
-              'scholarships, dormitories). Staff and their duties change — for '
-              'the current list see "구성원 안내" (staff) on the office website.',
+              'scholarships, dormitories). The current "구성원 안내" (staff) page '
+              'does not list that address, so check the relevant notice or call '
+              'to find the right person before you email. The numbers by '
+              'service follow that staff page as of September 2026.',
         ),
       ],
       tipsKo: [
@@ -6255,8 +7158,8 @@ class MockData {
         '📅 단체접수 기간이 있을 수 있어요 — 외국인등록이나 체류기간 연장 등 일부 업무는 학교에서 '
             '단체접수를 지원할 수 있습니다. 개인 신청 전에 해당 학기의 국제교류과 공지를 '
             '확인하세요.',
-        '💬 간단한 질문은 온라인으로 — 국제교류과 홈페이지의 Q&A 게시판에서 방문 전에 온라인으로 '
-            '문의할 수 있습니다.',
+        '💬 게시판은 교류 프로그램용 — 국제교류과 홈페이지의 Q&A · 상담신청 게시판은 「국제교류 '
+            '프로그램」 메뉴에 있습니다. 비자 · 체류 · 학사 문의는 업무별 번호로 전화하세요.',
         '🏫 학과 업무는 학과사무실에서 — 전공 수업, 학과별 졸업요건, 과목 증원 등 학과 고유 '
             '업무는 소속 학과사무실에 문의해야 할 수 있습니다.',
       ],
@@ -6268,8 +7171,10 @@ class MockData {
         '📅 There may be a group application period — the university sometimes '
             'files alien registrations or stay extensions as a group. Check the '
             "semester's notices before you apply on your own.",
-        '💬 Ask online for small things — the Q&A board on the office website '
-            'saves you the trip.',
+        '💬 The boards are for exchange programmes — the Q&A and counseling '
+            'boards on the office website sit under the exchange programmes '
+            'menu. For visa, stay or academic questions, call the number for '
+            'that service.',
         '🏫 Contact your department office for department-specific matters — '
             'major courses, graduation requirements and adding a full class are '
             'your department\'s business, not this office\'s.',
@@ -6292,18 +7197,19 @@ class MockData {
           iconName: 'directions_transit',
         ),
         GuideLink(
-          labelKo: '외국인 유학생 공지',
-          labelEn: 'Notices for international students',
-          descriptionKo: '비자 · 체류 · 장학 · 학교생활 안내',
-          descriptionEn: 'Visa, stay, scholarships and campus life',
+          labelKo: '국제교류과 공지사항',
+          labelEn: 'Office notices',
+          descriptionKo: '「유학생지원」 분류 — 비자연장 단체접수 · 장학 · 수강신청 안내',
+          descriptionEn: 'Pick the 유학생지원 (student support) category for visa '
+              'extensions, scholarships and course registration',
           url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN066',
           iconName: 'info',
         ),
         GuideLink(
           labelKo: '국제교류과 Q&A',
           labelEn: 'Office Q&A board',
-          descriptionKo: '방문 전 온라인 문의',
-          descriptionEn: 'Ask a question online before visiting',
+          descriptionKo: '국제교류 프로그램 메뉴의 Q&A 게시판',
+          descriptionEn: 'Q&A board under the exchange programmes menu',
           url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN067',
           iconName: 'help',
         ),
@@ -6315,17 +7221,21 @@ class MockData {
           url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN077',
           iconName: 'swap_horiz',
         ),
-        // In-app route (UX doc §3): opens the map focused on 종합강의동.
+        // In-app route (UX doc §3): opens the map focused on 글로벌인재관.
         GuideLink(
           labelKo: '지도에서 국제교류과 위치 보기',
           labelEn: 'View the International Affairs Office on the map',
-          descriptionKo: '부민캠퍼스 종합강의동',
-          descriptionEn: 'General Lecture Building, Bumin campus',
-          url: '/map?focus=b04',
+          descriptionKo: '부민캠퍼스 글로벌인재관',
+          descriptionEn: 'Global Leadership Hall, Bumin campus',
+          url: '/map?focus=b03',
           iconName: 'location_on',
         ),
       ],
-      relatedFacilityIds: ['b04'], // 종합강의동(부민) 1F 국제교류과
+      // 글로벌인재관(부민) 2F 국제교류과 B03-0202. building_floors predates the
+      // move both ways: b04's 1st floor still lists the office, and b03's 2nd
+      // floor does not list it yet. That floor data is generated, not edited
+      // here.
+      relatedFacilityIds: ['b03'],
       durationKo: '10~30분',
       durationEn: '10–30 minutes',
       difficulty: 1,
@@ -6337,6 +7247,10 @@ class MockData {
     // 112/119 split first, the call row inside each number's own section, and
     // no duration/difficulty meta at all. 1345 is NOT here — it is immigration
     // counselling, not an emergency line (it stays on the visa guides).
+    // Sources: 소방청 「119 구급신고 요령」 (what to say, GPS, stay on the line),
+    // 경찰청 보도자료 2024-03-19 (112 English/Chinese interpretation, 24h),
+    // 112신고포털 (text/video reports), 부산소방 다매체 신고 and 119안전신고센터
+    // (text and web reports), 법제처 생활법령 (119 ambulance is free).
     const AdminGuideItem(
       id: 'emergency-contacts',
       categoryId: GuideCategory.emergency,
@@ -6351,11 +7265,11 @@ class MockData {
           iconName: 'emergency',
           noticeKo: '지금 즉시 위험한 상황인가요?\n'
               '범죄 · 폭행 · 위협 등 경찰의 도움이 필요하면 112\n'
-              '화재 · 사고 · 부상 · 응급환자 · 구조가 필요하면 119',
+              '화재 · 사고 · 응급환자 · 구조가 필요하면 119 (다친 사람이 있으면 반드시 119)',
           noticeEn: 'Are you in immediate danger?\n'
               'Crime, assault, threats — anything you need the police for: 112\n'
-              'Fire, an accident, an injury, a medical emergency, someone who '
-              'needs rescuing: 119',
+              'Fire, an accident, a medical emergency, someone who needs '
+              'rescuing: 119 (always 119 if someone is hurt)',
           noticeIconName: 'emergency',
         ),
         GuideSection(
@@ -6397,9 +7311,12 @@ class MockData {
           titleKo: '119 — 화재 · 구조 · 구급',
           titleEn: '119 — Fire · Rescue · Ambulance',
           iconName: 'local_fire_department',
-          bodyKo: '화재, 사고, 구조 또는 응급환자가 발생한 경우 119에 신고하세요.',
+          bodyKo: '화재, 사고, 구조가 필요한 상황 또는 응급환자가 발생한 경우 119에 '
+              '신고하세요. 다친 사람이 있으면 반드시 119에 알리세요. 위급한 상황이라면 119 '
+              '구급차는 거리와 관계없이 무료입니다.',
           bodyEn: 'Call 119 for a fire, an accident, a rescue, or a medical '
-              'emergency.',
+              'emergency — always call 119 if someone is hurt. In an emergency '
+              'the 119 ambulance is free, however far it has to go.',
           links: [
             GuideLink(
               labelKo: '119 전화하기',
@@ -6423,7 +7340,8 @@ class MockData {
                 'There is a fire',
                 'Someone is badly injured',
                 'Someone is unconscious, or having trouble breathing',
-                'Someone has to be freed after a traffic accident',
+                'Someone needs to be rescued, for example after a traffic '
+                    'accident',
                 'Someone needs emergency medical help right now',
               ],
             ),
@@ -6441,6 +7359,8 @@ class MockData {
             '다친 사람이 있는지',
             '현재 상황이 계속 위험한지',
             '신고자의 연락 가능한 전화번호',
+            '구급차가 필요하면 환자의 나이, 아픈 곳, 의식 · 호흡이 있는지, 지병과 복용 중인 약',
+            '119 구급 신고라면 전화를 끊지 말고 응급처치 안내를 따르기',
           ],
           stepsEn: [
             'What has happened',
@@ -6448,19 +7368,29 @@ class MockData {
             'Whether anyone is hurt',
             'Whether the situation is still dangerous',
             'A phone number they can reach you on',
+            "If you need an ambulance: the patient's age, where it hurts, "
+                'whether they are conscious and breathing, and any illness or '
+                'medicines',
+            'On a 119 ambulance call, stay on the line and follow the '
+                'first-aid instructions',
           ],
-          noticeKo: '위치를 먼저 알려주세요\n'
-              '정확한 주소를 모르더라도 학교 이름, 캠퍼스, 건물 이름 또는 주변의 큰 건물을 '
-              '알려주세요.\n'
-              '· 동아대학교 승학캠퍼스\n'
-              '· 동아대학교 부민캠퍼스\n'
-              '· 동아대학교 구덕캠퍼스',
-          noticeEn: 'Tell them your location first\n'
-              'You do not need the exact address — the name of the university, '
-              'the campus, the building, or a large landmark nearby is enough.\n'
-              '· Dong-A University, Seunghak Campus\n'
-              '· Dong-A University, Bumin Campus\n'
-              '· Dong-A University, Gudeok Campus',
+          // Campus addresses from the university site footer, kept in Korean in
+          // both languages so the caller can read them out to the operator.
+          noticeKo: '위치를 정확히 알려주세요\n'
+              '정확한 주소를 알면 주소를 말하고, 모르면 학교 이름, 캠퍼스, 건물 이름이나 '
+              '주변의 큰 건물처럼 눈에 보이는 표지를 알려주세요. 휴대전화 위치 서비스(GPS)도 '
+              '켜 두세요.\n'
+              '· 동아대학교 승학캠퍼스 — 부산 사하구 낙동대로550번길 37\n'
+              '· 동아대학교 부민캠퍼스 — 부산 서구 구덕로 225\n'
+              '· 동아대학교 구덕캠퍼스 — 부산 서구 대신공원로 32',
+          noticeEn: 'Make sure they know where you are\n'
+              'Give the exact address if you know it. If you do not, give the '
+              'university, campus and building name, or a large building or '
+              "landmark you can see, and turn on your phone's location "
+              'services (GPS).\n'
+              '· Dong-A University, Seunghak Campus — 부산 사하구 낙동대로550번길 37\n'
+              '· Dong-A University, Bumin Campus — 부산 서구 구덕로 225\n'
+              '· Dong-A University, Gudeok Campus — 부산 서구 대신공원로 32',
           noticeIconName: 'location_on',
         ),
         // Both languages always show: the title carries one, the line the
@@ -6516,33 +7446,52 @@ class MockData {
         '🚨 112와 119는 긴급신고 번호입니다 — 긴급한 상황에서만 이용하세요.',
         '📍 위치를 확인하세요 — 신고하기 전에 가능하면 현재 캠퍼스와 건물 이름을 확인하세요.',
         '📱 휴대전화로 바로 신고할 수 있습니다 — 지역번호 없이 112 또는 119를 입력하세요.',
-        '🗣 한국어가 어렵다면 — 한국어를 잘 하지 못한다고 먼저 알리고 천천히 현재 상황과 위치를 '
-            '설명하세요.',
+        '🗣 한국어가 어렵다면 — 112 · 119 어느 쪽이든 한국어가 서툴다고 먼저 말하고, 천천히 '
+            '현재 상황과 위치를 설명하세요. 112에는 영어 · 중국어 통역이 24시간 연결됩니다.',
+        '💬 말하기 어렵다면 — 112와 119 모두 문자로 신고할 수 있습니다. 한국말이 서툰 '
+            '외국인은 119안전신고센터(119.go.kr)에서 인터넷으로도 119에 신고할 수 있습니다. '
+            '지금 위험하다면 전화나 문자가 가장 빠릅니다.',
       ],
       tipsEn: [
         '🚨 112 and 119 are emergency lines — use them only for emergencies.',
         '📍 Know where you are — check the campus and building name before you '
             'call if you can.',
         '📱 Dial straight from your phone — just 112 or 119, no area code.',
-        '🗣 If Korean is hard — say so first, then describe what is happening '
-            'and where you are, slowly.',
+        '🗣 If Korean is hard — whether you call 112 or 119, say so first, '
+            'then describe what is happening and where you are, slowly. 112 '
+            'connects English and Chinese interpreters 24 hours a day.',
+        '💬 If you cannot talk — you can report to both 112 and 119 by text '
+            'message. If Korean is difficult for you, you can also report to '
+            '119 online at 119.go.kr (119안전신고센터). If you are in danger '
+            'right now, a call or a text is fastest.',
       ],
       links: [
         GuideLink(
           labelKo: '경찰청 112신고 안내',
           labelEn: 'Korean National Police — 112',
-          descriptionKo: '범죄 · 긴급 경찰 신고',
-          descriptionEn: 'Crime and emergency police reports',
+          descriptionKo: '범죄 · 긴급 경찰 신고 · 문자 · 영상 신고',
+          descriptionEn: 'Crime and emergency police reports, including text '
+              'and video reports',
           url: 'https://www.112.go.kr/',
           iconName: 'local_police',
         ),
         GuideLink(
-          labelKo: '소방청 119신고 안내',
-          labelEn: 'National Fire Agency — 119',
-          descriptionKo: '화재 · 구조 · 구급 신고',
-          descriptionEn: 'Fire, rescue and ambulance reports',
+          labelKo: '소방청 119 구급신고 요령',
+          labelEn: 'National Fire Agency — 119 ambulance calls',
+          descriptionKo: '구급차가 필요할 때 알릴 내용과 순서',
+          descriptionEn: 'What to say, step by step, when you need an '
+              'ambulance',
           url: 'https://www.nfa.go.kr/nfa/safetyinfo/emergencyservice/'
               '119emergencydeclaration/',
+          iconName: 'local_fire_department',
+        ),
+        GuideLink(
+          labelKo: '119안전신고센터 인터넷 신고',
+          labelEn: 'National Fire Agency — report to 119 online',
+          descriptionKo: '말하기 어렵거나 한국말이 서툰 외국인을 위한 119 인터넷 신고',
+          descriptionEn: 'Report to 119 online if you cannot speak or find '
+              'Korean difficult',
+          url: 'https://www.119.go.kr/Center119/regist.do',
           iconName: 'local_fire_department',
         ),
       ],
@@ -6555,16 +7504,24 @@ class MockData {
     //    다국어 화면, 그리고 결정적으로 "분실시(도난제외)"
     //  · 하이코리아 「외국인등록(거소신고)증 분실신고」 — 부정 사용 방지 목적,
     //    효력 정지·회복이 아님, 24시간 내 철회, 온라인 불가 시 관할 관서 방문
-    //  · 출입국관리법 시행규칙 — 재발급은 사유 발생일부터 14일 이내 신청
+    //  · 하이코리아 「외국인등록증 발급/재발급」·「체류허가 수수료」 — 재발급 서류와
+    //    장소(주소지 관할 관서), 3만5천원(현금 수납만 가능). 분실 재발급에는 신청
+    //    기한이 없다 — 15일은 성명·국적 등 등록사항 변경 사유에만 붙는다
+    //    (rechecked 2026-09-13, 법제처 생활법령도 기한을 두지 않는다)
+    //  · 출입국관리법 시행령 제42조: 현행(시행 2025. 6. 1.) 조문에는 재발급 신청
+    //    기한이 없다. 2011. 11. 1. 전문개정판(대통령령 제23274호, 시행 2011. 12. 15.)
+    //    제42조②에는 「그 사유가 발생한 날부터 14일 이내」가 있었다 — the old
+    //    14 days is a repealed rule, not current law. The page still tells
+    //    students not to put the application off.
     //  · 하이코리아 「외국인등록」 — 외국인등록사항 변경신고는 사유 발생일부터
     //    15일 이내
+    //  · 법무부 외국인종합안내센터 — 1345 평일 09:00~22:00, 유료
     //
     // Deliberately absent, and deliberately NOT to be added later without a
-    // source: any fee amount (the ARC replacement fee could not be confirmed
-    // officially), LOST112 (the domain refused every connection and the
-    // migration notice has no verified primary source), 182, the card
-    // bulk-loss service, any claim about which languages 112 or 119 can
-    // interpret, a per-nationality passport procedure, named police stations,
+    // source: a deadline for replacing a lost card, LOST112 (the domain
+    // refused every connection and the migration notice has no verified
+    // primary source), 182, the card bulk-loss service, any claim about which
+    // languages 112 or 119 can interpret, a per-nationality passport procedure, named police stations,
     // hospitals, insurers, carriers or card issuers, and driver-only accident
     // steps. Fault, settlements and compensation are legal judgements and are
     // not this app's to make; nothing here tells a victim what they should
@@ -6710,13 +7667,13 @@ class MockData {
           iconName: 'local_police',
           bodyKo: '위험이 계속되고 있다면 즉시 112에 연락하세요.\n\n'
               '상황이 이미 끝났더라도 112에 신고하거나 가까운 경찰관서에 문의할 수 있습니다. '
-              '분실물 신고는 도난을 처리하는 경로가 아니므로, 도난이라고 생각되면 경찰에 '
-              '알리는 쪽이 맞습니다.',
+              '분실물 신고는 도난을 처리하는 경로가 아니므로, 도난이라고 생각되면 경찰에 알릴 '
+              '수 있습니다.',
           bodyEn: 'If it is still happening, call 112 straight away.\n\n'
               'Even after the immediate danger has passed, you can call 112 to '
               'report it or contact your nearest police office. A '
-              'lost-property report is not used for theft, so contact the '
-              'police instead.',
+              'lost-property report is not used for theft, so if you think it '
+              'was stolen, you can tell the police instead.',
           noticeKo: '직접 쫓아가거나 상대와 마주하려 하지 마세요\n'
               '상대를 추적하거나 대치하는 것은 위험할 수 있습니다. 경찰에 연락하세요.',
           noticeEn: 'Do not follow or confront anyone\n'
@@ -6749,8 +7706,13 @@ class MockData {
                     '카드의 효력이 정지되거나 회복되는 것은 아닙니다',
                 '신고한 뒤 24시간 이내에는 철회할 수 있습니다',
                 '온라인 신고가 어려우면 관할 출입국 · 외국인관서를 방문해 신고할 수 있습니다',
-                '재발급은 사유가 발생한 날부터 14일 이내에 신청합니다',
-                '구비서류와 수수료는 하이코리아 또는 1345에서 최신 안내를 확인하세요',
+                '분실 신고와 별도로, 새 카드는 주소지 관할 출입국 · 외국인관서에 재발급을 신청해야 '
+                    '받을 수 있습니다. 재발급 신청은 미루지 말고 가능한 한 빨리 하세요',
+                '재발급 수수료는 35,000원(현금 수납만 가능)이고, 여권 · 신청서 · 분실 사유를 '
+                    '설명하는 자료와 사진(3.5×4.5cm) 1장이 필요합니다. 하이코리아는 이전 사진이 '
+                    '6개월 이상 지난 경우에만 사진을 요구하지만, 시행령은 조건 없이 사진 1장을 '
+                    '첨부하도록 하므로 챙겨 가면 확실합니다',
+                '구비서류와 수수료는 바뀔 수 있으니 하이코리아 또는 1345에서 최신 안내를 확인하세요',
               ],
               linesEn: [
                 'You can file a loss report online on HiKorea',
@@ -6760,9 +7722,16 @@ class MockData {
                 'You can withdraw the report within 24 hours of filing it',
                 'If filing online does not work, you can report it at the '
                     'immigration office for your area',
-                'A replacement is applied for within 14 days of the loss',
-                'Check HiKorea, or call 1345, for the current documents and '
-                    'fee',
+                'The loss report does not replace the card — apply for a new '
+                    'one separately at the immigration office for your address, '
+                    'and do not put the application off',
+                'The replacement fee is KRW 35,000 (cash only). Bring your '
+                    'passport, the application form, something explaining the '
+                    'loss and one 3.5×4.5 cm photo. HiKorea asks for a photo '
+                    'only if your last one is more than six months old, but the '
+                    'enforcement decree simply requires one, so take it along',
+                'Documents and fees can change, so check HiKorea, or call 1345, '
+                    'for the current information',
               ],
             ),
             GuideNote(
@@ -6799,9 +7768,9 @@ class MockData {
               labelKo: '1345 출입국 문의',
               labelEn: 'Call 1345 for immigration enquiries',
               url: 'tel:1345',
-              descriptionKo: 'Residence Card 재발급 · 출입국 문의(유료)',
+              descriptionKo: 'Residence Card 재발급 · 출입국 문의(평일 09:00~22:00, 유료)',
               descriptionEn: 'Residence Card replacement and immigration '
-                  'enquiries (paid call)',
+                  'enquiries (weekdays 09:00–22:00, paid call)',
               iconName: 'call',
             ),
           ],
@@ -6869,7 +7838,7 @@ class MockData {
         '외국인등록증과 카드가 함께 든 지갑을 잃어버렸다면 출입국기관과 해당 카드사에 각각 '
             '별도로 조치하세요. 휴대폰도 함께 분실했다면 가입한 통신사에 따로 신고하세요.',
         '통신사와 카드사마다 절차가 다를 수 있으므로 해당 기관의 공식 안내를 확인하세요.',
-        '재발급 서류 · 기한 · 수수료는 바뀔 수 있으므로 최신 공식 안내를 확인하세요.',
+        '재발급 서류와 수수료는 바뀔 수 있으므로 최신 공식 안내를 확인하세요.',
       ],
       tipsEn: [
         'If you lost your phone, ask your own mobile carrier about reporting '
@@ -6882,8 +7851,8 @@ class MockData {
             'carrier separately.',
         'Carriers and card companies each have their own steps — check that '
             'company\'s own information.',
-        'Documents, deadlines and fees for a replacement can change, so check '
-            'the current official information.',
+        'Documents and fees for a replacement can change, so check the '
+            'current official information.',
       ],
       links: [
         GuideLink(
@@ -6932,10 +7901,15 @@ class MockData {
     // This page answers one question — where you can take a problem — and
     // nothing else. Every claim is limited to what an official source states:
     //  · 동아대학교 학생상담센터 이용안내 / Q&A / 개인상담 / 찾아오시는 길 /
-    //    고민 우체통 (guide.donga.ac.kr) — 서비스 목록, 회기, "본교 구성원
-    //    누구나", 무료, 비밀보장과 그 예외, 두 캠퍼스 위치와 전화, 운영시간
+    //    고민 우체통 (guide.donga.ac.kr) — 서비스 목록, 회기, 이용 대상(개인상담
+    //    "본교 구성원 누구나" / 이용안내·Q&A "학부생 및 대학원생" — 페이지마다
+    //    달라 둘 다 적는다), 무료, 비밀보장과 그 예외, 두 캠퍼스 위치와 전화,
+    //    운영시간, 고민 우체통의 필수 기재사항(이름·학번·연락처)과 답변 최대 7일
+    //  · 집단상담 신청 — 센터 「집단상담」 안내와 DECO 종료 안내 이미지: 2026-09-01
+    //    학생역량통합관리시스템(d-navi.donga-dongseo.ac.kr)으로 통합 (checked
+    //    2026-09-13)
     //  · 동아대학교 인권센터 (human.donga.ac.kr) — 인권침해 상담·신고 접수와
-    //    해결방안 제공, 대학본부 503호, 051-200-5711
+    //    해결방안 제공, 대학본부 503호, 051-200-5711, 대면 상담 평일 09~17시
     //  · 대외국제처 국제교류과 구성원 안내 (global.donga.ac.kr) —
     //    "유학생 학사 지원 및 상담" 051-200-6447
     //  · 보건복지부 / 보건복지상담센터 — 자살예방상담전화 109, 24시간 운영
@@ -6946,7 +7920,7 @@ class MockData {
     // claim that the counselling centre handles crisis work, the claim that a
     // desk can counsel in English or any other language, and the flat claim
     // that international students may use the centre — the centre's own
-    // wording is "본교 구성원 누구나" and this page does not go past it.
+    // wording is quoted and this page does not go past it.
     // `relatedFacilityIds` carries the two counselling offices only; the
     // 인권센터 building (s01) stays out of it so one map card never mixes two
     // services with very different purposes.
@@ -6963,7 +7937,8 @@ class MockData {
           '있습니다. 학교 안에는 이런 이야기를 나누고 도움을 요청할 수 있는 공식 창구가 '
           '있습니다.\n\n'
           '이 가이드는 학생상담센터를 중심으로, 어떤 고민을 어디에 이야기하면 되는지 안내합니다. '
-          '학생상담센터는 본교 구성원 누구나 이용할 수 있다고 안내하고 있습니다.\n\n'
+          '학생상담센터의 「개인상담」 안내는 본교 구성원 누구나 이용할 수 있다고 하고, '
+          '「이용안내」와 Q&A는 학부생 및 대학원생이라고 적고 있습니다.\n\n'
           '상담 내용과 인적 사항은 비밀보장을 원칙으로 합니다. 다만 본인 또는 타인의 안전과 '
           '관련된 경우 등에는 비밀보장이 제한될 수 있습니다.',
       overviewEn: 'University life can throw up something you cannot sort out '
@@ -6971,8 +7946,10 @@ class MockData {
           'places on campus to talk it through and ask for support.\n\n'
           'This guide is built around the student counseling centre '
           '(학생상담센터), and points you to the right desk for the other kinds '
-          'of help. The centre says its services are open to 본교 구성원 '
-          '누구나 — anyone who belongs to the university.\n\n'
+          'of help. The centre\'s one-to-one counselling page says it is open '
+          'to 본교 구성원 누구나 — anyone who belongs to the university — '
+          'while its general information and Q&A pages say undergraduate and '
+          'graduate students.\n\n'
           'What you say, and your personal details, are treated as '
           'confidential. The centre notes that this can be limited in some '
           'cases, such as where your safety or someone else\'s is at stake.',
@@ -7024,13 +8001,18 @@ class MockData {
           titleEn: 'Student counseling centre',
           iconName: 'help',
           bodyKo: '학생상담센터는 심리 · 생활 상담을 비롯한 여러 상담 프로그램을 운영하는 학교의 '
-              '공식 기관입니다. 공식 안내에 따르면 본교 구성원 누구나 이용할 수 있고, 센터의 '
-              '모든 프로그램은 무료입니다.',
+              '공식 기관입니다. 센터의 모든 프로그램은 무료입니다.\n\n'
+              '이용 대상은 센터 페이지마다 다르게 적혀 있습니다. 「개인상담」 안내는 본교 구성원 '
+              '누구나 이용할 수 있다고 하고, 「이용안내」와 Q&A는 동아대학교 학부생 및 '
+              '대학원생이라고 적고 있으므로, 대상이 궁금하면 센터에 확인하세요.',
           bodyEn: 'The student counseling centre (학생상담센터) is the '
-              'university\'s own counselling service. Its published '
-              'information says the centre is open to 본교 구성원 누구나 — '
-              'anyone who belongs to the university — and that every '
-              'programme it runs is free.',
+              'university\'s own counselling service, and every programme it '
+              'runs is free.\n\n'
+              'Its pages describe who can use it differently: the one-to-one '
+              'counselling page says 본교 구성원 누구나 — anyone who belongs '
+              'to the university — while its general information (이용안내) '
+              'and Q&A pages say Dong-A undergraduate and graduate students. '
+              'If you are unsure whether this covers you, ask the centre.',
           notes: [
             GuideNote(
               titleKo: '무엇을 받을 수 있나요',
@@ -7167,28 +8149,43 @@ class MockData {
           iconName: 'format_list_numbered',
           bodyKo: '개인상담 신청 방법은 학생상담센터 공식 홈페이지에서 최신 안내를 확인하거나 센터에 '
               '문의하세요.\n\n'
-              '집단상담과 상담 · 지원 프로그램은 학교의 DECO 시스템에서 신청할 수 있습니다.',
+              '집단상담은 학교의 학생역량통합관리시스템에서 신청합니다. 기존 DECO 시스템은 2026년 '
+              '9월 1일부터 이 시스템으로 통합되었습니다. 프로그램마다 신청 방법이 다를 수 있으니 '
+              '각 프로그램 안내문을 확인하세요.\n\n'
+              '센터 홈페이지 일부 안내에는 아직 DECO로 적혀 있지만, DECO는 2026년 8월 30일 20시 '
+              '이후 접속할 수 없고 비교과 프로그램도 학생역량통합관리시스템으로 통합되었습니다.',
           bodyEn: 'For one-to-one counselling, check the centre\'s website for '
               'the current instructions, or ring the office and ask.\n\n'
-              'Group counselling and the centre\'s programmes are booked '
-              'through DECO, the university\'s programme system.',
+              'Group counselling is booked through the university\'s '
+              '학생역량통합관리시스템 (student competency management system), '
+              'which took over from the DECO system on 1 September 2026. Each '
+              'programme can have its own way of applying, so check its '
+              'notice.\n\n'
+              'Some pages on the centre\'s website still say DECO, but DECO '
+              'has been unavailable since 20:00 on 30 August 2026 and the '
+              'extracurricular programmes have moved to the new system too.',
           notes: [
             GuideNote(
               titleKo: '고민 우체통',
               titleEn: 'The 고민 우체통 message box',
               linesKo: [
                 '센터를 직접 찾아가기가 망설여질 때 글로 고민을 남길 수 있습니다',
-                '작성자란에 「익명」이라고 적으면 익명으로 남길 수 있습니다',
-                '비밀글로 작성하면 센터 담당자와 본인만 볼 수 있습니다',
-                '답변은 센터 운영시간 내에 올라옵니다',
+                '작성자란에 「익명」이라고 적으면 게시판에 이름이 드러나지 않습니다. 다만 글에는 '
+                    '이름 · 학번 · 연락처와 고민 내용을 적도록 안내되어 있습니다',
+                '비밀글로 설정해야 센터 담당자와 본인만 볼 수 있습니다',
+                '답변은 센터 운영시간(평일 09:00~17:00) 내에 올라오며, 최대 7일까지 걸릴 수 '
+                    '있습니다',
               ],
               linesEn: [
                 'A way to write your problem down when walking in feels like '
                     'too much',
-                'Write 익명 in the name field to post anonymously',
-                'Marked as a private post, it is visible only to you and the '
-                    'centre',
-                'Replies are posted within the centre\'s opening hours',
+                'Writing 익명 in the name field keeps your name off the board, '
+                    'but the board asks you to include your name, student '
+                    'number, contact details and your concern in the post',
+                'Only a post set as private (비밀글) is visible just to you and '
+                    'the centre',
+                'Replies are posted within the centre\'s opening hours '
+                    '(weekdays 09:00–17:00) and can take up to 7 days',
               ],
             ),
           ],
@@ -7206,17 +8203,17 @@ class MockData {
               labelEn: 'The 고민 우체통 message box',
               url: 'https://guide.donga.ac.kr/guide/CMS/Board/Board.do'
                   '?mCode=MN046',
-              descriptionKo: '익명 · 비밀글로 고민을 남길 수 있는 게시판',
-              descriptionEn: 'Post anonymously, as a private message',
+              descriptionKo: '비밀글로 고민을 남길 수 있는 게시판',
+              descriptionEn: 'Leave your concern as a private post',
               iconName: 'info',
             ),
             GuideLink(
-              labelKo: 'DECO 시스템',
-              labelEn: 'DECO programme system',
-              url: 'https://deco.donga.ac.kr/',
-              descriptionKo: '집단상담 · 프로그램 신청',
+              labelKo: '학생역량통합관리시스템',
+              labelEn: 'Student competency system (학생역량통합관리시스템)',
+              url: 'https://d-navi.donga-dongseo.ac.kr/',
+              descriptionKo: '집단상담 · 프로그램 신청 (DECO 통합)',
               descriptionEn: 'Where group counselling and programmes are '
-                  'booked',
+                  'booked (replaced DECO)',
               iconName: 'computer',
             ),
           ],
@@ -7290,10 +8287,15 @@ class MockData {
               linesKo: [
                 '승학캠퍼스 대학본부 및 인문과학대학 503호',
                 '전화 051-200-5711',
+                '대면 상담은 예약하거나 직접 방문해 가능한 시간을 정할 수 있습니다(평일 '
+                    '09:00~17:00, 점심시간 12:00~13:00)',
               ],
               linesEn: [
-                'Seunghak campus — College of Humanities building, room 503',
+                'Seunghak campus — University Administration & College of '
+                    'Humanities building, room 503',
                 'Phone 051-200-5711',
+                'Face-to-face counselling can be booked, or you can visit and '
+                    'pick a time (weekdays 09:00–17:00, closed 12:00–13:00)',
               ],
             ),
           ],
