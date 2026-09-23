@@ -55,9 +55,9 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   # Launcher icon generation (config below). Source emblem is
   # assets/icon/donga-mate-icon.png; the two app_icon*.png files are 1024px
-  # white-canvas derivatives (94% emblem for regular icons, 65% for the
-  # adaptive foreground so the circle survives round launcher masks).
-  # Regenerate with: dart run flutter_launcher_icons
+  # derivatives (corners filled with the emblem blue; adaptive foreground
+  # scaled so the artwork fits the 66dp safe circle). Regenerate with:
+  # python tool/app_icon/build_icon.py && dart run flutter_launcher_icons
   flutter_launcher_icons: ^0.14.1
 
 flutter_launcher_icons:
@@ -66,8 +66,8 @@ flutter_launcher_icons:
   image_path: "assets/icon/app_icon.png"
   # iOS App Store rejects icons with an alpha channel.
   remove_alpha_ios: true
-  # Android adaptive icon: white background + padded emblem as foreground.
-  adaptive_icon_background: "#FFFFFF"
+  # Android adaptive icon: emblem blue background + scaled emblem foreground.
+  adaptive_icon_background: "#2F6FED"
   adaptive_icon_foreground: "assets/icon/app_icon_adaptive_fg.png"
 
 flutter:
