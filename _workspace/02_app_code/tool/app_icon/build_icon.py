@@ -4,8 +4,10 @@ The source is a 1024px rounded-square emblem with transparent corners. Both
 platforms apply their own corner mask, so the corners are filled with the
 emblem's blue to make a full-bleed square. For the Android adaptive
 foreground the whole square is scaled down until every non-blue pixel sits
-inside the 66dp safe circle; its blue edge disappears into the identical
-solid-blue background layer.
+inside the 66dp safe circle and pasted onto an opaque blue layer, so no
+resampled edge can show (the Android 12+ splash draws the foreground alone).
+The in-app home AppBar emblem is the source itself (rounded corners kept),
+downscaled to 128px.
 
 Run from the app root:  python tool/app_icon/build_icon.py
 Then:                   dart run flutter_launcher_icons
@@ -25,6 +27,8 @@ def main():
     src = Image.open(SRC).convert("RGBA")
     assert src.size == (SIZE, SIZE), src.size
 
+    src.resize((128, 128), Image.LANCZOS).save("assets/home/app_emblem.png")
+
     full = Image.new("RGBA", src.size, BLUE + (255,))
     full.alpha_composite(src)
     full.convert("RGB").save("assets/icon/app_icon.png")
@@ -41,9 +45,9 @@ def main():
 
     scale = min(1.0, SAFE_RADIUS * MARGIN / reach)
     side = round(SIZE * scale)
-    fg = Image.new("RGBA", (SIZE, SIZE), (0, 0, 0, 0))
+    fg = Image.new("RGBA", (SIZE, SIZE), BLUE + (255,))
     off = (SIZE - side) // 2
-    fg.paste(full.resize((side, side), Image.LANCZOS), (off, off))
+    fg.paste(full.resize((side, side), Image.LANCZOS).convert("RGB"), (off, off))
     fg.save("assets/icon/app_icon_adaptive_fg.png")
     print(f"artwork reach {reach:.0f}px -> adaptive scale {scale:.3f}")
 

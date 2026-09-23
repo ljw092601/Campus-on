@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:video_player/video_player.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -36,65 +37,119 @@ class CampusOnApp extends ConsumerWidget {
   }
 }
 
-/// Opening overlay shown over the first frames: the full 동아메이트 wordmark
-/// logo on white, fading out after a short hold. The Android 12+ system
-/// splash masks its icon to a small circle, so this is the only place the
-/// wordmark version of the logo can appear on launch.
+/// Opening overlay: plays the DONG-A MATE intro video once over the first
+/// frames, holds its last frame briefly, then fades out. The native launch
+/// screens use the same brand blue as the video's first frame, so the
+/// hand-off from system splash to animation is seamless.
 class BrandSplashOverlay extends StatefulWidget {
   const BrandSplashOverlay({super.key, required this.child});
 
   final Widget child;
 
-  static const holdDuration = Duration(milliseconds: 2000);
-  static const fadeDuration = Duration(milliseconds: 500);
+  static const asset = 'assets/branding/donga_mate_intro.mp4';
+
+  /// Brand blue for the bars around the 9:16 video on taller screens. The
+  /// clip's blue decodes within a couple of RGB steps of this depending on
+  /// the device decoder, so no seam is visible.
+  static const background = Color(0xFF2F6FED);
+  static const holdDuration = Duration(milliseconds: 500);
+  static const fadeDuration = Duration(milliseconds: 400);
+
+  /// Give up and reveal the app if the video hasn't started by then (e.g. no
+  /// decoder, or widget tests where the platform player doesn't exist).
+  static const startTimeout = Duration(seconds: 3);
 
   @override
   State<BrandSplashOverlay> createState() => _BrandSplashOverlayState();
 }
 
 class _BrandSplashOverlayState extends State<BrandSplashOverlay> {
+  VideoPlayerController? _video;
+  bool _playing = false;
   bool _fading = false;
   bool _done = false;
-  Timer? _holdTimer;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _holdTimer = Timer(BrandSplashOverlay.holdDuration, () {
-      if (mounted) setState(() => _fading = true);
-    });
+    _timer = Timer(BrandSplashOverlay.startTimeout, _fadeOut);
+    _start();
+  }
+
+  Future<void> _start() async {
+    final video = VideoPlayerController.asset(
+      BrandSplashOverlay.asset,
+      // Silent clip — don't pause whatever audio the user already has playing.
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
+    _video = video;
+    try {
+      await video.initialize();
+      if (!mounted || _fading) return;
+      video.addListener(_onTick);
+      await video.play();
+      _timer?.cancel();
+      if (mounted) setState(() => _playing = true);
+    } catch (_) {
+      _fadeOut();
+    }
+  }
+
+  void _onTick() {
+    final value = _video!.value;
+    if (_fading || _timer?.isActive == true) return;
+    if (value.hasError) {
+      _fadeOut();
+    } else if (value.isCompleted ||
+        (value.duration > Duration.zero && value.position >= value.duration)) {
+      _timer = Timer(BrandSplashOverlay.holdDuration, _fadeOut);
+    }
+  }
+
+  void _fadeOut() {
+    if (!mounted || _fading) return;
+    _timer?.cancel();
+    setState(() => _fading = true);
   }
 
   @override
   void dispose() {
-    _holdTimer?.cancel();
+    _timer?.cancel();
+    _video?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final video = _video;
     return Stack(
       textDirection: TextDirection.ltr,
       children: [
         widget.child,
         if (!_done)
           // Purely visual — never swallow touches, so taps (and widget tests
-          // that don't advance the hold timer) reach the UI underneath.
+          // that don't advance the timers) reach the UI underneath.
           IgnorePointer(
             child: AnimatedOpacity(
               opacity: _fading ? 0 : 1,
               duration: BrandSplashOverlay.fadeDuration,
-              onEnd: () => setState(() => _done = true),
+              onEnd: () {
+                setState(() => _done = true);
+                _video?.dispose();
+                _video = null;
+              },
               child: Container(
-                // The logo bakes in a white ground, so the overlay stays
-                // white in dark mode too.
-                color: Colors.white,
+                // The video bakes in the brand blue, so the overlay stays
+                // blue in dark mode too.
+                color: BrandSplashOverlay.background,
                 alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/branding/donga_mate_full.png',
-                  width: 340,
-                  excludeFromSemantics: true,
-                ),
+                child: !_playing || video == null
+                    ? null
+                    : AspectRatio(
+                        aspectRatio: video.value.aspectRatio,
+                        child: VideoPlayer(video),
+                      ),
               ),
             ),
           ),
