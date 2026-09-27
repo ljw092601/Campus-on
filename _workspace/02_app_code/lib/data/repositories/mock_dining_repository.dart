@@ -1,6 +1,7 @@
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../domain/repositories/dining_repository.dart';
+import '../i18n/place_text.dart';
 
 /// Mock dining data for the default dev mode (no Firebase required).
 ///
@@ -63,8 +64,11 @@ class MockDiningRepository implements DiningRepository {
               }
           ];
 
+    // The generated Chinese/Vietnamese names and opening hours are laid over
+    // the Korean/English literals, the same way facilities get theirs.
     return [
-      CafeteriaMenu(
+      for (final c in <CafeteriaMenu>[
+        CafeteriaMenu(
         id: 'seunghak-student',
         nameKo: '승학캠퍼스 학생식당',
         nameEn: 'Seunghak Student Cafeteria',
@@ -94,7 +98,9 @@ class MockDiningRepository implements DiningRepository {
         hoursEn: 'Lunch 11:30-13:30 · Dinner 17:00-18:30',
         facilityId: 'b04',
         meals: meals(const [MealType.lunch, MealType.dinner]),
-      ),
+        ),
+      ])
+        c.withI18n(cafeteriaOverlay(c.id)).withEnglish(cafeteriaEnglish(c.id)),
     ];
   }
 }

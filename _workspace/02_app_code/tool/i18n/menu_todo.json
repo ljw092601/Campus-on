@@ -1,0 +1,15 @@
+{
+  "_what": "번역이 없는 학식 메뉴 줄. 번역자가 place_{en,zh,vi}.json의 menu_items에 채운다.",
+  "_generated_by": "flutter test --no-pub tool/i18n/menu_scan_test.dart",
+  "_source": "MockDiningRepository (샘플 식단 — 화면에도 예시라고 안내한다). 학교 API가 붙으면 같은 스캔이 실제 식단을 읽는다.",
+  "_after_filling": "python tool/i18n/i18n_tool.py place-gen && place-check",
+  "scanned": {
+    "from": "2026-09-07",
+    "days": 28,
+    "cafeteria_days_open": 60,
+    "cafeteria_days_closed": 24,
+    "cafeteria_days_unpublished": 0,
+    "distinct_lines": 34
+  },
+  "missing": {}
+}

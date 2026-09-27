@@ -1,0 +1,140 @@
+{
+ "id": "moving-and-utilities",
+ "category": "housing",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "이사·공과금 정산",
+   "en": "Moving in and out: utilities"
+  },
+  "summary": {
+   "ko": "입주·퇴거 때 전기·가스·수도·관리비 정리",
+   "en": "Settling electricity, gas, water and fees"
+  },
+  "overview": {
+   "ko": "교외에 살면 월세 말고도 전기·가스·수도와 관리비를 내야 합니다. 이 비용은 집마다 내는 방법이 다릅니다. 관리비에 포함된 집도 있고, 사용자가 직접 공급자에게 내는 집도 있습니다.\n\n문제는 들어갈 때보다 나갈 때 생깁니다. 계량기 숫자를 확인하지 않고 나오면 다음 사람이 쓴 요금이 내 이름으로 남거나, 반대로 내가 쓴 요금을 임대인이 보증금에서 빼기도 합니다.\n\n이 가이드는 입주·이사·출국 때 무엇을 확인하고 무엇을 사진으로 남겨야 하는지 순서대로 정리합니다. 공급자와 계약 명의는 집마다 다르므로, 고지서와 관리실에서 먼저 확인하는 단계부터 시작합니다.",
+   "en": "Living off campus means bills beyond the rent: electricity, gas, water and a maintenance fee. How you pay them differs from one building to the next — some include them in the maintenance fee, others expect you to deal with each supplier yourself.\n\nThe trouble usually comes when you leave. Move out without recording the meter and the next tenant's usage can end up in your name, or your own usage comes out of your deposit.\n\nThis guide sets out, in order, what to check and what to photograph when you move in, move house, or leave the country. Because the supplier and the account holder differ by building, it starts by finding out who they actually are."
+  },
+  "checklist": {
+   "ko": [
+    "임대차계약서와 정확한 주소·호수",
+    "입주일·퇴거일",
+    "최근 고지서 또는 고객번호(있는 경우)",
+    "계량기 사진(입주일·퇴거일)",
+    "자동납부에 쓰는 계좌·카드 정보",
+    "임대인·관리실 연락처",
+    "본인확인 서류"
+   ],
+   "en": [
+    "Your lease and the exact address, including the unit number",
+    "Move-in and move-out dates",
+    "A recent bill or customer number, if you have one",
+    "Photos of the meters, on the day you move in and the day you leave",
+    "The account or card used for automatic payment",
+    "Contact details for your landlord and the building office",
+    "Photo ID"
+   ],
+   "count": 7
+  },
+  "checklist_note": {
+   "ko": "고지서가 없다면 관리실이나 임대인에게 «공급자와 고객번호»를 물어보세요. 그것부터 알아야 나머지 절차가 진행됩니다.",
+   "en": null
+  },
+  "steps": {
+   "ko": [
+    "계약서에서 관리비에 무엇이 포함되는지 확인한다관리비에 수도·인터넷이 포함된 집도 있고, 전기만 따로 내는 집도 있습니다. 계약서에 적힌 항목과 실제 고지서를 맞춰 보세요.",
+    "전기·가스·수도의 공급자와 명의를 확인한다고지서나 관리실을 통해 각 공급자와 현재 명의자를 확인합니다. 명의가 임대인으로 되어 있으면 사용자가 직접 해지할 수 없는 경우가 있습니다.",
+    "입주일에 계량기와 집 상태를 사진으로 남긴다전기·가스·수도 계량기 숫자가 보이게 찍고, 날짜가 남도록 저장하세요. 퇴거 정산과 보증금 분쟁에서 가장 확실한 자료입니다.",
+    "가스는 전입·전출 신청이 필요한지 확인한다부산도시가스는 전입·전출 신청을 받습니다. 방문이 필요한지, 언제 예약해야 하는지는 공식 페이지나 고객센터(1544-0009)에서 확인하세요.",
+    "자동납부를 새로 등록하거나 해지한다상수도 자동납부는 납기 며칠 전까지 변경·해지해야 합니다. 기한은 공식 안내에서 확인하세요. 해지를 잊으면 이사 뒤에도 인출될 수 있습니다.",
+    "퇴거일 계량값과 최종 정산내역을 문서로 받는다퇴거일에 계량기를 다시 찍고, 관리비·공과금 정산내역을 문서(메시지·이메일 등 기록이 남는 형태)로 받으세요.",
+    "보증금 반환과 열쇠 인도 일정을 따로 정한다공과금 정산과 보증금 반환은 관련은 있지만 같은 절차가 아닙니다. 반환 일정과 방법을 임대인과 따로 확정하세요.",
+    "주소 변경과 출국 절차로 넘어간다이사하면 체류지 변경 신고가 필요합니다. 출국이라면 출국 전 정리 가이드의 순서를 함께 확인하세요."
+   ],
+   "en": [
+    "Check what the maintenance fee coversSome buildings bundle water or internet into the maintenance fee; others bill electricity separately. Match what the lease lists against an actual bill.",
+    "Find out the supplier and whose name the account is inUse the bill or the building office to identify each supplier and the current account holder. If the account is in the landlord's name, you may not be able to close it yourself.",
+    "Photograph the meters and the flat on move-in dayPhotograph each meter so the numbers are legible, and keep the date on the file. This is the strongest evidence you will have in a move-out or deposit dispute.",
+    "Check whether gas needs a move-in or move-out visitBusan City Gas takes move-in and move-out requests. Check the official page or call 1544-0009 to find out whether a visit is needed and how far ahead to book it.",
+    "Set up or cancel automatic paymentWater bill auto-payment has to be changed or cancelled a few days before the due date — check the official page for the exact cut-off. Forget it and money can still leave your account after you have moved.",
+    "Get the closing meter readings and the final statementPhotograph the meters again on the day you leave, and get the final statement of fees and utilities in writing — a message or email, something that leaves a record.",
+    "Agree the deposit and key handover separatelySettling the utilities and getting your deposit back are related but not the same process. Agree the date and method for the deposit with your landlord separately.",
+    "Move on to the address change and departure stepsMoving means you must report the change of address. If you are leaving Korea, follow the departure checklist as well."
+   ],
+   "count": 8
+  },
+  "search_aliases": {
+   "ko": [
+    "공과금",
+    "전기요금",
+    "가스요금",
+    "수도요금",
+    "관리비",
+    "이사정산",
+    "전출",
+    "자동이체"
+   ],
+   "en": [
+    "utilities",
+    "electricity bill",
+    "gas bill",
+    "water bill",
+    "maintenance fee",
+    "moving out",
+    "final bill",
+    "auto payment"
+   ],
+   "count": 8
+  },
+  "sections[0].title": {
+   "ko": "알아두기",
+   "en": "Good to know"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "집마다 다릅니다",
+   "en": "It differs by building"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "이 가이드는 «모두 직접 해지하라»는 뜻이 아닙니다. 관리비 포함 범위와 계약 명의에 따라 해야 할 일이 달라지므로, 2단계에서 확인한 내용을 기준으로 움직이세요."
+   ],
+   "en": [
+    "This guide does not say «close every account yourself». What you have to do depends on what the maintenance fee covers and whose name the account is in — work from what you found in step 2."
+   ],
+   "count": 1
+  },
+  "sections[0].notes[1].title": {
+   "ko": "금액·수수료는 적지 않았습니다",
+   "en": "No amounts or fees here"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "요금과 수수료, 예약에 걸리는 날짜는 공급자와 시기에 따라 달라집니다. 공식 페이지나 고객센터에서 그때의 값을 확인하세요."
+   ],
+   "en": [
+    "Charges, fees and how long a booking takes vary by supplier and by season. Check the official page or the call centre for the figure that applies to you."
+   ],
+   "count": 1
+  },
+  "links[0].label": {
+   "ko": "부산도시가스 전입·전출 신청",
+   "en": "Busan City Gas — move-in / move-out"
+  },
+  "links[1].label": {
+   "ko": "부산도시가스 고객센터 1544-0009",
+   "en": "Busan City Gas call centre 1544-0009"
+  },
+  "links[2].label": {
+   "ko": "부산 상수도 자동납부 안내",
+   "en": "Busan Waterworks — automatic payment"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting a change of address"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 임대차 보증금 지키기",
+   "en": "Guide — Protecting your deposit"
+  }
+ }
+}

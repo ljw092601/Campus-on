@@ -34,12 +34,6 @@ class MockGuideRepository implements GuideRepository {
   @override
   Future<List<AdminGuideItem>> search(String query) async {
     await Future<void>.delayed(const Duration(milliseconds: 120));
-    final q = query.trim().toLowerCase();
-    if (q.isEmpty) return const [];
-    return _data
-        .where((g) =>
-            g.titleKo.toLowerCase().contains(q) ||
-            g.titleEn.toLowerCase().contains(q))
-        .toList();
+    return searchGuideItems(_data, query);
   }
 }

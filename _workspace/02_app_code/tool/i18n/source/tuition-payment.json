@@ -1,0 +1,237 @@
+{
+ "id": "tuition-payment",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "등록금 납부·등록 확인",
+   "en": "Paying Tuition & Confirming Registration"
+  },
+  "summary": {
+   "ko": "고지서 출력 → 기간 내 납부 → 다음 날 납입확인서 확인",
+   "en": "Print the bill → pay on time → check the receipt the next day"
+  },
+  "overview": {
+   "ko": "매 학기 고지된 등록금을 기간 안에 내야 등록이 됩니다. 기간 안에 내지 않으면 미등록제적 대상이 되고, 외국인 유학생은 제적이 체류에도 영향을 줍니다. 전액 장학금 등으로 납부액이 0원이라면 고지서와 해당 학기 공지에서 별도 등록 절차가 있는지 확인하세요.\n\n동아대학교는 학기마다 등록 일정을 홈페이지 공지사항으로 알리므로, 이 가이드의 기본 절차와 함께 해당 학기 공지를 꼭 확인하세요.",
+   "en": "You are registered for a semester only once the billed tuition is paid on time. If you do not pay within the period you can be dismissed for non-registration, and for international students dismissal also affects your stay. If your bill is ₩0 because of a full scholarship, check the bill and that semester’s notice for any separate registration step.\n\nDong-A announces each semester’s dates in its website notices, so check that semester’s notice alongside the basic steps here."
+  },
+  "checklist_title": {
+   "ko": "납부 전에 준비할 것",
+   "en": "Before you pay"
+  },
+  "checklist": {
+   "ko": [
+    "학생정보(통합정보시스템)에 로그인할 수 있는 학교 계정",
+    "등록금고지서 — 학교홈페이지 › 학생정보 › 등록장학 › 등록금고지서 발급에서 출력",
+    "고지서에 적힌 금액과 가상계좌 번호",
+    "수납은행(부산은행·농협은행) 창구 방문 또는 인터넷뱅킹·폰뱅킹·ATM"
+   ],
+   "en": [
+    "Your university account for Student Information (the integrated information system)",
+    "The tuition bill — print it at university website › Student Information › Registration & Scholarships › Tuition bill",
+    "The amount and virtual account number on the bill",
+    "A counter at a receiving bank (BNK Busan Bank or NongHyup Bank), or internet/phone banking or an ATM"
+   ],
+   "count": 4
+  },
+  "checklist_note": {
+   "ko": "※ 학기초과자·학사학위취득유예생은 수강신청 학점에 따라 등록금이 달라지고, 수강신청을 하지 않으면 학기초과자는 전액, 유예생은 5.5%가 고지됩니다. 학점별 비율은 등록금 납부안내 페이지의 표에서 확인하세요.",
+   "en": "※ For extra-semester and degree-deferral students, tuition depends on the credits you register for; with no courses, extra-semester students are billed in full and deferral students 5.5%. See the table on the tuition payment page for the ratios."
+  },
+  "steps": {
+   "ko": [
+    "해당 학기 등록금 납부 공지에서 기간 확인",
+    "학생정보 › 등록장학 › 등록금고지서 발급에서 고지서 출력",
+    "기간 안에 부산은행·농협은행 창구에서 내거나, 고지서의 가상계좌로 인터넷뱅킹·폰뱅킹·ATM 이체",
+    "납부한 다음 날부터 학생정보 › 등록장학 › 등록장학내역조회에서 납부 확인",
+    "등록금 납입확인서(영수증) 출력·보관",
+    "등록금을 냈다면 기간 안에 수강신청까지 마치기"
+   ],
+   "en": [
+    "Check the dates in that semester’s tuition notice.",
+    "Print the bill at Student Information › Registration & Scholarships › Tuition bill.",
+    "Within the period, pay at a BNK Busan Bank or NongHyup counter, or transfer to the virtual account on the bill by internet or phone banking or at an ATM.",
+    "From the day after paying, check it at Student Information › Registration & Scholarships › Registration history.",
+    "Print and keep the tuition payment certificate (receipt).",
+    "Once paid, finish course registration within its period too."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "등록금을 냈더라도 수강신청을 하지 않으면 미수강제적 대상입니다.",
+    "등록 후 휴학하면 등록금은 돌려받지 않고 다음 등록으로 이월됩니다(신청 시점에 따라 비율이 다름). 자퇴 환불 기준은 따로 있습니다.",
+    "연말정산용 교육비납입증명서는 다음 해 1월경부터 발급됩니다.",
+    "비자연장 등에서 등록금 납입 증빙이 필요하면 납입확인서를 출력해 두세요."
+   ],
+   "en": [
+    "Even with tuition paid, not registering for courses can get you dismissed.",
+    "If you take leave after registering, tuition is carried over to your next registration rather than refunded (the share depends on when you apply). Withdrawal has its own refund rules.",
+    "The education-expense certificate for year-end tax settlement is available from around January of the following year.",
+    "If a visa extension or similar asks for proof of tuition, print the payment certificate."
+   ],
+   "count": 4
+  },
+  "search_aliases": {
+   "ko": [
+    "등록금",
+    "학비",
+    "등록금 납부",
+    "분할납부",
+    "고지서"
+   ],
+   "en": [
+    "tuition",
+    "fees",
+    "tuition payment",
+    "installment"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "언제, 누가 내나요?",
+   "en": "When, and who pays?"
+  },
+  "top_sections[0].notice": {
+   "ko": "복학생은 복학 신청 후 학적이 「재학」으로 바뀐 뒤부터 등록금을 낼 수 있습니다.",
+   "en": "Returning students can pay tuition only after applying to return and their status changes to “enrolled”."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 동아대학교 「등록금 납부안내」 기준, 2026-09-13 확인.",
+   "en": "※ Based on Dong-A’s “Tuition payment” page, checked 2026-09-13."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "📅 납부기간",
+   "en": "📅 Payment period"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "1학기는 2월 말, 2학기는 8월 말 — 정확한 날짜는 해당 학기 홈페이지 공지사항",
+    "대상: 해당 학기 재학생·복학생, 학기초과자, 학사학위취득유예생, 재입학생 등",
+    "신입생은 입학관리과 홈페이지 안내를 따릅니다."
+   ],
+   "en": [
+    "Spring semester: end of February; autumn: end of August — exact dates in that semester’s website notice.",
+    "Who: continuing and returning students, extra-semester students, students deferring their degree, readmitted students and others.",
+    "New students follow the Admissions Office website."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "가상계좌로 낼 때",
+   "en": "Paying to the virtual account"
+  },
+  "sections[0].notice": {
+   "ko": "이용 시간과 조건은 학기마다 바뀔 수 있으니 해당 학기 공지에서 다시 확인하세요.",
+   "en": "Hours and conditions can change each semester — check them again in that semester’s notice."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "직전 학기 공지(2025-2학기) 기준",
+   "en": "Per the previous notice (autumn 2025)"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "가상계좌는 학생별로 번호가 따로 있어, 보내는 사람 이름과 관계없이 수납됩니다.",
+    "이용 시간은 09:00~16:00이었고, 필수 경비를 포함해 합계 금액이 고지서와 정확히 맞아야 수납됩니다.",
+    "고지서는 우편·팩스로 보내지 않으며 인터넷에서 직접 출력합니다. 납부 후에는 고지서 대신 납입확인서를 출력합니다."
+   ],
+   "en": [
+    "Each student has their own virtual account number, so payment is matched regardless of the sender’s name.",
+    "The account was available 09:00–16:00, and the total must match the bill exactly (including the required fees) for the payment to go through.",
+    "Bills are not posted or faxed — you print them online. After paying, print the payment certificate instead of the bill."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "나눠서 내고 싶다면 — 분할납부",
+   "en": "Paying in instalments"
+  },
+  "sections[1].body": {
+   "ko": "학부 재학생·복학생은 학기 시작 전에 정해진 기간 안에 신청하면 등록금을 최대 4회로 나눠 낼 수 있습니다(대학원생 제외). 신청 기간이 정규 등록보다 앞서므로 공지를 미리 확인하세요.",
+   "en": "Undergraduate continuing and returning students can split tuition into up to 4 payments if they apply within a set period before the semester (not graduate students). The application period comes before regular registration, so watch for the notice."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "2026-2학기 공지 기준",
+   "en": "Per the autumn 2026 notice"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "신청: 학생정보서비스 › 등록 장학 › 등록금분할납부 신청",
+    "분할납부는 부산은행(가상계좌 가능)으로만 낼 수 있습니다.",
+    "제외: 편입생·재입학생·학기초과자·학위취득유예자·학자금대출자·교류학생·카드수납 예정자·국가장학금 외 교외장학금 수혜자·직전 분할납부 연체자",
+    "회차별 기한까지 내지 않으면 제적될 수 있습니다. 분할을 취소하고 한 번에 내려면 경리과에 연락합니다."
+   ],
+   "en": [
+    "Apply: Student Information Service › Registration & Scholarships › Tuition instalment application.",
+    "Instalments can be paid only at BNK Busan Bank (virtual account allowed).",
+    "Not eligible: transfer and readmitted students, extra-semester and degree-deferral students, student-loan borrowers, exchange students, those planning to pay by card, recipients of outside scholarships other than the national scholarship, and anyone late on a previous instalment plan.",
+    "Missing an instalment deadline can lead to dismissal. To cancel and pay in one go, contact the Accounting Office."
+   ],
+   "count": 4
+  },
+  "sections[2].title": {
+   "ko": "확인이 필요한 경우",
+   "en": "When to check with the university"
+  },
+  "sections[2].body": {
+   "ko": "해외 송금이나 카드 납부 조건을 적은 학교 공식 안내는 찾지 못했습니다. 중국인 유학생 대상으로는 국제교류과가 알리페이 등록금 납부 안내를 올린 적이 있지만 수수료·환율 조건은 적혀 있지 않습니다. 고지서 금액이 장학금 반영 결과와 다르거나, 납부했는데 다음 날에도 확인되지 않으면 기간이 끝나기 전에 경리과에 문의하세요.",
+   "en": "We found no official university guidance on paying from abroad or by card. For Chinese students, the international office has posted an Alipay tuition payment guide, but it gives no fee or exchange-rate terms. If the bill does not reflect your scholarship, or a payment still is not shown the next day, contact the Accounting Office before the period ends."
+  },
+  "sections[2].footnote": {
+   "ko": "※ 2025-2학기 공지의 등록금 문의처: 경리과 051-200-6702~3",
+   "en": "※ Tuition enquiries in the autumn 2025 notice: Accounting Office, 051-200-6702~3"
+  },
+  "links[0].label": {
+   "ko": "동아대 등록금 납부안내",
+   "en": "Dong-A tuition payment guide"
+  },
+  "links[0].description": {
+   "ko": "납부기간·은행·고지서·납입확인서·학기초과자 표",
+   "en": "Periods, banks, bills, receipts and the extra-semester table (Korean)"
+  },
+  "links[1].label": {
+   "ko": "동아대 공지사항",
+   "en": "Dong-A notices"
+  },
+  "links[1].description": {
+   "ko": "학기별 등록금 납부·분할납부 공지",
+   "en": "Each semester’s tuition and instalment notices (Korean)"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[2].description": {
+   "ko": "등록 후 수강신청과 미수강제적",
+   "en": "Registering for courses after paying"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 휴학·복학·자퇴와 체류",
+   "en": "Guide — Leave, Return, Withdrawal & Your Stay"
+  },
+  "links[3].description": {
+   "ko": "휴학 시 이월, 자퇴 시 환불",
+   "en": "Carry-over on leave, refunds on withdrawal"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[4].description": {
+   "ko": "등록금 납입 확인서 발급",
+   "en": "Getting a tuition payment certificate"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 졸업요건 확인",
+   "en": "Guide — Checking Graduation Requirements"
+  },
+  "links[5].description": {
+   "ko": "학기초과·학위취득 유예 판단",
+   "en": "Extra semesters and degree deferral"
+  },
+  "phrases[0].text": {
+   "ko": "등록금을 냈는데 납부 확인이 되지 않습니다. 확인 부탁드립니다.",
+   "en": "I paid my tuition but it is not showing as paid. Could you check it?"
+  }
+ }
+}

@@ -1,0 +1,462 @@
+{
+ "id": "part-time-work",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "시간제취업(아르바이트) 허가",
+   "en": "Part-time Work Permission"
+  },
+  "detail_title": {
+   "ko": "유학생 시간제취업 허가 받기",
+   "en": "Getting Permission for Part-time Work"
+  },
+  "summary": {
+   "ko": "일을 시작하기 전에 학교 확인과 출입국 허가",
+   "en": "School confirmation and immigration permission before you start"
+  },
+  "overview": {
+   "ko": "유학(D-2)이나 어학연수(D-4) 체류자격만으로 아르바이트를 할 수 있는 것은 아닙니다. 일을 시작하기 전에 학교 유학생 담당자의 확인을 받고, 출입국·외국인관서에서 시간제취업 허가(체류자격외 활동허가)를 받아야 합니다.\n\n학교 확인서는 허가가 아닙니다. 허가 여부와 조건은 출입국·외국인관서가 심사해 정하며, 허가를 받은 뒤에도 허가된 근무처와 허용 시간 안에서만 일할 수 있습니다.",
+   "en": "Holding a student (D-2) or language-training (D-4) status does not by itself let you take a part-time job. Before you start, you need a confirmation from your university's international student adviser and permission for part-time work (permission for activities outside your status of stay) from the immigration office.\n\nThe university's confirmation is not the permission. The immigration office reviews the application and sets the conditions, and even once permitted you may only work at the approved workplace and within the permitted hours."
+  },
+  "checklist": {
+   "ko": [
+    "통합신청서(신고서), 여권, 외국인등록증",
+    "외국인 유학생 시간제 취업 확인서 — 학교 유학생 담당자가 작성",
+    "표준근로계약서 사본 — 시급, 근무 내용, 근무 시간이 적혀 있어야 함",
+    "사업자등록증 사본과 고용주 신분증 사본",
+    "한국어(영어트랙은 영어) 능력 증빙서류",
+    "성적 또는 출석 증명서 — 유학생정보시스템으로 확인되면 생략"
+   ],
+   "en": [
+    "Integrated application form, passport and Residence Card",
+    "Confirmation of part-time employment for international students — filled in by the university's international student adviser",
+    "Copy of the standard employment contract — it must show the hourly wage, the work and the working hours",
+    "Copy of the business registration certificate and of the employer's ID",
+    "Proof of Korean (or, on an English track, English) ability",
+    "Transcript or attendance certificate — not needed if the international student information system already shows it"
+   ],
+   "count": 6
+  },
+  "checklist_optional_title": {
+   "ko": "사업장에 따라 추가로 필요해요",
+   "en": "Also needed for some workplaces"
+  },
+  "checklist_optional": {
+   "ko": [
+    "외국인 유학생 시간제취업 요건 준수 확인서 — 사업자등록증에 제조업이나 건설업이 포함된 경우"
+   ],
+   "en": [
+    "Declaration of compliance with part-time work requirements — when the business registration lists manufacturing or construction"
+   ],
+   "count": 1
+  },
+  "checklist_note": {
+   "ko": "※ 동아대학교 국제교류과는 시간제취업 확인서에 담당자 서명이 필요하며, 서명을 받으러 갈 때 위 서류(통합신고서·확인서·사업자등록증 사본·고용계약서·여권·외국인등록증·성적 또는 출석증명서·TOPIK 증명서)를 가져오라고 안내합니다. 하이코리아 매뉴얼·전자민원은 수수료를 「면제」로 적고 있지만 출입국관리법 시행규칙 제72조는 유학·일반연수 시간제 취업을 2만원으로 적고 있어 서로 다르니, 방문 신청이라면 수수료를 함께 확인하세요. 출입국·외국인관서는 심사에 필요하면 서류를 더 요청할 수 있습니다.",
+   "en": "※ Dong-A's Office of International Affairs says the confirmation needs a staff signature, and asks you to bring the documents above (application form, confirmation, business registration copy, employment contract, passport, Residence Card, transcript or attendance certificate, TOPIK certificate) when you come for it. The HiKorea manual and e-application say the fee is waived, while art. 72 of the Enforcement Rules of the Immigration Act lists ₩20,000 for student and training part-time work, so check the fee if you apply in person. The immigration office may ask for more documents for its review."
+  },
+  "steps": {
+   "ko": [
+    "고용주와 표준근로계약서 작성(시급 기재) — 사업자등록증상 고용주와 직접 맺는 계약이어야 하며, 인력파견업체처럼 고용과 사용이 분리된 계약은 허용되지 않습니다.",
+    "학교 유학생 담당자에게 시간제 취업 확인서 작성 받기 — 동아대학교는 국제교류과에서 시간제취업 관련 학교 확인을 안내합니다.",
+    "하이코리아 전자민원(온라인) 또는 관할 출입국·외국인관서 방문으로 신청 — 전자민원 처리기간은 일반 10일, 조사가 필요하면 2개월로 안내됩니다.",
+    "허가 결과 확인(전자민원은 마이페이지 › 전자민원신청 현황) — 허가되면 허가 스티커를 붙이거나 온라인 허가서를 출력합니다.",
+    "허가된 근무처와 기간·시간 안에서 근무 시작"
+   ],
+   "en": [
+    "Sign a standard employment contract with the employer (stating the hourly wage). It must be directly with the employer named on the business registration — contracts where the hiring and the actual workplace are split, as with staffing agencies, are not accepted.",
+    "Ask the university’s international student adviser to fill in the part-time employment confirmation. At Dong-A, the Office of International Affairs handles university confirmation for part-time work.",
+    "Apply online through HiKorea e-application, or in person at your immigration office. E-applications are listed as taking 10 days, or 2 months when an investigation is needed.",
+    "Check the result (for e-applications: My Page › e-application status). If permitted, a permission sticker is attached or you print the online permission.",
+    "Start work only at the permitted workplace, within the permitted period and hours."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "방학 중이나 주말에 일할 때도 허가가 있어야 합니다. 시간 제한이 없다는 것은 허가를 받은 뒤의 근무 시간 이야기입니다.",
+    "허가서(또는 허가 스티커), 근로계약서, 학교 확인서 사본을 허가 기간 동안 보관하세요.",
+    "허가 기간이 끝나면 계속 일하기 전에 다시 허가를 받아야 합니다.",
+    "졸업하거나 학업을 마친 뒤에는 유학생 시간제취업 허가가 그대로 이어지지 않습니다. 이후 체류자격에 맞는 허가를 확인하세요.",
+    "일이 학업보다 주된 활동이 되면 체류자격외 활동허가가 아니라 체류자격 변경허가 대상이 될 수 있습니다.",
+    "임금을 받지 못한 문제는 경찰이 아니라 고용노동부(1350, 노동포털 진정)에서 다룹니다."
+   ],
+   "en": [
+    "You need the permission for vacation and weekend work too — “no hour limit” is about hours once you are permitted.",
+    "Keep the permission (or sticker), your contract and the university confirmation for as long as the permission lasts.",
+    "When the permission period ends, get a new one before you carry on working.",
+    "Student part-time permission does not carry over once you graduate or finish your studies. Check what your next status of stay allows.",
+    "If work becomes your main activity rather than study, you may need a change of status of stay instead of permission for activities outside your status.",
+    "Unpaid wages are handled by the Ministry of Employment and Labor (1350, or a petition on the labor portal), not the police."
+   ],
+   "count": 6
+  },
+  "search_aliases": {
+   "ko": [
+    "알바",
+    "아르바이트",
+    "시간제 취업",
+    "일자리",
+    "임금체불",
+    "근로계약",
+    "급여명세서",
+    "노동청",
+    "산재",
+    "직장괴롭힘",
+    "퇴직금"
+   ],
+   "en": [
+    "part-time job",
+    "work permit",
+    "side job",
+    "unpaid wages",
+    "employment contract",
+    "payslip",
+    "labour office",
+    "workplace injury",
+    "harassment at work",
+    "severance pay"
+   ],
+   "count": 11
+  },
+  "top_sections[0].title": {
+   "ko": "신청할 수 있나요?",
+   "en": "Can I apply?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 기준, 2026-09-13 확인. 최종 판단은 출입국·외국인관서 심사로 정해집니다.",
+   "en": "※ Based on the HiKorea stay-application manual by status (posted September 2026), checked 2026-09-13. The immigration office makes the final decision."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "✅ 신청 대상",
+   "en": "✅ Who can apply"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "유학(D-2) 중 세부 자격 D-2-1~D-2-4, D-2-6, D-2-7: 입국 후 바로 신청할 수 있습니다.",
+    "어학연수(D-4-1, D-4-7)와 방문학생(D-2-8): 자격 변경일(사증을 받아 입국했다면 입국일)부터 6개월이 지나야 신청할 수 있습니다.",
+    "과정에 맞는 언어능력 기준(일반 과정은 한국어, 영어트랙은 인정되는 영어 기준)을 갖추고, 학교 유학생 담당자의 확인을 받아야 합니다."
+   ],
+   "en": [
+    "Student (D-2) sub-types D-2-1 to D-2-4, D-2-6 and D-2-7: you can apply straight after arrival.",
+    "Language training (D-4-1, D-4-7) and visiting students (D-2-8): only once 6 months have passed since your status was changed (or since you entered Korea, if you came on that visa).",
+    "You need to meet the language standard for your programme (Korean for regular programmes, an accepted English standard for English-track programmes) and get a confirmation from the university's international student adviser."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "⛔ 허가가 제한될 수 있는 경우",
+   "en": "⛔ When permission can be refused"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "신청일 기준 직전 학기 평균 성적이 C학점(2.0) 미만이어서 학업과 병행하기 어렵다고 판단되는 경우(어학연수 과정은 전체 이수 학기 평균 출석률 90% 미만)",
+    "신청일 기준 최근 3개월 안에 허가 없이 일했거나 허가 조건을 어겨 처벌받은 경력이 있는 경우",
+    "정규 과정(전문학사 2년·학사 4년)이 끝난 뒤 학점 미달 등으로 졸업하지 못해 예외적으로 체류허가를 받은 경우(석·박사 과정 수료 후 논문 준비생은 허용될 수 있으나, 이 경우 주당 30시간까지이고 주말·공휴일·방학 무제한 규정은 적용되지 않습니다. 학점·출석 미달로 졸업이 늦어진 경우는 제외)"
+   ],
+   "en": [
+    "Your average grade in the previous semester is below C (2.0) as of the application date and work is judged to get in the way of study (for language courses: average attendance below 90% across all completed terms).",
+    "In the 3 months before applying you worked without permission, or were penalised for breaking the conditions of a permission.",
+    "Your regular course (2-year associate or 4-year bachelor) has ended and you were given stay only as an exception because you have not met graduation requirements, such as missing credits (thesis-stage master’s and doctoral students may be allowed, but only up to 30 hours a week, and the unlimited weekend, holiday and vacation rule does not apply; not if graduation is delayed by missing credits or attendance)."
+   ],
+   "count": 3
+  },
+  "top_sections[1].title": {
+   "ko": "한 주에 몇 시간 일할 수 있나요?",
+   "en": "How many hours a week?"
+  },
+  "top_sections[1].body": {
+   "ko": "과정에 맞는 언어능력 기준을 충족했는지에 따라 허용 시간이 달라집니다. 일반 과정은 TOPIK, 사회통합프로그램, 세종학당 중 하나로, 영어트랙은 인정되는 영어 시험으로 증명합니다.",
+   "en": "Your permitted hours depend on whether you meet the language standard for your programme. Regular programmes show Korean with TOPIK, the Korea Immigration & Integration Program (KIIP) or King Sejong Institute courses; English-track programmes use an accepted English test."
+  },
+  "top_sections[1].notice": {
+   "ko": "동아대학교는 법무부·교육부가 2026년 2월 12일 발표한 교육국제화역량 인증대학 명단(학위과정·어학연수과정)에 포함되어 있습니다. 인증은 매년 점검되므로 신청할 때 우대 시간이 적용되는지 함께 확인하세요. 우대 대상이어도 허가는 따로 받아야 합니다.",
+   "en": "Dong-A University is on the list of certified universities (degree and language programmes) announced by the Ministry of Justice and Ministry of Education on 12 February 2026. Certification is reviewed every year, so check that the extra hours apply when you apply. Even if they do, you still need the permission."
+  },
+  "top_sections[1].footnote": {
+   "ko": "※ 동아대학교 국제교류과 「VISA 정보」 페이지(게시일 표기 없음)는 주중 허용시간을 어학연수 25시간·학사 30시간·석박사 35시간으로, 허용 업종에 「제조업 불가」로 적고 있어 위 매뉴얼 기준과 표기가 다릅니다. 실제 적용 시간과 업종은 국제교류과와 하이코리아에서 확인하세요.",
+   "en": "※ Dong-A's Office of International Affairs “VISA information” page (no posting date) lists weekday hours as 25 for language students, 30 for bachelor’s and 35 for master’s and doctoral students, and says manufacturing is not allowed — different from the manual above. Confirm your hours and permitted jobs with the office and HiKorea."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "📘 한국어 능력 기준",
+   "en": "📘 Korean language requirement"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "전문학사, 학사 1~2학년: TOPIK 3급 / 사회통합프로그램 3단계 이상 이수 또는 사전평가 61점 이상 / 세종학당 중급1 이상 이수",
+    "학사 3~4학년, 석·박사: TOPIK 4급 / 사회통합프로그램 4단계 이상 이수 또는 사전평가 81점 이상 / 세종학당 중급2 이상 이수",
+    "영어트랙 과정은 학년과 관계없이 TOEFL 530(CBT 197, iBT 71), IELTS 5.5, CEFR B2, TEPS 601점(NEW TEPS 327점) 이상이면 기준을 충족한 것으로 봅니다(영어 공용 국가 학생은 증빙 제출 면제)."
+   ],
+   "en": [
+    "Associate degree, or bachelor’s years 1–2: TOPIK level 3 / KIIP level 3 completed or a pre-test score of 61+ / King Sejong Institute Intermediate 1 or above",
+    "Bachelor’s years 3–4, master’s and doctoral: TOPIK level 4 / KIIP level 4 completed or a pre-test score of 81+ / King Sejong Institute Intermediate 2 or above",
+    "On an English-track programme, TOEFL 530 (CBT 197, iBT 71), IELTS 5.5, CEFR B2 or TEPS 601 (NEW TEPS 327) counts as meeting the requirement in any year (students from countries where English is an official language need not submit proof)."
+   ],
+   "count": 3
+  },
+  "top_sections[1].notes[1].title": {
+   "ko": "⏱ 학위과정(D-2) 허용 시간",
+   "en": "⏱ Degree students (D-2)"
+  },
+  "top_sections[1].notes[1].lines": {
+   "ko": [
+    "한국어 기준 미충족: 전문학사·학사 주당 10시간, 석·박사 주당 15시간",
+    "한국어 기준 충족: 학기 중 주중 전문학사·학사 25시간, 석·박사 30시간",
+    "한국어 기준 충족 시 학기 중 주말·공휴일과 방학에는 시간 제한이 없습니다.",
+    "한국어 기준을 충족하고 ① 인증대학 재학생이거나 ② 직전 학기 평균 A학점 이상이거나 ③ TOPIK 5급 이상(사회통합프로그램 5단계 이수 또는 종합평가 합격)이면 주중 5시간이 더 허용됩니다(전문학사·학사 30시간, 석·박사 35시간)."
+   ],
+   "en": [
+    "Korean requirement not met: 10 hours a week for associate and bachelor’s students, 15 hours for master’s and doctoral students.",
+    "Korean requirement met: during term, up to 25 weekday hours for associate and bachelor’s students, 30 for master’s and doctoral students.",
+    "If you meet the Korean requirement, there is no hour limit at weekends and on public holidays during term, or during vacations.",
+    "If you meet the Korean requirement and (1) study at a certified university, (2) averaged A or above last semester, or (3) hold TOPIK level 5+ (or completed KIIP level 5 or passed its comprehensive test), you get 5 more weekday hours (30 for associate and bachelor’s, 35 for master’s and doctoral)."
+   ],
+   "count": 4
+  },
+  "top_sections[1].notes[2].title": {
+   "ko": "🗣 어학연수(D-4) 허용 시간",
+   "en": "🗣 Language students (D-4)"
+  },
+  "top_sections[1].notes[2].lines": {
+   "ko": [
+    "어학연수(D-4)의 허용 시간은 한국어 기준(스터디인코리아 표: TOPIK 2급, 사회통합프로그램 2단계 이상 이수 또는 사전평가 41점 이상, 세종학당 초급2 이상 이수) 충족 여부와 학교·성적 요건에 따라 달라집니다. 스터디인코리아 표는 기준 미충족 10시간, 충족 20시간, 우대 25시간을 제시하며, 어학연수 행은 주말·방학에도 같은 한도로 표시돼 있습니다. 본인의 시간 범위는 허가서에서 확인하세요.",
+    "주말·방학 시간 제한 없음은 학위과정(D-2) 유학생에게만 적용됩니다.",
+    "하이코리아 매뉴얼의 허용시간 표에는 어학연수 행이 따로 없으므로, 신청 전에 하이코리아나 1345에서 본인에게 적용되는 시간을 확인하세요."
+   ],
+   "en": [
+    "For language trainees (D-4), permitted hours vary with the Korean requirement (Study in Korea table: TOPIK level 2, KIIP level 2 completed or a pre-test score of 41+, or King Sejong Institute Beginner 2 or above) and school and grade conditions. The Study in Korea table shows 10 hours without the requirement, 20 with it and 25 with a bonus, and its language-training row shows the same limit for weekends and vacations. Check your exact limit on your permit.",
+    "The “no limit at weekends and in vacations” rule applies only to degree students (D-2).",
+    "The HiKorea manual’s hours table has no separate row for language training, so confirm your hours with HiKorea or 1345 before applying."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "허가 기간과 근무처",
+   "en": "Permission period and workplaces"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "📅 한 번 받으면",
+   "en": "📅 How long one permission lasts"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "유학(D-2): 체류기간 안에서 최장 1년, 허용 시간 범위 안에서 동시에 일할 수 있는 곳은 2곳까지입니다.",
+    "어학연수(D-4): 체류기간 안에서 최장 6개월, 1곳만 가능합니다."
+   ],
+   "en": [
+    "Student (D-2): up to 1 year within your period of stay, and at most 2 workplaces at a time within the permitted hours.",
+    "Language training (D-4): up to 6 months within your period of stay, at 1 workplace only."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[1].title": {
+   "ko": "🔁 근무처를 바꾸거나 더할 때",
+   "en": "🔁 Changing or adding a workplace"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "고용주가 달라져 근무 장소가 바뀌면 새 근무처에서 일하기 전에 절차를 다시 밟아야 합니다. 기존 허가는 그 근무처에만 해당합니다.",
+    "하이코리아 매뉴얼은 「사전에 새로이 시간제 취업허가를 받아야 함」으로, 하이코리아 전자민원은 「시간제취업 업체변경 신고」(처리 14일 이내, 통상 3일)로 안내합니다. 본인에게 어느 절차가 적용되는지 신청 전에 확인하세요.",
+    "어느 쪽이든 새 근무처의 계약서와 학교 확인서를 다시 준비합니다."
+   ],
+   "en": [
+    "If you move to a different employer, you must go through the procedure again before you start at the new workplace. An existing permission covers only that workplace.",
+    "The HiKorea manual says you must “obtain a new part-time work permission in advance”, while HiKorea e-application offers a “workplace change report” for part-time work (processed within 14 days, usually 3). Check which applies to you before you apply.",
+    "Either way, prepare the new contract and a new university confirmation."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "할 수 없는 일",
+   "en": "Work you cannot do"
+  },
+  "sections[1].body": {
+   "ko": "허가 대상은 학생이 통상적으로 하는 시간제 일(단순 노무 등)입니다. 다음 분야는 원칙적으로 제한됩니다.",
+   "en": "Permission covers the kind of part-time work students usually do (such as simple labour). The following are restricted in principle."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 계절근로, 방학 중 학위과정 유학생의 전문분야 인턴 등 예외적으로 허용되는 활동도 있습니다. 해당하는지는 신청 전에 하이코리아나 1345에서 확인하세요.",
+   "en": "※ Some activities are allowed as exceptions — seasonal farm work, or professional internships for degree students during vacations, for example. Check with HiKorea or 1345 before applying."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "🚫 제한 분야",
+   "en": "🚫 Restricted"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "선량한 풍속이나 사회질서에 반하는 업종",
+    "전문 분야(E-1~E-7) 활동 — 예: 미성년 학생 대상 외국어 교육 시설에서의 회화지도",
+    "제조업(한국어능력 4급 이상이면 허용)·건설업, 선원 업종",
+    "택배기사, 배달대행 라이더, 대리기사, 보험설계사, 학습지 교사, 방문판매원 같은 특수형태근로",
+    "파견·도급·알선 관계에 따른 취업, 원거리 근무",
+    "과거 불법고용 등으로 처벌받아 사증발급이 제한된 업체",
+    "개인과외는 엄격히 제한됩니다."
+   ],
+   "en": [
+    "Businesses contrary to public morals or social order",
+    "Professional work (E-1 to E-7) — e.g. teaching conversation at a foreign-language facility for minors",
+    "Manufacturing (allowed with Korean level 4 or above), construction, and work as a seafarer",
+    "Special-type work such as parcel delivery, delivery-app riding, designated driving, insurance sales, home-study tutoring for learning-material companies and door-to-door sales",
+    "Work through dispatch, subcontracting or placement, and long-distance workplaces",
+    "Employers barred from visa sponsorship for past illegal hiring",
+    "Private tutoring is strictly limited."
+   ],
+   "count": 7
+  },
+  "sections[1].notes[1].title": {
+   "ko": "🆗 허가 없이 받아도 되는 돈",
+   "en": "🆗 Payments that need no permission"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "유학 활동의 본질을 해치지 않는 범위의 일시적 사례금, 상금, 그 밖에 일상생활에 따르는 보수",
+    "소속 대학·산학협력단에서 연구수당을 받는 학업 연계 연구·인턴 참여(학업과 무관한 연구·인턴은 허가 필요)"
+   ],
+   "en": [
+    "One-off honoraria, prize money and other everyday payments that do not undermine your study",
+    "Study-related research or internships at your own university or its industry-cooperation foundation that pay a research allowance (research or internships unrelated to your study need permission)"
+   ],
+   "count": 2
+  },
+  "sections[2].title": {
+   "ko": "허가 없이 일했거나 조건을 어기면",
+   "en": "If you work without permission or break the conditions"
+  },
+  "sections[2].notice": {
+   "ko": "위 기준은 매뉴얼의 처리 기준이며 실제 처분은 출입국·외국인관서가 사안별로 정합니다. 최근 3개월 안에 처벌받은 경력이 있으면 새 허가도 제한될 수 있습니다.",
+   "en": "These are the manual’s handling standards; the immigration office decides each case. A penalty in the last 3 months can also block a new permission."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "허가 없이 일한 경우",
+   "en": "Working without permission"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "법은 허가 없이 다른 체류자격의 활동을 한 사람을 형사처벌(3년 이하 징역 또는 3천만원 이하 벌금)과 강제퇴거 대상으로 정하고 있습니다(출입국관리법 제20조·제46조·제94조).",
+    "매뉴얼의 처리 기준: 처음 적발되고 위반 정도가 가벼우면 통고처분 후 체류허가를 받을 수 있고, 두 번째 적발되면 강제퇴거될 수 있습니다.",
+    "건설업에서 허가 없이 일한 경우는 적발 횟수와 관계없이 출국명령 대상으로 안내됩니다."
+   ],
+   "en": [
+    "The law makes working in another status’s activity without permission a criminal offence (up to 3 years in prison or a fine of up to ₩30 million) and grounds for deportation (Immigration Act arts. 20, 46, 94).",
+    "Handling standards in the manual: a first, minor offence can end with a notice of disposition and permission to stay; a second offence can lead to deportation.",
+    "Working without permission in construction is listed for a departure order regardless of how many times you were caught."
+   ],
+   "count": 3
+  },
+  "sections[2].notes[1].title": {
+   "ko": "허가 조건을 어긴 경우",
+   "en": "Breaking the conditions"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "1차: 엄중 경고 / 2차: 유학기간 중 시간제취업 불허 / 3차: 유학자격 취소",
+    "허용 시간을 넘기거나 허가받지 않은 곳에서 일하는 것도 조건 위반입니다."
+   ],
+   "en": [
+    "1st time: a strict warning / 2nd: no part-time work for the rest of your studies / 3rd: your student status is cancelled.",
+    "Working more than the permitted hours, or somewhere you are not permitted, also breaks the conditions."
+   ],
+   "count": 2
+  },
+  "sections[3].title": {
+   "ko": "임금을 못 받았거나 근로 문제가 생기면",
+   "en": "If you are not paid or have a problem at work"
+  },
+  "sections[3].body": {
+   "ko": "체류 허가 문제와 임금·근로계약 문제는 담당 기관이 다릅니다. 임금체불이나 근로계약 문제는 고용노동부에 상담하거나 진정할 수 있습니다.",
+   "en": "Stay permission and wage or contract problems are handled by different authorities. For unpaid wages or contract problems you can ask the Ministry of Employment and Labor for advice or file a petition there."
+  },
+  "sections[3].footnote": {
+   "ko": "※ 체류 관련 문의는 외국인종합안내센터 1345(유료)에서 할 수 있습니다.",
+   "en": "※ For stay questions, call the Immigration Contact Center on 1345 (paid call)."
+  },
+  "sections[3].links[0].label": {
+   "ko": "고용노동부 고객상담센터 1350",
+   "en": "Ministry of Employment and Labor helpline 1350"
+  },
+  "sections[3].links[0].description": {
+   "ko": "국번 없이 1350(유료, 평일 09:00~18:00)",
+   "en": "Dial 1350 from anywhere (paid call, weekdays 09:00–18:00)"
+  },
+  "sections[3].links[1].label": {
+   "ko": "노동포털 민원 신청",
+   "en": "Labor portal — file a petition"
+  },
+  "sections[3].links[1].description": {
+   "ko": "임금체불 진정 등 민원(고용노동부)",
+   "en": "Petitions such as unpaid wages (Ministry of Employment and Labor, Korean)"
+  },
+  "links[0].label": {
+   "ko": "하이코리아 — 시간제취업 허가 신청 안내",
+   "en": "HiKorea — part-time work permission"
+  },
+  "links[0].description": {
+   "ko": "전자민원 구비서류·처리기간(신청은 로그인 필요)",
+   "en": "E-application documents and processing time (applying needs a login)"
+  },
+  "links[1].label": {
+   "ko": "하이코리아 — 시간제취업 업체변경 신고 안내",
+   "en": "HiKorea — part-time workplace change report"
+  },
+  "links[1].description": {
+   "ko": "근무처가 바뀔 때의 전자민원 안내",
+   "en": "E-application for a change of workplace"
+  },
+  "links[2].label": {
+   "ko": "동아대 국제교류과 VISA 정보",
+   "en": "Dong-A OIA — visa information"
+  },
+  "links[2].description": {
+   "ko": "시간제취업 준비물과 확인서 서명 안내",
+   "en": "What to bring and how the confirmation is signed (Korean)"
+  },
+  "links[3].label": {
+   "ko": "체류자격별 안내 매뉴얼",
+   "en": "Stay manual by status (HiKorea)"
+  },
+  "links[3].description": {
+   "ko": "하이코리아 공지 — 유학(D-2) 시간제취업 활동 허가 수록",
+   "en": "HiKorea notice — includes part-time work permission for D-2 (Korean)"
+  },
+  "links[4].label": {
+   "ko": "스터디인코리아 — 아르바이트 안내",
+   "en": "Study in Korea — part-time jobs"
+  },
+  "links[4].description": {
+   "ko": "국립국제교육원 체류 안내의 시간제 취업 표",
+   "en": "Part-time work table in the NIIED stay guide"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — International Affairs Office"
+  },
+  "links[5].description": {
+   "ko": "시간제취업 학교 확인 문의처",
+   "en": "Where to ask for the university confirmation"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 비자 종류 안내",
+   "en": "Guide — Visa types"
+  },
+  "links[6].description": {
+   "ko": "D-2·D-4 체류자격 설명",
+   "en": "What D-2 and D-4 statuses cover"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 어학연수→학위과정 체류자격 변경",
+   "en": "Guide — Changing from D-4 to D-2"
+  },
+  "links[7].description": {
+   "ko": "어학연수에서 학위과정으로 바꿀 때",
+   "en": "When you move from D-4 to D-2"
+  },
+  "phrases[0].text": {
+   "ko": "시간제취업 허가를 신청하려고 합니다. 시간제 취업 확인서를 받을 수 있을까요?",
+   "en": "I want to apply for part-time work permission. Could I get the part-time employment confirmation?"
+  },
+  "phrases[1].text": {
+   "ko": "표준근로계약서에 시급과 근무 시간을 적어 주세요.",
+   "en": "Please write the hourly wage and working hours in the standard employment contract."
+  }
+ }
+}

@@ -1,0 +1,1140 @@
+{
+  "_what": "규칙으로 판정하지 못한 층별 안내 공간명을 사람이 판정한 결과. classify_rooms.py가 규칙보다 먼저 읽는다.",
+  "_who": "리드 클로드 2026-09-27 판정. 독립 검토 대상이다.",
+  "_rule": "generic은 번역 대상, proper는 문 앞 표지판대로 한국어 유지, unsure는 판정 보류(한국어 유지).",
+  "counts": {
+    "generic": 190,
+    "proper": 91,
+    "unsure": 0
+  },
+  "decisions": {
+    "AI-디지털트윈실증랩(옥수열,이석환)": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "AI·디지털트윈 실증 플랫폼(AI 3-Ex 기술 체험룸)": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "AI·디지털트윈 실증 플랫폼(AI 3-Ex 클라우드서버룸)": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "AI·디지털트윈 실증 플랫폼(AI 디지털트윈 PBL실)": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "CS디자인": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "HUMANUTAS 컨텐츠 스튜디오": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "Lounge 동아 DAU:M": {
+      "decision": "proper",
+      "why": "brand"
+    },
+    "N-care 플랫폼": {
+      "decision": "generic",
+      "why": "project_office",
+      "_note": "조사 04/032 SF: s11 5층은 학과 연구공간 층이고 이름에 플랫폼이 들어간다. N-care는 남기고 플랫폼만 옮긴다"
+    },
+    "STUDY ROOM1~6": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "SW전문인재양성사업단": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "S·MART LAB": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "T.N.S 머시닝": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "UPR사업단": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단 비즈니스 랩": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단 사무국": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단 입주기업": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단 프로젝트 랩": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "URP사업단스마트팩토리실증테스트베드": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "㈜유디엠": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "가리온": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "강 당": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "건축공학과학생회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "경기지도자연수원": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "경영대학원동문회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "경영문제연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "고시반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "고시연구반실(기술고시)": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "골프장(옥외)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "공대서류고": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "공학스튜디오": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "과제도서실(경영대학원)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "과제도서실(사회복지)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "과제도서실(전자)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "과제도서실(환경)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "관광레저연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "관리과(관리1팀)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "관리과(관리2팀)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "관리과(비품지원팀)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "관세사반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "교수협의회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "교양교육원(영어수업지원실)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "교육성과관리센터(강요명,이선영,이승형,정성광)": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "교육연구정책실/BK총괄사업단": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "구내서점": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "국가고시반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "국어문화원": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "그랑부르": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "그리메": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "극예술연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "글로벌 존": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "글로벌금융연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "기계공학과학생회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "기라성": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "기업가정신연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "김태철": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "나눔": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "내쇼날": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "내일": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "노둣돌": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "노래의메아리": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "노아전자": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "다연회": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "다우악": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "다울": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "대강당(상부)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "대강당(하부)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "더조커": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "도경기술": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "도담반(보육실)": {
+      "decision": "generic",
+      "why": "nursery_class"
+    },
+    "도미토리솔루션": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "도시공학과설계실3-1": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "동문방": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "동아검도회-1": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아검도회-2": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아경당": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "동아교지편집위원회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아농구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아대학교 소비자생활협동조합": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "동아볼링연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아수영회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아시아평화인권캠프": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아싸이클": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아요트": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아자동차연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아증권연구회(DUSC)": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아탁구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아테니스": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동아화학공학연구회(KEMI)": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "동이동모": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "디스이즈": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "디지털혁신허브(DI-Hub)": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "따뜻한사람들": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "라온": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "라일락": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "레브스텝": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "마루반(보육실)": {
+      "decision": "generic",
+      "why": "nursery_class"
+    },
+    "맑스엥겔스연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "매 점": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "메이커스페이스 스튜디오": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "모바일네트워크랩": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "모의대법정": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "모의법정(민사)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "모의법정(형사)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "목공소": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "목업실(레이져,3D프린터)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "목업실(이미징스튜디오)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "무기고": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "물리교육실험": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "미디어디바이스연구센터(소장실)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "미션1": {
+      "decision": "proper",
+      "why": "company",
+      "_note": "조사 04/032 SF: s14 4층 입주기업 구역"
+    },
+    "바둑사랑": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "바이오·헬스 플랫폼1": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "방구석": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "배양실(병균접종)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "배양실(토양비료,조직배양)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "법학연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "복사점": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "복사점(임대)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "복지임대마장(여행사)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "부산어린이 복합문화공간 시범사업 운영지원단": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "부산은행": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "불교학생회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "블루맥스": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "블링크": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "사람과사랑": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "사무국": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "사진예술연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "산업체인력교육장": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "상앗대": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "생명자원산업학학회방": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "생활지도실(여)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "생활지도자실(여)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "생활체육": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "서부산로타렉트": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "서주테크": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "석당전용학습실1~3": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "석당학술원": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "석당학술원 인문도시지원사업단": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "석당함진재": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "설계실D": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "설계실E": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "설계실F": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "설계실G": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "설계실H": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "성낙창": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "성아회": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "셈틀마당": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "소리누리": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "소리오름": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "소방심리지원단": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "소설창작연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "순대": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "스넥코너": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "스니치": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "스마트에듀케이션": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "스마트웰니스플랫폼(동아기능성운동트레이닝센터)": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "스틸샵": {
+      "decision": "proper",
+      "why": "company",
+      "_note": "조사 04/032 SF: 같은 층의 입주기업 구역이고, 일반 철공소는 원문에 따로 있다"
+    },
+    "스틸파트너": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "시험실-1~12": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "식 당(임대)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "식물생장조절실(단일)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "식물생장조절실(장일)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "식품생명공학학회방": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "신서유기": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "실내건축스튜디오": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "씨엠알엔디": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "아고라": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "아라반(보육실)": {
+      "decision": "generic",
+      "why": "nursery_class"
+    },
+    "아마란스": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "아미고": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "안내실(우편물)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "안면당": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "안전관리센터(방사선안전관리실)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "언론고시반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "언어교육원": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "역동": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "열림그림마당": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "영화예술연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "외국어특강실(공자아카데미)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "외국어특강실1~3": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "원격교육지원센터 e-러닝 스튜디오 A": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "원드써핑": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "원장실(경영대학원)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "원장실(국제전문대학원)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "원장실(사회복지대학원)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "유네스코": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "유니피스": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "유레카": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "유스호스텔": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "유전공학학회방": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "육아시설": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "윤유월": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "응급시뮬레이션실(ER)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "응용생물공학회방": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "응원단": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "의과대학고시방": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "의학시뮬레이션랩": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "의학시뮬레이션센터(Debriefing Room)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "이수호": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "이슬람문화실(남)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "이슬람문화실(여)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "이음맥": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "인문대 취업준비반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "인터카툰": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "인터콥": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "일본문학예술연구회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "임병찬": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "임용고사 준비반": {
+      "decision": "generic",
+      "why": "exam_prep"
+    },
+    "입주기업": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "저수조": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "전공실기실1~61": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "정밀화학 소재·부품·장비 플랫폼": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "정보기술연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "정보처리교육실(생자대)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실(스포츠대B)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실(인문대)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실(자연대)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실(학생회관)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실A": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "정보처리교육실B": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "제이에스데이타": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "젠더·어펙트연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "젠더어펙트연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "조윤현": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "주 방": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "주 방(임대)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "중환자시뮬레이션실(ICU)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "지정폐기물임시보관장(안전관리센터)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "차고": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "차세대LSI LAB": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "창 고": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "창의공간": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "창의오아시스플랫폼1": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "창의오아시스플랫폼2": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "철공소": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "청촌장학재단": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "체육관및대강당": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "총학생회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "총학생회학생소통위원회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "최영익": {
+      "decision": "proper",
+      "why": "person"
+    },
+    "출판부인쇄소": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "친환경스마트선박R&D/스마트공장운영설계전문인력양성사업단": {
+      "decision": "generic",
+      "why": "project_office"
+    },
+    "카톨릭학생회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "커즈아이": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "커피점": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "코워킹스페이스": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "코테크엔지니어링": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "크레파스": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "타래": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "탁구장": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "터": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "테니스장(옥외)": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "튜터링학습실[국문학과(야)/영문학과(야)]": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "특성화사업 예정 공간": {
+      "decision": "generic",
+      "why": "kind_of_space"
+    },
+    "파이": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "팝콘": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "팬코 글로벌존": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "페이퍼펀": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "편의시설(농협)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "편의시설(분식점)(임대)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "편의시설(서점)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "편의시설(패스트푸드)(임대)": {
+      "decision": "generic",
+      "why": "functional_room"
+    },
+    "포디브": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "프릭스": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "하네": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "하늘별": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "학생복지위원회/학생권익위원회": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "한아리국악회": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "한울림": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "한울반(보육실)": {
+      "decision": "generic",
+      "why": "nursery_class"
+    },
+    "한울회": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "합창단": {
+      "decision": "generic",
+      "why": "club_descriptive"
+    },
+    "해양도시건설·방재연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "해양자원연구소": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "행정지원실(통합)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "행정지원실(통합대학원)": {
+      "decision": "generic",
+      "why": "university_unit"
+    },
+    "호우회": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "효창엔지니어링": {
+      "decision": "proper",
+      "why": "company"
+    },
+    "흙사랑": {
+      "decision": "proper",
+      "why": "name_only"
+    },
+    "희망": {
+      "decision": "proper",
+      "why": "name_only"
+    }
+  },
+  "_reviewed": "조사 코덱스 04/032 (2026-09-27) 전수 검토. 판정 변경 3건·이유 정정 2건 반영."
+}

@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/i18n/app_languages.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/ui_kit.dart';
@@ -27,14 +28,27 @@ class SettingsScreen extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 32),
         children: [
           SectionCaption(l.settings_language_title.toUpperCase()),
-          PillSegmented<String>(
-            values: const ['ko', 'en'],
-            selected: locale.languageCode,
-            // Each label names its own language, so it is always shown in
-            // that language regardless of the current locale.
-            labelOf: (code) =>
-                code == 'ko' ? l.settings_language_ko : l.settings_language_en,
-            onChanged: (code) => notifier.setLocale(Locale(code)),
+          // One grouped card, one radio row per language. Each language is
+          // named in itself and carries a locale hint so a screen reader
+          // pronounces it in that language; the active one is the filled blue
+          // radio. Real radios give the mutually-exclusive semantics for free.
+          RadioGroup<String>(
+            groupValue: locale.languageCode,
+            onChanged: (code) {
+              if (code == null) return;
+              _changeLanguage(context, notifier, code);
+            },
+            child: GroupCard(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              dividerIndent: 12,
+              children: [
+                for (final code in appLanguageCodes)
+                  _LanguageTile(
+                    code: code,
+                    selected: locale.languageCode == code,
+                  ),
+              ],
+            ),
           ),
           const SizedBox(height: 20),
           GroupCard(
@@ -91,12 +105,65 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> _changeLanguage(
+      BuildContext context, LocaleNotifier notifier, String code) async {
+    final messenger = ScaffoldMessenger.of(context);
+    // The switch itself always happens; only remembering it can fail
+    // (private window, blocked site data). Tell the reader, in the
+    // language they just picked, that it may not survive a restart —
+    // being surprised by it later is worse (감사 05/035 NIT-2).
+    if (!await notifier.setLocale(Locale(code))) {
+      if (!context.mounted) return;
+      messenger
+        ..clearSnackBars()
+        ..showSnackBar(SnackBar(
+          // Two sentences in a second language need more than the
+          // default four seconds (감사 05/037 SF-3).
+          duration: const Duration(seconds: 10),
+          content:
+              Text(AppLocalizations.of(context).settings_language_save_failed),
+        ));
+    }
+  }
+
   Future<void> _openUrl(String url) async {
     final uri = Uri.tryParse(url);
     if (uri == null) return;
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     }
+  }
+}
+
+/// One language choice in the grouped card: a [RadioListTile] (value/group
+/// from the enclosing [RadioGroup]) titled with the language's own name, with
+/// a locale hint so TTS reads it in that language. Radio on the trailing side
+/// in the primary blue, bold navy title when active — the mockup's look.
+class _LanguageTile extends StatelessWidget {
+  const _LanguageTile({required this.code, required this.selected});
+
+  final String code;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return RadioListTile<String>(
+      value: code,
+      activeColor: scheme.primary,
+      controlAffinity: ListTileControlAffinity.trailing,
+      contentPadding: const EdgeInsets.only(left: 12, right: 4),
+      shape: const RoundedRectangleBorder(),
+      title: Text(
+        appLanguageNames[code]!,
+        locale: Locale(code),
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+          color: selected ? headingColor(context) : scheme.onSurface,
+        ),
+      ),
+    );
   }
 }
 

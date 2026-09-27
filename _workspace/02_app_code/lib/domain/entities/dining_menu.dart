@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'facility.dart';
 
+import '../../core/i18n/entity_i18n.dart';
+
 /// Meal slots served by campus cafeterias.
 enum MealType {
   breakfast,
@@ -68,6 +70,7 @@ class CafeteriaMenu {
     this.hoursEn,
     this.facilityId,
     DiningAvailability? status,
+    this.i18n = noI18n,
   }) : _status = status;
 
   final String id;
@@ -84,6 +87,11 @@ class CafeteriaMenu {
   /// Optional link to the facility (map pin) hosting this cafeteria.
   final String? facilityId;
 
+  /// Chinese and Vietnamese text for `name` and `hours`. The menu lines are
+  /// not in here — they change daily and are translated by their own text
+  /// (see data/i18n/place_text.dart).
+  final EntityI18n i18n;
+
   /// Explicit availability when the data source provides one; null falls back
   /// to the legacy rule (empty meals == closed) so mock data stays valid.
   final DiningAvailability? _status;
@@ -95,17 +103,52 @@ class CafeteriaMenu {
   bool get isClosed => status == DiningAvailability.closed;
   bool get isUnpublished => status == DiningAvailability.unpublished;
 
-  String name(Locale l) => _pick(l, nameKo, nameEn) ?? id;
-  String? hours(Locale l) => _pick(l, hoursKo, hoursEn);
+  /// Never falls back to [id]: an internal key must not reach the screen.
+  String name(Locale l) => _pick(l, nameKo, nameEn, 'name') ?? '—';
+  String? hours(Locale l) => _pick(l, hoursKo, hoursEn, 'hours');
 
-  static String? _pick(Locale l, String? ko, String? en) {
-    final wantKo = l.languageCode == 'ko';
-    final primary = wantKo ? ko : en;
-    final secondary = wantKo ? en : ko;
-    if (primary != null && primary.trim().isNotEmpty) return primary;
-    if (secondary != null && secondary.trim().isNotEmpty) return secondary;
-    return null;
+  String? _pick(Locale l, String? ko, String? en, String key) {
+    final t = pickI18nText(ko ?? '', en ?? '', l, i18n, key);
+    return t.isEmpty ? null : t;
   }
+
+  /// The same cafeteria with empty English fields filled in from [en] — see
+  /// [Facility.withEnglish] for why English needs this and the other languages
+  /// do not.
+  CafeteriaMenu withEnglish(Map<String, Object?> en) {
+    String? pick(String? current, String key) {
+      if ((current ?? '').trim().isNotEmpty) return current;
+      final v = en[key];
+      return v is String && v.trim().isNotEmpty ? v : current;
+    }
+
+    return CafeteriaMenu(
+      id: id,
+      nameKo: nameKo,
+      nameEn: pick(nameEn, 'name') ?? nameEn,
+      campus: campus,
+      meals: meals,
+      hoursKo: hoursKo,
+      hoursEn: pick(hoursEn, 'hours'),
+      facilityId: facilityId,
+      status: _status,
+      i18n: i18n,
+    );
+  }
+
+  /// The same cafeteria carrying [i18n].
+  CafeteriaMenu withI18n(EntityI18n i18n) => CafeteriaMenu(
+        id: id,
+        nameKo: nameKo,
+        nameEn: nameEn,
+        campus: campus,
+        meals: meals,
+        hoursKo: hoursKo,
+        hoursEn: hoursEn,
+        facilityId: facilityId,
+        status: _status,
+        i18n: i18n,
+      );
 
   factory CafeteriaMenu.fromJson(Map<String, dynamic> j) => CafeteriaMenu(
         id: j['id'] as String,
@@ -120,6 +163,7 @@ class CafeteriaMenu {
         hoursEn: j['hours_en'] as String?,
         facilityId: j['facilityId'] as String?,
         status: DiningAvailability.fromId(j['status'] as String?),
+        i18n: entityI18nFromJson(j['i18n']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -132,5 +176,6 @@ class CafeteriaMenu {
         'hours_en': hoursEn,
         'facilityId': facilityId,
         'status': status.name,
+        if (entityI18nToJson(i18n) != null) 'i18n': entityI18nToJson(i18n),
       };
 }

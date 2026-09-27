@@ -1,0 +1,254 @@
+{
+ "id": "graduation-requirements",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "졸업요건 확인",
+   "en": "Checking Graduation Requirements"
+  },
+  "detail_title": {
+   "ko": "졸업할 수 있는지 미리 확인하기",
+   "en": "Check Early Whether You Can Graduate"
+  },
+  "summary": {
+   "ko": "학업성적 사정표로 학점·평점·TOPIK·학과요건 점검",
+   "en": "Use the grade audit to check credits, GPA, TOPIK and department rules"
+  },
+  "overview": {
+   "ko": "졸업은 총학점만 채운다고 되지 않습니다. 영역별 이수학점, 평점평균, 논문이나 학과 시험, 그리고 외국인 특별전형 입학생이라면 입학연도에 따라 더해지는 한국어능력·지정교과목 요건을 모두 충족해야 합니다.\n\n요건은 입학연도·학과·편입 여부에 따라 달라 한 가지 표로 정리할 수 없습니다. 3학년 무렵부터 학업성적 사정표로 본인 기준을 확인하고, 부족한 요건은 남은 학기의 수강 계획에 반영하세요.",
+   "en": "Graduating takes more than the total credit count. You must meet the credits for each area, the minimum GPA, any thesis or department exam, and — if you were admitted through the international track — the Korean-language and designated-course conditions for your admission year.\n\nThe rules depend on your admission year, department and whether you transferred, so no single table fits everyone. From around your third year, check your own requirements in the grade audit and plan the remaining semesters around anything missing."
+  },
+  "checklist_title": {
+   "ko": "사정표에서 확인할 것",
+   "en": "What to check in the grade audit"
+  },
+  "checklist": {
+   "ko": [
+    "입학연도(복학생은 적용 교과과정)와 소속 학과",
+    "총 졸업학점과 영역별(교양·전공 등) 이수학점",
+    "누적 평점평균 2.0 이상 여부",
+    "논문·졸업시험 등 학과 요건",
+    "해당자: TOPIK(또는 국제교류처 시험) 4급 이상 성적증명서 제출 여부",
+    "해당자: 외국인 지정 한국어 교과목 이수 여부(입학연도별)"
+   ],
+   "en": [
+    "Your admission year (for returning students, the curriculum applied) and department",
+    "Total graduation credits and credits in each area (general education, major and so on)",
+    "Whether your cumulative GPA is 2.0 or higher",
+    "Department requirements such as a thesis or graduation exam",
+    "If it applies to you: whether you have submitted a TOPIK (or international office test) level 4+ certificate",
+    "If it applies to you: whether you have completed the designated Korean courses (by admission year)"
+   ],
+   "count": 6
+  },
+  "steps": {
+   "ko": [
+    "통합정보시스템 › 학생정보서비스 › 학부학사 › 졸업 › 학업성적 사정표 확인",
+    "입학연도별 교과과정·영역별 이수학점표와 학과 졸업요건 페이지로 부족한 항목 대조",
+    "부족한 학점·과목은 다음 학기 수강신청에 반영하고, 학과사무실이나 학사관리과에 확인",
+    "예비 졸업사정(1학기 4월, 2학기 10월) 결과를 확인하고, 부족한 학점은 계절학기 수강을 검토하거나 바로 문의",
+    "최종 졸업사정(1학기 8월, 2학기 2월) 뒤 졸업·학위 증명서 발급"
+   ],
+   "en": [
+    "Open Integrated Information System › Student Information Service › Undergraduate › Graduation › Grade audit.",
+    "Compare anything missing with the curriculum and area credit table for your admission year and your department’s graduation page.",
+    "Put missing credits or courses into next semester’s registration, and check with your department office or Academic Affairs.",
+    "Check the preliminary graduation review (April for spring, October for autumn); consider seasonal-semester courses for missing credits, or ask straight away.",
+    "After the final review (August for spring, February for autumn), get your graduation and degree certificates."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "예비 졸업사정 전에 사정표를 먼저 확인하면 마지막 학기에 부족한 과목을 들을 시간이 생깁니다.",
+    "졸업예정자는 마지막 8학기 개강 직후 선정되고, 그때부터 졸업예정증명서를 발급받을 수 있습니다.",
+    "복학생은 최초 입학연도와 복학 학년 입학연도 중 유리한 교과과정을 선택할 수 있다고 안내되어 있으니 어떤 절차로 적용되는지 학과에 확인하세요."
+   ],
+   "en": [
+    "Checking the audit before the preliminary review leaves time to take missing courses in your last semester.",
+    "Expected graduates are selected just after the start of the 8th semester, and the certificate of expected graduation is available from then.",
+    "Returning students are told they may choose the more favourable curriculum — their original admission year or that of the year they rejoin — so ask your department how that is applied."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "졸업",
+    "졸업요건",
+    "졸업 학점",
+    "학위취득 유예",
+    "졸업유예"
+   ],
+   "en": [
+    "graduation",
+    "graduate",
+    "degree requirements",
+    "credits to graduate"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "졸업하려면 무엇이 필요한가요?",
+   "en": "What do you need to graduate?"
+  },
+  "top_sections[0].notice": {
+   "ko": "학과에 따라 공통 기준보다 높은 요건이 있습니다. 예를 들어 경제학과 졸업요건 페이지는 외국인 유학생에게 TOPIK 5급 이상과 학과 졸업시험을 모두 요구합니다. 본인 학과 요건을 꼭 확인하세요.",
+   "en": "Some departments set stricter rules than the university minimum. The Department of Economics page, for example, asks international students for both TOPIK level 5+ and a department graduation exam. Always check your own department."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 동아대학교 학사안내 「졸업기준 안내」 기준, 2026-09-13 확인. 대학원생은 학위청구 규정을 따로 확인하세요.",
+   "en": "※ Based on Dong-A’s academic guidance “Graduation standards”, checked 2026-09-13. Graduate students should check their degree rules separately."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🎓 학교 공통 기준(학부)",
+   "en": "🎓 University-wide rules (undergraduate)"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "졸업 조건: 영역별 이수학점 충족 + 논문 합격. 외국인 특별전형 입학생은 입학연도와 편입 여부에 따라 한국어능력·지정교과목 요건이 더해질 수 있습니다(아래).",
+    "누적 평점평균은 원칙적으로 2.0 이상이어야 하며, 졸업학점을 모두 채워도 이에 못 미치면 졸업할 수 없습니다. 의학과를 제외한 2008학년도 이전 신입생은 학교 안내의 1.5 기준을 확인하세요.",
+    "졸업대상자는 재학생·학사학위취득 유예생 중 등록·이수 학기를 채운 학생이며(휴학생 제외), 일반학과는 등록 8학기·이수 7학기 이상입니다(편입·학과별 예외는 안내 표 확인)."
+   ],
+   "en": [
+    "To graduate: meet the credits for each area + pass the thesis. Students admitted through the international track may have extra Korean-language and designated-course requirements depending on admission year and transfer status (below).",
+    "The cumulative GPA must generally be 2.0 or higher; below that you cannot graduate even with all credits. Students admitted in 2008 or earlier, except Medicine, should check the university’s 1.5 threshold.",
+    "Graduation candidates are enrolled students or degree-deferral students who have completed enough registered and studied semesters (not students on leave) — 8 registered and 7 completed semesters for regular departments (see the table for transfers and other departments)."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "🌏 외국인 특별전형 입학생",
+   "en": "🌏 Admitted through the international student track"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "2011학년도 이후 외국인 특별전형 입학생(편입 포함)은 TOPIK 4급 이상 또는 국제교류처 한국어능력시험 4급 이상 성적증명서를 졸업예정학기에 제출해야 합니다.",
+    "2017학년도 이후 외국인 특별전형 입학생(편입 제외)은 국제교류처가 지정한 한국어 교과목도 이수해야 합니다. 입학연도별 과목은 수강신청 가이드와 교양대학에서 확인하세요."
+   ],
+   "en": [
+    "Students admitted through the international track from 2011 (including transfers) must submit a TOPIK level 4+ score, or level 4+ in the international office’s Korean test, in their expected graduation semester.",
+    "Those admitted through that track from 2017 (excluding transfers) must also complete the Korean courses the international office designates. Check the courses for your year in the course registration guide and with the College of General Education."
+   ],
+   "count": 2
+  },
+  "sections[0].title": {
+   "ko": "요건을 다 못 채웠거나 졸업을 미루고 싶다면",
+   "en": "If you fall short, or want to delay graduating"
+  },
+  "sections[0].notice": {
+   "ko": "졸업이 늦어지면 체류기간 연장·구직(D-10) 계획에도 영향을 줄 수 있으니 국제교류과와 함께 일정을 확인하세요.",
+   "en": "A late graduation can affect your extension of stay or a job-seeking (D-10) plan, so check the timing with the Office of International Affairs too."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "학사학위취득 유예",
+   "en": "Deferring your degree"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "졸업예정 재학생 중 수료 또는 졸업이 가능한 학생이 신청할 수 있습니다. 영역별 이수학점을 모두 채웠다면 졸업논문을 통과하지 못한 수료예정자도 신청할 수 있지만, 졸업학점이나 영역별 학점이 부족하면 신청할 수 없습니다.",
+    "학기 단위로 총 2회(1년)까지 가능합니다.",
+    "수강하지 않으면 정규학기 등록금의 5.5%를 유예비로 내고, 수강하면 신청 학점에 따른 등록금을 냅니다. 내지 않으면 제적됩니다.",
+    "유예자는 재학생이 아닌 별도 학적이라 재학증명서가 발급되지 않고(졸업예정증명서는 가능) 그 학기에 휴학할 수 없으며, 승인 뒤에는 취소할 수 없습니다. 체류기간 연장 서류에 영향이 있으니 신청 전에 국제교류과에 확인하세요."
+   ],
+   "en": [
+    "Enrolled expected graduates who can complete the course or graduate may apply. If you have met all area credits but not passed the graduation thesis, you may still apply; if you are short of total or area credits, you may not.",
+    "Up to 2 semesters in total (1 year).",
+    "With no courses you pay 5.5% of regular tuition as a deferral fee; if you take courses, you pay by credits. If you do not pay, you are dismissed.",
+    "Deferral students are not classed as enrolled, so no certificate of enrolment is issued (the expected-graduation certificate still is), they cannot take leave that semester, and an approved deferral cannot be cancelled. This affects documents for extending your stay, so check with the Office of International Affairs before applying."
+   ],
+   "count": 4
+  },
+  "sections[0].notes[1].title": {
+   "ko": "구분해 두세요",
+   "en": "Keep these apart"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "학점이나 평점이 부족해 정규 학기를 넘겨 다니면 학기초과자로 등록합니다(등록금은 신청 학점에 따라 다름).",
+    "학위를 받지 못한 채 과정을 마친 수료는 졸업이 아니며, 학위증이 필요한 체류자격 신청 등에서 다르게 취급될 수 있습니다."
+   ],
+   "en": [
+    "If credits or GPA are short and you study past the regular semesters, you register as an extra-semester student (tuition depends on credits).",
+    "Completing the course without a degree is not graduation, and it can be treated differently in applications that need a degree certificate, such as some statuses of stay."
+   ],
+   "count": 2
+  },
+  "links[0].label": {
+   "ko": "동아대 학사안내 — 졸업기준",
+   "en": "Dong-A academic guide — graduation standards"
+  },
+  "links[0].description": {
+   "ko": "졸업대상자·졸업사정·평점·외국인 요건",
+   "en": "Candidates, review dates, GPA and international student rules (Korean)"
+  },
+  "links[1].label": {
+   "ko": "동아대 학사안내 — 학사학위취득 유예",
+   "en": "Dong-A academic guide — degree deferral"
+  },
+  "links[1].description": {
+   "ko": "신청 조건·유예비·기간",
+   "en": "Conditions, fee and period (Korean)"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[2].description": {
+   "ko": "외국인 필수교과목과 학점 계획",
+   "en": "Required courses and credit planning"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 학사경고·제적 예방",
+   "en": "Guide — Academic Warning & Avoiding Dismissal"
+  },
+  "links[3].description": {
+   "ko": "평점이 낮을 때",
+   "en": "If your GPA is low"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[4].description": {
+   "ko": "학기초과·유예 등록금",
+   "en": "Extra-semester and deferral tuition"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[5].description": {
+   "ko": "졸업예정·졸업증명서",
+   "en": "Expected-graduation and graduation certificates"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 졸업 후 구직(D-10) 체류",
+   "en": "Guide — Job-Seeking Visa (D-10) after Graduation"
+  },
+  "links[6].description": {
+   "ko": "졸업 뒤 한국에 남는다면",
+   "en": "If you stay in Korea after graduating"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 귀국·출국 전 행정 정리",
+   "en": "Guide — Before You Leave Korea"
+  },
+  "links[7].description": {
+   "ko": "졸업 후 귀국한다면",
+   "en": "If you leave Korea after graduating"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 휴학·복학·자퇴와 체류",
+   "en": "Guide — Leave, Return, Withdrawal & Your Stay"
+  },
+  "links[8].description": {
+   "ko": "휴학·자퇴·제적 등 학적 변경과 체류",
+   "en": "Leave, withdrawal or dismissal, and your stay"
+  },
+  "phrases[0].text": {
+   "ko": "학업성적 사정표를 보고 졸업요건을 확인하고 싶습니다.",
+   "en": "I would like to check my graduation requirements in the grade audit."
+  }
+ }
+}

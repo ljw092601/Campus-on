@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/facility.dart';
 import '../../domain/entities/favorite_ref.dart';
@@ -218,10 +219,13 @@ class _HeaderCard extends ConsumerWidget {
                     ),
                     if (secondaryName.trim().isNotEmpty) ...[
                       const SizedBox(height: 2),
+                      // The name in the other language is how a student
+                      // matches the building sign (a Chinese or Vietnamese
+                      // reader still sees the Korean sign text to show
+                      // someone); clipping it defeats the purpose, so it
+                      // wraps as far as it needs to.
                       Text(
                         secondaryName,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -302,7 +306,10 @@ class _CampusPill extends StatelessWidget {
       ),
       child: Text(
         text,
-        maxLines: 1,
+        // Romanised campus names ('Seunghak Campus') are wider than the header
+        // column on a 320dp phone / at large text; wrap there instead of
+        // clipping the tail.
+        maxLines: prefersFlexibleLayout(context) ? null : 1,
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w700,
@@ -367,6 +374,10 @@ class _BottomCta extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final dark = Theme.of(context).brightness == Brightness.dark;
+    // A fixed height clipped the label at large text; the button grows with
+    // it instead (capped, so it cannot swallow the screen).
+    final scale = MediaQuery.textScalerOf(context).scale(1.0);
+    final btnHeight = 56 * scale.clamp(1.0, 2.0);
     return SafeArea(
       minimum: EdgeInsets.fromLTRB(context.dimens.spaceMd, 8,
           context.dimens.spaceMd, context.dimens.spaceMd),
@@ -385,7 +396,7 @@ class _BottomCta extends StatelessWidget {
         ),
         child: SizedBox(
           width: double.infinity,
-          height: 56,
+          height: btnHeight,
           child: FilledButton.icon(
             onPressed: () => context.go('/map?focus=${facility.id}'),
             icon: const Icon(Symbols.location_on, size: 22),

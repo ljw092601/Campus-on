@@ -1,0 +1,317 @@
+{
+ "id": "transit-card",
+ "category": "living",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "교통카드",
+   "en": "Transit Card"
+  },
+  "detail_title": {
+   "ko": "교통카드 구매 및 충전",
+   "en": "Buying & Recharging a Transit Card"
+  },
+  "summary": {
+   "ko": "구매 · 충전 · 환승 이용법",
+   "en": "Buying, recharging & transfers"
+  },
+  "overview": {
+   "ko": "교통카드는 부산의 버스와 지하철 등 대중교통을 이용할 때 사용하는 충전식 카드입니다.\n\n현금으로 매번 요금을 내는 것보다 편리하며, 교통카드를 이용하면 대중교통 환승 시 할인 혜택을 받을 수 있습니다.\n\n외국인등록증이나 한국 은행계좌가 없어도 일반적인 선불 교통카드는 쉽게 구매할 수 있어 한국에 처음 입국한 학생도 바로 사용할 수 있습니다.",
+   "en": "A transit card is a rechargeable card you tap to pay for Busan's buses, subway, and other public transport.\n\nIt is easier than paying cash every trip, and it is what earns you the transfer discount between buses and the subway.\n\nYou can buy a regular prepaid transit card without an ARC or a Korean bank account, so it works from your very first day in Korea."
+  },
+  "checklist": {
+   "ko": [
+    "교통카드 구매 비용",
+    "충전할 금액",
+    "현금 또는 사용 가능한 결제수단"
+   ],
+   "en": [
+    "The cost of the card itself",
+    "The amount you want to load onto it",
+    "Cash or another accepted payment method"
+   ],
+   "count": 3
+  },
+  "checklist_note": {
+   "ko": "※ 교통카드 종류와 구매처에 따라 결제 방법이 다를 수 있습니다.",
+   "en": "※ Accepted payment methods vary by card type and by where you buy it."
+  },
+  "search_aliases": {
+   "ko": [
+    "교통카드",
+    "버스",
+    "지하철",
+    "티머니"
+   ],
+   "en": [
+    "bus",
+    "subway",
+    "T-money",
+    "metro"
+   ],
+   "count": 4
+  },
+  "sections[0].title": {
+   "ko": "구매 방법",
+   "en": "How to buy one"
+  },
+  "sections[0].steps": {
+   "ko": [
+    "가까운 편의점 또는 지하철역 방문",
+    "교통카드 판매 여부 확인",
+    "교통카드 구매",
+    "사용할 금액 충전",
+    "버스 또는 지하철에서 카드 사용"
+   ],
+   "en": [
+    "Go to a nearby convenience store or subway station",
+    "Ask whether they sell transit cards",
+    "Buy the card",
+    "Load the amount you want to use",
+    "Tap it on a bus or at the subway gate"
+   ],
+   "count": 5
+  },
+  "sections[0].notes[0].title": {
+   "ko": "어디에서 구매할 수 있나요?",
+   "en": "Where can I buy one?"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "편의점 — 가까운 편의점에서 교통카드 판매 여부를 확인하세요.",
+    "지하철역 — 일부 지하철역 또는 교통카드 판매·충전 시설에서 구매할 수 있습니다."
+   ],
+   "en": [
+    "Convenience stores — check with the store nearest you, as not every branch stocks them.",
+    "Subway stations — some stations have a counter or machine that sells and recharges cards."
+   ],
+   "count": 2
+  },
+  "sections[1].title": {
+   "ko": "충전 방법",
+   "en": "How to recharge"
+  },
+  "sections[1].body": {
+   "ko": "교통카드 잔액이 부족하면 다시 충전하여 계속 사용할 수 있습니다.",
+   "en": "When the balance runs low, just top the card up and keep using it."
+  },
+  "sections[1].steps": {
+   "ko": [
+    "편의점 또는 지하철역 충전기 방문",
+    "교통카드를 충전기에 올리거나 직원에게 전달",
+    "충전할 금액 선택",
+    "결제",
+    "충전 후 잔액 확인"
+   ],
+   "en": [
+    "Go to a convenience store or a recharge machine in a subway station",
+    "Place the card on the machine, or hand it to the staff",
+    "Choose how much to add",
+    "Pay",
+    "Check the new balance"
+   ],
+   "count": 5
+  },
+  "sections[1].notice": {
+   "ko": "충전 가능한 장소와 결제 방식은 교통카드 종류에 따라 다를 수 있습니다.",
+   "en": "Where you can recharge, and how you can pay, depends on the type of card."
+  },
+  "sections[2].title": {
+   "ko": "사용 방법",
+   "en": "How to use it"
+  },
+  "sections[2].notes[0].title": {
+   "ko": "버스",
+   "en": "Bus"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "탈 때 — 버스 승차 단말기에 교통카드를 한 번 태그합니다.",
+    "내릴 때 — 환승할 예정이라면 하차 단말기에 반드시 다시 태그하세요."
+   ],
+   "en": [
+    "Getting on — tap the card once on the reader by the door.",
+    "Getting off — if you plan to transfer, you must tap again on the reader as you exit."
+   ],
+   "count": 2
+  },
+  "sections[2].notes[1].title": {
+   "ko": "지하철",
+   "en": "Subway"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "들어갈 때 — 개찰구 단말기에 교통카드를 태그합니다.",
+    "나올 때 — 목적지에서 다시 개찰구에 교통카드를 태그합니다."
+   ],
+   "en": [
+    "Entering — tap the card on the ticket gate.",
+    "Exiting — tap it again on the gate at your destination."
+   ],
+   "count": 2
+  },
+  "sections[3].title": {
+   "ko": "환승",
+   "en": "Transfers"
+  },
+  "sections[3].body": {
+   "ko": "부산에서는 교통카드를 이용해 버스와 지하철 등 대중교통을 환승하면 환승 할인 혜택을 받을 수 있습니다.\n\n환승 혜택을 받으려면 교통카드를 사용하고 버스에서 내릴 때도 반드시 카드를 태그해야 합니다.",
+   "en": "In Busan, paying with a transit card gets you a transfer discount when you change between buses and the subway.\n\nTo get it you must pay with the card — and tap it again when you get off the bus."
+  },
+  "sections[3].notice": {
+   "ko": "버스에서 내릴 때도 꼭 카드를 찍으세요.\n환승 할인은 먼저 탄 교통수단에서 내린 뒤 30분 이내에 갈아탈 때 2회까지 적용됩니다(총 3개 수단). 같은 노선의 버스를 다시 타거나, 도시철도 개찰구 밖으로 나온 뒤 다시 도시철도를 타면 환승 할인이 적용되지 않습니다. 서로 다른 버스 노선 간 환승은 위 조건에 따라 할인받을 수 있습니다.",
+   "en": "Remember to tap your card when getting off the bus.\nThe transfer discount applies when you board the next service within 30 minutes of getting off the previous one, for up to two transfers (three services in all). Reboarding the same bus route, or re-entering the subway after leaving its paid area, does not qualify for a transfer discount. Transfers between different bus routes can qualify under the conditions above."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "요금은 얼마인가요?",
+   "en": "What does it cost?"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "도시철도는 교통카드로 어른 1구간 1,600원 · 2구간 1,800원입니다(부산교통공사).",
+    "시내버스는 교통카드로 어른 일반버스 1,550원 · 좌석버스 2,100원입니다(부산교통공사 환승운임 예시 기준).",
+    "종이 QR 승차권은 1구간 1,700원 · 2구간 1,900원으로 더 비쌉니다.",
+    "환승할 때는 이용한 수단 중 가장 높은 운임만 냅니다. 2025년 9월 19일부터 부산 · 김해 · 양산 광역환승운임이 없어졌습니다.",
+    "만 13~18세는 청소년 운임(1구간 1,050원 · 2구간 1,200원)이 적용됩니다. 청소년 요금을 적용받으려면 카드에 연령 정보를 등록해야 하니 카드사 안내를 확인하세요."
+   ],
+   "en": [
+    "With a transit card an adult pays 1,600 won for one subway zone and 1,800 won for two (Busan Transportation Corporation).",
+    "A city bus costs 1,550 won and an express-seat bus 2,100 won by transit card (from the same transfer-fare examples).",
+    "A paper QR ticket costs more — 1,700 and 1,900 won.",
+    "When you transfer you pay only the highest of the fares you used. The Busan–Gimhae–Yangsan regional transfer surcharge was abolished on 19 September 2025.",
+    "Ages 13–18 pay the youth fare (1,050 and 1,200 won). To get it the card has to carry your age details — check your card issuer's instructions."
+   ],
+   "count": 5
+  },
+  "sections[4].title": {
+   "ko": "어떤 교통카드를 사야 하나요?",
+   "en": "Which card should I buy?"
+  },
+  "sections[4].body": {
+   "ko": "처음 한국에 온 학생이라면 가까운 편의점이나 지하철역에서 구매 가능한 일반 선불 교통카드를 이용하면 됩니다.\n\n특정 카드 브랜드를 반드시 선택할 필요는 없으며, 부산의 버스와 지하철에서 사용할 수 있는지 확인한 후 구매하세요.",
+   "en": "If you have just arrived, a regular prepaid transit card from a nearby convenience store or subway station is all you need.\n\nNo particular brand is required — just check that the card works on Busan's buses and subway before you buy it."
+  },
+  "sections[5].title": {
+   "ko": "알아두면 좋은 점",
+   "en": "Good to know"
+  },
+  "sections[5].notes[0].title": {
+   "ko": "잔액을 확인하세요",
+   "en": "Check your balance"
+  },
+  "sections[5].notes[0].lines": {
+   "ko": [
+    "버스나 지하철을 이용하기 전에 교통카드에 충분한 잔액이 있는지 확인하세요."
+   ],
+   "en": [
+    "Make sure the card has enough balance before you board."
+   ],
+   "count": 1
+  },
+  "sections[5].notes[1].title": {
+   "ko": "충전 한도와 잔액 환불",
+   "en": "Recharge limit and refunds"
+  },
+  "sections[5].notes[1].lines": {
+   "ko": [
+    "이즐(캐시비) 기준 선불 교통카드 한 장에 최대 50만원까지 충전할 수 있습니다.",
+    "이즐(캐시비) 정상인식 카드의 환불 한도와 수수료는 환불처마다 다릅니다. 공식 상세 안내상 GS25 · 세븐일레븐 · 이마트24는 잔액 2만원 이하, CU는 3만원 이하를 수수료 500원으로 바로 환불합니다.",
+    "ATM · 은행 · 본사 접수와 고장 · 파손 카드는 조건이 따로 있으니 카드사의 「카드잔액환불」 안내에서 확인하세요.",
+    "환불 방법과 수수료는 카드사마다 다릅니다. 부산교통공사는 카드 잔액을 직접 환불하지 않으니 카드 발행사 안내를 확인하세요."
+   ],
+   "en": [
+    "An EZL (Cashbee) prepaid card holds up to 500,000 won.",
+    "For an EZL (Cashbee) card that still reads normally, the refund limit and fee depend on where you ask. Per the issuer's detailed table, GS25, 7-Eleven and emart24 refund balances of up to 20,000 won and CU up to 30,000 won, on the spot, for a 500 won fee.",
+    "ATMs, banks, head-office requests and faulty or damaged cards have their own conditions — check the issuer's 카드잔액환불 (card balance refund) page.",
+    "Refund routes and fees differ by issuer. Busan Transportation Corporation does not refund card balances itself — check your card issuer's instructions."
+   ],
+   "count": 4
+  },
+  "sections[5].notes[2].title": {
+   "ko": "하차 태그",
+   "en": "Tap off the bus"
+  },
+  "sections[5].notes[2].lines": {
+   "ko": [
+    "버스에서 환승할 예정이라면 내릴 때도 교통카드를 반드시 태그하세요."
+   ],
+   "en": [
+    "Planning to transfer? Tap the card again as you leave the bus."
+   ],
+   "count": 1
+  },
+  "sections[5].notes[3].title": {
+   "ko": "지하철에서도 사용 가능",
+   "en": "Works on the subway too"
+  },
+  "sections[5].notes[3].lines": {
+   "ko": [
+    "대부분의 일반 선불 교통카드는 부산 지하철과 시내버스 등에서 사용할 수 있습니다."
+   ],
+   "en": [
+    "Most regular prepaid cards work on the Busan subway and city buses alike."
+   ],
+   "count": 1
+  },
+  "sections[5].notes[4].title": {
+   "ko": "편의점에서 충전 가능",
+   "en": "Recharge at convenience stores"
+  },
+  "sections[5].notes[4].lines": {
+   "ko": [
+    "많은 선불 교통카드는 편의점이나 지하철역에서 충전할 수 있습니다."
+   ],
+   "en": [
+    "Most prepaid cards can be topped up at convenience stores or subway stations."
+   ],
+   "count": 1
+  },
+  "sections[5].notes[5].title": {
+   "ko": "모바일 교통카드",
+   "en": "Mobile transit cards"
+  },
+  "sections[5].notes[5].lines": {
+   "ko": [
+    "지원되는 스마트폰에서는 모바일 교통카드를 사용할 수도 있습니다.",
+    "다만 휴대폰 기종, NFC 지원 여부, 운영체제 및 앱에 따라 이용 조건이 달라질 수 있으므로 처음 입국한 학생에게는 실물 교통카드가 더 간단할 수 있습니다."
+   ],
+   "en": [
+    "Some phones can carry a transit card in an app instead.",
+    "Whether it works depends on your phone model, NFC support, OS, and the app — so a physical card is usually simpler when you have just arrived."
+   ],
+   "count": 2
+  },
+  "links[0].label": {
+   "ko": "부산광역시 교통카드 안내",
+   "en": "Busan city — transit card guide"
+  },
+  "links[0].description": {
+   "ko": "카드 종류 · 구매처 · 충전처 · 부산 밖 사용(영문, 일부 카드 이름은 옛 표기)",
+   "en": "Card types, where to buy and recharge, use outside Busan (English; some card names are out of date)"
+  },
+  "links[1].label": {
+   "ko": "이즐(캐시비) 교통카드 구입 · 충전 안내",
+   "en": "EZL (Cashbee) — buying & recharging"
+  },
+  "links[1].description": {
+   "ko": "구입처 · 충전 방법 · 잔액 환불",
+   "en": "Where to buy, how to recharge, and refunds"
+  },
+  "links[2].label": {
+   "ko": "이즐(캐시비) 카드잔액환불 안내",
+   "en": "EZL (Cashbee) — card balance refunds"
+  },
+  "links[2].description": {
+   "ko": "환불처별 한도 · 수수료 · 고장 카드",
+   "en": "Limits and fees by refund place, and faulty cards"
+  },
+  "links[3].label": {
+   "ko": "가까운 교통카드 구매 · 충전 장소",
+   "en": "Where to buy or recharge nearby"
+  },
+  "links[3].description": {
+   "ko": "편의점 · 지하철역 찾기",
+   "en": "Find convenience stores & subway stations"
+  }
+ }
+}

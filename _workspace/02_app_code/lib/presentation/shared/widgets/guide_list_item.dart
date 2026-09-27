@@ -60,9 +60,10 @@ class GuideListItem extends ConsumerWidget {
       contentPadding: const EdgeInsets.symmetric(vertical: 4),
       minVerticalPadding: 10,
       leading: IconTile(icon: item.icon, tone: item.categoryId.tone, size: 44),
+      // The title wraps instead of being cut: with large text on a narrow
+      // phone a one-line title showed only its first few characters, and
+      // several guides begin alike. The summary keeps a two-line cap.
       title: Text(item.title(locale),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
@@ -70,7 +71,7 @@ class GuideListItem extends ConsumerWidget {
           )),
       subtitle: summary != null
           ? Text(summary,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 13.5, color: scheme.onSurfaceVariant))
           : null,

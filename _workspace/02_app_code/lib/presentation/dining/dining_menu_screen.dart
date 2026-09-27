@@ -6,6 +6,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../core/config/firebase_init.dart' show useFirestoreDining;
 import '../../core/theme/app_theme.dart';
+import '../../data/i18n/place_text.dart';
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -223,9 +224,10 @@ class _CafeteriaCard extends ConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
+                  // The cafeteria's name is the heading of its card, and the
+                  // translated names are longer than the Korean ones: it
+                  // wraps rather than losing its end.
                   menu.name(locale),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
@@ -273,7 +275,10 @@ class _CafeteriaCard extends ConsumerWidget {
               _MealRow(
                 label: _mealLabel(l, menu.meals[i].type),
                 tone: _mealTone(menu.meals[i].type),
-                items: menu.meals[i].items.join(' · '),
+                items: [
+                  for (final item in menu.meals[i].items)
+                    menuItemText(item, locale)
+                ].join(' · '),
                 price: menu.meals[i].price == null
                     ? null
                     : l.dining_price(menu.meals[i].price!),

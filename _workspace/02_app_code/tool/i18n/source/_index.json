@@ -1,0 +1,206 @@
+[
+ {
+  "id": "arc-issue",
+  "category": "immigration",
+  "title_ko": "외국인등록증(ARC) 발급",
+  "fields": 20
+ },
+ {
+  "id": "stay-extension",
+  "category": "immigration",
+  "title_ko": "체류기간 연장",
+  "fields": 43
+ },
+ {
+  "id": "visa-types",
+  "category": "immigration",
+  "title_ko": "비자 종류 안내",
+  "fields": 56
+ },
+ {
+  "id": "dormitory",
+  "category": "housing",
+  "title_ko": "기숙사 신청",
+  "fields": 68
+ },
+ {
+  "id": "off-campus-housing",
+  "category": "housing",
+  "title_ko": "교외주거 구하기",
+  "fields": 126
+ },
+ {
+  "id": "bank-account",
+  "category": "living",
+  "title_ko": "은행 계좌 개설",
+  "fields": 17
+ },
+ {
+  "id": "mobile-plan",
+  "category": "living",
+  "title_ko": "휴대폰 개통",
+  "fields": 30
+ },
+ {
+  "id": "transit-card",
+  "category": "living",
+  "title_ko": "교통카드",
+  "fields": 48
+ },
+ {
+  "id": "health-insurance",
+  "category": "health",
+  "title_ko": "건강보험 가입",
+  "fields": 41
+ },
+ {
+  "id": "campus-clinic",
+  "category": "health",
+  "title_ko": "교내 보건진료소",
+  "fields": 41
+ },
+ {
+  "id": "hospital-guide",
+  "category": "health",
+  "title_ko": "병원 이용",
+  "fields": 56
+ },
+ {
+  "id": "course-registration",
+  "category": "school",
+  "title_ko": "수강신청",
+  "fields": 101
+ },
+ {
+  "id": "certificate-issue",
+  "category": "school",
+  "title_ko": "증명서 발급",
+  "fields": 82
+ },
+ {
+  "id": "library-guide",
+  "category": "school",
+  "title_ko": "도서관 이용안내",
+  "fields": 82
+ },
+ {
+  "id": "oia-visit",
+  "category": "school",
+  "title_ko": "국제교류과 방문 안내",
+  "fields": 54
+ },
+ {
+  "id": "emergency-contacts",
+  "category": "emergency",
+  "title_ko": "긴급 연락처",
+  "fields": 39
+ },
+ {
+  "id": "incident-response",
+  "category": "emergency",
+  "title_ko": "사건·사고 대응",
+  "fields": 58
+ },
+ {
+  "id": "counseling",
+  "category": "emergency",
+  "title_ko": "상담 창구",
+  "fields": 74
+ },
+ {
+  "id": "part-time-work",
+  "category": "immigration",
+  "title_ko": "시간제취업(아르바이트) 허가",
+  "fields": 70
+ },
+ {
+  "id": "academic-status-and-visa",
+  "category": "school",
+  "title_ko": "휴학·복학·자퇴와 체류",
+  "fields": 68
+ },
+ {
+  "id": "academic-probation",
+  "category": "school",
+  "title_ko": "학사경고·제적 예방",
+  "fields": 41
+ },
+ {
+  "id": "address-and-registration-changes",
+  "category": "immigration",
+  "title_ko": "체류지·등록사항 변경신고",
+  "fields": 44
+ },
+ {
+  "id": "d10-job-seeking",
+  "category": "immigration",
+  "title_ko": "졸업 후 구직(D-10) 체류",
+  "fields": 48
+ },
+ {
+  "id": "tuition-payment",
+  "category": "school",
+  "title_ko": "등록금 납부·등록 확인",
+  "fields": 38
+ },
+ {
+  "id": "residence-card-reissue",
+  "category": "immigration",
+  "title_ko": "외국인등록증 재발급",
+  "fields": 35
+ },
+ {
+  "id": "departure-checklist",
+  "category": "immigration",
+  "title_ko": "귀국·출국 전 행정 정리",
+  "fields": 45
+ },
+ {
+  "id": "graduation-requirements",
+  "category": "school",
+  "title_ko": "졸업요건 확인",
+  "fields": 41
+ },
+ {
+  "id": "rental-deposit-protection",
+  "category": "housing",
+  "title_ko": "임대차 보증금 지키기",
+  "fields": 50
+ },
+ {
+  "id": "status-change-d4-to-d2",
+  "category": "immigration",
+  "title_ko": "어학연수→학위과정 체류자격 변경",
+  "fields": 37
+ },
+ {
+  "id": "class-attendance-and-exams",
+  "category": "school",
+  "title_ko": "출결·공결·시험·성적",
+  "fields": 44
+ },
+ {
+  "id": "moving-and-utilities",
+  "category": "housing",
+  "title_ko": "이사·공과금 정산",
+  "fields": 17
+ },
+ {
+  "id": "waste-and-recycling",
+  "category": "living",
+  "title_ko": "쓰레기 버리기·분리배출",
+  "fields": 13
+ },
+ {
+  "id": "consumer-disputes",
+  "category": "living",
+  "title_ko": "소비자 피해·환불 분쟁",
+  "fields": 13
+ },
+ {
+  "id": "financial-scam-response",
+  "category": "emergency",
+  "title_ko": "금융사기·피싱 긴급 대응",
+  "fields": 16
+ }
+]

@@ -51,13 +51,18 @@ class RoomLocationCard extends ConsumerWidget {
       children: [
         const Icon(Symbols.location_on, color: Color(0xFFE53935), fill: 1),
         SizedBox(width: d.spaceXs),
-        Text(fullCode,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.3,
-                color: headingColor(context))),
-        const Spacer(),
+        // Expanded + ellipsis: at 320dp / 200 % text the code shrinks
+        // instead of overflowing the row; the floor tag ("3F") stays whole.
+        Expanded(
+          child: Text(fullCode,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.3,
+                  color: headingColor(context))),
+        ),
         if (async.valueOrNull != null)
           ToneBadge(async.valueOrNull!.plan.floorLabel, tone: Tone.navy),
       ],

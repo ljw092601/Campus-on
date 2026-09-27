@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/admin_guide.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -122,6 +123,7 @@ class _CategoryRow extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final count = this.count; // local promotes to non-null inside the guard
+    final flexible = prefersFlexibleLayout(context);
     return Semantics(
       button: true,
       child: InkWell(
@@ -145,10 +147,18 @@ class _CategoryRow extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
+                    // Two lines hold the Korean summary; English and
+                    // Vietnamese need more, and at 200 % text the row is
+                    // ~248px wide, so the tail was dropped — the list scrolls,
+                    // so the lines can simply be allowed (감사 05/036 NIT-5).
+                    // An ellipsis with no line limit ellipsizes at the first
+                    // line, so the unlimited case must drop it (measured).
                     Text(
                       category.summary(l),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: flexible ? null : 2,
+                      overflow: flexible
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14,
                         color: scheme.onSurfaceVariant,

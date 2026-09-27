@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/i18n/app_languages.dart';
+import '../../core/i18n/entity_i18n.dart';
+
 /// Admin guide categories — the 6 from UX doc §8 (includes emergency).
 enum GuideCategory {
   immigration,
@@ -67,28 +70,88 @@ const Map<String, IconData> _guideIcons = {
   'local_fire_department': Symbols.local_fire_department,
   'emergency': Symbols.emergency,
   'translate': Symbols.translate,
+  // Added with the 2026-09 guide expansion (part-time work, changes, D-10…).
+  'work': Symbols.work,
+  'edit_location_alt': Symbols.edit_location_alt,
+  'event_busy': Symbols.event_busy,
+  'fact_check': Symbols.fact_check,
+  'flight_takeoff': Symbols.flight_takeoff,
+  'home_work': Symbols.home_work,
+  'gavel': Symbols.gavel,
+  'warning': Symbols.warning,
 };
 
 /// Resolves a Material Symbols name to its icon, or null when unknown/absent.
 IconData? guideIconFromName(String? name) =>
     name == null ? null : _guideIcons[name];
 
-/// Locale pick with fallback to the other language when the primary is blank.
-String _pickText(String ko, String en, Locale l) {
-  final primary = l.languageCode == 'ko' ? ko : en;
-  if (primary.trim().isNotEmpty) return primary;
-  return l.languageCode == 'ko' ? en : ko;
+/// Per-language text that is not one of the two built-in fields. The shape and
+/// the parsing live in `core/i18n/entity_i18n.dart` because the academic
+/// calendar carries the same map; keeping one implementation means a document
+/// that is safe for one collection is safe for the other.
+typedef GuideI18n = EntityI18n;
+
+const GuideI18n _noI18n = noI18n;
+
+/// Text for [l], falling back requested language → English → Korean, so an
+/// untranslated field shows the English (or Korean) sentence rather than a
+/// blank line.
+String _pickText(String ko, String en, Locale l,
+        [GuideI18n i18n = _noI18n, String? key]) =>
+    pickI18nText(ko, en, l, i18n, key);
+
+/// Same as [_pickText] for lists, but item by item: a translation that carries
+/// only some of the lines must not shorten the list, or a reader of that
+/// language would silently lose the rest. The length comes from the written
+/// ko/en data, and each missing line falls back on its own (감사 05/034 S-6).
+List<String> _pickTextList(List<String> ko, List<String> en, Locale l,
+    [GuideI18n i18n = _noI18n, String? key]) {
+  final chain = languageFallback(l.languageCode);
+  List<String> listFor(String code) {
+    switch (code) {
+      case 'ko':
+        return ko;
+      case 'en':
+        return en;
+      default:
+        if (key == null) return const [];
+        final v = i18n[code]?[key];
+        return v is List ? v.whereType<String>().toList() : const [];
+    }
+  }
+
+  final lists = [for (final code in chain) listFor(code)];
+  // Only the written data decides how many lines there are.
+  final written = [
+    for (var i = 0; i < chain.length; i++)
+      if (chain[i] == 'ko' || chain[i] == 'en') lists[i]
+  ];
+  final length = written.firstWhere((l) => l.isNotEmpty, orElse: () => const []).length;
+  if (length == 0) {
+    // ko and en are both empty: nothing to anchor to, so take the translation
+    // as it stands.
+    return lists.firstWhere((l) => l.isNotEmpty, orElse: () => const []);
+  }
+  return [
+    for (var i = 0; i < length; i++)
+      lists
+              .map((l) => i < l.length ? l[i] : '')
+              .firstWhere((s) => s.trim().isNotEmpty, orElse: () => '')
+  ];
 }
 
-/// Same as [_pickText] for lists — falls back when the primary list is empty.
-List<String> _pickTextList(List<String> ko, List<String> en, Locale l) {
-  final primary = l.languageCode == 'ko' ? ko : en;
-  if (primary.isNotEmpty) return primary;
-  return l.languageCode == 'ko' ? en : ko;
-}
+/// Parses the `i18n` map of a document. See `core/i18n/entity_i18n.dart` —
+/// the academic calendar parses the same map with the same rules.
+GuideI18n _i18nFromJson(dynamic v) => entityI18nFromJson(v);
 
-List<String> _strList(dynamic v) =>
-    (v as List?)?.map((e) => e.toString()).toList() ?? const [];
+/// A list of strings from a document, whatever shape the document is in: a
+/// number, a map or a missing key gives an empty list, and a non-string item is
+/// dropped rather than printed as `{a: 1}`. One hand-edited document used to
+/// throw here and, since the repository only catches FirebaseException, take the
+/// whole guide list with it (B 03/054 NEW-B-01).
+List<String> _strList(dynamic v) => v is List
+    ? [for (final e in v) if (e is String) e else if (e is num || e is bool) e.toString()]
+    : const [];
 
 /// External / related link shown in the S7 "Links & Locations" section.
 @immutable
@@ -100,7 +163,11 @@ class GuideLink {
     this.descriptionKo,
     this.descriptionEn,
     this.iconName,
+    this.i18n = _noI18n,
   });
+
+  /// Chinese/Vietnamese label + description (keys `label`, `description`).
+  final GuideI18n i18n;
 
   final String labelKo;
   final String labelEn;
@@ -115,12 +182,13 @@ class GuideLink {
   final String? iconName;
 
   String label(Locale l) {
-    final s = _pickText(labelKo, labelEn, l);
+    final s = _pickText(labelKo, labelEn, l, i18n, 'label');
     return s.trim().isNotEmpty ? s : url;
   }
 
   String? description(Locale l) {
-    final s = _pickText(descriptionKo ?? '', descriptionEn ?? '', l);
+    final s = _pickText(
+        descriptionKo ?? '', descriptionEn ?? '', l, i18n, 'description');
     return s.trim().isNotEmpty ? s : null;
   }
 
@@ -131,6 +199,7 @@ class GuideLink {
         descriptionKo: j['description_ko'] as String?,
         descriptionEn: j['description_en'] as String?,
         iconName: j['icon'] as String?,
+        i18n: _i18nFromJson(j['i18n']),
       );
 }
 
@@ -143,21 +212,27 @@ class GuideNote {
     required this.titleEn,
     this.linesKo = const [],
     this.linesEn = const [],
+    this.i18n = _noI18n,
   });
+
+  /// Chinese/Vietnamese note text (keys `title`, `lines`).
+  final GuideI18n i18n;
 
   final String titleKo;
   final String titleEn;
   final List<String> linesKo;
   final List<String> linesEn;
 
-  String title(Locale l) => _pickText(titleKo, titleEn, l);
-  List<String> lines(Locale l) => _pickTextList(linesKo, linesEn, l);
+  String title(Locale l) => _pickText(titleKo, titleEn, l, i18n, 'title');
+  List<String> lines(Locale l) =>
+      _pickTextList(linesKo, linesEn, l, i18n, 'lines');
 
   factory GuideNote.fromJson(Map<String, dynamic> j) => GuideNote(
         titleKo: (j['title_ko'] ?? '') as String,
         titleEn: (j['title_en'] ?? '') as String,
         linesKo: _strList(j['lines_ko']),
         linesEn: _strList(j['lines_en']),
+        i18n: _i18nFromJson(j['i18n']),
       );
 }
 
@@ -186,7 +261,12 @@ class GuideSection {
     this.noticeIconName,
     this.footnoteKo,
     this.footnoteEn,
+    this.i18n = _noI18n,
   });
+
+  /// Chinese/Vietnamese section text (keys `title`, `body`, `steps`, `notice`,
+  /// `footnote`); its links and notes carry their own maps.
+  final GuideI18n i18n;
 
   final String titleKo;
   final String titleEn;
@@ -227,22 +307,23 @@ class GuideSection {
   final String? footnoteKo;
   final String? footnoteEn;
 
-  String title(Locale l) => _pickText(titleKo, titleEn, l);
+  String title(Locale l) => _pickText(titleKo, titleEn, l, i18n, 'title');
 
-  List<String> steps(Locale l) => _pickTextList(stepsKo, stepsEn, l);
+  List<String> steps(Locale l) =>
+      _pickTextList(stepsKo, stepsEn, l, i18n, 'steps');
 
   String? body(Locale l) {
-    final s = _pickText(bodyKo ?? '', bodyEn ?? '', l);
+    final s = _pickText(bodyKo ?? '', bodyEn ?? '', l, i18n, 'body');
     return s.trim().isNotEmpty ? s : null;
   }
 
   String? notice(Locale l) {
-    final s = _pickText(noticeKo ?? '', noticeEn ?? '', l);
+    final s = _pickText(noticeKo ?? '', noticeEn ?? '', l, i18n, 'notice');
     return s.trim().isNotEmpty ? s : null;
   }
 
   String? footnote(Locale l) {
-    final s = _pickText(footnoteKo ?? '', footnoteEn ?? '', l);
+    final s = _pickText(footnoteKo ?? '', footnoteEn ?? '', l, i18n, 'footnote');
     return s.trim().isNotEmpty ? s : null;
   }
 
@@ -260,8 +341,8 @@ class GuideSection {
                 .toList() ??
             const [],
         notes: (j['notes'] as List?)
-                ?.map((e) =>
-                    GuideNote.fromJson((e as Map).cast<String, dynamic>()))
+                ?.whereType<Map>()
+                    .map((e) => GuideNote.fromJson(e.cast<String, dynamic>()))
                 .toList() ??
             const [],
         noticeKo: j['notice_ko'] as String?,
@@ -269,23 +350,35 @@ class GuideSection {
         noticeIconName: j['notice_icon'] as String?,
         footnoteKo: j['footnote_ko'] as String?,
         footnoteEn: j['footnote_en'] as String?,
+        i18n: _i18nFromJson(j['i18n']),
       );
 }
 
 /// A short phrase pair shown in the S7 "Useful phrases" section — the Korean
-/// sentence to say plus its English meaning. Both lines are always rendered
-/// (the Korean line is what the user shows/reads at the counter), so this is
-/// deliberately not locale-switched like the other fields.
+/// sentence to say plus what it means. The Korean line is what the user shows
+/// or reads at the counter, so it is never locale-switched; only the meaning
+/// line follows the UI language (key `text` in [i18n]).
 @immutable
 class GuidePhrase {
-  const GuidePhrase({required this.ko, required this.en});
+  const GuidePhrase({required this.ko, required this.en, this.i18n = _noI18n});
 
   final String ko;
   final String en;
 
+  /// Chinese/Vietnamese meaning (key `text`).
+  final GuideI18n i18n;
+
+  /// What the Korean sentence means, in the reader's language.
+  String meaning(Locale l) {
+    final s = _pickText(ko, en, l, i18n, 'text');
+    // Korean readers see the sentence itself as the meaning line, as before.
+    return s;
+  }
+
   factory GuidePhrase.fromJson(Map<String, dynamic> j) => GuidePhrase(
         ko: (j['ko'] ?? '') as String,
         en: (j['en'] ?? '') as String,
+        i18n: _i18nFromJson(j['i18n']),
       );
 }
 
@@ -332,7 +425,25 @@ class AdminGuideItem {
     this.difficulty,
     this.iconName,
     this.status = GuideStatus.comingSoon,
+    this.searchAliasesKo = const [],
+    this.searchAliasesEn = const [],
+    this.i18n = _noI18n,
   });
+
+  /// Chinese/Vietnamese text for this guide, attached by the generated mock
+  /// overlay or read from a Firestore document's `i18n` map. Keys are the
+  /// field names without a language suffix (`title`, `detail_title`, `summary`,
+  /// `overview`, `checklist_title`, `checklist`, `checklist_optional_title`,
+  /// `checklist_optional`, `checklist_note`, `steps`, `tips`, `duration`,
+  /// `search_aliases`); sections, notes, links and phrases carry their own.
+  final GuideI18n i18n;
+
+  /// Everyday words people type when looking for this guide (알바, 이사,
+  /// lost card…) that its title does not contain. Search-only — never
+  /// rendered. Optional in Firestore (`search_aliases_ko/en`), so older
+  /// documents without them still load and match on their titles.
+  final List<String> searchAliasesKo;
+  final List<String> searchAliasesEn;
 
   final String id;
   final GuideCategory categoryId;
@@ -422,53 +533,59 @@ class AdminGuideItem {
   /// Icon for list rows — the item's own if it names one, else its category's.
   IconData get icon => guideIconFromName(iconName) ?? categoryId.icon;
 
-  String _pick(String ko, String en, Locale l) => _pickText(ko, en, l);
+  String _pick(String ko, String en, Locale l, String key) =>
+      _pickText(ko, en, l, i18n, key);
 
-  String title(Locale l) => _pick(titleKo, titleEn, l);
+  String title(Locale l) => _pick(titleKo, titleEn, l, 'title');
 
   /// Detail-screen heading — [detailTitle] when set, otherwise [title].
   String detailTitle(Locale l) {
-    final s = _pick(detailTitleKo ?? '', detailTitleEn ?? '', l);
+    final s = _pick(detailTitleKo ?? '', detailTitleEn ?? '', l, 'detail_title');
     return s.trim().isNotEmpty ? s : title(l);
   }
 
   String? summary(Locale l) {
-    final s = _pick(summaryKo ?? '', summaryEn ?? '', l);
+    final s = _pick(summaryKo ?? '', summaryEn ?? '', l, 'summary');
     return s.trim().isNotEmpty ? s : null;
   }
 
   String? overview(Locale l) {
-    final s = _pick(overviewKo ?? '', overviewEn ?? '', l);
+    final s = _pick(overviewKo ?? '', overviewEn ?? '', l, 'overview');
     return s.trim().isNotEmpty ? s : null;
   }
 
   /// Locale-aware list with fallback to the other language when one is empty.
-  List<String> checklist(Locale l) => _pickList(checklistKo, checklistEn, l);
-  List<String> checklistOptional(Locale l) =>
-      _pickList(checklistOptionalKo, checklistOptionalEn, l);
-  List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l);
-  List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l);
+  List<String> checklist(Locale l) =>
+      _pickList(checklistKo, checklistEn, l, 'checklist');
+  List<String> checklistOptional(Locale l) => _pickList(
+      checklistOptionalKo, checklistOptionalEn, l, 'checklist_optional');
+  List<String> steps(Locale l) => _pickList(stepsKo, stepsEn, l, 'steps');
+  List<String> tips(Locale l) => _pickList(tipsKo, tipsEn, l, 'tips');
 
   String? checklistTitle(Locale l) {
-    final s = _pick(checklistTitleKo ?? '', checklistTitleEn ?? '', l);
+    final s =
+        _pick(checklistTitleKo ?? '', checklistTitleEn ?? '', l, 'checklist_title');
     return s.trim().isNotEmpty ? s : null;
   }
 
   String? checklistOptionalTitle(Locale l) {
-    final s = _pick(checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '', l);
+    final s = _pick(checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '',
+        l, 'checklist_optional_title');
     return s.trim().isNotEmpty ? s : null;
   }
 
   String? checklistNote(Locale l) {
-    final s = _pick(checklistNoteKo ?? '', checklistNoteEn ?? '', l);
+    final s =
+        _pick(checklistNoteKo ?? '', checklistNoteEn ?? '', l, 'checklist_note');
     return s.trim().isNotEmpty ? s : null;
   }
 
-  List<String> _pickList(List<String> ko, List<String> en, Locale l) =>
-      _pickTextList(ko, en, l);
+  List<String> _pickList(
+          List<String> ko, List<String> en, Locale l, String key) =>
+      _pickTextList(ko, en, l, i18n, key);
 
   String? duration(Locale l) {
-    final s = _pick(durationKo ?? '', durationEn ?? '', l);
+    final s = _pick(durationKo ?? '', durationEn ?? '', l, 'duration');
     return s.trim().isNotEmpty ? s : null;
   }
 
@@ -518,35 +635,218 @@ class AdminGuideItem {
       stepsKo: _strList(j['steps_ko']),
       stepsEn: _strList(j['steps_en']),
       topSections: (j['top_sections'] as List?)
-              ?.map((e) =>
-                  GuideSection.fromJson((e as Map).cast<String, dynamic>()))
+              ?.whereType<Map>()
+                  .map((e) => GuideSection.fromJson(e.cast<String, dynamic>()))
               .toList() ??
           const [],
       sections: (j['sections'] as List?)
-              ?.map((e) =>
-                  GuideSection.fromJson((e as Map).cast<String, dynamic>()))
+              ?.whereType<Map>()
+                  .map((e) => GuideSection.fromJson(e.cast<String, dynamic>()))
               .toList() ??
           const [],
       tipsKo: _strList(j['tips_ko']),
       tipsEn: _strList(j['tips_en']),
       phrases: (j['phrases'] as List?)
-              ?.map((e) =>
-                  GuidePhrase.fromJson((e as Map).cast<String, dynamic>()))
+              ?.whereType<Map>()
+                  .map((e) => GuidePhrase.fromJson(e.cast<String, dynamic>()))
               .toList() ??
           const [],
       links: (j['links'] as List?)
-              ?.map((e) => GuideLink.fromJson((e as Map).cast<String, dynamic>()))
+              ?.whereType<Map>()
+              .map((e) => GuideLink.fromJson(e.cast<String, dynamic>()))
               .toList() ??
           const [],
-      relatedFacilityIds:
-          (j['relatedFacilityIds'] as List?)?.cast<String>() ?? const [],
+      relatedFacilityIds: _strList(j['relatedFacilityIds']),
       durationKo: meta['durationText_ko'] as String?,
       durationEn: meta['durationText_en'] as String?,
-      difficulty: (meta['difficulty'] as num?)?.toInt(),
+      difficulty: switch (meta['difficulty']) {
+        final num n => n.toInt(),
+        final String t => int.tryParse(t),
+        _ => null,
+      },
       iconName: j['icon'] as String?,
       status: (j['status'] == 'published')
           ? GuideStatus.published
           : GuideStatus.comingSoon,
+      searchAliasesKo: _strList(j['search_aliases_ko']),
+      searchAliasesEn: _strList(j['search_aliases_en']),
+      i18n: _i18nFromJson(j['i18n']),
     );
   }
+}
+
+/// Vietnamese letters folded to their base letter for matching only, so
+/// "hoc phi" finds "học phí" and "dang ky" finds "đăng ký". Display text is
+/// never folded — this runs on the comparison copy.
+const Map<String, String> _vietnameseFolding = {
+  'à': 'a',
+  'á': 'a',
+  'ả': 'a',
+  'ã': 'a',
+  'ạ': 'a',
+  'ă': 'a',
+  'ằ': 'a',
+  'ắ': 'a',
+  'ẳ': 'a',
+  'ẵ': 'a',
+  'ặ': 'a',
+  'â': 'a',
+  'ầ': 'a',
+  'ấ': 'a',
+  'ẩ': 'a',
+  'ẫ': 'a',
+  'ậ': 'a',
+  'è': 'e',
+  'é': 'e',
+  'ẻ': 'e',
+  'ẽ': 'e',
+  'ẹ': 'e',
+  'ê': 'e',
+  'ề': 'e',
+  'ế': 'e',
+  'ể': 'e',
+  'ễ': 'e',
+  'ệ': 'e',
+  'ì': 'i',
+  'í': 'i',
+  'ỉ': 'i',
+  'ĩ': 'i',
+  'ị': 'i',
+  'ò': 'o',
+  'ó': 'o',
+  'ỏ': 'o',
+  'õ': 'o',
+  'ọ': 'o',
+  'ô': 'o',
+  'ồ': 'o',
+  'ố': 'o',
+  'ổ': 'o',
+  'ỗ': 'o',
+  'ộ': 'o',
+  'ơ': 'o',
+  'ờ': 'o',
+  'ớ': 'o',
+  'ở': 'o',
+  'ỡ': 'o',
+  'ợ': 'o',
+  'ù': 'u',
+  'ú': 'u',
+  'ủ': 'u',
+  'ũ': 'u',
+  'ụ': 'u',
+  'ư': 'u',
+  'ừ': 'u',
+  'ứ': 'u',
+  'ử': 'u',
+  'ữ': 'u',
+  'ự': 'u',
+  'ỳ': 'y',
+  'ý': 'y',
+  'ỷ': 'y',
+  'ỹ': 'y',
+  'ỵ': 'y',
+  'đ': 'd',
+};
+
+/// Combining marks (U+0300–U+036F): the same Vietnamese word can arrive with
+/// its tone written as a separate mark (decomposed, NFD) instead of a single
+/// character, which is what a paste from a browser or some keyboards produces.
+/// Dropping the marks makes both forms compare equal (B 03/054 SF-02).
+final RegExp _combiningMarks = RegExp(r'[̀-ͯ]');
+
+String _foldVietnamese(String s) {
+  final stripped = s.contains(_combiningMarks) ? s.replaceAll(_combiningMarks, '') : s;
+  if (!stripped.split('').any(_vietnameseFolding.containsKey)) return stripped;
+  final b = StringBuffer();
+  for (final ch in stripped.split('')) {
+    b.write(_vietnameseFolding[ch] ?? ch);
+  }
+  return b.toString();
+}
+
+// Case, spaces, hyphens and dashes (U+2010–U+2015), middle dots and Vietnamese
+// tone marks are ignored. A slash is NOT removed here — that would make 3/4
+// and 34 the same query — it only separates words below (B 03/054 NEW-SF-02).
+String _compactQuery(String s) => _foldVietnamese(
+    s.toLowerCase().replaceAll(RegExp(r'[\s\-\u2010-\u2015·]+'), ''));
+
+// Searchable text of a guide, grouped by role. Every supported language goes
+// into the same lists, so a query in any language finds the guide whatever the
+// UI language is. Adding a language (e.g. Chinese, Vietnamese) means adding its
+// fields here; the matching and ranking below do not name any language.
+/// Overlay strings for [key] across every non-built-in language.
+List<String> _i18nTexts(AdminGuideItem g, String key) => [
+      for (final lang in g.i18n.keys)
+        ...switch (g.i18n[lang]?[key]) {
+          final String v => [v],
+          final List<dynamic> v => v.map((e) => e.toString()),
+          _ => const <String>[],
+        },
+    ];
+
+List<String> _searchTitles(AdminGuideItem g) =>
+    [g.titleKo, g.titleEn, ..._i18nTexts(g, 'title')];
+
+List<String> _searchAliases(AdminGuideItem g) => [
+      ...g.searchAliasesKo,
+      ...g.searchAliasesEn,
+      ..._i18nTexts(g, 'search_aliases'),
+    ];
+
+List<String> _searchOtherTexts(AdminGuideItem g) => [
+      g.detailTitleKo ?? '',
+      g.detailTitleEn ?? '',
+      g.summaryKo ?? '',
+      g.summaryEn ?? '',
+      ..._i18nTexts(g, 'detail_title'),
+      ..._i18nTexts(g, 'summary'),
+    ];
+
+/// Guide search shared by the mock and Firestore repositories so both answer
+/// the same query the same way. Matches, ignoring case, spaces, hyphens and
+/// middle dots, against the titles, detail titles, summaries and search
+/// aliases of every language. A multi-word query that matches no single field
+/// as a whole still matches if every word is found somewhere in those fields.
+///
+/// Ranking: a title or alias equal to the query, then a title starting with
+/// it, then any other title hit, then the rest. The catalogue order is kept
+/// inside each group. A lone Latin letter or digit (the first keystroke of
+/// "D-4" or "bank") only matches an equal title or alias, since as a substring
+/// it would match most of the catalogue.
+List<AdminGuideItem> searchGuideItems(
+    Iterable<AdminGuideItem> items, String query) {
+  final q = _compactQuery(query);
+  if (q.isEmpty) return const [];
+  final words = query
+      // A slash separates alternatives the way a space does, so 「D-4/D-2」
+      // matches a guide that carries both codes (B 03/054 N-02).
+      .split(RegExp(r'[\s/]+'))
+      .map(_compactQuery)
+      .where((w) => w.isNotEmpty)
+      .toList();
+  final exactOnly = RegExp(r'^[a-z0-9]$').hasMatch(q);
+  final groups = List.generate(4, (_) => <AdminGuideItem>[]);
+  for (final g in items) {
+    final titles = _searchTitles(g).map(_compactQuery).toList();
+    final aliases = _searchAliases(g).map(_compactQuery).toList();
+    final fields = [
+      ...titles,
+      ...aliases,
+      ..._searchOtherTexts(g).map(_compactQuery),
+    ].where((f) => f.isNotEmpty).toList();
+    if (titles.contains(q) || aliases.contains(q)) {
+      groups[0].add(g);
+    } else if (exactOnly) {
+      continue;
+    } else if (titles.any((t) => t.startsWith(q))) {
+      groups[1].add(g);
+    } else if (titles.any((t) => t.contains(q))) {
+      groups[2].add(g);
+    } else if (fields.any((f) => f.contains(q)) ||
+        (words.length > 1 &&
+            words.every((w) => fields.any((f) => f.contains(w))))) {
+      groups[3].add(g);
+    }
+  }
+  return [for (final group in groups) ...group];
 }

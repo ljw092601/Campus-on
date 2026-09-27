@@ -232,7 +232,9 @@ class _Results extends ConsumerWidget {
                   style: const TextStyle(fontWeight: FontWeight.w700)),
               subtitle:
                   g.summary(locale) != null ? Text(g.summary(locale)!) : null,
-              onTap: () => context.go('/guide/item/${g.id}'),
+              // Stays above the shell with the search screen, so back
+              // returns to these results.
+              onTap: () => context.push('/search/item/${g.id}'),
             ),
         ],
       ],

@@ -1,7 +1,11 @@
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/entities/building_floors.dart';
 import '../../domain/entities/facility.dart';
+import '../i18n/place_text.dart';
+import '../i18n/guide_translation_overlay.dart';
 import 'building_data.g.dart';
+import 'guide_items_expansion.dart';
+import 'guide_items_safety.dart';
 
 /// In-app fixture data. Facilities/floors are the REAL Dong-A buildings
 /// generated from the official campus map (building_data.g.dart — regenerate
@@ -12,18 +16,33 @@ class MockData {
   const MockData._();
 
   /// 48 real campus buildings (승학 24 · 구덕 15 · 부민 9).
-  static List<Facility> get facilities => BuildingData.facilities;
+  /// The generated Chinese/Vietnamese text is laid over the Korean/English
+  /// literals here, so every reader — repositories, search, the seed exporter —
+  /// sees the same thing. A facility with no translations is unchanged.
+  static final List<Facility> facilities = [
+    for (final f in BuildingData.facilities)
+      f.withI18n(facilityOverlay(f.id)).withEnglish(facilityEnglish(f.id)),
+  ];
 
   /// Floor-by-floor guides for the 34 buildings that have them (249 floors).
   static List<BuildingFloors> get buildingFloors => BuildingData.floors;
 
-  static final List<AdminGuideItem> guideItems = [
+  /// The 30 guides, with the Chinese/Vietnamese overlay attached (see
+  /// `data/i18n/guide_translation_overlay.dart`). Korean and English live in
+  /// the literals below; translations are a separate generated file.
+  static final List<AdminGuideItem> guideItems =
+      applyGuideTranslations(_guideItemsKoEn);
+
+  static final List<AdminGuideItem> _guideItemsKoEn = [
     // ── 입국·체류 (immigration) ──
-    // All 18 administrative guides are published.
+    // The original 18 administrative guides are published; guides from the
+    // 2026-09 expansion are appended at the end (guide_items_expansion.dart).
     // Test-only coming-soon coverage lives in guide_flow_test.dart.
     const AdminGuideItem(
       id: 'arc-issue',
       categoryId: GuideCategory.immigration,
+      searchAliasesKo: ['외국인등록', '외국인등록증', '등록증', '체류카드'],
+      searchAliasesEn: ['alien registration', 'ARC', 'residence card', 'foreigner registration'],
       titleKo: '외국인등록증(ARC) 발급',
       titleEn: 'Residence Card (ARC)',
       summaryKo: '90일 초과 체류 시 90일 이내 등록',
@@ -257,6 +276,8 @@ class MockData {
     const AdminGuideItem(
       id: 'stay-extension',
       categoryId: GuideCategory.immigration,
+      searchAliasesKo: ['비자 연장', '비자연장', '체류 연장', '체류기간 연장 신청'],
+      searchAliasesEn: ['visa extension', 'extend visa', 'extend stay'],
       titleKo: '체류기간 연장',
       titleEn: 'Extension of Stay',
       summaryKo: '신청 시기 · 준비서류 · 연장 방법',
@@ -635,6 +656,15 @@ class MockData {
           url: 'https://www.studyinkorea.go.kr/eng/life/residenceAndStayInfo.do'
               '#stay-extension',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 체류지·등록사항 변경신고',
+          labelEn: 'Guide — Reporting Address & Registration Changes',
+          url: '/guide/item/address-and-registration-changes',
+          descriptionKo: '이사·여권 변경 신고 절차',
+          descriptionEn: 'How to report a move or a new passport',
+          iconName: 'edit_location_alt',
+        ),
       ],
       // 정부24: "접수일로부터 14일 이내 처리" — the official service time, which
       // does not include preparing documents or any request for more.
@@ -646,6 +676,8 @@ class MockData {
     const AdminGuideItem(
       id: 'visa-types',
       categoryId: GuideCategory.immigration,
+      searchAliasesKo: ['비자', '체류자격', 'D-2', 'D-4'],
+      searchAliasesEn: ['visa', 'status of stay', 'D-2', 'D-4'],
       titleKo: '비자 종류 안내',
       titleEn: 'Visa Types',
       summaryKo: 'D-2 / D-4 차이',
@@ -1145,6 +1177,15 @@ class MockData {
           url: '/guide/item/stay-extension',
           iconName: 'event_repeat',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 시간제취업(아르바이트) 허가',
+          labelEn: 'Guide — Part-time Work Permission',
+          url: '/guide/item/part-time-work',
+          descriptionKo: '허가 대상·허용 시간·신청 절차',
+          descriptionEn: 'Who can apply, permitted hours and how to apply',
+          iconName: 'work',
+        ),
       ],
       // No duration: the only number this page could carry would be the reading
       // time, and on a visa guide that reads as the processing time.
@@ -1164,6 +1205,12 @@ class MockData {
     const AdminGuideItem(
       id: 'dormitory',
       categoryId: GuideCategory.housing,
+      // 조사 04/029 §4.2: the health-certificate requirement is covered in
+      // this guide; students look for it by the document's name.
+      searchAliasesKo: ['기숙사', '생활관', '한림생활관', '입사',
+        '건강진단서', '결핵검사', '흉부X선', '입사건강서류'],
+      searchAliasesEn: ['dorm', 'dormitory', 'residence hall',
+        'health certificate', 'tuberculosis test', 'chest x-ray'],
       titleKo: '기숙사 신청',
       titleEn: 'Dormitory Application',
       summaryKo: '한림생활관 · 석당글로벌하우스',
@@ -1723,6 +1770,15 @@ class MockData {
           url: '/map?focus=s15,s19',
           iconName: 'location_on',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 체류지·등록사항 변경신고',
+          labelEn: 'Guide — Reporting Address & Registration Changes',
+          url: '/guide/item/address-and-registration-changes',
+          descriptionKo: '기숙사 입·퇴사도 체류지 변경신고 대상',
+          descriptionEn: 'Moving into or out of a dormitory is a change of address too',
+          iconName: 'edit_location_alt',
+        ),
       ],
       // Only halls that already exist in the campus data — 석당글로벌하우스 is off
       // the surveyed campus map, so it gets links rather than an invented pin.
@@ -1742,6 +1798,8 @@ class MockData {
     const AdminGuideItem(
       id: 'off-campus-housing',
       categoryId: GuideCategory.housing,
+      searchAliasesKo: ['원룸', '자취', '방 구하기', '월세', '부동산', '집 구하기'],
+      searchAliasesEn: ['one-room', 'studio', 'rent', 'apartment', 'housing'],
       titleKo: '교외주거 구하기',
       titleEn: 'Finding Off-Campus Housing',
       summaryKo: '방 찾기 · 계약 · 입주 전 확인',
@@ -2753,6 +2811,15 @@ class MockData {
           url: '/guide/item/arc-issue',
           iconName: 'badge',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 임대차 보증금 지키기',
+          labelEn: 'Guide — Protecting Your Rental Deposit',
+          url: '/guide/item/rental-deposit-protection',
+          descriptionKo: '계약 전 심화 확인과 보증금 미반환 대응',
+          descriptionEn: 'Extra checks, and what to do if the deposit is not returned',
+          iconName: 'home_work',
+        ),
       ],
       durationKo: '수일~수주',
       durationEn: 'A few days to weeks',
@@ -2764,6 +2831,8 @@ class MockData {
     const AdminGuideItem(
       id: 'bank-account',
       categoryId: GuideCategory.living,
+      searchAliasesKo: ['은행', '통장', '계좌', '체크카드'],
+      searchAliasesEn: ['bank', 'account', 'debit card'],
       titleKo: '은행 계좌 개설',
       titleEn: 'Open a Bank Account',
       summaryKo: '신분증과 금융거래 목적 서류 준비',
@@ -2950,6 +3019,8 @@ class MockData {
     const AdminGuideItem(
       id: 'mobile-plan',
       categoryId: GuideCategory.living,
+      searchAliasesKo: ['유심', '휴대폰', '핸드폰', '스마트폰', '전화 개통'],
+      searchAliasesEn: ['USIM', 'SIM', 'phone', 'mobile', 'cell phone'],
       titleKo: '휴대폰 개통',
       titleEn: 'Get a Mobile Plan',
       summaryKo: '선불·후불 요금제와 개통 방법',
@@ -3212,6 +3283,8 @@ class MockData {
     const AdminGuideItem(
       id: 'transit-card',
       categoryId: GuideCategory.living,
+      searchAliasesKo: ['교통카드', '버스', '지하철', '티머니'],
+      searchAliasesEn: ['bus', 'subway', 'T-money', 'metro'],
       titleKo: '교통카드',
       titleEn: 'Transit Card',
       detailTitleKo: '교통카드 구매 및 충전',
@@ -3549,6 +3622,8 @@ class MockData {
     const AdminGuideItem(
       id: 'health-insurance',
       categoryId: GuideCategory.health,
+      searchAliasesKo: ['건강보험', '의료보험', '보험료', '국민건강보험'],
+      searchAliasesEn: ['insurance', 'NHIS', 'health insurance premium'],
       titleKo: '건강보험 가입',
       titleEn: 'National Health Insurance',
       detailTitleKo: '외국인 유학생 국민건강보험 안내',
@@ -3893,6 +3968,15 @@ class MockData {
               'your stay.',
           iconName: 'event_repeat',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 귀국·출국 전 행정 정리',
+          labelEn: 'Guide — Before You Leave Korea',
+          url: '/guide/item/departure-checklist',
+          descriptionKo: '출국 전 보험·계약 정리 순서',
+          descriptionEn: 'Insurance and contracts to sort out before leaving',
+          iconName: 'flight_takeoff',
+        ),
       ],
       // No related location on purpose: the only candidate facility
       // (`oia-office`) is week-2 fixture data — placeholder phone and
@@ -3907,6 +3991,8 @@ class MockData {
     const AdminGuideItem(
       id: 'campus-clinic',
       categoryId: GuideCategory.health,
+      searchAliasesKo: ['보건진료소', '보건실', '학교 병원'],
+      searchAliasesEn: ['clinic', 'health center', 'nurse'],
       // 「보건소」 is a local-government public health centre; the university's
       // own pages call this 보건진료소 throughout.
       titleKo: '교내 보건진료소',
@@ -4195,6 +4281,8 @@ class MockData {
     const AdminGuideItem(
       id: 'hospital-guide',
       categoryId: GuideCategory.health,
+      searchAliasesKo: ['병원', '약국', '진료', '응급실', '진단서', '검사결과', '서류발급'],
+      searchAliasesEn: ['hospital', 'pharmacy', 'doctor', 'medicine', 'medical certificate', 'test results'],
       titleKo: '병원 이용',
       titleEn: 'Visiting a Hospital',
       summaryKo: '접수 · 진료 · 처방전 · 야간 진료',
@@ -4635,6 +4723,8 @@ class MockData {
     const AdminGuideItem(
       id: 'course-registration',
       categoryId: GuideCategory.school,
+      searchAliasesKo: ['수강신청', '수업 신청', '과목 신청', '수강'],
+      searchAliasesEn: ['course registration', 'class registration', 'enrol classes'],
       titleKo: '수강신청',
       titleEn: 'Course Registration',
       summaryKo: '일정 · 과목 선택 · 신청 방법',
@@ -5532,6 +5622,15 @@ class MockData {
           url: 'https://gra.donga.ac.kr/gra/CMS/Contents/Contents.do?mCode=MN123',
           iconName: 'school',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 졸업요건 확인',
+          labelEn: 'Guide — Checking Graduation Requirements',
+          url: '/guide/item/graduation-requirements',
+          descriptionKo: '학업성적 사정표로 졸업요건 점검',
+          descriptionEn: 'Checking graduation requirements in the grade audit',
+          iconName: 'fact_check',
+        ),
       ],
       // No durationText: registration is not a single sitting. It runs from the
       // first round through the confirmation check, add/drop and the final
@@ -5542,6 +5641,8 @@ class MockData {
     const AdminGuideItem(
       id: 'certificate-issue',
       categoryId: GuideCategory.school,
+      searchAliasesKo: ['재학증명서', '성적증명서', '졸업증명서', '증명서 발급'],
+      searchAliasesEn: ['certificate of enrollment', 'transcript', 'diploma certificate'],
       titleKo: '증명서 발급',
       titleEn: 'Certificate Issuance',
       summaryKo: '온라인 · 자동발급기 · 방문 발급',
@@ -6141,6 +6242,15 @@ class MockData {
           url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN284',
           iconName: 'location_on',
         ),
+        // 2026-09 expansion: link to the new guide that owns this step.
+        GuideLink(
+          labelKo: '가이드 — 귀국·출국 전 행정 정리',
+          labelEn: 'Guide — Before You Leave Korea',
+          url: '/guide/item/departure-checklist',
+          descriptionKo: '출국 전 챙길 증명서와 행정',
+          descriptionEn: 'Certificates and paperwork before you leave',
+          iconName: 'flight_takeoff',
+        ),
       ],
       // 승학 인문과학대학 = s01(대학본부 및 인문과학대학), 부민 사회과학대학 = b04(종합강의동).
       relatedFacilityIds: ['s01', 'b04'],
@@ -6156,6 +6266,8 @@ class MockData {
     const AdminGuideItem(
       id: 'library-guide',
       categoryId: GuideCategory.school,
+      searchAliasesKo: ['도서관', '책 대출', '열람실'],
+      searchAliasesEn: ['library', 'borrow books', 'study room'],
       titleKo: '도서관 이용안내',
       titleEn: 'Library Guide',
       summaryKo: '대출 · 열람실 · 모바일 이용증',
@@ -6828,6 +6940,8 @@ class MockData {
     const AdminGuideItem(
       id: 'oia-visit',
       categoryId: GuideCategory.school,
+      searchAliasesKo: ['국제교류과', '유학생 지원', '국제교류처', '장학금'],
+      searchAliasesEn: ['OIA', 'international office', 'international student support', 'scholarship'],
       titleKo: '국제교류과 방문 안내',
       titleEn: 'International Affairs Office',
       detailTitleKo: '대외국제처 국제교류과 방문 안내',
@@ -7231,10 +7345,11 @@ class MockData {
           iconName: 'location_on',
         ),
       ],
-      // 글로벌인재관(부민) 2F 국제교류과 B03-0202. building_floors predates the
-      // move both ways: b04's 1st floor still lists the office, and b03's 2nd
-      // floor does not list it yet. That floor data is generated, not edited
-      // here.
+      // 글로벌인재관(부민) 2F 국제교류과 B03-0202. The floor-guide source
+      // (동아대학교_캠퍼스_건물층별안내.md) was corrected on 2026-09-13 from the
+      // same notices, so the generated floors now list 국제교류과 on b03 2F and
+      // no longer on b04 1F. The campus map itself still shows the old floor;
+      // the office's 회의실/자료실 and 처장실 stay on b04 1F (move unconfirmed).
       relatedFacilityIds: ['b03'],
       durationKo: '10~30분',
       durationEn: '10–30 minutes',
@@ -7254,6 +7369,8 @@ class MockData {
     const AdminGuideItem(
       id: 'emergency-contacts',
       categoryId: GuideCategory.emergency,
+      searchAliasesKo: ['119', '112', '긴급 전화', '응급'],
+      searchAliasesEn: ['emergency', 'ambulance', 'fire', 'police number'],
       titleKo: '긴급 연락처',
       titleEn: 'Emergency Contacts',
       summaryKo: '112 · 119 긴급신고 안내',
@@ -7535,6 +7652,8 @@ class MockData {
     const AdminGuideItem(
       id: 'incident-response',
       categoryId: GuideCategory.emergency,
+      searchAliasesKo: ['경찰', '분실', '도난', '사고', '사기', '범죄 신고', '분실 신고', '여권 분실'],
+      searchAliasesEn: ['police', 'lost', 'stolen', 'accident', 'scam', 'fraud', 'lost passport'],
       titleKo: '사건·사고 대응',
       titleEn: 'Incident Response',
       summaryKo: '분실·도난·사고 시 대응',
@@ -7773,6 +7892,17 @@ class MockData {
                   'enquiries (weekdays 09:00–22:00, paid call)',
               iconName: 'call',
             ),
+            // 2026-09 expansion: the full replacement procedure lives in its
+            // own guide; this section keeps the immediate steps.
+            GuideLink(
+              labelKo: '가이드 — 외국인등록증 재발급',
+              labelEn: 'Guide — Replacing Your Residence Card',
+              url: '/guide/item/residence-card-reissue',
+              descriptionKo: '재발급 사유별 신청과 모바일 카드',
+              descriptionEn: 'Applying for a new card, by reason, and the '
+                  'mobile card',
+              iconName: 'badge',
+            ),
           ],
         ),
         GuideSection(
@@ -7895,6 +8025,22 @@ class MockData {
           descriptionEn: 'When an injury needs treating',
           iconName: 'info',
         ),
+        GuideLink(
+          labelKo: '가이드 — 시간제취업(아르바이트) 허가',
+          labelEn: 'Guide — Part-time Work Permission',
+          descriptionKo: '임금을 받지 못했을 때(고용노동부 경로)',
+          descriptionEn: 'Unpaid wages (labour ministry route)',
+          url: '/guide/item/part-time-work',
+          iconName: 'work',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 임대차 보증금 지키기',
+          labelEn: 'Guide — Protecting Your Rental Deposit',
+          descriptionKo: '보증금을 돌려받지 못했을 때',
+          descriptionEn: 'If your deposit is not returned',
+          url: '/guide/item/rental-deposit-protection',
+          iconName: 'home_work',
+        ),
       ],
       status: GuideStatus.published,
     ),
@@ -7927,6 +8073,8 @@ class MockData {
     const AdminGuideItem(
       id: 'counseling',
       categoryId: GuideCategory.emergency,
+      searchAliasesKo: ['상담', '심리상담', '고민'],
+      searchAliasesEn: ['counseling', 'counselling', 'mental health', 'therapy'],
       titleKo: '상담 창구',
       titleEn: 'Counseling',
       summaryKo: '심리·생활 상담 안내',
@@ -8404,5 +8552,10 @@ class MockData {
       relatedFacilityIds: ['s02', 'b04'],
       status: GuideStatus.published,
     ),
+
+    // ── 2026-09 expansion ── authored in guide_items_expansion.dart.
+    ...ExpansionGuides.items,
+    // 2026-09-26 조사 04/029: 돈을 잃거나 지역 규칙에 걸리는 네 지점.
+    ...SafetyGuides.items,
   ];
 }

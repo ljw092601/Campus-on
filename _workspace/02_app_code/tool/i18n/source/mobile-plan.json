@@ -1,0 +1,230 @@
+{
+ "id": "mobile-plan",
+ "category": "living",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "휴대폰 개통",
+   "en": "Get a Mobile Plan"
+  },
+  "summary": {
+   "ko": "선불·후불 요금제와 개통 방법",
+   "en": "Prepaid vs. postpaid, and how to sign up"
+  },
+  "overview": {
+   "ko": "한국에서 은행, 배달앱, 온라인 쇼핑 등 다양한 서비스를 이용하려면 한국 휴대폰 번호가 있으면 편리합니다.\n\n외국인은 통신사 대리점이나 지점을 방문하여 개통하는 방법이 가장 간단합니다. 일부 통신사와 알뜰폰은 온라인 개통도 지원하지만, 외국인은 본인확인 방법이나 체류자격에 따라 이용이 제한될 수 있습니다.\n\n처음 휴대폰을 개통하는 외국인 학생은 필요한 서류를 확인한 후 통신사 매장을 방문하는 것을 권장합니다.",
+   "en": "A Korean mobile number makes everyday services — banking, delivery apps, online shopping — much easier to use.\n\nFor foreign residents the simplest route is to sign up in person at a carrier store or branch. Some carriers and budget (MVNO) operators also support online sign-up, but identity verification and your visa status can limit what is available to you.\n\nIf this is your first Korean line, check which documents you need and then visit a carrier store."
+  },
+  "checklist": {
+   "ko": [
+    "요금제에 맞는 신분증 — 후불은 외국인등록증, 일부 선불 상품은 여권",
+    "사용할 휴대폰",
+    "요금 납부를 위한 결제수단"
+   ],
+   "en": [
+    "The ID your plan needs — a Residence Card (ARC) for postpaid, a passport for some prepaid products",
+    "The phone you will use",
+    "A payment method for your bill"
+   ],
+   "count": 3
+  },
+  "checklist_optional": {
+   "ko": [
+    "한국 주소",
+    "본인 명의 은행계좌 또는 카드"
+   ],
+   "en": [
+    "A Korean address",
+    "A bank account or card in your own name"
+   ],
+   "count": 2
+  },
+  "checklist_note": {
+   "ko": "※ 필요한 서류와 결제 방법은 통신사, 요금제, 체류자격에 따라 달라질 수 있으므로 방문 전에 확인하세요.",
+   "en": "※ Required documents and payment methods vary by carrier, plan, and visa status — check before you visit."
+  },
+  "steps": {
+   "ko": [
+    "SKT · KT · LG U+ 또는 알뜰폰 요금제 비교",
+    "선불 또는 후불 요금제 선택",
+    "필요한 신분증과 서류 준비",
+    "통신사 매장 방문 및 가입 신청",
+    "USIM 또는 eSIM 개통",
+    "전화 · 문자 · 데이터 정상 작동 확인",
+    "필요한 경우 휴대폰 본인인증 가능 여부 확인"
+   ],
+   "en": [
+    "Compare plans from SKT, KT, LG U+, or a budget (MVNO) operator",
+    "Choose a prepaid or a postpaid plan",
+    "Prepare the ID and documents you need",
+    "Visit a carrier store and apply",
+    "Activate a USIM or eSIM",
+    "Check that calls, texts, and data all work",
+    "If you need it, check whether phone identity verification works"
+   ],
+   "count": 7
+  },
+  "tips": {
+   "ko": [
+    "한국의 주요 통신사는 SKT, KT, LG U+입니다.",
+    "알뜰폰(MVNO)은 요금제가 다양하니 요금과 외국인 가입 조건을 함께 비교하세요.",
+    "휴대폰이 본인 명의로 등록되어 있는지가 중요합니다.",
+    "가입 시 외국인등록증에 표시된 이름과 동일하게 정보를 등록하는 것이 좋습니다.",
+    "한국에서는 다른 사람 명의로 통신서비스를 쓰는 것이 금지되어 있습니다. 휴대폰이나 명의를 빌려주지 마세요. 명의자가 모든 사용에 법적 책임을 집니다.",
+    "한국을 떠나기 전에는 미납요금과 기기할부 잔액을 확인하고 매장에서 해지하세요(KT 기준 해지는 매장 방문). 미납이 있으면 이용정지나 해지가 될 수 있습니다.",
+    "만 19세 미만은 법정대리인과 함께 매장을 방문해야 합니다(KT 기준).",
+    "해외에서 가져온 휴대폰은 한국 통신망 및 USIM/eSIM 지원 여부를 확인해야 합니다."
+   ],
+   "en": [
+    "The major carriers in Korea are SKT, KT, and LG U+.",
+    "Budget (MVNO) operators offer a wide range of plans — compare both the price and their conditions for foreign customers.",
+    "Whether the line is registered in your own name matters a lot.",
+    "Register your details exactly as they appear on your Residence Card (ARC).",
+    "In Korea it is prohibited to use communication services under another person's name. Never lend your phone or your name for a line: the registered holder is legally responsible for all use.",
+    "Before leaving Korea, check any unpaid charges and device-installment balance and cancel the line at a store (at KT, cancellation is in person) — unpaid charges can get the line suspended or terminated.",
+    "If you are under 19, you must visit the store with a legal guardian (KT).",
+    "If you brought a phone from abroad, check that it supports Korean networks and USIM/eSIM."
+   ],
+   "count": 8
+  },
+  "search_aliases": {
+   "ko": [
+    "유심",
+    "휴대폰",
+    "핸드폰",
+    "스마트폰",
+    "전화 개통"
+   ],
+   "en": [
+    "USIM",
+    "SIM",
+    "phone",
+    "mobile",
+    "cell phone"
+   ],
+   "count": 5
+  },
+  "sections[0].title": {
+   "ko": "외국인등록증(ARC) 유무 안내",
+   "en": "With or without an ARC"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "외국인등록증이 아직 없나요?",
+   "en": "Don't have an ARC yet?"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "여권으로 가입 가능한 선불 SIM을 확인하세요.",
+    "KT 기준 여권만으로는 선불 요금제만 가입할 수 있고, 한 사람이 가질 수 있는 회선은 선불 1회선·후불 1회선이며 체류자격에 따라 후불 회선이 더 허용될 수 있습니다.",
+    "KT 선불 이용기간 안내에 따르면 여권으로 개통한 선불 회선은 개통일부터 90일, 외국인등록증으로 개통한 선불 회선은 카드 만료일까지 쓸 수 있습니다.",
+    "기간이 끝나도 여권이나 외국인등록증을 들고 KT 매장에 가거나 고객센터(080-448-0100)에 연락하면 이용기간을 연장할 수 있습니다(KT 기준).",
+    "통신사에 따라 비자에 남은 기간 조건이 있습니다(KT: 90일 이상).",
+    "PASS 등 휴대폰 본인인증이 그 회선에서 되는지는 개통할 때 매장에 확인하세요."
+   ],
+   "en": [
+    "Look for a prepaid SIM you can sign up for with your passport.",
+    "At KT a passport alone only gets you a prepaid plan, one subscriber may hold one prepaid and one postpaid line, and more postpaid lines may be allowed depending on your status of stay.",
+    "KT's prepaid service periods: a prepaid line opened with a passport runs for 90 days from activation, while a prepaid line opened with a Residence Card runs until the card expires.",
+    "When the period ends you can extend it at KT by taking your passport or Residence Card to a KT store or calling the Global Call Center (080-448-0100).",
+    "Carriers may require a minimum time left on your visa (KT: at least 90 days).",
+    "Ask the store whether phone identity verification such as PASS works on that line."
+   ],
+   "count": 6
+  },
+  "sections[0].notes[1].title": {
+   "ko": "외국인등록증이 있나요?",
+   "en": "Already have an ARC?"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "본인 명의 휴대폰 개통을 권장합니다."
+   ],
+   "en": [
+    "We recommend opening a line registered in your own name."
+   ],
+   "count": 1
+  },
+  "sections[1].title": {
+   "ko": "선불 요금제",
+   "en": "Prepaid plans"
+  },
+  "sections[1].body": {
+   "ko": "선불 요금제는 사용할 요금을 미리 충전해서 사용하는 방식입니다.\n\n외국인등록증이 아직 없는 학생도 여권으로 개통 가능한 상품이 있어 한국에 처음 입국한 학생에게 유용할 수 있습니다.",
+   "en": "With a prepaid plan you top up credit in advance and use it as you go.\n\nSome prepaid products can be opened with a passport before your ARC is issued, which helps if you have just arrived in Korea."
+  },
+  "sections[1].notice": {
+   "ko": "여권으로 개통한 선불 SIM에서 휴대폰 본인인증이나 PASS 앱을 쓸 수 있는지는 통신사마다 다를 수 있으니 개통할 때 확인하세요.",
+   "en": "Whether phone identity verification or the PASS app works on a prepaid SIM opened with a passport can differ by carrier — check when you sign up."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "추천 대상",
+   "en": "Best for"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "외국인등록증이 아직 없는 학생",
+    "입국 직후 한국 전화번호가 필요한 학생",
+    "단기간 체류하는 학생"
+   ],
+   "en": [
+    "Students who do not have an ARC yet",
+    "Students who need a Korean number right after arriving",
+    "Students staying for a short period"
+   ],
+   "count": 3
+  },
+  "sections[2].title": {
+   "ko": "후불 요금제",
+   "en": "Postpaid plans"
+  },
+  "sections[2].body": {
+   "ko": "후불 요금제는 한 달 동안 사용한 통신요금을 나중에 납부하는 방식입니다.\n\n후불 요금제는 외국인등록증이 있어야 가입할 수 있습니다(KT 기준 — 여권만 있으면 선불 요금제만 가능합니다). 장기간 한국에서 생활하는 학생이라면 외국인등록증을 받은 후 본인 명의로 개통하는 것을 권장합니다.",
+   "en": "With a postpaid plan you pay afterwards for the month you have used.\n\nA postpaid plan needs a Residence Card (at KT, a passport alone only gets you a prepaid plan). If you will be living in Korea long term, open a line in your own name once your card is issued."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "추천 대상",
+   "en": "Best for"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "외국인등록증을 발급받은 학생",
+    "한국에서 장기간 생활하는 학생",
+    "휴대폰 본인인증을 자주 이용해야 하는 학생"
+   ],
+   "en": [
+    "Students who already have an ARC",
+    "Students living in Korea long term",
+    "Students who often need phone identity verification"
+   ],
+   "count": 3
+  },
+  "links[0].label": {
+   "ko": "SKT 외국인 USIM 가입",
+   "en": "SKT — USIM sign-up for foreign residents"
+  },
+  "links[1].label": {
+   "ko": "KT 외국인 개통 준비사항",
+   "en": "KT — what to prepare for activation"
+  },
+  "links[1].description": {
+   "ko": "외국인 고객센터 080-448-0100",
+   "en": "Global Call Center 080-448-0100"
+  },
+  "links[2].label": {
+   "ko": "LG U+ 외국인 고객 안내",
+   "en": "LG U+ — info for foreign customers"
+  },
+  "links[3].label": {
+   "ko": "가까운 통신사 매장 찾기",
+   "en": "Find a nearby carrier store"
+  },
+  "phrases[0].text": {
+   "ko": "휴대폰을 개통하고 싶습니다.",
+   "en": "I would like to sign up for a mobile plan."
+  },
+  "phrases[1].text": {
+   "ko": "외국인등록증 없이 개통할 수 있나요?",
+   "en": "Can I sign up without a Residence Card (ARC)?"
+  }
+ }
+}

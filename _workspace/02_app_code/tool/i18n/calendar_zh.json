@@ -1,0 +1,20 @@
+{
+  "_lang": "zh",
+  "_what": "학사일정 행사 이름 번역. 값만 채운다(키는 그대로).",
+  "titles": {
+    "fall-registration": "2学期选课",
+    "fall-semester-start": "2学期开学",
+    "fall-add-drop": "选课更正",
+    "chuseok": "韩国中秋节假期",
+    "foundation-day": "韩国开天节",
+    "hangul-day": "韩文日",
+    "midterm-exams": "期中考试",
+    "course-withdrawal": "选课取消",
+    "final-exams": "期末考试",
+    "winter-break": "寒假开始",
+    "winter-session": "寒假季节学期",
+    "spring-registration": "1学期选课",
+    "winter-commencement": "学位授予仪式",
+    "spring-semester-start": "1学期开学"
+  }
+}

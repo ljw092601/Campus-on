@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../../core/layout/flexible_text_layout.dart';
 import '../../../core/theme/app_theme.dart';
 
 /// Shared building blocks for the DONG-A-MATE UI mockups
@@ -169,7 +170,10 @@ class ToneBadge extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        maxLines: 1,
+        // One line at ordinary sizes. At large text / on a 320dp phone a badge
+        // in a Wrap (e.g. the home date chip) can be wider than the row, so
+        // it wraps rather than silently clipping its tail.
+        maxLines: prefersFlexibleLayout(context) ? null : 1,
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.w800,
@@ -246,43 +250,50 @@ class PillSegmented<T> extends StatelessWidget {
         color: dark ? scheme.surfaceContainerHighest : const Color(0xFFE9EEF6),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Row(
-        children: [
-          for (final v in values)
-            Expanded(
-              child: Semantics(
-                button: true,
-                selected: v == selected,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onChanged(v),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    height: 40,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: v == selected ? scheme.surface : null,
-                      borderRadius: BorderRadius.circular(999),
-                      boxShadow: v == selected ? softShadow(context) : null,
-                    ),
-                    child: Text(
-                      labelOf(v),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight:
-                            v == selected ? FontWeight.w800 : FontWeight.w500,
-                        color: v == selected
-                            ? headingColor(context)
-                            : scheme.onSurfaceVariant,
+      // Equal-height segments even when one label wraps at large text.
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final v in values)
+              Expanded(
+                child: Semantics(
+                  button: true,
+                  selected: v == selected,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onChanged(v),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      // Min height, not fixed: at large text the label grows
+                      // the thumb instead of being clipped.
+                      constraints: const BoxConstraints(minHeight: 40),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: v == selected ? scheme.surface : null,
+                        borderRadius: BorderRadius.circular(999),
+                        boxShadow: v == selected ? softShadow(context) : null,
+                      ),
+                      child: Text(
+                        labelOf(v),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight:
+                              v == selected ? FontWeight.w800 : FontWeight.w500,
+                          color: v == selected
+                              ? headingColor(context)
+                              : scheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

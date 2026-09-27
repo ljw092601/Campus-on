@@ -32,21 +32,22 @@ import 'package:campus_on/data/repositories/mock_dining_repository.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'guide_seed_codec.dart';
+import 'package:campus_on/core/i18n/entity_i18n.dart';
+
 void main() {
   test('export MockData to Firestore seed JSON', () async {
     final facilities = <String, Map<String, dynamic>>{
       for (final f in MockData.facilities)
-        f.id: _compact(f.toJson()..remove('id')..remove('updatedAt')),
+        f.id: compactSeedMap(f.toJson()..remove('id')..remove('updatedAt')),
     };
 
-    final guides = <String, Map<String, dynamic>>{
-      for (final g in MockData.guideItems) g.id: _guideToJson(g),
-    };
+    final guides = guideSeedDocuments(MockData.guideItems);
 
     // Doc id == facilityId (same key convention as facilities).
     final floors = <String, Map<String, dynamic>>{
       for (final b in MockData.buildingFloors)
-        b.facilityId: _compact(b.toJson()..remove('facilityId')),
+        b.facilityId: compactSeedMap(b.toJson()..remove('facilityId')),
     };
 
     // Round-trip guard: whatever we are about to write must rebuild the exact
@@ -80,6 +81,8 @@ void main() {
           'hours_en': c.hoursEn,
           'facilityId': c.facilityId,
           'mealTypes': [for (final m in c.meals) m.type.name],
+          // Same `i18n` map the app reads back; absent when untranslated.
+          if (entityI18nToJson(c.i18n) != null) 'i18n': entityI18nToJson(c.i18n),
         }),
     };
 
@@ -117,97 +120,6 @@ void main() {
   });
 }
 
-/// Inverse of [AdminGuideItem.fromJson] (the entity is read-only in app code,
-/// so serialization lives with the seed tooling that needs it).
-Map<String, dynamic> _guideToJson(AdminGuideItem g) {
-  final meta = _compact({
-    'durationText_ko': g.durationKo,
-    'durationText_en': g.durationEn,
-    'difficulty': g.difficulty,
-  });
-  return _compact({
-    'categoryId': g.categoryId.name,
-    'title_ko': g.titleKo,
-    'title_en': g.titleEn,
-    'detail_title_ko': g.detailTitleKo,
-    'detail_title_en': g.detailTitleEn,
-    'summary_ko': g.summaryKo,
-    'summary_en': g.summaryEn,
-    'icon': g.iconName,
-    'overview_ko': g.overviewKo,
-    'overview_en': g.overviewEn,
-    'top_sections': g.topSections.map(_sectionToJson).toList(),
-    'checklist_title_ko': g.checklistTitleKo,
-    'checklist_title_en': g.checklistTitleEn,
-    'checklist_ko': g.checklistKo,
-    'checklist_en': g.checklistEn,
-    'checklist_optional_title_ko': g.checklistOptionalTitleKo,
-    'checklist_optional_title_en': g.checklistOptionalTitleEn,
-    'checklist_optional_ko': g.checklistOptionalKo,
-    'checklist_optional_en': g.checklistOptionalEn,
-    'checklist_note_ko': g.checklistNoteKo,
-    'checklist_note_en': g.checklistNoteEn,
-    'steps_ko': g.stepsKo,
-    'steps_en': g.stepsEn,
-    'sections': g.sections.map(_sectionToJson).toList(),
-    'tips_ko': g.tipsKo,
-    'tips_en': g.tipsEn,
-    'phrases': [
-      for (final p in g.phrases) {'ko': p.ko, 'en': p.en},
-    ],
-    'links': [
-      for (final l in g.links)
-        _compact({
-          'label_ko': l.labelKo,
-          'label_en': l.labelEn,
-          'url': l.url,
-          'description_ko': l.descriptionKo,
-          'description_en': l.descriptionEn,
-          'icon': l.iconName,
-        }),
-    ],
-    'relatedFacilityIds': g.relatedFacilityIds,
-    if (meta.isNotEmpty) 'meta': meta,
-    'status': g.status.name,
-  });
-}
-
-/// Inverse of [GuideSection.fromJson]; shared by `top_sections` and `sections`.
-Map<String, dynamic> _sectionToJson(GuideSection s) => _compact({
-      'title_ko': s.titleKo,
-      'title_en': s.titleEn,
-      'icon': s.iconName,
-      'body_ko': s.bodyKo,
-      'body_en': s.bodyEn,
-      'steps_ko': s.stepsKo,
-      'steps_en': s.stepsEn,
-      'links': [
-        for (final l in s.links)
-          _compact({
-            'label_ko': l.labelKo,
-            'label_en': l.labelEn,
-            'url': l.url,
-            'description_ko': l.descriptionKo,
-            'description_en': l.descriptionEn,
-            'icon': l.iconName,
-          }),
-      ],
-      'notes': [
-        for (final n in s.notes)
-          _compact({
-            'title_ko': n.titleKo,
-            'title_en': n.titleEn,
-            'lines_ko': n.linesKo,
-            'lines_en': n.linesEn,
-          }),
-      ],
-      'notice_ko': s.noticeKo,
-      'notice_en': s.noticeEn,
-      'notice_icon': s.noticeIconName,
-      'footnote_ko': s.footnoteKo,
-      'footnote_en': s.footnoteEn,
-    });
-
 /// Canonical text of every field [AdminGuideItem] exposes, used by the
 /// round-trip guard above. Reads the entity's own getters rather than the JSON,
 /// so a key the serializer never emitted shows up as a difference here.
@@ -240,7 +152,7 @@ String _dumpGuide(AdminGuideItem g) =>
       'tipsKo': g.tipsKo,
       'tipsEn': g.tipsEn,
       'phrases': [
-        for (final p in g.phrases) {'ko': p.ko, 'en': p.en},
+        for (final p in g.phrases) {'ko': p.ko, 'en': p.en, 'i18n': p.i18n},
       ],
       'links': [
         for (final l in g.links)
@@ -251,6 +163,7 @@ String _dumpGuide(AdminGuideItem g) =>
             'descriptionKo': l.descriptionKo,
             'descriptionEn': l.descriptionEn,
             'iconName': l.iconName,
+            'i18n': l.i18n,
           },
       ],
       'relatedFacilityIds': g.relatedFacilityIds,
@@ -258,6 +171,12 @@ String _dumpGuide(AdminGuideItem g) =>
       'durationEn': g.durationEn,
       'difficulty': g.difficulty,
       'status': g.status.name,
+      'searchAliasesKo': g.searchAliasesKo,
+      'searchAliasesEn': g.searchAliasesEn,
+      // The translations belong in the round-trip guard too: without them a
+      // codec that dropped an i18n key would lose it from both sides of the
+      // comparison and pass (B 03/054 SF-01).
+      'i18n': g.i18n,
     });
 
 Map<String, dynamic> _dumpSection(GuideSection s) => {
@@ -277,6 +196,7 @@ Map<String, dynamic> _dumpSection(GuideSection s) => {
             'descriptionKo': l.descriptionKo,
             'descriptionEn': l.descriptionEn,
             'iconName': l.iconName,
+            'i18n': l.i18n,
           },
       ],
       'notes': [
@@ -286,6 +206,7 @@ Map<String, dynamic> _dumpSection(GuideSection s) => {
             'titleEn': n.titleEn,
             'linesKo': n.linesKo,
             'linesEn': n.linesEn,
+            'i18n': n.i18n,
           },
       ],
       'noticeKo': s.noticeKo,
@@ -293,9 +214,16 @@ Map<String, dynamic> _dumpSection(GuideSection s) => {
       'noticeIconName': s.noticeIconName,
       'footnoteKo': s.footnoteKo,
       'footnoteEn': s.footnoteEn,
+      'i18n': s.i18n,
     };
 
-/// Drops null values and empty lists/strings so seed docs stay minimal.
+void _writeJson(String path, Map<String, dynamic> data) {
+  const encoder = JsonEncoder.withIndent('  ');
+  File(path).writeAsStringSync('${encoder.convert(data)}\n');
+}
+
+// Kept from main (297074c): the academic-calendar and cafeteria seed exports
+// added there drop null fields through this helper.
 Map<String, dynamic> _compact(Map<String, dynamic> m) => {
       for (final e in m.entries)
         if (e.value != null &&
@@ -303,8 +231,3 @@ Map<String, dynamic> _compact(Map<String, dynamic> m) => {
             (e.value is! List || (e.value as List).isNotEmpty))
           e.key: e.value,
     };
-
-void _writeJson(String path, Map<String, dynamic> data) {
-  const encoder = JsonEncoder.withIndent('  ');
-  File(path).writeAsStringSync('${encoder.convert(data)}\n');
-}

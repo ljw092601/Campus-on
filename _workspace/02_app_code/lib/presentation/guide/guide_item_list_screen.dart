@@ -49,7 +49,8 @@ class GuideItemListScreen extends ConsumerWidget {
                   for (final item in items)
                     GuideListItem(
                       item: item,
-                      onTap: () => context.go('/guide/item/${item.id}'),
+                      // push, not go: back returns to this list instead of the hub.
+                      onTap: () => context.push('/guide/item/${item.id}'),
                     ),
                 ],
               ),

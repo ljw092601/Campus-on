@@ -45,7 +45,10 @@ class CategoryChip extends StatelessWidget {
         shape: const StadiumBorder(),
         side: BorderSide(
             color: selected ? scheme.primary : scheme.outlineVariant),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        // Vertical 6 (not 8): the chip sizes its avatar box to
+        // 32 - padding.vertical, and 8 left a 16px box for the 20px icon,
+        // clipping the glyph. Same 32px overall chip height.
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         labelPadding: const EdgeInsets.only(left: 2, right: 6),
         labelStyle: TextStyle(
           fontSize: 15,

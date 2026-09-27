@@ -11,12 +11,46 @@ function onOpen() {
 function setupAdminSheets() {
   const ss = SpreadsheetApp.getActive();
   ss.setSpreadsheetTimeZone(CONFIG.timeZone);
+  migrateAcademicHeaders_(ss);
   setupDataSheet_(ss, CONFIG.sheets.academic, ACADEMIC_HEADERS);
   setupDataSheet_(ss, CONFIG.sheets.dining, DINING_HEADERS);
   setupGuideSheet_(ss);
   configureAcademicSheet_(ss.getSheetByName(CONFIG.sheets.academic));
   configureDiningSheet_(ss.getSheetByName(CONFIG.sheets.dining));
   SpreadsheetApp.getUi().alert('템플릿 준비 완료', '학사일정·학식·안내 시트를 준비했습니다.', SpreadsheetApp.getUi().ButtonSet.OK);
+}
+
+// 기존 7열 학사일정 시트를 9열로 올린다.
+//
+// 그냥 새 머리글을 덮어쓰면 E(분류)·F(동기화 결과)·G(event_id)가 제자리에 남아
+// 모든 행이 한 칸씩 밀려 읽힌다 — 분류가 중문 제목이 되고 event_id가 분류가 된다
+// (B 03/063 B-01). 그래서 **열을 실제로 삽입**해 기존 값을 오른쪽으로 옮긴다.
+// 머리글이 예전 것도 새 것도 아니면 아무것도 건드리지 않고 중단한다.
+function migrateAcademicHeaders_(ss) {
+  const sheet = ss.getSheetByName(CONFIG.sheets.academic);
+  if (!sheet) return;                       // 새로 만들 시트는 바로 9열로 생긴다
+  const width = Math.max(sheet.getLastColumn(), ACADEMIC_HEADERS.length);
+  const header = sheet.getRange(1, 1, 1, width).getValues()[0]
+    .map(h => String(h == null ? '' : h).trim());
+
+  const already = ACADEMIC_HEADERS.every((name, i) => header[i] === name);
+  if (already) return;
+
+  const isLegacy = ACADEMIC_HEADERS_LEGACY.every((name, i) => header[i] === name);
+  if (isLegacy) {
+    // 일정명(영문) 다음(5번째)에 두 열을 넣으면 기존 E:G가 G:I로 이동한다.
+    sheet.insertColumnsAfter(4, 2);
+    return;
+  }
+
+  const blank = header.every(h => h === '');
+  if (blank && sheet.getLastRow() <= 1) return;   // 빈 시트: 그대로 머리글을 쓴다
+
+  throw new Error(
+    '학사일정 시트의 머리글이 예상과 다릅니다. 기존 데이터를 덮어쓸 수 있어 중단했습니다. ' +
+    `현재 1행: ${header.slice(0, 9).join(' | ')} — ` +
+    '머리글을 원래대로 되돌리거나, 일정명(영문) 오른쪽에 「일정명(중문)」·「일정명(베트남어)」 ' +
+    '두 열을 직접 추가한 뒤 다시 실행해 주세요.');
 }
 
 function setupDataSheet_(ss, name, headers) {
@@ -49,13 +83,16 @@ function protectHeader_(sheet, columnCount) {
 function configureAcademicSheet_(sheet) {
   ensureRows_(sheet, 1000);
   const rows = sheet.getMaxRows() - 1;
+  const cols = academicColumns_(sheet);
   const dateRule = SpreadsheetApp.newDataValidation().requireDate().setAllowInvalid(false).build();
-  sheet.getRange(2, 1, rows, 2).setDataValidation(dateRule).setNumberFormat('yyyy-mm-dd');
-  setListValidation_(sheet.getRange(2, 5, rows, 1), Object.keys(ACADEMIC_CATEGORIES));
-  sheet.hideColumns(7);
-  sheet.setColumnWidth(3, 220);
-  sheet.setColumnWidth(4, 240);
-  sheet.setColumnWidth(6, 260);
+  sheet.getRange(2, cols.start + 1, rows, 2).setDataValidation(dateRule).setNumberFormat('yyyy-mm-dd');
+  setListValidation_(sheet.getRange(2, cols.category + 1, rows, 1), Object.keys(ACADEMIC_CATEGORIES));
+  sheet.hideColumns(cols.id + 1);
+  sheet.setColumnWidth(cols.titleKo + 1, 220);
+  sheet.setColumnWidth(cols.titleEn + 1, 240);
+  if (cols.titleZh >= 0) sheet.setColumnWidth(cols.titleZh + 1, 200);
+  if (cols.titleVi >= 0) sheet.setColumnWidth(cols.titleVi + 1, 240);
+  sheet.setColumnWidth(cols.result + 1, 260);
 }
 
 function configureDiningSheet_(sheet) {

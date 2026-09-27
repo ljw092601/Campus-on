@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/i18n/app_languages.dart';
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/academic_event.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -11,7 +13,7 @@ import '../providers/locale_provider.dart';
 import '../shared/widgets/ui_kit.dart';
 
 /// S1 — Home hub, restyled after DONG-A-MATE_UI mockup: emblem + wordmark
-/// header with KO/EN pill, date chip + greeting, bright-blue classroom-search
+/// header with the language pill, date chip + greeting, bright-blue classroom-search
 /// hero with a fake search field, a 2×2 grid of icon-tile feature cards and
 /// the next few academic events.
 class HomeScreen extends ConsumerWidget {
@@ -28,6 +30,11 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: bg,
       appBar: AppBar(
+        // The language button shows a two-letter code beside a caret; in a 56px
+        // toolbar it lost its bottom at 200 % text, so the bar grows with the
+        // text instead of the label shrinking.
+        toolbarHeight:
+            56 * MediaQuery.textScalerOf(context).scale(1.0).clamp(1.0, 1.6),
         backgroundColor: bg,
         titleSpacing: 20,
         title: Row(
@@ -109,8 +116,9 @@ class _Wordmark extends StatelessWidget {
   }
 }
 
-/// White bordered pill with KO / EN segments; the active language is a
-/// filled blue pill. The whole control toggles the app locale.
+/// White bordered pill showing the current language's short code in a filled
+/// blue pill plus a caret. Four languages no longer fit a KO|EN toggle, so it
+/// opens the language list; Settings has the same list.
 class _LangToggle extends ConsumerWidget {
   const _LangToggle();
 
@@ -118,43 +126,71 @@ class _LangToggle extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final isKo = ref.watch(localeProvider).languageCode == 'ko';
+    final code = ref.watch(localeProvider).languageCode;
+    final pillColor = Tone.blue.fg(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    Widget seg(String text, bool on) => AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: on ? AppColors.blue : null,
-            borderRadius: BorderRadius.circular(999),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w800,
-              color: on ? Colors.white : scheme.onSurfaceVariant,
+    return Material(
+      color: scheme.surface,
+      shape: StadiumBorder(side: BorderSide(color: scheme.outlineVariant)),
+      clipBehavior: Clip.antiAlias,
+      child: PopupMenuButton<String>(
+        tooltip: l.settings_language_title,
+        initialValue: code,
+        position: PopupMenuPosition.under,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        onSelected: (code) async {
+          final messenger = ScaffoldMessenger.of(context);
+          // Same as the settings list: say on screen when the choice could not
+          // be remembered (감사 05/035 NIT-2).
+          if (!await ref
+              .read(localeProvider.notifier)
+              .setLocale(Locale(code))) {
+            if (!context.mounted) return;
+            messenger
+              ..clearSnackBars()
+              ..showSnackBar(SnackBar(
+                // Two sentences in a second language need more than the
+                // default four seconds (감사 05/037 SF-3).
+                duration: const Duration(seconds: 10),
+                content: Text(
+                    AppLocalizations.of(context).settings_language_save_failed),
+              ));
+          }
+        },
+        itemBuilder: (context) => [
+          // Each language is named in itself, with a locale hint so a screen
+          // reader pronounces it in that language.
+          for (final c in appLanguageCodes)
+            PopupMenuItem<String>(
+              value: c,
+              child: Text(appLanguageNames[c]!, locale: Locale(c)),
             ),
-          ),
-        );
-
-    // The styled "KO EN" segments mean nothing to a screen reader, so expose
-    // the control as a button labeled with the language-setting title.
-    return Semantics(
-      button: true,
-      label: l.settings_language_title,
-      excludeSemantics: true,
-      child: Material(
-        color: scheme.surface,
-        shape: StadiumBorder(side: BorderSide(color: scheme.outlineVariant)),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () => ref.read(localeProvider.notifier).toggle(),
-          child: Padding(
-            padding: const EdgeInsets.all(3),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [seg('KO', isKo), seg('EN', !isKo)],
-            ),
+        ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(3, 3, 6, 3),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: pillColor,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  appLanguageShortNames[code] ?? code,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    color: isDark ? scheme.surface : Colors.white,
+                  ),
+                ),
+              ),
+              Icon(Symbols.arrow_drop_down,
+                  size: 22, color: scheme.onSurfaceVariant),
+            ],
           ),
         ),
       ),
@@ -243,6 +279,7 @@ class _HeroSearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final large = prefersFlexibleLayout(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     const radius = BorderRadius.all(Radius.circular(28));
 
@@ -301,8 +338,14 @@ class _HeroSearchCard extends StatelessWidget {
                           children: [
                             Text(
                               l.classroom_search_title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                              // The card grows, so at large text the heading
+                              // takes the lines it needs instead of being cut -
+                              // and an ellipsis with no limit would ellipsize
+                              // at the first line (measured).
+                              maxLines: large ? null : 2,
+                              overflow: large
+                                  ? TextOverflow.visible
+                                  : TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w800,
@@ -338,8 +381,14 @@ class _HeroSearchCard extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 l.home_classroom_hint,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                // One line in the pill at ordinary sizes; at
+                                // large text / on a narrow phone the example
+                                // wraps (the pill grows) instead of being cut
+                                // to "예: 공과…", which hid the format it shows.
+                                maxLines: large ? null : 1,
+                                overflow: large
+                                    ? TextOverflow.visible
+                                    : TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 15,
                                   color: AppColors.inkMuted,
@@ -399,10 +448,27 @@ class _FeatureGrid extends StatelessWidget {
       ),
     ];
 
-    // Rows of IntrinsicHeight pairs instead of a fixed-aspect grid: both cards
-    // in a row share the taller one's height, so long English copy or 200%
-    // font scale grows the card instead of overflowing it (UX §6).
     const gap = 14.0;
+    // Two columns work at ordinary text sizes. Past the default text size (or
+    // on a 320dp screen) they cannot hold a card title at all - each cell is
+    // ~137px wide, which left two characters - so the cards become full-width,
+    // each as tall as its own text needs, which is what makes a long title in
+    // Vietnamese or English readable instead of ellipsized (감사 05/036 SF-2).
+    // The home body already scrolls.
+    if (prefersFlexibleLayout(context)) {
+      return Column(
+        children: [
+          for (final c in cards) ...[
+            _FeatureCard(data: c),
+            const SizedBox(height: gap),
+          ],
+        ],
+      );
+    }
+
+    // Rows of IntrinsicHeight pairs instead of a fixed-aspect grid: both cards
+    // in a row share the taller one's height, so long copy grows the card
+    // instead of overflowing it (UX §6).
     return Column(
       children: [
         for (var r = 0; r < cards.length; r += 2) ...[
@@ -447,6 +513,7 @@ class _FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final large = prefersFlexibleLayout(context);
     final scheme = Theme.of(context).colorScheme;
     final radius = BorderRadius.circular(AppColors.cardRadius);
 
@@ -481,8 +548,14 @@ class _FeatureCard extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   data.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  // Two lines side by side; no cap at large text, where the
+                  // card is full width and grows with its content, so the
+                  // whole title is shown rather than cut (감사 05/036 SF-2).
+                  // An ellipsis with no line limit ellipsizes at the first
+                  // line, so unlimited lines must drop it (measured).
+                  maxLines: large ? null : 2,
+                  overflow:
+                      large ? TextOverflow.visible : TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
@@ -495,8 +568,9 @@ class _FeatureCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   data.description,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                  maxLines: large ? null : 3,
+                  overflow:
+                      large ? TextOverflow.visible : TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 13,
                     height: 1.4,
@@ -609,6 +683,46 @@ class _UpcomingRow extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
     final (label, tone) = _category(l);
+
+    // Past the default text size (or on a narrow screen) the two badges leave
+    // the title a sliver of the row, so the badges go on their own line and
+    // the title below takes the full width and the lines it needs — the same
+    // fold the calendar list uses (감사 05/037 SF-1).
+    if (prefersFlexibleLayout(context)) {
+      return InkWell(
+        onTap: () => context.go('/home/calendar'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                spacing: 8,
+                runSpacing: 6,
+                children: [
+                  ToneBadge(
+                    _dateLabel(),
+                    fontSize: 14,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  ),
+                  ToneBadge(label, tone: tone),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                event.title(locale),
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.3,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return InkWell(
       onTap: () => context.go('/home/calendar'),
