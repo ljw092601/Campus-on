@@ -10,7 +10,9 @@ import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
 import '../providers/search_provider.dart';
 import '../shared/category_labels.dart';
+import '../shared/widgets/facility_list_item.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S8 — Unified facility + guide search. 300ms debounce, segment filter,
 /// recent searches (local) when the query is empty.
@@ -123,19 +125,19 @@ class _SegmentBar extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.all(context.dimens.spaceMd),
-      child: SegmentedButton<SearchSegment>(
-        segments: [
-          ButtonSegment(
-              value: SearchSegment.all, label: Text(l.search_segment_all)),
-          ButtonSegment(
-              value: SearchSegment.facility,
-              label: Text(l.search_segment_facility)),
-          ButtonSegment(
-              value: SearchSegment.guide, label: Text(l.search_segment_guide)),
+      child: PillSegmented<SearchSegment>(
+        values: const [
+          SearchSegment.all,
+          SearchSegment.facility,
+          SearchSegment.guide,
         ],
-        selected: {segment},
-        onSelectionChanged: (s) =>
-            ref.read(searchSegmentProvider.notifier).state = s.first,
+        selected: segment,
+        labelOf: (s) => switch (s) {
+          SearchSegment.all => l.search_segment_all,
+          SearchSegment.facility => l.search_segment_facility,
+          SearchSegment.guide => l.search_segment_guide,
+        },
+        onChanged: (s) => ref.read(searchSegmentProvider.notifier).state = s,
       ),
     );
   }
@@ -162,7 +164,11 @@ class _RecentSearches extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(l.search_recent_title,
-                style: Theme.of(context).textTheme.titleMedium),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                  color: headingColor(context),
+                )),
             TextButton(
               onPressed: () =>
                   ref.read(recentSearchesProvider.notifier).clear(),
@@ -198,24 +204,34 @@ class _Results extends ConsumerWidget {
               label: l.search_section_facility(results.facilities.length)),
           for (final f in results.facilities)
             ListTile(
-              leading: Icon(f.category.icon,
-                  color: context.catColors.forFacility(f.category)),
-              title: Text(f.name(locale)),
+              leading: IconTile(
+                  icon: f.category.icon, tone: f.category.tone, size: 44),
+              title: Text(f.name(locale),
+                  style: const TextStyle(fontWeight: FontWeight.w700)),
               subtitle: Text(f.category.label(l)),
               onTap: () => context.go('/map/facility/${f.id}'),
             ),
         ],
         if (results.guides.isNotEmpty) ...[
-          _SectionHeader(
-              label: l.search_section_guide(results.guides.length)),
+          _SectionHeader(label: l.search_section_guide(results.guides.length)),
           for (final g in results.guides)
             ListTile(
-              leading: Icon(g.categoryId.icon,
-                  color: context.catColors.forGuide(g.categoryId)),
-              title: Text(g.title(locale)),
-              subtitle: g.summary(locale) != null
-                  ? Text(g.summary(locale)!)
-                  : null,
+              leading: Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: context.catColors
+                      .forGuide(g.categoryId)
+                      .withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Icon(g.categoryId.icon,
+                    size: 22, color: context.catColors.forGuide(g.categoryId)),
+              ),
+              title: Text(g.title(locale),
+                  style: const TextStyle(fontWeight: FontWeight.w700)),
+              subtitle:
+                  g.summary(locale) != null ? Text(g.summary(locale)!) : null,
               onTap: () => context.go('/guide/item/${g.id}'),
             ),
         ],
@@ -231,12 +247,18 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(context.dimens.spaceMd,
-          context.dimens.spaceMd, context.dimens.spaceMd, context.dimens.spaceXs),
+      padding: EdgeInsets.fromLTRB(
+          context.dimens.spaceMd,
+          context.dimens.spaceMd,
+          context.dimens.spaceMd,
+          context.dimens.spaceXs),
       child: Text(label,
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              )),
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.4,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          )),
     );
   }
 }

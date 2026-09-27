@@ -27,10 +27,12 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
     final items = <_TabItem>[
       _TabItem(Symbols.home, l.tab_home_label),
       _TabItem(Symbols.map, l.tab_map_label),
-      _TabItem(Symbols.settings, l.tab_settings_label),
+      // Sliders glyph for 설정, per the DONG-A-MATE mockup.
+      _TabItem(Symbols.tune, l.tab_settings_label),
     ];
 
     final isCupertino = !kIsWeb && _isIOS;
@@ -55,19 +57,32 @@ class AppShell extends StatelessWidget {
             ? CupertinoTabBar(
                 currentIndex: navigationShell.currentIndex,
                 onTap: _onTap,
+                activeColor: scheme.primary,
+                inactiveColor: scheme.onSurfaceVariant,
+                backgroundColor: scheme.surface,
+                border: Border(top: BorderSide(color: scheme.outlineVariant)),
                 items: [
                   for (final it in items)
                     BottomNavigationBarItem(
                         icon: Icon(it.icon), label: it.label),
                 ],
               )
-            : NavigationBar(
-                selectedIndex: navigationShell.currentIndex,
-                onDestinationSelected: _onTap,
-                destinations: [
-                  for (final it in items)
-                    NavigationDestination(icon: Icon(it.icon), label: it.label),
-                ],
+            // Hairline top border above the bar (mockup); the theme supplies
+            // the light-blue pill indicator and label colors.
+            : DecoratedBox(
+                decoration: BoxDecoration(
+                  border:
+                      Border(top: BorderSide(color: scheme.outlineVariant)),
+                ),
+                child: NavigationBar(
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: _onTap,
+                  destinations: [
+                    for (final it in items)
+                      NavigationDestination(
+                          icon: Icon(it.icon), label: it.label),
+                  ],
+                ),
               ),
       ),
     );

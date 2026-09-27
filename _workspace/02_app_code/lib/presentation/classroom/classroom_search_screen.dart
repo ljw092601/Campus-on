@@ -10,7 +10,9 @@ import '../providers/classroom_providers.dart';
 import '../providers/facility_providers.dart';
 import '../providers/floor_plan_providers.dart';
 import '../providers/locale_provider.dart';
+import '../../core/theme/app_theme.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
 /// `/classroom-search`).
@@ -102,6 +104,13 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
     return list;
   }
 
+  /// "공과대학 2호관 (P2)" — the facility name already carries the campus-map
+  /// letter code; a split wing adds its drawing code ("… (B04A)").
+  String _choiceLabel(_BuildingChoice b, Locale locale) {
+    final name = b.facility.name(locale);
+    return b.planCode == null ? name : '$name · ${b.planCode}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -113,7 +122,10 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
         ref.watch(floorPlansProvider).valueOrNull?.keys ?? const <String>[];
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.classroom_search_title)),
+      appBar: AppBar(
+        title: Text(l.classroom_search_title,
+            style: const TextStyle(fontSize: 24)),
+      ),
       body: facilitiesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => ErrorStateView(
@@ -124,47 +136,32 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
         data: (all) {
           final buildings = _buildings(all, planIndex);
           return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
             children: [
-              Text(
-                l.classroom_help,
-                style: TextStyle(
-                  fontSize: 13,
-                  height: 1.5,
-                  color: scheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(height: 16),
+              _HelpText(text: l.classroom_help),
+              const SizedBox(height: 20),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: DropdownMenu<_BuildingChoice>(
-                      expandedInsets: EdgeInsets.zero,
-                      menuHeight: 420,
-                      hintText: l.classroom_hint_building,
-                      textStyle: const TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.w600),
-                      onSelected: (f) => setState(() => _building = f),
-                      dropdownMenuEntries: [
-                        for (final f in buildings)
-                          DropdownMenuEntry(
-                            value: f,
-                            label: '${f.code} · ${f.facility.name(locale)}',
-                          ),
-                      ],
+                    child: _BuildingPicker(
+                      choices: buildings,
+                      selected: _building,
+                      hint: l.classroom_hint_building,
+                      labelOf: (b) => _choiceLabel(b, locale),
+                      onSelected: (b) => setState(() => _building = b),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text('-',
                         style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
-                            color: scheme.onSurfaceVariant)),
+                            color: scheme.outline)),
                   ),
                   SizedBox(
-                    width: 132,
+                    width: 118,
                     child: TextField(
                       controller: _roomCtrl,
                       onChanged: (_) => setState(() {}),
@@ -180,31 +177,29 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                         LengthLimitingTextInputFormatter(7),
                       ],
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1),
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                          color: scheme.onSurface),
                       decoration: InputDecoration(
                         hintText: l.classroom_hint_room,
-                        hintStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0),
-                        border: const OutlineInputBorder(),
+                        hintStyle: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0,
+                            color: scheme.outline),
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 14),
+                            horizontal: 8, vertical: 16),
                       ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              FilledButton.icon(
+              _SearchButton(
+                label: l.classroom_action_search,
                 onPressed: _canSearch ? _search : null,
-                icon: const Icon(Symbols.pin_drop),
-                label: Text(l.classroom_action_search),
-                style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(48)),
               ),
               if (_building != null) ...[
                 const SizedBox(height: 20),
@@ -274,47 +269,31 @@ class _SuggestionList extends ConsumerWidget {
         if (matches.isEmpty) {
           return _InfoNote(text: l.classroom_suggestions_empty);
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        return GroupCard(
+          padding: EdgeInsets.zero,
           children: [
             for (final e in shown)
-              Card(
-                margin: const EdgeInsets.only(bottom: 8),
-                child: ListTile(
-                  dense: true,
-                  onTap: () => onPick(e.code),
-                  leading: Container(
-                    constraints: const BoxConstraints(minWidth: 44),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: scheme.secondaryContainer,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      e.floorLabel,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: scheme.onSecondaryContainer),
-                    ),
-                  ),
-                  title: Text(
-                    e.code,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w700, letterSpacing: 1),
-                  ),
-                  subtitle: e.onPlan
-                      ? Text(l.classroom_suggestion_onPlan)
-                      : Text(e.roomName,
-                          maxLines: 1, overflow: TextOverflow.ellipsis),
-                  trailing: Icon(
-                      e.onPlan ? Symbols.location_on : Symbols.north_west,
-                      size: 18,
-                      color:
-                          e.onPlan ? const Color(0xFFE53935) : scheme.outline),
+              ListTile(
+                onTap: () => onPick(e.code),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                leading: ToneBadge(e.floorLabel, tone: Tone.navy, minWidth: 48),
+                title: Text(
+                  e.code,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.5),
                 ),
+                subtitle: Text(
+                  e.onPlan ? l.classroom_suggestion_onPlan : e.roomName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 13, color: scheme.outline),
+                ),
+                trailing: Icon(
+                    e.onPlan ? Symbols.location_on : Symbols.north_west,
+                    size: 20,
+                    color: e.onPlan ? AppColors.red : scheme.outline),
               ),
           ],
         );
@@ -338,17 +317,311 @@ class _InfoNote extends StatelessWidget {
   final String text;
 
   @override
+  Widget build(BuildContext context) => InfoBanner(text: text);
+}
+
+/// Help copy: the first line as plain gray text; on the example line the
+/// room codes ("S01 - 0301") are set in bold navy, per the mockup.
+class _HelpText extends StatelessWidget {
+  const _HelpText({required this.text});
+  final String text;
+
+  static final _code = RegExp(r'[A-Z]\d{2} - [0-9A-Z-]+');
+
+  @override
+  Widget build(BuildContext context) {
+    final strong =
+        TextStyle(fontWeight: FontWeight.w800, color: headingColor(context));
+    final spans = <InlineSpan>[];
+    text.splitMapJoin(
+      _code,
+      onMatch: (m) {
+        spans.add(TextSpan(text: m[0], style: strong));
+        return '';
+      },
+      onNonMatch: (t) {
+        spans.add(TextSpan(text: t));
+        return '';
+      },
+    );
+    return Text.rich(
+      TextSpan(children: spans),
+      style: TextStyle(
+        fontSize: 14,
+        height: 1.75,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+    );
+  }
+}
+
+/// Building field + floating list (mockup "강의실 위치 검색"): a white rounded
+/// field with a chevron; tapping opens a white rounded card under the whole
+/// input row listing "S01   대학본부 및 인문과학대학 (A)" rows, code in blue.
+class _BuildingPicker extends StatefulWidget {
+  const _BuildingPicker({
+    required this.choices,
+    required this.selected,
+    required this.hint,
+    required this.labelOf,
+    required this.onSelected,
+  });
+
+  final List<_BuildingChoice> choices;
+  final _BuildingChoice? selected;
+  final String hint;
+  final String Function(_BuildingChoice) labelOf;
+  final ValueChanged<_BuildingChoice> onSelected;
+
+  @override
+  State<_BuildingPicker> createState() => _BuildingPickerState();
+}
+
+class _BuildingPickerState extends State<_BuildingPicker> {
+  final _portal = OverlayPortalController();
+  final _link = LayerLink();
+  final _scroll = ScrollController();
+
+  static const _fieldHeight = 56.0;
+  static const _rowHeight = 50.0;
+
+  /// The list spans the whole input row (this field + dash + room box).
+  static const _roomBoxAndDash = 118.0 + 2 * 10 + 12;
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    FocusScope.of(context).unfocus();
+    setState(_portal.toggle);
+  }
+
+  void _close() => setState(_portal.hide);
+
+  void _pick(_BuildingChoice b) {
+    widget.onSelected(b);
+    _close();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(12),
+    final open = _portal.isShowing;
+    final sel = widget.selected;
+
+    return OverlayPortal(
+      controller: _portal,
+      overlayChildBuilder: _menu,
+      child: CompositedTransformTarget(
+        link: _link,
+        child: Semantics(
+          button: true,
+          expanded: open,
+          label: widget.hint,
+          value: sel == null ? null : widget.labelOf(sel),
+          child: GestureDetector(
+            onTap: _toggle,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              height: _fieldHeight,
+              padding: const EdgeInsets.only(left: 18, right: 14),
+              decoration: BoxDecoration(
+                color: scheme.surface,
+                borderRadius: BorderRadius.circular(AppColors.fieldRadius),
+                border: Border.all(
+                  color: open ? scheme.primary : scheme.outlineVariant,
+                  width: open ? 1.5 : 1,
+                ),
+                boxShadow: open
+                    ? [
+                        BoxShadow(
+                          color: scheme.primary.withValues(alpha: 0.12),
+                          spreadRadius: 4,
+                        ),
+                      ]
+                    : softShadow(context),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      sel == null ? widget.hint : widget.labelOf(sel),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:
+                            sel == null ? FontWeight.w500 : FontWeight.w800,
+                        color: sel == null ? scheme.outline : scheme.onSurface,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    open
+                        ? Symbols.keyboard_arrow_up
+                        : Symbols.keyboard_arrow_down,
+                    size: 24,
+                    color: open ? scheme.primary : scheme.onSurfaceVariant,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
-      child: Text(text,
-          style: TextStyle(
-              fontSize: 13, height: 1.5, color: scheme.onSurfaceVariant)),
+    );
+  }
+
+  Widget _menu(BuildContext overlayContext) {
+    final scheme = Theme.of(context).colorScheme;
+    final box = context.findRenderObject() as RenderBox?;
+    final media = MediaQuery.of(context);
+    final width = (box?.size.width ?? 240) + _roomBoxAndDash;
+    // Room left between the field and the screen bottom (keyboard aside).
+    final top = box?.localToGlobal(Offset.zero).dy ?? 0;
+    final below = media.size.height -
+        media.viewInsets.bottom -
+        media.padding.bottom -
+        top -
+        _fieldHeight -
+        24;
+    final height = (widget.choices.length * _rowHeight)
+        .clamp(0.0, below.clamp(160.0, 520.0))
+        .toDouble();
+
+    return Stack(
+      children: [
+        // Tap outside closes the list.
+        Positioned.fill(
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: _close,
+          ),
+        ),
+        CompositedTransformFollower(
+          link: _link,
+          showWhenUnlinked: false,
+          offset: const Offset(0, _fieldHeight + 6),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                color: scheme.surface,
+                borderRadius: BorderRadius.circular(AppColors.cardRadius),
+                border: Border.all(color: scheme.outlineVariant),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF1B3A7A).withValues(alpha: 0.14),
+                    blurRadius: 32,
+                    offset: const Offset(0, 12),
+                  ),
+                ],
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Material(
+                type: MaterialType.transparency,
+                child: Scrollbar(
+                  controller: _scroll,
+                  thumbVisibility: true,
+                  radius: const Radius.circular(4),
+                  child: ListView.separated(
+                    controller: _scroll,
+                    padding: EdgeInsets.zero,
+                    itemCount: widget.choices.length,
+                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    itemBuilder: (_, i) => _row(widget.choices[i]),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _row(_BuildingChoice b) {
+    final scheme = Theme.of(context).colorScheme;
+    final selected = b == widget.selected;
+    return InkWell(
+      onTap: () => _pick(b),
+      child: Container(
+        height: _rowHeight - 1,
+        color: selected ? Tone.blue.bg(context) : null,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 72,
+              child: Text(
+                b.code,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  color: Tone.blue.fg(context),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                b.facility.name(Localizations.localeOf(context)),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  color: scheme.onSurface,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Full-width stadium "위치 보기" button: pale gray when disabled, bright
+/// blue with a glow once a building and a valid room are entered.
+class _SearchButton extends StatelessWidget {
+  const _SearchButton({required this.label, required this.onPressed});
+
+  final String label;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final enabled = onPressed != null;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(999),
+        boxShadow: enabled
+            ? [
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: 0.28),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ]
+            : null,
+      ),
+      child: FilledButton.icon(
+        onPressed: onPressed,
+        icon: const Icon(Symbols.location_on, size: 22),
+        label: Text(label),
+        style: FilledButton.styleFrom(
+          minimumSize: const Size.fromHeight(56),
+          textStyle:
+              const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+        ),
+      ),
     );
   }
 }

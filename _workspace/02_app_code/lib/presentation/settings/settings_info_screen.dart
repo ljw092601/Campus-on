@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/config/app_config.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../../core/theme/app_theme.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// Which static info page to render (Settings sub-pages, S9).
 enum SettingsInfoType { about, dataSource, contact }
@@ -35,10 +36,19 @@ class SettingsInfoScreen extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(d.spaceMd),
         children: [
-          Text(body, style: Theme.of(context).textTheme.bodyLarge),
+          GroupCard(
+            padding: EdgeInsets.all(d.spaceMd + 4),
+            children: [
+              Text(body,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(height: 1.55)),
+            ],
+          ),
           if (type == SettingsInfoType.contact) ...[
             SizedBox(height: d.spaceLg),
-            FilledButton.tonalIcon(
+            FilledButton.icon(
               onPressed: () => _sendEmail(AppConfig.contactEmail),
               icon: const Icon(Symbols.mail),
               label: Text(l.settings_contact_emailLabel),
@@ -46,6 +56,7 @@ class SettingsInfoScreen extends StatelessWidget {
             SizedBox(height: d.spaceSm),
             SelectableText(
               AppConfig.contactEmail,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),

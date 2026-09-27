@@ -8,10 +8,35 @@ import '../../../domain/entities/favorite_ref.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/locale_provider.dart';
+import 'ui_kit.dart';
+
+/// Mockup accent tone + hub glyph per guide category (DONG-A-MATE UI):
+/// immigration blue, housing yellow, living green, health coral, school
+/// purple, emergency red. [GuideCategory.icon] stays the item-level default.
+extension GuideCategoryTone on GuideCategory {
+  Tone get tone => switch (this) {
+        GuideCategory.immigration => Tone.blue,
+        GuideCategory.housing => Tone.yellow,
+        GuideCategory.living => Tone.green,
+        GuideCategory.health => Tone.coral,
+        GuideCategory.school => Tone.purple,
+        GuideCategory.emergency => Tone.red,
+      };
+
+  IconData get hubIcon => switch (this) {
+        GuideCategory.immigration => Symbols.badge,
+        GuideCategory.housing => Symbols.home,
+        GuideCategory.living => Symbols.account_balance,
+        GuideCategory.health => Symbols.add_box,
+        GuideCategory.school => Symbols.school,
+        GuideCategory.emergency => Symbols.notifications,
+      };
+}
 
 /// Reusable guide row (UX doc §4.5 ListItem, guide variant): item/category icon
-/// in the category color,
-/// title, one-line summary, trailing favorite star. Shared by S6 and S10.
+/// on a tinted tile in the category tone, bold title, one-line summary,
+/// trailing favorite star. Shared by S6 and S10; meant to sit inside a
+/// [GroupCard].
 class GuideListItem extends ConsumerWidget {
   const GuideListItem({super.key, required this.item, required this.onTap});
 
@@ -22,7 +47,7 @@ class GuideListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final color = context.catColors.forGuide(item.categoryId);
+    final scheme = Theme.of(context).colorScheme;
     // Narrow the subscription: only this row's favorite flag, so toggling one
     // item doesn't rebuild the whole list (QA P-1).
     final favKey = '${FavoriteType.guide.name}:${item.id}';
@@ -32,19 +57,27 @@ class GuideListItem extends ConsumerWidget {
 
     return ListTile(
       onTap: onTap,
-      leading: CircleAvatar(
-        backgroundColor: color.withValues(alpha: 0.15),
-        child: Icon(item.icon, color: color),
-      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 4),
+      minVerticalPadding: 10,
+      leading: IconTile(icon: item.icon, tone: item.categoryId.tone, size: 44),
       title: Text(item.title(locale),
-          maxLines: 1, overflow: TextOverflow.ellipsis),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: scheme.onSurface,
+          )),
       subtitle: summary != null
-          ? Text(summary, maxLines: 1, overflow: TextOverflow.ellipsis)
+          ? Text(summary,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 13.5, color: scheme.onSurfaceVariant))
           : null,
       trailing: IconButton(
         icon: Icon(Symbols.star,
             fill: isFav ? 1 : 0,
-            color: isFav ? Theme.of(context).colorScheme.primary : null),
+            color: isFav ? AppColors.yellow : scheme.onSurfaceVariant),
         tooltip: isFav ? l.guide_favorite_remove : l.guide_favorite_add,
         onPressed: () => ref
             .read(favoritesProvider.notifier)

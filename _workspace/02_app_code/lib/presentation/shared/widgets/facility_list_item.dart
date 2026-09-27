@@ -9,9 +9,23 @@ import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/favorites_provider.dart';
 import '../../providers/locale_provider.dart';
 import '../category_labels.dart';
+import 'ui_kit.dart';
+
+/// Mockup accent tone per facility category (icon tiles, badges, headers).
+extension FacilityCategoryTone on FacilityCategory {
+  Tone get tone => switch (this) {
+        FacilityCategory.building => Tone.blue,
+        FacilityCategory.classroom => Tone.purple,
+        FacilityCategory.dining => Tone.coral,
+        FacilityCategory.library => Tone.green,
+        FacilityCategory.amenity => Tone.yellow,
+        FacilityCategory.etc => Tone.neutral,
+      };
+}
 
 /// Reusable facility row (UX doc §4.5 ListItem, facility variant).
-/// leading category icon+color, title, "category · Xm", trailing favorite star.
+/// leading tinted icon tile, bold title, "category · Xm", trailing favorite
+/// star.
 class FacilityListItem extends ConsumerWidget {
   const FacilityListItem({
     super.key,
@@ -28,7 +42,7 @@ class FacilityListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final color = context.catColors.forFacility(facility.category);
+    final scheme = Theme.of(context).colorScheme;
     // Narrow the subscription to this row's favorite flag only (QA P-1).
     final favKey = '${FavoriteType.facility.name}:${facility.id}';
     final isFav = ref.watch(favoritesProvider
@@ -41,20 +55,27 @@ class FacilityListItem extends ConsumerWidget {
 
     return ListTile(
       onTap: onTap,
-      leading: CircleAvatar(
-        backgroundColor: color.withValues(alpha: 0.15),
-        child: Icon(facility.category.icon, color: color),
-      ),
+      contentPadding:
+          EdgeInsets.symmetric(horizontal: context.dimens.spaceMd, vertical: 4),
+      leading:
+          IconTile(icon: facility.category.icon, tone: facility.category.tone),
       title: Text(facility.name(locale),
-          maxLines: 1, overflow: TextOverflow.ellipsis),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: headingColor(context),
+          )),
       subtitle: Text(subtitleParts.join(' · '),
-          maxLines: 1, overflow: TextOverflow.ellipsis),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant)),
       trailing: IconButton(
         icon: Icon(Symbols.star,
             fill: isFav ? 1 : 0,
-            color: isFav ? Theme.of(context).colorScheme.primary : null),
-        tooltip:
-            isFav ? l.facility_favorite_remove : l.facility_favorite_add,
+            color: isFav ? AppColors.yellow : scheme.outline),
+        tooltip: isFav ? l.facility_favorite_remove : l.facility_favorite_add,
         onPressed: () => ref
             .read(favoritesProvider.notifier)
             .toggle(FavoriteType.facility, facility.id),

@@ -29,13 +29,30 @@
   "home_hero_title_highlight": "your new beginning",
   "home_hero_title_suffix": "!",
   "home_hero_subtitle": "Essential info and services for international students,\nquick and easy in Korea.",
-  "home_card_guide_desc": "Entry & visa, enrollment, certificates — all the admin how-tos.",
+  "home_card_guide_desc": "Visas, enrollment, certificates",
   "home_card_calendar_title": "Academic calendar",
-  "home_card_calendar_desc": "Key semester dates — course registration, exams, breaks.",
+  "home_card_calendar_desc": "Registration, exams, breaks",
   "home_card_map_title": "Campus map",
-  "home_card_map_desc": "Find buildings and key spots on the campus map.",
+  "home_card_map_desc": "Find buildings and rooms",
   "home_card_dining_title": "Today's menu",
-  "home_card_dining_desc": "Check cafeteria menus and opening hours.",
+  "home_card_dining_desc": "Menus and hours by cafeteria",
+  "home_greeting": "Where to today?",
+  "home_semesterWeek": "{year} Semester {term} · Week {week}",
+  "@home_semesterWeek": {
+    "placeholders": { "year": { "type": "int" }, "term": { "type": "int" }, "week": { "type": "int" } }
+  },
+  "home_break_summer": "{year} Summer break",
+  "@home_break_summer": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "home_break_winter": "{year} Winter break",
+  "@home_break_winter": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "home_classroom_subtitle": "Find it by building name or room number",
+  "home_classroom_hint": "e.g. Engineering Bldg 2, 301",
+  "home_upcoming_title": "Upcoming",
+  "home_viewAll": "See all",
 
   "map_zoomIn_tooltip": "Zoom in",
   "map_zoomOut_tooltip": "Zoom out",
@@ -78,6 +95,7 @@
   "calendar_cat_exam": "Exams",
   "calendar_cat_holiday": "Holiday",
   "calendar_cat_graduation": "Graduation",
+  "calendar_thisMonth": "This month",
 
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",
@@ -90,6 +108,10 @@
   "map_campus_seunghak": "Seunghak",
   "map_campus_gudeok": "Gudeok",
   "map_campus_bumin": "Bumin",
+  "map_campus_full": "{campus} Campus",
+  "@map_campus_full": {
+    "placeholders": { "campus": { "type": "String" } }
+  },
   "map_toggle_toList": "List",
   "map_toggle_toMap": "Map",
   "map_empty_noMarker": "No facilities in this category.",
@@ -126,6 +148,10 @@
   "@facility_floors_roomCount": {
     "placeholders": { "count": { "type": "int" } }
   },
+  "facility_floors_total": "{count} total",
+  "@facility_floors_total": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "facility_detail_error": "Couldn't load the info.",
   "facility_favorite_add": "Add to favorites",
   "facility_favorite_remove": "Remove from favorites",
@@ -158,6 +184,9 @@
   "guide_category_emergency": "Emergency & Help",
 
   "guide_appbar_title": "Admin guide",
+  "guide_search_hint": "What do you need? e.g. visa extension",
+  "guide_contactCard_title": "Can't find what you need?",
+  "guide_contactCard_body": "Ask the Office of International Affairs directly",
   "guide_categorySummary_immigration": "Visa, ARC, extension of stay",
   "guide_categorySummary_housing": "Dormitory & off-campus housing",
   "guide_categorySummary_living": "Banking, mobile, transit card",
@@ -192,6 +221,7 @@
   "settings_language_ko": "한국어",
   "settings_language_en": "English",
   "settings_favorites_title": "Favorites",
+  "settings_favorites_subtitle": "Saved buildings and restaurants in one place",
   "settings_section_info": "About",
   "settings_about": "About the app",
   "settings_dataSource": "Data sources",

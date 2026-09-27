@@ -12,7 +12,9 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/widgets/guide_list_item.dart' show GuideCategoryTone;
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S7 — Guide Detail. Fixed section template (overview → checklist → steps →
 /// tips → phrases → links/locations) rendered as scrollable cards, each headed
@@ -62,8 +64,9 @@ class _FavoriteButton extends ConsumerWidget {
     return IconButton(
       icon: Icon(Symbols.star, fill: isFav ? 1 : 0),
       tooltip: isFav ? l.guide_favorite_remove : l.guide_favorite_add,
-      onPressed: () =>
-          ref.read(favoritesProvider.notifier).toggle(FavoriteType.guide, itemId),
+      onPressed: () => ref
+          .read(favoritesProvider.notifier)
+          .toggle(FavoriteType.guide, itemId),
     );
   }
 }
@@ -76,7 +79,9 @@ class _DetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final accent = accentFor(context, context.catColors.forGuide(item.categoryId));
+    // Category tone shared with the hub / list tiles (DONG-A-MATE mockup);
+    // [Tone.fg] already lightens itself for dark mode.
+    final accent = item.categoryId.tone.fg(context);
     final d = context.dimens;
     final scheme = Theme.of(context).colorScheme;
 
@@ -99,7 +104,10 @@ class _DetailBody extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.detailTitle(locale),
-                  style: Theme.of(context).textTheme.headlineSmall),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: headingColor(context),
+                      )),
               SizedBox(height: d.spaceSm),
               _MetaRow(item: item, color: accent),
             ],
@@ -223,21 +231,6 @@ class _DetailBody extends ConsumerWidget {
   }
 }
 
-/// Category accent adjusted for the current brightness.
-///
-/// The category tokens (§4.1) are single mid-tone values shared by both themes
-/// — e.g. living = teal `#00838F`, which does not clear text contrast on the
-/// dark surface. Light mode keeps the exact token; dark mode gets a lightened,
-/// slightly desaturated variant so the dark palette itself stays unchanged.
-Color accentFor(BuildContext context, Color base) {
-  if (Theme.of(context).brightness == Brightness.light) return base;
-  final hsl = HSLColor.fromColor(base);
-  return hsl
-      .withLightness((hsl.lightness + 0.32).clamp(0.0, 1.0))
-      .withSaturation((hsl.saturation * 0.85).clamp(0.0, 1.0))
-      .toColor();
-}
-
 class _MetaRow extends StatelessWidget {
   const _MetaRow({required this.item, required this.color});
   final AdminGuideItem item;
@@ -314,21 +307,31 @@ class _Section extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: accent),
-                SizedBox(width: d.spaceSm),
+                Container(
+                  width: 32,
+                  height: 32,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: accent.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, size: 18, color: accent),
+                ),
+                SizedBox(width: d.spaceSm + 2),
                 Expanded(
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: accent,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                         ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: d.spaceSm),
-            Divider(height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
+            SizedBox(height: d.spaceSm + 2),
+            Divider(
+                height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
             SizedBox(height: d.spaceMd),
             child,
           ],
@@ -537,8 +540,8 @@ class _PhraseCard extends StatelessWidget {
           children: [
             SizedBox(
               width: 56,
-              child: Text(label,
-                  style: text.labelLarge?.copyWith(color: color)),
+              child:
+                  Text(label, style: text.labelLarge?.copyWith(color: color)),
             ),
             SizedBox(width: d.spaceSm),
             Expanded(child: Text(value, style: style)),
@@ -588,8 +591,7 @@ class _ChecklistRow extends StatelessWidget {
               size: 20, color: scheme.onSurfaceVariant),
           SizedBox(width: context.dimens.spaceSm),
           Expanded(
-              child:
-                  Text(text, style: Theme.of(context).textTheme.bodyLarge)),
+              child: Text(text, style: Theme.of(context).textTheme.bodyLarge)),
         ],
       ),
     );
@@ -597,7 +599,8 @@ class _ChecklistRow extends StatelessWidget {
 }
 
 class _StepRow extends StatelessWidget {
-  const _StepRow({required this.index, required this.text, required this.color});
+  const _StepRow(
+      {required this.index, required this.text, required this.color});
   final int index;
   final String text;
   final Color color;
@@ -625,8 +628,7 @@ class _StepRow extends StatelessWidget {
           ),
           SizedBox(width: context.dimens.spaceSm),
           Expanded(
-              child:
-                  Text(text, style: Theme.of(context).textTheme.bodyLarge)),
+              child: Text(text, style: Theme.of(context).textTheme.bodyLarge)),
         ],
       ),
     );
@@ -693,21 +695,20 @@ class _RelatedLocationCard extends ConsumerWidget {
     final facility = async.valueOrNull;
     if (facility == null) return const SizedBox.shrink();
 
-    final color = context.catColors.forFacility(facility.category);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.dimens.spaceXs),
       child: Card(
         margin: EdgeInsets.zero,
         child: InkWell(
-          borderRadius: context.dimens.brMd,
+          borderRadius: BorderRadius.circular(AppColors.cardRadius),
           // Single-id focus per the deep-link contract (UX §3).
           onTap: () => context.go('/map?focus=$facilityId'),
           child: Padding(
             padding: EdgeInsets.all(context.dimens.spaceMd),
             child: Row(
               children: [
-                Icon(Symbols.location_on, color: color),
-                SizedBox(width: context.dimens.spaceSm),
+                const IconTile(icon: Symbols.location_on, size: 40),
+                SizedBox(width: context.dimens.spaceSm + 4),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -715,16 +716,15 @@ class _RelatedLocationCard extends ConsumerWidget {
                       Text(facility.name(locale),
                           style: Theme.of(context).textTheme.titleSmall),
                       Text(
-                        [facility.building(locale), l.guide_relatedLocation_hint]
+                        [
+                          facility.building(locale),
+                          l.guide_relatedLocation_hint
+                        ]
                             .where((e) => e != null && e.trim().isNotEmpty)
                             .join(' · '),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -751,12 +751,14 @@ class _ComingSoonCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(context.dimens.spaceLg),
       decoration: BoxDecoration(
-        color: scheme.surfaceContainerHighest,
-        borderRadius: context.dimens.brMd,
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(AppColors.cardRadius),
+        border: Border.all(color: scheme.outlineVariant),
+        boxShadow: softShadow(context),
       ),
       child: Row(
         children: [
-          Icon(Symbols.hourglass_top, color: scheme.onSurfaceVariant),
+          const IconTile(icon: Symbols.hourglass_top, tone: Tone.neutral, size: 40),
           SizedBox(width: context.dimens.spaceMd),
           Expanded(
             child: Text(text,

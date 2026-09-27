@@ -8,6 +8,7 @@ import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/locale_provider.dart';
 import '../floor_plan_screen.dart';
+import '../../shared/widgets/ui_kit.dart';
 import 'floor_plan_view.dart';
 
 /// Classroom-search result inside the map peek sheet: the searched room's
@@ -51,17 +52,14 @@ class RoomLocationCard extends ConsumerWidget {
         const Icon(Symbols.location_on, color: Color(0xFFE53935), fill: 1),
         SizedBox(width: d.spaceXs),
         Text(fullCode,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.3,
+                color: headingColor(context))),
         const Spacer(),
         if (async.valueOrNull != null)
-          Text(async.valueOrNull!.plan.floorLabel,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: scheme.primary)),
+          ToneBadge(async.valueOrNull!.plan.floorLabel, tone: Tone.navy),
       ],
     );
 
@@ -98,7 +96,7 @@ class RoomLocationCard extends ConsumerWidget {
                 color: Colors.white,
                 clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(
-                  borderRadius: d.brSm,
+                  borderRadius: BorderRadius.circular(20),
                   side: BorderSide(color: scheme.outlineVariant),
                 ),
                 child: InkWell(
@@ -115,16 +113,24 @@ class RoomLocationCard extends ConsumerWidget {
                       FloorPlanView(
                           plan: loc.plan, room: loc.room, decodeWidth: 1200),
                       Positioned(
-                        right: 8,
-                        bottom: 8,
+                        right: 10,
+                        bottom: 10,
                         child: Container(
-                          padding: const EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.black54,
-                            borderRadius: BorderRadius.circular(8),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF1B3A7A)
+                                    .withValues(alpha: 0.18),
+                                blurRadius: 10,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
                           child: const Icon(Symbols.zoom_in,
-                              size: 18, color: Colors.white),
+                              size: 18, color: AppColors.blue),
                         ),
                       ),
                     ],

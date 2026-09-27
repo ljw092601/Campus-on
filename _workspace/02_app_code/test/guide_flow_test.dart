@@ -47,6 +47,15 @@ Future<void> _openGuideHub(WidgetTester tester, {bool ko = false}) async {
   await tester.pumpAndSettle();
 }
 
+/// Taps a category row on the guide hub. The hub opens with a search pill and
+/// sits above a contact card, so the lower rows can start below the fold of
+/// the default 800×600 test surface — scroll the row into view first.
+Future<void> _tapCategory(WidgetTester tester, String label) async {
+  await tester.ensureVisible(find.text(label));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(label));
+}
+
 void main() {
   testWidgets('Guide tab: categories → item list → detail', (tester) async {
     _useTallSurface(tester);
@@ -318,6 +327,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(arcLink);
     await tester.pumpAndSettle();
+    // Wait out the mock repo latency before the ARC page has content.
+    await tester.pump(const Duration(milliseconds: 400));
+    await tester.pumpAndSettle();
     expect(find.text('Residence Card (ARC)'), findsWidgets);
 
     // Drain the ARC page's related-location lookup (mock repo delay) so no
@@ -333,7 +345,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
     await tester.pumpAndSettle();
@@ -410,7 +422,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
     await tester.pumpAndSettle();
@@ -441,7 +453,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('National Health Insurance'));
     await tester.pumpAndSettle();
@@ -452,6 +464,9 @@ void main() {
     await tester.scrollUntilVisible(arcLink, 400);
     await tester.pumpAndSettle();
     await tester.tap(arcLink);
+    await tester.pumpAndSettle();
+    // Wait out the mock repo latency before the ARC page has content.
+    await tester.pump(const Duration(milliseconds: 400));
     await tester.pumpAndSettle();
     expect(find.text('Residence Card (ARC)'), findsWidgets);
 
@@ -477,7 +492,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Course Registration'));
     await tester.pumpAndSettle();
@@ -610,7 +625,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Course Registration'));
     await tester.pumpAndSettle();
@@ -711,7 +726,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Course Registration'));
     await tester.pumpAndSettle();
@@ -769,7 +784,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Certificate Issuance'));
     await tester.pumpAndSettle();
@@ -856,7 +871,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Certificate Issuance'));
     await tester.pumpAndSettle();
@@ -893,7 +908,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Library Guide'));
     await tester.pumpAndSettle();
@@ -992,7 +1007,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Library Guide'));
     await tester.pumpAndSettle();
@@ -1025,7 +1040,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('학교 행정'));
+    await _tapCategory(tester, '학교 행정');
     await tester.pumpAndSettle();
     await tester.tap(find.text('도서관 이용안내'));
     await tester.pumpAndSettle();
@@ -1056,7 +1071,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Library Guide'));
     await tester.pumpAndSettle();
@@ -1086,7 +1101,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('International Affairs Office'));
     await tester.pumpAndSettle();
@@ -1168,7 +1183,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('International Affairs Office'));
     await tester.pumpAndSettle();
@@ -1193,7 +1208,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('International Affairs Office'));
     await tester.pumpAndSettle();
@@ -1225,7 +1240,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('학교 행정'));
+    await _tapCategory(tester, '학교 행정');
     await tester.pumpAndSettle();
     await tester.tap(find.text('국제교류과 방문 안내'));
     await tester.pumpAndSettle();
@@ -1255,7 +1270,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('School admin'));
+    await _tapCategory(tester, 'School admin');
     await tester.pumpAndSettle();
     await tester.tap(find.text('International Affairs Office'));
     await tester.pumpAndSettle();
@@ -1285,7 +1300,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Campus Health Center'));
     await tester.pumpAndSettle();
@@ -1566,7 +1581,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     expect(
       find.text('Care, prescriptions & after-hours help'),
@@ -1680,7 +1695,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Visiting a Hospital'));
     await tester.pumpAndSettle();
@@ -1707,7 +1722,7 @@ void main() {
     // the route rather than pushing one, so re-enter from the tab instead of
     // popping.
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Visiting a Hospital'));
     await tester.pumpAndSettle();
@@ -1739,7 +1754,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Visiting a Hospital'));
     await tester.pumpAndSettle();
@@ -1772,7 +1787,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('건강·보험'));
+    await _tapCategory(tester, '건강·보험');
     await tester.pumpAndSettle();
     expect(find.text('접수 · 진료 · 처방전 · 야간 진료'), findsOneWidget);
 
@@ -1837,7 +1852,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Health & Insurance'));
+    await _tapCategory(tester, 'Health & Insurance');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Visiting a Hospital'));
     await tester.pumpAndSettle();
@@ -1964,7 +1979,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
 
     // S6 row subtitle no longer advertises 1345.
@@ -2044,7 +2059,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Emergency Contacts'));
     await tester.pumpAndSettle();
@@ -2078,7 +2093,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('긴급·도움'));
+    await _tapCategory(tester, '긴급·도움');
     await tester.pumpAndSettle();
     expect(find.text('112 · 119 긴급신고 안내'), findsOneWidget);
 
@@ -2109,7 +2124,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Emergency Contacts'));
     await tester.pumpAndSettle();
@@ -2954,7 +2969,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     expect(find.text('Wellbeing & life support'), findsOneWidget);
 
@@ -3049,7 +3064,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Counseling'));
     await tester.pumpAndSettle();
@@ -3066,7 +3081,7 @@ void main() {
     // `_LinkRow` uses `context.go`, which replaces the route rather than
     // pushing one, so re-enter from the tab instead of popping.
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Counseling'));
     await tester.pumpAndSettle();
@@ -3095,7 +3110,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Counseling'));
     await tester.pumpAndSettle();
@@ -3129,7 +3144,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('긴급·도움'));
+    await _tapCategory(tester, '긴급·도움');
     await tester.pumpAndSettle();
     expect(find.text('심리·생활 상담 안내'), findsOneWidget);
 
@@ -3188,7 +3203,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Counseling'));
     await tester.pumpAndSettle();
@@ -3610,7 +3625,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     expect(find.text('Loss, theft, accidents'), findsOneWidget);
 
@@ -3712,7 +3727,7 @@ void main() {
 
     Future<void> openGuide() async {
       await _openGuideHub(tester);
-      await tester.tap(find.text('Emergency & Help'));
+      await _tapCategory(tester, 'Emergency & Help');
       await tester.pumpAndSettle();
       await tester.tap(find.text('Incident Response'));
       await tester.pumpAndSettle();
@@ -3761,7 +3776,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Incident Response'));
     await tester.pumpAndSettle();
@@ -3795,7 +3810,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester, ko: true);
-    await tester.tap(find.text('긴급·도움'));
+    await _tapCategory(tester, '긴급·도움');
     await tester.pumpAndSettle();
     expect(find.text('분실·도난·사고 시 대응'), findsOneWidget);
 
@@ -3847,7 +3862,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Incident Response'));
     await tester.pumpAndSettle();
@@ -3886,7 +3901,7 @@ void main() {
     await tester.pumpAndSettle();
 
     await _openGuideHub(tester);
-    await tester.tap(find.text('Emergency & Help'));
+    await _tapCategory(tester, 'Emergency & Help');
     await tester.pumpAndSettle();
     await tester.tap(find.text('Test Coming Soon'));
     await tester.pumpAndSettle();

@@ -10,6 +10,7 @@ import '../providers/favorites_provider.dart';
 import '../shared/widgets/facility_list_item.dart';
 import '../shared/widgets/guide_list_item.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S10 — Favorites. Facility/guide segments over locally-saved items, with
 /// swipe-to-delete. Ids are local (SharedPreferences) but the referenced
@@ -36,17 +37,13 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
         children: [
           Padding(
             padding: EdgeInsets.all(context.dimens.spaceMd),
-            child: SegmentedButton<_Segment>(
-              segments: [
-                ButtonSegment(
-                    value: _Segment.facility,
-                    label: Text(l.favorites_segment_facility)),
-                ButtonSegment(
-                    value: _Segment.guide,
-                    label: Text(l.favorites_segment_guide)),
-              ],
-              selected: {_segment},
-              onSelectionChanged: (s) => setState(() => _segment = s.first),
+            child: PillSegmented<_Segment>(
+              values: _Segment.values,
+              selected: _segment,
+              labelOf: (s) => s == _Segment.facility
+                  ? l.favorites_segment_facility
+                  : l.favorites_segment_guide,
+              onChanged: (s) => setState(() => _segment = s),
             ),
           ),
           Expanded(
@@ -85,22 +82,30 @@ class _FacilityFavorites extends ConsumerWidget {
             onAction: () => context.go('/map'),
           );
         }
-        return ListView.separated(
-          itemCount: facilities.length,
-          separatorBuilder: (_, __) => const Divider(height: 1),
-          itemBuilder: (context, i) {
-            final f = facilities[i];
-            return Dismissible(
-              key: ValueKey('fav-facility-${f.id}'),
-              direction: DismissDirection.endToStart,
-              background: const _DismissBg(),
-              onDismissed: (_) => _remove(context, ref, FavoriteType.facility, f.id),
-              child: FacilityListItem(
-                facility: f,
-                onTap: () => context.go('/map/facility/${f.id}'),
-              ),
-            );
-          },
+        // Grouped white card (DONG-A-MATE mockup). Facility rows carry their
+        // own ListTile padding, so the card adds none.
+        return ListView(
+          padding: _listPadding,
+          children: [
+            GroupCard(
+              padding: EdgeInsets.zero,
+              dividerIndent: 16,
+              children: [
+                for (final f in facilities)
+                  Dismissible(
+                    key: ValueKey('fav-facility-${f.id}'),
+                    direction: DismissDirection.endToStart,
+                    background: const _DismissBg(),
+                    onDismissed: (_) =>
+                        _remove(context, ref, FavoriteType.facility, f.id),
+                    child: FacilityListItem(
+                      facility: f,
+                      onTap: () => context.go('/map/facility/${f.id}'),
+                    ),
+                  ),
+              ],
+            ),
+          ],
         );
       },
     );
@@ -132,27 +137,33 @@ class _GuideFavorites extends ConsumerWidget {
             onAction: () => context.go('/guide'),
           );
         }
-        return ListView.separated(
-          itemCount: items.length,
-          separatorBuilder: (_, __) => const Divider(height: 1),
-          itemBuilder: (context, i) {
-            final g = items[i];
-            return Dismissible(
-              key: ValueKey('fav-guide-${g.id}'),
-              direction: DismissDirection.endToStart,
-              background: const _DismissBg(),
-              onDismissed: (_) => _remove(context, ref, FavoriteType.guide, g.id),
-              child: GuideListItem(
-                item: g,
-                onTap: () => context.go('/guide/item/${g.id}'),
-              ),
-            );
-          },
+        return ListView(
+          padding: _listPadding,
+          children: [
+            GroupCard(
+              children: [
+                for (final g in items)
+                  Dismissible(
+                    key: ValueKey('fav-guide-${g.id}'),
+                    direction: DismissDirection.endToStart,
+                    background: const _DismissBg(),
+                    onDismissed: (_) =>
+                        _remove(context, ref, FavoriteType.guide, g.id),
+                    child: GuideListItem(
+                      item: g,
+                      onTap: () => context.go('/guide/item/${g.id}'),
+                    ),
+                  ),
+              ],
+            ),
+          ],
         );
       },
     );
   }
 }
+
+const _listPadding = EdgeInsets.fromLTRB(16, 0, 16, 24);
 
 void _remove(
     BuildContext context, WidgetRef ref, FavoriteType type, String id) {
