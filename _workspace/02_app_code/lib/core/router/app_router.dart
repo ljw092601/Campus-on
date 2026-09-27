@@ -115,11 +115,18 @@ class AppRouter {
                   // `?floor=03` (classroom search): open the focused
                   // building's peek sheet expanded at that floor.
                   final floor = state.uri.queryParameters['floor'];
+                  // `&room=0306-1`: red dot on that room's floor plan.
+                  final room = state.uri.queryParameters['room'];
+                  // `&plan=B04A`: which drawings (wing) the room is on,
+                  // when it differs from the building code.
+                  final plan = state.uri.queryParameters['plan'];
                   return MapScreen(
                     focusIds: ids,
                     nearbyQueries: queries,
                     focusFloorCode:
                         (floor == null || floor.isEmpty) ? null : floor,
+                    focusRoomCode: (room == null || room.isEmpty) ? null : room,
+                    focusPlanCode: (plan == null || plan.isEmpty) ? null : plan,
                   );
                 },
                 routes: [
@@ -174,7 +181,7 @@ class AppRouter {
         path: '/search',
         builder: (context, state) => const SearchScreen(),
       ),
-      // Full-screen classroom-location search above the shell (placeholder).
+      // Full-screen classroom-location search above the shell.
       GoRoute(
         parentNavigatorKey: _rootKey,
         path: '/classroom-search',

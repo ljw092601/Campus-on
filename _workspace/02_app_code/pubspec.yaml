@@ -87,6 +87,9 @@ flutter:
     # tool/app_icon/build_icon.py —
     # assets/icon/ stays unbundled: those launcher sources are build-time only).
     - assets/home/
+    # Classroom-search floor plans (WebP) + room index (floorplans.json),
+    # generated from 도면화/ by tool/floorplans/build_floorplans.py.
+    - assets/floorplans/
 
   # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
   # fonts:

@@ -8,19 +8,24 @@ import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/classroom_providers.dart';
 import '../providers/facility_providers.dart';
+import '../providers/floor_plan_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
 /// `/classroom-search`).
 ///
-/// Room codes are `<campus letter + 2-digit building>-<4-digit room>`, e.g.
-/// S01-0301 (first two room digits = floor). The building half is a single
-/// dropdown over the 48 campus-map buildings; the room half is a filtered
-/// 4-digit input with suggestions from [classroomEntriesProvider] (placeholder
-/// data derived from the floor guide until the real room list arrives).
-/// Searching deep-links to `/map?focus=<building>&floor=<2 digits>` — pin
-/// focused, peek sheet expanded at that floor.
+/// Room codes are `<campus letter + 2-digit building>-<room>`, e.g. S01-0301,
+/// S04-0306-1, S04-0101-A (first two room digits = floor) or B02-B101
+/// (basement 1). The building half is a single dropdown over the campus-map
+/// buildings — a building whose drawings are split by wing (B04 → B04A /
+/// B04B) gets one entry per wing; the room half is a free input with
+/// suggestions from [classroomEntriesProvider] (real codes for buildings with
+/// floor-plan drawings, placeholder data derived from the floor guide
+/// otherwise). Searching deep-links to
+/// `/map?focus=<building>&floor=<03|B1>&room=<code>[&plan=<plan code>]` — pin
+/// focused, peek sheet expanded with the room's floor plan (red dot) above
+/// the floor guide.
 class ClassroomSearchScreen extends ConsumerStatefulWidget {
   const ClassroomSearchScreen({super.key});
 
@@ -29,8 +34,29 @@ class ClassroomSearchScreen extends ConsumerStatefulWidget {
       _ClassroomSearchScreenState();
 }
 
+/// One dropdown entry: a campus-map building, narrowed to one set of drawings
+/// ([planCode], e.g. "B04A") when it has any.
+class _BuildingChoice {
+  const _BuildingChoice(this.facility, this.planCode);
+
+  final Facility facility;
+  final String? planCode;
+
+  /// Code shown to the user and used as the room-code prefix.
+  String get code => planCode ?? facility.buildingCode!;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _BuildingChoice &&
+      other.facility.id == facility.id &&
+      other.planCode == planCode;
+
+  @override
+  int get hashCode => Object.hash(facility.id, planCode);
+}
+
 class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
-  Facility? _building;
+  _BuildingChoice? _building;
   final _roomCtrl = TextEditingController();
 
   @override
@@ -39,27 +65,37 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
     super.dispose();
   }
 
-  bool get _canSearch => _building != null && _roomCtrl.text.length == 4;
+  bool get _canSearch =>
+      _building != null && roomCodePattern.hasMatch(_roomCtrl.text);
 
   void _search() {
     final b = _building;
     if (b == null || !_canSearch) return;
-    final floor = _roomCtrl.text.substring(0, 2);
-    context.go('/map?focus=${b.id}&floor=$floor');
+    final code = _roomCtrl.text;
+    // "03" for 0301, "B1" for B101 (see MapScreen.focusFloorCode).
+    final floor = code.substring(0, 2);
+    final plan = b.planCode == null ? '' : '&plan=${b.planCode}';
+    context.go('/map?focus=${b.facility.id}&floor=$floor&room=$code$plan');
   }
 
-  /// Campus-map buildings sorted 승학(S) → 구덕(G) → 부민(B), then by code.
-  List<Facility> _buildings(List<Facility> all) {
-    final list = [
+  /// Campus-map buildings (split per drawing wing) sorted 승학(S) → 구덕(G)
+  /// → 부민(B), then by code.
+  List<_BuildingChoice> _buildings(
+      List<Facility> all, Iterable<String> planIndex) {
+    final list = <_BuildingChoice>[
       for (final f in all)
-        if (f.buildingCode != null && f.buildingCode!.isNotEmpty) f
+        if (f.buildingCode != null && f.buildingCode!.isNotEmpty)
+          ...switch (planCodesFor(f.buildingCode!, planIndex)) {
+            [] => [_BuildingChoice(f, null)],
+            final codes => [for (final c in codes) _BuildingChoice(f, c)],
+          },
     ];
     const campusOrder = {'S': 0, 'G': 1, 'B': 2};
     list.sort((a, b) {
-      final ca = campusOrder[a.buildingCode![0]] ?? 9;
-      final cb = campusOrder[b.buildingCode![0]] ?? 9;
+      final ca = campusOrder[a.code[0]] ?? 9;
+      final cb = campusOrder[b.code[0]] ?? 9;
       if (ca != cb) return ca - cb;
-      return a.buildingCode!.compareTo(b.buildingCode!);
+      return a.code.compareTo(b.code);
     });
     return list;
   }
@@ -70,6 +106,9 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
     final locale = ref.watch(localeProvider);
     final scheme = Theme.of(context).colorScheme;
     final facilitiesAsync = ref.watch(allFacilitiesProvider);
+    // No drawings yet (loading / asset error) → plain building list.
+    final planIndex =
+        ref.watch(floorPlansProvider).valueOrNull?.keys ?? const <String>[];
 
     return Scaffold(
       appBar: AppBar(title: Text(l.classroom_search_title)),
@@ -81,7 +120,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
           onRetry: () => ref.invalidate(allFacilitiesProvider),
         ),
         data: (all) {
-          final buildings = _buildings(all);
+          final buildings = _buildings(all, planIndex);
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
@@ -98,7 +137,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: DropdownMenu<Facility>(
+                    child: DropdownMenu<_BuildingChoice>(
                       expandedInsets: EdgeInsets.zero,
                       menuHeight: 420,
                       hintText: l.classroom_hint_building,
@@ -109,8 +148,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                         for (final f in buildings)
                           DropdownMenuEntry(
                             value: f,
-                            label:
-                                '${f.buildingCode} · ${f.name(locale)}',
+                            label: '${f.code} · ${f.facility.name(locale)}',
                           ),
                       ],
                     ),
@@ -124,21 +162,26 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                             color: scheme.onSurfaceVariant)),
                   ),
                   SizedBox(
-                    width: 108,
+                    width: 132,
                     child: TextField(
                       controller: _roomCtrl,
                       onChanged: (_) => setState(() {}),
                       onSubmitted: (_) => _search(),
-                      keyboardType: TextInputType.number,
+                      // Plain text keyboard: the numeric pad has no hyphen
+                      // on every platform, and codes need "0306-1", "0101-A"
+                      // and basement "B101".
+                      keyboardType: TextInputType.visiblePassword,
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(4),
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[0-9A-Za-z-]')),
+                        const _UpperCaseFormatter(),
+                        LengthLimitingTextInputFormatter(7),
                       ],
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
-                          letterSpacing: 2),
+                          letterSpacing: 1),
                       decoration: InputDecoration(
                         hintText: l.classroom_hint_room,
                         hintStyle: const TextStyle(
@@ -180,9 +223,9 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
   }
 }
 
-/// Room-number suggestions for the selected building, prefix-filtered by the
-/// current input. Backed by placeholder data (floor guide derivation) until
-/// the real room list arrives.
+/// Room-number suggestions for the selected building, filtered by the
+/// current input. Real codes where a floor-plan drawing exists, placeholder
+/// data (floor guide derivation) elsewhere.
 class _SuggestionList extends ConsumerWidget {
   const _SuggestionList({
     required this.building,
@@ -190,7 +233,7 @@ class _SuggestionList extends ConsumerWidget {
     required this.onPick,
   });
 
-  final Facility building;
+  final _BuildingChoice building;
   final String query;
   final ValueChanged<String> onPick;
 
@@ -198,7 +241,8 @@ class _SuggestionList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final async = ref.watch(classroomEntriesProvider(building.id));
+    final async = ref.watch(
+        classroomEntriesProvider((building.facility.id, building.planCode)));
 
     return async.when(
       loading: () => const Padding(
@@ -218,18 +262,20 @@ class _SuggestionList extends ConsumerWidget {
           return _InfoNote(text: l.classroom_noRoomData);
         }
         // Contains-match so partial input works from anywhere in the code
-        // (e.g. "101" also surfaces 0101).
+        // (e.g. "101" also surfaces 0101, "0306" also 0306-1 / 0306-2).
         final matches = [
           for (final e in entries)
             if (e.code.contains(query)) e
         ];
+        // Long lists (drawings list every room) stay light.
+        final shown = matches.take(60).toList();
         if (matches.isEmpty) {
           return _InfoNote(text: l.classroom_suggestions_empty);
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (final e in matches)
+            for (final e in shown)
               Card(
                 margin: const EdgeInsets.only(bottom: 8),
                 child: ListTile(
@@ -237,8 +283,8 @@ class _SuggestionList extends ConsumerWidget {
                   onTap: () => onPick(e.code),
                   leading: Container(
                     constraints: const BoxConstraints(minWidth: 44),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 3),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: scheme.secondaryContainer,
                       borderRadius: BorderRadius.circular(8),
@@ -257,10 +303,15 @@ class _SuggestionList extends ConsumerWidget {
                     style: const TextStyle(
                         fontWeight: FontWeight.w700, letterSpacing: 1),
                   ),
-                  subtitle: Text(e.roomName,
-                      maxLines: 1, overflow: TextOverflow.ellipsis),
-                  trailing:
-                      Icon(Symbols.north_west, size: 18, color: scheme.outline),
+                  subtitle: e.onPlan
+                      ? Text(l.classroom_suggestion_onPlan)
+                      : Text(e.roomName,
+                          maxLines: 1, overflow: TextOverflow.ellipsis),
+                  trailing: Icon(
+                      e.onPlan ? Symbols.location_on : Symbols.north_west,
+                      size: 18,
+                      color:
+                          e.onPlan ? const Color(0xFFE53935) : scheme.outline),
                 ),
               ),
           ],
@@ -268,6 +319,16 @@ class _SuggestionList extends ConsumerWidget {
       },
     );
   }
+}
+
+/// Room codes are upper-case ("0101-A", "B101"); lets the user type either.
+class _UpperCaseFormatter extends TextInputFormatter {
+  const _UpperCaseFormatter();
+
+  @override
+  TextEditingValue formatEditUpdate(
+          TextEditingValue oldValue, TextEditingValue newValue) =>
+      newValue.copyWith(text: newValue.text.toUpperCase());
 }
 
 class _InfoNote extends StatelessWidget {

@@ -33,14 +33,25 @@ class MapScreen extends ConsumerStatefulWidget {
     this.focusIds = const [],
     this.nearbyQueries = const [],
     this.focusFloorCode,
+    this.focusRoomCode,
+    this.focusPlanCode,
   });
 
   final List<String> focusIds;
   final List<String> nearbyQueries;
 
-  /// 2-digit floor code from `/map?floor=` (classroom search deep link):
-  /// opens the focused building's peek sheet expanded at that floor.
+  /// Floor code from `/map?floor=` (classroom search deep link): "03" for
+  /// 3F, "B1" for basement 1. Opens the focused building's peek sheet
+  /// expanded at that floor.
   final String? focusFloorCode;
+
+  /// Room code from `/map?room=` (e.g. "0306-1"): the peek sheet shows that
+  /// room's floor plan with a red dot.
+  final String? focusRoomCode;
+
+  /// Floor-plan building code from `/map?plan=` ("B04A") when the room's
+  /// drawings are not filed under the building's own code.
+  final String? focusPlanCode;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -218,10 +229,25 @@ class _MapScreenState extends ConsumerState<MapScreen>
         !selected.hasFloorInfo) {
       return null;
     }
+    if (RegExp(r'^B\d$').hasMatch(code)) return '${code}F';
     final n = int.tryParse(code);
     if (n == null || n <= 0) return null;
     return '${n}F';
   }
+
+  /// `?room=` code, only while the deep-linked building is selected.
+  String? _roomCodeFor(Facility selected) {
+    final code = widget.focusRoomCode;
+    if (code == null ||
+        widget.focusIds.isEmpty ||
+        selected.id != widget.focusIds.first) {
+      return null;
+    }
+    return code;
+  }
+
+  bool _expandable(Facility selected) =>
+      selected.hasFloorInfo || _roomCodeFor(selected) != null;
 
   Facility? _find(List<Facility> list, String? id) {
     if (id == null) return null;
@@ -442,19 +468,23 @@ class _MapScreenState extends ConsumerState<MapScreen>
               child: DraggableScrollableSheet(
                 key: ValueKey(selected.id),
                 // A `?floor=` deep link lands with the guide already open.
-                initialChildSize: _floorLabelFor(selected) != null
+                initialChildSize: _floorLabelFor(selected) != null ||
+                        _roomCodeFor(selected) != null
                     ? _peekMax
                     : _peekMin,
                 minChildSize: _peekMin,
-                // No floor info → nothing below the header; lock the sheet.
-                maxChildSize: selected.hasFloorInfo ? _peekMax : _peekMin,
+                // Nothing below the header (no floor info, no searched
+                // room) → lock the sheet.
+                maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
                 // min/max are the implicit snap targets — half-open states
                 // settle to collapsed or expanded on release.
-                snap: selected.hasFloorInfo,
+                snap: _expandable(selected),
                 builder: (context, scrollController) => PeekSheet(
                   facility: selected,
                   scrollController: scrollController,
                   expandedFloor: _floorLabelFor(selected),
+                  roomCode: _roomCodeFor(selected),
+                  roomPlanCode: widget.focusPlanCode,
                   onViewDetail: () =>
                       context.go('/map/facility/${selected.id}'),
                 ),

@@ -40,12 +40,19 @@
   "map_zoomOut_tooltip": "축소",
 
   "classroom_search_title": "강의실 위치 검색",
-  "classroom_help": "건물을 선택하고 4자리 호수를 입력하세요.\n예) S01 - 0301 (앞 2자리 = 층)",
+  "classroom_help": "건물을 선택하고 호수를 입력하세요.\n예) S01 - 0301, S04 - 0306-1 (앞 2자리 = 층, 지하 1층은 B101)",
   "classroom_hint_building": "건물 선택",
   "classroom_hint_room": "호수",
   "classroom_action_search": "위치 보기",
   "classroom_suggestions_empty": "일치하는 호수가 없어요.",
   "classroom_noRoomData": "이 건물은 호수 정보가 아직 준비 중이에요. 4자리 번호로 바로 검색할 수 있어요.",
+  "classroom_suggestion_onPlan": "도면에 위치 표시",
+  "classroom_plan_unavailable": "이 강의실은 아직 도면에 표시할 수 없어요. 아래 층별 안내를 참고하세요.",
+  "classroom_plan_open": "{code} 도면 크게 보기",
+  "@classroom_plan_open": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "classroom_plan_recenter": "강의실 위치로",
 
   "dining_meal_breakfast": "조식",
   "dining_meal_lunch": "중식",

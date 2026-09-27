@@ -41,12 +41,19 @@
   "map_zoomOut_tooltip": "Zoom out",
 
   "classroom_search_title": "Classroom search",
-  "classroom_help": "Pick a building and type the 4-digit room number.\ne.g. S01 - 0301 (first 2 digits = floor)",
+  "classroom_help": "Pick a building and type the room number.\ne.g. S01 - 0301, S04 - 0306-1 (first 2 digits = floor; basement 1 is B101)",
   "classroom_hint_building": "Select a building",
   "classroom_hint_room": "Room",
   "classroom_action_search": "Show location",
   "classroom_suggestions_empty": "No matching rooms.",
   "classroom_noRoomData": "Room numbers for this building aren't registered yet. You can still search with a 4-digit number.",
+  "classroom_suggestion_onPlan": "Shown on the floor plan",
+  "classroom_plan_unavailable": "This room can't be shown on a floor plan yet. See the floor guide below.",
+  "classroom_plan_open": "Open floor plan for {code}",
+  "@classroom_plan_open": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "classroom_plan_recenter": "Back to the room",
 
   "dining_meal_breakfast": "Breakfast",
   "dining_meal_lunch": "Lunch",

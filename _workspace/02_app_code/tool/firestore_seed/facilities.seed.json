@@ -110,14 +110,14 @@
     "buildingCode": "S11",
     "hasFloorInfo": true
   },
-  "p4": {
+  "s12": {
     "name_ko": "공과대학4호관(P4)",
     "name_en": "Engineering Building 4 (P4)",
     "category": "building",
     "lat": 35.1160873732028,
     "lng": 128.9683284400812,
     "campus": "seunghak",
-    "buildingCode": "P4",
+    "buildingCode": "S12",
     "hasFloorInfo": false
   },
   "s13": {
