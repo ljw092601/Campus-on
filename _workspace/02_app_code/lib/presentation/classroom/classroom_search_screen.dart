@@ -75,7 +75,9 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
     // "03" for 0301, "B1" for B101 (see MapScreen.focusFloorCode).
     final floor = code.substring(0, 2);
     final plan = b.planCode == null ? '' : '&plan=${b.planCode}';
-    context.go('/map?focus=${b.facility.id}&floor=$floor&room=$code$plan');
+    // `t` makes every search a new request, even an identical repeat.
+    final t = DateTime.now().millisecondsSinceEpoch;
+    context.go('/map?focus=${b.facility.id}&floor=$floor&room=$code$plan&t=$t');
   }
 
   /// Campus-map buildings (split per drawing wing) sorted 승학(S) → 구덕(G)

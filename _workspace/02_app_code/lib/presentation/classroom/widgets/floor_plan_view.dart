@@ -14,7 +14,7 @@ class FloorPlanView extends StatelessWidget {
     super.key,
     required this.plan,
     required this.room,
-    this.dotSize = 18,
+    this.dotSize = 13,
     this.decodeWidth,
   });
 

@@ -18,8 +18,11 @@ import 'marker_icons.dart';
 ///  - Places one per-category colored pin per facility (6 colors, UX §4.1).
 ///    The 6 pin PNGs are loaded once via [CategoryMarkerIcons] before the map
 ///    renders, so markers are colored from the first frame (fully offline).
-///  - On create, if [focusIds] is non-empty, fitBounds over those markers
-///    (single id → recenter) per the `/map?focus=` deep-link contract.
+///  - On create, and whenever [focusIds] or [focusKey] changes (a new
+///    `/map?focus=` deep link into the already-open map tab), fitBounds over
+///    those markers (single id → recenter) per the deep-link contract. A
+///    single pin is centred in the part of the map left visible above
+///    [focusObscuredFraction] (the open peek sheet).
 ///  - Reports marker taps via [onMarkerTap] (facility id).
 ///  - Draws [userLocation] as a blue dot (pixel-fixed CustomOverlay) plus a
 ///    translucent accuracy halo (meter-based Circle). While [following], every
@@ -63,6 +66,9 @@ class CampusMapView extends StatefulWidget {
     this.onPlacesFound,
     this.onPlacesFailed,
     this.zoomHandle,
+    this.focusKey,
+    this.focusObscuredFraction = 0,
+    this.targetId,
   });
 
   final List<Facility> facilities;
@@ -72,6 +78,19 @@ class CampusMapView extends StatefulWidget {
   final Campus? campus;
 
   final List<String> focusIds;
+
+  /// Changes whenever a new focus request arrives, even for the same
+  /// [focusIds] (e.g. searching the same building again after panning away).
+  final Object? focusKey;
+
+  /// Fraction of the map's height covered from the bottom (the peek sheet);
+  /// a single focused pin is centred in the visible part above it.
+  final double focusObscuredFraction;
+
+  /// Facility marked with a pulsing red dot — the building of a searched
+  /// classroom (null = none).
+  final String? targetId;
+
   final String? selectedId;
   final ValueChanged<String> onMarkerTap;
   final UserLocation? userLocation;
@@ -102,6 +121,10 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   kakao.KakaoMapController? _controller;
 
+  /// Focus requested while its target was not on the shown campus yet; applied
+  /// once the campus switch delivers the target's markers.
+  bool _focusPending = false;
+
   StreamSubscription<double>? _headingSub;
 
   /// Continuous (unbounded) rotation target so CSS `transition: transform`
@@ -130,9 +153,19 @@ class _CampusMapViewState extends State<CampusMapView> {
     }
     _syncHeadingSubscription(oldWidget.headingStream);
 
-    // Campus switch: chase the new campus's marker cluster. widget.facilities
-    // is already the new campus's (filtered) list in this same build.
-    if (widget.campus != oldWidget.campus) _fitToFacilities();
+    // New focus request (classroom search / guide link into the open map
+    // tab) → move to it.
+    final focusChanged = !listEquals(oldWidget.focusIds, widget.focusIds) ||
+        oldWidget.focusKey != widget.focusKey;
+
+    // Campus switch: chase the new campus's marker cluster — unless it was
+    // switched to reach a focus target. widget.facilities is already the new
+    // campus's (filtered) list in this same build.
+    if (focusChanged || (widget.campus != oldWidget.campus && _focusPending)) {
+      _applyFocus();
+    } else if (widget.campus != oldWidget.campus) {
+      _fitToFacilities();
+    }
 
     // New search terms → search again; new results → frame them. (The plugin
     // syncs the marker list itself from the `markers` param on update.)
@@ -209,6 +242,43 @@ class _CampusMapViewState extends State<CampusMapView> {
       ),
     ];
   }
+
+  // ── Searched-classroom building dot ───────────────────────────────────────
+
+  /// Red dot on the searched room's building. The overlay id carries the
+  /// facility id: the plugin never moves an existing overlay (same id is
+  /// kept as-is) but drops ids missing from the list, so a new search target
+  /// swaps the dot cleanly.
+  List<kakao.CustomOverlay> _targetOverlays() {
+    final id = widget.targetId;
+    if (id == null) return const [];
+    Facility? target;
+    for (final f in widget.facilities) {
+      if (f.id == id) target = f;
+    }
+    if (target == null) return const [];
+    return [
+      kakao.CustomOverlay(
+        customOverlayId: 'room-target-$id',
+        latLng: kakao.LatLng(target.lat, target.lng),
+        // Double quotes only (injected into single-quoted JavaScript).
+        content: '<div style="position:relative;width:34px;height:34px;">'
+            '<div style="position:absolute;inset:0;border-radius:50%;'
+            'background:rgba(229,57,53,0.25);"></div>'
+            '<div style="position:absolute;left:50%;top:50%;'
+            'transform:translate(-50%,-50%);width:14px;height:14px;'
+            'background:#E53935;border:3px solid #fff;border-radius:50%;'
+            'box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>'
+            '</div>',
+        yAnchor: 0.5,
+        // Over facility pins (selected pin 10), under the user dot (20).
+        zIndex: 15,
+      ),
+    ];
+  }
+
+  List<kakao.CustomOverlay> _allOverlays() =>
+      [..._userOverlays(), ..._targetOverlays()];
 
   List<kakao.Circle> _userCircles() {
     final loc = widget.userLocation;
@@ -409,18 +479,34 @@ class _CampusMapViewState extends State<CampusMapView> {
     }
   }
 
-  void _applyFocus() {
+  Future<void> _applyFocus() async {
     final controller = _controller;
     if (controller == null || widget.focusIds.isEmpty) return;
     final targets = widget.facilities
         .where((f) => widget.focusIds.contains(f.id))
         .map((f) => kakao.LatLng(f.lat, f.lng))
         .toList();
+    // Target on another campus: the screen switches campus next frame.
+    _focusPending = targets.isEmpty;
     if (targets.isEmpty) return;
-    if (targets.length == 1) {
-      controller.setCenter(targets.first);
-    } else {
+    if (targets.length > 1) {
       controller.fitBounds(targets);
+      return;
+    }
+    final target = targets.first;
+    controller.setCenter(target);
+    final obscured = widget.focusObscuredFraction;
+    if (obscured <= 0) return;
+    // Shift the camera south by half the covered height so the pin sits in
+    // the middle of the visible strip above the sheet.
+    try {
+      final bounds = await controller.getBounds();
+      if (!mounted) return;
+      final span = bounds.ne.latitude - bounds.sw.latitude;
+      controller.setCenter(kakao.LatLng(
+          target.latitude - span * obscured / 2, target.longitude));
+    } catch (_) {
+      // Bounds unavailable (map not laid out yet) — the plain centre stands.
     }
   }
 
@@ -439,7 +525,7 @@ class _CampusMapViewState extends State<CampusMapView> {
           center: _center,
           markers: _markers(icons),
           circles: _userCircles(),
-          customOverlays: _userOverlays(),
+          customOverlays: _allOverlays(),
           onMapCreated: (controller) {
             _controller = controller;
             // The plugin only auto-adds overlays on didUpdateWidget (e.g. a
@@ -449,7 +535,10 @@ class _CampusMapViewState extends State<CampusMapView> {
             controller.addMarker(markers: _markers(icons));
             if (widget.userLocation != null) {
               controller.addCircle(circles: _userCircles());
-              controller.addCustomOverlay(customOverlays: _userOverlays());
+            }
+            final overlays = _allOverlays();
+            if (overlays.isNotEmpty) {
+              controller.addCustomOverlay(customOverlays: overlays);
             }
             _applyFocus();
             _runPlaceSearch();

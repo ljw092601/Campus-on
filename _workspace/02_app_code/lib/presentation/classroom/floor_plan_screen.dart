@@ -100,7 +100,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                 child: FloorPlanView(
                   plan: loc.plan,
                   room: loc.room,
-                  dotSize: 10,
+                  dotSize: 7,
                 ),
               ),
             ),

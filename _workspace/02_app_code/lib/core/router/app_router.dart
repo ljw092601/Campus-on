@@ -120,6 +120,9 @@ class AppRouter {
                   // `&plan=B04A`: which drawings (wing) the room is on,
                   // when it differs from the building code.
                   final plan = state.uri.queryParameters['plan'];
+                  // `&t=<millis>`: unique per search so a repeat search into
+                  // the open map tab still re-centres.
+                  final token = state.uri.queryParameters['t'];
                   return MapScreen(
                     focusIds: ids,
                     nearbyQueries: queries,
@@ -127,6 +130,7 @@ class AppRouter {
                         (floor == null || floor.isEmpty) ? null : floor,
                     focusRoomCode: (room == null || room.isEmpty) ? null : room,
                     focusPlanCode: (plan == null || plan.isEmpty) ? null : plan,
+                    focusToken: token,
                   );
                 },
                 routes: [

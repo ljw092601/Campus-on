@@ -35,6 +35,7 @@ class MapScreen extends ConsumerStatefulWidget {
     this.focusFloorCode,
     this.focusRoomCode,
     this.focusPlanCode,
+    this.focusToken,
   });
 
   final List<String> focusIds;
@@ -52,6 +53,10 @@ class MapScreen extends ConsumerStatefulWidget {
   /// Floor-plan building code from `/map?plan=` ("B04A") when the room's
   /// drawings are not filed under the building's own code.
   final String? focusPlanCode;
+
+  /// `/map?t=` — unique per search, so repeating the same search into the
+  /// already-open map tab still re-selects and re-centres.
+  final String? focusToken;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -100,6 +105,29 @@ class _MapScreenState extends ConsumerState<MapScreen>
     if (widget.focusIds.isNotEmpty) {
       // Representative marker = first id (deep-link contract, UX doc §3).
       _selectedId = widget.focusIds.first;
+    }
+  }
+
+  /// Identity of the current deep-link request. The map tab stays alive in
+  /// the shell, so a new search arrives as new widget params on this same
+  /// State rather than a fresh initState.
+  String _focusKeyOf(MapScreen w) => [
+        w.focusIds.join(','),
+        w.focusFloorCode,
+        w.focusRoomCode,
+        w.focusPlanCode,
+        w.focusToken,
+      ].join('|');
+
+  @override
+  void didUpdateWidget(covariant MapScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusIds.isNotEmpty &&
+        _focusKeyOf(widget) != _focusKeyOf(oldWidget)) {
+      // New search / deep link: select its building (opens the peek sheet)
+      // and let the campus follow it again.
+      _selectedId = widget.focusIds.first;
+      _campusSynced = false;
     }
   }
 
@@ -245,6 +273,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
     }
     return code;
   }
+
+  bool _opensExpanded(Facility selected) =>
+      _floorLabelFor(selected) != null || _roomCodeFor(selected) != null;
 
   bool _expandable(Facility selected) =>
       selected.hasFloorInfo || _roomCodeFor(selected) != null;
@@ -393,6 +424,17 @@ class _MapScreenState extends ConsumerState<MapScreen>
               facilities: facilities,
               campus: campus,
               focusIds: widget.focusIds,
+              focusKey: _focusKeyOf(widget),
+              // Classroom search: red dot on the room's building.
+              targetId:
+                  widget.focusRoomCode != null && widget.focusIds.isNotEmpty
+                      ? widget.focusIds.first
+                      : null,
+              // Deep-linked building opens with the sheet expanded; keep its
+              // pin above it.
+              focusObscuredFraction: selected == null
+                  ? 0
+                  : (_opensExpanded(selected) ? _peekMax : _peekMin),
               selectedId: _selectedId,
               zoomHandle: _zoomHandle,
               userLocation: _userLocation,
@@ -464,14 +506,16 @@ class _MapScreenState extends ConsumerState<MapScreen>
           ),
           if (selected != null)
             Positioned.fill(
-              // Key resets the sheet extent when another pin is tapped.
+              // Key resets the sheet extent when another pin is tapped — or
+              // when a new search targets this same building.
               child: DraggableScrollableSheet(
-                key: ValueKey(selected.id),
-                // A `?floor=` deep link lands with the guide already open.
-                initialChildSize: _floorLabelFor(selected) != null ||
-                        _roomCodeFor(selected) != null
-                    ? _peekMax
-                    : _peekMin,
+                key: ValueKey(widget.focusIds.isNotEmpty &&
+                        selected.id == widget.focusIds.first
+                    ? '${selected.id}|${_focusKeyOf(widget)}'
+                    : selected.id),
+                // A `?floor=` / `?room=` deep link lands with the guide open.
+                initialChildSize:
+                    _opensExpanded(selected) ? _peekMax : _peekMin,
                 minChildSize: _peekMin,
                 // Nothing below the header (no floor info, no searched
                 // room) → lock the sheet.
