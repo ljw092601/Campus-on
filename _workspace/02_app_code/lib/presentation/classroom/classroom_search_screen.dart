@@ -11,6 +11,8 @@ import '../providers/facility_providers.dart';
 import '../providers/floor_plan_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../../data/i18n/place_text.dart';
+import '../../core/layout/flexible_text_layout.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
 /// `/classroom-search`).
@@ -105,7 +107,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final locale = ref.watch(localeProvider);
+    final locale = Localizations.localeOf(context);
     final scheme = Theme.of(context).colorScheme;
     final facilitiesAsync = ref.watch(allFacilitiesProvider);
     // No drawings yet (loading / asset error) → plain building list.
@@ -135,6 +137,20 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                 ),
               ),
               const SizedBox(height: 16),
+              // A hint sits inside the field on one line, so at large text it
+              // is cut ('건물 선택' → '건물 …') with nowhere else to read it.
+              // Above the field it can wrap, and the field then needs no hint
+              // (감사 05/040 SF-1, same screen).
+              if (prefersFlexibleLayout(context)) ...[
+                Text(
+                  '${l.classroom_hint_building} · ${l.classroom_hint_room}',
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: scheme.onSurfaceVariant),
+                ),
+                const SizedBox(height: 6),
+              ],
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -142,7 +158,9 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                     child: DropdownMenu<_BuildingChoice>(
                       expandedInsets: EdgeInsets.zero,
                       menuHeight: 420,
-                      hintText: l.classroom_hint_building,
+                      hintText: prefersFlexibleLayout(context)
+                          ? null
+                          : l.classroom_hint_building,
                       textStyle: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.w600),
                       onSelected: (f) => setState(() => _building = f),
@@ -185,7 +203,13 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1),
                       decoration: InputDecoration(
-                        hintText: l.classroom_hint_room,
+                        // Same reason as the building field: a hint inside a
+                        // narrow, centred number box has one line, and at large
+                        // text even 'Phòng' does not fit. The label above it
+                        // carries the meaning instead.
+                        hintText: prefersFlexibleLayout(context)
+                            ? null
+                            : l.classroom_hint_room,
                         hintStyle: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -242,6 +266,7 @@ class _SuggestionList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
+    final locale = ref.watch(localeProvider);
     final scheme = Theme.of(context).colorScheme;
     final async = ref.watch(
         classroomEntriesProvider((building.facility.id, building.planCode)));
@@ -265,10 +290,25 @@ class _SuggestionList extends ConsumerWidget {
         }
         // Contains-match so partial input works from anywhere in the code
         // (e.g. "101" also surfaces 0101, "0306" also 0306-1 / 0306-2).
-        final matches = [
+        // The room's name matches too, in whichever language it was written: a
+        // student who knows they want the practice room but not its number had
+        // no way in before (감사 05/042 SF-1). Code matches rank first — a
+        // number is a precise request — and name matches follow.
+        final lower = query.toLowerCase();
+        final byCode = [
           for (final e in entries)
             if (e.code.contains(query)) e
         ];
+        final byName = query.trim().isEmpty
+            ? const <ClassroomEntry>[]
+            : [
+                for (final e in entries)
+                  if (!e.code.contains(query) &&
+                      roomSearchForms(e.roomName)
+                          .any((n) => n.toLowerCase().contains(lower)))
+                    e
+              ];
+        final matches = [...byCode, ...byName];
         // Long lists (drawings list every room) stay light.
         final shown = matches.take(60).toList();
         if (matches.isEmpty) {
@@ -307,8 +347,19 @@ class _SuggestionList extends ConsumerWidget {
                   ),
                   subtitle: e.onPlan
                       ? Text(l.classroom_suggestion_onPlan)
-                      : Text(e.roomName,
-                          maxLines: 1, overflow: TextOverflow.ellipsis),
+                      // Generic spaces read in the chosen language; tenant
+                      // companies, named offices and lab brands are not in the
+                      // table, so they keep the Korean that is on the door.
+                      : Text(
+                          roomText(e.roomName, locale),
+                          // At 200 % text one line leaves about five Korean
+                          // characters, which is not enough to tell one room
+                          // from another (감사 05/040 SF-1).
+                          maxLines: prefersFlexibleLayout(context) ? null : 1,
+                          overflow: prefersFlexibleLayout(context)
+                              ? TextOverflow.visible
+                              : TextOverflow.ellipsis,
+                        ),
                   trailing: Icon(
                       e.onPlan ? Symbols.location_on : Symbols.north_west,
                       size: 18,

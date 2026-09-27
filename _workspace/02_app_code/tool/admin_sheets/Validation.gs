@@ -1,8 +1,56 @@
+// 학사일정 시트의 열 위치를 헤더 이름으로 찾는다(0-based, 없으면 -1).
+// 번역 열이 없는 기존 시트는 예전 고정 순서로 읽는다.
+function academicColumns_(sheet) {
+  const width = Math.max(sheet.getLastColumn(), ACADEMIC_HEADERS.length);
+  const header = sheet.getRange(1, 1, 1, width).getValues()[0]
+    .map(h => String(h == null ? '' : h).trim());
+  const find = name => header.indexOf(name);
+  const cols = {};
+  Object.keys(ACADEMIC_FIELDS).forEach(key => { cols[key] = find(ACADEMIC_FIELDS[key]); });
+
+  // 필수 헤더가 모두 있으면 이름으로 찾은 위치를 그대로 쓴다(열 순서는 자유).
+  if (cols.start >= 0 && cols.end >= 0 && cols.titleKo >= 0 && cols.titleEn >= 0 &&
+      cols.category >= 0 && cols.result >= 0 && cols.id >= 0) {
+    cols.width = Math.max(width, ACADEMIC_HEADERS.length);
+    return cols;
+  }
+
+  // 여기부터는 헤더가 부족한 경우다. 예전 7열 시트일 때만 옛 순서로 읽는다 —
+  // 그것도 **7개 헤더가 이름과 순서까지 정확히 같을 때만**. 하나라도 어긋나면
+  // 위치를 추측하지 않는다: 추측하면 event_id 자동 생성이 엉뚱한 열(예: 분류)을
+  // 덮어쓸 수 있다 (B 03/063 B-02).
+  const isLegacy = ACADEMIC_HEADERS_LEGACY.every((name, i) => header[i] === name);
+  if (!isLegacy) {
+    const missing = Object.keys(ACADEMIC_FIELDS)
+      .filter(key => key !== 'titleZh' && key !== 'titleVi' && cols[key] < 0)
+      .map(key => ACADEMIC_FIELDS[key]);
+    throw new Error(
+      `학사일정 시트의 머리글을 알아볼 수 없습니다. 없는 머리글: ${missing.join(', ')}. ` +
+      '1행 머리글을 원래대로 되돌린 뒤 다시 실행해 주세요. ' +
+      '(헤더를 추측해 쓰면 기존 데이터를 덮어쓸 수 있어 중단했습니다.)');
+  }
+  ACADEMIC_HEADERS_LEGACY.forEach((name, i) => {
+    Object.keys(ACADEMIC_FIELDS).forEach(key => {
+      if (ACADEMIC_FIELDS[key] === name) cols[key] = i;
+    });
+  });
+  cols.titleZh = -1;
+  cols.titleVi = -1;
+  cols.legacy = true;
+  cols.width = ACADEMIC_HEADERS_LEGACY.length;
+  return cols;
+}
+
+function optionalText_(value) {
+  return String(value == null ? '' : value).trim();
+}
+
 function readAcademicRows_() {
   const sheet = requireSheet_(CONFIG.sheets.academic);
   const lastRow = sheet.getLastRow();
-  if (lastRow < 2) return { sheet, rows: [], errors: [] };
-  const values = sheet.getRange(2, 1, lastRow - 1, ACADEMIC_HEADERS.length).getValues();
+  const cols = academicColumns_(sheet);
+  if (lastRow < 2) return { sheet, cols, rows: [], errors: [] };
+  const values = sheet.getRange(2, 1, lastRow - 1, cols.width).getValues();
   const rows = [];
   const errors = [];
   const ids = new Map();
@@ -10,17 +58,20 @@ function readAcademicRows_() {
   values.forEach((v, index) => {
     const rowNumber = index + 2;
     if (isBlankRow_(v)) return;
-    let eventId = String(v[6] || '').trim();
+    let eventId = String(v[cols.id] || '').trim();
     if (!eventId) {
       eventId = Utilities.getUuid();
-      sheet.getRange(rowNumber, 7).setValue(eventId);
+      sheet.getRange(rowNumber, cols.id + 1).setValue(eventId);
     }
     const rowErrors = [];
-    const start = validDate_(v[0], '시작일', rowErrors);
-    const end = blank_(v[1]) ? null : validDate_(v[1], '종료일', rowErrors);
-    const titleKo = requiredText_(v[2], '일정명(국문)', rowErrors);
-    const titleEn = requiredText_(v[3], '일정명(영문)', rowErrors);
-    const category = allowlisted_(v[4], ACADEMIC_CATEGORIES, '분류', rowErrors);
+    const start = validDate_(v[cols.start], '시작일', rowErrors);
+    const end = blank_(v[cols.end]) ? null : validDate_(v[cols.end], '종료일', rowErrors);
+    const titleKo = requiredText_(v[cols.titleKo], '일정명(국문)', rowErrors);
+    const titleEn = requiredText_(v[cols.titleEn], '일정명(영문)', rowErrors);
+    // 번역은 선택이다 — 비어 있으면 앱이 영문 → 국문으로 대신 보여 준다.
+    const titleZh = cols.titleZh >= 0 ? optionalText_(v[cols.titleZh]) : '';
+    const titleVi = cols.titleVi >= 0 ? optionalText_(v[cols.titleVi]) : '';
+    const category = allowlisted_(v[cols.category], ACADEMIC_CATEGORIES, '분류', rowErrors);
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(eventId)) rowErrors.push('event_id 형식이 잘못되었습니다.');
     if (start && end && end.getTime() < start.getTime()) rowErrors.push('종료일은 시작일보다 빠를 수 없습니다.');
     if (ids.has(eventId)) rowErrors.push(`event_id가 ${ids.get(eventId)}행과 중복됩니다.`);
@@ -35,6 +86,9 @@ function readAcademicRows_() {
         category,
         start: start ? formatDateSeoul_(start) : null,
         end: end ? formatDateSeoul_(end) : null,
+        // 앱·시드와 같은 모양: 언어 코드 → 필드 → 값. 번역을 지우면 이 맵도
+        // 비어서 함께 지워진다(update write는 문서를 통째로 다시 쓴다).
+        i18n: academicI18n_(titleZh, titleVi),
         updatedAt: new Date(),
       },
       errors: rowErrors,
@@ -42,7 +96,14 @@ function readAcademicRows_() {
     rows.push(record);
     if (rowErrors.length) errors.push({ rowNumber, errors: rowErrors });
   });
-  return { sheet, rows, errors };
+  return { sheet, cols, rows, errors };
+}
+
+function academicI18n_(titleZh, titleVi) {
+  const out = {};
+  if (titleZh) out.zh = { title: titleZh };
+  if (titleVi) out.vi = { title: titleVi };
+  return out;
 }
 
 function readDiningGroups_() {

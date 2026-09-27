@@ -50,18 +50,27 @@ class RoomLocationCard extends ConsumerWidget {
       children: [
         const Icon(Symbols.location_on, color: Color(0xFFE53935), fill: 1),
         SizedBox(width: d.spaceXs),
-        Text(fullCode,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
-        const Spacer(),
-        if (async.valueOrNull != null)
-          Text(async.valueOrNull!.plan.floorLabel,
+        Flexible(
+          child: Text(fullCode,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
-                  .labelLarge
-                  ?.copyWith(color: scheme.primary)),
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
+        ),
+        const Spacer(),
+        if (async.valueOrNull != null)
+          Flexible(
+            child: Text(async.valueOrNull!.plan.floorLabel,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: scheme.primary)),
+          ),
       ],
     );
 

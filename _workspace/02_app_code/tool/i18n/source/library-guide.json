@@ -1,0 +1,568 @@
+{
+ "id": "library-guide",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "도서관 이용안내",
+   "en": "Library Guide"
+  },
+  "summary": {
+   "ko": "대출 · 열람실 · 모바일 이용증",
+   "en": "Borrowing, reading rooms & mobile ID"
+  },
+  "overview": {
+   "ko": "동아대학교에는 승학캠퍼스의 한림도서관, 부민캠퍼스의 부민도서관과 법학도서분관, 구덕캠퍼스의 의학도서분관이 있습니다.\n\n도서 대출과 반납뿐 아니라 열람실, 그룹스터디실, 전자자료, 학술DB, 캠퍼스간 대출 등 다양한 서비스를 이용할 수 있습니다.\n\n동아대학교에 재학 중인 외국인 학생은 다른 재학생과 같은 기준으로 통합정보시스템 계정과 모바일 이용증(또는 학생증)을 이용하여 도서관 서비스를 사용할 수 있습니다. 교환학생이나 한국어교육과정 학생은 이용 범위를 도서관(051-200-6273)에 확인하세요.",
+   "en": "Dong-A University has four libraries: Hallim Library on the Seunghak campus, Bumin Library and the Law Library Branch on the Bumin campus, and the Medical Library Branch on the Gudeok campus.\n\nThey are not only for borrowing and returning books — you can also use reading rooms and group study rooms, read e-journals and academic databases, and have a book sent over from another campus.\n\nIf you are enrolled at Dong-A University as an international student, you use the library on the same terms as other enrolled students: log in with your integrated information system account and identify yourself with the mobile library ID in the library app (or your student ID card). Exchange students and Korean-language program students should check what they can use with the library (051-200-6273)."
+  },
+  "tips": {
+   "ko": [
+    "📱 모바일 이용증 — 도서관 앱의 모바일 이용증을 이용하면 출입, 대출, 좌석배정 등을 편리하게 이용할 수 있습니다.",
+    "📚 다른 캠퍼스의 책도 신청 가능 — 필요한 자료가 다른 캠퍼스에 있다면 캠퍼스간 대출 서비스를 확인하세요.",
+    "🔄 다른 도서관에서도 반납 가능 — 대출한 도서는 한림 · 부민 · 법학 · 의학도서분관 중 다른 도서관에서도 반납할 수 있습니다.",
+    "⏰ 운영시간 확인 — 시험기간과 방학에는 운영시간이 달라질 수 있으므로 방문 전 확인하세요.",
+    "💻 전자자료 — 도서관 홈페이지를 통해 전자저널, 학술DB 등 다양한 전자자료를 이용할 수 있습니다."
+   ],
+   "en": [
+    "📱 Mobile library ID — the ID in the library app covers entry, borrowing and seat booking in one place.",
+    "📚 Books from other campuses — if what you need is held elsewhere, use the inter-campus loan service.",
+    "🔄 Return anywhere — a borrowed book can go back to Hallim, Bumin, the Law Branch or the Medical Branch, whichever is closest.",
+    "⏰ Check the hours — they change during exam periods and vacations, so look them up before you go.",
+    "💻 E-resources — e-journals and academic databases are all reachable through the library website."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "도서관",
+    "책 대출",
+    "열람실"
+   ],
+   "en": [
+    "library",
+    "borrow books",
+    "study room"
+   ],
+   "count": 3
+  },
+  "duration": {
+   "ko": "5~10분",
+   "en": "5–10 minutes"
+  },
+  "top_sections[0].title": {
+   "ko": "도서관 위치",
+   "en": "Where the libraries are"
+  },
+  "top_sections[0].body": {
+   "ko": "이용하려는 캠퍼스의 도서관을 먼저 확인하세요. 자료실 구성과 층 위치는 도서관마다 다릅니다.",
+   "en": "Start with the library on your own campus — each one is laid out differently and holds a different collection."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 건물·층과 연락처는 도서관 홈페이지 「찾아오시는 길」 기준입니다. 각 층에 무엇이 있는지는 홈페이지의 「층별 안내」에서 확인할 수 있습니다.",
+   "en": "※ Buildings, floors and phone numbers follow the \"Directions\" page on the library website. What sits on each floor is shown on its \"Floor guide\" page."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "승학캠퍼스 — 한림도서관",
+   "en": "Seunghak campus — Hallim Library"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "승학캠퍼스의 대표 도서관으로 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.",
+    "건물: S10 한림도서관",
+    "문의: 051-200-6273"
+   ],
+   "en": [
+    "The main library on the Seunghak campus: collections, reading rooms and group study rooms.",
+    "Building: S10, Hallim Library",
+    "Phone: 051-200-6273"
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "부민캠퍼스 — 부민도서관",
+   "en": "Bumin campus — Bumin Library"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "부민캠퍼스 국제관에 위치하며 자료실, 열람실, 그룹스터디실 등을 이용할 수 있습니다.",
+    "건물: B05 국제관 5~10층",
+    "문의: 051-200-8434"
+   ],
+   "en": [
+    "Inside the International Building on the Bumin campus: collections, reading rooms and group study rooms.",
+    "Building: B05, International Building, floors 5–10",
+    "Phone: 051-200-8434"
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[2].title": {
+   "ko": "부민캠퍼스 — 법학도서분관",
+   "en": "Bumin campus — Law Library Branch"
+  },
+  "top_sections[0].notes[2].lines": {
+   "ko": [
+    "법학전문대학원 건물에 위치하며 법학 관련 자료를 이용할 수 있습니다.",
+    "건물: B02 법학전문대학원 1층",
+    "문의: 051-200-8441"
+   ],
+   "en": [
+    "In the Law School building, for legal collections.",
+    "Building: B02, Law School, 1st floor",
+    "Phone: 051-200-8441"
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[3].title": {
+   "ko": "구덕캠퍼스 — 의학도서분관",
+   "en": "Gudeok campus — Medical Library Branch"
+  },
+  "top_sections[0].notes[3].lines": {
+   "ko": [
+    "의학·간호 분야의 자료를 이용할 수 있는 도서분관입니다.",
+    "건물: G05 (구덕캠퍼스)",
+    "문의: 051-240-2938"
+   ],
+   "en": [
+    "A branch library for medicine and nursing.",
+    "Building: G05 (Gudeok campus)",
+    "Phone: 051-240-2938"
+   ],
+   "count": 3
+  },
+  "top_sections[1].title": {
+   "ko": "처음 이용한다면",
+   "en": "Using the library for the first time"
+  },
+  "top_sections[1].body": {
+   "ko": "동아대학교 도서관 앱의 모바일 이용증을 먼저 준비해 두면 도서관에서 할 수 있는 일이 대부분 휴대폰 하나로 해결됩니다.",
+   "en": "Set up the mobile library ID in the Dong-A University Library app first — after that your phone covers almost everything you do in the library."
+  },
+  "top_sections[1].steps": {
+   "ko": [
+    "App Store 또는 Google Play에서 「동아대학교 도서관」 앱 설치",
+    "동아대학교 통합정보시스템 계정으로 로그인",
+    "앱 화면 오른쪽 위의 「이용증」 메뉴 선택",
+    "모바일 이용증 확인",
+    "도서관 출입 · 도서 대출 · 좌석배정 등에 사용"
+   ],
+   "en": [
+    "Install the \"동아대학교 도서관\" app from the App Store or Google Play",
+    "Log in with your Dong-A University integrated information system account",
+    "Open the ID card (이용증) menu at the top right of the app",
+    "Your mobile library ID appears on screen",
+    "Show it to enter the library, borrow books and take a seat"
+   ],
+   "count": 5
+  },
+  "top_sections[1].notice": {
+   "ko": "모바일 이용증을 준비하세요\n동아대학교 도서관 앱의 모바일 이용증은 도서관 출입, 도서 대출, 열람실 좌석배정 등에 사용할 수 있습니다.",
+   "en": "Set up your mobile library ID\nThe mobile library ID in the app is what identifies you when you enter the library, borrow a book or take a seat in a reading room."
+  },
+  "top_sections[1].footnote": {
+   "ko": "※ 학생증의 사용처(학생 확인용, 도서 대출, 열람실 이용)와 무료 발급 안내는 2024학년도 외국인 유학생 안내서 기준입니다. 학생증 발급 절차는 학사관리과 안내를 확인하세요.",
+   "en": "※ What the student ID card is used for (identification, borrowing, reading rooms) and the fact that it is issued free of charge come from the 2024 international-student booklet. For how to get one, check with the Office of Academic Affairs."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "학생증으로도 대출할 수 있어요",
+   "en": "Your student ID card works for borrowing"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "실물 학생증도 대출 창구의 리더기에서 인식되어 도서를 대출할 수 있습니다.",
+    "출입과 좌석배정은 도서관 안내에 모바일 이용증 기준으로 적혀 있습니다. 실물 학생증으로 출입할 수 있는지는 도서관에 확인하세요."
+   ],
+   "en": [
+    "The plastic student ID card is also read at the loan desk, so you can borrow with it.",
+    "For entry and seat booking the library describes the mobile library ID. Whether the plastic card opens the entry gate is not stated — ask the library."
+   ],
+   "count": 2
+  },
+  "top_sections[1].notes[1].title": {
+   "ko": "졸업 · 휴학 후에는 특별회원으로",
+   "en": "After graduating or while on leave"
+  },
+  "top_sections[1].notes[1].lines": {
+   "ko": [
+    "졸업생 · 대학원 수료생 · 휴학생은 재학생과 같은 조건이 아니라 도서관 특별회원으로 가입해 이용합니다.",
+    "가입 신청서 작성 → 발급비 입금(해당자) → 신분증을 가지고 대출/반납 데스크 방문 → 모바일 이용증 사용",
+    "졸업동문 · 대학원 수료생: 5책 / 14일, 발급비 50,000원(2년, 환급 불가) · 휴학생: 5책 / 14일, 무료(휴학 기간)",
+    "열람실은 시험기간을 제외하고 이용할 수 있습니다.",
+    "도서관 규정상 졸업 · 수료 · 휴학할 때는 빌린 자료를 즉시 반납해야 하며, 연체자료가 남아 있으면 증명서 발급이 보류될 수 있습니다(규정 제21조 · 제32조)."
+   ],
+   "en": [
+    "Graduates, graduate students who have completed coursework and students on leave do not keep student borrowing rights — they join the library as special members.",
+    "Fill in the membership form → pay the fee if one applies → bring your ID to the loan/return desk → use the mobile library ID",
+    "Graduates and course-completed graduate students: 5 books for 14 days, fee 50,000 won for 2 years (non-refundable) · Students on leave: 5 books for 14 days, free for the leave period",
+    "Reading rooms are open to them except during exam periods.",
+    "Library rules require you to return borrowed items as soon as you graduate, complete coursework or take leave; if anything is still overdue, the library can ask for your certificates to be held back (rules, Articles 21 and 32)."
+   ],
+   "count": 5
+  },
+  "sections[0].title": {
+   "ko": "도서 대출",
+   "en": "Borrowing Books"
+  },
+  "sections[0].body": {
+   "ko": "대출 데스크 또는 무인대출기를 이용하여 학생증이나 모바일 이용증으로 도서를 대출할 수 있습니다.",
+   "en": "Borrow at the loan desk, or by yourself at a self-checkout machine, using your student ID card or your mobile library ID."
+  },
+  "sections[0].notice": {
+   "ko": "대출할 수 없는 자료도 있어요\n학위논문과 연속간행물은 대출되지 않습니다. 무인대출기는 기기가 설치된 도서관에서만 이용할 수 있습니다.",
+   "en": "Some materials cannot be taken out\nTheses and periodicals are for use inside the library only. Self-checkout machines are available only at the libraries that have one."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "대출 책수와 기간",
+   "en": "How many books, for how long"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "학부 재학생: 10책 / 14일",
+    "대학원생: 10책 / 30일",
+    "비전임교원 · 직원: 10책 / 30일",
+    "전임교원: 30책 / 90일",
+    "책 수와 기간은 한림 · 부민 · 법학 · 의학도서분관에서 빌린 것을 합산해 적용합니다.",
+    "참고도서는 당일만 대출되고, DVD는 최대 3점을 2주 동안 빌릴 수 있습니다."
+   ],
+   "en": [
+    "Undergraduate students: 10 books for 14 days",
+    "Graduate students: 10 books for 30 days",
+    "Non-tenured teaching staff and staff: 10 books for 30 days",
+    "Full-time faculty: 30 books for 90 days",
+    "The limits count what you borrow from all four libraries together.",
+    "Reference books are same-day loans only; DVDs are up to 3 items for 2 weeks."
+   ],
+   "count": 6
+  },
+  "sections[0].notes[1].title": {
+   "ko": "대출기간을 연장할 수 있어요",
+   "en": "You can extend the loan"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "대출한 자료는 반납예정일 전에 재대출할 수 있습니다.",
+    "재대출은 최초 대출기간과 동일한 기간으로 1회만 가능합니다.",
+    "예약자가 있거나 연체 중인 경우 재대출이 제한됩니다.",
+    "신청: 도서관 홈페이지 로그인 → My Library → 대출/재대출/예약조회 → 대출 및 재대출"
+   ],
+   "en": [
+    "Renew a book before its due date and you keep it longer.",
+    "You can renew once, for the same length as the original loan.",
+    "You cannot renew a book someone has reserved, or while you have anything overdue.",
+    "Where: log in to the library website → My Library → 대출/재대출/예약조회 (loans, renewals & reservations) → 대출 및 재대출"
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "반납 · 연체",
+   "en": "Returns & Overdue Items"
+  },
+  "sections[1].body": {
+   "ko": "대출한 도서는 한림도서관, 부민도서관, 법학도서분관, 의학도서분관 중 어느 곳에서도 반납할 수 있습니다.\n\n무인반납함에 넣어 반납할 수도 있습니다. 위치는 아래를 확인하세요.",
+   "en": "Return a book to any of the four libraries — Hallim, Bumin, the Law Library Branch or the Medical Library Branch. It does not have to go back where you borrowed it.\n\nYou can also drop a book in a return box — see below for where they are."
+  },
+  "sections[1].notice": {
+   "ko": "반납일을 꼭 확인하세요\n대출한 자료를 연체하면 일정 기간 도서 대출이 제한될 수 있습니다. 현재 규정은 1책당 연체 1일마다 대출중지 1일입니다.",
+   "en": "Keep an eye on the due date\nReturning late suspends your borrowing for a while: the current rule is one day of suspension per book per day overdue."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "무인반납함 위치",
+   "en": "Where the return boxes are"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "한림도서관: 한림도서관 2층",
+    "부민도서관: 국제관 1층, 지하 1층",
+    "법학도서분관: 도서관 입구",
+    "의학도서분관: 간호대 1층"
+   ],
+   "en": [
+    "Hallim Library: 2nd floor of the library",
+    "Bumin Library: International Building, 1st floor and basement 1st floor",
+    "Law Library Branch: at the library entrance",
+    "Medical Library Branch: 1st floor of the Nursing building"
+   ],
+   "count": 4
+  },
+  "sections[2].title": {
+   "ko": "열람실 이용",
+   "en": "Reading Room & Seat Reservation"
+  },
+  "sections[2].body": {
+   "ko": "열람실 좌석은 동아대학교 도서관 앱에서 예약한 뒤 인증(발권확정)해야 이용할 수 있습니다.",
+   "en": "Seats in the reading rooms are booked in the library app — and a booking only becomes a seat once you check in."
+  },
+  "sections[2].steps": {
+   "ko": [
+    "동아대학교 도서관 앱에 통합정보시스템 계정으로 로그인",
+    "「열람실 예약」 선택",
+    "도서관 선택",
+    "열람실 선택",
+    "좌석 선택 후 예약 완료",
+    "20분 이내에 예약 인증(발권확정)",
+    "좌석 이용",
+    "이용 종료 후 앱에서 좌석 반납"
+   ],
+   "en": [
+    "Log in to the library app with your integrated information system account",
+    "Choose 열람실 예약 (reserve a seat)",
+    "Pick the library",
+    "Pick the reading room",
+    "Pick a seat and confirm the booking",
+    "Check in within 20 minutes to confirm the seat",
+    "Use your seat",
+    "Release the seat in the app when you leave"
+   ],
+   "count": 8
+  },
+  "sections[2].notice": {
+   "ko": "예약만 하면 끝이 아니에요\n좌석 예약 후 20분 이내에 앱의 「예약인증」이나 좌석배정기에서 인증해 발권확정을 해야 좌석을 이용할 수 있습니다.",
+   "en": "Booking a seat is only half of it\nYou have 20 minutes to check in — with 예약인증 in the app or at a seat kiosk — before the seat is really yours."
+  },
+  "sections[2].footnote": {
+   "ko": "※ 그룹스터디실은 재학생과 교직원이 도서관 홈페이지에서 별도로 신청합니다. 평일 09:00~20:00(토 · 일 휴실), 1회 2시간, 1일 1회 · 월 10회까지이며, 이용자 모두 학생증을 지참해야 합니다. 예약 후 동행인 전원이 예약을 승인해야 하고(동행인은 도서관 홈페이지에 한 번 이상 로그인해 두어야 합니다), 예약하고 무단으로 불참해 30분이 지나면 1개월 동안 그룹스터디실을 이용할 수 없습니다. 시험기간 1주 전부터 종료일까지는 예약 대신 좌석배정으로 일반 열람실처럼 운영합니다.",
+   "en": "※ Group study rooms are booked separately on the library website by enrolled students and staff: weekdays 09:00–20:00 (closed at weekends), 2 hours per booking, once a day and up to 10 times a month, and everyone using the room brings a student ID card. Everyone you add has to approve the booking (and must have logged in to the library website at least once), and an unannounced no-show (30 minutes past the start) bars you from group study rooms for a month. From one week before exams until they end, the rooms are allocated like ordinary reading-room seats instead of being booked."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "인증 방법은 두 가지예요",
+   "en": "Two ways to check in"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "열람실 안에서 앱의 「예약인증」 선택 — 비콘 인증이므로 블루투스를 켜 두세요.",
+    "도서관 안의 좌석배정기(키오스크)에서 모바일 이용증을 인식"
+   ],
+   "en": [
+    "Tap 예약인증 (confirm booking) in the app while you are in the reading room — it uses Bluetooth beacons, so keep Bluetooth on.",
+    "Or scan your mobile library ID at a seat kiosk inside the library."
+   ],
+   "count": 2
+  },
+  "sections[2].notes[1].title": {
+   "ko": "이용 후 좌석을 반납하세요",
+   "en": "Release your seat when you are done"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "이용이 끝난 뒤 앱에서 좌석 반납을 완료하세요.",
+    "앱의 「나의자리」에서 현재 예약·발권된 좌석과 사용 이력을 확인할 수 있습니다.",
+    "「나의자리」에서 좌석 연장도 할 수 있습니다."
+   ],
+   "en": [
+    "Finish by releasing the seat in the app so someone else can use it.",
+    "Under 나의자리 (my seat) you can see your current booking and your past usage.",
+    "You can also extend your seat under 나의자리."
+   ],
+   "count": 3
+  },
+  "sections[3].title": {
+   "ko": "캠퍼스간 대출",
+   "en": "Inter-Campus Loan"
+  },
+  "sections[3].body": {
+   "ko": "필요한 책이 다른 캠퍼스 도서관에 있는 경우 캠퍼스간 대출을 신청하여 원하는 도서관에서 받을 수 있습니다.\n\n신청하려는 자료가 내가 있는 캠퍼스의 도서관에 없을 때 이용할 수 있습니다.",
+   "en": "If the book you need is held on another campus, request an inter-campus loan and collect it at the library you choose.\n\nIt applies when the item is not held by the library on your own campus."
+  },
+  "sections[3].steps": {
+   "ko": [
+    "도서관 홈페이지 로그인",
+    "자료 검색",
+    "도서 상세정보 확인",
+    "캠퍼스간 대출 신청",
+    "수령할 도서관 선택",
+    "도착 안내 확인 후 수령"
+   ],
+   "en": [
+    "Log in to the library website",
+    "Search for the book",
+    "Open its detail page",
+    "Request an inter-campus loan",
+    "Choose where you want to collect it",
+    "Wait for the arrival notice, then pick it up"
+   ],
+   "count": 6
+  },
+  "sections[3].notice": {
+   "ko": "신청한 책은 꼭 찾아가세요\n신청한 자료를 3회 이상 대출하지 않으면 해당 학기 동안 캠퍼스간 대출 서비스를 이용할 수 없습니다.",
+   "en": "Do collect what you request\nIf you fail to pick up requested items three times, you lose access to the inter-campus loan service for the rest of the semester."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "수령할 수 있는 도서관",
+   "en": "Where you can collect it"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "한림도서관 (승학캠퍼스)",
+    "부민도서관 (부민캠퍼스)",
+    "법학도서분관 (부민캠퍼스)",
+    "의학도서분관 (구덕캠퍼스)"
+   ],
+   "en": [
+    "Hallim Library (Seunghak campus)",
+    "Bumin Library (Bumin campus)",
+    "Law Library Branch (Bumin campus)",
+    "Medical Library Branch (Gudeok campus)"
+   ],
+   "count": 4
+  },
+  "sections[3].notes[1].title": {
+   "ko": "알아둘 점",
+   "en": "Things to know"
+  },
+  "sections[3].notes[1].lines": {
+   "ko": [
+    "대출기간은 일반 대출과 동일합니다.",
+    "반납은 우리 대학의 모든 도서관에서 할 수 있습니다(취업지원실 제외).",
+    "자료 도착 후 보관 기간은 3일입니다.",
+    "금요일 오후 2시 이후 신청분은 다음 주 월요일에 처리됩니다."
+   ],
+   "en": [
+    "The loan period is the same as an ordinary loan.",
+    "You can return it at any library of the university (except the Career Support Office).",
+    "Once it arrives it is held for 3 days.",
+    "Requests made after 2 p.m. on Friday are processed the following Monday."
+   ],
+   "count": 4
+  },
+  "sections[4].title": {
+   "ko": "전자자료 · 논문 이용",
+   "en": "E-resources & Papers"
+  },
+  "sections[4].body": {
+   "ko": "동아대학교 도서관 홈페이지에 로그인하면 전자저널, 학술DB 등 다양한 전자자료를 이용할 수 있습니다.\n\n교외에서는 도서관의 교외접속 서비스를 이용해야 할 수 있습니다.",
+   "en": "Log in to the library website and you can read e-journals, academic databases and other electronic resources.\n\nFrom off campus you may need the library's off-campus access service to reach them."
+  },
+  "sections[4].notice": {
+   "ko": "학교 밖에서도 논문을 볼 수 있어요\n교외접속 서비스를 이용하면 학교 밖에서도 교내와 동일하게 전자저널과 학술DB를 이용할 수 있습니다.",
+   "en": "You can read papers from outside the campus too\nWith off-campus access, e-journals and databases work from home exactly as they do on campus."
+  },
+  "sections[4].notes[0].title": {
+   "ko": "교외접속 이용 방법",
+   "en": "How off-campus access works"
+  },
+  "sections[4].notes[0].lines": {
+   "ko": [
+    "별도의 프로그램 설치 없이 도서관 홈페이지에 로그인하면 이용할 수 있습니다.",
+    "Edge, Chrome, Safari, Firefox 등 대부분의 브라우저를 지원합니다.",
+    "도서관 홈페이지에 로그인한 뒤 메인 화면 위쪽의 「교외접속」이 On으로 되어 있는지 확인하고 전자자료를 이용하세요.",
+    "전자자료 주소(URL)를 직접 입력해 들어갈 때는 주소 앞에 https://libproxy.donga.ac.kr/_Lib_Proxy_Url 을 붙여야 합니다.",
+    "문의: 전자자료 이용 051-200-6272 · 교외접속 오류 051-200-8430"
+   ],
+   "en": [
+    "Nothing to install — just log in to the library website.",
+    "Most browsers work: Edge, Chrome, Safari and Firefox.",
+    "After logging in, check that 교외접속 (off-campus access) at the top of the library home page is On, then open the resource.",
+    "If you type a resource's address directly, put https://libproxy.donga.ac.kr/_Lib_Proxy_Url in front of it.",
+    "Questions: e-resources 051-200-6272 · off-campus access errors 051-200-8430"
+   ],
+   "count": 5
+  },
+  "sections[5].title": {
+   "ko": "운영시간",
+   "en": "Opening Hours"
+  },
+  "sections[5].body": {
+   "ko": "도서관 운영시간은 학기, 방학, 시험기간에 따라 달라집니다.\n\n방문 전에 동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요. 홈페이지 메인에 실시간 이용시간이 표시됩니다.",
+   "en": "Opening hours change between term time, the vacation and the exam period.\n\nCheck today's hours on the library website before you go — the home page shows the live opening hours."
+  },
+  "sections[5].notice": {
+   "ko": "운영시간은 방문 전에 확인하세요\n도서관 운영시간은 학기, 방학, 시험기간에 따라 달라질 수 있습니다. 방문 전에 동아대학교 도서관 홈페이지에서 오늘의 운영시간을 확인하세요.",
+   "en": "Check opening hours before visiting\nHours change with the term, the vacation and the exam period. Look up today's hours on the library website before you set off."
+  },
+  "sections[5].footnote": {
+   "ko": "※ 도서관 「이용시간」 페이지와 메인의 실시간 이용시간은 열람실을 07:00~24:00으로 적지만, 같은 홈페이지의 「열람실 이용」 페이지는 05:00~24:00으로 적고 있습니다(2024학년도 외국인 유학생 안내서도 열람실 05:00~24:00, 자료실 09:00~22:00). 공식 페이지끼리 다르므로 방문 전 메인의 실시간 이용시간을 기준으로 하세요.",
+   "en": "※ The library's \"Library hours\" page and the live hours on its home page give 07:00–24:00 for the reading rooms, but its \"Reading room\" page gives 05:00–24:00 (as did the 2024 international-student booklet, with 09:00–22:00 for the collections). The official pages disagree, so go by the live hours on the home page before you visit."
+  },
+  "sections[5].notes[0].title": {
+   "ko": "2026년 9월 확인 기준",
+   "en": "As listed in September 2026"
+  },
+  "sections[5].notes[0].lines": {
+   "ko": [
+    "자료실(한림 · 부민 · 법학도서분관): 학기 중 평일 09:00~20:00, 방학 중 평일 09:00~17:00",
+    "의학도서분관 자료실: 평일 09:00~17:00",
+    "열람실(한림 · 부민 · 구덕): 일요일 · 공휴일 포함 매일 07:00~24:00",
+    "자료실은 토요일 · 일요일 · 공휴일에 닫습니다. 열람실은 일요일과 공휴일에도 운영합니다."
+   ],
+   "en": [
+    "Collections (Hallim, Bumin, Law Branch): 09:00–20:00 on weekdays in term time, 09:00–17:00 during the vacation",
+    "Medical Library Branch collection: 09:00–17:00 on weekdays",
+    "Reading rooms (Hallim, Bumin, Gudeok): 07:00–24:00 every day, including Sundays and public holidays",
+    "The collections are closed on Saturdays, Sundays and public holidays. The reading rooms stay open on Sundays and public holidays."
+   ],
+   "count": 4
+  },
+  "sections[5].notes[1].title": {
+   "ko": "시험기간 열람실",
+   "en": "Reading rooms during exams"
+  },
+  "sections[5].notes[1].lines": {
+   "ko": [
+    "한림 · 부민: 24시간",
+    "구덕: 07:00~익일 02:00",
+    "2026년 9월 도서관 홈페이지 실시간 이용시간 기준입니다. 방문 전 홈페이지에서 다시 확인하세요."
+   ],
+   "en": [
+    "Hallim and Bumin: open 24 hours",
+    "Gudeok: 07:00–02:00 the next day",
+    "From the live hours on the library website, September 2026. Check the website again before you go."
+   ],
+   "count": 3
+  },
+  "links[0].label": {
+   "ko": "동아대학교 도서관",
+   "en": "Dong-A University Library"
+  },
+  "links[0].description": {
+   "ko": "자료검색 · 운영시간 · 도서관 서비스",
+   "en": "Search, opening hours and library services"
+  },
+  "links[1].label": {
+   "ko": "DAU Library English",
+   "en": "DAU Library English"
+  },
+  "links[1].description": {
+   "ko": "영문 도서관 홈페이지 (일부 공지는 한국어)",
+   "en": "The library website in English (some notices are in Korean)"
+  },
+  "links[2].label": {
+   "ko": "오늘의 운영시간",
+   "en": "Today's opening hours"
+  },
+  "links[2].description": {
+   "ko": "도서관별 · 실별 이용시간",
+   "en": "Hours for each library and each room"
+  },
+  "links[3].label": {
+   "ko": "모바일 이용증 안내",
+   "en": "Mobile library ID"
+  },
+  "links[3].description": {
+   "ko": "도서관 앱 · 모바일 이용증 사용 방법",
+   "en": "How to set up and use the ID in the app"
+  },
+  "links[4].label": {
+   "ko": "열람실 좌석배정 안내",
+   "en": "Seat reservation"
+  },
+  "links[4].description": {
+   "ko": "좌석 예약 · 인증 · 반납 방법",
+   "en": "Booking, checking in and releasing a seat"
+  },
+  "links[5].label": {
+   "ko": "캠퍼스간 대출 안내",
+   "en": "Inter-campus loan"
+  },
+  "links[5].description": {
+   "ko": "다른 캠퍼스 도서 신청",
+   "en": "Request a book held on another campus"
+  },
+  "links[6].label": {
+   "ko": "교외접속 서비스",
+   "en": "Off-campus access"
+  },
+  "links[6].description": {
+   "ko": "학교 밖에서 전자저널 · 학술DB 이용",
+   "en": "Read e-journals and databases from off campus"
+  }
+ }
+}

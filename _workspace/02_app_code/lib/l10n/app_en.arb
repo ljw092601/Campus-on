@@ -1,14 +1,10 @@
 {
   "@@locale": "en",
-
   "appTitle": "Dong-A Mate",
   "@appTitle": {},
-
   "tab_home_label": "Home",
   "tab_map_label": "Map",
-  "tab_guide_label": "Guide",
   "tab_settings_label": "Settings",
-
   "common_retry": "Retry",
   "common_all": "All",
   "common_clear": "Clear",
@@ -18,13 +14,11 @@
   "common_sortName": "Name",
   "common_comingSoon": "Coming soon",
   "common_loadFailed": "Something went wrong.",
-
   "home_searchBar_hint": "Search facilities & admin",
   "home_mapBanner_title": "Open campus map",
   "home_mapBanner_subtitle": "Find nearby facilities",
   "home_section_guide": "Admin guide",
   "home_empty_noFacility": "No facility info yet.",
-
   "home_hero_title_line1": "Dong-A University cheers on",
   "home_hero_title_highlight": "your new beginning",
   "home_hero_title_suffix": "!",
@@ -36,12 +30,10 @@
   "home_card_map_desc": "Find buildings and key spots on the campus map.",
   "home_card_dining_title": "Today's menu",
   "home_card_dining_desc": "Check cafeteria menus and opening hours.",
-
   "map_zoomIn_tooltip": "Zoom in",
   "map_zoomOut_tooltip": "Zoom out",
-
   "classroom_search_title": "Classroom search",
-  "classroom_help": "Pick a building and type the room number.\ne.g. S01 - 0301, S04 - 0306-1 (first 2 digits = floor; basement 1 is B101)",
+  "classroom_help": "Pick a building and type the room number.\ne.g. S01 - 0301, S04 - 0306-1 (first 2 digits = floor; basement 1 is B101)\n※ For a building without a floor plan the suggested numbers come from the order of the floor list and are not verified room numbers.\n※ In a building with a floor plan you can search by room number only. To look by name, open the floor guide below.",
   "classroom_hint_building": "Select a building",
   "classroom_hint_room": "Room",
   "classroom_action_search": "Show location",
@@ -62,14 +54,17 @@
   "dining_unpublished": "Today's menu hasn't been posted yet.",
   "dining_price": "₩{price}",
   "@dining_price": {
-    "placeholders": { "price": { "type": "int" } }
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
   },
-  "dining_placeholder_notice": "Sample menus for now — real menus will appear once the cafeteria staff publish them.",
+  "dining_placeholder_notice": "Sample menus for now — real menus will appear once the school API is connected.",
   "dining_prevDay": "Previous day",
   "dining_nextDay": "Next day",
   "dining_error_loadFailed": "Couldn't load the menus.",
   "dining_empty": "No cafeteria info registered yet.",
-
   "calendar_placeholder_notice": "Sample dates for now — the real schedule will appear once the academic calendar is published.",
   "calendar_empty": "No academic calendar entries for this year yet.",
   "calendar_error_loadFailed": "Couldn't load the academic calendar.",
@@ -78,14 +73,12 @@
   "calendar_cat_exam": "Exams",
   "calendar_cat_holiday": "Holiday",
   "calendar_cat_graduation": "Graduation",
-
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",
   "facility_category_dining": "Dining",
   "facility_category_library": "Library",
   "facility_category_amenity": "Amenity",
   "facility_category_etc": "Etc",
-
   "map_appbar_title": "Map",
   "map_campus_seunghak": "Seunghak",
   "map_campus_gudeok": "Gudeok",
@@ -104,18 +97,24 @@
   "map_peek_openPlace": "Kakao Map",
   "map_nearby_resultCount": "{count} places found nearby",
   "@map_nearby_resultCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "map_nearby_empty": "No places found nearby.",
   "map_nearby_failed": "Couldn't search for nearby places.",
-
   "list_appbar_title": "Facilities",
   "list_empty_noResult": "No facilities match your filter.",
   "list_error_loadFailed": "Couldn't load the list.",
-
   "facility_meta_distance": "{meters}m",
   "@facility_meta_distance": {
-    "placeholders": { "meters": { "type": "int" } }
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
   },
   "facility_action_viewOnMap": "View on map",
   "facility_action_call": "Call",
@@ -124,12 +123,15 @@
   "facility_floors_error": "Couldn't load floor info.",
   "facility_floors_roomCount": "{count} rooms",
   "@facility_floors_roomCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "facility_detail_error": "Couldn't load the info.",
   "facility_favorite_add": "Add to favorites",
   "facility_favorite_remove": "Remove from favorites",
-
   "search_appbar_hint": "Search",
   "search_segment_all": "All",
   "search_segment_facility": "Facilities",
@@ -137,26 +139,36 @@
   "search_recent_title": "Recent searches",
   "search_section_facility": "Facilities ({count})",
   "@search_section_facility": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "search_section_guide": "Guide ({count})",
   "@search_section_guide": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "search_empty_noResult": "No results for '{query}'.",
   "@search_empty_noResult": {
-    "placeholders": { "query": { "type": "String" } }
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   },
   "search_empty_hint": "Search facilities and admin guides.",
   "search_error_failed": "Search failed.",
-
   "guide_category_immigration": "Immigration & Stay",
   "guide_category_housing": "Housing",
   "guide_category_living": "Living",
   "guide_category_health": "Health & Insurance",
   "guide_category_school": "School admin",
   "guide_category_emergency": "Emergency & Help",
-
   "guide_appbar_title": "Admin guide",
   "guide_categorySummary_immigration": "Visa, ARC, extension of stay",
   "guide_categorySummary_housing": "Dormitory & off-campus housing",
@@ -166,13 +178,15 @@
   "guide_categorySummary_emergency": "Emergency contacts, incidents, counseling",
   "guide_meta_itemCount": "{count} items",
   "@guide_meta_itemCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "guide_list_empty_title": "This category is coming soon",
   "guide_list_error": "Couldn't load the guide.",
-
   "guide_checklist_optional_title": "You may also need",
-
   "guide_section_overview": "Overview",
   "guide_section_checklist": "What to prepare",
   "guide_section_steps": "Steps",
@@ -186,7 +200,6 @@
   "guide_favorite_add": "Add to favorites",
   "guide_favorite_remove": "Remove from favorites",
   "guide_detail_error": "Couldn't load the guide.",
-
   "settings_title": "Settings",
   "settings_language_title": "Language",
   "settings_language_ko": "한국어",
@@ -200,11 +213,10 @@
   "settings_licenses": "Open-source licenses",
   "settings_version": "Version",
   "settings_version_value": "0.2.0 (MVP)",
-  "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place, in Korean and English. Browse the map and admin guides without signing in.",
+  "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place. The screens and the 30 admin guides are available in Korean, English, Simplified Chinese and Vietnamese; the academic calendar and the names and details of facilities and cafeterias are available in all four languages. In the floor guides and the cafeteria menus, the entries that have been translated appear in your language; the rest stay in Korean so they match the signs on the doors. Browse the map and admin guides without signing in.",
   "settings_dataSource_body": "Facility and administrative information is compiled from materials provided by the Office of International Affairs. Please also check the university's official notices for the latest updates. Maps are powered by Kakao Maps.",
   "settings_contact_body": "For bugs or content corrections, please email us below.",
   "settings_contact_emailLabel": "Send email",
-
   "favorites_title": "Favorites",
   "favorites_segment_facility": "Facilities",
   "favorites_segment_guide": "Guides",
@@ -214,5 +226,6 @@
   "favorites_action_openMap": "Open map",
   "favorites_action_openGuide": "Open guide",
   "favorites_removed": "Removed from favorites.",
-  "common_undo": "Undo"
+  "common_undo": "Undo",
+  "settings_language_save_failed": "The language changed now, but it could not be saved on this device. It may go back to the previous language when you restart the app."
 }

@@ -1,0 +1,365 @@
+{
+ "id": "oia-visit",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "국제교류과 방문 안내",
+   "en": "International Affairs Office"
+  },
+  "detail_title": {
+   "ko": "대외국제처 국제교류과 방문 안내",
+   "en": "International Affairs Office Guide"
+  },
+  "summary": {
+   "ko": "비자 · 체류 · 장학 · 유학생 지원",
+   "en": "Visa, stay, scholarships & student support"
+  },
+  "overview": {
+   "ko": "동아대학교 대외국제처 국제교류과는 외국인 유학생의 입학, 학사, 체류, 장학, 기숙사, 상담 및 국제교류 프로그램 등을 지원하는 부서입니다.\n\n비자나 체류 관련 학교 확인이 필요하거나 외국인 유학생 지원 프로그램, 장학, 학교생활 관련 문의가 있는 경우 국제교류과에 문의할 수 있습니다.\n\n업무에 따라 담당자와 필요한 서류가 다를 수 있으므로 방문 전에 공식 공지나 담당 부서를 확인하는 것이 좋습니다.",
+   "en": "The Office of International Affairs (대외국제처 국제교류과) is the department that supports international students — admissions, academic matters, stay and visa, scholarships, dormitories, counseling and exchange programmes.\n\nGo to them when you need the university to confirm something for a visa or stay application, or when you have a question about student support programmes, scholarships or life at Dong-A.\n\nDifferent services are handled by different staff members and need different documents, so check the office notices — or which department actually handles it — before you go."
+  },
+  "checklist_title": {
+   "ko": "방문 전 확인",
+   "en": "Before You Visit"
+  },
+  "checklist": {
+   "ko": [
+    "방문 목적 확인 — 비자, 체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.",
+    "관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 있으므로 방문 전에 국제교류과 공지를 확인하세요. 단체접수 서류는 사무실이 아니라 공지에 적힌 장소에서 받을 수 있습니다.",
+    "필요한 서류 확인 — 업무에 따라 여권, 외국인등록증, 신청서, 재학증명서 등 필요한 서류가 달라질 수 있습니다.",
+    "담당 번호 확인 — 비자 · 체류 · 학사 문의는 아래 「연락처」의 업무별 번호로 먼저 문의하세요. 홈페이지 Q&A · 상담신청 게시판은 「국제교류 프로그램」 메뉴 아래에 있습니다."
+   ],
+   "en": [
+    "Know what you are asking about — visa and stay, scholarships, exchange programmes and so on are each handled by a different person.",
+    "Read the notices first — alien registration and stay extensions are sometimes filed as a group through the university within a set period, which the office announces. Group applications may be collected at the place given in the notice rather than the office.",
+    "Find out which documents you need — depending on the service that may be your passport, your ARC, an application form or an enrollment certificate.",
+    "Find the right number — for visa, stay and academic questions, call the number for that service under Contact below. The Q&A and counseling boards on the website sit under the exchange programmes menu."
+   ],
+   "count": 4
+  },
+  "checklist_note": {
+   "ko": "※ 위 서류가 모든 방문에 필요한 것은 아닙니다. 방문 전에 해당 업무의 공지 또는 담당자에게 필요한 서류를 확인하세요.\n※ 2026년 국제교류과 공지에는 사무실 업무시간이 10:00~15:00(점심시간 12:00~13:00)으로 적혀 있습니다. 입학 안내 공지에 함께 적힌 시간이라 업무나 시기에 따라 다를 수 있으므로 방문 전 전화로 확인하세요.\n※ 유학생 보험료 미납자, 수료생(초과학기자), 직전학기 성적 2.0 미만인 학생은 비자연장 단체접수를 할 수 없고 개인접수를 해야 합니다(2026-2학기 학부생 · 9월 30일 만료자 단체접수 공지 기준).",
+   "en": "※ Those documents are not required for every visit. Check the notice for your particular service, or ask the staff, before you set off.\n※ The office's 2026 notices give its hours as 10:00–15:00, closed 12:00–13:00 for lunch. Those hours appear on admissions notices and may differ by service or time of year, so call before you visit.\n※ Students with unpaid student insurance, students past their final semester, and students whose last-semester GPA was below 2.0 cannot use the group visa extension and must apply on their own (notice for undergraduates whose visas expire on 30 September, 2026 fall semester)."
+  },
+  "steps": {
+   "ko": [
+    "문의하려는 업무 확인",
+    "국제교류과 최신 공지 확인",
+    "필요한 서류 확인",
+    "국제교류과 방문 또는 온라인 문의",
+    "담당자에게 문의",
+    "추가 제출 또는 후속 절차 확인"
+   ],
+   "en": [
+    "Work out exactly what you need",
+    "Check the latest notices from the office",
+    "Find out which documents that service needs",
+    "Visit the office, or ask online",
+    "Talk to the staff member who handles it",
+    "Check what you still have to submit or do next"
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "📌 업무마다 담당자가 달라요 — 비자·체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.",
+    "📄 필요한 서류를 먼저 확인하세요 — 체류 및 출입국 관련 업무는 정해진 제출서류가 있는 경우가 많으므로 공식 공지를 먼저 확인하세요.",
+    "📅 단체접수 기간이 있을 수 있어요 — 외국인등록이나 체류기간 연장 등 일부 업무는 학교에서 단체접수를 지원할 수 있습니다. 개인 신청 전에 해당 학기의 국제교류과 공지를 확인하세요.",
+    "💬 게시판은 교류 프로그램용 — 국제교류과 홈페이지의 Q&A · 상담신청 게시판은 「국제교류 프로그램」 메뉴에 있습니다. 비자 · 체류 · 학사 문의는 업무별 번호로 전화하세요.",
+    "🏫 학과 업무는 학과사무실에서 — 전공 수업, 학과별 졸업요건, 과목 증원 등 학과 고유 업무는 소속 학과사무실에 문의해야 할 수 있습니다."
+   ],
+   "en": [
+    "📌 Different services have different staff members — visa and stay, scholarships and exchange programmes are each someone else's desk.",
+    "📄 Check the documents first — immigration and stay services usually have a fixed list of what to submit, published in the notice.",
+    "📅 There may be a group application period — the university sometimes files alien registrations or stay extensions as a group. Check the semester's notices before you apply on your own.",
+    "💬 The boards are for exchange programmes — the Q&A and counseling boards on the office website sit under the exchange programmes menu. For visa, stay or academic questions, call the number for that service.",
+    "🏫 Contact your department office for department-specific matters — major courses, graduation requirements and adding a full class are your department's business, not this office's."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "국제교류과",
+    "유학생 지원",
+    "국제교류처",
+    "장학금"
+   ],
+   "en": [
+    "OIA",
+    "international office",
+    "international student support",
+    "scholarship"
+   ],
+   "count": 4
+  },
+  "duration": {
+   "ko": "10~30분",
+   "en": "10–30 minutes"
+  },
+  "top_sections[0].title": {
+   "ko": "어떤 일로 방문할 수 있나요?",
+   "en": "What can I ask about?"
+  },
+  "top_sections[0].body": {
+   "ko": "문의하려는 내용이 국제교류과 업무인지 먼저 확인하세요. 국제교류과는 외국인 유학생 유치와 지원, 해외 대학과의 협정 체결, 해외 한국어 센터 운영 등을 담당합니다.",
+   "en": "Check first that what you need is actually handled here. The office recruits and supports international students, signs agreements with universities abroad, and runs Korean language centres overseas."
+  },
+  "top_sections[0].notice": {
+   "ko": "출입국 민원을 대신 처리하는 곳은 아니에요\n국제교류과는 학교 단체접수 또는 학교 확인이 필요한 업무를 지원할 수 있습니다. 신청과 심사 자체는 출입국·외국인청에서 진행합니다.",
+   "en": "It is not an immigration office\nThe office can help where a group application through the university, or a confirmation from the university, is needed. The application itself is filed with — and decided by — the immigration office."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 국제교류과가 모든 학사 업무를 처리하지는 않습니다. 전공 수강신청이나 학과 세부 사항은 소속 학과사무실에 문의해야 할 수 있습니다.",
+   "en": "※ Not every academic matter goes through this office. Registering for your major courses and department-specific rules are usually handled by your own department office."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🪪 체류 · 비자",
+   "en": "🪪 Stay & visa"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "외국인등록 관련 문의",
+    "체류기간 연장 관련 문의",
+    "체류자격 변경",
+    "시간제취업 관련 학교 확인",
+    "기타 출입국·체류 관련 학교 지원",
+    "통합신고서 · 지도교수확인서 · 사유서 양식은 국제교류과에 있습니다."
+   ],
+   "en": [
+    "Questions about alien registration",
+    "Questions about extending your period of stay",
+    "Changing your status of stay",
+    "University confirmation for part-time work",
+    "Other university support for immigration and stay matters",
+    "The integrated application form, the advisor confirmation form and the statement-of-reason form are kept at the office."
+   ],
+   "count": 6
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "🎓 학사 · 학교생활",
+   "en": "🎓 Academics & student life"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "외국인 유학생 학사 관련 문의",
+    "학교생활 상담",
+    "유학생 지원 프로그램",
+    "학과 또는 학교생활 관련 지원이 필요한 경우"
+   ],
+   "en": [
+    "Academic questions specific to international students",
+    "Counseling about student life",
+    "Support programmes for international students",
+    "When you need help with something at your department or on campus"
+   ],
+   "count": 4
+  },
+  "top_sections[0].notes[2].title": {
+   "ko": "💰 장학 · 생활지원",
+   "en": "💰 Scholarships & living support"
+  },
+  "top_sections[0].notes[2].lines": {
+   "ko": [
+    "외국인 유학생 장학 관련 문의",
+    "기숙사 및 생활지원 관련 안내",
+    "외국인 학생 지원제도"
+   ],
+   "en": [
+    "Questions about scholarships for international students",
+    "Dormitories and living support",
+    "Support schemes for international students"
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[3].title": {
+   "ko": "🌏 국제교류",
+   "en": "🌏 Exchange programmes"
+  },
+  "top_sections[0].notes[3].lines": {
+   "ko": [
+    "교환학생 프로그램",
+    "해외파견 프로그램",
+    "국제교류 프로그램",
+    "한국인·외국인 학생 교류 프로그램"
+   ],
+   "en": [
+    "Exchange student programmes",
+    "Overseas dispatch programmes",
+    "International exchange programmes",
+    "Programmes that bring Korean and international students together"
+   ],
+   "count": 4
+  },
+  "top_sections[1].title": {
+   "ko": "위치",
+   "en": "Where the office is"
+  },
+  "top_sections[1].body": {
+   "ko": "국제교류과 사무실은 부민캠퍼스 글로벌인재관(B03) 2층에 있습니다. 국제교류과는 2025년 8월 공지부터 사무실이 이전했다고 안내했으므로, 종합강의동 1층으로 적힌 예전 안내를 보고 찾아가지 않도록 주의하세요.",
+   "en": "The office is on the 2nd floor of the Global Leadership Hall (글로벌인재관, B03) on the Bumin campus. Its notices have said since August 2025 that the office has moved, so ignore older directions that send you to the 1st floor of the General Lecture Building."
+  },
+  "top_sections[1].footnote": {
+   "ko": "※ 사무실 위치(B03-0202)는 2026년 7~8월 국제교류과 공지 기준입니다. 홈페이지 「찾아오시는 길」에는 캠퍼스 주소만 있고 건물 · 호실은 나오지 않으므로, 방문 전 최신 공지나 전화로 위치를 확인하세요.",
+   "en": "※ The room (B03-0202) is taken from the office's notices of July–August 2026. The \"Directions\" page gives only the campus address, not the building or room, so check the latest notice or call before you go."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "부민캠퍼스",
+   "en": "Bumin campus"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "글로벌인재관(B03) 2층 B03-0202"
+   ],
+   "en": [
+    "Global Leadership Hall (글로벌인재관, B03), 2nd floor, room B03-0202"
+   ],
+   "count": 1
+  },
+  "top_sections[1].notes[1].title": {
+   "ko": "주소",
+   "en": "Address"
+  },
+  "top_sections[1].notes[1].lines": {
+   "ko": [
+    "부산광역시 서구 구덕로 225 (부민동 2가)",
+    "우편번호 49236"
+   ],
+   "en": [
+    "225 Gudeok-ro, Seo-gu, Busan (Bumin-dong 2-ga)",
+    "Postal code 49236"
+   ],
+   "count": 2
+  },
+  "top_sections[1].notes[2].title": {
+   "ko": "지하철",
+   "en": "By subway"
+  },
+  "top_sections[1].notes[2].lines": {
+   "ko": [
+    "부산지하철 1호선 토성역 2번 출구에서 동아대학교 부민캠퍼스 방향으로 이동하세요.",
+    "2번 출구에서 약 3분 거리입니다."
+   ],
+   "en": [
+    "Take Busan Metro Line 1 to Toseong station and leave by Exit 2, heading towards the Dong-A University Bumin campus.",
+    "It is about a 3-minute walk from Exit 2."
+   ],
+   "count": 2
+  },
+  "top_sections[1].notes[3].title": {
+   "ko": "버스",
+   "en": "By bus"
+  },
+  "top_sections[1].notes[3].lines": {
+   "ko": [
+    "동아대학교 부민캠퍼스 정류소 하차",
+    "일반 15, 16, 40, 70, 81, 123, 126, 161, 190 / 좌석 58-1"
+   ],
+   "en": [
+    "Get off at the Dong-A University Bumin Campus stop",
+    "Regular buses 15, 16, 40, 70, 81, 123, 126, 161, 190; express bus 58-1"
+   ],
+   "count": 2
+  },
+  "sections[0].title": {
+   "ko": "연락처",
+   "en": "Contact"
+  },
+  "sections[0].body": {
+   "ko": "국제교류과는 국제교류팀과 국제지원팀으로 구성되어 있습니다. 업무에 따라 담당자가 다르므로 대표번호로 먼저 문의하세요.",
+   "en": "The office has two teams — the International Exchange Team and the International Support Team. Which staff member helps you depends on what you need, so start with the main numbers."
+  },
+  "sections[0].notice": {
+   "ko": "방문 시간을 확인하세요\n2026년 국제교류과 공지에 적힌 업무시간은 10:00~15:00(점심시간 12:00~13:00)입니다. 업무에 따라 다를 수 있으므로 방문 전에 전화로 한 번 더 확인하세요.",
+   "en": "Check the office hours\nThe office's 2026 notices list 10:00–15:00, with a 12:00–13:00 lunch break. They may differ by service, so call ahead before you visit."
+  },
+  "sections[0].footnote": {
+   "ko": "※ 2024학년도 외국인 유학생 안내서에는 유학생 지원(체류·장학·기숙사) 문의 이메일이 global@donga.ac.kr로 안내되어 있었습니다. 현재 홈페이지 「구성원 안내」에는 이 주소가 없으므로 이메일을 보내기 전에 해당 공지나 전화로 담당자를 확인하세요. 업무별 번호는 2026년 9월 「구성원 안내」 기준입니다.",
+   "en": "※ The 2024 international-student booklet gave global@donga.ac.kr as the address for student support (stay, scholarships, dormitories). The current \"구성원 안내\" (staff) page does not list that address, so check the relevant notice or call to find the right person before you email. The numbers by service follow that staff page as of September 2026."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "국제교류과 대표 연락처",
+   "en": "Main contact"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "전화: 051-200-6442~4, 6446~8",
+    "팩스: 051-200-6445"
+   ],
+   "en": [
+    "Phone: 051-200-6442~4, 6446~8",
+    "Fax: 051-200-6445"
+   ],
+   "count": 2
+  },
+  "sections[0].notes[1].title": {
+   "ko": "업무별 연락처",
+   "en": "Numbers by service"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "유학생 학사 지원·상담, 유학생 외부 기숙사 관리: 051-200-6447",
+    "석당 글로벌하우스 운영: 051-200-1496 · 사생 관리: 051-200-1510",
+    "학부 · 대학원 외국인 입시: 051-200-6444",
+    "정부초청장학생(GKS), 유학생 학습지원 · 적응 프로그램: 051-200-6449",
+    "한국어학당: 051-200-6446"
+   ],
+   "en": [
+    "Academic support and counseling, and off-campus dormitories, for international students: 051-200-6447",
+    "Seokdang Global House — management: 051-200-1496 · residents: 051-200-1510",
+    "Undergraduate and graduate admissions for international students: 051-200-6444",
+    "Global Korea Scholarship (GKS), and learning-support and adjustment programmes: 051-200-6449",
+    "Korean language school (한국어학당): 051-200-6446"
+   ],
+   "count": 5
+  },
+  "links[0].label": {
+   "ko": "동아대학교 대외국제처 국제교류과",
+   "en": "Dong-A University Office of International Affairs"
+  },
+  "links[0].description": {
+   "ko": "공지 · 유학생 지원 · 국제교류 프로그램",
+   "en": "Notices, student support and exchange programmes"
+  },
+  "links[1].label": {
+   "ko": "국제교류과 찾아오시는 길",
+   "en": "Directions to the office"
+  },
+  "links[1].description": {
+   "ko": "위치 · 교통편 · 연락처",
+   "en": "Location, transport and contact details"
+  },
+  "links[2].label": {
+   "ko": "국제교류과 공지사항",
+   "en": "Office notices"
+  },
+  "links[2].description": {
+   "ko": "「유학생지원」 분류 — 비자연장 단체접수 · 장학 · 수강신청 안내",
+   "en": "Pick the 유학생지원 (student support) category for visa extensions, scholarships and course registration"
+  },
+  "links[3].label": {
+   "ko": "국제교류과 Q&A",
+   "en": "Office Q&A board"
+  },
+  "links[3].description": {
+   "ko": "국제교류 프로그램 메뉴의 Q&A 게시판",
+   "en": "Q&A board under the exchange programmes menu"
+  },
+  "links[4].label": {
+   "ko": "국제교류 프로그램 상담신청",
+   "en": "Exchange programme counseling"
+  },
+  "links[4].description": {
+   "ko": "교환학생 · 어학연수 등 프로그램 상담",
+   "en": "Counseling for exchange and language programmes"
+  },
+  "links[5].label": {
+   "ko": "지도에서 국제교류과 위치 보기",
+   "en": "View the International Affairs Office on the map"
+  },
+  "links[5].description": {
+   "ko": "부민캠퍼스 글로벌인재관",
+   "en": "Global Leadership Hall, Bumin campus"
+  }
+ }
+}

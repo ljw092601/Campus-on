@@ -1,13 +1,9 @@
 {
   "@@locale": "ko",
-
   "appTitle": "동아메이트",
-
   "tab_home_label": "홈",
   "tab_map_label": "지도",
-  "tab_guide_label": "가이드",
   "tab_settings_label": "설정",
-
   "common_retry": "다시 시도",
   "common_all": "전체",
   "common_clear": "지우기",
@@ -17,13 +13,11 @@
   "common_sortName": "이름순",
   "common_comingSoon": "내용 준비 중입니다",
   "common_loadFailed": "문제가 발생했어요.",
-
   "home_searchBar_hint": "시설·행정 검색",
   "home_mapBanner_title": "캠퍼스 지도 보기",
   "home_mapBanner_subtitle": "가까운 시설 찾기",
   "home_section_guide": "행정 가이드",
   "home_empty_noFacility": "표시할 시설 정보가 아직 없어요.",
-
   "home_hero_title_line1": "동아대학교에서",
   "home_hero_title_highlight": "새로운 시작",
   "home_hero_title_suffix": "을 응원합니다!",
@@ -35,12 +29,10 @@
   "home_card_map_desc": "캠퍼스 지도에서 건물과 주요 위치를 확인하세요.",
   "home_card_dining_title": "오늘의 학식",
   "home_card_dining_desc": "식단별 메뉴와 영업시간을 확인하세요.",
-
   "map_zoomIn_tooltip": "확대",
   "map_zoomOut_tooltip": "축소",
-
   "classroom_search_title": "강의실 위치 검색",
-  "classroom_help": "건물을 선택하고 호수를 입력하세요.\n예) S01 - 0301, S04 - 0306-1 (앞 2자리 = 층, 지하 1층은 B101)",
+  "classroom_help": "건물을 선택하고 호수를 입력하세요.\n예) S01 - 0301, S04 - 0306-1 (앞 2자리 = 층, 지하 1층은 B101)\n※ 도면이 없는 건물의 추천 번호는 층별 시설 목록 순서로 만든 임시 번호이며 실제 호실 번호가 아닙니다.\n※ 도면이 있는 건물은 방 번호로만 찾을 수 있어요. 이름으로 찾을 때는 아래 층별 안내를 펼쳐 보세요.",
   "classroom_hint_building": "건물 선택",
   "classroom_hint_room": "호수",
   "classroom_action_search": "위치 보기",
@@ -61,14 +53,17 @@
   "dining_unpublished": "오늘 식단이 아직 등록되지 않았어요.",
   "dining_price": "{price}원",
   "@dining_price": {
-    "placeholders": { "price": { "type": "int" } }
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
   },
-  "dining_placeholder_notice": "지금은 예시 식단이에요. 관리자가 식단을 등록하면 실제 메뉴가 표시됩니다.",
+  "dining_placeholder_notice": "지금은 예시 식단이에요. 학교 API 연동 후 실제 메뉴가 표시됩니다.",
   "dining_prevDay": "이전 날짜",
   "dining_nextDay": "다음 날짜",
   "dining_error_loadFailed": "식단을 불러오지 못했어요.",
   "dining_empty": "등록된 학식 정보가 아직 없어요.",
-
   "calendar_placeholder_notice": "지금은 예시 일정이에요. 관리자가 학사일정을 등록하면 실제 일정이 표시됩니다.",
   "calendar_empty": "올해 등록된 학사일정이 아직 없어요.",
   "calendar_error_loadFailed": "학사일정을 불러오지 못했어요.",
@@ -77,14 +72,12 @@
   "calendar_cat_exam": "시험",
   "calendar_cat_holiday": "휴일",
   "calendar_cat_graduation": "졸업",
-
   "facility_category_building": "건물",
   "facility_category_classroom": "강의실",
   "facility_category_dining": "식당",
   "facility_category_library": "도서관",
   "facility_category_amenity": "편의시설",
   "facility_category_etc": "기타",
-
   "map_appbar_title": "지도",
   "map_campus_seunghak": "승학",
   "map_campus_gudeok": "구덕",
@@ -104,11 +97,9 @@
   "map_nearby_resultCount": "주변 검색 결과 {count}곳",
   "map_nearby_empty": "주변에서 검색 결과를 찾지 못했어요.",
   "map_nearby_failed": "주변 장소를 검색하지 못했어요.",
-
   "list_appbar_title": "시설 목록",
   "list_empty_noResult": "검색/필터에 맞는 시설이 없어요.",
   "list_error_loadFailed": "목록을 불러오지 못했어요.",
-
   "facility_meta_distance": "{meters}m",
   "facility_action_viewOnMap": "지도에서 보기",
   "facility_action_call": "전화",
@@ -117,12 +108,15 @@
   "facility_floors_error": "층별 정보를 불러오지 못했어요.",
   "facility_floors_roomCount": "{count}곳",
   "@facility_floors_roomCount": {
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "facility_detail_error": "정보를 불러오지 못했어요.",
   "facility_favorite_add": "즐겨찾기 추가",
   "facility_favorite_remove": "즐겨찾기 해제",
-
   "search_appbar_hint": "검색",
   "search_segment_all": "전체",
   "search_segment_facility": "시설",
@@ -133,14 +127,12 @@
   "search_empty_noResult": "'{query}' 검색 결과가 없어요.",
   "search_empty_hint": "시설과 행정 가이드를 검색하세요.",
   "search_error_failed": "검색에 실패했어요.",
-
   "guide_category_immigration": "입국·체류",
   "guide_category_housing": "주거",
   "guide_category_living": "생활 인프라",
   "guide_category_health": "건강·보험",
   "guide_category_school": "학교 행정",
   "guide_category_emergency": "긴급·도움",
-
   "guide_appbar_title": "행정 가이드",
   "guide_categorySummary_immigration": "비자·외국인등록·체류연장",
   "guide_categorySummary_housing": "기숙사·교외 주거",
@@ -151,9 +143,7 @@
   "guide_meta_itemCount": "{count}건",
   "guide_list_empty_title": "이 카테고리의 안내가 준비 중이에요",
   "guide_list_error": "안내를 불러오지 못했어요.",
-
   "guide_checklist_optional_title": "경우에 따라 필요할 수 있어요",
-
   "guide_section_overview": "개요",
   "guide_section_checklist": "준비물",
   "guide_section_steps": "단계",
@@ -167,7 +157,6 @@
   "guide_favorite_add": "즐겨찾기 추가",
   "guide_favorite_remove": "즐겨찾기 해제",
   "guide_detail_error": "안내를 불러오지 못했어요.",
-
   "settings_title": "설정",
   "settings_language_title": "언어 · Language",
   "settings_language_ko": "한국어",
@@ -181,11 +170,10 @@
   "settings_licenses": "오픈소스 라이선스",
   "settings_version": "버전",
   "settings_version_value": "0.2.0 (MVP)",
-  "settings_about_body": "동아메이트는 외국인 유학생이 캠퍼스 시설과 행정 절차를 한국어·영어로 한 곳에서 찾도록 돕는 앱입니다. 로그인 없이 지도와 행정 가이드를 이용할 수 있어요.",
+  "settings_about_body": "동아메이트는 외국인 유학생이 캠퍼스 시설과 행정 절차를 한 곳에서 찾도록 돕는 앱입니다. 화면과 행정 가이드는 한국어·영어·중국어(간체)·베트남어로 볼 수 있고, 학사일정·시설·학식의 이름과 안내도 네 언어로 제공됩니다. 층별 안내의 공간 이름과 학식 메뉴는 번역된 것만 해당 언어로 보이고, 나머지는 건물 표지판과 맞추기 위해 한국어를 그대로 둡니다. 로그인 없이 지도와 행정 가이드를 이용할 수 있어요.",
   "settings_dataSource_body": "시설·행정 정보는 국제교류처 제공 자료를 바탕으로 정리했습니다. 최신 내용은 학교 공식 안내를 함께 확인해 주세요. 지도는 카카오맵을 사용합니다.",
   "settings_contact_body": "앱 오류나 정보 수정 제안은 아래 이메일로 보내 주세요.",
   "settings_contact_emailLabel": "이메일 보내기",
-
   "favorites_title": "즐겨찾기",
   "favorites_segment_facility": "시설",
   "favorites_segment_guide": "가이드",
@@ -195,5 +183,9 @@
   "favorites_action_openMap": "지도 보기",
   "favorites_action_openGuide": "가이드 보기",
   "favorites_removed": "즐겨찾기에서 제거했어요.",
-  "common_undo": "실행 취소"
+  "common_undo": "실행 취소",
+  "settings_language_save_failed": "언어는 지금 바뀌었지만 이 기기에 저장하지 못했습니다. 앱을 다시 시작하면 이전 언어로 돌아갈 수 있어요.",
+  "@settings_language_save_failed": {
+    "description": "Shown when the chosen language could not be persisted (private window, blocked storage)."
+  }
 }

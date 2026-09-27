@@ -45,6 +45,12 @@ class FirestorePaths {
 Map<String, dynamic> _normalize(
   DocumentSnapshot<Map<String, dynamic>> doc,
 ) {
+  // A document with no data would otherwise become an entity with empty fields,
+  // i.e. a blank row on screen. Treat it as malformed so the callers that skip
+  // malformed documents skip this too (B 03/060 N-01).
+  if (doc.data() == null) {
+    throw FormatException('${doc.reference.path}: document has no data');
+  }
   final data = <String, dynamic>{...?doc.data()};
   data['id'] = doc.id;
   final ts = data['updatedAt'];

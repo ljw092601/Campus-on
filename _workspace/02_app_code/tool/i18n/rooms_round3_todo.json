@@ -1,0 +1,20 @@
+{
+  "_what": "번역 대상인데 아직 번역이 없는 층별 안내 공간명. place_{en,zh,vi}.json의 rooms에 채운다.",
+  "_generated_by": "python tool/i18n/rooms_round3_todo.py",
+  "_rules": [
+    "호실 번호·건물 코드·층 표기·영문 브랜드·사람 이름은 그대로 둔다.",
+    "한국어 원문에 없는 기능·용도·대상을 덧붙이지 않는다.",
+    "한국어와 같은 값을 넣으면 번역으로 세지 않는다."
+  ],
+  "_after_filling": "python tool/i18n/i18n_tool.py place-gen && place-validate",
+  "counts": {
+    "in_scope": 1470,
+    "todo": 0,
+    "by_language": {
+      "en": 0,
+      "zh": 0,
+      "vi": 0
+    }
+  },
+  "todo": {}
+}

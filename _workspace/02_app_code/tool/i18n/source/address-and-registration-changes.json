@@ -1,0 +1,285 @@
+{
+ "id": "address-and-registration-changes",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "체류지·등록사항 변경신고",
+   "en": "Reporting Address & Registration Changes"
+  },
+  "detail_title": {
+   "ko": "이사했거나 여권·인적사항이 바뀌었을 때 신고하기",
+   "en": "Moved, or Got a New Passport? Report the Change"
+  },
+  "summary": {
+   "ko": "이사는 전입일부터, 여권·학교 변경은 변경일부터 15일 안에",
+   "en": "Within 15 days — of moving in, or of the change"
+  },
+  "overview": {
+   "ko": "외국인등록을 한 유학생은 사는 곳이나 등록된 정보가 바뀌면 직접 신고해야 합니다. 신고는 두 가지로 나뉩니다.\n\n① 체류지 변경신고 — 이사했을 때(기숙사에 들어가거나 나올 때 포함)\n② 외국인등록사항 변경신고 — 여권을 새로 받았거나 이름·국적 등이 바뀌었을 때, 다니는 학교가 바뀌었을 때\n\n두 신고는 기한을 세는 날, 신고할 수 있는 곳, 늦었을 때의 제재가 서로 다릅니다.",
+   "en": "Registered international students must report it themselves when their address or registered details change. There are two separate reports.\n\n① Change of address — when you move (including moving into or out of a dormitory)\n② Change of foreign resident registration — when you get a new passport, your name or nationality changes, or you move to a different school\n\nThe two differ in when the deadline starts, where you can report, and what happens if you are late."
+  },
+  "checklist": {
+   "ko": [
+    "외국인등록증",
+    "여권(새 여권을 받았다면 새 여권)",
+    "신고서 — 체류지변경신고서 또는 외국인등록사항 변경신고서(통합신청서 양식)",
+    "이사했다면: 이사 사실을 확인할 서류 — 임대차계약서 등"
+   ],
+   "en": [
+    "Residence Card",
+    "Passport (the new one, if you have been issued a new passport)",
+    "The report form — change of address, or change of registration (integrated application form)",
+    "If you moved: proof of the move — such as the lease"
+   ],
+   "count": 4
+  },
+  "checklist_optional_title": {
+   "ko": "상황에 따라 필요해요",
+   "en": "Depending on your situation"
+  },
+  "checklist_optional": {
+   "ko": [
+    "기숙사에 들어갔다면: 기숙사비 영수증이나 숙소제공 확인서 등(매뉴얼 표기). 학교 발급 서류 이름은 기숙사·국제교류과에서 확인",
+    "학교가 바뀌었다면: 새 학교 재학증명서, 전 학교 제적증명서"
+   ],
+   "en": [
+    "If you moved into a dormitory: a dormitory fee receipt or a confirmation of accommodation (as the manual lists them). Ask the dormitory or the international office what the university issues.",
+    "If you changed school: certificate of enrolment from the new school, certificate of withdrawal from the old one"
+   ],
+   "count": 2
+  },
+  "steps": {
+   "ko": [
+    "바뀐 날짜 확인 — 이사는 새 주소로 전입한 날, 여권·학교 등은 변경된 날부터 15일",
+    "어떤 신고인지 고르고 서류 준비",
+    "신고처 선택 — 이사는 주민센터·시군구청·출입국 중 한 곳, 등록사항은 출입국(여권 정보만 바뀌었으면 하이코리아 전자민원). 출입국 방문은 하이코리아 방문예약 확인",
+    "신고 후 외국인등록증에 새 주소가 적혔는지(또는 변경 처리가 끝났는지) 확인",
+    "임대차계약서·접수증 등 신고 증빙을 보관"
+   ],
+   "en": [
+    "Check the date — for a move, the day you moved in; for passport, school and other changes, the day of the change. You have 15 days.",
+    "Pick the right report and prepare the documents.",
+    "Choose where to report — a move at a community service centre, the district office or immigration; registration details at immigration (or HiKorea e-application if only your passport changed). For immigration visits, check HiKorea visit booking.",
+    "After reporting, check that your new address is on your Residence Card (or that the change has been processed).",
+    "Keep the lease, receipt and other proof of the report."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "외국인은 체류지 변경신고가 주민등록 전입신고를 대신합니다(출입국관리법 제88조의2).",
+    "학교 포털(학생정보)에서 주소를 바꾸는 것만으로 출입국 신고가 된다는 공식 안내는 없습니다. 출입국 신고는 따로 하세요.",
+    "기숙사에 들어가거나 나와 다른 곳으로 옮기는 것도 체류지 변경입니다.",
+    "대학 휴학 자체는 등록사항 변경신고 항목으로 규정돼 있지 않습니다. 학교를 옮기는 경우가 신고 대상입니다.",
+    "체류기간 연장 등 다른 신청을 할 때도 새 주소 입증서류가 필요하니 계약서를 보관하세요."
+   ],
+   "en": [
+    "For foreign residents, the change-of-address report takes the place of the resident move-in report (Immigration Act art. 88-2).",
+    "No official guidance says that changing your address in the university portal counts as reporting to immigration. Report to immigration separately.",
+    "Moving into a dormitory, or out of one to somewhere else, is also a change of address.",
+    "Taking leave from university is not itself listed as a registration change; moving to a different school is.",
+    "Other applications such as an extension of stay also ask for proof of your address, so keep your lease."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "이사",
+    "주소 변경",
+    "체류지 변경",
+    "여권 변경",
+    "새 여권",
+    "전입신고"
+   ],
+   "en": [
+    "moving",
+    "move house",
+    "change of address",
+    "new passport",
+    "passport change"
+   ],
+   "count": 6
+  },
+  "top_sections[0].title": {
+   "ko": "어떤 신고인가요?",
+   "en": "Which report do I need?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 출입국관리법·시행령·시행규칙과 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 기준, 2026-09-13 확인.",
+   "en": "※ Based on the Immigration Act, its Decree and Rules and the HiKorea stay manual by status (posted September 2026), checked 2026-09-13."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🏠 체류지 변경신고(이사)",
+   "en": "🏠 Change of address (moving)"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "기한: 새 주소로 전입한 날부터 15일 이내",
+    "신고처: 새 체류지의 시·군·구청이나 읍·면·동 주민센터, 또는 관할 출입국·외국인관서",
+    "제출: 체류지변경신고서, 여권, 외국인등록증과 이사 사실을 확인할 수 있는 서류(임대차계약서 등). 신고하면 등록증에 새 주소가 적힙니다.",
+    "늦거나 안 하면: 100만원 이하의 벌금 대상(출입국관리법 제98조)"
+   ],
+   "en": [
+    "Deadline: within 15 days of moving in to the new address",
+    "Where: the city/county/district office or the community service centre (eup/myeon/dong) for your new address, or your immigration office",
+    "Bring: the change-of-address form, passport, Residence Card and proof of the move (such as the lease). The new address is written on your card.",
+    "If late or not reported: a fine of up to ₩1 million (Immigration Act art. 98)"
+   ],
+   "count": 4
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "🪪 외국인등록사항 변경신고",
+   "en": "🪪 Change of registration details"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "대상: 성명·성별·생년월일·국적, 여권 번호·발급일자·유효기간, 유학(D-2)·연수(D-4)의 소속 학교 변경(명칭 변경 포함)이나 추가",
+    "기한: 변경된 날부터 15일 이내",
+    "신고처: 관할 출입국·외국인관서(여권 정보만 바뀌었으면 하이코리아 전자민원 가능)",
+    "제출: 외국인등록사항 변경신고서, 여권, 외국인등록증(수수료 없음). 학교가 바뀐 경우 새 학교 재학증명서와 전 학교 제적증명서",
+    "늦거나 안 하면: 100만원 이하의 과태료 대상(제100조)"
+   ],
+   "en": [
+    "Covers: name, sex, date of birth, nationality; passport number, issue date and expiry; and for student (D-2) or training (D-4) status, a change of school (including a name change) or an added school",
+    "Deadline: within 15 days of the change",
+    "Where: your immigration office (HiKorea e-application if only passport details changed)",
+    "Bring: the change-of-registration form, passport and Residence Card (no fee). If you changed school, a certificate of enrolment from the new school and a certificate of withdrawal from the old one.",
+    "If late or not reported: an administrative fine of up to ₩1 million (art. 100)"
+   ],
+   "count": 5
+  },
+  "sections[0].title": {
+   "ko": "여권을 새로 받았다면",
+   "en": "If you got a new passport"
+  },
+  "sections[0].body": {
+   "ko": "여권 번호·발급일자·유효기간만 바뀌었다면 하이코리아 전자민원 「등록사항변경신고(여권변경)」으로 신고할 수 있습니다. 이름·생년월일·성별이 하나라도 바뀌었다면 반드시 출입국·외국인관서를 방문해야 합니다.",
+   "en": "If only your passport number, issue date or expiry changed, you can report it through HiKorea e-application “Report of change of registration (passport change)”. If your name, date of birth or sex changed, you must visit the immigration office."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "하이코리아 안내 기준",
+   "en": "What HiKorea lists"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "전자민원: 여권 인적사항면 이미지 첨부, 수수료 없음, 업무일 기준 3일 이내 처리",
+    "방문: 통합신청서·외국인등록증·여권, 즉시 처리",
+    "전자민원 접수 시간: 07:00~22:00(토·일·공휴일 제외)",
+    "이름·성별·생년월일·국적이 바뀌면 외국인등록증이 재발급됩니다."
+   ],
+   "en": [
+    "Online: attach an image of the passport photo page; no fee; processed within 3 working days.",
+    "In person: integrated application form, Residence Card and passport; processed on the spot.",
+    "Online applications accepted 07:00–22:00 (not at weekends or on public holidays).",
+    "If your name, sex, date of birth or nationality changes, a new Residence Card is issued."
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "늦었다면",
+   "en": "If you are late"
+  },
+  "sections[1].body": {
+   "ko": "기한을 넘겼더라도 알게 된 즉시 신고하세요. 제재 금액은 위반 기간에 따라 기준이 있지만 사정에 따라 줄거나 늘 수 있어, 얼마를 내게 될지는 출입국이 정합니다.",
+   "en": "Even past the deadline, report as soon as you realise. There are standard amounts by how late you are, but they can be reduced or increased, so immigration decides what you pay."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "법령의 기준액",
+   "en": "Standard amounts in the rules"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "체류지 변경신고(벌금·범칙금 기준): 3개월 미만 10만원, 3~6개월 30만원, 6개월~1년 50만원, 1~2년 70만원, 2년 이상 100만원",
+    "외국인등록사항 변경신고(과태료 기준): 3개월 미만 10만원, 3~6개월 30만원, 6개월~1년 50만원, 1년 이상 100만원",
+    "기준액은 사정에 따라 2분의 1 범위에서 감경·가중될 수 있지만, 최종 금액은 법률상 상한(100만원)을 넘을 수 없습니다."
+   ],
+   "en": [
+    "Change of address (fine / penalty-notice standard): under 3 months ₩100,000; 3–6 months ₩300,000; 6 months–1 year ₩500,000; 1–2 years ₩700,000; 2 years or more ₩1 million.",
+    "Change of registration (administrative fine standard): under 3 months ₩100,000; 3–6 months ₩300,000; 6 months–1 year ₩500,000; 1 year or more ₩1 million.",
+    "The standard amount may be reduced or increased by up to half for the circumstances, but the final amount cannot exceed the statutory cap of ₩1 million."
+   ],
+   "count": 3
+  },
+  "sections[2].title": {
+   "ko": "동아대 안내와 다른 점",
+   "en": "Where Dong-A’s page differs"
+  },
+  "sections[2].body": {
+   "ko": "동아대학교 국제교류과 「VISA 정보」 페이지(게시일 표기 없음)는 등록사항 변경(체류지 변경) 신고를 「변경일로 14일 이내」, 「출입국관리사무소 직접신청(하이코리아 방문예약)」으로 안내합니다. 법은 전입한 날부터 15일 이내이고, 주민센터·시군구청에서도 신고할 수 있습니다. 여유를 두고 빨리 신고하되 신고처는 편한 곳을 고르세요.",
+   "en": "Dong-A’s Office of International Affairs “VISA information” page (no posting date) says to report a change of address “within 14 days of the change” and “in person at the immigration office (HiKorea visit booking)”. The law gives 15 days from moving in, and you can also report at a community service centre or district office. Report early, at whichever office suits you."
+  },
+  "links[0].label": {
+   "ko": "하이코리아 — 여권변경 신고 안내",
+   "en": "HiKorea — passport change report"
+  },
+  "links[0].description": {
+   "ko": "전자민원 서류·처리기간(신청은 로그인 필요)",
+   "en": "Online documents and processing time (applying needs a login)"
+  },
+  "links[1].label": {
+   "ko": "하이코리아 방문예약",
+   "en": "HiKorea visit booking"
+  },
+  "links[1].description": {
+   "ko": "출입국·외국인관서 방문 전 예약",
+   "en": "Book before visiting the immigration office"
+  },
+  "links[2].label": {
+   "ko": "생활법령 — 외국인등록 및 변경신고",
+   "en": "Easy-to-find Law — registration and change reports"
+  },
+  "links[2].description": {
+   "ko": "법제처 외국인유학생 안내",
+   "en": "Ministry of Government Legislation guide for international students (Korean)"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 교외주거 구하기",
+   "en": "Guide — Finding Off-Campus Housing"
+  },
+  "links[3].description": {
+   "ko": "방을 구할 때 확인할 것",
+   "en": "What to check when you look for a room"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 기숙사 신청",
+   "en": "Guide — Dormitory Application"
+  },
+  "links[4].description": {
+   "ko": "입사·퇴사 일정",
+   "en": "Move-in and move-out dates"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 외국인등록증(ARC) 발급",
+   "en": "Guide — Residence Card (ARC)"
+  },
+  "links[5].description": {
+   "ko": "처음 외국인등록을 할 때",
+   "en": "Registering for the first time"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 체류기간 연장",
+   "en": "Guide — Extension of Stay"
+  },
+  "links[6].description": {
+   "ko": "연장 신청 때 주소 입증서류",
+   "en": "Address proof for an extension"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 임대차 보증금 지키기",
+   "en": "Guide — Protecting Your Rental Deposit"
+  },
+  "links[7].description": {
+   "ko": "교외로 이사할 때 보증금 보호",
+   "en": "Protecting your deposit when you move off campus"
+  },
+  "phrases[0].text": {
+   "ko": "이사해서 체류지 변경신고를 하려고 합니다.",
+   "en": "I moved and want to report my change of address."
+  },
+  "phrases[1].text": {
+   "ko": "여권을 새로 받아서 외국인등록사항 변경신고를 하고 싶습니다.",
+   "en": "I got a new passport and want to report the change to my registration."
+  }
+ }
+}

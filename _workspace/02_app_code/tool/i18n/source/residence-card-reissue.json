@@ -1,0 +1,223 @@
+{
+ "id": "residence-card-reissue",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "외국인등록증 재발급",
+   "en": "Replacing Your Residence Card"
+  },
+  "detail_title": {
+   "ko": "외국인등록증을 잃어버렸거나 새로 받아야 할 때",
+   "en": "Lost Your Residence Card, or Need a New One?"
+  },
+  "summary": {
+   "ko": "분실·훼손·인적사항 변경 등 사유별로 관할 출입국에 신청",
+   "en": "Apply to your immigration office — loss, damage, changed details and more"
+  },
+  "overview": {
+   "ko": "외국인등록증을 잃어버렸거나 망가졌을 때, 또는 이름·국적 등이 바뀌어 카드를 새로 받아야 할 때는 체류지 관할 출입국·외국인관서에 재발급을 신청합니다.\n\n분실 신고는 카드가 부정하게 쓰이지 않도록 알리는 절차일 뿐, 새 카드를 받는 신청이 아닙니다. 분실 직후 할 일은 사건·사고 대응 가이드를, 재발급 신청은 이 가이드를 보세요.",
+   "en": "If your Residence Card is lost or damaged, or you need a new one because your name, nationality or other details changed, apply for a replacement at the immigration office for your address.\n\nA loss report only records the loss to prevent misuse — it is not an application for a new card. For what to do right after losing it, see the incident response guide; for the replacement itself, use this guide."
+  },
+  "checklist": {
+   "ko": [
+    "외국인등록증 재발급 신청서(통합신청서)",
+    "사진 1장 — 최근 6개월 이내 촬영한 3.5×4.5cm 정면 사진",
+    "여권",
+    "수수료 35,000원(현금)",
+    "분실이 아닌 사유라면 원래 외국인등록증"
+   ],
+   "en": [
+    "Residence Card reissue application (integrated application form)",
+    "One photo — front-facing, 3.5 × 4.5 cm, taken within the last 6 months",
+    "Passport",
+    "Fee: ₩35,000 (cash)",
+    "For any reason other than loss, your current Residence Card"
+   ],
+   "count": 5
+  },
+  "checklist_note": {
+   "ko": "※ 수수료 면제 대상자(정부초청장학생 등)도 외국인등록증 발급·재발급 수수료는 내야 합니다. 분실 사유를 설명하는 자료처럼 추가로 요구될 수 있는 서류는 하이코리아나 1345에서 확인하세요.",
+   "en": "※ Even people exempt from other fees (such as government scholarship students) pay the card issue and reissue fee. Check any extra documents that may be asked for — such as a note explaining the loss — with HiKorea or 1345."
+  },
+  "steps": {
+   "ko": [
+    "분실이라면 먼저 사건·사고 대응 가이드에 따라 분실 신고와 습득물 확인",
+    "재발급 사유와 필요한 서류 확인",
+    "체류지 관할 출입국·외국인관서 방문 — 하이코리아 방문예약 확인",
+    "신청서·사진·여권·수수료(분실 외 사유는 기존 카드) 제출",
+    "새 카드를 받은 뒤, 모바일 외국인등록증을 쓰고 있었다면 모바일 카드도 다시 발급"
+   ],
+   "en": [
+    "If it was lost, first follow the incident response guide: report the loss and check lost-and-found.",
+    "Confirm the reason for reissue and the documents you need.",
+    "Visit the immigration office for your address — check HiKorea visit booking.",
+    "Submit the form, photo, passport and fee (and the old card, for reasons other than loss).",
+    "Once you have the new card, if you used a mobile Residence Card, get the mobile card reissued too."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "경찰에 낸 분실 신고는 출입국 재발급 신청을 대신하지 않습니다.",
+    "도난이나 범죄 피해라면 112에 신고하세요.",
+    "출국할 때 외국인등록증이 필요할 수 있으니, 출국 예정이 있다면 재발급 일정과 반납 여부를 함께 확인하세요."
+   ],
+   "en": [
+    "A loss report to the police does not replace applying to immigration for a new card.",
+    "If it was stolen or you were a victim of crime, call 112.",
+    "You may need the card when you leave Korea, so if you are travelling soon, check reissue timing and whether you must hand it in."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "분실",
+    "등록증 분실",
+    "외국인등록증 분실",
+    "재발급",
+    "잃어버렸어요"
+   ],
+   "en": [
+    "lost card",
+    "lost residence card",
+    "reissue",
+    "replacement card"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "재발급을 받는 경우",
+   "en": "When a card is reissued"
+  },
+  "top_sections[0].notice": {
+   "ko": "주소·여권·학교가 바뀐 것만으로는 새 카드 사유가 아닐 수 있습니다. 먼저 변경신고를 하고, 카드 교체가 필요한지는 신고할 때 확인하세요.",
+   "en": "A new address, passport or school alone may not mean a new card. Report the change first and ask whether the card needs replacing when you do."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 출입국관리법 시행령 제42조와 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 기준, 2026-09-13 확인.",
+   "en": "※ Based on Enforcement Decree art. 42 and the HiKorea stay manual by status (posted September 2026), checked 2026-09-13."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "📋 재발급 사유(시행령 제42조)",
+   "en": "📋 Grounds (Enforcement Decree art. 42)"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "분실했거나 훼손된 경우",
+    "카드의 기재란이 부족한 경우",
+    "체류자격 변경허가를 받은 경우",
+    "성명·성별·생년월일·국적이 바뀌어 변경신고를 한 경우",
+    "카드를 일괄 갱신해야 하는 경우"
+   ],
+   "en": [
+    "It was lost or damaged.",
+    "There is no more room on the card for entries.",
+    "You were granted a change of status of stay.",
+    "You reported a change of name, sex, date of birth or nationality.",
+    "Cards have to be renewed all at once."
+   ],
+   "count": 5
+  },
+  "sections[0].title": {
+   "ko": "기한과 기다리는 동안",
+   "en": "Deadlines, and while you wait"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "신청 기한",
+   "en": "Deadline"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "현행 시행령 제42조에는 재발급 신청 기한이 적혀 있지 않습니다. 예전 조문의 「14일 이내」는 현재 규정이 아닙니다.",
+    "다만 카드는 신분 증명에 계속 쓰이므로 미루지 말고 가능한 한 빨리 신청하세요.",
+    "이름·국적 등 등록사항이 바뀐 경우의 변경신고는 15일 기한이 따로 있습니다."
+   ],
+   "en": [
+    "The current Enforcement Decree art. 42 sets no deadline for applying. The old “within 14 days” wording is no longer the rule.",
+    "Your card is still your ID, though, so apply as soon as you can.",
+    "Reporting a change of name, nationality and similar details has its own 15-day deadline."
+   ],
+   "count": 3
+  },
+  "sections[0].notes[1].title": {
+   "ko": "카드가 없는 동안",
+   "en": "Without a card"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "외국인등록 사실증명을 발급받을 수 있지만, 은행·통신사·병원 등이 이를 등록증 대신 인정하는지는 제출처마다 다르므로 먼저 확인하세요.",
+    "처리 기간과 카드 수령 방법은 신청할 때 관서에 확인하세요."
+   ],
+   "en": [
+    "You can get a certificate of foreign resident registration, but whether a bank, phone company or hospital accepts it instead of the card is up to each of them — ask first.",
+    "Ask the office about processing time and how you will collect the card when you apply."
+   ],
+   "count": 2
+  },
+  "sections[1].title": {
+   "ko": "모바일 외국인등록증",
+   "en": "Mobile Residence Card"
+  },
+  "sections[1].body": {
+   "ko": "모바일 외국인등록증은 실물 카드와 같은 효력이 있고, 14세 이상 등록외국인이 본인 명의 스마트폰 1대에만 발급받을 수 있습니다. 유효기간은 체류기간 만료일까지이며, 실물 카드를 재발급받으면 모바일 카드도 재발급 사유가 됩니다.",
+   "en": "A mobile Residence Card has the same legal effect as the physical card. Registered foreigners aged 14 or over can get one on a single smartphone in their own name. It is valid until your period of stay expires, and when the physical card is reissued the mobile card has to be reissued as well."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 모바일 카드가 있어도 실물 카드 재발급을 생략해도 된다는 공식 안내는 확인하지 못했습니다.",
+   "en": "※ We found no official guidance saying a mobile card lets you skip replacing the physical card."
+  },
+  "links[0].label": {
+   "ko": "가이드 — 사건·사고 대응",
+   "en": "Guide — Incident Response"
+  },
+  "links[0].description": {
+   "ko": "분실 직후 할 일과 하이코리아 분실 신고",
+   "en": "What to do right after a loss, and the HiKorea loss report"
+  },
+  "links[1].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting Address & Registration Changes"
+  },
+  "links[1].description": {
+   "ko": "이름·국적·여권이 바뀐 경우의 15일 신고",
+   "en": "15-day report when your name, nationality or passport changes"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 외국인등록증(ARC) 발급",
+   "en": "Guide — Residence Card (ARC)"
+  },
+  "links[2].description": {
+   "ko": "처음 발급받을 때",
+   "en": "Getting your first card"
+  },
+  "links[3].label": {
+   "ko": "하이코리아 방문예약",
+   "en": "HiKorea visit booking"
+  },
+  "links[3].description": {
+   "ko": "출입국·외국인관서 방문 전 예약",
+   "en": "Book before visiting the immigration office"
+  },
+  "links[4].label": {
+   "ko": "법무부 — 모바일 외국인등록증 발급",
+   "en": "Ministry of Justice — mobile Residence Card"
+  },
+  "links[4].description": {
+   "ko": "대상과 발급 방법",
+   "en": "Who can get one and how (Korean)"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 귀국·출국 전 행정 정리",
+   "en": "Guide — Before You Leave Korea"
+  },
+  "links[5].description": {
+   "ko": "출국 시 등록증 반납",
+   "en": "Handing in the card when leaving"
+  },
+  "phrases[0].text": {
+   "ko": "외국인등록증을 잃어버려서 재발급을 신청하려고 합니다.",
+   "en": "I lost my Residence Card and want to apply for a new one."
+  }
+ }
+}

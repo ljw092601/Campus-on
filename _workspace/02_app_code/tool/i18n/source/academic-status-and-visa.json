@@ -1,0 +1,398 @@
+{
+ "id": "academic-status-and-visa",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "휴학·복학·자퇴와 체류",
+   "en": "Leave, Return, Withdrawal & Your Stay"
+  },
+  "detail_title": {
+   "ko": "휴학·복학·자퇴·제적 전에 체류까지 확인하기",
+   "en": "Leave, Return, Withdrawal or Dismissal — and Your Stay"
+  },
+  "summary": {
+   "ko": "학교 절차와 출입국 체류 판단은 따로 확인",
+   "en": "The school procedure and your stay are decided separately"
+  },
+  "overview": {
+   "ko": "휴학·복학·자퇴는 학교에 신청하는 학적 절차이지만, 외국인 유학생은 그 결과가 체류에도 이어집니다. 학교는 유학생이 등록하지 않거나 휴학하거나 제적·자퇴 등으로 유학이 끝나면 15일 안에 출입국·외국인관서에 신고해야 합니다.\n\n학교가 승인했다고 체류가 그대로 보장되는 것은 아닙니다. 체류허가를 유지할지, 연장·변경·취소할지는 출입국·외국인관서가 판단합니다. 학적을 바꾸기 전에 국제교류과와 출입국(1345)에 본인의 체류 계획을 먼저 확인하세요.",
+   "en": "Leave of absence, return and withdrawal are academic procedures you file with the university, but for international students they also affect your stay. When a student does not register, takes leave, or ends their studies through dismissal or withdrawal, the university must report it to the immigration office within 15 days.\n\nUniversity approval does not guarantee your stay. The immigration office decides whether your permission is kept, extended, changed or cancelled. Before you change your academic status, check your plan with the Office of International Affairs and with immigration (1345)."
+  },
+  "checklist_title": {
+   "ko": "신청 전에 확인할 것",
+   "en": "Check before you apply"
+  },
+  "checklist": {
+   "ko": [
+    "외국인등록증의 체류기간 만료일",
+    "휴학·자퇴 사유와 기간(질병이면 진단서 등 증빙)",
+    "등록금 납부 여부와 신청 날짜 — 이월·환불 금액이 달라집니다",
+    "휴학 중 한국에 머물지, 출국할지에 대한 계획",
+    "장학금·기숙사·시간제취업 허가 등 학적에 묶인 혜택이나 허가"
+   ],
+   "en": [
+    "The expiry date of the period of stay on your Residence Card",
+    "Why and for how long you are taking leave or withdrawing (for illness, a medical certificate or other proof)",
+    "Whether you have paid tuition and on what date you apply — the carry-over or refund amount depends on it",
+    "Whether you plan to stay in Korea or leave during the leave",
+    "Scholarships, dormitory places, part-time work permission and other benefits or permissions tied to your enrolment"
+   ],
+   "count": 5
+  },
+  "checklist_note": {
+   "ko": "※ 동아대학교 학부 학사안내 기준입니다. 대학원생은 소속 대학원 행정실에서 규정을 확인하세요.",
+   "en": "※ Based on Dong-A’s undergraduate academic guidance. Graduate students should check their graduate school office’s rules."
+  },
+  "steps": {
+   "ko": [
+    "국제교류과와 출입국(1345)에 휴학·자퇴가 체류에 미치는 영향을 먼저 확인",
+    "학교 절차 신청 — 일반휴학·복학은 인터넷, 자퇴는 소속대학 행정실 방문(지도교수 상담)",
+    "승인 결과와 등록금 이월·환불 내역 확인, 필요한 증명서(휴학증명서·제적증명서 등) 발급",
+    "출입국 안내에 따라 체류 조치 — 계속 체류, 체류기간 연장·체류자격 변경 신청, 또는 출국",
+    "복학할 때는 복학 신청 → 학적이 「재학」으로 바뀐 뒤 등록금 납부 → 수강신청 순서로 진행"
+   ],
+   "en": [
+    "First check with the Office of International Affairs and immigration (1345) how leave or withdrawal will affect your stay.",
+    "File the university procedure — general leave and return online; withdrawal in person at your college administration office (with a talk with your academic adviser).",
+    "Check the decision and any tuition carry-over or refund, and get the certificates you need (certificate of leave, of dismissal, etc.).",
+    "Follow immigration’s guidance on your stay — keep staying, apply to extend or change your status, or leave Korea.",
+    "To return: apply for return → once your status shows “enrolled”, pay tuition → register for courses."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "학교는 휴학·미등록·제적을 출입국에 신고하지만, 그것으로 학생 본인의 체류 절차가 끝나는 것은 아닙니다. 연장·변경·출국은 본인이 챙겨야 합니다.",
+    "대학 휴학 자체는 외국인등록사항 변경신고 항목으로 규정돼 있지 않습니다. 다만 전학·편입처럼 소속 학교가 바뀌면 15일 안에 변경신고를 해야 합니다.",
+    "휴학하면 시간제취업 허가 요건(재학·성적·출석)에 영향이 있을 수 있습니다. 일하고 있다면 1345에 먼저 확인하세요.",
+    "등록금을 냈는데 수강신청을 하지 않으면 제적될 수 있습니다. 휴학하지 않을 거라면 기간 안에 수강신청을 마치세요."
+   ],
+   "en": [
+    "The university reports leave, non-registration and dismissal to immigration, but that does not complete your own stay procedures. Extensions, changes of status and departure are up to you.",
+    "Taking leave from university is not itself listed as a change of foreign resident registration. Moving to another school, such as a transfer, must be reported within 15 days.",
+    "Leave can affect the conditions of a part-time work permission (enrolment, grades, attendance). If you are working, check with 1345 first.",
+    "If you pay tuition but do not register for courses, you can be dismissed. If you are not taking leave, finish course registration on time."
+   ],
+   "count": 4
+  },
+  "search_aliases": {
+   "ko": [
+    "휴학",
+    "복학",
+    "자퇴",
+    "제적",
+    "재입학"
+   ],
+   "en": [
+    "leave of absence",
+    "return to school",
+    "withdrawal",
+    "dismissal"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "학교가 하는 일, 출입국이 하는 일",
+   "en": "What the university does, what immigration does"
+  },
+  "top_sections[0].notice": {
+   "ko": "휴학한 유학생이 한국에 계속 머물 수 있는지를 일반적으로 정한 공식 안내는 찾지 못했습니다. 휴학 기간·사유·남은 체류기간에 따라 달라지므로 신청 전에 1345나 관할 출입국·외국인관서에 확인하세요.",
+   "en": "We found no official guidance that says in general whether an international student on leave may stay in Korea. It depends on the length and reason of the leave and on your remaining period of stay, so check with 1345 or your immigration office before you apply."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🏫 학교(동아대학교)",
+   "en": "🏫 The university (Dong-A)"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "휴학·복학·자퇴를 학칙에 따라 승인하거나 제적 처리합니다.",
+    "유학생이 등록기한까지 등록하지 않거나 휴학한 경우, 제적 등으로 유학이 끝난 경우 15일 안에 출입국에 신고합니다(출입국관리법 제19조의4).",
+    "15일은 미등록이면 등록기한 다음 날, 휴학이면 휴학일, 제적이면 제적한 날부터 셉니다."
+   ],
+   "en": [
+    "Approves leave, return and withdrawal under its academic rules, or dismisses students.",
+    "Reports to immigration within 15 days when an international student does not register by the deadline, takes leave, or ends their studies through dismissal and the like (Immigration Act art. 19-4).",
+    "The 15 days run from the day after the registration deadline (non-registration), the leave date (leave), or the dismissal date (dismissal)."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "🛂 출입국·외국인관서",
+   "en": "🛂 The immigration office"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "체류허가를 유지·연장·변경·취소할지 판단합니다. 사정이 바뀌어 허가 상태를 유지할 수 없는 중대한 사유가 생기면 체류허가를 취소하거나 변경할 수 있습니다(제89조).",
+    "하이코리아 체류민원 매뉴얼은 가사, 졸업연기 등 개인적인 사정이나 학점미달로 학업을 중단(휴학)한 사람은 체류기간 연장을 제한하고, 질병·사고 등 부득이한 사유가 인정되면 예외적으로 조치한다고 적고 있습니다."
+   ],
+   "en": [
+    "Decides whether your permission is kept, extended, changed or cancelled. If circumstances change so that the permission can no longer be maintained for a serious reason, it can be cancelled or changed (art. 89).",
+    "The HiKorea stay manual says extensions are restricted for people who stop studying (take leave) for personal reasons such as family matters or postponing graduation, or because of missing credits, with exceptions where unavoidable reasons such as illness or an accident are accepted."
+   ],
+   "count": 2
+  },
+  "sections[0].title": {
+   "ko": "휴학",
+   "en": "Leave of absence"
+  },
+  "sections[0].footnote": {
+   "ko": "※ 휴학을 취소하려면 사유가 생긴 날부터 5일 안에 휴학취소원을 소속대학 행정지원실에 방문 제출합니다.",
+   "en": "※ To cancel a leave, submit the cancellation form in person at your college administration office within 5 days of the reason arising."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "신청",
+   "en": "Applying"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "일반휴학·육아휴학·병역휴학은 인터넷으로, 창업휴학은 소속대학 행정실 방문으로 신청합니다.",
+    "일반휴학은 재학 중 최대 8학기(5년제는 10학기), 한 번에 최대 2학기까지입니다.",
+    "미등록 휴학: 학기말 시험 후~다음 학기 개강 전(1학기는 2월 말, 2학기는 8월 말)",
+    "등록 휴학: 등록금 납부 후~학기말 시험 공고 전. 수업일수 15주 종료일 2주 전부터는 일반휴학을 할 수 없습니다."
+   ],
+   "en": [
+    "General, parental and military leave are filed online; start-up leave in person at your college administration office.",
+    "General leave: up to 8 semesters in total (10 on 5-year programmes), at most 2 semesters at a time.",
+    "Leave without registering: from after final exams until the next semester starts (end of February for spring, end of August for autumn).",
+    "Leave after registering: from paying tuition until the final exam notice. General leave is not possible from 2 weeks before the end of the 15-week term."
+   ],
+   "count": 4
+  },
+  "sections[0].notes[1].title": {
+   "ko": "⚠️ 신입생 첫 학기",
+   "en": "⚠️ First semester"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "입학 후 첫 학기에는 일반휴학이 허용되지 않습니다. 질병(종합병원급 4주 이상 진단서)과 군입대만 예외입니다."
+   ],
+   "en": [
+    "General leave is not allowed in your first semester. Only illness (a general-hospital certificate of 4+ weeks) and military enlistment are exceptions."
+   ],
+   "count": 1
+  },
+  "sections[0].notes[2].title": {
+   "ko": "💰 등록 후 휴학하면 등록금은 이월",
+   "en": "💰 Tuition is carried over, not refunded"
+  },
+  "sections[0].notes[2].lines": {
+   "ko": [
+    "학기 개시일부터 30일까지 휴학: 전액 이월",
+    "30일 지난 날부터 60일까지: 3분의 2 이월 / 60일 지난 날부터 90일까지: 2분의 1 이월",
+    "90일이 지난 뒤 휴학: 이월하지 않음"
+   ],
+   "en": [
+    "Leave within 30 days of the semester start: the full amount is carried over.",
+    "Day 31–60: two thirds carried over / day 61–90: half carried over.",
+    "After day 90: nothing is carried over."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "복학",
+   "en": "Returning"
+  },
+  "sections[1].body": {
+   "ko": "일반복학·군복학은 인터넷으로 신청하고, 기간은 학기 시작 전 학사공지로 안내됩니다. 복학 신청 후 학적이 「재학」으로 바뀌어야 등록금 납부와 수강신청을 할 수 있습니다.",
+   "en": "General and military return are filed online; the dates are announced in academic notices before the semester. You can pay tuition and register for courses only after your status changes to “enrolled”."
+  },
+  "sections[1].notice": {
+   "ko": "복학 예정 학기에 복학하지 않으면 미복학제적 처리될 수 있습니다. 휴학을 더 하려면 복학 예정 학기가 시작되기 전까지 휴학연장을 인터넷으로 신청하고, 정확한 기간은 해당 학기 학사공지에서 확인하세요. 휴학연장은 재학 중 1회만 가능합니다.",
+   "en": "If you do not return in the semester you are due back, you may be dismissed for non-return. To extend your leave, apply online before that semester starts and check the semester’s academic notice for the exact dates. A leave extension can be used only once while enrolled."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 휴학 중 출국했다면 체류기간이 남아 있는지, 다시 들어올 때 사증이 필요한지 복학 신청 전에 확인하세요.",
+   "en": "※ If you left Korea during your leave, check before you apply to return whether your period of stay is still valid and whether you need a visa to come back."
+  },
+  "sections[2].title": {
+   "ko": "자퇴와 제적",
+   "en": "Withdrawal and dismissal"
+  },
+  "sections[2].notice": {
+   "ko": "자퇴·제적으로 학업이 끝나면 학교는 유학이 끝난 것으로 출입국에 신고합니다. 출국할지, 다른 체류자격으로 바꿀 수 있는지 자퇴 신청 전에 1345나 관할 출입국·외국인관서에서 확인하세요.",
+   "en": "When withdrawal or dismissal ends your studies, the university reports to immigration that your studies have ended. Before you withdraw, check with 1345 or your immigration office whether you must leave Korea or can change to another status."
+  },
+  "sections[2].footnote": {
+   "ko": "※ 학사경고·유급 등 성적불량 제적자는 1학기 이상 지난 뒤 재입학을 신청할 수 있고, 징계로 제적되면 재입학할 수 없습니다. 재입학은 여석이 있을 때 허가됩니다.",
+   "en": "※ Students dismissed for poor grades (academic warnings, repeated years) may apply for readmission after at least one semester; those dismissed for discipline cannot. Readmission depends on places being available."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "자퇴 신청",
+   "en": "Withdrawing"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "소속대학 행정실을 직접 방문해 자퇴원을 쓰고 지도교수 상담을 거칩니다.",
+    "환불받을 수업료가 있으면 학교 안내 준비물(본인 도장, 부모님 도장, 부모님 명의 통장 사본)을 가져갑니다. 유학생에게 같은 서류를 요구하는지는 행정실에 확인하세요.",
+    "수업료 반환: 학기 개시일 전날까지 전액 / 개시 후에는 입학금을 빼고 30일까지 6분의 5, 60일까지 3분의 2, 90일까지 2분의 1, 그 뒤에는 반환하지 않음"
+   ],
+   "en": [
+    "Go to your college administration office in person, fill in the withdrawal form and have a talk with your academic adviser.",
+    "If tuition is to be refunded, the university asks for your seal, a parent’s seal and a copy of a bankbook in a parent’s name. Ask the office whether international students need the same documents.",
+    "Tuition refund: in full up to the day before the semester starts / after that, excluding the admission fee, five sixths up to day 30, two thirds up to day 60, half up to day 90, nothing after that."
+   ],
+   "count": 3
+  },
+  "sections[2].notes[1].title": {
+   "ko": "이런 경우 제적됩니다",
+   "en": "You are dismissed if you"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "복학해야 할 학기에 복학하지 않음(미복학) · 등록금을 기간 안에 내지 않음(미등록)",
+    "등록금을 내고 수강신청을 하지 않음(미수강) · 중간시험 종료일까지 무단결석 통산 4주 이상(장기결석)",
+    "학사경고 통산 3회 · 유급 통산 2회 · 징계 퇴학 · 본인 희망 자퇴"
+   ],
+   "en": [
+    "Do not return when due (non-return) · do not pay tuition on time (non-registration)",
+    "Pay tuition but do not register for courses (no courses) · are absent without leave for 4+ weeks in total by the end of midterms (long absence)",
+    "Receive a third academic warning · repeat a year for the second time · are expelled for discipline · withdraw at your own request"
+   ],
+   "count": 3
+  },
+  "sections[3].title": {
+   "ko": "휴학 중 본국에 다녀오려면",
+   "en": "Going home during your leave"
+  },
+  "sections[3].notes[0].title": {
+   "ko": "재입국과 외국인등록증",
+   "en": "Re-entry and your Residence Card"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "외국인등록을 한 유학(D-2)·일반연수(D-4) 체류자는 출국한 날부터 1년(남은 체류기간이 1년보다 짧으면 그 기간) 안에 다시 들어오면 재입국허가가 면제될 수 있습니다.",
+    "체류기간 안에 다시 들어올 예정이라면 출국할 때 외국인등록증을 반납하지 않아도 되는 경우가 있습니다. 반납 대상인지 출국 전에 확인하세요.",
+    "휴학 중 체류기간이 끝나면 연장이 제한될 수 있으므로, 만료일을 넘겨 해외에 머물 계획이라면 복학 때 새 사증이 필요한지 미리 확인하세요.",
+    "건강보험 지역가입자는 출국해 1개월 이상 해외에 머물면 출국 다음 날로 자격이 끝납니다. 자세한 내용은 건강보험 가이드를 보세요."
+   ],
+   "en": [
+    "Registered student (D-2) and general training (D-4) residents who come back within 1 year of leaving (or within their remaining period of stay, if shorter) may be exempt from a re-entry permit.",
+    "If you will come back within your period of stay, you may not need to hand in your Residence Card when you leave. Check whether you must return it before departure.",
+    "Extensions can be restricted during leave, so if you plan to stay abroad past your expiry date, check in advance whether you will need a new visa to return.",
+    "For regional health insurance subscribers, coverage ends from the day after departure once you stay abroad 1 month or more. See the health insurance guide for details."
+   ],
+   "count": 4
+  },
+  "links[0].label": {
+   "ko": "동아대 학사안내 — 휴학",
+   "en": "Dong-A academic guide — leave of absence"
+  },
+  "links[0].description": {
+   "ko": "종류·기간·등록금 이월·신청 바로가기",
+   "en": "Types, periods, tuition carry-over and the online application (Korean)"
+  },
+  "links[1].label": {
+   "ko": "동아대 학사안내 — 복학",
+   "en": "Dong-A academic guide — returning"
+  },
+  "links[1].description": {
+   "ko": "복학 신청과 미복학제적",
+   "en": "Applying to return, and dismissal for non-return (Korean)"
+  },
+  "links[2].label": {
+   "ko": "동아대 학사안내 — 자퇴",
+   "en": "Dong-A academic guide — withdrawal"
+  },
+  "links[2].description": {
+   "ko": "신청 방법과 수업료 반환 기준",
+   "en": "How to withdraw and the refund table (Korean)"
+  },
+  "links[3].label": {
+   "ko": "동아대 학사안내 — 제적",
+   "en": "Dong-A academic guide — dismissal"
+  },
+  "links[3].description": {
+   "ko": "제적 요건과 재입학",
+   "en": "Grounds for dismissal and readmission (Korean)"
+  },
+  "links[4].label": {
+   "ko": "생활법령 — 입국 및 재입국",
+   "en": "Easy-to-find Law — entry and re-entry"
+  },
+  "links[4].description": {
+   "ko": "법제처 외국인유학생 — 재입국허가 면제",
+   "en": "Ministry of Government Legislation — re-entry permit exemption (Korean)"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — International Affairs Office"
+  },
+  "links[5].description": {
+   "ko": "학적 변경 전 체류 상담",
+   "en": "Talk about your stay before changing your status"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 체류기간 연장",
+   "en": "Guide — Extension of Stay"
+  },
+  "links[6].description": {
+   "ko": "연장 신청 방법",
+   "en": "How to apply for an extension"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[7].description": {
+   "ko": "복학 후 수강신청과 미수강제적",
+   "en": "Registering after you return, and dismissal for no courses"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[8].description": {
+   "ko": "휴학·제적 증명서 발급",
+   "en": "Getting a certificate of leave or dismissal"
+  },
+  "links[9].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[9].description": {
+   "ko": "등록금 이월·납부",
+   "en": "Tuition carry-over and payment"
+  },
+  "links[10].label": {
+   "ko": "가이드 — 학사경고·제적 예방",
+   "en": "Guide — Academic Warning & Avoiding Dismissal"
+  },
+  "links[10].description": {
+   "ko": "학사경고 누적 제적 예방",
+   "en": "Avoiding dismissal for academic warnings"
+  },
+  "links[11].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[11].description": {
+   "ko": "휴학·학적 변경과 아르바이트 허가",
+   "en": "Part-time permission when your status changes"
+  },
+  "links[12].label": {
+   "ko": "가이드 — 귀국·출국 전 행정 정리",
+   "en": "Guide — Before You Leave Korea"
+  },
+  "links[12].description": {
+   "ko": "학업을 마치고 출국한다면",
+   "en": "If your studies end and you leave"
+  },
+  "links[13].label": {
+   "ko": "가이드 — 건강보험 가입",
+   "en": "Guide — National Health Insurance"
+  },
+  "links[13].description": {
+   "ko": "장기 귀국 시 건강보험 자격",
+   "en": "Health insurance if you are abroad for long"
+  },
+  "phrases[0].text": {
+   "ko": "휴학하려고 하는데, 체류에 어떤 영향이 있는지 확인하고 싶습니다.",
+   "en": "I want to take a leave of absence and would like to check how it affects my stay."
+  },
+  "phrases[1].text": {
+   "ko": "자퇴하면 등록금은 얼마나 돌려받을 수 있나요?",
+   "en": "If I withdraw, how much of my tuition will be refunded?"
+  }
+ }
+}

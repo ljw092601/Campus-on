@@ -1,0 +1,305 @@
+{
+ "id": "rental-deposit-protection",
+ "category": "housing",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "임대차 보증금 지키기",
+   "en": "Protecting Your Rental Deposit"
+  },
+  "detail_title": {
+   "ko": "보증금을 지키려면 — 계약 전·입주 후·계약 끝날 때",
+   "en": "Protecting Your Deposit — Before, After Moving In, and at the End"
+  },
+  "summary": {
+   "ko": "권리관계 확인, 체류지 신고·확정일자, 돌려받지 못할 때 대응",
+   "en": "Check the property, report your address and get a fixed date, and what to do if it is not returned"
+  },
+  "overview": {
+   "ko": "원룸·투룸 등 교외 주택을 빌릴 때 낸 보증금은 계약이 끝나면 돌려받아야 할 큰 돈입니다. 이 가이드는 방 구하기 가이드의 기본 확인에 더해, 보증금을 지키기 위해 계약 전·입주 직후·계약 종료 때 할 일과 돌려받지 못했을 때 도움받는 곳을 정리했습니다.\n\n아래 절차를 모두 지켜도 보증금이 반드시 보호된다는 뜻은 아닙니다. 선순위 권리 등 개별 사정에 따라 결과가 달라지므로, 불안한 점이 있으면 계약 전에 공식 상담을 받으세요.",
+   "en": "The deposit you pay to rent an off-campus room is a large sum you should get back when the lease ends. On top of the basics in the housing guide, this guide covers what to do before signing, right after moving in and at the end of the lease to protect it, and where to get help if it is not returned.\n\nFollowing every step below does not guarantee your deposit is protected. Outcomes depend on individual facts such as prior claims on the property, so get official advice before signing if anything worries you."
+  },
+  "checklist_title": {
+   "ko": "계약 전·잔금 전 더 확인할 것",
+   "en": "Extra checks before signing and before the final payment"
+  },
+  "checklist": {
+   "ko": [
+    "등기사항증명서를 계약 전과 잔금 치르기 직전에 다시 확인 — 갑구(소유권·압류·가압류 등), 을구(근저당권·전세권 등). 아파트 같은 집합건물이 아니면 토지 등기부도 확인",
+    "다른 임차인의 보증금 — 임대인 동의를 받아 주민센터 등에서 확정일자 부여 현황 등 정보 제공을 요청할 수 있음",
+    "임대인이 계약할 때 제시해야 하는 확정일자 부여 정보와 국세·지방세 납세증명서",
+    "중개사무소 등록 여부(한국공인중개사협회·국가공간정보포털 등 조회)",
+    "대리인과 계약한다면 위임장과 인감증명서(또는 본인서명사실확인서)를 확인하고 임대인과 직접 통화",
+    "매매 시세 대비 보증금이 너무 높지 않은지(국토교통부 실거래가 공개시스템 등)"
+   ],
+   "en": [
+    "Check the property register again before signing and just before the final payment — section A (ownership, seizures, provisional seizures), section B (mortgages, jeonse rights). For buildings that are not multi-unit complexes, check the land register too.",
+    "Other tenants’ deposits — with the landlord’s consent you can ask a community service centre or similar for fixed-date and deposit information on the property.",
+    "The fixed-date information and national/local tax payment certificates the landlord must show when signing",
+    "That the real estate agency is registered (Korea Association of Realtors search, National Spatial Data Infrastructure Portal, etc.)",
+    "If signing with an agent, check the power of attorney and seal certificate (or signature confirmation) and phone the landlord directly.",
+    "That the deposit is not too high compared with the sale price (MOLIT real transaction price system, etc.)"
+   ],
+   "count": 6
+  },
+  "checklist_note": {
+   "ko": "※ 등기부·소유자 확인과 사기 예방의 기본은 교외주거 구하기 가이드에 있습니다. 임대인의 미납 세금 확인 가능 범위는 기관 안내마다 표현이 달라, 필요하면 국세청(126)에 확인하세요.",
+   "en": "※ The basics — checking the register and owner, avoiding scams — are in the off-campus housing guide. Official guidance words the landlord’s unpaid-tax check differently, so ask the National Tax Service (126) if you need it."
+  },
+  "steps": {
+   "ko": [
+    "계약 전: 위 체크리스트 확인, 공인중개사를 통한 계약서 작성",
+    "잔금 직전: 등기사항증명서 다시 확인",
+    "입주한 날부터 15일 안에 체류지 변경신고",
+    "주택 임대차계약 신고 대상(부산은 보증금 6천만원 또는 월세 30만원 초과)이면 계약 체결일부터 30일 안에 신고 — 임차인이 계약서를 첨부해 신고하면 확정일자가 자동 부여됩니다. 자세한 내용은 교외주거 구하기 가이드",
+    "신고 대상이 아니면 계약서 원본과 여권 또는 외국인등록증을 가지고 주민센터 등에서 확정일자 받기(1건 600원)",
+    "필요하면 전세보증금반환보증 가입 조건 확인",
+    "계약서·영수증·확정일자 받은 계약서를 계약이 끝날 때까지 보관"
+   ],
+   "en": [
+    "Before signing: go through the checklist above and sign through a licensed real estate agent.",
+    "Just before the final payment: check the property register again.",
+    "Within 15 days of moving in, report your change of address.",
+    "If the lease must be reported (in Busan, a deposit over ₩60 million or rent over ₩300,000), report it within 30 days of signing — if the tenant reports it with the lease attached, a fixed date is given automatically. See the off-campus housing guide.",
+    "If it does not need reporting, take the original lease and your passport or Residence Card to a community service centre or similar to get a fixed date (₩600 per contract).",
+    "If needed, check the conditions for deposit-return guarantee insurance.",
+    "Keep the lease, receipts and the fixed-date lease until the lease ends."
+   ],
+   "count": 7
+  },
+  "tips": {
+   "ko": [
+    "확정일자는 외국인도 주민센터 등에서 여권이나 외국인등록증으로 받을 수 있습니다.",
+    "대항력은 전입 다음 날부터 생기므로, 입주 당일에 설정된 근저당을 조심하라는 HUG 안내가 있습니다. 잔금 직전 등기부를 다시 확인하세요.",
+    "임대인의 차임·보증금 증액청구는 원칙적으로 약정액의 5%(20분의 1)를 넘을 수 없고, 계약 또는 직전 증액 후 1년 안에는 다시 청구할 수 없습니다. 지역 조례가 더 낮은 상한을 정할 수 있습니다.",
+    "기숙사는 주택임대차보호법 적용 판단이 따로 필요하므로 이 가이드 대상이 아닙니다."
+   ],
+   "en": [
+    "Foreigners can also get a fixed date at a community service centre, using a passport or Residence Card.",
+    "Opposability starts the day after moving in, and HUG warns about mortgages set up on the move-in day — check the register again just before the final payment.",
+    "As a rule, a landlord’s request to raise rent or the deposit cannot exceed 5% (one twentieth) of the agreed amount, and another increase cannot be requested within 1 year of the contract or the last increase. A local ordinance may set a lower cap.",
+    "Dormitories need a separate assessment under the Housing Lease Protection Act, so they are outside this guide."
+   ],
+   "count": 4
+  },
+  "search_aliases": {
+   "ko": [
+    "보증금",
+    "전세",
+    "전세사기",
+    "확정일자",
+    "보증금 반환"
+   ],
+   "en": [
+    "deposit",
+    "jeonse",
+    "lease deposit",
+    "fixed date",
+    "rental scam"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "외국인도 보호받을 수 있나요?",
+   "en": "Are foreign tenants covered?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 주택임대차보호법·출입국관리법 조문과 HUG 안심전세포털 기준, 2026-09-13 확인. 개별 사건의 법률 판단은 아래 공식 상담 기관에 받으세요.",
+   "en": "※ Based on the Housing Lease Protection Act, the Immigration Act and the HUG Safe Jeonse portal, checked 2026-09-13. For legal advice on your case, use the official services below."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🛡 대항력과 우선변제권",
+   "en": "🛡 Opposability and priority repayment"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "임차인이 주택을 인도받고(입주) 주민등록을 마치면 그다음 날부터 제3자에게 임대차를 주장할 수 있습니다(대항력, 주택임대차보호법 제3조).",
+    "외국인은 출입국관리법에 따라 외국인등록과 체류지 변경신고가 주민등록과 전입신고를 대신합니다. 이사하면 전입한 날부터 15일 안에 체류지 변경신고를 하세요.",
+    "대항요건에 더해 계약서에 확정일자를 받으면 경매·공매 때 후순위 권리자보다 먼저 보증금을 변제받을 권리(우선변제권)가 생깁니다. 전액 회수를 보장한다는 뜻은 아닙니다."
+   ],
+   "en": [
+    "Once a tenant has moved in and completed resident registration, the lease can be asserted against third parties from the next day (Housing Lease Protection Act art. 3).",
+    "For foreigners, foreign resident registration and the change-of-address report stand in for resident registration and the move-in report (Immigration Act). When you move, report within 15 days of moving in.",
+    "If you also get a fixed date on the lease, you gain a right to be repaid ahead of later claimants in an auction or public sale (priority repayment). That does not guarantee you get it all back."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "보증금 반환보증",
+   "en": "Deposit-return guarantee"
+  },
+  "sections[0].body": {
+   "ko": "주택도시보증공사(HUG) 전세보증금반환보증은 「개인, 법인, 외국인도 보증가입이 가능」하다고 안내합니다. 가입은 심사를 거치며 조건이 있습니다.",
+   "en": "HUG’s jeonse deposit return guarantee says “individuals, corporations and foreigners can also apply”. Applications are reviewed and conditions apply."
+  },
+  "sections[0].notice": {
+   "ko": "외국인이 체류지 변경신고로 전입신고 요건을 어떻게 증명하는지, HUG 외 다른 보증기관의 외국인 가입 가능 여부는 확인하지 못했습니다. 신청 전에 HUG 등 보증기관에 확인하세요.",
+   "en": "We could not confirm how a foreigner proves the move-in condition with a change-of-address report, or whether guarantors other than HUG accept foreigners. Check with HUG or the guarantor before applying."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "HUG 안내의 주요 조건",
+   "en": "Main conditions in HUG’s guidance"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "보증금 수도권 7억원·그 외 지역 5억원 이하(보증부 월세는 전월세전환율로 환산한 금액)",
+    "잔금지급일과 전입신고일 중 늦은 날부터 계약기간의 2분의 1이 지나기 전에 신청",
+    "그 집에 살면서 전입신고와 확정일자를 받았을 것, 계약기간 1년 이상, 공인중개사를 통해 체결한 계약서",
+    "등기부 권리침해가 없고 선순위채권이 주택가액의 60% 이내 등 주택 조건"
+   ],
+   "en": [
+    "Deposit up to ₩700 million in the capital region, ₩500 million elsewhere (for monthly rent with a deposit, the converted amount)",
+    "Apply before half the lease term has passed, counted from the later of the final-payment date and the move-in report date",
+    "You live there with a move-in report and fixed date; lease of 1 year or more; contract signed through a licensed agent",
+    "Property conditions such as no infringing entries in the register and prior claims within 60% of the property value"
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "계약이 끝날 때",
+   "en": "When the lease ends"
+  },
+  "sections[1].footnote": {
+   "ko": "※ 통지는 문자·내용증명 등 기록이 남는 방법으로 하고, 이사 날짜와 보증금 반환 날짜를 미리 맞추세요.",
+   "en": "※ Give notice in a way that leaves a record (text message, certified mail) and agree the move-out and deposit-return dates in advance."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "기간과 통지",
+   "en": "Term and notice"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "기간을 정하지 않았거나 2년 미만으로 정했으면 2년으로 보지만, 임차인은 정한 짧은 기간을 주장할 수 있습니다.",
+    "나가려면 계약이 끝나기 2개월 전까지 임대인에게 알리세요. 서로 알리지 않으면 같은 조건으로 갱신되고 기간은 2년으로 봅니다(묵시적 갱신).",
+    "묵시적 갱신이 된 뒤에는 임차인이 언제든 해지를 통지할 수 있고, 임대인이 통지를 받은 날부터 3개월이 지나면 효력이 생깁니다.",
+    "계약기간이 끝나도 보증금을 돌려받을 때까지는 임대차관계가 계속되는 것으로 봅니다.",
+    "더 살고 싶다면 계약갱신요구권을 계약 종료 6개월 전부터 2개월 전까지 1회 행사할 수 있고, 갱신 기간은 2년으로 봅니다. 임대인의 실제 거주 등 법정 거절 사유가 있으니 본인 상황을 확인하세요."
+   ],
+   "en": [
+    "A lease with no term, or under 2 years, is treated as 2 years, but the tenant may insist on the shorter term agreed.",
+    "To leave, tell the landlord at least 2 months before the end. If neither side gives notice, the lease renews on the same terms and is treated as 2 years (implied renewal).",
+    "After an implied renewal, the tenant can give notice to end it at any time; it takes effect 3 months after the landlord receives the notice.",
+    "Even after the term ends, the lease is treated as continuing until the deposit is returned.",
+    "To stay on, you may use the statutory renewal right once, from 6 months until 2 months before the lease ends; the renewed term is treated as 2 years. Statutory refusal grounds, such as the landlord genuinely moving in, may apply, so check your situation."
+   ],
+   "count": 5
+  },
+  "sections[2].title": {
+   "ko": "보증금을 돌려받지 못했다면",
+   "en": "If your deposit is not returned"
+  },
+  "sections[2].body": {
+   "ko": "임대차가 끝났는데 보증금을 돌려받지 못했다면 이사하기 전에 대응 방법을 확인하세요. 주택 소재지 관할 법원에 임차권등기명령을 신청할 수 있고, 등기를 마치면 이사하더라도 이미 가진 대항력·우선변제권을 잃지 않습니다(관련 비용은 임대인에게 청구 가능). 신청 시점과 방법은 개인 사정에 따라 다르니 상담을 먼저 받으세요.",
+   "en": "If the lease has ended and your deposit has not come back, look into your options before moving out. You can apply to the court for the property’s area for a tenancy registration order; once registered, you keep the opposability and priority you already had even if you move (costs can be claimed from the landlord). Timing and method depend on your situation, so get advice first."
+  },
+  "sections[2].notice": {
+   "ko": "상담 기관의 외국어 지원 여부는 기관마다 다르니 필요하면 부산외국인통합콜센터에 먼저 문의하세요.",
+   "en": "Foreign-language support differs by organisation, so if you need it, start with the Busan Foreigner Call Center."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "도움받을 수 있는 곳",
+   "en": "Where to get help"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "주택임대차분쟁조정위원회: 보증금·주택 반환 등 분쟁 조정(부산위원회 있음, 온라인 조정신청 가능)",
+    "HUG 전세피해지원센터: 법률·주거·금융 상담과 전세사기 피해 접수 연계(부산센터 — 부산광역시청 1층, 평일 10:00~17:00, 점심시간 12:00~13:00)",
+    "사기가 의심되면 경찰(112) 신고도 함께 검토하세요."
+   ],
+   "en": [
+    "Housing Lease Dispute Mediation Committee: mediates disputes such as deposit and property return (Busan committee; online applications)",
+    "HUG Jeonse Fraud Support Center: legal, housing and financial advice and fraud-report referrals (Busan center — Busan City Hall 1F, weekdays 10:00–17:00, closed 12:00–13:00)",
+    "If you suspect fraud, consider reporting to the police (112) as well."
+   ],
+   "count": 3
+  },
+  "sections[2].links[0].label": {
+   "ko": "대한법률구조공단 132",
+   "en": "Korea Legal Aid Corporation 132"
+  },
+  "sections[2].links[0].description": {
+   "ko": "전화 법률상담(국번 없이 132, 평일 09:00~18:00)",
+   "en": "Legal advice by phone (dial 132, weekdays 09:00–18:00)"
+  },
+  "sections[2].links[1].label": {
+   "ko": "부산외국인통합콜센터 1600-0051",
+   "en": "Busan Foreigner Call Center 1600-0051"
+  },
+  "sections[2].links[1].description": {
+   "ko": "영어·중국어·베트남어 등, 부동산·법률 전문상담 사전 예약",
+   "en": "English, Chinese, Vietnamese and more; book specialist real estate and legal advice"
+  },
+  "links[0].label": {
+   "ko": "HUG 안심전세포털 — 계약 전 유의사항",
+   "en": "HUG Safe Jeonse — before signing"
+  },
+  "links[0].description": {
+   "ko": "등기부 보는 법과 위험 신호",
+   "en": "Reading the register and warning signs (Korean)"
+  },
+  "links[1].label": {
+   "ko": "HUG 전세보증금반환보증",
+   "en": "HUG deposit return guarantee"
+  },
+  "links[1].description": {
+   "ko": "가입 조건과 신청 방법",
+   "en": "Conditions and how to apply (Korean)"
+  },
+  "links[2].label": {
+   "ko": "HUG 전세피해지원센터",
+   "en": "HUG Jeonse Fraud Support Center"
+  },
+  "links[2].description": {
+   "ko": "상담 분야와 지역센터(부산)",
+   "en": "Services and regional centers, incl. Busan (Korean)"
+  },
+  "links[3].label": {
+   "ko": "주택임대차분쟁조정위원회",
+   "en": "Housing Lease Dispute Mediation Committee"
+  },
+  "links[3].description": {
+   "ko": "조정 신청과 지역 위원회",
+   "en": "Applying for mediation and regional committees (Korean)"
+  },
+  "links[4].label": {
+   "ko": "생활법령 — 주택임대차 확정일자",
+   "en": "Easy-to-find Law — fixed date on a lease"
+  },
+  "links[4].description": {
+   "ko": "확정일자 부여 기관·서류",
+   "en": "Where to get it and what to bring (Korean)"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 교외주거 구하기",
+   "en": "Guide — Finding Off-Campus Housing"
+  },
+  "links[5].description": {
+   "ko": "방 구하기와 계약 기본",
+   "en": "Finding a room and lease basics"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting Address & Registration Changes"
+  },
+  "links[6].description": {
+   "ko": "이사 후 15일 안에 신고",
+   "en": "Report within 15 days of moving"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 귀국·출국 전 행정 정리",
+   "en": "Guide — Before You Leave Korea"
+  },
+  "links[7].description": {
+   "ko": "출국 전 보증금 반환 일정",
+   "en": "Deposit refund timing before you leave"
+  },
+  "phrases[0].text": {
+   "ko": "임대차계약서에 확정일자를 받고 싶습니다.",
+   "en": "I would like to get a fixed date on my lease."
+  },
+  "phrases[1].text": {
+   "ko": "계약이 끝났는데 보증금을 돌려받지 못해 상담을 받고 싶습니다.",
+   "en": "My lease has ended but my deposit has not been returned, and I would like advice."
+  }
+ }
+}

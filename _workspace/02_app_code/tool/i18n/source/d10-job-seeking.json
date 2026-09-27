@@ -1,0 +1,294 @@
+{
+ "id": "d10-job-seeking",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "졸업 후 구직(D-10) 체류",
+   "en": "Job-Seeking Visa (D-10) after Graduation"
+  },
+  "detail_title": {
+   "ko": "졸업 후 한국에서 일자리를 찾으려면 — 구직(D-10)",
+   "en": "Staying On to Look for Work — Job-Seeking (D-10)"
+  },
+  "summary": {
+   "ko": "전문 분야 구직·인턴용, 첫 변경은 점수제 면제 특례",
+   "en": "For professional job-seeking and internships; first change skips the points test"
+  },
+  "overview": {
+   "ko": "구직(D-10-1) 체류자격은 교수·회화지도·특정활동 등 전문 분야(E-1~E-7)에 취업하기 위해 한국에서 구직활동을 하거나, 정식 취업 전에 연수비를 받는 단기 인턴을 하는 사람을 위한 자격입니다. 단순 노무 일자리를 찾기 위한 자격이 아닙니다.\n\n현재 체류자격과 다른 자격의 활동을 하려면 미리 체류자격 변경허가를 받아야 하므로, 졸업 후 한국에 남아 구직활동을 하려면 유학(D-2)에서 구직(D-10)으로 바꾸는 허가를 받아야 합니다. 취업이 확정되면 그 일에 맞는 체류자격으로 다시 바꿔야 합니다.",
+   "en": "Job-seeking (D-10-1) status is for people looking for work in Korea in a professional field (E-1 to E-7, such as professor, conversation instructor or special activities), or doing a short paid internship before regular employment. It is not a status for finding simple-labour jobs.\n\nDoing the activities of a different status requires a change of status in advance, so to stay on after graduation and look for work you need permission to change from student (D-2) to job-seeking (D-10). When you are hired, you must change again to the status that fits the job."
+  },
+  "checklist_title": {
+   "ko": "제출서류 — 졸업 후 첫 구직 변경(점수제 면제)",
+   "en": "Documents — first change after graduating (no points test)"
+  },
+  "checklist": {
+   "ko": [
+    "통합신청서, 사진, 여권(사본), 외국인등록증, 수수료",
+    "구직활동 계획서(하이코리아 민원서식)",
+    "국내 정규 대학 전문학사 이상 학위증(또는 졸업증명서)",
+    "체류지 입증서류(임대차계약서 등)"
+   ],
+   "en": [
+    "Integrated application form, photo, passport (copy), Residence Card, fee",
+    "Job-seeking activity plan (HiKorea forms)",
+    "Degree certificate (or graduation certificate) from a regular Korean university, associate or higher",
+    "Proof of address (such as your lease)"
+   ],
+   "count": 4
+  },
+  "checklist_optional_title": {
+   "ko": "점수제로 신청한다면 더 필요해요",
+   "en": "Also needed on the points test"
+  },
+  "checklist_optional": {
+   "ko": [
+    "점수표 항목을 증명하는 서류(한국어능력·경력 등 해당자)",
+    "체재비 입증서류 — 「연도별 1인 가구 주거급여 기준액 × 체류개월 수」 이상이 예치된 은행잔고증명서 등"
+   ],
+   "en": [
+    "Proof for the points you claim (Korean ability, work experience and so on, where relevant)",
+    "Proof of living costs — such as a bank balance certificate of at least “the yearly single-person housing benefit standard × the months of stay”"
+   ],
+   "count": 2
+  },
+  "checklist_note": {
+   "ko": "※ 졸업 후 첫 구직 변경 특례자는 체재비 입증서류 제출이 면제됩니다. 수수료는 시행규칙(체류자격 변경허가 10만원)과 하이코리아 전자민원 표기(119,000원, 외국인등록증 발급·결제대행 수수료 포함)가 달라, 신청 화면이나 1345에서 확인하세요.",
+   "en": "※ The first-change exemption also waives proof of living costs. The fee differs between the Enforcement Rules (change of status ₩100,000) and HiKorea e-application (₩119,000 including the Residence Card and payment-processing fees), so check it on the application screen or with 1345."
+  },
+  "steps": {
+   "ko": [
+    "졸업(학위 수여) 일정과 외국인등록증의 체류기간 만료일 확인",
+    "점수제 면제 특례에 해당하는지, 아니면 점수제인지 확인",
+    "구직활동 계획서와 학위증·체류지 입증서류 등 준비",
+    "신분이 바뀌는 즉시 하이코리아 전자민원 또는 관할 출입국·외국인관서 방문으로 체류자격 변경허가 신청",
+    "허가 후 구직활동 — 인턴을 시작하거나 연수기관을 바꾸면 15일 안에 신고",
+    "취업이 확정되면 그 일에 맞는 체류자격(E-1~E-7 등)으로 변경"
+   ],
+   "en": [
+    "Check your graduation (degree conferral) date and the expiry date on your Residence Card.",
+    "Check whether you fall under a points-test exemption or need the points test.",
+    "Prepare the job-seeking plan, degree certificate, proof of address and the rest.",
+    "As soon as your status changes, apply for a change of status through HiKorea e-application or at your immigration office.",
+    "Look for work once permitted — if you start an internship or change the host organisation, report it within 15 days.",
+    "When you are hired, change to the status that fits the job (E-1 to E-7 and so on)."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "유학(D-2) 체류기간이 끝나기 전에 준비하세요. 졸업 일정과 만료일이 가깝다면 미리 1345에 신청 시기를 확인하세요.",
+    "학위증·졸업증명서 발급은 증명서 발급 가이드를 참고하세요.",
+    "한국을 떠날 계획이라면 출국 전 행정 정리도 함께 챙기세요."
+   ],
+   "en": [
+    "Prepare before your student (D-2) period of stay ends. If graduation and the expiry date are close, ask 1345 early about when to apply.",
+    "For degree and graduation certificates, see the certificate guide.",
+    "If you plan to leave Korea instead, sort out your pre-departure paperwork too."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "구직",
+    "취업 비자",
+    "졸업 후 취업",
+    "D-10",
+    "구직비자"
+   ],
+   "en": [
+    "job seeking",
+    "job-seeking visa",
+    "D-10",
+    "after graduation work"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "점수제를 면제받을 수 있나요?",
+   "en": "Do I skip the points test?"
+  },
+  "top_sections[0].notice": {
+   "ko": "최근 5년 안에 금고 이상의 형을 받았거나 출입국관리법 위반으로 강제퇴거·출국명령을 받은 경우, 최근 3년 안에 300만원 이상 벌금형을 받은 경우 등은 허가가 제한됩니다. 요건을 갖춰도 허가 여부는 심사로 정해집니다.",
+   "en": "Permission is restricted if, for example, within the last 5 years you were sentenced to imprisonment or deported or ordered to leave for breaking the Immigration Act, or within the last 3 years fined ₩3 million or more. Even if you qualify, the review decides."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 구직(D-10) 편 기준, 2026-09-13 확인.",
+   "en": "※ Based on the job-seeking (D-10) chapter of the HiKorea stay manual by status (posted September 2026), checked 2026-09-13."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "✅ 점수제 면제 특례",
+   "en": "✅ Points-test exemptions"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "국내 대학 졸업 후 첫 구직 변경: 국내 대학 전문학사 이상 학위과정 유학생(D-2)으로 졸업해 학위를 받은 뒤 처음으로 D-10-1로 바꾸는 경우. 첫 체류기간은 1년이고, 연장할 때는 점수제를 적용합니다.",
+    "졸업 후 출국했다가 졸업일부터 1년 안에 구직(D-10) 사증을 받는 경우도 면제 대상에 포함됩니다. 다만 과거에 D-10을 받은 적이 있으면 첫 변경이 아니므로 점수제를 적용합니다.",
+    "한국어능력 우수자: 국내 정규 대학 전문학사 이상 학위를 받은 지 3년이 지나지 않았고 TOPIK 4급 이상 유효 성적표나 사회통합프로그램 4단계 중간평가 합격(사전평가 5단계 배정 포함)이 있는 경우"
+   ],
+   "en": [
+    "First job-seeking change after graduating in Korea: you studied a degree (associate or higher) at a Korean university on D-2, graduated with the degree, and are changing to D-10-1 for the first time. You get 1 year at first; extensions use the points test.",
+    "Leaving Korea after graduation and getting a job-seeking (D-10) visa within 1 year of graduating also counts. But if you have held D-10 before, it is not a first change and the points test applies.",
+    "Excellent Korean: within 3 years of receiving an associate or higher degree from a regular Korean university, with a valid TOPIK level 4+ score, or a pass in the KIIP level 4 mid-term test (or placement at level 5 in the pre-test)."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "📊 그 밖에는 점수제",
+   "en": "📊 Otherwise, the points test"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "학사(국내 전문학사 포함) 이상 학위를 가진 국내 합법 체류자로, 구직 점수표 190점 중 기본항목 20점 이상이고 총점 60점 이상이어야 합니다.",
+    "학력 점수는 학위증만 인정되고 졸업증·수료증·자격증은 인정되지 않습니다."
+   ],
+   "en": [
+    "Lawful residents with a bachelor’s degree or higher (a Korean associate degree counts) need at least 20 basic points and 60 in total out of 190 on the job-seeking points table.",
+    "Only a degree certificate counts for education points — not a graduation certificate, certificate of completion or other qualification."
+   ],
+   "count": 2
+  },
+  "sections[0].title": {
+   "ko": "얼마나 머물 수 있나요?",
+   "en": "How long can I stay?"
+  },
+  "sections[0].footnote": {
+   "ko": "※ 스터디인코리아 안내에는 「6개월씩 최대 2년」으로 적혀 있어 2026년 9월 매뉴얼과 다릅니다. 신청 전 하이코리아나 1345에서 최신 기준을 확인하세요.",
+   "en": "※ Study in Korea still says “6 months at a time, up to 2 years”, which differs from the September 2026 manual. Check the current rule with HiKorea or 1345 before applying."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "체류기간",
+   "en": "Period of stay"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "한 번에 주는 기간은 원칙적으로 1년이며, 점수제 60~80점 미만 등은 한 번에 최대 6개월입니다.",
+    "누적 상한은 최대 3년이고 점수·특례 대상에 따라 차등을 둡니다(60~80점 미만은 1년).",
+    "국내 체류기간은 합산하며, 완전히 출국했다가 사증을 받아 다시 들어오면 새로 계산합니다."
+   ],
+   "en": [
+    "Each grant is normally 1 year; for, e.g., 60 to under 80 points it is at most 6 months at a time.",
+    "The overall cap is at most 3 years, tiered by points and exemption (1 year for 60 to under 80 points).",
+    "Time in Korea is added up; if you leave for good and come back on a new visa, the count restarts."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "D-10으로 할 수 있는 일과 없는 일",
+   "en": "What D-10 does and does not allow"
+  },
+  "sections[1].notice": {
+   "ko": "D-10은 전문 분야 구직을 위한 자격입니다. 단순 노무 일을 하거나 허가 없이 일하면 체류에 불이익이 생길 수 있습니다.",
+   "en": "D-10 is for looking for professional work. Doing simple labour, or working without permission, can harm your stay."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "인턴",
+   "en": "Internships"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "정식 취업 전 연수비를 받는 단기 인턴은 활동 범위에 포함됩니다. 같은 기업 인턴은 한 번에 최대 1년입니다.",
+    "인턴을 시작하거나 연수기관을 바꾸면 사유가 생긴 날부터 15일 안에 외국인등록사항 변경신고를 합니다."
+   ],
+   "en": [
+    "Short paid internships before regular employment are within the status. An internship at the same company is up to 1 year at a time.",
+    "If you start an internship or change the host organisation, report a change of registration within 15 days."
+   ],
+   "count": 2
+  },
+  "sections[1].notes[1].title": {
+   "ko": "아르바이트(시간제 취업)",
+   "en": "Part-time work"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "유학생 시간제취업 허가는 이어지지 않습니다. D-10-1의 시간제 취업은 별도 특례로, 국내 대학 전문학사 이상 학위를 받은 지 3년 미만이고 과거 E-1~E-7 체류 이력이 없는 등 요건을 모두 갖춘 사람에게만 적용됩니다.",
+    "분야는 제조업과 농업으로 제한됩니다. 농업은 어학 요건이 없지만, 제조업은 사회통합프로그램 4단계 이상 이수자만 가능하며 TOPIK 성적만으로는 제조업 허가 대상이 되지 않습니다.",
+    "허가 시 주중 25시간(사회통합프로그램 5단계 이상 30시간), 주말·공휴일은 시간 제한이 없고, 체류자격외 활동허가라 수수료가 있습니다. 허가 전에 일하면 구직자와 고용주 모두 처벌될 수 있습니다."
+   ],
+   "en": [
+    "Student part-time permission does not carry over. Part-time work on D-10-1 is a separate exception that applies only if you meet every condition, including a Korean associate degree or higher received less than 3 years ago and no previous E-1 to E-7 stay.",
+    "It is limited to manufacturing and agriculture. Agriculture has no language requirement, but manufacturing is only for people who completed KIIP level 4 or higher — TOPIK alone does not qualify you for manufacturing.",
+    "If permitted: 25 weekday hours (30 with KIIP level 5+), no limit at weekends and on public holidays; it is permission for activities outside your status, so there is a fee. Working before permission can get both you and the employer penalised."
+   ],
+   "count": 3
+  },
+  "sections[2].title": {
+   "ko": "아직 확인이 필요한 점",
+   "en": "Still to confirm"
+  },
+  "sections[2].body": {
+   "ko": "매뉴얼의 특례 문구는 「졸업하여 학위 취득한 후」인데, 같은 매뉴얼의 신청 요령은 「신분이 변동(예정 포함)되는 즉시」 신청하라고 적고 있습니다. 학위 수여 전에 졸업예정 서류로 신청할 수 있는지, 수료(학위 미취득)만 한 경우 D-10이 가능한지는 1345나 관할 출입국·외국인관서에 확인하세요.",
+   "en": "The manual’s exemption says “after graduating and receiving the degree”, while its application tips say to apply “as soon as your status changes (including when it is about to)”. Ask 1345 or your immigration office whether you can apply before the degree is conferred with proof of expected graduation, and whether completing coursework without a degree qualifies."
+  },
+  "links[0].label": {
+   "ko": "하이코리아 — 체류자격 변경허가 안내",
+   "en": "HiKorea — change of status of stay"
+  },
+  "links[0].description": {
+   "ko": "등록외국인 전자민원 안내(신청은 로그인 필요)",
+   "en": "E-application guide for registered foreigners (applying needs a login)"
+  },
+  "links[1].label": {
+   "ko": "체류자격별 안내 매뉴얼",
+   "en": "Stay manual by status (HiKorea)"
+  },
+  "links[1].description": {
+   "ko": "구직(D-10) 편 — 점수표·제출서류",
+   "en": "Job-seeking (D-10) chapter — points table and documents (Korean)"
+  },
+  "links[2].label": {
+   "ko": "하이코리아 방문예약",
+   "en": "HiKorea visit booking"
+  },
+  "links[2].description": {
+   "ko": "출입국·외국인관서 방문 전 예약",
+   "en": "Book before visiting the immigration office"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[3].description": {
+   "ko": "학위·졸업증명서",
+   "en": "Degree and graduation certificates"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[4].description": {
+   "ko": "재학 중 아르바이트 규칙과의 차이",
+   "en": "How student part-time rules differ"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 비자 종류 안내",
+   "en": "Guide — Visa types"
+  },
+  "links[5].description": {
+   "ko": "체류자격 기본 설명",
+   "en": "Status-of-stay basics"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 귀국·출국 전 행정 정리",
+   "en": "Guide — Before You Leave Korea"
+  },
+  "links[6].description": {
+   "ko": "한국을 떠나기로 했다면",
+   "en": "If you decide to leave Korea"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 졸업요건 확인",
+   "en": "Guide — Checking Graduation Requirements"
+  },
+  "links[7].description": {
+   "ko": "졸업·학위 수여 요건 확인",
+   "en": "Checking you will graduate with a degree"
+  },
+  "phrases[0].text": {
+   "ko": "졸업 후 구직(D-10) 체류자격으로 변경하려고 합니다. 점수제 면제 대상인지 확인하고 싶습니다.",
+   "en": "I want to change to job-seeking (D-10) status after graduation. I would like to check whether I am exempt from the points test."
+  }
+ }
+}

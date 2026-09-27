@@ -1,0 +1,233 @@
+{
+ "id": "status-change-d4-to-d2",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "어학연수→학위과정 체류자격 변경",
+   "en": "Changing from D-4 to D-2"
+  },
+  "detail_title": {
+   "ko": "어학연수(D-4)에서 학위과정 유학(D-2)으로 바꿀 때",
+   "en": "Moving from Language Study (D-4) to a Degree (D-2)"
+  },
+  "summary": {
+   "ko": "입학 허가를 받았다면 학위과정 수업 전에 변경허가",
+   "en": "Admitted to a degree? Get the change approved before classes"
+  },
+  "overview": {
+   "ko": "한국어학당 같은 어학연수(D-4) 과정에 있다가 학부나 대학원 입학 허가를 받았다면, 학위과정 수업을 시작하기 전에 유학(D-2)으로 체류자격 변경허가를 받아야 합니다. 현재 체류자격과 다른 활동을 하려면 미리 허가를 받아야 하기 때문입니다.\n\n변경은 하이코리아 전자민원이나 출입국·외국인관서 방문으로 신청하며, 허가되면 외국인등록증도 새로 발급받습니다. 필요한 서류와 수수료는 학교 안내와 법무부 안내의 표기가 조금씩 다르므로 신청 전에 국제교류과와 하이코리아에서 확인하세요.",
+   "en": "If you are on a language programme (D-4), such as the Korean Language Institute, and have been admitted to an undergraduate or graduate degree, you need permission to change to student status (D-2) before your degree classes begin — doing something your current status does not cover requires permission in advance.\n\nApply through HiKorea e-application or at an immigration office; once approved, you also get a new Residence Card. The university’s and the Ministry of Justice’s lists differ slightly on documents and fees, so check with the Office of International Affairs and HiKorea before you apply."
+  },
+  "checklist_title": {
+   "ko": "신청 전 준비할 것",
+   "en": "Get these ready"
+  },
+  "checklist": {
+   "ko": [
+    "통합신청서(체류자격 변경허가), 여권과 사본, 외국인등록증",
+    "사진 1장 — 최근 6개월 이내 촬영한 3.5×4.5cm 정면 사진(동아대 안내: 흰색 배경, 기존 등록증·여권과 다른 새 사진)",
+    "표준입학허가서",
+    "학교의 사업자등록증(또는 고유번호증) 사본",
+    "재정능력 입증서류 — 동아대 안내: 1,600만원 이상(본교 어학연수생은 800만원)",
+    "어학연수 출석(출결)증명서 — 동아대 어학연수생은 국제교류과 발급",
+    "학력증명서(졸업·성적) 인증본 — 동아대 안내: 아포스티유·영사확인·중국교육부 인증 중 하나",
+    "체류지 입증서류(기숙사 거주자는 기숙사에서 발급) — 동아대 안내: 임대차계약서가 본인 명의가 아니면 거주·숙소제공확인서와 계약자 신분증 앞·뒷면 사본 추가",
+    "등록금납입증명서 — 등록금 납부 후 출력"
+   ],
+   "en": [
+    "Integrated application form (change of status), passport and a copy, Residence Card",
+    "One photo — front-facing, 3.5 × 4.5 cm, taken within the last 6 months (Dong-A guidance: white background, different from your card and passport photos)",
+    "Standard certificate of admission",
+    "Copy of the university’s business registration (or unique number) certificate",
+    "Proof of funds — Dong-A guidance: KRW 16,000,000 or more (KRW 8,000,000 for Dong-A language students)",
+    "Language-programme attendance certificate — issued by the Office of International Affairs for Dong-A students",
+    "Certified academic records (graduation, transcript) — Dong-A guidance: apostille, consular legalisation or China Ministry of Education verification",
+    "Proof of address (dormitory residents get it from the dormitory) — Dong-A guidance: if the lease is not in your name, add a confirmation of accommodation and a copy of both sides of the leaseholder’s ID",
+    "Tuition payment certificate — print it after paying"
+   ],
+   "count": 9
+  },
+  "checklist_optional": {
+   "ko": [
+    "부모의 잔고증명서를 냈다면 가족관계 입증서류"
+   ],
+   "en": [
+    "Proof of family relationship, if you submit a parent’s bank statement"
+   ],
+   "count": 1
+  },
+  "checklist_note": {
+   "ko": "※ 법무부 매뉴얼은 학력요건·재정능력 입증서류를 요구하지만 금액과 인증 방식은 동아대 국제교류과 안내 기준입니다. 서류는 바뀔 수 있으니 신청 전에 확인하세요.",
+   "en": "※ The Ministry’s manual asks for proof of academic background and funds; the amounts and certification methods here follow Dong-A’s Office of International Affairs. Requirements can change, so check before you apply."
+  },
+  "steps": {
+   "ko": [
+    "학위과정 입학 허가와 표준입학허가서 받기",
+    "국제교류과 안내에 맞춰 서류 준비",
+    "하이코리아 전자민원(온라인 결제) 또는 방문예약 후 관할 출입국·외국인관서에서 신청",
+    "심사 결과 조회",
+    "허가되면 허가서를 출력하고 새 외국인등록증 발급 절차 진행",
+    "새 등록증을 받은 뒤 시간제취업 등 필요한 허가·신고를 다시 확인"
+   ],
+   "en": [
+    "Receive your degree admission and standard certificate of admission.",
+    "Prepare documents following the Office of International Affairs list.",
+    "Apply through HiKorea e-application (pay online) or book a visit to your immigration office.",
+    "Check the decision.",
+    "Once approved, print the permit and get your new Residence Card.",
+    "After receiving the new card, check again which permits or reports (such as part-time work) you need."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "방문 신청은 하이코리아 방문예약을 먼저 하세요.",
+    "동아대 어학연수생의 출석증명서는 국제교류과에서 발급합니다."
+   ],
+   "en": [
+    "Book on HiKorea before visiting the immigration office.",
+    "Dong-A language students get the attendance certificate from the Office of International Affairs."
+   ],
+   "count": 2
+  },
+  "search_aliases": {
+   "ko": [
+    "어학연수 진학",
+    "한국어학당 졸업 후 입학",
+    "D-4 D-2",
+    "비자 변경",
+    "체류자격 변경"
+   ],
+   "en": [
+    "change visa",
+    "D-4 to D-2",
+    "language school to degree",
+    "change of status"
+   ],
+   "count": 5
+  },
+  "top_sections[0].title": {
+   "ko": "언제 신청하나요?",
+   "en": "When do I apply?"
+  },
+  "top_sections[0].body": {
+   "ko": "학위과정 수업을 시작하기 전에 신청하세요. 법무부 안내에는 구체적인 마감일이 따로 적혀 있지 않지만, 하이코리아 안내의 처리시간이 접수일부터 1개월 이내이므로 입학 일정이 정해지면 바로 국제교류과에 문의하고 D-4 체류기간이 끝나기 전에 신청을 마치세요.",
+   "en": "Apply before your degree classes start. The Ministry’s guidance gives no fixed deadline, but HiKorea lists a processing time of up to 1 month from receipt, so ask the Office of International Affairs as soon as your admission dates are set, and apply before your D-4 period of stay ends."
+  },
+  "top_sections[0].notice": {
+   "ko": "허가가 나기 전에는 학위과정 학생(D-2)으로 체류하는 것이 아닙니다.",
+   "en": "Until it is approved, you are not yet staying as a degree student (D-2)."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 출입국관리법 제24조, 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시), 동아대 국제교류과 VISA 정보 기준, 2026-09-13 확인.",
+   "en": "※ Based on Immigration Act art. 24, the HiKorea stay manual (posted September 2026) and Dong-A’s visa information page, checked 2026-09-13."
+  },
+  "sections[0].title": {
+   "ko": "수수료 — 표기가 서로 달라요",
+   "en": "Fees — the figures differ"
+  },
+  "sections[0].notice": {
+   "ko": "실제 결제 금액은 결제 화면이나 관할 출입국·외국인관서에서 확인하세요.",
+   "en": "Confirm the amount you pay on the payment screen or with your immigration office."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "출처별 표기",
+   "en": "What each source says"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "현행 법정 금액: 체류자격 변경허가 10만원, 외국인등록증 발급 3만5천원",
+    "하이코리아 전자민원 화면: 온라인 결제액 119,000원(외국인등록증 발급 수수료·결제대행 수수료 포함)",
+    "동아대 국제교류과 페이지의 13만원 표기는 현행 법정 금액과 다릅니다."
+   ],
+   "en": [
+    "Current statutory amounts: KRW 100,000 for the change of status, KRW 35,000 for the Residence Card",
+    "HiKorea e-application screen: KRW 119,000 online payment (includes the Residence Card fee and the payment-processing fee)",
+    "The KRW 130,000 on Dong-A’s international office page differs from the current statutory amounts."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "허가 뒤와 허가되지 않을 때",
+   "en": "After approval, or if refused"
+  },
+  "sections[1].notes[0].title": {
+   "ko": "확인할 것",
+   "en": "What to check"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "학위과정(D-2) 체류기간은 2년 이내에서 3월 말 또는 9월 말까지로 정해집니다.",
+    "허가되지 않으면 통지를 받습니다. 기존 자격으로 체류하게 할 수 있고, 출국기한이 적힐 때는 통지서 발급일부터 14일 이내 범위입니다. 통지서 내용을 먼저 확인하고 국제교류과에 알리세요.",
+    "어학연수 때 받은 시간제취업 허가가 변경 후에도 유지되는지는 원문에서 확인되지 않았습니다. 일을 계속하려면 먼저 하이코리아나 1345에 확인하세요."
+   ],
+   "en": [
+    "D-2 periods of stay are granted for up to 2 years, ending at the end of March or September.",
+    "If refused, you are notified. You may be allowed to stay on your current status; if a departure deadline is set, it is within 14 days of the date the notice is issued. Read the notice first and tell the Office of International Affairs.",
+    "Official guidance does not say whether a part-time work permit from your language programme carries over. Check with HiKorea or 1345 before you keep working."
+   ],
+   "count": 3
+  },
+  "links[0].label": {
+   "ko": "하이코리아 — 체류자격 변경허가 안내",
+   "en": "HiKorea — change of status of stay"
+  },
+  "links[0].description": {
+   "ko": "전자민원 안내(신청은 로그인 필요)",
+   "en": "E-application guide (applying needs a login)"
+  },
+  "links[1].label": {
+   "ko": "동아대 국제교류과 VISA 정보",
+   "en": "Dong-A OIA — visa information"
+  },
+  "links[1].description": {
+   "ko": "D4→D2 변경 준비물",
+   "en": "What to prepare for D-4 to D-2 (Korean)"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 비자 종류 안내",
+   "en": "Guide — Visa types"
+  },
+  "links[2].description": {
+   "ko": "D-2·D-4 체류자격",
+   "en": "D-2 and D-4 statuses"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[3].description": {
+   "ko": "변경 뒤 아르바이트 허가 확인",
+   "en": "Checking part-time permission after the change"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — International Affairs Office"
+  },
+  "links[4].description": {
+   "ko": "서류 발급과 문의",
+   "en": "Documents and questions"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 외국인등록증 재발급",
+   "en": "Guide — Replacing Your Residence Card"
+  },
+  "links[5].description": {
+   "ko": "허가 뒤 새 등록증",
+   "en": "Your new card after approval"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[6].description": {
+   "ko": "등록금납입증명서 출력",
+   "en": "Printing the tuition payment certificate"
+  },
+  "phrases[0].text": {
+   "ko": "어학연수(D-4)에서 유학(D-2)으로 체류자격을 변경하려고 합니다. 필요한 서류를 확인하고 싶습니다.",
+   "en": "I’d like to change from D-4 to D-2. Could you tell me which documents I need?"
+  }
+ }
+}

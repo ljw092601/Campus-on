@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/i18n/app_languages.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
+import '../../core/layout/flexible_text_layout.dart';
 
 /// S1 — Home hub, restyled after design_template.png: navy hero banner with
 /// campus photo + in-banner search, then a 2×2 feature-card grid with the 3D
@@ -31,6 +33,11 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: bg,
       appBar: AppBar(
+        // The language button shows a two-letter code beside a caret; in a 56px
+        // toolbar it lost its bottom at 200 % text, so the bar grows with the
+        // text instead of the label shrinking.
+        toolbarHeight:
+            56 * MediaQuery.textScalerOf(context).scale(1.0).clamp(1.0, 1.6),
         backgroundColor: bg,
         title: Row(
           mainAxisSize: MainAxisSize.min,
@@ -86,34 +93,50 @@ class _LangToggle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final isKo = locale.languageCode == 'ko';
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final active =
         isDark ? Theme.of(context).colorScheme.primary : HomeScreen.brandNavy;
-    final inactive = Theme.of(context).colorScheme.outline;
 
-    TextStyle st(bool on) => TextStyle(
-          fontSize: 15,
-          fontWeight: on ? FontWeight.w800 : FontWeight.w500,
-          color: on ? active : inactive,
-        );
-
-    // The styled "KO | EN" spans mean nothing to a screen reader, so expose
-    // the control as a button labeled with the language-setting title.
-    return Semantics(
-      button: true,
-      label: l.settings_language_title,
-      child: TextButton(
-        onPressed: () => ref.read(localeProvider.notifier).toggle(),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(text: 'KO', style: st(isKo)),
-            TextSpan(text: '  |  ', style: st(false)),
-            TextSpan(text: 'EN', style: st(!isKo)),
-          ]),
-        ),
+    // Four languages no longer fit a KO|EN toggle, so the button shows the
+    // current language and opens the list; Settings has the same list.
+    return PopupMenuButton<String>(
+      tooltip: AppLocalizations.of(context).settings_language_title,
+      initialValue: locale.languageCode,
+      onSelected: (code) async {
+        final messenger = ScaffoldMessenger.of(context);
+        // Same as the settings list: say on screen when the choice could not be
+        // remembered (감사 05/035 NIT-2).
+        if (!await ref.read(localeProvider.notifier).setLocale(Locale(code))) {
+          if (!context.mounted) return;
+          messenger
+            ..clearSnackBars()
+            ..showSnackBar(SnackBar(
+              // Two sentences in a second language need more than the default
+              // four seconds (감사 05/037 SF-3).
+              duration: const Duration(seconds: 10),
+              content: Text(
+                  AppLocalizations.of(context).settings_language_save_failed),
+            ));
+        }
+      },
+      itemBuilder: (context) => [
+        for (final code in appLanguageCodes)
+          PopupMenuItem<String>(
+            value: code,
+            child: Text(appLanguageNames[code]!, locale: Locale(code)),
+          ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Text(
+            appLanguageShortNames[locale.languageCode] ?? locale.languageCode,
+            style: TextStyle(
+                fontSize: 15, fontWeight: FontWeight.w800, color: active),
+          ),
+          Icon(Symbols.arrow_drop_down, size: 20, color: active),
+        ]),
       ),
     );
   }
@@ -192,8 +215,16 @@ class _HeroBanner extends StatelessWidget {
                     Expanded(
                       child: Text(
                         l.classroom_search_title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                        // The banner has a minimum height and grows, so at large
+                        // text the heading can take the lines it needs instead of
+                        // being cut — and an ellipsis with no limit would
+                        // ellipsize at the first line (measured).
+                        maxLines: prefersFlexibleLayout(context)
+                            ? null
+                            : 2,
+                        overflow: prefersFlexibleLayout(context)
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 21,
                           fontWeight: FontWeight.w800,
@@ -272,11 +303,28 @@ class _FeatureGrid extends ConsumerWidget {
       ),
     ];
 
-    // Taller cells under large font scale so the description never overflows
-    // (UX §6: no breakage at 200%).
+    // Two fixed-ratio columns work at ordinary text sizes. Past the default text size they cannot
+    // hold a card title at all — on a 320dp phone each cell is ~137px wide,
+    // which left two characters — so the cards become full-width and, more
+    // importantly, stop being ratio-sized: each one is as tall as its own text
+    // needs, which is what makes a long title in Vietnamese or English readable
+    // instead of ellipsized (감사 05/036 SF-2). The home body already scrolls.
+    // The cards and the thing that lays them out have to agree: a card that
+    // sizes itself inside a fixed-ratio cell overflows it (173px, measured at
+    // 320dp with default text).
     final textScale = MediaQuery.textScalerOf(context).scale(1.0);
-    final aspect = (0.86 / textScale).clamp(0.55, 0.86);
+    if (prefersFlexibleLayout(context)) {
+      return Column(
+        children: [
+          for (final c in cards) ...[
+            _FeatureCard(data: c),
+            if (c != cards.last) const SizedBox(height: 14),
+          ],
+        ],
+      );
+    }
 
+    final aspect = (0.86 / textScale).clamp(0.55, 0.86);
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -309,6 +357,7 @@ class _FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final large = prefersFlexibleLayout(context);
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final titleColor = isDark ? scheme.primary : HomeScreen.brandNavy;
@@ -332,33 +381,60 @@ class _FeatureCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       data.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        color: titleColor,
-                        letterSpacing: -0.3,
-                      ),
+                      // Two lines and a scaled size: on a 320dp phone at 200 %
+                      // text the title slot is ~85px, so one hard-coded 18px
+                      // line left 2 characters in Korean or Chinese and about 5
+                      // in Latin — every card read the same (감사 05/036 SF-2).
+                      // No cap at large text: the card is full width and grows
+                      // with its content there, so the whole title is shown
+                      // rather than cut (감사 05/036 SF-2).
+                      maxLines: large ? null : 2,
+                      // An ellipsis with no line limit makes Flutter ellipsize at the
+                      // first line, so unlimited lines must drop it (measured).
+                      overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: titleColor,
+                                letterSpacing: -0.3,
+                              ) ??
+                          TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: titleColor,
+                            letterSpacing: -0.3,
+                          ),
                     ),
                   ),
                   Icon(Symbols.chevron_right, size: 22, color: titleColor),
                 ],
               ),
               const SizedBox(height: 8),
-              Text(
-                data.description,
-                // Capped: at 360dp the English copy wraps past the cell height
-                // and the Column overflows; the card is a teaser, not the doc.
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12.5,
-                  height: 1.45,
-                  color: scheme.onSurfaceVariant,
+              // At ordinary sizes the card is a fixed-ratio cell, so the teaser
+              // takes what is left and ellipsizes there. At large text the card
+              // sizes itself to its content: the teaser is shown in full and
+              // must not be flexible, because a self-sizing column has no
+              // leftover height to hand out.
+              _maybeFlexible(
+                flexible: !large,
+                child: Text(
+                  data.description,
+                  maxLines: large ? null : 3,
+                  overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    height: 1.45,
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
               ),
-              Expanded(
+              _maybeExpanded(
+                expanded: !large,
+                // At large text the illustration keeps a fixed height instead of
+                // taking the leftover space; the text above is what needs the
+                // room.
+                // 96px added a screenful of scrolling with no information
+                // (감사 05/037 SF-4).
+                height: 56,
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -371,7 +447,7 @@ class _FeatureCard extends StatelessWidget {
                         data.asset,
                         fit: BoxFit.contain,
                         width: double.infinity,
-                        height: double.infinity,
+                        height: large ? 56 : double.infinity,
                       ),
                     ),
                   ),
@@ -384,3 +460,13 @@ class _FeatureCard extends StatelessWidget {
     );
   }
 }
+
+
+/// `Flexible` only when the parent has a height to divide.
+Widget _maybeFlexible({required bool flexible, required Widget child}) =>
+    flexible ? Flexible(child: child) : child;
+
+/// `Expanded` when the parent has leftover height, a fixed box when it does not.
+Widget _maybeExpanded(
+        {required bool expanded, required double height, required Widget child}) =>
+    expanded ? Expanded(child: child) : SizedBox(height: height, child: child);

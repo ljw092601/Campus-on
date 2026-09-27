@@ -4,91 +4,203 @@
     "title_en": "Fall course registration",
     "category": "registration",
     "start": "2026-08-10",
-    "end": "2026-08-14"
+    "end": "2026-08-14",
+    "i18n": {
+      "zh": {
+        "title": "2学期选课"
+      },
+      "vi": {
+        "title": "Đăng ký môn học kỳ 2"
+      }
+    }
   },
   "fall-semester-start": {
     "title_ko": "2학기 개강",
     "title_en": "Fall semester begins",
     "category": "semester",
-    "start": "2026-09-01"
+    "start": "2026-09-01",
+    "i18n": {
+      "zh": {
+        "title": "2学期开学"
+      },
+      "vi": {
+        "title": "Khai giảng học kỳ 2"
+      }
+    }
   },
   "fall-add-drop": {
     "title_ko": "수강신청 정정",
     "title_en": "Course add/drop period",
     "category": "registration",
     "start": "2026-09-01",
-    "end": "2026-09-07"
+    "end": "2026-09-07",
+    "i18n": {
+      "zh": {
+        "title": "选课更正"
+      },
+      "vi": {
+        "title": "Chỉnh sửa đăng ký môn"
+      }
+    }
   },
   "chuseok": {
     "title_ko": "추석 연휴",
     "title_en": "Chuseok holiday",
     "category": "holiday",
     "start": "2026-09-24",
-    "end": "2026-09-26"
+    "end": "2026-09-26",
+    "i18n": {
+      "zh": {
+        "title": "韩国中秋节假期"
+      },
+      "vi": {
+        "title": "Nghỉ lễ Chuseok Hàn Quốc"
+      }
+    }
   },
   "foundation-day": {
     "title_ko": "개천절",
     "title_en": "National Foundation Day",
     "category": "holiday",
-    "start": "2026-10-03"
+    "start": "2026-10-03",
+    "i18n": {
+      "zh": {
+        "title": "韩国开天节"
+      },
+      "vi": {
+        "title": "Ngày Lập quốc Hàn Quốc"
+      }
+    }
   },
   "hangul-day": {
     "title_ko": "한글날",
     "title_en": "Hangul Day",
     "category": "holiday",
-    "start": "2026-10-09"
+    "start": "2026-10-09",
+    "i18n": {
+      "zh": {
+        "title": "韩文日"
+      },
+      "vi": {
+        "title": "Ngày chữ Hangeul Hàn Quốc"
+      }
+    }
   },
   "midterm-exams": {
     "title_ko": "중간시험",
     "title_en": "Midterm exams",
     "category": "exam",
     "start": "2026-10-20",
-    "end": "2026-10-26"
+    "end": "2026-10-26",
+    "i18n": {
+      "zh": {
+        "title": "期中考试"
+      },
+      "vi": {
+        "title": "Thi giữa kỳ"
+      }
+    }
   },
   "course-withdrawal": {
     "title_ko": "수강 철회",
     "title_en": "Course withdrawal period",
     "category": "registration",
     "start": "2026-11-02",
-    "end": "2026-11-06"
+    "end": "2026-11-06",
+    "i18n": {
+      "zh": {
+        "title": "选课取消"
+      },
+      "vi": {
+        "title": "Rút môn học"
+      }
+    }
   },
   "final-exams": {
     "title_ko": "기말시험",
     "title_en": "Final exams",
     "category": "exam",
     "start": "2026-12-08",
-    "end": "2026-12-14"
+    "end": "2026-12-14",
+    "i18n": {
+      "zh": {
+        "title": "期末考试"
+      },
+      "vi": {
+        "title": "Thi cuối kỳ"
+      }
+    }
   },
   "winter-break": {
     "title_ko": "겨울방학 시작",
     "title_en": "Winter break begins",
     "category": "semester",
-    "start": "2026-12-15"
+    "start": "2026-12-15",
+    "i18n": {
+      "zh": {
+        "title": "寒假开始"
+      },
+      "vi": {
+        "title": "Bắt đầu kỳ nghỉ đông"
+      }
+    }
   },
   "winter-session": {
     "title_ko": "겨울 계절수업",
     "title_en": "Winter session",
     "category": "semester",
     "start": "2026-12-21",
-    "end": "2027-01-13"
+    "end": "2027-01-13",
+    "i18n": {
+      "zh": {
+        "title": "寒假季节学期"
+      },
+      "vi": {
+        "title": "Học kỳ mùa đông"
+      }
+    }
   },
   "spring-registration": {
     "title_ko": "1학기 수강신청",
     "title_en": "Spring course registration",
     "category": "registration",
     "start": "2027-02-08",
-    "end": "2027-02-12"
+    "end": "2027-02-12",
+    "i18n": {
+      "zh": {
+        "title": "1学期选课"
+      },
+      "vi": {
+        "title": "Đăng ký môn học kỳ 1"
+      }
+    }
   },
   "winter-commencement": {
     "title_ko": "학위수여식",
     "title_en": "Commencement",
     "category": "graduation",
-    "start": "2027-02-19"
+    "start": "2027-02-19",
+    "i18n": {
+      "zh": {
+        "title": "学位授予仪式"
+      },
+      "vi": {
+        "title": "Lễ trao bằng"
+      }
+    }
   },
   "spring-semester-start": {
     "title_ko": "1학기 개강",
     "title_en": "Spring semester begins",
     "category": "semester",
-    "start": "2027-03-02"
+    "start": "2027-03-02",
+    "i18n": {
+      "zh": {
+        "title": "1学期开学"
+      },
+      "vi": {
+        "title": "Khai giảng học kỳ 1"
+      }
+    }
   }
 }

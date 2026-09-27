@@ -1,4 +1,6 @@
 import 'package:campus_on/app.dart';
+import 'package:campus_on/data/mock/guide_items_expansion.dart';
+import 'package:campus_on/data/mock/guide_items_safety.dart';
 import 'package:campus_on/data/mock/mock_data.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:campus_on/domain/repositories/guide_repository.dart';
@@ -3288,6 +3290,9 @@ void main() {
         '/guide/item/emergency-contacts',
         '/guide/item/counseling',
         '/guide/item/hospital-guide',
+        // 2026-09 expansion: wage and deposit problems route to their owners.
+        '/guide/item/part-time-work',
+        '/guide/item/rental-deposit-protection',
       ],
     );
 
@@ -3915,8 +3920,11 @@ void main() {
     );
     expect(withOverview.hasNoContent, isFalse);
 
-    // …and every shipped guide is written and published: 18 / 18.
-    expect(MockData.guideItems.length, 18);
+    // …and every shipped guide is written and published: the original 18,
+    // the 2026-09 expansion, and the 2026-09-26 safety batch
+    // (guide_expansion_test.dart pins which ids are in each).
+    expect(MockData.guideItems.length,
+        18 + ExpansionGuides.items.length + SafetyGuides.items.length);
     for (final g in MockData.guideItems) {
       expect(g.hasNoContent, isFalse, reason: g.id);
       expect(g.status, GuideStatus.published, reason: g.id);
@@ -5230,15 +5238,26 @@ void main() {
     expect(en, contains('must apply on their own'));
   });
 
-  test('Guide catalogue: 18 items, all published, reterm scoped to three', () {
-    expect(MockData.guideItems, hasLength(18));
+  test('Guide catalogue: 18 original items kept, all published, reterm scoped '
+      'to three', () {
+    final total =
+        18 + ExpansionGuides.items.length + SafetyGuides.items.length;
+    expect(MockData.guideItems, hasLength(total));
+    // The original 18 stay first, in their original order, with their ids.
+    expect(MockData.guideItems.take(18).map((g) => g.id), const [
+      'arc-issue', 'stay-extension', 'visa-types', 'dormitory',
+      'off-campus-housing', 'bank-account', 'mobile-plan', 'transit-card',
+      'health-insurance', 'campus-clinic', 'hospital-guide',
+      'course-registration', 'certificate-issue', 'library-guide',
+      'oia-visit', 'emergency-contacts', 'incident-response', 'counseling',
+    ]);
     expect(
       MockData.guideItems.where((g) => g.status == GuideStatus.comingSoon),
       isEmpty,
     );
     expect(
       MockData.guideItems.where((g) => g.status == GuideStatus.published),
-      hasLength(18),
+      hasLength(total),
     );
     // The Residence Card reterm covers the immigration trio only; the other
     // guides are corrected in their own category reviews.

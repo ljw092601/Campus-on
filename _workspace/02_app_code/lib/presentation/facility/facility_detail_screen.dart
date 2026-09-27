@@ -92,6 +92,8 @@ class _DetailBody extends ConsumerWidget {
     final hours = facility.hours(locale);
     final description = facility.description(locale);
     final building = facility.building(locale);
+    // Second line under the name: the other language's name, so a Chinese or
+    // Vietnamese reader still sees the Korean sign text to show someone.
     final secondaryName =
         locale.languageCode == 'ko' ? facility.nameEn : facility.nameKo;
 
@@ -116,8 +118,10 @@ class _DetailBody extends ConsumerWidget {
                         if (secondaryName.trim().isNotEmpty)
                           Flexible(
                             child: Text(secondaryName,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                // The name in the other language is how a
+                                // student matches the building sign; clipping
+                                // it defeats the purpose, so it wraps as far
+                                // as it needs to.
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -304,25 +308,28 @@ class _BottomCta extends ConsumerWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final stack = scale >= 1.3 || constraints.maxWidth < 340;
+          // A fixed 48 clipped the label at large text; the button grows with
+          // it instead (capped, so it cannot swallow the screen).
+          final btnHeight = 48 * scale.clamp(1.0, 2.0);
           if (!hasPhone) {
             return SizedBox(
-                width: double.infinity, height: 48, child: mapBtn);
+                width: double.infinity, height: btnHeight, child: mapBtn);
           }
           if (stack) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(width: double.infinity, height: 48, child: mapBtn),
+                SizedBox(width: double.infinity, height: btnHeight, child: mapBtn),
                 SizedBox(height: context.dimens.spaceSm),
-                SizedBox(width: double.infinity, height: 48, child: callBtn),
+                SizedBox(width: double.infinity, height: btnHeight, child: callBtn),
               ],
             );
           }
           return Row(
             children: [
-              Expanded(child: SizedBox(height: 48, child: mapBtn)),
+              Expanded(child: SizedBox(height: btnHeight, child: mapBtn)),
               SizedBox(width: context.dimens.spaceMd),
-              Expanded(child: SizedBox(height: 48, child: callBtn)),
+              Expanded(child: SizedBox(height: btnHeight, child: callBtn)),
             ],
           );
         },

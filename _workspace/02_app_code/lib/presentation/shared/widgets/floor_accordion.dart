@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/facility_providers.dart';
+import '../../../data/i18n/place_text.dart';
 
 /// Floor-by-floor accordion for one building (map Peek sheet + S4 detail).
 ///
@@ -23,6 +24,7 @@ class FloorAccordion extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context);
     final scheme = Theme.of(context).colorScheme;
     final d = context.dimens;
     final async = ref.watch(buildingFloorsProvider(facilityId));
@@ -72,7 +74,14 @@ class FloorAccordion extends ConsumerWidget {
                     d.spaceMd, 0, d.spaceMd, d.spaceMd),
                 shape: const Border(),
                 collapsedShape: const Border(),
-                title: Row(
+                // Translated floor labels are words, not 'B2F': in Vietnamese
+                // at 200 % text the chip and the room count no longer share a
+                // line (53px over, measured). Wrap lets the count drop under
+                // the chip instead of being clipped.
+                title: Wrap(
+                  spacing: 0,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Container(
                       constraints: const BoxConstraints(minWidth: 48),
@@ -83,7 +92,7 @@ class FloorAccordion extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(d.radiusSm),
                       ),
                       child: Text(
-                        floor.floor,
+                        floorLabelText(floor.floor, locale),
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -92,14 +101,12 @@ class FloorAccordion extends ConsumerWidget {
                       ),
                     ),
                     SizedBox(width: d.spaceSm),
-                    Expanded(
-                      child: Text(
+                    Text(
                         l.facility_floors_roomCount(floor.rooms.length),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
                             ?.copyWith(color: scheme.onSurfaceVariant),
-                      ),
                     ),
                   ],
                 ),
@@ -107,7 +114,11 @@ class FloorAccordion extends ConsumerWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      floor.rooms.join(' · '),
+                      // Untranslated names keep their Korean — that is what the
+                      // door sign says, so it is also what a student compares
+                      // against.
+                      [for (final r in floor.rooms) roomText(r, locale)]
+                          .join(' · '),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

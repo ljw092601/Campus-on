@@ -11,6 +11,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../providers/dining_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../../data/i18n/place_text.dart';
 
 /// 오늘의 학식 — daily cafeteria menus per campus, with a day switcher.
 /// No school API exists; real menus come from the admin sheet → Firestore
@@ -185,9 +186,10 @@ class _CafeteriaCard extends ConsumerWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
+                    // The cafeteria's name is the heading of its card, and the
+                    // translated names are longer than the Korean ones: it
+                    // wraps rather than losing its end.
                     menu.name(locale),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w700),
                   ),
@@ -253,7 +255,7 @@ class _CafeteriaCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(meal.items.join(' · '),
+                          Text([for (final i in meal.items) menuItemText(i, locale)].join(' · '),
                               style: const TextStyle(
                                   fontSize: 13.5, height: 1.5)),
                           if (meal.price != null)

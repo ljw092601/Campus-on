@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:campus_on/data/firestore/firestore_paths.dart';
+import 'package:campus_on/data/firestore/firestore_guide_repository.dart';
 import 'package:campus_on/domain/entities/dining_menu.dart';
 import 'package:campus_on/domain/entities/facility.dart';
 
@@ -142,6 +143,30 @@ void main() {
       ];
       final out = mapDocsSkippingMalformed(docs, 'facilities', facilityFromDoc);
       expect(out, isEmpty);
+    });
+  });
+
+  group('catalogue order with malformed isolation (the merged contract)', () {
+    // B 03/060 N-01: `mapDocsSkippingMalformed(orderByCatalogue(...))` is what the
+    // guide list runs after the merge — main's isolation over our ordering.
+    const good = {
+      'categoryId': 'immigration',
+      'title_ko': '안내',
+    };
+
+    test('keeps catalogue order, drops the malformed doc, survives null data', () {
+      final docs = <_FakeDoc>[
+        _FakeDoc('two', {...good, 'sort_order': 2}),
+        _FakeDoc('zero', {...good, 'sort_order': 0}),
+        _FakeDoc('bad', {...good, 'sort_order': 1, 'sections': 42}),
+        _FakeDoc('null-data', null),
+      ];
+      final ordered =
+          orderByCatalogue(docs, (d) => (d.data() ?? const {})[guideSortOrderField]);
+      final out =
+          mapDocsSkippingMalformed(ordered, FirestorePaths.guideItems, guideFromDoc);
+      expect([for (final g in out) g.id], ['zero', 'two'],
+          reason: 'sorted by sort_order, malformed and empty documents skipped');
     });
   });
 }

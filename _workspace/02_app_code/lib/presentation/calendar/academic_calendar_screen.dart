@@ -9,6 +9,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../providers/academic_calendar_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../../core/layout/flexible_text_layout.dart';
 
 /// 학사일정 — shows ONLY the current academic year (학년도, Mar–Feb),
 /// grouped by month. Other years' rows may exist in Firestore (the admin
@@ -183,11 +184,13 @@ class _EventRow extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final (badgeBg, badgeFg) = _categoryColors(scheme);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          Container(
+    // At 320dp with 200 % text the date chip and the badge take the whole row
+    // and the title — the part that says what the event is — is squeezed to a
+    // character or two. Past the default text size the row folds into two lines instead
+    // (감사 05/038 SF-1).
+    final large = prefersFlexibleLayout(context);
+
+    final date = Container(
             constraints: const BoxConstraints(minWidth: 64),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
@@ -200,18 +203,18 @@ class _EventRow extends ConsumerWidget {
               style: const TextStyle(
                   fontSize: 12.5, fontWeight: FontWeight.w700),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              event.title(locale),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 14, height: 1.35),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Container(
+    );
+
+    final title = Text(
+      event.title(locale),
+      // Folded layout gives the title a line of its own, so it needs no cap; an
+      // ellipsis with no cap would ellipsize at the first line.
+      maxLines: large ? null : 2,
+      overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
+      style: const TextStyle(fontSize: 14, height: 1.35),
+    );
+
+    final badge = Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               color: badgeBg,
@@ -219,14 +222,44 @@ class _EventRow extends ConsumerWidget {
             ),
             child: Text(
               _categoryLabel(l),
+              // Folded, the badge has room to wrap; clipping it would drop the
+              // only words that say what kind of entry this is.
+              maxLines: large ? null : 1,
+              overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
               style: TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w600,
                   color: badgeFg),
             ),
-          ),
-        ],
-      ),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: large
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Wrap, not Row: at 320dp with 200 % text the date chip can
+                // take most of the width, and a badge that wraps inside a Row
+                // still overflows it by its longest word. Here the badge simply
+                // drops to its own line when it no longer fits beside the date.
+                Wrap(spacing: 8, runSpacing: 6, children: [date, badge]),
+                const SizedBox(height: 6),
+                title,
+              ],
+            )
+          : Row(
+              children: [
+                date,
+                const SizedBox(width: 12),
+                Expanded(child: title),
+                const SizedBox(width: 8),
+                // Flexible so the row cannot overflow while the text scale and
+                // the layout disagree for a frame (changing the system text
+                // size rebuilds one before the other).
+                Flexible(child: badge),
+              ],
+            ),
     );
   }
 }

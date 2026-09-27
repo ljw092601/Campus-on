@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:campus_on/presentation/providers/classroom_providers.dart';
+import 'package:campus_on/presentation/providers/facility_providers.dart';
 import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
 
 void main() {
@@ -108,6 +109,36 @@ void main() {
     // Numbers restart at 01 on each floor and stay unique per building.
     expect(entries.map((e) => e.code).toSet().length, entries.length);
     expect(entries.any((e) => e.code.endsWith('01')), isTrue);
+  });
+
+  test('국제교류과 is listed on B03 2F, not B04 1F (office moved in 2025)',
+      () async {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    // Office notices (2025-08-04 relocation; 2026-07-21·08-14 「글로벌인재관
+    // 2층 국제교류과(B03-0202)」) — the floor-guide source is corrected to
+    // match. Only the floor is asserted: the 4-digit code is a placeholder
+    // derived from list order, so it is not treated as the real room number.
+    final b03 = await container.read(classroomEntriesProvider(('b03', null)).future);
+    final office = b03.where((e) => e.roomName == '국제교류과').toList();
+    expect(office, hasLength(1));
+    expect(office.single.floorLabel, '2F');
+    expect(office.single.code, startsWith('02'));
+
+    // B04 has a drawing, so the search screen passes a plan code and the
+    // entries carry no room names. The floor guide is where these names reach
+    // the screen, so the guarantee is asserted on that data (감사 05/053 권고 2).
+    final b04 = await container.read(buildingFloorsProvider('b04').future);
+    expect(b04, isNotNull, reason: 'B04 floor guide is missing');
+    final b04Rooms = {
+      for (final f in b04!.floors)
+        for (final r in f.rooms) (r, f.floor)
+    };
+    expect(b04Rooms.any((e) => e.$1 == '국제교류과'), isFalse);
+    // Not confirmed as moved — the campus-map location is kept.
+    expect(b04Rooms.contains(('국제교류과회의실/자료실', '1F')), isTrue);
+    expect(b04Rooms.contains(('국제교류처장실', '1F')), isTrue);
   });
 
   test('building without floor info yields no entries', () async {

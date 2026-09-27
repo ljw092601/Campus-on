@@ -8,6 +8,7 @@ import '../../domain/entities/admin_guide.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/guide_providers.dart';
 import '../shared/category_labels.dart';
+import '../../core/layout/flexible_text_layout.dart';
 
 /// S5 — Guide Categories (Guide tab root). The 6 categories are hardcoded (from
 /// the enum) so the list always renders; only the per-category count badge is
@@ -60,8 +61,18 @@ class _CategoryRow extends StatelessWidget {
         child: Icon(category.icon, color: color),
       ),
       title: Text(category.label(l)),
-      subtitle: Text(category.summary(l),
-          maxLines: 1, overflow: TextOverflow.ellipsis),
+      // Two lines hold the Korean summary; English and Vietnamese need more, and
+      // at 200 % text the row is ~248px wide, so the tail was dropped — the list
+      // scrolls, so the lines can simply be allowed (감사 05/036 NIT-5).
+      subtitle: Text(
+        category.summary(l),
+        maxLines: prefersFlexibleLayout(context) ? null : 2,
+        // An ellipsis with no line limit ellipsizes at the first line, so the
+        // unlimited case must drop it (measured).
+        overflow: prefersFlexibleLayout(context)
+            ? TextOverflow.visible
+            : TextOverflow.ellipsis,
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

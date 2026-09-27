@@ -1,0 +1,506 @@
+{
+ "id": "dormitory",
+ "category": "housing",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "기숙사 신청",
+   "en": "Dormitory Application"
+  },
+  "summary": {
+   "ko": "한림생활관 · 석당글로벌하우스",
+   "en": "Hanlim Residence Hall · Seokdang Global House"
+  },
+  "overview": {
+   "ko": "동아대학교 외국인 학생은 학생 유형과 과정에 따라 한림생활관 또는 석당글로벌하우스 등 교내 기숙사를 이용할 수 있습니다.\n\n기숙사별 입사대상, 신청방법, 모집기간, 비용은 서로 다를 수 있습니다.\n\n기숙사를 이용하려는 학생은 본인에게 해당하는 기숙사를 먼저 확인한 뒤, 해당 학기의 최신 모집 공지를 확인해야 합니다.",
+   "en": "Dong-A University has more than one on-campus dormitory — Hanlim Residence Hall and Seokdang Global House — and which one you can use depends on the kind of student you are.\n\nEach dormitory has its own eligibility, application route, application period and fee.\n\nSo work out which dormitory applies to you first, then read that semester's own recruitment notice."
+  },
+  "checklist_title": {
+   "ko": "신청 전에 확인하세요",
+   "en": "Before You Apply"
+  },
+  "checklist": {
+   "ko": [
+    "본인의 학생 유형",
+    "신청 가능한 기숙사",
+    "모집기간",
+    "입사기간",
+    "기숙사비",
+    "납부기간",
+    "제출서류",
+    "식사 포함 여부",
+    "방 유형",
+    "입사 가능일"
+   ],
+   "en": [
+    "What kind of student you are",
+    "Which dormitory you may apply to",
+    "When applications open and close",
+    "The move-in period",
+    "The dormitory fee",
+    "The payment deadline",
+    "What you have to submit",
+    "Whether meals are included",
+    "The room type",
+    "The earliest date you can move in"
+   ],
+   "count": 10
+  },
+  "checklist_note": {
+   "ko": "기숙사와 학생 유형에 따라 필요한 서류와 조건이 다를 수 있으므로 해당 학기 모집공고와 입사 안내에서 본인에게 해당하는 항목을 확인하세요.\n\n한림생활관과 석당글로벌하우스 모두 입사할 때 결핵 검사 결과를 요구합니다.",
+   "en": "What you need differs by dormitory and by the kind of student you are, so check the semester's notice and move-in guide for your own case.\n\nBoth Hanlim Residence Hall and Seokdang Global House ask for a tuberculosis test result when you move in."
+  },
+  "steps": {
+   "ko": [
+    "본인의 학생 유형 확인",
+    "이용 가능한 기숙사 확인",
+    "해당 학기 모집공고 확인",
+    "신청기간 및 조건 확인",
+    "기숙사 신청",
+    "합격 / 배정 결과 확인",
+    "기숙사비 납부",
+    "입사일 및 제출서류 확인"
+   ],
+   "en": [
+    "Work out what kind of student you are",
+    "Find out which dormitory you can use",
+    "Read that semester's recruitment notice",
+    "Check the application period and the conditions",
+    "Apply to the dormitory",
+    "Check the result — accepted, or a room assigned",
+    "Pay the dormitory fee",
+    "Check your move-in date and what you must submit"
+   ],
+   "count": 8
+  },
+  "tips": {
+   "ko": [
+    "📅 모집기간은 매 학기 달라요 — 지난 학기의 신청기간을 기준으로 판단하지 말고 최신 모집공고를 확인하세요.",
+    "🏠 기숙사마다 대상이 달라요 — 학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다.",
+    "💰 비용은 최신 공지를 확인하세요 — 기숙사비는 입사기간과 기숙사에 따라 달라질 수 있습니다.",
+    "🛏 침구류를 확인하세요 — 침구가 제공되지 않는 기숙사가 있을 수 있으므로 입사 전 확인하세요.",
+    "📄 결핵 검사 결과를 준비하세요 — 한림생활관과 석당글로벌하우스 모두 입사할 때 결핵 검사 결과를 요구합니다."
+   ],
+   "en": [
+    "📅 Application periods change each semester — never go by last semester's dates; read the current notice.",
+    "🏠 Each dormitory has its own eligibility — undergraduates, graduate students, exchange students and Korean language students are not all offered the same place.",
+    "💰 Check the fee in the current notice — it changes with the dormitory and the length of stay.",
+    "🛏 Check the bedding — some dormitories provide none, so find out before you arrive.",
+    "📄 Get your tuberculosis test result ready — both Hanlim Residence Hall and Seokdang Global House ask for one when you move in."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "기숙사",
+    "생활관",
+    "한림생활관",
+    "입사",
+    "건강진단서",
+    "결핵검사",
+    "흉부X선",
+    "입사건강서류"
+   ],
+   "en": [
+    "dorm",
+    "dormitory",
+    "residence hall",
+    "health certificate",
+    "tuberculosis test",
+    "chest x-ray"
+   ],
+   "count": 8
+  },
+  "duration": {
+   "ko": "신청기간 확인 필요",
+   "en": "Check the dates"
+  },
+  "top_sections[0].title": {
+   "ko": "어떤 기숙사가 있나요?",
+   "en": "Which dormitory can I use?"
+  },
+  "top_sections[0].body": {
+   "ko": "교내 기숙사는 크게 두 곳입니다. 운영 주체와 신청 방법이 다르므로 본인이 신청할 수 있는 곳을 먼저 확인하세요.",
+   "en": "There are two main on-campus dormitories. They are run separately and you apply to them in different ways, so start by working out which one is open to you."
+  },
+  "top_sections[0].notice": {
+   "ko": "본인이 신청할 수 있는 기숙사를 먼저 확인하세요\n학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다. 확실하지 않다면 국제교류과에 문의하세요.",
+   "en": "Check which one is yours before anything else\nUndergraduates, graduate students, exchange students and Korean language students are not all eligible for the same dormitory. If you are unsure, ask the International Affairs Office."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🏫 한림생활관",
+   "en": "🏫 Hanlim Residence Hall"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "동아대학교 학생이 이용하는 교내 생활관으로, 사생모집 공고에 외국인 유학생도 모집 대상으로 적혀 있습니다.",
+    "한림생활관 홈페이지 기준으로 승학1관 · 승학2관 · 부민관 · 구덕관을 운영합니다.",
+    "학기마다 사생모집 공고로 대상과 신청방법이 안내됩니다."
+   ],
+   "en": [
+    "The university's own residence hall; its recruitment notice names international students among those it recruits.",
+    "Its website currently lists four halls — Seunghak 1, Seunghak 2, Bumin and Gudeok.",
+    "Eligibility and how to apply are announced in a recruitment notice each semester."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "🌏 석당글로벌하우스",
+   "en": "🌏 Seokdang Global House"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "외국인 유학생을 위한 기숙사입니다.",
+    "부민캠퍼스 인근(부산 중구 대청로 30-1)에 있으며 2인 1실로 운영됩니다.",
+    "입사신청서를 작성해 행정실에 제출하는 방식으로 안내되고 있습니다."
+   ],
+   "en": [
+    "A dormitory for international students.",
+    "Near the Bumin campus (30-1 Daecheong-ro, Jung-gu, Busan), in twin rooms.",
+    "You apply by filling in an application form and handing it to the house office."
+   ],
+   "count": 3
+  },
+  "top_sections[1].title": {
+   "ko": "한림생활관",
+   "en": "Hanlim Residence Hall"
+  },
+  "top_sections[1].body": {
+   "ko": "동아대학교 생활관으로, 승학캠퍼스(승학1관 · 승학2관), 부민캠퍼스(부민관)와 캠퍼스 밖 부산 서구 서대신동의 구덕관이 있습니다. 입사대상과 신청방법, 모집기간, 생활관비는 학기마다 사생모집 공고로 안내됩니다.",
+   "en": "The university's residence halls: Seunghak 1 and Seunghak 2 on the Seunghak campus, Bumin on the Bumin campus, and Gudeok, which is off campus in Seodaesin-dong, Seo-gu. Who may apply, how to apply, when applications open and what it costs are published in a recruitment notice each semester."
+  },
+  "top_sections[1].notice": {
+   "ko": "신청기간은 학기마다 달라요\n신청기간은 학기마다 달라지므로 한림생활관 최신 모집공고를 확인하세요.\n입사를 포기하려면 정규 입사일 전날 23:59까지 해당 관 이메일로 환불신청서와 학생 명의 통장 사본을 보내야 합니다. 중도 퇴사 때는 재실일수에 위약금 10일분을 더한 생활관비를 빼고 돌려받으며, 남은 기간이 30일 이하이면 돌려받을 수 없습니다.",
+   "en": "The application period changes every semester\nApplication dates move, so always read the latest Hanlim recruitment notice rather than last semester's.\nTo give up your place, email the refund form and a copy of a bankbook in your own name to your hall by 23:59 the day before the regular move-in date. If you leave mid-semester, the fee for the days you stayed plus a 10-day penalty is deducted, and with 30 days or less remaining nothing is refunded."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "입사대상",
+   "en": "Who can apply"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "2026학년도 사생모집 공고 기준: 동아대학교 학부 · 대학원 신입생, 재학생, 복학예정자와 함께 외국인 유학생 · 국내 교환학생 등도 모집 대상으로 적혀 있습니다.",
+    "어학연수생은 공고에 따로 적혀 있지 않습니다.",
+    "본인이 대상인지 확실하지 않다면 한림생활관 또는 국제교류과에 확인하세요."
+   ],
+   "en": [
+    "The 2026 recruitment notice lists incoming and enrolled undergraduate and graduate students and students returning from leave, and also names international students and domestic exchange students among those it recruits.",
+    "Language-programme students are not named in the notice.",
+    "If you cannot tell whether you qualify, ask Hanlim Residence Hall or the International Affairs Office."
+   ],
+   "count": 3
+  },
+  "top_sections[1].notes[1].title": {
+   "ko": "신청 방법",
+   "en": "How to apply"
+  },
+  "top_sections[1].notes[1].lines": {
+   "ko": [
+    "학부 신입생 · 재학생 · 복학예정자, 대학원 재학생: 한림생활관 홈페이지에서 인터넷 원서접수",
+    "대학원 신입생, 학부 편입생 · 재입학생: 입사원서와 개인정보 동의서를 관별 이메일로 접수",
+    "선발은 성적점수 · 거리점수 · 상벌점을 합산해 이루어집니다.",
+    "입사자는 개별 통지하지 않습니다. 재학생은 캠퍼스락 앱, 신입생은 한림생활관 홈페이지에서 결과를 확인하고, 납부기간 안에 생활관비를 내지 않으면 불합격 처리됩니다."
+   ],
+   "en": [
+    "Incoming undergraduates, enrolled or returning undergraduates, and enrolled graduate students: apply online on the Hanlim website.",
+    "Incoming graduate students, and undergraduate transfer and re-admitted students: scan the application form and the privacy consent form and send them by email to your hall's address.",
+    "Places are awarded on a score combining grades, distance from home and merit/demerit points.",
+    "Results are not sent to you individually — enrolled students check the Campus Lock app and new students check the Hanlim website — and an offer is cancelled if the fee is not paid within the payment period."
+   ],
+   "count": 4
+  },
+  "top_sections[1].notes[2].title": {
+   "ko": "📞 문의",
+   "en": "📞 Contact"
+  },
+  "top_sections[1].notes[2].lines": {
+   "ko": [
+    "승학1관 051-200-6021~6023 · 승학2관 051-200-6026~6027 · 부민관 051-200-8426~8427 · 구덕관 051-200-1302"
+   ],
+   "en": [
+    "Seunghak 1 051-200-6021–6023 · Seunghak 2 051-200-6026–6027 · Bumin 051-200-8426–8427 · Gudeok 051-200-1302"
+   ],
+   "count": 1
+  },
+  "top_sections[1].notes[3].title": {
+   "ko": "식사",
+   "en": "Meals"
+  },
+  "top_sections[1].notes[3].lines": {
+   "ko": [
+    "식비는 생활관비에 포함되지 않습니다.",
+    "1학기 단위로 식사권을 구입해 생활관 식당에서 이용합니다.",
+    "평일 조식 · 석식만 포함되며 중식은 별도 구매입니다. 주말 · 공휴일에는 식당을 운영하지 않습니다."
+   ],
+   "en": [
+    "Meals are not included in the dormitory fee.",
+    "You buy a meal plan for the semester and use it in the hall cafeteria.",
+    "The plan covers weekday breakfast and dinner only — lunch is bought separately, and the cafeteria is closed at weekends and on public holidays."
+   ],
+   "count": 3
+  },
+  "top_sections[2].title": {
+   "ko": "석당글로벌하우스",
+   "en": "Seokdang Global House"
+  },
+  "top_sections[2].body": {
+   "ko": "외국인 유학생을 위한 기숙사입니다. 부민캠퍼스 인근(부산 중구 대청로 30-1)에 있으며 2인 1실로 운영됩니다.",
+   "en": "A dormitory for international students, near the Bumin campus at 30-1 Daecheong-ro, Jung-gu, Busan. Rooms are twins."
+  },
+  "top_sections[2].steps": {
+   "ko": [
+    "입사신청 기간에 입사신청서 작성 (홈페이지에서 내려받기)",
+    "작성한 신청서를 석당글로벌하우스 행정실에 제출",
+    "입사 가능 여부 안내받기",
+    "기숙사비 납부",
+    "입사기간 내에 체크인"
+   ],
+   "en": [
+    "Fill in the application form during the application period (it is downloadable from the website)",
+    "Hand the form in at the Seokdang Global House office",
+    "Wait to be told whether a place is available",
+    "Pay the dormitory fee",
+    "Check in within the move-in period"
+   ],
+   "count": 5
+  },
+  "top_sections[2].notice": {
+   "ko": "한국어학당 신규생은 기숙사 거주가 의무예요\n한국어학당 등록 안내는 기타 비용에 「기숙사비(신규생 의무거주)」를 적고 있습니다. 거주 기간과 신청 방법은 한국어학당 입학 안내 또는 석당글로벌하우스에서 확인하세요.",
+   "en": "New Korean language students must live in the dormitory\nThe Korean language programme registration guide lists \"dormitory fee (compulsory residence for new students)\" among its other costs. Check the length of stay and how to apply in your admission guide or with Seokdang Global House."
+  },
+  "top_sections[2].footnote": {
+   "ko": "※ 위 절차는 석당글로벌하우스 홈페이지의 「입·퇴사」 안내 기준입니다. 그 페이지의 일정 · 비용표는 2024학년도 기준이므로, 입사신청 기간과 기숙사비는 해당 학기 공지 또는 행정실에서 확인하세요.",
+   "en": "※ The steps above follow the \"move-in / move-out\" page on the Seokdang Global House website. Its dates and fees are from 2024, so check this semester's notice or the house office for application dates and the fee."
+  },
+  "top_sections[2].notes[0].title": {
+   "ko": "입사대상",
+   "en": "Who can apply"
+  },
+  "top_sections[2].notes[0].lines": {
+   "ko": [
+    "국제교류과 안내 기준: 동아대학교에 재학 중인 외국인 유학생",
+    "한국어학당 학생은 입학 안내에서 별도로 안내될 수 있습니다."
+   ],
+   "en": [
+    "The International Affairs Office describes it as a dormitory for international students enrolled at Dong-A.",
+    "Korean language students may be given separate instructions with their admission materials."
+   ],
+   "count": 2
+  },
+  "top_sections[2].notes[1].title": {
+   "ko": "시설 · 생활",
+   "en": "Facilities & living"
+  },
+  "top_sections[2].notes[1].lines": {
+   "ko": [
+    "조리실 · 세탁실 · 휴게실 등을 이용할 수 있습니다.",
+    "취사가 가능한 조리실이 있습니다. 식사 제공 여부는 입사 전에 행정실에 확인하세요.",
+    "침구류(이불 · 패드 · 베개) 유료 대여가 입 · 퇴사 안내에 적혀 있으나 이 페이지의 일정 · 비용표는 2024학년도 기준이므로, 현재 제공 여부와 비용은 행정실에 확인하세요.",
+    "문의: 석당글로벌하우스 051-200-1496"
+   ],
+   "en": [
+    "There is a kitchen, a laundry room and lounges.",
+    "You can cook in the kitchen. Ask the house office before moving in whether meals are provided.",
+    "The move-in/out page mentions paid bedding rental (duvet, mattress pad, pillow), but its dates and fees are from 2024 — ask the house office whether it is still offered and what it costs.",
+    "Contact: Seokdang Global House 051-200-1496"
+   ],
+   "count": 4
+  },
+  "sections[0].title": {
+   "ko": "입사 전 준비",
+   "en": "Before Moving In"
+  },
+  "sections[0].body": {
+   "ko": "입사가 확정되면 입사일 전에 아래 사항을 확인하세요. 기숙사와 학생 유형에 따라 준비할 것이 다를 수 있습니다.",
+   "en": "Once you have a place, work through the list below before your move-in date. What you need differs by dormitory and by the kind of student you are."
+  },
+  "sections[0].notice": {
+   "ko": "입사할 때 결핵 검사 결과가 필요해요\n한림생활관은 입사일로부터 3개월 이내에 발급받은 결핵검진 확인서(보건증 등으로 대체 가능, 입사 당일 없으면 일주일 이내 제출)를, 석당글로벌하우스는 건강검진결과표(결핵 · B형간염)를 입사 서류로 안내하고 있습니다. 발급에 시간이 걸릴 수 있으니 미리 준비하세요.",
+   "en": "You need a tuberculosis test result to move in\nHanlim asks for a tuberculosis screening certificate issued within 3 months of your move-in date (a health certificate can stand in for it, and if you do not have it on the day you have a week to hand it in), and Seokdang Global House asks for a health-check certificate covering tuberculosis and hepatitis B. Getting one can take time, so arrange it early."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "📋 입사 전 확인",
+   "en": "📋 Check before you move in"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "입사일 확인",
+    "배정된 기숙사 및 방 확인",
+    "기숙사비 납부",
+    "제출서류 확인",
+    "침구류 준비 여부 확인",
+    "결핵 검사 결과(건강검진결과표 · 결핵검진 확인서) 준비"
+   ],
+   "en": [
+    "Your move-in date",
+    "Which dormitory and room you were given",
+    "Payment of the dormitory fee",
+    "What you have to submit",
+    "Whether you need to bring bedding",
+    "Your tuberculosis test result (health-check or TB screening certificate)"
+   ],
+   "count": 6
+  },
+  "sections[0].notes[1].title": {
+   "ko": "💰 기숙사비를 확인하세요",
+   "en": "💰 Check the dormitory fee"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "기숙사비는 기숙사와 관, 입사기간, 학기 등에 따라 달라질 수 있습니다.",
+    "정확한 금액은 해당 학기의 공식 모집공고 또는 입사안내에서 확인하세요."
+   ],
+   "en": [
+    "The fee depends on the dormitory, the hall, the length of stay and the semester.",
+    "For the exact amount, read that semester's official recruitment notice or move-in guide."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[2].title": {
+   "ko": "🍽 식사는 기숙사마다 달라요",
+   "en": "🍽 Meals differ by dormitory"
+  },
+  "sections[0].notes[2].lines": {
+   "ko": [
+    "기숙사별 식사 제공 여부와 식권 구매 방법을 입사 전에 확인하세요.",
+    "한림생활관은 식비가 생활관비에 포함되지 않으며, 학기 단위로 식사권을 구입해 이용합니다.",
+    "석당글로벌하우스는 취사가 가능한 조리실이 있으며, 식사 제공 여부는 행정실에 확인하세요."
+   ],
+   "en": [
+    "Check whether your dormitory serves meals, and how meal tickets are bought, before you move in.",
+    "At Hanlim, meals are not part of the dormitory fee — you buy a meal plan for the semester.",
+    "Seokdang Global House has a kitchen where you can cook; ask the house office whether meals are provided."
+   ],
+   "count": 3
+  },
+  "sections[0].notes[3].title": {
+   "ko": "🛏 침구류를 확인하세요",
+   "en": "🛏 Check the bedding"
+  },
+  "sections[0].notes[3].lines": {
+   "ko": [
+    "기숙사에 따라 침구류가 제공되지 않을 수 있으므로 입사 전에 준비 여부를 확인하세요.",
+    "석당글로벌하우스 입 · 퇴사 안내에는 이불 · 패드 · 베개 유료 대여가 적혀 있으나, 현재 제공 여부는 행정실에 확인하세요."
+   ],
+   "en": [
+    "Some dormitories do not provide bedding, so find out before you arrive whether you have to bring your own.",
+    "Seokdang Global House's move-in/out page mentions renting a duvet, mattress pad and pillow for a fee — ask the office whether it is still offered."
+   ],
+   "count": 2
+  },
+  "sections[1].title": {
+   "ko": "입사 후 해야 할 일",
+   "en": "After Moving In"
+  },
+  "sections[1].body": {
+   "ko": "입사 당일과 그 직후에 처리해야 하는 일들입니다. 세부 절차는 기숙사와 학기에 따라 달라질 수 있으므로 입사 안내를 함께 확인하세요.",
+   "en": "What to do on the day you move in and shortly after. The details vary by dormitory and semester, so read your move-in guide alongside this."
+  },
+  "sections[1].steps": {
+   "ko": [
+    "방 배정 확인",
+    "오리엔테이션 또는 입사 안내 확인",
+    "입사등록 서류 제출",
+    "기숙사비 납부 여부 확인",
+    "비품 상태 확인",
+    "결핵 검사 결과 제출",
+    "기숙사 생활규칙 확인"
+   ],
+   "en": [
+    "Confirm your room assignment",
+    "Attend the orientation, or read the move-in briefing",
+    "Hand in your registration documents",
+    "Make sure the dormitory fee has been paid",
+    "Check the condition of the room and its fittings",
+    "Hand in your tuberculosis test result",
+    "Read the house rules"
+   ],
+   "count": 7
+  },
+  "sections[1].notice": {
+   "ko": "퇴사할 때도 신고가 필요해요\n석당글로벌하우스는 행정실 또는 사감실에 신고한 뒤 퇴사하도록 안내하며, 입 · 퇴사 안내 기준(3개월분 납부 기준)으로 중도 퇴사 시 입사 후 1개월 이내면 기숙사비의 2/3, 1~2개월이면 1/3을 돌려받고 2개월이 지나면 환불되지 않으며, 사생 수칙 위반으로 강제 퇴사하면 환불되지 않습니다. 퇴사 전에 본인 기숙사의 최신 규정을 확인하세요.",
+   "en": "Moving out also has to be reported\nSeokdang Global House asks residents to report to the office or the warden before leaving. Its move-in/out page says that, for a three-month fee, if you leave early you get back two-thirds within the first month, one-third in the second month, and nothing after two months — and nothing if you are evicted for breaking the house rules. Check your dormitory's current rules before you move out."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "🏠 기숙사 생활규칙",
+   "en": "🏠 House rules to check"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "입 · 퇴사 시간 및 절차 확인",
+    "외부인 출입 규칙 확인",
+    "화재 및 안전수칙 준수",
+    "공용시설 사용규칙 확인",
+    "쓰레기 분리배출",
+    "금연 · 음주 관련 생활관 규정 확인",
+    "한림생활관은 전열기기, 취사기기(냉장고 · 전기밥솥 · 전기포트 등), 화재위험물, 과도 · 도검류 등 일반위험물, 주류를 반입할 수 없습니다."
+   ],
+   "en": [
+    "Check-in and check-out times and procedures",
+    "The rules on visitors",
+    "Fire and safety rules",
+    "How shared facilities may be used",
+    "How rubbish is separated for recycling",
+    "The rules on smoking and alcohol",
+    "Hanlim does not allow electric heaters, cooking appliances (including fridges, rice cookers and electric kettles), fire hazards, knives and other dangerous items, or alcohol."
+   ],
+   "count": 7
+  },
+  "links[0].label": {
+   "ko": "한림생활관",
+   "en": "Hanlim Residence Hall"
+  },
+  "links[0].description": {
+   "ko": "모집공고 · 입사안내 · 생활관 정보",
+   "en": "Recruitment notices, move-in guide, hall information"
+  },
+  "links[1].label": {
+   "ko": "한림생활관 사생모집",
+   "en": "Hanlim recruitment notice"
+  },
+  "links[1].description": {
+   "ko": "학기별 입사대상 · 신청방법 · 일정",
+   "en": "Each semester's eligibility, how to apply, dates"
+  },
+  "links[2].label": {
+   "ko": "석당글로벌하우스",
+   "en": "Seokdang Global House"
+  },
+  "links[2].description": {
+   "ko": "외국인 유학생 기숙사 안내",
+   "en": "The dormitory for international students"
+  },
+  "links[3].label": {
+   "ko": "석당글로벌하우스 입 · 퇴사 안내",
+   "en": "Seokdang Global House — moving in and out"
+  },
+  "links[3].description": {
+   "ko": "입사 절차 · 제출서류 · 침구류 대여",
+   "en": "Move-in steps, documents, bedding rental"
+  },
+  "links[4].label": {
+   "ko": "국제교류과 유학생 지원",
+   "en": "International Affairs Office — student support"
+  },
+  "links[4].description": {
+   "ko": "외국인 유학생 기숙사 · 생활지원 문의",
+   "en": "Dormitories and living support for international students"
+  },
+  "links[5].label": {
+   "ko": "지도에서 기숙사 위치 보기",
+   "en": "View the dormitories on the map"
+  },
+  "links[5].description": {
+   "ko": "승학캠퍼스 한림생활관 승학1관 · 승학2관",
+   "en": "Hanlim Seunghak 1 and Seunghak 2, Seunghak campus"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting Address & Registration Changes"
+  },
+  "links[6].description": {
+   "ko": "기숙사 입·퇴사도 체류지 변경신고 대상",
+   "en": "Moving into or out of a dormitory is a change of address too"
+  }
+ }
+}

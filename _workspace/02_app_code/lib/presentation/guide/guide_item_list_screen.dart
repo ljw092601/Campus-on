@@ -44,7 +44,8 @@ class GuideItemListScreen extends ConsumerWidget {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (context, i) => GuideListItem(
               item: items[i],
-              onTap: () => context.go('/guide/item/${items[i].id}'),
+              // push, not go: back returns to this list instead of the hub.
+              onTap: () => context.push('/guide/item/${items[i].id}'),
             ),
           );
         },

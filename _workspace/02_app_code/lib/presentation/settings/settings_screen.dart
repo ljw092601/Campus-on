@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
+import '../../core/i18n/app_languages.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
 
@@ -27,20 +28,35 @@ class SettingsScreen extends ConsumerWidget {
           _SectionHeader(l.settings_language_title),
           RadioGroup<String>(
             groupValue: locale.languageCode,
-            onChanged: (value) {
-              if (value != null) notifier.setLocale(Locale(value));
+            onChanged: (value) async {
+              if (value == null) return;
+              final messenger = ScaffoldMessenger.of(context);
+              // The switch itself always happens; only remembering it can fail
+              // (private window, blocked site data). Tell the reader, in the
+              // language they just picked, that it may not survive a restart —
+              // being surprised by it later is worse (감사 05/035 NIT-2).
+              if (!await notifier.setLocale(Locale(value))) {
+                if (!context.mounted) return;
+                messenger
+                  ..clearSnackBars()
+                  ..showSnackBar(SnackBar(
+                    // Two sentences in a second language need more than the
+                    // default four seconds (감사 05/037 SF-3).
+                    duration: const Duration(seconds: 10),
+                    content: Text(
+                        AppLocalizations.of(context).settings_language_save_failed),
+                  ));
+              }
             },
             child: Column(
               children: [
-                RadioListTile<String>(
-                    value: 'ko',
-                    // Locale hint so a non-Korean TTS pronounces "한국어" correctly.
-                    title: Text(l.settings_language_ko,
-                        locale: const Locale('ko'))),
-                RadioListTile<String>(
-                    value: 'en',
-                    title: Text(l.settings_language_en,
-                        locale: const Locale('en'))),
+                // Each language is named in itself, and carries a locale hint
+                // so a screen reader pronounces it in that language.
+                for (final code in appLanguageCodes)
+                  RadioListTile<String>(
+                    value: code,
+                    title: Text(appLanguageNames[code]!, locale: Locale(code)),
+                  ),
               ],
             ),
           ),

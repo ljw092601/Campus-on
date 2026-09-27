@@ -144,7 +144,8 @@ class _GuideFavorites extends ConsumerWidget {
               onDismissed: (_) => _remove(context, ref, FavoriteType.guide, g.id),
               child: GuideListItem(
                 item: g,
-                onTap: () => context.go('/guide/item/${g.id}'),
+                // push within the Settings branch: back returns here.
+                onTap: () => context.push('/settings/favorites/guide/${g.id}'),
               ),
             );
           },

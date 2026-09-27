@@ -1,0 +1,134 @@
+{
+ "id": "bank-account",
+ "category": "living",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "은행 계좌 개설",
+   "en": "Open a Bank Account"
+  },
+  "summary": {
+   "ko": "신분증과 금융거래 목적 서류 준비",
+   "en": "Bring ID and proof of what the account is for"
+  },
+  "overview": {
+   "ko": "은행 계좌는 은행 지점 방문을 통해 개설하는 것이 가장 일반적입니다. 계좌를 만들 때는 여권이나 외국인등록증 같은 신분증과 금융거래 목적을 보여 주는 서류를 제시합니다. 일부 은행은 모바일 앱을 통한 비대면 계좌 개설도 지원할 수 있으나, 외국인등록증, 본인 명의 휴대폰, 모바일 외국인등록증 등 조건이 필요할 수 있습니다. 은행마다 가능 여부와 필요 서류가 다르므로 방문 또는 신청 전 확인하는 것이 좋습니다.",
+   "en": "Opening an account in person at a bank branch is the most common route. To open one you show an ID such as your passport or Residence Card, together with a document showing what the account is for. Some banks also offer app-based (non-face-to-face) account opening, but this may require a Residence Card (ARC), a phone number registered in your own name, or a mobile Residence Card. Availability and required documents differ by bank, so check before you visit or apply."
+  },
+  "checklist": {
+   "ko": [
+    "신분증: 여권 또는 외국인등록증(ARC)",
+    "금융거래 목적을 보여 주는 서류 — 은행 안내 예시: 유학 목적이라면 입학허가서 · 비자(유학), 아르바이트 급여라면 근로계약서 · 고용주 사업자등록증 사본, 공과금 · 관리비라면 납입 영수증",
+    "한국 주소(신청서에 적습니다)",
+    "연락 가능한 휴대폰 번호"
+   ],
+   "en": [
+    "ID: passport or Residence Card (ARC)",
+    "A document showing what the account is for — examples banks give: for study, your admission letter and (student) visa; for part-time wages, your employment contract and a copy of your employer's business registration; for utility or maintenance bills, a payment receipt",
+    "Your address in Korea (you write it on the application form)",
+    "A mobile number you can be reached on"
+   ],
+   "count": 4
+  },
+  "checklist_note": {
+   "ko": "※ 필요한 서류는 은행 · 지점 · 상품과 외국인등록 여부에 따라 다르며, 위 목록이 모두 필수는 아닙니다. 은행에 따라 본국 신분증 · 신용카드나 공과금 영수증 같은 서류를 더 요청하기도 하므로, 학생이 어떤 서류를 내면 되는지 방문할 지점에 미리 확인하세요.",
+   "en": "※ What you need depends on the bank, the branch, the product, and whether you have registered as a foreign resident — not every item above is required everywhere. Some banks also ask for extra documents such as an ID or credit card from your home country or a Korean utility bill, so ask the branch you will visit what a student can bring."
+  },
+  "steps": {
+   "ko": [
+    "가까운 은행 방문",
+    "번호표 발급 후 대기",
+    "은행 직원에게 계좌 개설 요청",
+    "신분증 및 필요 서류 제출",
+    "신청서 작성(외국인등록번호 · 생년월일 · 주소 · 연락처 등)",
+    "통장 · 카드 비밀번호를 정하고 통장, 체크카드, 인터넷뱅킹 또는 모바일뱅킹 신청",
+    "발급된 통장과 카드 확인"
+   ],
+   "en": [
+    "Visit a nearby bank branch",
+    "Take a queue ticket and wait",
+    "Tell the teller you want to open an account",
+    "Submit your ID and the required documents",
+    "Fill in the application form (your foreign resident registration number, date of birth, address, contact number and so on)",
+    "Set PINs for your bankbook and card, and request a bankbook, check card, and internet or mobile banking",
+    "Check the bankbook and card you are given"
+   ],
+   "count": 7
+  },
+  "tips": {
+   "ko": [
+    "일반적인 은행 영업시간은 평일 오전 9시부터 오후 4시까지입니다. 평일 저녁이나 주말에 여는 외국인 특화 점포도 있으니 아래 은행연합회 탄력점포 검색에서 확인하세요.",
+    "외국인등록증이 나오기 전에도 여권을 신분증으로 쓸 수 있습니다. 다만 은행에 따라 본국 신분증 · 신용카드나 공과금 영수증 같은 서류를 더 요청할 수 있고, 금융거래 목적을 증빙하기 어려우면 한도제한계좌로 개설됩니다. 여권으로 개설한 뒤 외국인등록증을 받았다면 은행에 갈 때 여권과 외국인등록증을 함께 가져가세요(은행 안내).",
+    "모바일 외국인등록증은 외국인등록을 마친 14세 이상이 본인 명의 스마트폰으로 발급받습니다. 이것으로 계좌를 개설할 수 있는 은행은 2025년 3월 발표 기준 대면 6곳(신한 · 하나 · iM뱅크 · 부산 · 전북 · 제주), 비대면 1곳(전북)입니다.",
+    "금융거래 목적을 증명하기 어려운 경우 한도제한계좌로 개설될 수 있습니다.",
+    "한도제한계좌는 2024년 5월 2일부터 하루에 인터넷 · 모바일뱅킹 100만 원, ATM 100만 원, 창구 300만 원까지 거래할 수 있습니다(인터넷전문은행은 다름). 나중에 금융거래 목적을 보여 주는 서류를 내면 은행 확인을 거쳐 한도를 풀 수 있습니다.",
+    "인터넷뱅킹과 모바일뱅킹을 함께 신청하면 송금과 잔액 확인이 편리합니다.",
+    "해외송금은 은행마다 수수료와 환율이 다를 수 있으므로 비교 후 이용하는 것이 좋습니다.",
+    "해외로 송금하려면 거래외국환은행을 지정해야 합니다. 연간 미화 5만 달러 범위의 송금은 별도 입증 서류 없이 할 수 있고, 한국에서 번 소득을 그보다 많이 보낼 때는 취득 경위를 입증하는 서류가 필요합니다.",
+    "통장이나 체크카드를 다른 사람에게 빌려주거나 팔면 안 됩니다. 남에게 넘기거나 파는 것은 그 자체로 금지되고, 대가를 받고 빌려주거나 범죄에 쓰일 것을 알면서 빌려주면 처벌받습니다(전자금융거래법 제6조제3항 · 제49조제4항). 사기에 쓰이면 계좌 개설 등 금융거래가 제한될 수 있습니다. 피해가 생기면 경찰(112)이나 금융감독원(1332)에 알리세요."
+   ],
+   "en": [
+    "Banks are usually open 09:00–16:00 on weekdays. Some branches for foreign residents also open on weekday evenings or at weekends — look them up in the Korea Federation of Banks branch search below.",
+    "Before your Residence Card is issued you can use your passport as ID. A bank may ask for extra documents such as an ID or credit card from your home country or a Korean utility bill, and if the purpose of banking is hard to prove you will get a limited-transaction account. If you opened the account with your passport and later receive your Residence Card, bring both documents when you visit the bank (bank guidance).",
+    "A mobile Residence Card is issued to registered foreign residents aged 14 or over, on a smartphone in their own name. As announced in March 2025, six banks accept it at the counter (Shinhan, Hana, iM Bank, Busan, Jeonbuk, Jeju) and one online (Jeonbuk).",
+    "If the purpose of banking is hard to prove, you may receive a limited-transaction account.",
+    "Since 2 May 2024 a limited-transaction account allows up to ₩1,000,000 a day through internet or mobile banking, ₩1,000,000 at ATMs and ₩3,000,000 at the counter (online-only banks differ). You can have the limit lifted later by showing a document that proves what the account is for, once the bank has checked it.",
+    "Applying for internet and mobile banking together makes transfers and balance checks easier.",
+    "Overseas remittance fees and exchange rates differ by bank — compare before you send money.",
+    "To send money abroad you must designate one bank as your foreign-exchange bank. Transfers of up to US$50,000 a year need no supporting documents; to send more of the income you earned in Korea you must show how you earned it.",
+    "Never lend or sell your bankbook or card. Handing it over or selling it is prohibited in itself, and lending it for payment — or knowing it will be used for crime — is a criminal offence (Electronic Financial Transactions Act art. 6(3), 49(4)). If it is used for fraud your banking — including opening accounts — can be restricted. Report fraud to the police (112) or the Financial Supervisory Service (1332)."
+   ],
+   "count": 9
+  },
+  "search_aliases": {
+   "ko": [
+    "은행",
+    "통장",
+    "계좌",
+    "체크카드"
+   ],
+   "en": [
+    "bank",
+    "account",
+    "debit card"
+   ],
+   "count": 4
+  },
+  "links[0].label": {
+   "ko": "외국인유학생 은행 이용 안내",
+   "en": "Banking for international students"
+  },
+  "links[0].description": {
+   "ko": "찾기쉬운 생활법령정보 — 계좌 개설 · 해외송금 · 외국어 상담 은행",
+   "en": "Easy-to-find Law (Korean) — accounts, transfers and bank lines with foreign-language help"
+  },
+  "links[1].label": {
+   "ko": "주말 · 저녁 영업 은행 점포",
+   "en": "Bank branches open evenings and weekends"
+  },
+  "links[1].description": {
+   "ko": "은행연합회 탄력점포 검색 — 외국인 특화 점포",
+   "en": "Korea Federation of Banks — branches for foreign residents"
+  },
+  "links[2].label": {
+   "ko": "해외송금 수수료 비교",
+   "en": "Compare overseas transfer fees"
+  },
+  "links[2].description": {
+   "ko": "은행연합회 은행별 외화송금수수료 공시",
+   "en": "Korea Federation of Banks — fees by bank"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 외국인등록증(ARC) 발급",
+   "en": "Guide — Residence Card (ARC)"
+  },
+  "links[3].description": {
+   "ko": "앱 안에서 바로 보기",
+   "en": "Open the in-app guide"
+  },
+  "phrases[0].text": {
+   "ko": "은행 계좌를 만들고 싶습니다.",
+   "en": "I would like to open a bank account."
+  }
+ }
+}

@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/i18n/app_languages.dart';
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/entities/favorite_ref.dart';
@@ -197,7 +199,7 @@ class _DetailBody extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (final p in item.phrases)
-                    _PhraseCard(phrase: p, color: accent),
+                    _PhraseCard(phrase: p, color: accent, locale: locale),
                 ],
               ),
             ),
@@ -257,7 +259,11 @@ class _MetaRow extends StatelessWidget {
         children: [
           Icon(Symbols.schedule, size: 16, color: scheme.onSurfaceVariant),
           const SizedBox(width: 4),
-          Text(duration, style: Theme.of(context).textTheme.bodySmall),
+          // Flexible so a long label wraps instead of overflowing at large
+          // text sizes on narrow phones.
+          Flexible(
+              child: Text(duration,
+                  style: Theme.of(context).textTheme.bodySmall)),
         ],
       ));
     }
@@ -269,8 +275,9 @@ class _MetaRow extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('${l.guide_meta_difficulty} ',
-                  style: Theme.of(context).textTheme.bodySmall),
+              Flexible(
+                  child: Text('${l.guide_meta_difficulty} ',
+                      style: Theme.of(context).textTheme.bodySmall)),
               for (var i = 1; i <= 3; i++)
                 Icon(Symbols.circle,
                     fill: i <= item.difficulty! ? 1 : 0,
@@ -518,16 +525,17 @@ class _TipRow extends StatelessWidget {
   }
 }
 
-/// Korean sentence + its English meaning, tinted with the category accent.
-/// Both lines always render — the Korean line is the one to show at a counter.
+/// Korean sentence + what it means in the reader's language, tinted with the
+/// category accent. Both lines always render — the Korean line is the one to
+/// show at a counter.
 class _PhraseCard extends StatelessWidget {
-  const _PhraseCard({required this.phrase, required this.color});
+  const _PhraseCard({required this.phrase, required this.color, required this.locale});
   final GuidePhrase phrase;
   final Color color;
+  final Locale locale;
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
     final d = context.dimens;
     final text = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
@@ -557,12 +565,15 @@ class _PhraseCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            line(l.settings_language_ko, phrase.ko,
+            // The Korean sentence is what the user shows at the counter, so it
+            // is always here; the second line is what it means, in whichever
+            // language the reader picked (English when untranslated).
+            line(appLanguageNames['ko']!, phrase.ko,
                 text.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
             SizedBox(height: d.spaceSm),
             line(
-              l.settings_language_en,
-              phrase.en,
+              appLanguageNames[locale.languageCode] ?? appLanguageNames['en']!,
+              phrase.meaning(locale),
               text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
             ),
           ],
@@ -642,6 +653,23 @@ class _LinkRow extends StatelessWidget {
   /// an external page and opens in the browser as before.
   bool get _isInternal => link.url.startsWith('/');
 
+  static const _guideItemPrefix = '/guide/item/';
+
+  /// Another guide opens on top of this one so back returns here. It stays on
+  /// the stack the current detail came from: search details live on the root
+  /// navigator (`/search/item/:id`) and favorites details in the Settings
+  /// branch (`/settings/favorites/guide/:id`); pushing the Home-branch route
+  /// from either would leave that stack.
+  static String _stackedGuideRoute(BuildContext context, String url) {
+    final id = url.substring(_guideItemPrefix.length);
+    final from = GoRouterState.of(context).matchedLocation;
+    if (from.startsWith('/search/')) return '/search/item/$id';
+    if (from.startsWith('/settings/favorites/')) {
+      return '/settings/favorites/guide/$id';
+    }
+    return url;
+  }
+
   Future<void> _openExternal() async {
     final uri = Uri.tryParse(link.url);
     if (uri == null) return;
@@ -676,7 +704,12 @@ class _LinkRow extends StatelessWidget {
               child: Icon(Symbols.open_in_new,
                   size: 18, color: scheme.onSurfaceVariant),
             ),
-      onTap: _isInternal ? () => context.go(link.url) : _openExternal,
+      onTap: !_isInternal
+          ? _openExternal
+          : link.url.startsWith(_guideItemPrefix)
+              ? () => context.push(_stackedGuideRoute(context, link.url))
+              // Other in-app routes (the map tab) switch branches as before.
+              : () => context.go(link.url),
     );
   }
 }
@@ -725,8 +758,16 @@ class _RelatedLocationCard extends ConsumerWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onSurfaceVariant),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        // At 320dp and 200 % text this line held only the
+                        // building name and dropped the hint that the card
+                        // opens the map (감사 05/042 NIT-5). The card grows
+                        // with its content, so above the boundary the line
+                        // simply wraps; the ellipsis has to go with it, or the
+                        // first line would still be cut.
+                        maxLines: prefersFlexibleLayout(context) ? null : 1,
+                        overflow: prefersFlexibleLayout(context)
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
                       ),
                     ],
                   ),

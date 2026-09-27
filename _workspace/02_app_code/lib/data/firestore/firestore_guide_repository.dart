@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/repositories/guide_repository.dart';
@@ -26,7 +27,10 @@ class FirestoreGuideRepository implements GuideRepository {
     try {
       final snap = await _col.get();
       return mapDocsSkippingMalformed(
-          snap.docs, FirestorePaths.guideItems, guideFromDoc);
+          orderByCatalogue(
+              snap.docs, (d) => (d.data() ?? const {})[guideSortOrderField]),
+          FirestorePaths.guideItems,
+          guideFromDoc);
     } on FirebaseException catch (e) {
       final cached = await _tryCacheAll();
       if (cached != null) return cached;
@@ -39,7 +43,10 @@ class FirestoreGuideRepository implements GuideRepository {
       final snap = await _col.get(const GetOptions(source: Source.cache));
       if (snap.docs.isEmpty) return null;
       return mapDocsSkippingMalformed(
-          snap.docs, FirestorePaths.guideItems, guideFromDoc);
+          orderByCatalogue(
+              snap.docs, (d) => (d.data() ?? const {})[guideSortOrderField]),
+          FirestorePaths.guideItems,
+          guideFromDoc);
     } on FirebaseException {
       return null;
     }
@@ -56,16 +63,30 @@ class FirestoreGuideRepository implements GuideRepository {
     return orderGuideItems(all.where((g) => g.categoryId == category));
   }
 
+  /// Same policy as the list and as `FirestoreFloorGuideRepository`: a document
+  /// that cannot be parsed is logged and treated as missing, so a favourite or a
+  /// related link pointing at a hand-edited document opens an empty state
+  /// instead of throwing out of the screen (B 03/060 SF-02).
+  AdminGuideItem? _tryMap(DocumentSnapshot<Map<String, dynamic>> doc) {
+    try {
+      return guideFromDoc(doc);
+    } catch (e) {
+      debugPrint('${FirestorePaths.guideItems}/${doc.id}: '
+          'skipped malformed doc ($e)');
+      return null;
+    }
+  }
+
   @override
   Future<AdminGuideItem?> getById(String id) async {
     try {
       final doc = await _col.doc(id).get();
-      return doc.exists ? guideFromDoc(doc) : null;
+      return doc.exists ? _tryMap(doc) : null;
     } on FirebaseException catch (e) {
       try {
         final cached =
             await _col.doc(id).get(const GetOptions(source: Source.cache));
-        if (cached.exists) return guideFromDoc(cached);
+        if (cached.exists) return _tryMap(cached);
       } on FirebaseException {
         // fall through to throw
       }
@@ -75,13 +96,32 @@ class FirestoreGuideRepository implements GuideRepository {
 
   @override
   Future<List<AdminGuideItem>> search(String query) async {
-    final q = query.trim().toLowerCase();
-    if (q.isEmpty) return const [];
+    if (query.trim().isEmpty) return const [];
     final all = await _loadAll();
-    return all
-        .where((g) =>
-            g.titleKo.toLowerCase().contains(q) ||
-            g.titleEn.toLowerCase().contains(q))
-        .toList(growable: false);
+    return List.unmodifiable(searchGuideItems(all, query));
   }
+}
+
+/// Seed field holding a guide's position in the curated catalogue
+/// (`MockData.guideItems`), written by the seed exporter.
+const guideSortOrderField = 'sort_order';
+
+/// Firestore returns documents ordered by id, while the mock data — and so the
+/// category lists and search ties the app shows — follow the curated catalogue
+/// order. Sorts [docs] by their `sort_order` value; documents without one
+/// (uploaded before the field existed) keep their relative order after the
+/// ordered ones. Stable, so equal values keep the incoming order.
+List<T> orderByCatalogue<T>(Iterable<T> docs, Object? Function(T) sortOrderOf) {
+  final indexed = [
+    for (final (i, d) in docs.indexed)
+      (i, d, switch (sortOrderOf(d)) { final num n => n, _ => null }),
+  ];
+  indexed.sort((a, b) {
+    final (ai, _, ao) = a;
+    final (bi, _, bo) = b;
+    if (ao != null && bo != null && ao != bo) return ao.compareTo(bo);
+    if ((ao == null) != (bo == null)) return ao == null ? 1 : -1;
+    return ai.compareTo(bi);
+  });
+  return [for (final (_, d, _) in indexed) d];
 }

@@ -10,7 +10,17 @@
       "breakfast",
       "lunch",
       "dinner"
-    ]
+    ],
+    "i18n": {
+      "zh": {
+        "name": "Seunghak校区学生食堂",
+        "hours": "早餐 08:00-09:30 · 午餐 11:30-13:30 · 晚餐 17:00-18:30"
+      },
+      "vi": {
+        "name": "Nhà ăn sinh viên cơ sở Seunghak",
+        "hours": "Bữa sáng 08:00-09:30 · Bữa trưa 11:30-13:30 · Bữa tối 17:00-18:30"
+      }
+    }
   },
   "gudeok-student": {
     "name_ko": "구덕캠퍼스 학생식당",
@@ -21,7 +31,17 @@
     "facilityId": "g12",
     "mealTypes": [
       "lunch"
-    ]
+    ],
+    "i18n": {
+      "zh": {
+        "name": "Gudeok校区学生食堂",
+        "hours": "午餐 11:30-13:30"
+      },
+      "vi": {
+        "name": "Nhà ăn sinh viên cơ sở Gudeok",
+        "hours": "Bữa trưa 11:30-13:30"
+      }
+    }
   },
   "bumin-student": {
     "name_ko": "부민캠퍼스 학생식당",
@@ -33,6 +53,16 @@
     "mealTypes": [
       "lunch",
       "dinner"
-    ]
+    ],
+    "i18n": {
+      "zh": {
+        "name": "Bumin校区学生食堂",
+        "hours": "午餐 11:30-13:30 · 晚餐 17:00-18:30"
+      },
+      "vi": {
+        "name": "Nhà ăn sinh viên cơ sở Bumin",
+        "hours": "Bữa trưa 11:30-13:30 · Bữa tối 17:00-18:30"
+      }
+    }
   }
 }
