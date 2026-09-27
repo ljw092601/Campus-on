@@ -33,14 +33,30 @@ class MapScreen extends ConsumerStatefulWidget {
     this.focusIds = const [],
     this.nearbyQueries = const [],
     this.focusFloorCode,
+    this.focusRoomCode,
+    this.focusPlanCode,
+    this.focusToken,
   });
 
   final List<String> focusIds;
   final List<String> nearbyQueries;
 
-  /// 2-digit floor code from `/map?floor=` (classroom search deep link):
-  /// opens the focused building's peek sheet expanded at that floor.
+  /// Floor code from `/map?floor=` (classroom search deep link): "03" for
+  /// 3F, "B1" for basement 1. Opens the focused building's peek sheet
+  /// expanded at that floor.
   final String? focusFloorCode;
+
+  /// Room code from `/map?room=` (e.g. "0306-1"): the peek sheet shows that
+  /// room's floor plan with a red dot.
+  final String? focusRoomCode;
+
+  /// Floor-plan building code from `/map?plan=` ("B04A") when the room's
+  /// drawings are not filed under the building's own code.
+  final String? focusPlanCode;
+
+  /// `/map?t=` — unique per search, so repeating the same search into the
+  /// already-open map tab still re-selects and re-centres.
+  final String? focusToken;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -70,6 +86,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
   // FAB starts a position stream: the blue dot follows the user in real time
   // and the camera chases every fix (follow mode). A manual map pan drops
   // follow mode (dot keeps updating); tapping the FAB again re-enables it.
+  final _zoomHandle = CampusMapZoomHandle();
+
   UserLocation? _userLocation;
   bool _locating = false; // access check / waiting for the first fix
   bool _following = false;
@@ -87,6 +105,29 @@ class _MapScreenState extends ConsumerState<MapScreen>
     if (widget.focusIds.isNotEmpty) {
       // Representative marker = first id (deep-link contract, UX doc §3).
       _selectedId = widget.focusIds.first;
+    }
+  }
+
+  /// Identity of the current deep-link request. The map tab stays alive in
+  /// the shell, so a new search arrives as new widget params on this same
+  /// State rather than a fresh initState.
+  String _focusKeyOf(MapScreen w) => [
+        w.focusIds.join(','),
+        w.focusFloorCode,
+        w.focusRoomCode,
+        w.focusPlanCode,
+        w.focusToken,
+      ].join('|');
+
+  @override
+  void didUpdateWidget(covariant MapScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusIds.isNotEmpty &&
+        _focusKeyOf(widget) != _focusKeyOf(oldWidget)) {
+      // New search / deep link: select its building (opens the peek sheet)
+      // and let the campus follow it again.
+      _selectedId = widget.focusIds.first;
+      _campusSynced = false;
     }
   }
 
@@ -216,10 +257,28 @@ class _MapScreenState extends ConsumerState<MapScreen>
         !selected.hasFloorInfo) {
       return null;
     }
+    if (RegExp(r'^B\d$').hasMatch(code)) return '${code}F';
     final n = int.tryParse(code);
     if (n == null || n <= 0) return null;
     return '${n}F';
   }
+
+  /// `?room=` code, only while the deep-linked building is selected.
+  String? _roomCodeFor(Facility selected) {
+    final code = widget.focusRoomCode;
+    if (code == null ||
+        widget.focusIds.isEmpty ||
+        selected.id != widget.focusIds.first) {
+      return null;
+    }
+    return code;
+  }
+
+  bool _opensExpanded(Facility selected) =>
+      _floorLabelFor(selected) != null || _roomCodeFor(selected) != null;
+
+  bool _expandable(Facility selected) =>
+      selected.hasFloorInfo || _roomCodeFor(selected) != null;
 
   Facility? _find(List<Facility> list, String? id) {
     if (id == null) return null;
@@ -365,7 +424,19 @@ class _MapScreenState extends ConsumerState<MapScreen>
               facilities: facilities,
               campus: campus,
               focusIds: widget.focusIds,
+              focusKey: _focusKeyOf(widget),
+              // Classroom search: red dot on the room's building.
+              targetId:
+                  widget.focusRoomCode != null && widget.focusIds.isNotEmpty
+                      ? widget.focusIds.first
+                      : null,
+              // Deep-linked building opens with the sheet expanded; keep its
+              // pin above it.
+              focusObscuredFraction: selected == null
+                  ? 0
+                  : (_opensExpanded(selected) ? _peekMax : _peekMin),
               selectedId: _selectedId,
+              zoomHandle: _zoomHandle,
               userLocation: _userLocation,
               following: _following,
               headingStream: _tracking ? _headingStream : null,
@@ -390,48 +461,74 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
           // "My location" FAB — starts live tracking (blue dot + heading cone
           // follow the user); while tracking, re-enables follow after a pan.
+          // Zoom in/out buttons sit right below it.
           Positioned(
             right: context.dimens.spaceMd,
             bottom: context.dimens.spaceMd +
                 (selected != null
                     ? peekHeight
                     : (selectedPlace != null ? 96 : 0)),
-            child: FloatingActionButton.small(
-              heroTag: 'myLocation',
-              tooltip: l.map_myLocation_tooltip,
-              onPressed: _locating ? null : () => _onMyLocationPressed(l),
-              child: _locating
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  // Crosshair without dot = "not locked on me" (post-pan);
-                  // matches the affordance native map apps use.
-                  : Icon(_tracking && !_following
-                      ? Symbols.location_searching
-                      : Symbols.my_location),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton.small(
+                  heroTag: 'myLocation',
+                  tooltip: l.map_myLocation_tooltip,
+                  onPressed: _locating ? null : () => _onMyLocationPressed(l),
+                  child: _locating
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      // Crosshair without dot = "not locked on me" (post-pan);
+                      // matches the affordance native map apps use.
+                      : Icon(_tracking && !_following
+                          ? Symbols.location_searching
+                          : Symbols.my_location),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
+                  heroTag: 'zoomIn',
+                  tooltip: l.map_zoomIn_tooltip,
+                  onPressed: _zoomHandle.zoomIn,
+                  child: const Icon(Symbols.add),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
+                  heroTag: 'zoomOut',
+                  tooltip: l.map_zoomOut_tooltip,
+                  onPressed: _zoomHandle.zoomOut,
+                  child: const Icon(Symbols.remove),
+                ),
+              ],
             ),
           ),
           if (selected != null)
             Positioned.fill(
-              // Key resets the sheet extent when another pin is tapped.
+              // Key resets the sheet extent when another pin is tapped — or
+              // when a new search targets this same building.
               child: DraggableScrollableSheet(
-                key: ValueKey(selected.id),
-                // A `?floor=` deep link lands with the guide already open.
-                initialChildSize: _floorLabelFor(selected) != null
-                    ? _peekMax
-                    : _peekMin,
+                key: ValueKey(widget.focusIds.isNotEmpty &&
+                        selected.id == widget.focusIds.first
+                    ? '${selected.id}|${_focusKeyOf(widget)}'
+                    : selected.id),
+                // A `?floor=` / `?room=` deep link lands with the guide open.
+                initialChildSize:
+                    _opensExpanded(selected) ? _peekMax : _peekMin,
                 minChildSize: _peekMin,
-                // No floor info → nothing below the header; lock the sheet.
-                maxChildSize: selected.hasFloorInfo ? _peekMax : _peekMin,
+                // Nothing below the header (no floor info, no searched
+                // room) → lock the sheet.
+                maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
                 // min/max are the implicit snap targets — half-open states
                 // settle to collapsed or expanded on release.
-                snap: selected.hasFloorInfo,
+                snap: _expandable(selected),
                 builder: (context, scrollController) => PeekSheet(
                   facility: selected,
                   scrollController: scrollController,
                   expandedFloor: _floorLabelFor(selected),
+                  roomCode: _roomCodeFor(selected),
+                  roomPlanCode: widget.focusPlanCode,
                   onViewDetail: () =>
                       context.go('/map/facility/${selected.id}'),
                 ),

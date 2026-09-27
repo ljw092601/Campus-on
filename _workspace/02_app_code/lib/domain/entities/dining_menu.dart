@@ -37,6 +37,24 @@ class Meal {
       {'type': type.name, 'items': items, 'price': price};
 }
 
+/// Whether a cafeteria's menu for a day is published, and how (agreed design:
+/// _workspace/06_admin_data_pipeline.md §7 D1). Distinguishes an admin who
+/// hasn't entered the menu yet ([unpublished]) from an explicit closure
+/// ([closed]) — merging the two would announce "closed" for missing input.
+enum DiningAvailability {
+  open,
+  closed,
+  unpublished;
+
+  static DiningAvailability? fromId(String? id) {
+    if (id == null) return null;
+    for (final v in DiningAvailability.values) {
+      if (v.name == id) return v;
+    }
+    return null;
+  }
+}
+
 /// One cafeteria's menu for one day.
 @immutable
 class CafeteriaMenu {
@@ -49,7 +67,8 @@ class CafeteriaMenu {
     this.hoursKo,
     this.hoursEn,
     this.facilityId,
-  });
+    DiningAvailability? status,
+  }) : _status = status;
 
   final String id;
   final String nameKo;
@@ -65,7 +84,16 @@ class CafeteriaMenu {
   /// Optional link to the facility (map pin) hosting this cafeteria.
   final String? facilityId;
 
-  bool get isClosed => meals.isEmpty;
+  /// Explicit availability when the data source provides one; null falls back
+  /// to the legacy rule (empty meals == closed) so mock data stays valid.
+  final DiningAvailability? _status;
+
+  DiningAvailability get status =>
+      _status ??
+      (meals.isEmpty ? DiningAvailability.closed : DiningAvailability.open);
+
+  bool get isClosed => status == DiningAvailability.closed;
+  bool get isUnpublished => status == DiningAvailability.unpublished;
 
   String name(Locale l) => _pick(l, nameKo, nameEn) ?? id;
   String? hours(Locale l) => _pick(l, hoursKo, hoursEn);
@@ -91,6 +119,7 @@ class CafeteriaMenu {
         hoursKo: j['hours_ko'] as String?,
         hoursEn: j['hours_en'] as String?,
         facilityId: j['facilityId'] as String?,
+        status: DiningAvailability.fromId(j['status'] as String?),
       );
 
   Map<String, dynamic> toJson() => {
@@ -102,5 +131,6 @@ class CafeteriaMenu {
         'hours_ko': hoursKo,
         'hours_en': hoursEn,
         'facilityId': facilityId,
+        'status': status.name,
       };
 }

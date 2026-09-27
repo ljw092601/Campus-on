@@ -4,12 +4,16 @@
 > 근거: `_workspace/01_ux_design.md` (S1–S10, 디자인 토큰, 데이터 모델, 딥링크) · `_workspace/00_input.md`
 > 코드: `_workspace/02_app_code/`
 
+> **갱신 노트 (2026-09-10)** — 이 문서는 Week 2 스냅샷이며 이후 변경 중 다음만 반영:
+> ① **하단 탭 4→3개**(홈/지도/설정): 2026-08-31 홈 리디자인에서 가이드 탭 제거, `/guide` 라우트는 `/home/guide`로 이관(기존 딥링크 redirect 보존).
+> ② **학사일정·학식 리포지토리 추가**: `AcademicCalendarRepository`/`DiningRepository`(mock + `FirestoreAcademicCalendarRepository`/`FirestoreDiningRepository`)가 `USE_FIRESTORE_CALENDAR`/`USE_FIRESTORE_DINING` 플래그로 mock↔Firestore 스왑 — 데이터는 관리자 시트 파이프라인이 공급(plan.md §13). 그 외 세부는 plan.md 최신 이력을 따름.
+
 ## Technology Stack
 
 - **Framework**: Flutter (iOS + Android), SDK `>=3.27.0`, Dart `>=3.6.0`
 - **Language**: Dart
 - **State Management**: **Riverpod** (`flutter_riverpod ^2.5.1`) — plain providers, no code-gen(build_runner) 의존
-- **Navigation**: **go_router ^14.2.0** (`StatefulShellRoute.indexedStack`, 하단 4탭 + 탭별 스택)
+- **Navigation**: **go_router ^14.2.0** (`StatefulShellRoute.indexedStack`, 하단 3탭(홈/지도/설정) + 탭별 스택 — 초기 4탭에서 2026-08-31 가이드 탭을 `/home/guide`로 이관)
 - **Local DB**: `shared_preferences ^2.2.3` (즐겨찾기·언어·최근검색 — 전면 로컬)
 - **Map**: **카카오맵** (`kakao_map_plugin ^0.3.1`) — `CampusMapView` 위젯 한 곳에 격리
 - **Geolocation**: `geolocator ^13.0.2` — S2 "내 위치"(파란 점 + 정확도 원). `LocationService`(data/services) 한 곳에 격리
@@ -32,7 +36,7 @@ lib/
 ├── app.dart                      — MaterialApp.router(테마·locale·라우터 결선)
 ├── core/
 │   ├── config/app_config.dart    — Kakao 키 주입(--dart-define), 캠퍼스 중심 좌표
-│   ├── router/app_router.dart     — go_router(4 branch + /search + 딥링크)
+│   ├── router/app_router.dart     — go_router(3 branch: 홈/지도/설정 + /search + 딥링크)
 │   └── theme/
 │       ├── app_dimens.dart        — ThemeExtension: spacing/radius/elevation/touch
 │       ├── category_colors.dart   — ThemeExtension: 시설6 + 가이드6 액센트

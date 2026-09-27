@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Pre-Android-12 launch splash: white + full 동아메이트 wordmark logo.
-     Android 12+ ignores this and shows the system splash (round emblem);
-     the wordmark there lives in the in-app opening overlay (app.dart). -->
+<!-- Pre-Android-12 launch splash: solid brand blue, matching the first frame
+     of the intro animation that the in-app overlay (app.dart) plays next. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@android:color/white" />
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/splash_logo" />
-    </item>
+    <item android:drawable="@color/splash_background" />
 </layer-list>

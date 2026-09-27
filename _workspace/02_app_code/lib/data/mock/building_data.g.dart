@@ -134,14 +134,14 @@ abstract final class BuildingData {
       hasFloorInfo: true,
     ),
     Facility(
-      id: 'p4',
+      id: 's12',
       nameKo: '공과대학4호관(P4)',
       nameEn: 'Engineering Building 4 (P4)',
       category: FacilityCategory.building,
       lat: 35.1160873732028,
       lng: 128.9683284400812,
       campus: Campus.seunghak,
-      buildingCode: 'P4',
+      buildingCode: 'S12',
     ),
     Facility(
       id: 's13',

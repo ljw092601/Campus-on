@@ -13,16 +13,35 @@ import '../../firebase_options.dart';
 const bool useFirestore =
     bool.fromEnvironment('USE_FIRESTORE', defaultValue: false);
 
-/// Initializes Firebase + Firestore offline persistence — but ONLY when
-/// [useFirestore] is on. When off this is a no-op, so `main()` never touches
-/// Firebase and the app boots on mock data.
+/// Per-feature flags for the admin-entered content (academic calendar /
+/// dining), independent of [useFirestore] so each can go live only once its
+/// collections are actually populated (design doc
+/// _workspace/06_admin_data_pipeline.md §7 D5):
 ///
-/// Requires real config from `flutterfire configure` (writes `firebase_options.dart`
-/// + `google-services.json` / `GoogleService-Info.plist`). The committed
-/// `firebase_options.dart` is a placeholder; running with `USE_FIRESTORE=true`
-/// against placeholders will fail fast at init (by design — no silent bad state).
+///   flutter run --dart-define=USE_FIRESTORE_CALENDAR=true
+///   flutter run --dart-define=USE_FIRESTORE_DINING=true
+const bool useFirestoreCalendar =
+    bool.fromEnvironment('USE_FIRESTORE_CALENDAR', defaultValue: false);
+const bool useFirestoreDining =
+    bool.fromEnvironment('USE_FIRESTORE_DINING', defaultValue: false);
+
+/// True when any Firestore-backed feature is on — gates Firebase init.
+const bool anyFirestoreEnabled =
+    useFirestore || useFirestoreCalendar || useFirestoreDining;
+
+/// Initializes Firebase + Firestore offline persistence — but ONLY when
+/// at least one Firestore flag is on. When all are off this is a no-op, so
+/// `main()` never touches Firebase and the app boots on mock data.
+///
+/// Config comes from `flutterfire configure`: the committed
+/// `firebase_options.dart` carries the REAL `campus-f4748` options (Firebase
+/// app config is public by design — access control is `firestore.rules`'
+/// job), while `google-services.json` / `GoogleService-Info.plist` are
+/// gitignored, so a fresh checkout must re-fetch them before building.
+/// Careful: turning any flag on connects the app to the production Firestore
+/// of `campus-f4748`.
 Future<void> initFirebaseIfEnabled() async {
-  if (!useFirestore) return;
+  if (!anyFirestoreEnabled) return;
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

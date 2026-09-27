@@ -12,7 +12,8 @@ import '../shared/widgets/guide_list_item.dart';
 import '../shared/widgets/state_views.dart';
 
 /// S10 — Favorites. Facility/guide segments over locally-saved items, with
-/// swipe-to-delete. Data is fully local (SharedPreferences), so no error state.
+/// swipe-to-delete. Ids are local (SharedPreferences) but the referenced
+/// facility/guide data can fail to load, hence the retryable error state.
 class FavoritesScreen extends ConsumerStatefulWidget {
   const FavoritesScreen({super.key});
 
@@ -69,8 +70,11 @@ class _FacilityFavorites extends ConsumerWidget {
 
     return async.when(
       loading: () => const SkeletonList(rows: 4),
-      error: (e, _) => EmptyStateView(
-          icon: Symbols.star, title: l.favorites_empty_facility),
+      error: (e, _) => ErrorStateView(
+        message: l.common_loadFailed,
+        retryLabel: l.common_retry,
+        onRetry: () => ref.invalidate(favoriteFacilitiesProvider),
+      ),
       data: (facilities) {
         if (facilities.isEmpty) {
           return EmptyStateView(
@@ -113,8 +117,11 @@ class _GuideFavorites extends ConsumerWidget {
 
     return async.when(
       loading: () => const SkeletonList(rows: 4),
-      error: (e, _) =>
-          EmptyStateView(icon: Symbols.star, title: l.favorites_empty_guide),
+      error: (e, _) => ErrorStateView(
+        message: l.common_loadFailed,
+        retryLabel: l.common_retry,
+        onRetry: () => ref.invalidate(favoriteGuideItemsProvider),
+      ),
       data: (items) {
         if (items.isEmpty) {
           return EmptyStateView(

@@ -17,3 +17,6 @@ env.json
 # access) must never be committed. Local npm deps for the seeder too.
 tool/firestore_seed/serviceAccount.json
 node_modules/
+
+# Apps Script deployment identifiers (per-environment)
+tool/admin_sheets/.clasp.json

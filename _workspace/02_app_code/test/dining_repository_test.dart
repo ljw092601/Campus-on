@@ -33,6 +33,35 @@ void main() {
     expect(menus.every((c) => c.isClosed), isTrue);
   });
 
+  test('availability: unpublished != closed, legacy empty-meals = closed', () {
+    // Explicit status from Firestore data wins.
+    final unpublished = CafeteriaMenu.fromJson(const {
+      'id': 'x',
+      'campus': 'seunghak',
+      'status': 'unpublished',
+    });
+    expect(unpublished.isUnpublished, isTrue);
+    expect(unpublished.isClosed, isFalse);
+
+    final closed = CafeteriaMenu.fromJson(const {
+      'id': 'x',
+      'campus': 'seunghak',
+      'status': 'closed',
+    });
+    expect(closed.isClosed, isTrue);
+    expect(closed.isUnpublished, isFalse);
+
+    // Legacy rule (mock data): no status + empty meals reads as closed.
+    final legacy = CafeteriaMenu.fromJson(const {
+      'id': 'x',
+      'campus': 'seunghak',
+    });
+    expect(legacy.status, DiningAvailability.closed);
+
+    // toJson always carries the resolved status.
+    expect(unpublished.toJson()['status'], 'unpublished');
+  });
+
   test('menus rotate by date (deterministic)', () async {
     final a = await repo.getMenus(DateTime(2026, 9, 1));
     final b = await repo.getMenus(DateTime(2026, 9, 2));

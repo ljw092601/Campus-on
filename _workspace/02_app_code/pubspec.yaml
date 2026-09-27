@@ -1,4 +1,4 @@
-﻿name: campus_on
+name: campus_on
 description: "Campus-On — 외국인 유학생 캠퍼스 안내 앱 (Flutter)."
 publish_to: "none"
 version: 0.2.0+2
@@ -48,6 +48,7 @@ dependencies:
 
   # Utilities
   url_launcher: ^6.3.0
+  video_player: ^2.14.0
 
 dev_dependencies:
   flutter_test:
@@ -55,9 +56,9 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   # Launcher icon generation (config below). Source emblem is
   # assets/icon/donga-mate-icon.png; the two app_icon*.png files are 1024px
-  # white-canvas derivatives (94% emblem for regular icons, 65% for the
-  # adaptive foreground so the circle survives round launcher masks).
-  # Regenerate with: dart run flutter_launcher_icons
+  # derivatives (corners filled with the emblem blue; adaptive foreground
+  # scaled so the artwork fits the 66dp safe circle). Regenerate with:
+  # python tool/app_icon/build_icon.py && dart run flutter_launcher_icons
   flutter_launcher_icons: ^0.14.1
 
 flutter_launcher_icons:
@@ -66,8 +67,8 @@ flutter_launcher_icons:
   image_path: "assets/icon/app_icon.png"
   # iOS App Store rejects icons with an alpha channel.
   remove_alpha_ios: true
-  # Android adaptive icon: white background + padded emblem as foreground.
-  adaptive_icon_background: "#FFFFFF"
+  # Android adaptive icon: emblem blue background + scaled emblem foreground.
+  adaptive_icon_background: "#2F6FED"
   adaptive_icon_foreground: "assets/icon/app_icon_adaptive_fg.png"
 
 flutter:
@@ -78,13 +79,17 @@ flutter:
   # on the Kakao map (S2). See lib/presentation/map/widgets/marker_icons.dart.
   assets:
     - assets/markers/
-    # Wordmark logo for the in-app opening overlay (BrandSplashOverlay in
-    # app.dart) — Android 12+ system splash can only show the round emblem.
+    # Intro video (1080x1920 H.264, silent, played once) for the in-app
+    # opening overlay (BrandSplashOverlay in app.dart).
     - assets/branding/
     # Home hero photo + 3D illustrations cropped from design_template.png,
-    # plus app_emblem.png (transparent 128px emblem for the home AppBar —
+    # plus app_emblem.png (128px launcher emblem for the home AppBar, made by
+    # tool/app_icon/build_icon.py —
     # assets/icon/ stays unbundled: those launcher sources are build-time only).
     - assets/home/
+    # Classroom-search floor plans (WebP) + room index (floorplans.json),
+    # generated from 도면화/ by tool/floorplans/build_floorplans.py.
+    - assets/floorplans/
 
   # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
   # fonts:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/admin_guide.dart';
+import '../../presentation/calendar/academic_calendar_screen.dart';
 import '../../presentation/classroom/classroom_search_screen.dart';
 import '../../presentation/dining/dining_menu_screen.dart';
 import '../../presentation/facility/facility_detail_screen.dart';
@@ -67,6 +68,11 @@ class AppRouter {
                     builder: (context, state) => const DiningMenuScreen(),
                   ),
                   GoRoute(
+                    path: 'calendar',
+                    builder: (context, state) =>
+                        const AcademicCalendarScreen(),
+                  ),
+                  GoRoute(
                     path: 'guide',
                     builder: (context, state) => const GuideCategoryScreen(),
                     routes: [
@@ -109,11 +115,22 @@ class AppRouter {
                   // `?floor=03` (classroom search): open the focused
                   // building's peek sheet expanded at that floor.
                   final floor = state.uri.queryParameters['floor'];
+                  // `&room=0306-1`: red dot on that room's floor plan.
+                  final room = state.uri.queryParameters['room'];
+                  // `&plan=B04A`: which drawings (wing) the room is on,
+                  // when it differs from the building code.
+                  final plan = state.uri.queryParameters['plan'];
+                  // `&t=<millis>`: unique per search so a repeat search into
+                  // the open map tab still re-centres.
+                  final token = state.uri.queryParameters['t'];
                   return MapScreen(
                     focusIds: ids,
                     nearbyQueries: queries,
                     focusFloorCode:
                         (floor == null || floor.isEmpty) ? null : floor,
+                    focusRoomCode: (room == null || room.isEmpty) ? null : room,
+                    focusPlanCode: (plan == null || plan.isEmpty) ? null : plan,
+                    focusToken: token,
                   );
                 },
                 routes: [
@@ -168,7 +185,7 @@ class AppRouter {
         path: '/search',
         builder: (context, state) => const SearchScreen(),
       ),
-      // Full-screen classroom-location search above the shell (placeholder).
+      // Full-screen classroom-location search above the shell.
       GoRoute(
         parentNavigatorKey: _rootKey,
         path: '/classroom-search',

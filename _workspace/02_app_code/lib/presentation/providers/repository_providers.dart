@@ -2,15 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/config/firebase_init.dart' show useFirestore;
+import '../../core/config/firebase_init.dart'
+    show useFirestore, useFirestoreCalendar, useFirestoreDining;
+import '../../data/firestore/firestore_academic_calendar_repository.dart';
+import '../../data/firestore/firestore_dining_repository.dart';
 import '../../data/firestore/firestore_facility_repository.dart';
 import '../../data/firestore/firestore_floor_guide_repository.dart';
 import '../../data/firestore/firestore_guide_repository.dart';
 import '../../data/repositories/local_favorites_repository.dart';
+import '../../data/repositories/mock_academic_calendar_repository.dart';
 import '../../data/repositories/mock_dining_repository.dart';
 import '../../data/repositories/mock_facility_repository.dart';
 import '../../data/repositories/mock_floor_guide_repository.dart';
 import '../../data/repositories/mock_guide_repository.dart';
+import '../../domain/repositories/academic_calendar_repository.dart';
 import '../../domain/repositories/dining_repository.dart';
 import '../../domain/repositories/facility_repository.dart';
 import '../../domain/repositories/favorites_repository.dart';
@@ -52,9 +57,19 @@ final favoritesRepositoryProvider = Provider<FavoritesRepository>(
   (ref) => LocalFavoritesRepository(ref.watch(sharedPreferencesProvider)),
 );
 
-/// Cafeteria menus — mock only for now. TODO(dining-api): when the school's
-/// menu API contract arrives, add an ApiDiningRepository and swap here
-/// (screens/providers stay untouched).
+/// Cafeteria menus — admin-entered via the sheet sync (tool/admin_sheets/).
+/// Own flag (not [useFirestore]) so it flips on only once the `cafeterias` /
+/// `dining_menus` collections are populated; mock stays the dev default.
 final diningRepositoryProvider = Provider<DiningRepository>(
-  (ref) => MockDiningRepository(),
+  (ref) => useFirestoreDining
+      ? FirestoreDiningRepository(FirebaseFirestore.instance)
+      : MockDiningRepository(),
+);
+
+/// Academic calendar — admin-entered via the sheet sync (tool/admin_sheets/).
+/// Same per-feature flag policy as dining.
+final academicCalendarRepositoryProvider = Provider<AcademicCalendarRepository>(
+  (ref) => useFirestoreCalendar
+      ? FirestoreAcademicCalendarRepository(FirebaseFirestore.instance)
+      : MockAcademicCalendarRepository(),
 );

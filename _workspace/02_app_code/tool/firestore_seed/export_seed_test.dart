@@ -27,11 +27,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:campus_on/data/mock/mock_data.dart';
+import 'package:campus_on/data/repositories/mock_academic_calendar_repository.dart';
+import 'package:campus_on/data/repositories/mock_dining_repository.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('export MockData to Firestore seed JSON', () {
+  test('export MockData to Firestore seed JSON', () async {
     final facilities = <String, Map<String, dynamic>>{
       for (final f in MockData.facilities)
         f.id: _compact(f.toJson()..remove('id')..remove('updatedAt')),
@@ -58,11 +60,36 @@ void main() {
       );
     }
 
+    // Initial content for the admin-entered collections (design doc §7).
+    // These seeds are one-time starters only: after the admin sheet goes
+    // live it owns the collections, so seed.mjs never prunes them.
+    final events = <String, Map<String, dynamic>>{
+      for (final e in await MockAcademicCalendarRepository().getEvents())
+        e.id: _compact(e.toJson()..remove('id')),
+    };
+    // Static cafeteria info derived from a weekday mock day (meals stripped;
+    // the served slots become `mealTypes`).
+    final cafeterias = <String, Map<String, dynamic>>{
+      for (final c in await MockDiningRepository()
+          .getMenus(DateTime(2026, 9, 7))) // a Monday — all slots present
+        c.id: _compact({
+          'name_ko': c.nameKo,
+          'name_en': c.nameEn,
+          'campus': c.campus.name,
+          'hours_ko': c.hoursKo,
+          'hours_en': c.hoursEn,
+          'facilityId': c.facilityId,
+          'mealTypes': [for (final m in c.meals) m.type.name],
+        }),
+    };
+
     const dir = String.fromEnvironment('SEED_OUT',
         defaultValue: 'tool/firestore_seed');
     _writeJson('$dir/facilities.seed.json', facilities);
     _writeJson('$dir/guide_items.seed.json', guides);
     _writeJson('$dir/building_floors.seed.json', floors);
+    _writeJson('$dir/academic_events.seed.json', events);
+    _writeJson('$dir/cafeterias.seed.json', cafeterias);
 
     expect(facilities, hasLength(48));
     expect(floors, hasLength(34));
@@ -71,6 +98,12 @@ void main() {
       249,
     );
     expect(guides, isNotEmpty);
+    expect(events, isNotEmpty);
+    expect(cafeterias, hasLength(3));
+    for (final c in cafeterias.values) {
+      expect(c['mealTypes'], isNotEmpty,
+          reason: 'cafeteria seed must list its served meal slots');
+    }
     // Every floor doc must belong to a facility that advertises it.
     final byId = {for (final f in MockData.facilities) f.id: f};
     for (final id in floors.keys) {

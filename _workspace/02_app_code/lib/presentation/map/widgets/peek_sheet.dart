@@ -6,6 +6,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../domain/entities/facility.dart';
 import '../../../domain/entities/nearby_place.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../../classroom/widgets/room_location_card.dart';
 import '../../providers/locale_provider.dart';
 import '../../shared/category_labels.dart';
 import '../../shared/widgets/floor_accordion.dart';
@@ -24,6 +25,8 @@ class PeekSheet extends ConsumerWidget {
     required this.onViewDetail,
     required this.scrollController,
     this.expandedFloor,
+    this.roomCode,
+    this.roomPlanCode,
   });
 
   final Facility facility;
@@ -32,6 +35,14 @@ class PeekSheet extends ConsumerWidget {
 
   /// Floor label to open pre-expanded (classroom search deep link).
   final String? expandedFloor;
+
+  /// Searched room code (classroom search deep link): shows its floor plan
+  /// with a red dot above the floor guide.
+  final String? roomCode;
+
+  /// Floor-plan building code for [roomCode] when it differs from the
+  /// building's own code (a B04 wing: "B04A").
+  final String? roomPlanCode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,6 +84,11 @@ class PeekSheet extends ConsumerWidget {
             ),
           ],
         ),
+        if (roomCode != null) ...[
+          SizedBox(height: d.spaceMd),
+          RoomLocationCard(
+              facility: facility, roomCode: roomCode!, planCode: roomPlanCode),
+        ],
         if (facility.hasFloorInfo) ...[
           SizedBox(height: d.spaceMd),
           Text(l.facility_floors_title,

@@ -49,7 +49,7 @@ EN_NAMES = {
     "s09": "Colleges of Life Resource Science & Health Sciences",
     "s10": "Hanlim Library (B)",
     "s11": "College of Natural Sciences (E)",
-    "p4": "Engineering Building 4 (P4)",
+    "s12": "Engineering Building 4 (P4)",
     "s13": "Startup Hall",
     "s14": "Industry-Academic Cooperation Building (SM)",
     "s15": "Hanlim Dormitory Seunghak Hall 1",

@@ -1,0 +1,38 @@
+{
+  "seunghak-student": {
+    "name_ko": "승학캠퍼스 학생식당",
+    "name_en": "Seunghak Student Cafeteria",
+    "campus": "seunghak",
+    "hours_ko": "조식 08:00-09:30 · 중식 11:30-13:30 · 석식 17:00-18:30",
+    "hours_en": "Breakfast 08:00-09:30 · Lunch 11:30-13:30 · Dinner 17:00-18:30",
+    "facilityId": "s02",
+    "mealTypes": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ]
+  },
+  "gudeok-student": {
+    "name_ko": "구덕캠퍼스 학생식당",
+    "name_en": "Gudeok Student Cafeteria",
+    "campus": "gudeok",
+    "hours_ko": "중식 11:30-13:30",
+    "hours_en": "Lunch 11:30-13:30",
+    "facilityId": "g12",
+    "mealTypes": [
+      "lunch"
+    ]
+  },
+  "bumin-student": {
+    "name_ko": "부민캠퍼스 학생식당",
+    "name_en": "Bumin Student Cafeteria",
+    "campus": "bumin",
+    "hours_ko": "중식 11:30-13:30 · 석식 17:00-18:30",
+    "hours_en": "Lunch 11:30-13:30 · Dinner 17:00-18:30",
+    "facilityId": "b04",
+    "mealTypes": [
+      "lunch",
+      "dinner"
+    ]
+  }
+}

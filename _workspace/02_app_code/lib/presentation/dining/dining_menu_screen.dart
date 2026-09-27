@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/config/firebase_init.dart' show useFirestoreDining;
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
@@ -12,8 +13,9 @@ import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
 
 /// 오늘의 학식 — daily cafeteria menus per campus, with a day switcher.
-/// Data is mock until the school menu API lands (see DiningRepository /
-/// TODO(dining-api)); a notice banner tells users the menus are samples.
+/// No school API exists; real menus come from the admin sheet → Firestore
+/// pipeline when `useFirestoreDining` is on (see DiningRepository). In mock
+/// mode a notice banner tells users the menus are samples.
 class DiningMenuScreen extends ConsumerStatefulWidget {
   const DiningMenuScreen({super.key});
 
@@ -70,17 +72,31 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen> {
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(diningMenusProvider(_date)),
               ),
-              data: (menus) => ListView(
-                padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                children: [
-                  _NoticeBanner(text: l.dining_placeholder_notice),
-                  const SizedBox(height: 12),
-                  for (final c in menus) ...[
-                    _CafeteriaCard(menu: c),
-                    const SizedBox(height: 12),
+              data: (menus) {
+                // Firestore mode with no seeded cafeterias yields an empty
+                // list — show an empty state instead of a bare date header.
+                if (menus.isEmpty) {
+                  return EmptyStateView(
+                    icon: Symbols.restaurant,
+                    title: l.dining_empty,
+                  );
+                }
+                return ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                  children: [
+                    // The sample-data disclaimer only applies to mock data; in
+                    // Firestore mode the menus are real admin-entered content.
+                    if (!useFirestoreDining) ...[
+                      _NoticeBanner(text: l.dining_placeholder_notice),
+                      const SizedBox(height: 12),
+                    ],
+                    for (final c in menus) ...[
+                      _CafeteriaCard(menu: c),
+                      const SizedBox(height: 12),
+                    ],
                   ],
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],
@@ -194,7 +210,16 @@ class _CafeteriaCard extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 10),
-            if (menu.isClosed)
+            // Unpublished (admin hasn't entered the menu) is NOT the same as
+            // an explicit closure — see design doc §7 D1.
+            if (menu.isUnpublished)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(l.dining_unpublished,
+                    style: TextStyle(
+                        fontSize: 13.5, color: scheme.onSurfaceVariant)),
+              )
+            else if (menu.isClosed)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(l.dining_closed,

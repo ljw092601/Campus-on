@@ -2,10 +2,17 @@ import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../domain/repositories/dining_repository.dart';
 
-/// PLACEHOLDER dining data until the school API contract arrives
-/// (TODO(dining-api)): three campus cafeterias with a small menu pool rotated
-/// deterministically by date, closed on weekends. Cafeteria names/hours are
-/// provisional too — replace everything with API data.
+/// Mock dining data for the default dev mode (no Firebase required).
+///
+/// A school dining API was confirmed unavailable, so production data now
+/// flows admin sheet → Firestore (`cafeterias` + `dining_menus`; see
+/// _workspace/06_admin_data_pipeline.md). Running with
+/// `--dart-define=USE_FIRESTORE_DINING=true` swaps in
+/// `FirestoreDiningRepository`; this mock stays the default-mode stand-in:
+/// three campus cafeterias with a small menu pool rotated deterministically
+/// by date, closed on weekends (which exercises the entity's legacy
+/// empty-meals==closed fallback — keep that rule in mind before changing
+/// this data shape).
 class MockDiningRepository implements DiningRepository {
   static const _latency = Duration(milliseconds: 120);
 

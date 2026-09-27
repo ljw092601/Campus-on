@@ -2094,13 +2094,13 @@
   },
   {
     "campus": "seunghak",
-    "code": "P4",
+    "code": "S12",
     "name": "공과대학4호관(P4)",
     "description": "",
     "floors": [],
     "lat": 35.1160873732028,
     "lng": 128.9683284400812,
-    "id": "p4",
+    "id": "s12",
     "name_en": "Engineering Building 4 (P4)"
   },
   {
