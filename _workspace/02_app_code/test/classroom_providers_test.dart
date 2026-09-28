@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:campus_on/domain/entities/floor_plan.dart';
 import 'package:campus_on/presentation/providers/classroom_providers.dart';
 import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
 
@@ -29,6 +30,21 @@ void main() {
     ]..sort(compareRoomCodes);
     expect(codes,
         ['B101', '0306', '0306-1', '0306-2', '0306-10', '0306-A', '0307']);
+  });
+
+  test('plan room JSON: outline and rect are optional', () {
+    final full = PlanRoom.fromJson('0302', const {
+      'x': 0.2,
+      'y': 0.3,
+      'r': [0.1, 0.2, 0.3, 0.4],
+      'o': [0.1, 0.2, 0.4, 0.2, 0.4, 0.6, 0.1, 0.6],
+    });
+    expect(full.rect, [0.1, 0.2, 0.3, 0.4]);
+    expect(full.outline, hasLength(8));
+
+    final bare = PlanRoom.fromJson('0108', const {'x': 0.5, 'y': 0.5});
+    expect(bare.rect, isNull);
+    expect(bare.outline, isNull);
   });
 
   test('plan codes: own code or wings', () {

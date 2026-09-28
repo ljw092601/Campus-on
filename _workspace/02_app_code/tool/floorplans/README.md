@@ -17,7 +17,22 @@
 2. **overrides.json** — OCR 보정 (`rename` 오인식 교정, `drop` 제외, `allow` 형식 밖 실제 호수, `add` 수동 좌표
    `[x, y, rx, ry, rw, rh]`). 세로쓰기 라벨 등 OCR 불가 항목은 여기서 추가한다.
 3. **build_floorplans.py** — 호수 형식/층 일치 검증 후 WebP(가로 2400px, 무손실) +
-   `floorplans.json` 생성.
+   `floorplans.json` 생성. 사각형이 있는 방마다 원본 해상도 도면에서 방의 **실제 외곽선**을
+   뽑는다: 사각형과 바운딩박스가 맞는 채움 요소를 찾아, 벽·문에 닿은 라벨 글자는 방에 붙이고
+   글자 구멍은 메우되 중첩 방(다른 방 채움이 든 구멍)은 빼고, 바깥 윤곽을 Douglas-Peucker
+   (2.5px)로 단순화한다. ㄱ자 방(S05 0302, S07 0511 등)의 사각형은 이웃 방을 덮지만 외곽선은 그렇지 않다.
+   (opencv-python 필요 — rapidocr_onnxruntime 설치 시 함께 설치됨)
+
+   `floorplans.json` 형식 — `{건물: {층: {image, w, h, rooms: {호수: 방}}}}`, 방은
+
+   ```json
+   "0306-1": {"x": 0.5, "y": 0.2, "r": [rx, ry, rw, rh], "o": [x1, y1, x2, y2, ...]}
+   ```
+
+   - `x`, `y`: 라벨 중심(빨간 점 위치)
+   - `r`: 바운딩 사각형 — 한 영역에 호수가 여럿 읽힌 방 등 모를 때는 생략
+   - `o`: 외곽선 폴리곤, x·y를 번갈아 늘어놓은 평탄 리스트(첫 점 반복 없이 암묵적으로 닫힘) — 모를 때 생략
+   - 좌표는 모두 이미지 크기 대비 비율(0..1, 소수 4자리). overrides.json의 `add`는 기존 리스트 형식 그대로 쓰고 빌드에서 변환한다.
 
    ```
    python build_floorplans.py ../../../../도면화 raw_rooms.json

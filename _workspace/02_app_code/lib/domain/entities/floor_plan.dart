@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-/// One room label found on a floor-plan drawing. Coordinates are fractions of
-/// the image size (0..1) so they survive any re-export / resize of the plan.
+/// One room found on a floor-plan drawing. Coordinates are fractions of the
+/// image size (0..1) so they survive any re-export / resize of the plan.
 @immutable
 class PlanRoom {
   const PlanRoom({
@@ -9,26 +9,37 @@ class PlanRoom {
     required this.x,
     required this.y,
     this.rect,
+    this.outline,
   });
 
   /// Room code without the building prefix, e.g. "0306" or "0306-1".
   final String code;
 
-  /// Label centre — where the red location dot is drawn.
+  /// Label centre — the fallback dot position when no [outline] is known.
   final double x;
   final double y;
 
   /// Room bounds as [left, top, width, height] fractions, when known.
   final List<double>? rect;
 
-  factory PlanRoom.fromJson(String code, List<dynamic> j) => PlanRoom(
-        code: code,
-        x: (j[0] as num).toDouble(),
-        y: (j[1] as num).toDouble(),
-        rect: j.length >= 6
-            ? [for (final v in j.sublist(2, 6)) (v as num).toDouble()]
-            : null,
-      );
+  /// Real room shape as a flat [x1, y1, x2, y2, ...] polygon (closed
+  /// implicitly), when known. Rooms sharing one fill region on the drawing
+  /// have none.
+  final List<double>? outline;
+
+  /// `{"x":…, "y":…, "r":[rx,ry,rw,rh], "o":[x1,y1,…]}` — `r`/`o` optional.
+  factory PlanRoom.fromJson(String code, Map<String, dynamic> j) {
+    List<double>? nums(Object? v) =>
+        v == null ? null : [for (final n in v as List) (n as num).toDouble()];
+    final outline = nums(j['o']);
+    return PlanRoom(
+      code: code,
+      x: (j['x'] as num).toDouble(),
+      y: (j['y'] as num).toDouble(),
+      rect: nums(j['r']),
+      outline: outline != null && outline.length >= 6 ? outline : null,
+    );
+  }
 }
 
 /// Floor-plan drawing of one floor (`assets/floorplans/`), generated from the
@@ -66,7 +77,8 @@ class FloorPlan {
         rooms: {
           for (final e in (j['rooms'] as Map).entries)
             e.key as String:
-                PlanRoom.fromJson(e.key as String, e.value as List<dynamic>),
+                PlanRoom.fromJson(
+                e.key as String, e.value as Map<String, dynamic>),
         },
       );
 }

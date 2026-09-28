@@ -96,10 +96,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
               child: SizedBox(
                 width: fit.width,
                 height: fit.height,
-                // Small base dot — it scales up with the zoom.
+                // Thin base border / small dot — they scale up with the zoom.
                 child: FloorPlanView(
                   plan: loc.plan,
                   room: loc.room,
+                  strokeWidth: 1.2,
                   dotSize: 7,
                 ),
               ),

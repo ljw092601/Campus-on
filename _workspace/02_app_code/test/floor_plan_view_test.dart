@@ -41,7 +41,8 @@ void main() {
     hasFloorInfo: true,
   );
 
-  testWidgets('room card shows the plan with the red dot', (tester) async {
+  testWidgets('room card shows the plan with the room highlighted',
+      (tester) async {
     await tester.runAsync(
         () => container.read(roomLocationProvider(('S04', '0306-1')).future));
     await tester.pumpWidget(
