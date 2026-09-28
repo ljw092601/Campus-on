@@ -122,25 +122,28 @@ function syncDiningMenusLocked_(run) {
     validGroups.push(group);
   });
 
-  if (validGroups.length > CONFIG.maxCommitWrites) {
-    throw new Error(`정상 식당×날짜 그룹 ${validGroups.length}건이 commit 한도 ${CONFIG.maxCommitWrites}건을 넘습니다.`);
-  }
-  const writes = validGroups.map(group => updateWrite_(CONFIG.collections.diningMenus, group.id, {
+  const toWrite = group => updateWrite_(CONFIG.collections.diningMenus, group.id, {
     cafeteriaId: group.cafeteriaId,
     date: group.date,
     status: group.status,
     meals: group.status === 'open' ? group.meals : [],
     updatedAt: new Date(),
-  }));
+  });
 
-  try {
-    commitWrites_(writes);
-    validGroups.forEach(group => group.rows.forEach(row =>
+  // Every group is its own document, so the sheet can grow past the per-commit
+  // write limit: commit in chunks. A failed chunk stops the run; chunks already
+  // committed stay published and keep their ✅ result.
+  for (let offset = 0; offset < validGroups.length; offset += CONFIG.maxCommitWrites) {
+    const chunk = validGroups.slice(offset, offset + CONFIG.maxCommitWrites);
+    try {
+      commitWrites_(chunk.map(toWrite));
+    } catch (error) {
+      validGroups.slice(offset).forEach(group => group.rows.forEach(row =>
+        setRowResult_(parsed.sheet, row.rowNumber, 7, `❌ Firestore 반영 실패: ${error.message}`, true)));
+      throw new Error(`정상 그룹 ${validGroups.length}건 중 ${offset}건만 반영된 뒤 실패했습니다. ${error.message || error}`);
+    }
+    chunk.forEach(group => group.rows.forEach(row =>
       setRowResult_(parsed.sheet, row.rowNumber, 7, '✅ 동기화됨', false)));
-  } catch (error) {
-    validGroups.forEach(group => group.rows.forEach(row =>
-      setRowResult_(parsed.sheet, row.rowNumber, 7, `❌ Firestore 반영 실패: ${error.message}`, true)));
-    throw error;
   }
 
   const failedGroups = parsed.groups.length - validGroups.length;

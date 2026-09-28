@@ -155,10 +155,11 @@ class CafeteriaMenu {
         nameKo: (j['name_ko'] ?? '') as String,
         nameEn: (j['name_en'] ?? '') as String,
         campus: Campus.fromId(j['campus'] as String?) ?? Campus.seunghak,
+        // Sorted here so stored order (sheet row order) never leaks into UI.
         meals: [
           for (final m in (j['meals'] as List? ?? const []))
             Meal.fromJson((m as Map).cast<String, dynamic>()),
-        ],
+        ]..sort((a, b) => a.type.index.compareTo(b.type.index)),
         hoursKo: j['hours_ko'] as String?,
         hoursEn: j['hours_en'] as String?,
         facilityId: j['facilityId'] as String?,

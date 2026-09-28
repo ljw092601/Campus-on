@@ -188,7 +188,11 @@ function readDiningGroups_() {
       group.rows.forEach(r => group.errors.push({ rowNumber: r.rowNumber, message: '같은 식당·날짜 그룹의 상태는 모두 같아야 합니다.' }));
     }
     group.status = group.statuses.size === 1 ? Array.from(group.statuses)[0] : null;
-    group.meals = group.rows.map(r => r.meal).filter(Boolean);
+    // Stored breakfast → dinner regardless of sheet row order; the app renders
+    // meals in stored order.
+    const mealOrder = Object.values(MEAL_TYPES);
+    group.meals = group.rows.map(r => r.meal).filter(Boolean)
+      .sort((a, b) => mealOrder.indexOf(a.type) - mealOrder.indexOf(b.type));
     if (group.status === 'open' && group.meals.length === 0) {
       group.rows.forEach(r => group.errors.push({ rowNumber: r.rowNumber, message: '게시 상태에는 한 끼 이상의 메뉴가 필요합니다.' }));
     }

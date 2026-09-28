@@ -117,42 +117,61 @@ class _AcademicCalendarScreenState
           final yearFmt = DateFormat.y(tag);
           _monthKeys.removeWhere((m, _) => !months.containsKey(m));
 
+          // Pull-to-refresh re-fetches, so events published via the admin
+          // sheet show up without restarting the app.
+          Future<void> refresh() => ref.refresh(academicEventsProvider.future);
+
           if (months.isEmpty) {
-            return Center(
-              child: Text(
-                l.calendar_empty,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+            return RefreshIndicator(
+              onRefresh: refresh,
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Text(
+                        l.calendar_empty,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
 
           // A year's schedule is short, so a non-lazy column keeps every
           // month header built and reachable by Scrollable.ensureVisible.
-          return SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Sample-data disclaimer is for mock mode only; Firestore
-                // mode shows real admin-entered schedule.
-                if (!useFirestoreCalendar)
-                  InfoBanner(text: l.calendar_placeholder_notice),
-                for (final entry in months.entries) ...[
-                  _MonthHeader(
-                    key: _monthKeys.putIfAbsent(entry.key, GlobalKey.new),
-                    month: monthFmt.format(entry.key),
-                    year: yearFmt.format(entry.key),
-                  ),
-                  GroupCard(
-                    children: [
-                      for (final e in entry.value) _EventRow(event: e),
-                    ],
-                  ),
+          return RefreshIndicator(
+            onRefresh: refresh,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Sample-data disclaimer is for mock mode only; Firestore
+                  // mode shows real admin-entered schedule.
+                  if (!useFirestoreCalendar)
+                    InfoBanner(text: l.calendar_placeholder_notice),
+                  for (final entry in months.entries) ...[
+                    _MonthHeader(
+                      key: _monthKeys.putIfAbsent(entry.key, GlobalKey.new),
+                      month: monthFmt.format(entry.key),
+                      year: yearFmt.format(entry.key),
+                    ),
+                    GroupCard(
+                      children: [
+                        for (final e in entry.value) _EventRow(event: e),
+                      ],
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           );
         },

@@ -61,28 +61,48 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen> {
                 onRetry: () => ref.invalidate(diningMenusProvider(_date)),
               ),
               data: (menus) {
+                // Pull-to-refresh re-fetches this day, so menus published via
+                // the admin sheet show up without restarting the app.
+                Future<void> refresh() =>
+                    ref.refresh(diningMenusProvider(_date).future);
+
                 // Firestore mode with no seeded cafeterias yields an empty
                 // list — show an empty state instead of a bare date header.
                 if (menus.isEmpty) {
-                  return EmptyStateView(
-                    icon: Symbols.restaurant,
-                    title: l.dining_empty,
+                  return RefreshIndicator(
+                    onRefresh: refresh,
+                    child: CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      slivers: [
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: EmptyStateView(
+                            icon: Symbols.restaurant,
+                            title: l.dining_empty,
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 }
-                return ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                  children: [
-                    // The sample-data disclaimer only applies to mock data; in
-                    // Firestore mode the menus are real admin-entered content.
-                    if (!useFirestoreDining) ...[
-                      InfoBanner(text: l.dining_placeholder_notice),
-                      const SizedBox(height: 16),
+                return RefreshIndicator(
+                  onRefresh: refresh,
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                    children: [
+                      // The sample-data disclaimer only applies to mock data; in
+                      // Firestore mode the menus are real admin-entered content.
+                      if (!useFirestoreDining) ...[
+                        InfoBanner(text: l.dining_placeholder_notice),
+                        const SizedBox(height: 16),
+                      ],
+                      for (final c in menus) ...[
+                        _CafeteriaCard(menu: c),
+                        const SizedBox(height: 16),
+                      ],
                     ],
-                    for (final c in menus) ...[
-                      _CafeteriaCard(menu: c),
-                      const SizedBox(height: 16),
-                    ],
-                  ],
+                  ),
                 );
               },
             ),

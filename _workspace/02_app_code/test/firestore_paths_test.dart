@@ -100,6 +100,19 @@ void main() {
       expect(closed.status, DiningAvailability.closed);
       expect(closed.isClosed, isTrue);
     });
+
+    test('meals are ordered breakfast → dinner regardless of stored order', () {
+      final menu = cafeteriaMenuFromData(cafeteria, const {
+        'status': 'open',
+        'meals': [
+          {'type': 'dinner', 'items': ['돈까스']},
+          {'type': 'breakfast', 'items': ['토스트']},
+          {'type': 'lunch', 'items': ['비빔밥']},
+        ],
+      });
+      expect(menu.meals.map((m) => m.type),
+          [MealType.breakfast, MealType.lunch, MealType.dinner]);
+    });
   });
 
   group('cafeteriaMenuFromDocs (doc wrapper)', () {
