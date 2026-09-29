@@ -75,3 +75,27 @@ ARB sources live in `lib/l10n/app_en.arb` (template) and `app_ko.arb`.
 ```bash
 flutter test
 ```
+
+Map state regression tests also cover the map-enabled screen using a fake
+WebView (no network or real Kakao key). Run that variant with:
+
+```bash
+flutter test test/map_state_test.dart --dart-define=KAKAO_JS_KEY=test-key
+```
+
+For the real Android map E2E, boot one emulator, prepare the local `env.json`
+with an authorized Kakao JavaScript key, and run from this app directory:
+
+```bash
+python tool/run_map_e2e.py --device emulator-5554
+python tool/run_map_e2e.py --device emulator-5554 --firestore
+```
+
+The runner grants location permission to the app and injects three emulator
+GPS fixes at test checkpoints. The test checks native WebView markers, classroom
+search under an active filter, consumed focus, campus switching, live nearby
+search/removal, and location overlays. A separate real-WebView fixture supplies
+60m/120m accuracy because emulator GPS normally reports 5m (no visible halo).
+Firestore mode only reads content. Logs are saved in the OS temporary directory;
+use `--log`, `--flutter`, or `--adb` to override local paths. The emulator must be
+dedicated to the test while it runs.

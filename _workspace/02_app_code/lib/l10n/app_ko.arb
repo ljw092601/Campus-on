@@ -1,5 +1,6 @@
 {
   "@@locale": "ko",
+  "map_focus_notFound": "해당 건물을 찾을 수 없어요. 다시 검색해 주세요.",
 
   "appTitle": "동아메이트",
 

@@ -9,6 +9,7 @@ import '../../../domain/entities/facility.dart';
 import '../../../domain/entities/nearby_place.dart';
 import '../../../domain/entities/user_location.dart';
 import 'marker_icons.dart';
+import 'nearby_search_bridge.dart';
 
 /// Thin wrapper around the Kakao Maps widget. ALL Kakao-plugin coupling lives
 /// here — if the plugin's API shifts, only this file needs updating; the map
@@ -56,6 +57,7 @@ class CampusMapView extends StatefulWidget {
     required this.focusIds,
     required this.onMarkerTap,
     this.campus,
+    this.campusCenter,
     this.selectedId,
     this.userLocation,
     this.following = false,
@@ -67,6 +69,7 @@ class CampusMapView extends StatefulWidget {
     this.onPlacesFailed,
     this.zoomHandle,
     this.focusKey,
+    this.onFocusApplied,
     this.focusObscuredFraction = 0,
     this.targetId,
   });
@@ -76,12 +79,14 @@ class CampusMapView extends StatefulWidget {
   /// Currently shown campus. When it CHANGES, the camera re-fits to the new
   /// campus's markers (the plugin itself syncs the marker set).
   final Campus? campus;
+  final ({double lat, double lng})? campusCenter;
 
   final List<String> focusIds;
 
   /// Changes whenever a new focus request arrives, even for the same
   /// [focusIds] (e.g. searching the same building again after panning away).
   final Object? focusKey;
+  final VoidCallback? onFocusApplied;
 
   /// Fraction of the map's height covered from the bottom (the peek sheet);
   /// a single focused pin is centred in the visible part above it.
@@ -121,9 +126,13 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   kakao.KakaoMapController? _controller;
 
-  /// Focus requested while its target was not on the shown campus yet; applied
-  /// once the campus switch delivers the target's markers.
-  bool _focusPending = false;
+  int _cameraRevision = 0;
+  int _searchRevision = 0;
+  int _markerRevision = 0;
+  int _locationRevision = 0;
+  Future<void> _markerSync = Future.value();
+  Map<FacilityCategory, kakao.MarkerIcon>? _icons;
+  NearbySearchBridge? _placeSearch;
 
   StreamSubscription<double>? _headingSub;
 
@@ -158,21 +167,30 @@ class _CampusMapViewState extends State<CampusMapView> {
     final focusChanged = !listEquals(oldWidget.focusIds, widget.focusIds) ||
         oldWidget.focusKey != widget.focusKey;
 
-    // Campus switch: chase the new campus's marker cluster — unless it was
-    // switched to reach a focus target. widget.facilities is already the new
-    // campus's (filtered) list in this same build.
-    if (focusChanged || (widget.campus != oldWidget.campus && _focusPending)) {
+    if (focusChanged ||
+        widget.campus != oldWidget.campus ||
+        widget.following != oldWidget.following) {
+      _cameraRevision++;
+    }
+    // The screen resolves campus/filter before delivering a focus request.
+    // Once applied, ordinary campus/filter rebuilds must never replay it.
+    if (focusChanged && widget.focusIds.isNotEmpty) {
       _applyFocus();
     } else if (widget.campus != oldWidget.campus) {
       _fitToFacilities();
     }
 
-    // New search terms → search again; new results → frame them. (The plugin
-    // syncs the marker list itself from the `markers` param on update.)
-    if (!listEquals(oldWidget.placeQueries, widget.placeQueries)) {
+    _syncMarkers();
+    if (!identical(oldWidget.userLocation, widget.userLocation)) {
+      _locationRevision++;
+    }
+
+    // New search terms/campus invalidate previous asynchronous results.
+    if (!listEquals(oldWidget.placeQueries, widget.placeQueries) ||
+        oldWidget.campus != widget.campus) {
       _runPlaceSearch();
     }
-    if (oldWidget.places.length != widget.places.length) {
+    if (!listEquals(oldWidget.places, widget.places)) {
       _fitPlaces();
     }
 
@@ -191,6 +209,7 @@ class _CampusMapViewState extends State<CampusMapView> {
   @override
   void dispose() {
     widget.zoomHandle?._state = null;
+    _placeSearch?.dispose();
     _headingSub?.cancel();
     super.dispose();
   }
@@ -233,7 +252,7 @@ class _CampusMapViewState extends State<CampusMapView> {
     if (loc == null) return const [];
     return [
       kakao.CustomOverlay(
-        customOverlayId: _dotOverlayId,
+        customOverlayId: '$_dotOverlayId-$_locationRevision',
         latLng: kakao.LatLng(loc.lat, loc.lng),
         content: _dotHtml(),
         yAnchor: 0.5,
@@ -287,7 +306,7 @@ class _CampusMapViewState extends State<CampusMapView> {
     if (loc == null || accuracy == null || accuracy < 15) return const [];
     return [
       kakao.Circle(
-        circleId: _accuracyCircleId,
+        circleId: '$_accuracyCircleId-$_locationRevision',
         center: kakao.LatLng(loc.lat, loc.lng),
         radius: accuracy.clamp(15, 300).toDouble(),
         strokeWidth: 1,
@@ -347,7 +366,8 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   // ── Map ────────────────────────────────────────────────────────────────────
 
-  List<kakao.Marker> _markers(Map<FacilityCategory, kakao.MarkerIcon> icons) => [
+  List<kakao.Marker> _markers(Map<FacilityCategory, kakao.MarkerIcon> icons) =>
+      [
         for (final f in widget.facilities)
           kakao.Marker(
             markerId: f.id,
@@ -377,41 +397,59 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   // ── Keyword search (off-campus places) ────────────────────────────────────
 
+  /// The plugin starts one asynchronous add per marker. Serialize updates so
+  /// an old batch cannot add pins after a newer empty filter has cleared them.
+  void _syncMarkers() {
+    final controller = _controller;
+    final icons = _icons;
+    if (controller == null || icons == null) return;
+    final revision = ++_markerRevision;
+    final markers = _markers(icons);
+    _markerSync = _markerSync.then((_) async {
+      if (!mounted || revision != _markerRevision) return;
+      if (markers.isEmpty) {
+        await controller.webViewController.runJavaScript('clearMarker();');
+      } else {
+        await controller.addMarker(markers: markers);
+      }
+    }).catchError((Object error) {
+      debugPrint('Map marker update failed: $error');
+    });
+  }
+
   /// Runs every query around the campus center and reports the merged result.
   ///
   /// One search per keyword (the JS SDK takes a single keyword per call) with
   /// the responses de-duplicated by place id, since "SKT 대리점" and
   /// "KT 대리점" can both match a multi-carrier shop.
   Future<void> _runPlaceSearch() async {
-    final controller = _controller;
+    final revision = ++_searchRevision;
+    final search = _placeSearch;
     final queries = widget.placeQueries;
-    if (controller == null || queries.isEmpty) return;
+    if (search == null || queries.isEmpty) return;
+    final center = _campusCenter;
 
     final found = <String, NearbyPlace>{};
     var failed = false;
     for (final keyword in queries) {
       try {
-        final res = await controller.keywordSearch(
-          kakao.KeywordSearchRequest(
-            keyword: keyword,
-            x: AppConfig.campusCenterLng,
-            y: AppConfig.campusCenterLat,
-            radius: _placeSearchRadiusMeters,
-            size: 15,
-            sort: kakao.SortBy.distance,
-          ),
+        final places = await search.search(
+          keyword,
+          lat: center.latitude,
+          lng: center.longitude,
         );
-        for (final a in res.list) {
-          final place = _toPlace(a);
-          if (place != null) found[place.id] = place;
+        if (!mounted || revision != _searchRevision) return;
+        for (final place in places) {
+          found[place.id] = place;
         }
       } catch (_) {
         // A single failed keyword shouldn't drop the others (the search runs
         // through the WebView bridge, which can reject while the page settles).
         failed = true;
       }
+      if (!mounted || revision != _searchRevision) return;
     }
-    if (!mounted) return;
+    if (!mounted || revision != _searchRevision) return;
     if (found.isEmpty && failed) {
       widget.onPlacesFailed?.call();
       return;
@@ -422,29 +460,9 @@ class _CampusMapViewState extends State<CampusMapView> {
     widget.onPlacesFound?.call(places);
   }
 
-  /// Kakao returns every field as a string; a row without usable coordinates
-  /// can't be pinned, so it is dropped rather than guessed at.
-  NearbyPlace? _toPlace(kakao.KeywordAddress a) {
-    final lat = double.tryParse(a.y ?? '');
-    final lng = double.tryParse(a.x ?? '');
-    final id = a.id;
-    if (lat == null || lng == null || id == null || id.isEmpty) return null;
-    return NearbyPlace(
-      id: id,
-      name: (a.placeName ?? '').trim(),
-      lat: lat,
-      lng: lng,
-      address: a.addressName,
-      roadAddress: a.roadAddressName,
-      phone: a.phone,
-      placeUrl: a.placeUrl,
-      distanceMeters: double.tryParse(a.distance ?? '')?.round(),
-    );
-  }
-
-  /// Wide enough to reach the shopping streets around campus, small enough
-  /// that results stay walkable.
-  static const int _placeSearchRadiusMeters = 5000;
+  kakao.LatLng get _campusCenter => kakao.LatLng(
+      widget.campusCenter?.lat ?? AppConfig.campusCenterLat,
+      widget.campusCenter?.lng ?? AppConfig.campusCenterLng);
 
   void _fitPlaces() {
     final controller = _controller;
@@ -452,7 +470,7 @@ class _CampusMapViewState extends State<CampusMapView> {
     // Keep the campus in frame alongside the stores so the user keeps their
     // bearings; a single result just recenters.
     final targets = [
-      kakao.LatLng(AppConfig.campusCenterLat, AppConfig.campusCenterLng),
+      _campusCenter,
       for (final p in widget.places) kakao.LatLng(p.lat, p.lng),
     ];
     controller.fitBounds(targets);
@@ -463,12 +481,16 @@ class _CampusMapViewState extends State<CampusMapView> {
       final f = widget.facilities.first;
       return kakao.LatLng(f.lat, f.lng);
     }
-    return kakao.LatLng(AppConfig.campusCenterLat, AppConfig.campusCenterLng);
+    return _campusCenter;
   }
 
   void _fitToFacilities() {
     final controller = _controller;
-    if (controller == null || widget.facilities.isEmpty) return;
+    if (controller == null) return;
+    if (widget.facilities.isEmpty) {
+      controller.setCenter(_campusCenter);
+      return;
+    }
     final targets = [
       for (final f in widget.facilities) kakao.LatLng(f.lat, f.lng),
     ];
@@ -486,28 +508,35 @@ class _CampusMapViewState extends State<CampusMapView> {
         .where((f) => widget.focusIds.contains(f.id))
         .map((f) => kakao.LatLng(f.lat, f.lng))
         .toList();
-    // Target on another campus: the screen switches campus next frame.
-    _focusPending = targets.isEmpty;
-    if (targets.isEmpty) return;
+    if (targets.isEmpty) {
+      _fitToFacilities();
+      return;
+    }
+    final revision = _cameraRevision;
     if (targets.length > 1) {
-      controller.fitBounds(targets);
+      await controller.fitBounds(targets);
+      if (mounted && revision == _cameraRevision) widget.onFocusApplied?.call();
       return;
     }
     final target = targets.first;
     controller.setCenter(target);
     final obscured = widget.focusObscuredFraction;
-    if (obscured <= 0) return;
+    if (obscured <= 0) {
+      widget.onFocusApplied?.call();
+      return;
+    }
     // Shift the camera south by half the covered height so the pin sits in
     // the middle of the visible strip above the sheet.
     try {
       final bounds = await controller.getBounds();
-      if (!mounted) return;
+      if (!mounted || revision != _cameraRevision) return;
       final span = bounds.ne.latitude - bounds.sw.latitude;
       controller.setCenter(kakao.LatLng(
           target.latitude - span * obscured / 2, target.longitude));
     } catch (_) {
       // Bounds unavailable (map not laid out yet) — the plain centre stands.
     }
+    if (mounted && revision == _cameraRevision) widget.onFocusApplied?.call();
   }
 
   @override
@@ -521,18 +550,20 @@ class _CampusMapViewState extends State<CampusMapView> {
         if (icons == null) {
           return const Center(child: CircularProgressIndicator());
         }
+        _icons = icons;
         return kakao.KakaoMap(
           center: _center,
-          markers: _markers(icons),
+          // Markers are synchronized serially by this wrapper (including []).
           circles: _userCircles(),
           customOverlays: _allOverlays(),
           onMapCreated: (controller) {
             _controller = controller;
+            _placeSearch = NearbySearchBridge(controller);
             // The plugin only auto-adds overlays on didUpdateWidget (e.g. a
             // filter change), not on first create — so add them explicitly once
             // the controller is ready, otherwise the initial (unfiltered) map
             // renders with no pins until the user interacts.
-            controller.addMarker(markers: _markers(icons));
+            _syncMarkers();
             if (widget.userLocation != null) {
               controller.addCircle(circles: _userCircles());
             }
@@ -546,9 +577,14 @@ class _CampusMapViewState extends State<CampusMapView> {
           onMarkerTap: (markerId, latLng, zoomLevel) {
             widget.onMarkerTap(markerId);
           },
+          onCustomOverlayTap: (message, _) =>
+              _placeSearch?.receiveOverlayMessage(message),
           // A manual pan means "stop chasing me" — native map-app behaviour.
           onDragChangeCallback: (latLng, zoomLevel, dragType) {
-            if (dragType == kakao.DragType.start) widget.onUserPan?.call();
+            if (dragType == kakao.DragType.start) {
+              _cameraRevision++;
+              widget.onUserPan?.call();
+            }
           },
         );
       },

@@ -51,6 +51,11 @@ dependencies:
   video_player: ^2.14.0
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
+  webview_flutter: ^4.14.1
+  # Simulate the native WebView bridge in map regression tests.
+  webview_flutter_platform_interface: ^2.15.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0

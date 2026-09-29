@@ -11,7 +11,9 @@ import '../../shared/category_labels.dart';
 /// map shows one at a time; switching re-filters markers and moves the camera
 /// (handled by CampusMapView reacting to [mapCampusProvider]).
 class CampusSelector extends ConsumerWidget {
-  const CampusSelector({super.key});
+  const CampusSelector({super.key, this.onSelected});
+
+  final ValueChanged<Campus>? onSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,8 +21,8 @@ class CampusSelector extends ConsumerWidget {
     final campus = ref.watch(mapCampusProvider);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-          context.dimens.spaceMd, context.dimens.spaceSm, context.dimens.spaceMd, 0),
+      padding: EdgeInsets.fromLTRB(context.dimens.spaceMd,
+          context.dimens.spaceSm, context.dimens.spaceMd, 0),
       child: SegmentedButton<Campus>(
         segments: [
           for (final c in Campus.values)
@@ -32,8 +34,13 @@ class CampusSelector extends ConsumerWidget {
           visualDensity: VisualDensity.compact,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        onSelectionChanged: (selection) =>
-            ref.read(mapCampusProvider.notifier).state = selection.first,
+        onSelectionChanged: (selection) {
+          if (onSelected != null) {
+            onSelected!(selection.first);
+          } else {
+            ref.read(mapCampusProvider.notifier).state = selection.first;
+          }
+        },
       ),
     );
   }

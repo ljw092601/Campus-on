@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -75,6 +76,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
   /// linking to 부민 종합강의동) — switch the campus selector to it once the
   /// facility list is known.
   bool _campusSynced = false;
+  bool _focusActive = false;
+  bool _focusApplied = false;
+  bool _focusSyncScheduled = false;
 
   // ── Off-campus keyword search (`?nearby=`) ───────────────────────────────
   // Results are owned here and passed back down to the map view, so a rebuild
@@ -105,6 +109,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
     if (widget.focusIds.isNotEmpty) {
       // Representative marker = first id (deep-link contract, UX doc §3).
       _selectedId = widget.focusIds.first;
+      _focusActive = true;
     }
   }
 
@@ -122,13 +127,48 @@ class _MapScreenState extends ConsumerState<MapScreen>
   @override
   void didUpdateWidget(covariant MapScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.focusIds.isNotEmpty &&
-        _focusKeyOf(widget) != _focusKeyOf(oldWidget)) {
+    if (_focusKeyOf(widget) != _focusKeyOf(oldWidget)) {
       // New search / deep link: select its building (opens the peek sheet)
       // and let the campus follow it again.
-      _selectedId = widget.focusIds.first;
+      _focusActive = widget.focusIds.isNotEmpty;
+      _focusApplied = false;
+      _selectedId = _focusActive ? widget.focusIds.first : null;
       _campusSynced = false;
+      _focusSyncScheduled = false;
+      _following = false;
     }
+    if (!listEquals(widget.nearbyQueries, oldWidget.nearbyQueries)) {
+      if (NearbyPlace.idFromMarker(_selectedId ?? '') != null) {
+        _selectedId = null;
+      }
+      _places = const [];
+      _placesSearched = false;
+    }
+  }
+
+  void _clearFocus() {
+    _focusActive = false;
+    _selectedId = null;
+    _following = false;
+  }
+
+  void _markFocusApplied() {
+    final key = _focusKeyOf(widget);
+    // Camera callbacks can arrive during a child's build/update.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _focusActive && key == _focusKeyOf(widget)) {
+        setState(() => _focusApplied = true);
+      }
+    });
+  }
+
+  void _selectCampus(Campus campus) {
+    setState(() {
+      _clearFocus();
+      _places = const [];
+      _placesSearched = false;
+    });
+    ref.read(mapCampusProvider.notifier).state = campus;
   }
 
   @override
@@ -153,6 +193,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   }
 
   Future<void> _onMyLocationPressed(AppLocalizations l) async {
+    setState(_clearFocus);
     if (_tracking) {
       // Already tracking → just re-enable follow (recenters via the map view).
       setState(() => _following = true);
@@ -239,8 +280,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
               : null,
         ));
       case LocationFailure():
-        messenger.showSnackBar(
-            SnackBar(content: Text(l.map_myLocation_failed)));
+        messenger
+            .showSnackBar(SnackBar(content: Text(l.map_myLocation_failed)));
       case LocationReady():
         break; // not an error — caller proceeds
     }
@@ -251,7 +292,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
   /// goes back to the normal collapsed peek.
   String? _floorLabelFor(Facility selected) {
     final code = widget.focusFloorCode;
-    if (code == null ||
+    if (!_focusActive ||
+        code == null ||
         widget.focusIds.isEmpty ||
         selected.id != widget.focusIds.first ||
         !selected.hasFloorInfo) {
@@ -266,7 +308,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
   /// `?room=` code, only while the deep-linked building is selected.
   String? _roomCodeFor(Facility selected) {
     final code = widget.focusRoomCode;
-    if (code == null ||
+    if (!_focusActive ||
+        code == null ||
         widget.focusIds.isEmpty ||
         selected.id != widget.focusIds.first) {
       return null;
@@ -288,14 +331,39 @@ class _MapScreenState extends ConsumerState<MapScreen>
     return null;
   }
 
+  ({double lat, double lng})? _campusCenter(Campus campus) {
+    final facilities = ref
+        .read(allFacilitiesProvider)
+        .valueOrNull
+        ?.where((f) => f.campus == campus)
+        .toList();
+    if (facilities == null || facilities.isEmpty) return null;
+    return (
+      lat: facilities.fold(0.0, (sum, f) => sum + f.lat) / facilities.length,
+      lng: facilities.fold(0.0, (sum, f) => sum + f.lng) / facilities.length,
+    );
+  }
+
   void _syncCampusToFocus(List<Facility> all) {
-    if (_campusSynced || widget.focusIds.isEmpty) return;
-    _campusSynced = true;
-    final target = _find(all, widget.focusIds.first)?.campus;
-    if (target == null) return;
-    // Defer the provider write out of build.
+    if (!_focusActive || _campusSynced || _focusSyncScheduled) return;
+    _focusSyncScheduled = true;
+    final key = _focusKeyOf(widget);
+    // Resolve against ALL facilities, then send one ready request to the map.
+    // No pending focus is left in the WebView while campus/filter changes settle.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) ref.read(mapCampusProvider.notifier).state = target;
+      if (!mounted || key != _focusKeyOf(widget) || !_focusActive) return;
+      _focusSyncScheduled = false;
+      final target = _find(all, widget.focusIds.first);
+      if (target == null) {
+        setState(_clearFocus);
+        _showPlacesSnackBar(AppLocalizations.of(context).map_focus_notFound);
+        return;
+      }
+      ref.read(facilityCategoryFilterProvider.notifier).state = null;
+      if (target.campus != null) {
+        ref.read(mapCampusProvider.notifier).state = target.campus!;
+      }
+      setState(() => _campusSynced = true);
     });
   }
 
@@ -343,11 +411,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final allFacilities = ref.watch(allFacilitiesProvider).valueOrNull;
     if (allFacilities != null) _syncCampusToFocus(allFacilities);
 
+    ref.listen(facilityCategoryFilterProvider, (previous, next) {
+      if (previous != next && _campusSynced) setState(_clearFocus);
+    });
+
     // One-shot Empty toast: fire only on the transition INTO an empty result
     // (data change), not on every rebuild (e.g. marker-tap setState). Requires
     // a real Kakao key so it doesn't stack on top of the no-key fallback.
-    ref.listen<AsyncValue<List<Facility>>>(mapFacilitiesProvider,
-        (prev, next) {
+    ref.listen<AsyncValue<List<Facility>>>(mapFacilitiesProvider, (prev, next) {
       if (!AppConfig.hasKakaoKey) return;
       final nextEmpty = next.valueOrNull?.isEmpty ?? false;
       final prevEmpty = prev?.valueOrNull?.isEmpty ?? false;
@@ -376,7 +447,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       ),
       body: Column(
         children: [
-          const CampusSelector(),
+          CampusSelector(onSelected: _selectCampus),
           const CategoryFilterBar(),
           Expanded(
             child: filtered.when(
@@ -423,13 +494,19 @@ class _MapScreenState extends ConsumerState<MapScreen>
             child: CampusMapView(
               facilities: facilities,
               campus: campus,
-              focusIds: widget.focusIds,
+              campusCenter: _campusCenter(campus),
+              focusIds: _focusActive && _campusSynced && !_focusApplied
+                  ? widget.focusIds
+                  : const [],
+              onFocusApplied: _markFocusApplied,
               focusKey: _focusKeyOf(widget),
               // Classroom search: red dot on the room's building.
-              targetId:
-                  widget.focusRoomCode != null && widget.focusIds.isNotEmpty
-                      ? widget.focusIds.first
-                      : null,
+              targetId: _focusActive &&
+                      _campusSynced &&
+                      widget.focusRoomCode != null &&
+                      widget.focusIds.isNotEmpty
+                  ? widget.focusIds.first
+                  : null,
               // Deep-linked building opens with the sheet expanded; keep its
               // pin above it.
               focusObscuredFraction: selected == null
@@ -447,7 +524,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
               onUserPan: () {
                 if (_following) setState(() => _following = false);
               },
-              onMarkerTap: (id) => setState(() => _selectedId = id),
+              onMarkerTap: (id) => setState(() {
+                _clearFocus();
+                _selectedId = id;
+              }),
             ),
           ),
           // Result count for the `?nearby=` search — the pins alone don't say
@@ -509,7 +589,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
               // Key resets the sheet extent when another pin is tapped — or
               // when a new search targets this same building.
               child: DraggableScrollableSheet(
-                key: ValueKey(widget.focusIds.isNotEmpty &&
+                key: ValueKey(_focusActive &&
+                        widget.focusIds.isNotEmpty &&
                         selected.id == widget.focusIds.first
                     ? '${selected.id}|${_focusKeyOf(widget)}'
                     : selected.id),
