@@ -29,8 +29,7 @@ class GuideItemListScreen extends ConsumerWidget {
         error: (e, _) => ErrorStateView(
           message: l.guide_list_error,
           retryLabel: l.common_retry,
-          onRetry: () =>
-              ref.invalidate(guideItemsByCategoryProvider(category)),
+          onRetry: () => ref.invalidate(guideItemsByCategoryProvider(category)),
         ),
         data: (items) {
           if (items.isEmpty) {
@@ -44,7 +43,7 @@ class GuideItemListScreen extends ConsumerWidget {
             separatorBuilder: (_, __) => const Divider(height: 1),
             itemBuilder: (context, i) => GuideListItem(
               item: items[i],
-              onTap: () => context.go('/guide/item/${items[i].id}'),
+              onTap: () => context.push('/guide/item/${items[i].id}'),
             ),
           );
         },

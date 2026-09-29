@@ -7,6 +7,8 @@ import '../../core/theme/app_theme.dart';
 import '../../domain/entities/favorite_ref.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/favorites_provider.dart';
+import '../providers/facility_providers.dart';
+import '../providers/guide_providers.dart';
 import '../shared/widgets/facility_list_item.dart';
 import '../shared/widgets/guide_list_item.dart';
 import '../shared/widgets/state_views.dart';
@@ -73,7 +75,10 @@ class _FacilityFavorites extends ConsumerWidget {
       error: (e, _) => ErrorStateView(
         message: l.common_loadFailed,
         retryLabel: l.common_retry,
-        onRetry: () => ref.invalidate(favoriteFacilitiesProvider),
+        onRetry: () {
+          ref.invalidate(favoritesProvider);
+          ref.invalidate(allFacilitiesProvider);
+        },
       ),
       data: (facilities) {
         if (facilities.isEmpty) {
@@ -94,10 +99,12 @@ class _FacilityFavorites extends ConsumerWidget {
               key: ValueKey('fav-facility-${f.id}'),
               direction: DismissDirection.endToStart,
               background: const _DismissBg(),
-              onDismissed: (_) => _remove(context, ref, FavoriteType.facility, f.id),
+              onDismissed: (_) =>
+                  _remove(context, ref, FavoriteType.facility, f.id),
               child: FacilityListItem(
                 facility: f,
-                onTap: () => context.go('/map/facility/${f.id}'),
+                onTap: () =>
+                    context.push('/settings/favorites/facility/${f.id}'),
               ),
             );
           },
@@ -120,7 +127,10 @@ class _GuideFavorites extends ConsumerWidget {
       error: (e, _) => ErrorStateView(
         message: l.common_loadFailed,
         retryLabel: l.common_retry,
-        onRetry: () => ref.invalidate(favoriteGuideItemsProvider),
+        onRetry: () {
+          ref.invalidate(favoritesProvider);
+          ref.invalidate(allGuideItemsProvider);
+        },
       ),
       data: (items) {
         if (items.isEmpty) {
@@ -141,10 +151,11 @@ class _GuideFavorites extends ConsumerWidget {
               key: ValueKey('fav-guide-${g.id}'),
               direction: DismissDirection.endToStart,
               background: const _DismissBg(),
-              onDismissed: (_) => _remove(context, ref, FavoriteType.guide, g.id),
+              onDismissed: (_) =>
+                  _remove(context, ref, FavoriteType.guide, g.id),
               child: GuideListItem(
                 item: g,
-                onTap: () => context.go('/guide/item/${g.id}'),
+                onTap: () => context.push('/settings/favorites/guide/${g.id}'),
               ),
             );
           },

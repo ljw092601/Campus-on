@@ -11,7 +11,8 @@ import '../shared/widgets/state_views.dart';
 
 /// S3 — Facility List. Category filter + list; toggles with the map (S2).
 class FacilityListScreen extends ConsumerWidget {
-  const FacilityListScreen({super.key});
+  const FacilityListScreen({super.key, this.navigationBase = '/map'});
+  final String navigationBase;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +31,8 @@ class FacilityListScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Symbols.map),
             tooltip: l.map_toggle_toMap,
-            onPressed: () => context.go('/map'),
+            onPressed: () =>
+                context.canPop() ? context.pop() : context.go(navigationBase),
           ),
         ],
       ),
@@ -51,9 +53,9 @@ class FacilityListScreen extends ConsumerWidget {
                     icon: Symbols.search_off,
                     title: l.list_empty_noResult,
                     actionLabel: l.common_resetFilter,
-                    onAction: () =>
-                        ref.read(facilityCategoryFilterProvider.notifier).state =
-                            null,
+                    onAction: () => ref
+                        .read(facilityCategoryFilterProvider.notifier)
+                        .state = null,
                   );
                 }
                 return RefreshIndicator(
@@ -63,8 +65,8 @@ class FacilityListScreen extends ConsumerWidget {
                     separatorBuilder: (_, __) => const Divider(height: 1),
                     itemBuilder: (context, i) => FacilityListItem(
                       facility: list[i],
-                      onTap: () =>
-                          context.go('/map/facility/${list[i].id}'),
+                      onTap: () => context
+                          .push('$navigationBase/facility/${list[i].id}'),
                     ),
                   ),
                 );

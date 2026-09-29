@@ -33,6 +33,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   void _onChanged(String value) {
+    setState(() {}); // Show the clear button before the debounce has fired.
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 300), () {
       ref.read(searchQueryProvider.notifier).state = value;
@@ -40,6 +41,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   }
 
   void _submit(String value) {
+    _debounce?.cancel();
     ref.read(searchQueryProvider.notifier).state = value;
     if (value.trim().isNotEmpty) {
       ref.read(recentSearchesProvider.notifier).add(value.trim());
@@ -70,8 +72,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     icon: const Icon(Symbols.close),
                     tooltip: l.common_clear,
                     onPressed: () {
+                      _debounce?.cancel();
                       _controller.clear();
                       ref.read(searchQueryProvider.notifier).state = '';
+                      setState(() {});
                     },
                   ),
           ),
@@ -202,21 +206,19 @@ class _Results extends ConsumerWidget {
                   color: context.catColors.forFacility(f.category)),
               title: Text(f.name(locale)),
               subtitle: Text(f.category.label(l)),
-              onTap: () => context.go('/map/facility/${f.id}'),
+              onTap: () => context.push('/search/facility/${f.id}'),
             ),
         ],
         if (results.guides.isNotEmpty) ...[
-          _SectionHeader(
-              label: l.search_section_guide(results.guides.length)),
+          _SectionHeader(label: l.search_section_guide(results.guides.length)),
           for (final g in results.guides)
             ListTile(
               leading: Icon(g.categoryId.icon,
                   color: context.catColors.forGuide(g.categoryId)),
               title: Text(g.title(locale)),
-              subtitle: g.summary(locale) != null
-                  ? Text(g.summary(locale)!)
-                  : null,
-              onTap: () => context.go('/guide/item/${g.id}'),
+              subtitle:
+                  g.summary(locale) != null ? Text(g.summary(locale)!) : null,
+              onTap: () => context.push('/search/guide/${g.id}'),
             ),
         ],
       ],
@@ -231,8 +233,11 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(context.dimens.spaceMd,
-          context.dimens.spaceMd, context.dimens.spaceMd, context.dimens.spaceXs),
+      padding: EdgeInsets.fromLTRB(
+          context.dimens.spaceMd,
+          context.dimens.spaceMd,
+          context.dimens.spaceMd,
+          context.dimens.spaceXs),
       child: Text(label,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

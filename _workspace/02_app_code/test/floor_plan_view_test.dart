@@ -82,6 +82,21 @@ void main() {
     final viewer =
         tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
     expect(viewer.transformationController!.value.getMaxScaleOnAxis(), 2.5);
+    final original = viewer.transformationController!.value.clone();
+    viewer.transformationController!.value = Matrix4.identity();
+    await tester.pump();
+    final labels =
+        AppLocalizations.of(tester.element(find.byType(FloorPlanScreen)));
+    final recenter = find.byTooltip(labels.classroom_plan_recenter);
+    expect(
+        tester
+            .widget<IconButton>(find.byWidgetPredicate((w) =>
+                w is IconButton && w.tooltip == labels.classroom_plan_recenter))
+            .onPressed,
+        isNotNull);
+    await tester.tap(recenter);
+    await tester.pump();
+    expect(viewer.transformationController!.value, original);
     expect(tester.takeException(), isNull);
   });
 }

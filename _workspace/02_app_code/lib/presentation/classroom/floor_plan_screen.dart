@@ -68,9 +68,10 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
           IconButton(
             tooltip: l.classroom_plan_recenter,
             icon: const Icon(Symbols.center_focus_strong),
-            onPressed: _viewport == null
-                ? null
-                : () => _ctrl.value = _focusOnRoom(_viewport!),
+            onPressed: () {
+              final viewport = _viewport;
+              if (viewport != null) _ctrl.value = _focusOnRoom(viewport);
+            },
           ),
         ],
       ),

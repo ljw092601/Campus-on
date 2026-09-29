@@ -38,6 +38,40 @@ class AppRouter {
 
   static final _rootKey = GlobalKey<NavigatorState>();
 
+  static MapScreen _mapScreen(GoRouterState state,
+      {String navigationBase = '/map'}) {
+    final query = state.uri.queryParameters;
+    String? value(String key) =>
+        query[key]?.isNotEmpty == true ? query[key] : null;
+    return MapScreen(
+      navigationBase: navigationBase,
+      focusIds: value('focus')?.split(',') ?? const [],
+      nearbyQueries: value('nearby')
+              ?.split(',')
+              .map((s) => s.trim())
+              .where((s) => s.isNotEmpty)
+              .toList() ??
+          const [],
+      focusFloorCode: value('floor'),
+      focusRoomCode: value('room'),
+      focusPlanCode: value('plan'),
+      focusToken: value('t'),
+    );
+  }
+
+  // Distinct route instances keep details on the navigator that opened them.
+  // Pushing the tab shell above a full-screen search would duplicate the shell.
+  static List<RouteBase> _details() => [
+        GoRoute(
+            path: 'facility/:id',
+            builder: (context, state) =>
+                FacilityDetailScreen(facilityId: state.pathParameters['id']!)),
+        GoRoute(
+            path: 'guide/:id',
+            builder: (context, state) =>
+                GuideDetailScreen(itemId: state.pathParameters['id']!)),
+      ];
+
   static final GoRouter router = GoRouter(
     navigatorKey: _rootKey,
     initialLocation: '/home',
@@ -69,8 +103,7 @@ class AppRouter {
                   ),
                   GoRoute(
                     path: 'calendar',
-                    builder: (context, state) =>
-                        const AcademicCalendarScreen(),
+                    builder: (context, state) => const AcademicCalendarScreen(),
                   ),
                   GoRoute(
                     path: 'guide',
@@ -99,40 +132,7 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/map',
-                builder: (context, state) {
-                  final focus = state.uri.queryParameters['focus'];
-                  final ids = (focus == null || focus.isEmpty)
-                      ? const <String>[]
-                      : focus.split(',');
-                  final nearby = state.uri.queryParameters['nearby'];
-                  final queries = (nearby == null || nearby.trim().isEmpty)
-                      ? const <String>[]
-                      : nearby
-                          .split(',')
-                          .map((e) => e.trim())
-                          .where((e) => e.isNotEmpty)
-                          .toList();
-                  // `?floor=03` (classroom search): open the focused
-                  // building's peek sheet expanded at that floor.
-                  final floor = state.uri.queryParameters['floor'];
-                  // `&room=0306-1`: red dot on that room's floor plan.
-                  final room = state.uri.queryParameters['room'];
-                  // `&plan=B04A`: which drawings (wing) the room is on,
-                  // when it differs from the building code.
-                  final plan = state.uri.queryParameters['plan'];
-                  // `&t=<millis>`: unique per search so a repeat search into
-                  // the open map tab still re-centres.
-                  final token = state.uri.queryParameters['t'];
-                  return MapScreen(
-                    focusIds: ids,
-                    nearbyQueries: queries,
-                    focusFloorCode:
-                        (floor == null || floor.isEmpty) ? null : floor,
-                    focusRoomCode: (room == null || room.isEmpty) ? null : room,
-                    focusPlanCode: (plan == null || plan.isEmpty) ? null : plan,
-                    focusToken: token,
-                  );
-                },
+                builder: (context, state) => _mapScreen(state),
                 routes: [
                   GoRoute(
                     path: 'list',
@@ -157,6 +157,7 @@ class AppRouter {
                   GoRoute(
                     path: 'favorites',
                     builder: (context, state) => const FavoritesScreen(),
+                    routes: _details(),
                   ),
                   GoRoute(
                     path: 'about',
@@ -184,12 +185,27 @@ class AppRouter {
         parentNavigatorKey: _rootKey,
         path: '/search',
         builder: (context, state) => const SearchScreen(),
+        routes: _details(),
       ),
       // Full-screen classroom-location search above the shell.
       GoRoute(
         parentNavigatorKey: _rootKey,
         path: '/classroom-search',
         builder: (context, state) => const ClassroomSearchScreen(),
+        routes: [
+          GoRoute(
+            path: 'result',
+            builder: (context, state) =>
+                _mapScreen(state, navigationBase: '/classroom-search/result'),
+            routes: [
+              ..._details(),
+              GoRoute(
+                  path: 'list',
+                  builder: (context, state) => const FacilityListScreen(
+                      navigationBase: '/classroom-search/result')),
+            ],
+          ),
+        ],
       ),
     ],
   );

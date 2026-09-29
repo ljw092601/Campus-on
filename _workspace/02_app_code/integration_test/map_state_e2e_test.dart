@@ -6,6 +6,10 @@ import 'package:campus_on/domain/entities/user_location.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
 import 'package:campus_on/main.dart' as app;
 import 'package:campus_on/presentation/classroom/widgets/room_location_card.dart';
+import 'package:campus_on/presentation/classroom/classroom_search_screen.dart';
+import 'package:campus_on/presentation/classroom/floor_plan_screen.dart';
+import 'package:campus_on/presentation/classroom/widgets/floor_plan_view.dart';
+import 'package:campus_on/presentation/facility/facility_detail_screen.dart';
 import 'package:campus_on/presentation/map/map_screen.dart';
 import 'package:campus_on/presentation/map/widgets/campus_map_view.dart';
 import 'package:campus_on/presentation/providers/facility_providers.dart';
@@ -68,6 +72,10 @@ void main() {
     Future<void> route(String path) async {
       AppRouter.router.go(path);
       await tester.pump(const Duration(milliseconds: 300));
+      if (path.startsWith('/map')) {
+        await until(() async => find.byType(MapScreen).evaluate().length == 1,
+            'map route transition');
+      }
     }
 
     Future<void> tapCampus(Campus campus) async {
@@ -135,6 +143,77 @@ void main() {
     expect(view().selectedId, building.id);
     expect(view().campus, Campus.seunghak);
     passed('H1_filtered_classroom_search');
+
+    // Real route transitions must retain both the WebView and search form.
+    final mapState = tester.state(find.byType(MapScreen));
+    final camera = await js(
+        '[map.getCenter().getLat(),map.getCenter().getLng(),map.getLevel()]');
+    final plan = find.descendant(
+        of: find.byType(RoomLocationCard),
+        matching: find.byType(FloorPlanView));
+    await until(() async => plan.evaluate().isNotEmpty, 'room floor plan');
+    await tester.ensureVisible(plan);
+    await tester.tap(plan);
+    await until(() async => find.byType(FloorPlanScreen).evaluate().isNotEmpty,
+        'full-screen plan');
+    await tester.pump(const Duration(milliseconds: 500));
+    final viewer =
+        tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
+    final focused = viewer.transformationController!.value.clone();
+    await tester.drag(find.byType(InteractiveViewer), const Offset(90, 100));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(viewer.transformationController!.value, isNot(focused));
+    await tester.tap(find.byTooltip(l.classroom_plan_recenter));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(viewer.transformationController!.value, focused);
+    await tester.pageBack();
+    await tester.pump(const Duration(milliseconds: 500));
+    passed('M3_floor_plan_recenter');
+
+    final detail = find.text(l.map_peek_viewDetail);
+    await tester.scrollUntilVisible(detail, -200,
+        scrollable: find
+            .descendant(
+                of: find.byType(DraggableScrollableSheet),
+                matching: find.byType(Scrollable))
+            .first);
+    await tester.tap(detail);
+    await until(
+        () async => find.byType(FacilityDetailScreen).evaluate().isNotEmpty,
+        'facility detail');
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.binding.handlePopRoute();
+    await tester.pump(const Duration(milliseconds: 600));
+    expect(tester.state(find.byType(MapScreen)), same(mapState));
+    expect(
+        await js(
+            '[map.getCenter().getLat(),map.getCenter().getLng(),map.getLevel()]'),
+        camera);
+    expect(
+        (await overlays()).any((o) => o['id'] == 'room-target-${building.id}'),
+        isTrue);
+    expect(find.byType(RoomLocationCard), findsOneWidget);
+    passed('M13_detail_back_preserves_classroom_map');
+
+    await tester.binding.handlePopRoute();
+    await until(
+        () async => find.byType(ClassroomSearchScreen).evaluate().isNotEmpty,
+        'return to classroom form');
+    expect(tester.widget<TextField>(roomField).controller!.text, '0306-1');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).first).controller!.text,
+        startsWith('S04'));
+    await tester
+        .tap(find.widgetWithText(FilledButton, l.classroom_action_search));
+    await until(() async {
+      try {
+        return (await overlays())
+            .any((o) => o['id'] == 'room-target-${building.id}');
+      } catch (_) {
+        return false;
+      }
+    }, 'resubmitted classroom target');
+    passed('M11_classroom_back_and_resubmit');
 
     await tapCampus(Campus.bumin);
     await tapCampus(Campus.seunghak);

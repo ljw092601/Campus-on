@@ -37,6 +37,7 @@ class MapScreen extends ConsumerStatefulWidget {
     this.focusRoomCode,
     this.focusPlanCode,
     this.focusToken,
+    this.navigationBase = '/map',
   });
 
   final List<String> focusIds;
@@ -58,6 +59,10 @@ class MapScreen extends ConsumerStatefulWidget {
   /// `/map?t=` — unique per search, so repeating the same search into the
   /// already-open map tab still re-selects and re-centres.
   final String? focusToken;
+
+  /// Classroom results use a root stack above the search form, while the map
+  /// tab uses its own branch. Details/lists stay in their originating stack.
+  final String navigationBase;
 
   @override
   ConsumerState<MapScreen> createState() => _MapScreenState();
@@ -441,7 +446,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
           IconButton(
             icon: const Icon(Symbols.list),
             tooltip: l.map_toggle_toList,
-            onPressed: () => context.go('/map/list'),
+            onPressed: () => context.push('${widget.navigationBase}/list'),
           ),
         ],
       ),
@@ -457,7 +462,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(allFacilitiesProvider),
                 secondaryLabel: l.map_error_openList,
-                onSecondary: () => context.go('/map/list'),
+                onSecondary: () =>
+                    context.push('${widget.navigationBase}/list'),
               ),
               data: (facilities) => _buildMap(context, l, facilities),
             ),
@@ -476,7 +482,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
         retryLabel: l.common_retry,
         onRetry: () => ref.invalidate(allFacilitiesProvider),
         secondaryLabel: l.map_error_openList,
-        onSecondary: () => context.go('/map/list'),
+        onSecondary: () => context.push('${widget.navigationBase}/list'),
       );
     }
 
@@ -610,8 +616,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   expandedFloor: _floorLabelFor(selected),
                   roomCode: _roomCodeFor(selected),
                   roomPlanCode: widget.focusPlanCode,
-                  onViewDetail: () =>
-                      context.go('/map/facility/${selected.id}'),
+                  onViewDetail: () => context
+                      .push('${widget.navigationBase}/facility/${selected.id}'),
                 ),
               ),
             )

@@ -14,14 +14,17 @@ class SearchResults {
 }
 
 /// Debounced query text (the S8 screen updates this via a 300ms Timer).
-final searchQueryProvider = StateProvider<String>((ref) => '');
+// Search state belongs to the mounted search screen: pushing a result keeps it,
+// closing search releases it so the next session starts with recent searches.
+final searchQueryProvider = StateProvider.autoDispose<String>((ref) => '');
 
 final searchSegmentProvider =
-    StateProvider<SearchSegment>((ref) => SearchSegment.all);
+    StateProvider.autoDispose<SearchSegment>((ref) => SearchSegment.all);
 
 /// Unified facility + guide search (S8). Returns empty for a blank query so the
 /// screen shows the "recent searches" empty state instead.
-final searchResultsProvider = FutureProvider<SearchResults>((ref) async {
+final searchResultsProvider =
+    FutureProvider.autoDispose<SearchResults>((ref) async {
   final query = ref.watch(searchQueryProvider).trim();
   final segment = ref.watch(searchSegmentProvider);
   if (query.isEmpty) return const SearchResults();

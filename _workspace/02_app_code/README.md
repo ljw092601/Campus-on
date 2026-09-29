@@ -94,7 +94,9 @@ python tool/run_map_e2e.py --device emulator-5554 --firestore
 The runner grants location permission to the app and injects three emulator
 GPS fixes at test checkpoints. The test checks native WebView markers, classroom
 search under an active filter, consumed focus, campus switching, live nearby
-search/removal, and location overlays. A separate real-WebView fixture supplies
+search/removal, and location overlays. It also opens and recenters a floor plan,
+returns from facility detail without losing the map target/camera, and returns
+to the classroom form with its input intact before submitting again. A separate real-WebView fixture supplies
 60m/120m accuracy because emulator GPS normally reports 5m (no visible halo).
 Firestore mode only reads content. Logs are saved in the OS temporary directory;
 use `--log`, `--flutter`, or `--adb` to override local paths. The emulator must be
