@@ -11,6 +11,7 @@ import '../../l10n/gen/app_localizations.dart';
 import '../providers/dining_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// 오늘의 학식 — daily cafeteria menus per campus, with a day switcher.
 /// No school API exists; real menus come from the admin sheet → Firestore
@@ -68,35 +69,38 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen> {
             child: async.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => ErrorStateView(
-                message: l.dining_error_loadFailed,
+                message: readErrorMessage(e, l, l.dining_error_loadFailed),
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(diningMenusProvider(_date)),
               ),
-              data: (menus) {
-                // Firestore mode with no seeded cafeterias yields an empty
-                // list — show an empty state instead of a bare date header.
-                if (menus.isEmpty) {
-                  return EmptyStateView(
-                    icon: Symbols.restaurant,
-                    title: l.dining_empty,
-                  );
-                }
-                return ListView(
-                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-                  children: [
-                    // The sample-data disclaimer only applies to mock data; in
-                    // Firestore mode the menus are real admin-entered content.
-                    if (!useFirestoreDining) ...[
-                      _NoticeBanner(text: l.dining_placeholder_notice),
-                      const SizedBox(height: 12),
-                    ],
-                    for (final c in menus) ...[
-                      _CafeteriaCard(menu: c),
-                      const SizedBox(height: 12),
-                    ],
-                  ],
-                );
-              },
+              data: (menus) => ReadStatusContent(
+                  data: menus,
+                  onRetry: () => ref.invalidate(diningMenusProvider(_date)),
+                  child: Builder(builder: (context) {
+                    // Firestore mode with no seeded cafeterias yields an empty
+                    // list — show an empty state instead of a bare date header.
+                    if (menus.isEmpty) {
+                      return EmptyStateView(
+                        icon: Symbols.restaurant,
+                        title: l.dining_empty,
+                      );
+                    }
+                    return ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                      children: [
+                        // The sample-data disclaimer only applies to mock data; in
+                        // Firestore mode the menus are real admin-entered content.
+                        if (!useFirestoreDining) ...[
+                          _NoticeBanner(text: l.dining_placeholder_notice),
+                          const SizedBox(height: 12),
+                        ],
+                        for (final c in menus) ...[
+                          _CafeteriaCard(menu: c),
+                          const SizedBox(height: 12),
+                        ],
+                      ],
+                    );
+                  })),
             ),
           ),
         ],
@@ -212,7 +216,11 @@ class _CafeteriaCard extends ConsumerWidget {
             const SizedBox(height: 10),
             // Unpublished (admin hasn't entered the menu) is NOT the same as
             // an explicit closure — see design doc §7 D1.
-            if (menu.isUnpublished)
+            if (menu.status == DiningAvailability.unavailable)
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(l.dining_unavailable))
+            else if (menu.isUnpublished)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Text(l.dining_unpublished,
@@ -254,8 +262,8 @@ class _CafeteriaCard extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(meal.items.join(' · '),
-                              style: const TextStyle(
-                                  fontSize: 13.5, height: 1.5)),
+                              style:
+                                  const TextStyle(fontSize: 13.5, height: 1.5)),
                           if (meal.price != null)
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
@@ -278,8 +286,7 @@ class _CafeteriaCard extends ConsumerWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton.icon(
-                  onPressed: () =>
-                      context.go('/map?focus=${menu.facilityId}'),
+                  onPressed: () => context.go('/map?focus=${menu.facilityId}'),
                   icon: const Icon(Symbols.pin_drop, size: 18),
                   label: Text(l.facility_action_viewOnMap),
                 ),

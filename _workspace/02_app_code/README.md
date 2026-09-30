@@ -123,3 +123,35 @@ The recovery E2E injects one startup failure, then initializes the real services
 It temporarily supplies an invalid Kakao key in the test process, checks the SDK
 timeout and list fallback, restores the configured key, and verifies the classroom
 marker after retry. It does not change device connectivity or production content.
+
+### Firestore offline reads and data sources
+
+Dining and calendar use separate build flags. All three Firestore flags still
+**default to false**; plain `flutter run` uses labeled sample data. The local
+Kakao key file alone does not enable production data. To run with Firestore:
+
+```bash
+flutter run --dart-define-from-file=env.json --dart-define=USE_FIRESTORE=true --dart-define=USE_FIRESTORE_DINING=true --dart-define=USE_FIRESTORE_CALENDAR=true
+```
+
+Repositories request server data with an 8-second deadline, then try the local
+Firestore cache for up to 2 seconds on connectivity errors. Server-empty is a
+valid empty result; cache-empty cannot establish absence and raises an offline
+error. Permission errors do not fall back to cached content. No fallback uses
+mock data. Successful list reads carry `RepositoryList` cache/partial metadata;
+filters must retain it with `preserveReadStatus`.
+
+Dining, calendar, facility lists/map, guide lists and unified search show a
+per-read cache/partial notice with Retry. A cached menu missing for one cafeteria
+is unavailable, not unpublished/closed. Dining retry rereads both cafeterias and
+menus. Unified search retains the successful source when the other source fails.
+
+```bash
+flutter test test/firestore_offline_test.dart test/offline_ui_test.dart
+python tool/run_map_e2e.py --test offline --firestore
+```
+
+The offline E2E reads real content, disables only the test app's Firestore network,
+checks saved facilities, calendar state and an uncached menu date, then re-enables
+the network in `finally`. Retry must restore a server-backed dining result. It
+makes no Firestore writes and does not change emulator-wide connectivity.

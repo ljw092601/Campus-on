@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/facility_providers.dart';
+import 'read_status.dart';
 
 /// Floor-by-floor accordion for one building (map Peek sheet + S4 detail).
 ///
@@ -43,7 +44,7 @@ class FloorAccordion extends ConsumerWidget {
         child: Row(
           children: [
             Expanded(
-              child: Text(l.facility_floors_error,
+              child: Text(readErrorMessage(e, l, l.facility_floors_error),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -68,8 +69,8 @@ class FloorAccordion extends ConsumerWidget {
               ExpansionTile(
                 initiallyExpanded: floor.floor == expandedFloor,
                 tilePadding: EdgeInsets.symmetric(horizontal: d.spaceSm),
-                childrenPadding: EdgeInsets.fromLTRB(
-                    d.spaceMd, 0, d.spaceMd, d.spaceMd),
+                childrenPadding:
+                    EdgeInsets.fromLTRB(d.spaceMd, 0, d.spaceMd, d.spaceMd),
                 shape: const Border(),
                 collapsedShape: const Border(),
                 title: Row(

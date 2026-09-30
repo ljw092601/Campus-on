@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/building_floors.dart';
 import '../../domain/entities/facility.dart';
+import '../../domain/repositories/read_result.dart';
 import 'repository_providers.dart';
 
 /// All facilities (S2/S3 load-all + client filter strategy).
@@ -26,7 +27,7 @@ final filteredFacilitiesProvider = Provider<AsyncValue<List<Facility>>>((ref) {
   final filter = ref.watch(facilityCategoryFilterProvider);
   return async.whenData((list) {
     if (filter == null) return list;
-    return list.where((f) => f.category == filter).toList();
+    return preserveReadStatus(list, list.where((f) => f.category == filter));
   });
 });
 
@@ -40,8 +41,8 @@ final mapCampusProvider = StateProvider<Campus>((ref) => Campus.seunghak);
 final mapFacilitiesProvider = Provider<AsyncValue<List<Facility>>>((ref) {
   final async = ref.watch(filteredFacilitiesProvider);
   final campus = ref.watch(mapCampusProvider);
-  return async.whenData((list) =>
-      list.where((f) => f.campus == null || f.campus == campus).toList());
+  return async.whenData((list) => preserveReadStatus(
+      list, list.where((f) => f.campus == null || f.campus == campus)));
 });
 
 /// Floor guide for one building (pin tap / S4 detail). `.family` on facility

@@ -11,6 +11,7 @@ import '../providers/locale_provider.dart';
 import '../providers/search_provider.dart';
 import '../shared/category_labels.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// S8 — Unified facility + guide search. 300ms debounce, segment filter,
 /// recent searches (local) when the query is empty.
@@ -96,20 +97,28 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                     loading: () =>
                         const Center(child: CircularProgressIndicator()),
                     error: (e, _) => ErrorStateView(
-                      message: l.search_error_failed,
+                      message: readErrorMessage(e, l, l.search_error_failed),
                       retryLabel: l.common_retry,
                       onRetry: () => ref.invalidate(searchResultsProvider),
                     ),
-                    data: (r) => r.isEmpty
-                        ? EmptyStateView(
-                            icon: Symbols.search_off,
-                            title: l.search_empty_noResult(query.trim()),
-                            actionLabel: l.common_resetFilter,
-                            onAction: () => ref
-                                .read(searchSegmentProvider.notifier)
-                                .state = SearchSegment.all,
-                          )
-                        : _Results(results: r),
+                    data: (r) => ReadStatusContent(
+                        data: r.readStatus,
+                        onRetry: () => ref.invalidate(searchResultsProvider),
+                        warning: r.facilityFailed
+                            ? l.search_partial_facility
+                            : r.guideFailed
+                                ? l.search_partial_guide
+                                : null,
+                        child: r.isEmpty
+                            ? EmptyStateView(
+                                icon: Symbols.search_off,
+                                title: l.search_empty_noResult(query.trim()),
+                                actionLabel: l.common_resetFilter,
+                                onAction: () => ref
+                                    .read(searchSegmentProvider.notifier)
+                                    .state = SearchSegment.all,
+                              )
+                            : _Results(results: r)),
                   ),
           ),
         ],

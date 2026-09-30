@@ -2,12 +2,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/entities/facility.dart';
+import '../../domain/repositories/read_result.dart';
 import 'repository_providers.dart';
 
 enum SearchSegment { all, facility, guide }
 
 class SearchResults {
-  const SearchResults({this.facilities = const [], this.guides = const []});
+  const SearchResults(
+      {this.facilities = const [],
+      this.guides = const [],
+      this.facilityFailed = false,
+      this.guideFailed = false});
+  final bool facilityFailed;
+  final bool guideFailed;
+  bool get hasFailures => facilityFailed || guideFailed;
+  RepositoryList<Object> get readStatus =>
+      RepositoryList<Object>([...facilities, ...guides],
+          fromCache: isCachedRead(facilities) || isCachedRead(guides),
+          incomplete: hasFailures ||
+              isIncompleteRead(facilities) ||
+              isIncompleteRead(guides));
   final List<Facility> facilities;
   final List<AdminGuideItem> guides;
   bool get isEmpty => facilities.isEmpty && guides.isEmpty;
@@ -35,11 +49,36 @@ final searchResultsProvider =
   final wantFacility = segment != SearchSegment.guide;
   final wantGuide = segment != SearchSegment.facility;
 
-  final facilities =
-      wantFacility ? await facilityRepo.search(query) : <Facility>[];
-  final guides = wantGuide ? await guideRepo.search(query) : <AdminGuideItem>[];
-
-  return SearchResults(facilities: facilities, guides: guides);
+  List<Facility> facilities = const [];
+  List<AdminGuideItem> guides = const [];
+  Object? facilityError, guideError;
+  await Future.wait([
+    if (wantFacility)
+      (() async {
+        try {
+          facilities = await facilityRepo.search(query);
+        } catch (e) {
+          facilityError = e;
+        }
+      })(),
+    if (wantGuide)
+      (() async {
+        try {
+          guides = await guideRepo.search(query);
+        } catch (e) {
+          guideError = e;
+        }
+      })(),
+  ]);
+  if ((!wantFacility || facilityError != null) &&
+      (!wantGuide || guideError != null)) {
+    throw facilityError ?? guideError!;
+  }
+  return SearchResults(
+      facilities: facilities,
+      guides: guides,
+      facilityFailed: facilityError != null,
+      guideFailed: guideError != null);
 });
 
 /// Recent searches (local, most-recent-first, max 8).

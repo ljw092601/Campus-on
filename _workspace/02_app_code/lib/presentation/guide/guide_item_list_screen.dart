@@ -9,6 +9,7 @@ import '../providers/guide_providers.dart';
 import '../shared/category_labels.dart';
 import '../shared/widgets/guide_list_item.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// S6 — Guide Item List. Items within one category (published first). Tapping a
 /// row opens the S7 detail; the star toggles a local favorite.
@@ -27,26 +28,30 @@ class GuideItemListScreen extends ConsumerWidget {
       body: async.when(
         loading: () => const SkeletonList(rows: 4),
         error: (e, _) => ErrorStateView(
-          message: l.guide_list_error,
+          message: readErrorMessage(e, l, l.guide_list_error),
           retryLabel: l.common_retry,
           onRetry: () => ref.invalidate(guideItemsByCategoryProvider(category)),
         ),
-        data: (items) {
-          if (items.isEmpty) {
-            return EmptyStateView(
-              icon: Symbols.checklist,
-              title: l.guide_list_empty_title,
-            );
-          }
-          return ListView.separated(
-            itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1),
-            itemBuilder: (context, i) => GuideListItem(
-              item: items[i],
-              onTap: () => context.push('/guide/item/${items[i].id}'),
-            ),
-          );
-        },
+        data: (items) => ReadStatusContent(
+            data: items,
+            onRetry: () =>
+                ref.invalidate(guideItemsByCategoryProvider(category)),
+            child: Builder(builder: (context) {
+              if (items.isEmpty) {
+                return EmptyStateView(
+                  icon: Symbols.checklist,
+                  title: l.guide_list_empty_title,
+                );
+              }
+              return ListView.separated(
+                itemCount: items.length,
+                separatorBuilder: (_, __) => const Divider(height: 1),
+                itemBuilder: (context, i) => GuideListItem(
+                  item: items[i],
+                  onTap: () => context.push('/guide/item/${items[i].id}'),
+                ),
+              );
+            })),
       ),
     );
   }

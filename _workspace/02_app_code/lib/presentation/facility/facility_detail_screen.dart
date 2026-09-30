@@ -14,6 +14,7 @@ import '../providers/locale_provider.dart';
 import '../shared/category_labels.dart';
 import '../shared/widgets/floor_accordion.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// S4 — Facility Detail. Info + inline mini-map link + bottom CTA (responsive
 /// horizontal→vertical stack under large font scale).
@@ -36,7 +37,7 @@ class FacilityDetailScreen extends ConsumerWidget {
       body: async.when(
         loading: () => const _DetailSkeleton(),
         error: (e, _) => ErrorStateView(
-          message: l.facility_detail_error,
+          message: readErrorMessage(e, l, l.facility_detail_error),
           retryLabel: l.common_retry,
           onRetry: () => ref.invalidate(facilityByIdProvider(facilityId)),
         ),
@@ -121,8 +122,7 @@ class _DetailBody extends ConsumerWidget {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
-                                    ?.copyWith(
-                                        color: scheme.onSurfaceVariant)),
+                                    ?.copyWith(color: scheme.onSurfaceVariant)),
                           ),
                         SizedBox(width: d.spaceSm),
                         _CategoryBadge(
@@ -214,7 +214,8 @@ class _MiniMap extends StatelessWidget {
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.10),
           borderRadius: context.dimens.brMd,
-          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+          border:
+              Border.all(color: Theme.of(context).colorScheme.outlineVariant),
         ),
         alignment: Alignment.center,
         child: Icon(Symbols.location_on, color: color, size: 40),
@@ -261,10 +262,8 @@ class _CategoryBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(label,
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(color: color)),
+          style:
+              Theme.of(context).textTheme.labelLarge?.copyWith(color: color)),
     );
   }
 }
@@ -305,8 +304,7 @@ class _BottomCta extends ConsumerWidget {
         builder: (context, constraints) {
           final stack = scale >= 1.3 || constraints.maxWidth < 340;
           if (!hasPhone) {
-            return SizedBox(
-                width: double.infinity, height: 48, child: mapBtn);
+            return SizedBox(width: double.infinity, height: 48, child: mapBtn);
           }
           if (stack) {
             return Column(

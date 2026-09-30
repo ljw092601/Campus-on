@@ -8,6 +8,7 @@ import '../providers/facility_providers.dart';
 import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/facility_list_item.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// S3 — Facility List. Category filter + list; toggles with the map (S2).
 class FacilityListScreen extends ConsumerWidget {
@@ -43,34 +44,44 @@ class FacilityListScreen extends ConsumerWidget {
             child: filtered.when(
               loading: () => const SkeletonList(),
               error: (e, _) => ErrorStateView(
-                message: l.list_error_loadFailed,
+                message: readErrorMessage(e, l, l.list_error_loadFailed),
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(allFacilitiesProvider),
               ),
-              data: (list) {
-                if (list.isEmpty) {
-                  return EmptyStateView(
-                    icon: Symbols.search_off,
-                    title: l.list_empty_noResult,
-                    actionLabel: l.common_resetFilter,
-                    onAction: () => ref
-                        .read(facilityCategoryFilterProvider.notifier)
-                        .state = null,
-                  );
-                }
-                return RefreshIndicator(
-                  onRefresh: () async => ref.invalidate(allFacilitiesProvider),
-                  child: ListView.separated(
-                    itemCount: list.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (context, i) => FacilityListItem(
-                      facility: list[i],
-                      onTap: () => context
-                          .push('$navigationBase/facility/${list[i].id}'),
-                    ),
-                  ),
-                );
-              },
+              data: (list) => ReadStatusContent(
+                  data: list,
+                  onRetry: () => ref.invalidate(allFacilitiesProvider),
+                  child: Builder(builder: (context) {
+                    if (list.isEmpty) {
+                      return EmptyStateView(
+                        icon: Symbols.search_off,
+                        title: l.list_empty_noResult,
+                        actionLabel: l.common_resetFilter,
+                        onAction: () => ref
+                            .read(facilityCategoryFilterProvider.notifier)
+                            .state = null,
+                      );
+                    }
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        ref.invalidate(allFacilitiesProvider);
+                        try {
+                          await ref.read(allFacilitiesProvider.future);
+                        } catch (_) {
+                          /* The provider displays the read error. */
+                        }
+                      },
+                      child: ListView.separated(
+                        itemCount: list.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (context, i) => FacilityListItem(
+                          facility: list[i],
+                          onTap: () => context
+                              .push('$navigationBase/facility/${list[i].id}'),
+                        ),
+                      ),
+                    );
+                  })),
             ),
           ),
         ],

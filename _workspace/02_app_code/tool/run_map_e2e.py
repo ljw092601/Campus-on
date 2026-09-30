@@ -22,14 +22,16 @@ def main():
     parser.add_argument('--adb', default=shutil.which('adb') or str(
         Path.home() / 'AppData/Local/Android/Sdk/platform-tools/adb.exe'))
     parser.add_argument('--firestore', action='store_true')
-    parser.add_argument('--test', choices=['map', 'recovery'], default='map')
+    parser.add_argument('--test', choices=['map', 'recovery', 'offline'], default='map')
     parser.add_argument('--log', type=Path)
     args = parser.parse_args()
+    if args.test == 'offline' and not args.firestore:
+        parser.error('--test offline requires --firestore')
     root = Path(__file__).resolve().parents[1]
     mode = 'firestore' if args.firestore else 'mock'
     log_path = args.log or Path(tempfile.gettempdir()) / f'campus-{args.test}-e2e-{mode}.log'
     command = [args.flutter, 'test', '-d', args.device,
-               f'integration_test/{"map_state" if args.test == "map" else "recovery"}_e2e_test.dart',
+               f'integration_test/{"map_state" if args.test == "map" else args.test}_e2e_test.dart',
                '--dart-define-from-file=env.json', '--no-pub']
     for flag in ('USE_FIRESTORE', 'USE_FIRESTORE_CALENDAR', 'USE_FIRESTORE_DINING'):
         command.append(f'--dart-define={flag}={str(args.firestore).lower()}')

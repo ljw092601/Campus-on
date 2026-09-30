@@ -14,6 +14,13 @@
   "map_error_timeout": "The map could not be loaded. Check your connection and try again.",
 
   "common_retry": "Retry",
+  "data_cached": "Showing saved information. It may be outdated or incomplete.",
+  "data_cached_empty": "Saved information is not enough to confirm these results. Connect and try again.",
+  "data_offline_unavailable": "Could not connect and no saved information is available. Check your connection and try again.",
+  "data_incomplete": "Some information could not be loaded. Please try again.",
+  "dining_unavailable": "Could not check the menu for this date. Please try again.",
+  "search_partial_facility": "Could not load facility results. Retry to check all results.",
+  "search_partial_guide": "Could not load guide results. Retry to check all results.",
   "common_all": "All",
   "common_clear": "Clear",
   "common_resetFilter": "Reset filter",

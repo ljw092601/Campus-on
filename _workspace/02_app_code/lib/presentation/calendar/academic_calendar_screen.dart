@@ -5,10 +5,12 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../core/config/firebase_init.dart' show useFirestoreCalendar;
 import '../../domain/entities/academic_event.dart';
+import '../../domain/repositories/read_result.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/academic_calendar_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// 학사일정 — shows ONLY the current academic year (학년도, Mar–Feb),
 /// grouped by month. Other years' rows may exist in Firestore (the admin
@@ -30,70 +32,78 @@ class AcademicCalendarScreen extends ConsumerWidget {
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => ErrorStateView(
-          message: l.calendar_error_loadFailed,
+          message: readErrorMessage(e, l, l.calendar_error_loadFailed),
           retryLabel: l.common_retry,
           onRetry: () => ref.invalidate(academicEventsProvider),
         ),
-        data: (events) {
-          final currentYear = AcademicEvent.academicYearOf(DateTime.now());
+        data: (events) => ReadStatusContent(
+            data: preserveReadStatus(
+                events,
+                events.where((e) =>
+                    e.academicYear ==
+                    AcademicEvent.academicYearOf(DateTime.now()))),
+            onRetry: () => ref.invalidate(academicEventsProvider),
+            child: Builder(builder: (context) {
+              final currentYear = AcademicEvent.academicYearOf(DateTime.now());
 
-          // Group this year's events by start month (events arrive
-          // start-sorted, so insertion order keeps months chronological).
-          final months = <DateTime, List<AcademicEvent>>{};
-          for (final e in events) {
-            if (e.academicYear != currentYear) continue;
-            months
-                .putIfAbsent(DateTime(e.start.year, e.start.month), () => [])
-                .add(e);
-          }
-          final monthFmt = DateFormat.yMMMM(locale.toLanguageTag());
+              // Group this year's events by start month (events arrive
+              // start-sorted, so insertion order keeps months chronological).
+              final months = <DateTime, List<AcademicEvent>>{};
+              for (final e in events) {
+                if (e.academicYear != currentYear) continue;
+                months
+                    .putIfAbsent(
+                        DateTime(e.start.year, e.start.month), () => [])
+                    .add(e);
+              }
+              final monthFmt = DateFormat.yMMMM(locale.toLanguageTag());
 
-          if (months.isEmpty) {
-            return Center(
-              child: Text(
-                l.calendar_empty,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-            );
-          }
-
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: [
-              // Sample-data disclaimer is for mock mode only; Firestore mode
-              // shows real admin-entered schedule.
-              if (!useFirestoreCalendar)
-                _NoticeBanner(text: l.calendar_placeholder_notice),
-              for (final entry in months.entries) ...[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 18, 4, 8),
+              if (months.isEmpty) {
+                return Center(
                   child: Text(
-                    monthFmt.format(entry.key),
+                    l.calendar_empty,
                     style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
-                ),
-                Card(
-                  margin: EdgeInsets.zero,
-                  child: Column(
-                    children: [
-                      for (var i = 0; i < entry.value.length; i++) ...[
-                        if (i > 0) const Divider(height: 1, indent: 16),
-                        _EventRow(event: entry.value[i]),
-                      ],
-                    ],
-                  ),
-                ),
-              ],
-            ],
-          );
-        },
+                );
+              }
+
+              return ListView(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                children: [
+                  // Sample-data disclaimer is for mock mode only; Firestore mode
+                  // shows real admin-entered schedule.
+                  if (!useFirestoreCalendar)
+                    _NoticeBanner(text: l.calendar_placeholder_notice),
+                  for (final entry in months.entries) ...[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 18, 4, 8),
+                      child: Text(
+                        monthFmt.format(entry.key),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      margin: EdgeInsets.zero,
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < entry.value.length; i++) ...[
+                            if (i > 0) const Divider(height: 1, indent: 16),
+                            _EventRow(event: entry.value[i]),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
+              );
+            })),
       ),
     );
   }
@@ -197,8 +207,8 @@ class _EventRow extends ConsumerWidget {
             child: Text(
               _dateLabel(),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 12.5, fontWeight: FontWeight.w700),
+              style:
+                  const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
             ),
           ),
           const SizedBox(width: 12),
@@ -220,9 +230,7 @@ class _EventRow extends ConsumerWidget {
             child: Text(
               _categoryLabel(l),
               style: TextStyle(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w600,
-                  color: badgeFg),
+                  fontSize: 11.5, fontWeight: FontWeight.w600, color: badgeFg),
             ),
           ),
         ],

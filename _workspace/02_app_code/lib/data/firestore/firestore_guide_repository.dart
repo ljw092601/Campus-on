@@ -1,76 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/repositories/guide_repository.dart';
+import '../../domain/repositories/read_result.dart';
 import 'firestore_paths.dart';
-import 'repository_exceptions.dart';
+import 'firestore_read.dart';
 
-/// Firestore-backed [GuideRepository].
-///
-/// Week 2 only exercises the search index (S8) and single-item lookup; full
-/// sectioned guide content (S5–S7) lands in week 3 on the SAME documents — the
-/// schema already reserves those fields (see `03_api_integration.md`). Items may
-/// carry `status: comingSoon` while content is a placeholder; the loading path
-/// is complete regardless.
 class FirestoreGuideRepository implements GuideRepository {
   FirestoreGuideRepository(this._db);
-
   final FirebaseFirestore _db;
-
   CollectionReference<Map<String, dynamic>> get _col =>
       _db.collection(FirestorePaths.guideItems);
 
-  /// A malformed document is skipped (logged) instead of failing the whole
-  /// list — same policy as `FirestoreAcademicCalendarRepository`.
-  Future<List<AdminGuideItem>> _loadAll() async {
-    try {
-      final snap = await _col.get();
-      return mapDocsSkippingMalformed(
-          snap.docs, FirestorePaths.guideItems, guideFromDoc);
-    } on FirebaseException catch (e) {
-      final cached = await _tryCacheAll();
-      if (cached != null) return cached;
-      throw DataRepositoryException('Failed to load guide items', e);
-    }
-  }
-
-  Future<List<AdminGuideItem>?> _tryCacheAll() async {
-    try {
-      final snap = await _col.get(const GetOptions(source: Source.cache));
-      if (snap.docs.isEmpty) return null;
-      return mapDocsSkippingMalformed(
-          snap.docs, FirestorePaths.guideItems, guideFromDoc);
-    } on FirebaseException {
-      return null;
-    }
-  }
+  Future<List<AdminGuideItem>> _loadAll() async =>
+      mapReadDocuments(await readQuery(_col), guideFromDoc);
 
   @override
   Future<List<AdminGuideItem>> getAllItems() => _loadAll();
 
   @override
-  Future<List<AdminGuideItem>> getByCategory(GuideCategory category) async {
-    // Filter client-side off the (cache-friendly) full load: the dataset is
-    // campus-small, and reusing _loadAll keeps the same offline fallback path.
-    final all = await _loadAll();
-    return orderGuideItems(all.where((g) => g.categoryId == category));
-  }
-
-  @override
   Future<AdminGuideItem?> getById(String id) async {
-    try {
-      final doc = await _col.doc(id).get();
-      return doc.exists ? guideFromDoc(doc) : null;
-    } on FirebaseException catch (e) {
-      try {
-        final cached =
-            await _col.doc(id).get(const GetOptions(source: Source.cache));
-        if (cached.exists) return guideFromDoc(cached);
-      } on FirebaseException {
-        // fall through to throw
-      }
-      throw DataRepositoryException('Failed to load guide item "$id"', e);
-    }
+    final doc = await readDocument(_col.doc(id));
+    return doc.exists ? guideFromDoc(doc) : null;
   }
 
   @override
@@ -78,10 +28,17 @@ class FirestoreGuideRepository implements GuideRepository {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return const [];
     final all = await _loadAll();
-    return all
-        .where((g) =>
-            g.titleKo.toLowerCase().contains(q) ||
-            g.titleEn.toLowerCase().contains(q))
-        .toList(growable: false);
+    return preserveReadStatus(
+        all,
+        all.where((v) =>
+            v.titleKo.toLowerCase().contains(q) ||
+            v.titleEn.toLowerCase().contains(q)));
+  }
+
+  @override
+  Future<List<AdminGuideItem>> getByCategory(GuideCategory category) async {
+    final all = await _loadAll();
+    return preserveReadStatus(
+        all, orderGuideItems(all.where((g) => g.categoryId == category)));
   }
 }

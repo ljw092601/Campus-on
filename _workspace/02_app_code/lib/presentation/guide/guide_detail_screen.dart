@@ -13,6 +13,7 @@ import '../providers/favorites_provider.dart';
 import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 
 /// S7 — Guide Detail. Fixed section template (overview → checklist → steps →
 /// tips → phrases → links/locations) rendered as scrollable cards, each headed
@@ -32,7 +33,7 @@ class GuideDetailScreen extends ConsumerWidget {
       appBar: AppBar(actions: [_FavoriteButton(itemId: itemId)]),
       body: async.when(
         loading: () => const _DetailSkeleton(),
-        error: (e, _) => _errorView(context, ref, l),
+        error: (e, _) => _errorView(context, ref, l, e),
         data: (item) => item == null
             ? _errorView(context, ref, l)
             : _DetailBody(item: item),
@@ -40,9 +41,12 @@ class GuideDetailScreen extends ConsumerWidget {
     );
   }
 
-  Widget _errorView(BuildContext context, WidgetRef ref, AppLocalizations l) =>
+  Widget _errorView(BuildContext context, WidgetRef ref, AppLocalizations l,
+          [Object? error]) =>
       ErrorStateView(
-        message: l.guide_detail_error,
+        message: error == null
+            ? l.guide_detail_error
+            : readErrorMessage(error, l, l.guide_detail_error),
         retryLabel: l.common_retry,
         onRetry: () => ref.invalidate(guideByIdProvider(itemId)),
       );
@@ -62,8 +66,9 @@ class _FavoriteButton extends ConsumerWidget {
     return IconButton(
       icon: Icon(Symbols.star, fill: isFav ? 1 : 0),
       tooltip: isFav ? l.guide_favorite_remove : l.guide_favorite_add,
-      onPressed: () =>
-          ref.read(favoritesProvider.notifier).toggle(FavoriteType.guide, itemId),
+      onPressed: () => ref
+          .read(favoritesProvider.notifier)
+          .toggle(FavoriteType.guide, itemId),
     );
   }
 }
@@ -76,7 +81,8 @@ class _DetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final accent = accentFor(context, context.catColors.forGuide(item.categoryId));
+    final accent =
+        accentFor(context, context.catColors.forGuide(item.categoryId));
     final d = context.dimens;
     final scheme = Theme.of(context).colorScheme;
 
@@ -328,7 +334,8 @@ class _Section extends StatelessWidget {
               ],
             ),
             SizedBox(height: d.spaceSm),
-            Divider(height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
+            Divider(
+                height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
             SizedBox(height: d.spaceMd),
             child,
           ],
@@ -537,8 +544,8 @@ class _PhraseCard extends StatelessWidget {
           children: [
             SizedBox(
               width: 56,
-              child: Text(label,
-                  style: text.labelLarge?.copyWith(color: color)),
+              child:
+                  Text(label, style: text.labelLarge?.copyWith(color: color)),
             ),
             SizedBox(width: d.spaceSm),
             Expanded(child: Text(value, style: style)),
@@ -588,8 +595,7 @@ class _ChecklistRow extends StatelessWidget {
               size: 20, color: scheme.onSurfaceVariant),
           SizedBox(width: context.dimens.spaceSm),
           Expanded(
-              child:
-                  Text(text, style: Theme.of(context).textTheme.bodyLarge)),
+              child: Text(text, style: Theme.of(context).textTheme.bodyLarge)),
         ],
       ),
     );
@@ -597,7 +603,8 @@ class _ChecklistRow extends StatelessWidget {
 }
 
 class _StepRow extends StatelessWidget {
-  const _StepRow({required this.index, required this.text, required this.color});
+  const _StepRow(
+      {required this.index, required this.text, required this.color});
   final int index;
   final String text;
   final Color color;
@@ -625,8 +632,7 @@ class _StepRow extends StatelessWidget {
           ),
           SizedBox(width: context.dimens.spaceSm),
           Expanded(
-              child:
-                  Text(text, style: Theme.of(context).textTheme.bodyLarge)),
+              child: Text(text, style: Theme.of(context).textTheme.bodyLarge)),
         ],
       ),
     );
@@ -715,16 +721,15 @@ class _RelatedLocationCard extends ConsumerWidget {
                       Text(facility.name(locale),
                           style: Theme.of(context).textTheme.titleSmall),
                       Text(
-                        [facility.building(locale), l.guide_relatedLocation_hint]
+                        [
+                          facility.building(locale),
+                          l.guide_relatedLocation_hint
+                        ]
                             .where((e) => e != null && e.trim().isNotEmpty)
                             .join(' · '),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

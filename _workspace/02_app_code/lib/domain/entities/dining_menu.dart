@@ -44,7 +44,8 @@ class Meal {
 enum DiningAvailability {
   open,
   closed,
-  unpublished;
+  unpublished,
+  unavailable;
 
   static DiningAvailability? fromId(String? id) {
     if (id == null) return null;

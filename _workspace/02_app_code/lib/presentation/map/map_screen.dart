@@ -18,6 +18,7 @@ import '../providers/facility_providers.dart';
 import '../providers/location_providers.dart';
 import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/state_views.dart';
+import '../shared/widgets/read_status.dart';
 import 'widgets/campus_map_view.dart';
 import 'widgets/campus_selector.dart';
 import 'widgets/peek_sheet.dart';
@@ -459,14 +460,17 @@ class _MapScreenState extends ConsumerState<MapScreen>
             child: filtered.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => ErrorStateView(
-                message: l.map_error_loadFailed,
+                message: readErrorMessage(e, l, l.map_error_loadFailed),
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(allFacilitiesProvider),
                 secondaryLabel: l.map_error_openList,
                 onSecondary: () =>
                     context.push('${widget.navigationBase}/list'),
               ),
-              data: (facilities) => _buildMap(context, l, facilities),
+              data: (facilities) => ReadStatusContent(
+                  data: facilities,
+                  onRetry: () => ref.invalidate(allFacilitiesProvider),
+                  child: _buildMap(context, l, facilities)),
             ),
           ),
         ],
