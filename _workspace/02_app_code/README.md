@@ -101,3 +101,25 @@ to the classroom form with its input intact before submitting again. A separate 
 Firestore mode only reads content. Logs are saved in the OS temporary directory;
 use `--log`, `--flutter`, or `--adb` to override local paths. The emulator must be
 dedicated to the test while it runs.
+
+### Startup and map recovery
+
+The app renders startup progress before initializing Firebase, local storage and
+Kakao configuration. A failed initialization or a 20-second timeout shows Retry;
+retry waits for any still-running native operation instead of starting a duplicate.
+Successful initialization stages are retained. Production failures never switch
+the app to sample data.
+
+Map icon/SDK loading has a 20-second deadline. Failure hides map controls and the
+peek sheet and offers Retry or the facility list. Retry creates a new WebView,
+retains the search target, and ignores callbacks from the discarded map.
+
+```bash
+flutter test test/bootstrap_test.dart test/marker_icons_test.dart
+python tool/run_map_e2e.py --test recovery --firestore
+```
+
+The recovery E2E injects one startup failure, then initializes the real services.
+It temporarily supplies an invalid Kakao key in the test process, checks the SDK
+timeout and list fallback, restores the configured key, and verifies the classroom
+marker after retry. It does not change device connectivity or production content.

@@ -76,6 +76,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   static const _peekMax = 0.75;
 
   String? _selectedId;
+  bool _mapLoadFailed = false;
 
   /// One-shot: a `/map?focus=` target may live on another campus (e.g. a guide
   /// linking to 부민 종합강의동) — switch the campus selector to it once the
@@ -498,6 +499,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
         children: [
           Positioned.fill(
             child: CampusMapView(
+              onLoadFailureChanged: (failed) {
+                if (mounted) setState(() => _mapLoadFailed = failed);
+              },
+              onOpenList: () => context.push('${widget.navigationBase}/list'),
               facilities: facilities,
               campus: campus,
               campusCenter: _campusCenter(campus),
@@ -536,105 +541,107 @@ class _MapScreenState extends ConsumerState<MapScreen>
               }),
             ),
           ),
-          // Result count for the `?nearby=` search — the pins alone don't say
-          // what was searched for.
-          if (widget.nearbyQueries.isNotEmpty && _placesSearched)
+          if (!_mapLoadFailed) ...[
+            // Result count for the `?nearby=` search — the pins alone don't say
+            // what was searched for.
+            if (widget.nearbyQueries.isNotEmpty && _placesSearched)
+              Positioned(
+                left: context.dimens.spaceMd,
+                right: context.dimens.spaceMd,
+                top: context.dimens.spaceSm,
+                child: _NearbyBanner(count: _places.length),
+              ),
+            // "My location" FAB — starts live tracking (blue dot + heading cone
+            // follow the user); while tracking, re-enables follow after a pan.
+            // Zoom in/out buttons sit right below it.
             Positioned(
-              left: context.dimens.spaceMd,
               right: context.dimens.spaceMd,
-              top: context.dimens.spaceSm,
-              child: _NearbyBanner(count: _places.length),
-            ),
-          // "My location" FAB — starts live tracking (blue dot + heading cone
-          // follow the user); while tracking, re-enables follow after a pan.
-          // Zoom in/out buttons sit right below it.
-          Positioned(
-            right: context.dimens.spaceMd,
-            bottom: context.dimens.spaceMd +
-                (selected != null
-                    ? peekHeight
-                    : (selectedPlace != null ? 96 : 0)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton.small(
-                  heroTag: 'myLocation',
-                  tooltip: l.map_myLocation_tooltip,
-                  onPressed: _locating ? null : () => _onMyLocationPressed(l),
-                  child: _locating
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      // Crosshair without dot = "not locked on me" (post-pan);
-                      // matches the affordance native map apps use.
-                      : Icon(_tracking && !_following
-                          ? Symbols.location_searching
-                          : Symbols.my_location),
-                ),
-                const SizedBox(height: 8),
-                FloatingActionButton.small(
-                  heroTag: 'zoomIn',
-                  tooltip: l.map_zoomIn_tooltip,
-                  onPressed: _zoomHandle.zoomIn,
-                  child: const Icon(Symbols.add),
-                ),
-                const SizedBox(height: 8),
-                FloatingActionButton.small(
-                  heroTag: 'zoomOut',
-                  tooltip: l.map_zoomOut_tooltip,
-                  onPressed: _zoomHandle.zoomOut,
-                  child: const Icon(Symbols.remove),
-                ),
-              ],
-            ),
-          ),
-          if (selected != null)
-            Positioned.fill(
-              // Key resets the sheet extent when another pin is tapped — or
-              // when a new search targets this same building.
-              child: DraggableScrollableSheet(
-                key: ValueKey(_focusActive &&
-                        widget.focusIds.isNotEmpty &&
-                        selected.id == widget.focusIds.first
-                    ? '${selected.id}|${_focusKeyOf(widget)}'
-                    : selected.id),
-                // A `?floor=` / `?room=` deep link lands with the guide open.
-                initialChildSize:
-                    _opensExpanded(selected) ? _peekMax : _peekMin,
-                minChildSize: _peekMin,
-                // Nothing below the header (no floor info, no searched
-                // room) → lock the sheet.
-                maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
-                // min/max are the implicit snap targets — half-open states
-                // settle to collapsed or expanded on release.
-                snap: _expandable(selected),
-                builder: (context, scrollController) => PeekSheet(
-                  facility: selected,
-                  scrollController: scrollController,
-                  expandedFloor: _floorLabelFor(selected),
-                  roomCode: _roomCodeFor(selected),
-                  roomPlanCode: widget.focusPlanCode,
-                  onViewDetail: () => context
-                      .push('${widget.navigationBase}/facility/${selected.id}'),
-                ),
-              ),
-            )
-          else if (selectedPlace != null)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: PlacePeekSheet(
-                place: selectedPlace,
-                // No in-app detail screen for an off-campus place — the CTA is
-                // hidden rather than dead when Kakao gives us no page for it.
-                onOpen: (selectedPlace.placeUrl ?? '').isEmpty
-                    ? null
-                    : () => _openPlace(selectedPlace, l),
+              bottom: context.dimens.spaceMd +
+                  (selected != null
+                      ? peekHeight
+                      : (selectedPlace != null ? 96 : 0)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FloatingActionButton.small(
+                    heroTag: 'myLocation',
+                    tooltip: l.map_myLocation_tooltip,
+                    onPressed: _locating ? null : () => _onMyLocationPressed(l),
+                    child: _locating
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        // Crosshair without dot = "not locked on me" (post-pan);
+                        // matches the affordance native map apps use.
+                        : Icon(_tracking && !_following
+                            ? Symbols.location_searching
+                            : Symbols.my_location),
+                  ),
+                  const SizedBox(height: 8),
+                  FloatingActionButton.small(
+                    heroTag: 'zoomIn',
+                    tooltip: l.map_zoomIn_tooltip,
+                    onPressed: _zoomHandle.zoomIn,
+                    child: const Icon(Symbols.add),
+                  ),
+                  const SizedBox(height: 8),
+                  FloatingActionButton.small(
+                    heroTag: 'zoomOut',
+                    tooltip: l.map_zoomOut_tooltip,
+                    onPressed: _zoomHandle.zoomOut,
+                    child: const Icon(Symbols.remove),
+                  ),
+                ],
               ),
             ),
+            if (selected != null)
+              Positioned.fill(
+                // Key resets the sheet extent when another pin is tapped — or
+                // when a new search targets this same building.
+                child: DraggableScrollableSheet(
+                  key: ValueKey(_focusActive &&
+                          widget.focusIds.isNotEmpty &&
+                          selected.id == widget.focusIds.first
+                      ? '${selected.id}|${_focusKeyOf(widget)}'
+                      : selected.id),
+                  // A `?floor=` / `?room=` deep link lands with the guide open.
+                  initialChildSize:
+                      _opensExpanded(selected) ? _peekMax : _peekMin,
+                  minChildSize: _peekMin,
+                  // Nothing below the header (no floor info, no searched
+                  // room) → lock the sheet.
+                  maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
+                  // min/max are the implicit snap targets — half-open states
+                  // settle to collapsed or expanded on release.
+                  snap: _expandable(selected),
+                  builder: (context, scrollController) => PeekSheet(
+                    facility: selected,
+                    scrollController: scrollController,
+                    expandedFloor: _floorLabelFor(selected),
+                    roomCode: _roomCodeFor(selected),
+                    roomPlanCode: widget.focusPlanCode,
+                    onViewDetail: () => context.push(
+                        '${widget.navigationBase}/facility/${selected.id}'),
+                  ),
+                ),
+              )
+            else if (selectedPlace != null)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: PlacePeekSheet(
+                  place: selectedPlace,
+                  // No in-app detail screen for an off-campus place — the CTA is
+                  // hidden rather than dead when Kakao gives us no page for it.
+                  onOpen: (selectedPlace.placeUrl ?? '').isEmpty
+                      ? null
+                      : () => _openPlace(selectedPlace, l),
+                ),
+              ),
+          ],
         ],
       );
     });

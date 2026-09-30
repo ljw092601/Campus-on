@@ -28,12 +28,16 @@ class CategoryMarkerIcons {
   }
 
   static Future<Map<FacilityCategory, kakao.MarkerIcon>> _loadAll() async {
-    final map = <FacilityCategory, kakao.MarkerIcon>{};
-    for (final c in FacilityCategory.values) {
-      map[c] = await kakao.MarkerIcon.fromAsset('assets/markers/pin_${c.name}.png');
+    try {
+      final map = <FacilityCategory, kakao.MarkerIcon>{};
+      for (final c in FacilityCategory.values) {
+        map[c] = await kakao.MarkerIcon.fromAsset(
+            'assets/markers/pin_${c.name}.png');
+      }
+      _cache = map;
+      return map;
+    } finally {
+      _inFlight = null;
     }
-    _cache = map;
-    _inFlight = null;
-    return map;
   }
 }

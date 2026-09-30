@@ -8,6 +8,8 @@ import '../../../core/config/app_config.dart';
 import '../../../domain/entities/facility.dart';
 import '../../../domain/entities/nearby_place.dart';
 import '../../../domain/entities/user_location.dart';
+import '../../../l10n/gen/app_localizations.dart';
+import '../../shared/widgets/state_views.dart';
 import 'marker_icons.dart';
 import 'nearby_search_bridge.dart';
 
@@ -72,8 +74,14 @@ class CampusMapView extends StatefulWidget {
     this.onFocusApplied,
     this.focusObscuredFraction = 0,
     this.targetId,
+    this.onLoadFailureChanged,
+    this.onOpenList,
+    this.loadTimeout = const Duration(seconds: 20),
   });
 
+  final ValueChanged<bool>? onLoadFailureChanged;
+  final VoidCallback? onOpenList;
+  final Duration loadTimeout;
   final List<Facility> facilities;
 
   /// Currently shown campus. When it CHANGES, the camera re-fits to the new
@@ -125,6 +133,46 @@ class _CampusMapViewState extends State<CampusMapView> {
   static const _locationBlue = Color(0xFF4285F4);
 
   kakao.KakaoMapController? _controller;
+  Timer? _loadTimer;
+  bool _loadFailed = false;
+  int _loadAttempt = 0;
+
+  void _startLoading() {
+    final attempt = ++_loadAttempt;
+    _loadFailed = false;
+    _icons = null;
+    _loadTimer?.cancel();
+    _loadTimer = Timer(widget.loadTimeout, () => _failLoading(attempt));
+    _loadIcons(attempt);
+  }
+
+  Future<void> _loadIcons(int attempt) async {
+    try {
+      final icons = await CategoryMarkerIcons.load();
+      if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+      setState(() => _icons = icons);
+    } catch (_) {
+      _failLoading(attempt);
+    }
+  }
+
+  void _failLoading(int attempt) {
+    if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+    _loadTimer?.cancel();
+    _controller = null;
+    _cameraRevision++;
+    _markerRevision++;
+    _searchRevision++;
+    _placeSearch?.dispose();
+    _placeSearch = null;
+    setState(() => _loadFailed = true);
+    widget.onLoadFailureChanged?.call(true);
+  }
+
+  void _retryLoading() {
+    setState(_startLoading);
+    widget.onLoadFailureChanged?.call(false);
+  }
 
   int _cameraRevision = 0;
   int _searchRevision = 0;
@@ -151,6 +199,7 @@ class _CampusMapViewState extends State<CampusMapView> {
     super.initState();
     widget.zoomHandle?._state = this;
     _syncHeadingSubscription(null);
+    _startLoading();
   }
 
   @override
@@ -208,6 +257,7 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   @override
   void dispose() {
+    _loadTimer?.cancel();
     widget.zoomHandle?._state = null;
     _placeSearch?.dispose();
     _headingSub?.cancel();
@@ -541,53 +591,67 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   @override
   Widget build(BuildContext context) {
-    // Gate the map on the (memoised) pin icons so every marker is colored from
-    // the first render. The future resolves instantly after the first load.
-    return FutureBuilder<Map<FacilityCategory, kakao.MarkerIcon>>(
-      future: CategoryMarkerIcons.load(),
-      builder: (context, snapshot) {
-        final icons = snapshot.data;
-        if (icons == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        _icons = icons;
-        return kakao.KakaoMap(
-          center: _center,
-          // Markers are synchronized serially by this wrapper (including []).
-          circles: _userCircles(),
-          customOverlays: _allOverlays(),
-          onMapCreated: (controller) {
-            _controller = controller;
-            _placeSearch = NearbySearchBridge(controller);
-            // The plugin only auto-adds overlays on didUpdateWidget (e.g. a
-            // filter change), not on first create — so add them explicitly once
-            // the controller is ready, otherwise the initial (unfiltered) map
-            // renders with no pins until the user interacts.
-            _syncMarkers();
-            if (widget.userLocation != null) {
-              controller.addCircle(circles: _userCircles());
-            }
-            final overlays = _allOverlays();
-            if (overlays.isNotEmpty) {
-              controller.addCustomOverlay(customOverlays: overlays);
-            }
-            _applyFocus();
-            _runPlaceSearch();
-          },
-          onMarkerTap: (markerId, latLng, zoomLevel) {
-            widget.onMarkerTap(markerId);
-          },
-          onCustomOverlayTap: (message, _) =>
-              _placeSearch?.receiveOverlayMessage(message),
-          // A manual pan means "stop chasing me" — native map-app behaviour.
-          onDragChangeCallback: (latLng, zoomLevel, dragType) {
-            if (dragType == kakao.DragType.start) {
-              _cameraRevision++;
-              widget.onUserPan?.call();
-            }
-          },
-        );
-      },
-    );
+    final l = AppLocalizations.of(context);
+    if (_loadFailed) {
+      return ErrorStateView(
+        message: l.map_error_timeout,
+        retryLabel: l.common_retry,
+        onRetry: _retryLoading,
+        secondaryLabel: l.map_error_openList,
+        onSecondary: widget.onOpenList,
+      );
+    }
+    if (_icons == null) return const Center(child: CircularProgressIndicator());
+    final attempt = _loadAttempt;
+    return Stack(children: [
+      kakao.KakaoMap(
+        key: ValueKey(attempt),
+        center: _center,
+        // Markers are synchronized serially by this wrapper (including []).
+        circles: _userCircles(),
+        customOverlays: _allOverlays(),
+        onMapCreated: (controller) {
+          if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+          _loadTimer?.cancel();
+          setState(() => _controller = controller);
+          widget.onLoadFailureChanged?.call(false);
+          _placeSearch = NearbySearchBridge(controller);
+          // The plugin only auto-adds overlays on didUpdateWidget (e.g. a
+          // filter change), not on first create — so add them explicitly once
+          // the controller is ready, otherwise the initial (unfiltered) map
+          // renders with no pins until the user interacts.
+          _syncMarkers();
+          if (widget.userLocation != null) {
+            controller.addCircle(circles: _userCircles());
+          }
+          final overlays = _allOverlays();
+          if (overlays.isNotEmpty) {
+            controller.addCustomOverlay(customOverlays: overlays);
+          }
+          _applyFocus();
+          _runPlaceSearch();
+        },
+        onMarkerTap: (markerId, latLng, zoomLevel) {
+          if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+          widget.onMarkerTap(markerId);
+        },
+        onCustomOverlayTap: (message, _) {
+          if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+          _placeSearch?.receiveOverlayMessage(message);
+        },
+        // A manual pan means "stop chasing me" — native map-app behaviour.
+        onDragChangeCallback: (latLng, zoomLevel, dragType) {
+          if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+          if (dragType == kakao.DragType.start) {
+            _cameraRevision++;
+            widget.onUserPan?.call();
+          }
+        },
+      ),
+      if (_controller == null)
+        const Positioned.fill(
+            child: IgnorePointer(
+                child: Center(child: CircularProgressIndicator()))),
+    ]);
   }
 }

@@ -53,7 +53,7 @@ void main() {
         .params
         .controller);
     Future<dynamic> js(String expression) async {
-      var value = await web()
+      dynamic value = await web()
           .runJavaScriptReturningResult('JSON.stringify($expression)');
       // Android returns a JSON string literal, iOS may return its contents.
       for (var i = 0; i < 2 && value is String; i++) {
@@ -69,12 +69,23 @@ void main() {
             'customOverlays.filter(o => o.getMap() !== null).map(o => ({'
             'id:o.id, lat:o.getPosition().getLat(), lng:o.getPosition().getLng()}))'))
         as List<dynamic>;
+    Future<void> mapReady() => until(() async {
+          try {
+            await markers();
+            await overlays();
+            return true;
+          } catch (_) {
+            return false;
+          }
+        }, 'new WebView SDK ready');
+
     Future<void> route(String path) async {
       AppRouter.router.go(path);
       await tester.pump(const Duration(milliseconds: 300));
       if (path.startsWith('/map')) {
         await until(() async => find.byType(MapScreen).evaluate().length == 1,
             'map route transition');
+        await mapReady();
       }
     }
 
@@ -135,6 +146,7 @@ void main() {
         .tap(find.widgetWithText(FilledButton, l.classroom_action_search));
     await until(() async => find.byType(RoomLocationCard).evaluate().isNotEmpty,
         'classroom result card');
+    await mapReady();
     await until(
         () async => (await overlays())
             .any((o) => o['id'] == 'room-target-${building.id}'),
@@ -312,6 +324,8 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 300));
     Widget locationFixture(UserLocation? location) => MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
               body: CampusMapView(
             facilities: [building],

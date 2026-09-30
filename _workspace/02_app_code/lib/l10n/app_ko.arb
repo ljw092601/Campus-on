@@ -9,6 +9,10 @@
   "tab_guide_label": "가이드",
   "tab_settings_label": "설정",
 
+  "startup_loading": "동아메이트를 시작하고 있어요…",
+  "startup_error_failed": "앱을 시작하지 못했어요. 다시 시도해 주세요.",
+  "map_error_timeout": "지도를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
+
   "common_retry": "다시 시도",
   "common_all": "전체",
   "common_clear": "지우기",

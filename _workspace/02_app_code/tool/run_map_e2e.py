@@ -22,13 +22,14 @@ def main():
     parser.add_argument('--adb', default=shutil.which('adb') or str(
         Path.home() / 'AppData/Local/Android/Sdk/platform-tools/adb.exe'))
     parser.add_argument('--firestore', action='store_true')
+    parser.add_argument('--test', choices=['map', 'recovery'], default='map')
     parser.add_argument('--log', type=Path)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     mode = 'firestore' if args.firestore else 'mock'
-    log_path = args.log or Path(tempfile.gettempdir()) / f'campus-map-e2e-{mode}.log'
+    log_path = args.log or Path(tempfile.gettempdir()) / f'campus-{args.test}-e2e-{mode}.log'
     command = [args.flutter, 'test', '-d', args.device,
-               'integration_test/map_state_e2e_test.dart',
+               f'integration_test/{"map_state" if args.test == "map" else "recovery"}_e2e_test.dart',
                '--dart-define-from-file=env.json', '--no-pub']
     for flag in ('USE_FIRESTORE', 'USE_FIRESTORE_CALENDAR', 'USE_FIRESTORE_DINING'):
         command.append(f'--dart-define={flag}={str(args.firestore).lower()}')
@@ -37,7 +38,7 @@ def main():
         subprocess.run([args.adb, '-s', args.device, *arguments],
                        check=True, capture_output=True, timeout=20)
 
-    print(f'Running {mode} map E2E; log: {log_path}', flush=True)
+    print(f'Running {mode} {args.test} E2E; log: {log_path}', flush=True)
     env = dict(os.environ, ANDROID_SERIAL=args.device)
     with log_path.open('w', encoding='utf-8') as log:
         process = subprocess.Popen(command, cwd=root, env=env,

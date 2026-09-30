@@ -132,6 +132,59 @@ void main() {
     WebViewPlatform.instance = platform;
   });
 
+  testWidgets('SDK timeout offers retry; late callbacks cannot revive old map',
+      (tester) async {
+    final failures = <bool>[];
+    var openedList = false;
+    final taps = <String>[];
+    await tester.pumpWidget(_app(CampusMapView(
+      facilities: const [_s],
+      focusIds: const [],
+      onMarkerTap: taps.add,
+      loadTimeout: const Duration(seconds: 1),
+      onLoadFailureChanged: failures.add,
+      onOpenList: () => openedList = true,
+    )));
+    await _flush(tester);
+    final old = platform.controller;
+    final oldMap = tester.widget<kakao.KakaoMap>(find.byType(kakao.KakaoMap));
+    await tester.pump(const Duration(seconds: 2));
+    expect(find.text('Retry'), findsOneWidget);
+    expect(find.byType(kakao.KakaoMap), findsNothing);
+    old.send('onMapCreated', {});
+    await tester.pump();
+    expect(find.text('Retry'), findsOneWidget);
+    final l = AppLocalizations.of(tester.element(find.byType(CampusMapView)));
+    await tester.tap(find.text(l.map_error_openList));
+    expect(openedList, isTrue);
+    await tester.tap(find.text('Retry'));
+    await _flush(tester);
+    expect(platform.controller, isNot(same(old)));
+    platform.controller.send('onMapCreated', {});
+    oldMap.onMarkerTap?.call('stale', kakao.LatLng(35, 129), 3);
+    expect(taps, isEmpty);
+    await tester.pump(const Duration(seconds: 2));
+    expect(find.text('Retry'), findsNothing);
+    expect(find.byType(kakao.KakaoMap), findsOneWidget);
+    expect(failures, [true, false, false]);
+  });
+
+  testWidgets('disposing a loading map cancels its timeout', (tester) async {
+    final failures = <bool>[];
+    await tester.pumpWidget(_app(CampusMapView(
+      facilities: const [_s],
+      focusIds: const [],
+      onMarkerTap: (_) {},
+      loadTimeout: const Duration(seconds: 1),
+      onLoadFailureChanged: failures.add,
+    )));
+    await _flush(tester);
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 2));
+    expect(failures, isEmpty);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('GPS moves dot and halo even when camera follow is off',
       (tester) async {
     Widget view(UserLocation location) => _app(CampusMapView(

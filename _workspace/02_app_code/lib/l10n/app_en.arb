@@ -9,6 +9,10 @@
   "tab_guide_label": "Guide",
   "tab_settings_label": "Settings",
 
+  "startup_loading": "Starting Dong-A Mate…",
+  "startup_error_failed": "Could not start the app. Please try again.",
+  "map_error_timeout": "The map could not be loaded. Check your connection and try again.",
+
   "common_retry": "Retry",
   "common_all": "All",
   "common_clear": "Clear",

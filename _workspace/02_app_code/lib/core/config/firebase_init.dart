@@ -43,9 +43,12 @@ const bool anyFirestoreEnabled =
 Future<void> initFirebaseIfEnabled() async {
   if (!anyFirestoreEnabled) return;
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // A prior attempt may have initialized Firebase before persistence setup failed.
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   // Offline persistence is on by default on mobile; set it explicitly so the
   // repositories' cache fallback (Source.cache) always has a store to read.
