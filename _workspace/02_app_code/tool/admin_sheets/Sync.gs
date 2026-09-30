@@ -28,17 +28,17 @@ function runWithLock_(kind, operation) {
   }
   const run = newRun_(kind);
   try {
-    operation(run);
+    operation(run, lock);
   } catch (error) {
     finishRun_(run, 'failed', { failure: 1 }, [String(error.message || error)]);
     ui.alert('동기화 실패', String(error.message || error), ui.ButtonSet.OK);
     throw error;
   } finally {
-    lock.releaseLock();
+    if (lock.hasLock()) lock.releaseLock();
   }
 }
 
-function syncAcademicEventsLocked_(run) {
+function syncAcademicEventsLocked_(run, lock) {
   const ui = SpreadsheetApp.getUi();
   const parsed = readAcademicRows_();
   clearResultColumn_(parsed.sheet, 6);
@@ -57,14 +57,38 @@ function syncAcademicEventsLocked_(run) {
   const existingDocs = listDocumentSummaries_(CONFIG.collections.academicEvents);
   const desiredIds = new Set(parsed.rows.map(row => row.id));
   const staleDocs = existingDocs.filter(doc => !desiredIds.has(doc.id));
-  if (staleDocs.length && !confirmAcademicDeletes_(ui, staleDocs)) {
+  let confirmed = true;
+  if (staleDocs.length) {
+    const sheetRevision = academicSheetRevision_(parsed);
+    const serverRevision = academicServerRevision_(existingDocs);
+    // Apps Script dialogs suspend execution and discard held locks.
+    lock.releaseLock();
+    confirmed = confirmAcademicDeletes_(ui, staleDocs);
+    if (!lock.tryLock(1000)) {
+      throw new Error('확인 중 다른 동기화가 시작되었습니다. 다시 실행해 주세요.');
+    }
+    if (confirmed && (
+      sheetRevision !== academicSheetRevision_(readAcademicRows_()) ||
+      serverRevision !== academicServerRevision_(listDocumentSummaries_(CONFIG.collections.academicEvents))
+    )) {
+      throw new Error('확인 중 시트 또는 서버 데이터가 변경되었습니다. 삭제 대상을 다시 확인해 주세요.');
+    }
+  }
+  if (!confirmed) {
     parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, 6, '⏸ 삭제 확인에서 취소됨', false));
     finishRun_(run, 'cancelled', { input: parsed.rows.length, deleted: 0 }, [`삭제 예정 ${staleDocs.length}건을 사용자가 취소함`]);
     return;
   }
 
-  const writes = parsed.rows.map(row => updateWrite_(CONFIG.collections.academicEvents, row.id, row.data));
-  staleDocs.forEach(doc => writes.push(deleteWrite_(CONFIG.collections.academicEvents, doc.id)));
+  const versions = new Map(existingDocs.map(doc => [doc.id, academicPrecondition_(doc)]));
+  const writes = parsed.rows.map(row => ({
+    ...updateWrite_(CONFIG.collections.academicEvents, row.id, row.data),
+    currentDocument: versions.get(row.id) || { exists: false },
+  }));
+  staleDocs.forEach(doc => writes.push({
+    ...deleteWrite_(CONFIG.collections.academicEvents, doc.id),
+    currentDocument: versions.get(doc.id),
+  }));
   if (writes.length > CONFIG.maxCommitWrites) {
     throw new Error(`게시 ${parsed.rows.length}건 + 삭제 ${staleDocs.length}건이 atomic commit 한도 ${CONFIG.maxCommitWrites}건을 넘습니다.`);
   }
@@ -76,6 +100,26 @@ function syncAcademicEventsLocked_(run) {
     deleted: staleDocs.length,
   }, []);
   ui.alert('학사일정 동기화 완료', `게시 ${parsed.rows.length}건, 삭제 ${staleDocs.length}건을 하나의 atomic commit으로 반영했습니다.`, ui.ButtonSet.OK);
+}
+
+function academicSheetRevision_(parsed) {
+  return JSON.stringify({
+    errors: parsed.errors,
+    rows: parsed.rows.map(row => {
+      const data = { ...row.data };
+      delete data.updatedAt;
+      return { id: row.id, rowNumber: row.rowNumber, data };
+    }),
+  });
+}
+
+function academicServerRevision_(docs) {
+  return JSON.stringify(docs.map(doc => [doc.id, doc.updateTime]).sort());
+}
+
+function academicPrecondition_(doc) {
+  if (!doc.updateTime) throw new Error('서버 문서 버전을 확인할 수 없습니다. 다시 실행해 주세요.');
+  return { updateTime: doc.updateTime };
 }
 
 function confirmAcademicDeletes_(ui, staleDocs) {

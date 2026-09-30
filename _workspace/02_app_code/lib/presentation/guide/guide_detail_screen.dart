@@ -1,3 +1,4 @@
+import '../shared/favorite_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -66,9 +67,7 @@ class _FavoriteButton extends ConsumerWidget {
     return IconButton(
       icon: Icon(Symbols.star, fill: isFav ? 1 : 0),
       tooltip: isFav ? l.guide_favorite_remove : l.guide_favorite_add,
-      onPressed: () => ref
-          .read(favoritesProvider.notifier)
-          .toggle(FavoriteType.guide, itemId),
+      onPressed: () => toggleFavorite(context, ref, FavoriteType.guide, itemId),
     );
   }
 }

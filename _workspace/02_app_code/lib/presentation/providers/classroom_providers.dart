@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'facility_providers.dart';
 import 'floor_plan_providers.dart';
 
 /// One selectable classroom inside a building: the room code, the floor it
@@ -56,58 +55,17 @@ int compareRoomCodes(String a, String b) {
   return sa.compareTo(sb);
 }
 
-final _numericFloor = RegExp(r'^(\d+)F$');
-
-/// Room list for a building, keyed by (facility id, plan code). The plan code
-/// comes from [planCodesFor] — "B04A" for one wing of B04 — and is null when
-/// the building has no drawings.
-///
-/// Buildings with floor-plan drawings use the real room codes read off the
-/// drawings. The rest fall back to PLACEHOLDER numbers derived from the floor
-/// guide: a numeric floor "3F" with N rooms yields 0301..03NN, each paired
-/// with that floor's room names in source order. Basements ("B1F") and
-/// rooftops ("옥탑F") are skipped because their numbering scheme is not
-/// defined yet.
-///
-/// TODO(room-data): drop the placeholder derivation once every building has a
-/// drawing or a real room list — the screen only consumes [ClassroomEntry].
+/// Only verified room numbers from bundled drawings are offered as suggestions.
 final classroomEntriesProvider =
     FutureProvider.family<List<ClassroomEntry>, (String, String?)>(
         (ref, key) async {
-  final (facilityId, planCode) = key;
-  if (planCode != null) {
-    final plans = await ref.watch(buildingFloorPlansProvider(planCode).future);
-    if (plans.isNotEmpty) {
-      return [
-        for (final p in plans.values)
-          for (final r in p.rooms.keys)
-            ClassroomEntry(
-              code: r,
-              floorLabel: p.floorLabel,
-              roomName: '',
-              onPlan: true,
-            ),
-      ]..sort((a, b) => compareRoomCodes(a.code, b.code));
-    }
-  }
-
-  final building = await ref.watch(buildingFloorsProvider(facilityId).future);
-  if (building == null) return const [];
-
-  final entries = <ClassroomEntry>[];
-  for (final floor in building.floors) {
-    final m = _numericFloor.firstMatch(floor.floor);
-    if (m == null) continue;
-    final floorNo = int.parse(m.group(1)!);
-    if (floorNo > 99) continue;
-    final prefix = floorNo.toString().padLeft(2, '0');
-    for (var i = 0; i < floor.rooms.length && i < 99; i++) {
-      entries.add(ClassroomEntry(
-        code: '$prefix${(i + 1).toString().padLeft(2, '0')}',
-        floorLabel: floor.floor,
-        roomName: floor.rooms[i],
-      ));
-    }
-  }
-  return entries;
+  final (_, planCode) = key;
+  if (planCode == null) return const [];
+  final plans = await ref.watch(buildingFloorPlansProvider(planCode).future);
+  return [
+    for (final p in plans.values)
+      for (final r in p.rooms.keys)
+        ClassroomEntry(
+            code: r, floorLabel: p.floorLabel, roomName: '', onPlan: true),
+  ]..sort((a, b) => compareRoomCodes(a.code, b.code));
 });

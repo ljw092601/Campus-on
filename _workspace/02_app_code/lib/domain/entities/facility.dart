@@ -105,6 +105,16 @@ class Facility {
   final String? imageUrl;
   final DateTime? updatedAt;
 
+  /// Names and official building codes share the same search normalization.
+  bool matchesSearch(String query) {
+    String normalized(String value) =>
+        value.toLowerCase().replaceAll(RegExp(r'\s+'), '');
+    final q = normalized(query);
+    return q.isNotEmpty &&
+        [nameKo, nameEn, buildingCode ?? '']
+            .any((value) => normalized(value).contains(q));
+  }
+
   /// Locale-aware name with fallback to the other language (UX doc §5).
   String name(Locale l) => _pick(l, nameKo, nameEn) ?? id;
   String? address(Locale l) => _pick(l, addressKo, addressEn);

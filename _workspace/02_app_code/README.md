@@ -155,3 +155,32 @@ The offline E2E reads real content, disables only the test app's Firestore netwo
 checks saved facilities, calendar state and an uncached menu date, then re-enables
 the network in `finally`. Retry must restore a server-backed dining result. It
 makes no Firestore writes and does not change emulator-wide connectivity.
+
+### Favorites, admin data protection and verified classroom search
+
+Favorites preserve readable entries from partially damaged storage and keep the
+exact original in `favorites_v1_corrupt_backups` before editing. Fully unreadable
+data blocks edits. Writes are serialized, checked for native failure, and only
+then reflected in the UI; failed swipes retain the row and show an error.
+
+Cafeteria seeds use atomic create-only writes, including with `--overwrite
+--prune`. Academic deletion confirmation reacquires the document lock and checks
+sheet and server revisions again. Commits include document version preconditions.
+Update both `Sync.gs` and `Firestore.gs` in Apps Script to deploy these safeguards.
+
+Classroom suggestions contain only verified drawing codes. Unknown rooms on an
+available floor are rejected; missing drawings explicitly offer building-only
+guidance. Three-digit exceptions must exist on a drawing. Facility search matches
+building codes as well as names, ignoring case and whitespace.
+
+```bash
+flutter test test/favorites_storage_test.dart test/navigation_state_test.dart test/classroom_providers_test.dart test/firestore_offline_test.dart
+node --test tool/firestore_seed/seed_policy.test.mjs tool/admin_sheets/sync_safety.test.mjs
+python tool/run_map_e2e.py --device emulator-5556 --firestore
+```
+
+Verified on 2026-09-30: `flutter analyze --no-pub` reported no issues;
+`flutter test --no-pub` passed 156 tests with one map-key-dependent skip;
+the map widget suite with `KAKAO_JS_KEY=test-key` passed all 9 tests;
+the admin protection suites passed all 9 tests; Firestore map E2E on
+`emulator-5556` completed successfully, including room validation and native GPS.

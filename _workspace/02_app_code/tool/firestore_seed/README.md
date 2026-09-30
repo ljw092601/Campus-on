@@ -24,8 +24,10 @@ Seed the two public collections used by Campus-On:
 | `academic_events` | `academic_events.seed.json` — **schema doc only, `seed.mjs` does not upload it** (admin-sheet owned) | immutable event id | n/a (never seeded) |
 | `cafeterias`      | `cafeterias.seed.json`       | cafeteria id (e.g. `seunghak-student`) | **never** |
 
-`cafeterias` is a ONE-TIME starter: after the first upload it is owned by the
-admin sheet sync (`tool/admin_sheets/`), so `--prune` skips it by design (see
+`cafeterias` uses atomic **create-only** writes: existing documents are never
+updated, even with `--overwrite --prune`. Missing starter documents may be
+created; concurrent admin creates are preserved. It is owned by the
+admin sheet sync (`tool/admin_sheets/`), so pruning is always skipped (see
 `_workspace/06_admin_data_pipeline.md` §7). `academic_events` is admin-sheet
 owned from the start — its seed JSON is kept only as schema documentation and
 `seed.mjs` never uploads the collection (excluded since commit `6a68df2`).

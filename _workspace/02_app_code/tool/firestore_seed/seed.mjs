@@ -17,8 +17,8 @@
 //
 // `--prune` only ever touches the dev-owned collections (facilities,
 // guide_items, building_floors). The admin-entered collections
-// (academic_events, cafeterias) get an initial seed here but are OWNED by the
-// admin sheet sync afterwards — they are never pruned by this script.
+// cafeterias get missing starter documents only; existing docs are never
+// updated or pruned. academic_events and dining_menus are never seeded.
 //
 // The JSON is keyed by document id; each value is the document body. `updatedAt`
 // is stamped server-side here (stored as a Firestore Timestamp; the app reader
@@ -29,6 +29,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { initializeApp, applicationDefault, cert } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
+import { createMissingAdminDocs } from './seed_policy.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const overwrite = process.argv.includes('--overwrite');
@@ -71,6 +72,12 @@ const COLLECTIONS = {
 async function seedCollection(collection, file, prunable) {
   const docs = JSON.parse(readFileSync(join(here, file), 'utf8'));
   const entries = Object.entries(docs);
+  if (!prunable) {
+    const created = await createMissingAdminDocs(db, collection, entries,
+      () => FieldValue.serverTimestamp());
+    console.log(`Created ${created} missing docs in "${collection}"; existing admin data preserved.`);
+    return;
+  }
   let batch = db.batch();
   let ops = 0;
 
@@ -89,9 +96,6 @@ async function seedCollection(collection, file, prunable) {
     `Seeded ${entries.length} docs into "${collection}" (${overwrite ? 'overwrite' : 'merge'}).`,
   );
 
-  if (prune && !prunable) {
-    console.log(`Skipping prune for admin-owned collection "${collection}".`);
-  }
   if (prune && prunable) {
     const seedIds = new Set(Object.keys(docs));
     const existing = await db.collection(collection).listDocuments();

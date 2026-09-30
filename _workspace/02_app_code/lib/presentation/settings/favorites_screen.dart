@@ -1,3 +1,4 @@
+import '../shared/favorite_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -93,13 +94,13 @@ class _FacilityFavorites extends ConsumerWidget {
         return ListView.separated(
           itemCount: facilities.length,
           separatorBuilder: (_, __) => const Divider(height: 1),
-          itemBuilder: (context, i) {
+          itemBuilder: (_, i) {
             final f = facilities[i];
             return Dismissible(
               key: ValueKey('fav-facility-${f.id}'),
               direction: DismissDirection.endToStart,
               background: const _DismissBg(),
-              onDismissed: (_) =>
+              confirmDismiss: (_) =>
                   _remove(context, ref, FavoriteType.facility, f.id),
               child: FacilityListItem(
                 facility: f,
@@ -145,13 +146,13 @@ class _GuideFavorites extends ConsumerWidget {
         return ListView.separated(
           itemCount: items.length,
           separatorBuilder: (_, __) => const Divider(height: 1),
-          itemBuilder: (context, i) {
+          itemBuilder: (_, i) {
             final g = items[i];
             return Dismissible(
               key: ValueKey('fav-guide-${g.id}'),
               direction: DismissDirection.endToStart,
               background: const _DismissBg(),
-              onDismissed: (_) =>
+              confirmDismiss: (_) =>
                   _remove(context, ref, FavoriteType.guide, g.id),
               child: GuideListItem(
                 item: g,
@@ -165,19 +166,21 @@ class _GuideFavorites extends ConsumerWidget {
   }
 }
 
-void _remove(
-    BuildContext context, WidgetRef ref, FavoriteType type, String id) {
+Future<bool> _remove(
+    BuildContext context, WidgetRef ref, FavoriteType type, String id) async {
   final l = AppLocalizations.of(context);
-  ref.read(favoritesProvider.notifier).toggle(type, id);
-  ScaffoldMessenger.of(context)
+  final messenger = ScaffoldMessenger.of(context);
+  final ok = await toggleFavorite(context, ref, type, id);
+  if (!ok || !context.mounted) return false;
+  messenger
     ..clearSnackBars()
     ..showSnackBar(SnackBar(
       content: Text(l.favorites_removed),
       action: SnackBarAction(
-        label: l.common_undo,
-        onPressed: () => ref.read(favoritesProvider.notifier).toggle(type, id),
-      ),
+          label: l.common_undo,
+          onPressed: () => toggleFavorite(context, ref, type, id)),
     ));
+  return true;
 }
 
 class _DismissBg extends StatelessWidget {

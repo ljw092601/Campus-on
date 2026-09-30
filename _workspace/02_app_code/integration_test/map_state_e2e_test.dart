@@ -139,6 +139,20 @@ void main() {
     await tester.tap(choice);
     final roomField = find.byWidgetPredicate((w) =>
         w is TextField && w.decoration?.hintText == l.classroom_hint_room);
+    for (final invalid in ['0399', '101']) {
+      await tester.enterText(roomField, invalid);
+      await SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester
+          .tap(find.widgetWithText(FilledButton, l.classroom_action_search));
+      final message = invalid == '101'
+          ? l.classroom_room_invalid
+          : l.classroom_room_notFound;
+      await until(() async => find.text(message).evaluate().isNotEmpty,
+          'invalid classroom feedback');
+      expect(find.byType(ClassroomSearchScreen), findsOneWidget);
+    }
+    passed('verified_room_validation');
     await tester.enterText(roomField, '0306-1');
     await SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
     await tester.pump(const Duration(milliseconds: 300));

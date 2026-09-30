@@ -62,7 +62,9 @@ void main() {
     await tester.pump();
 
     expect(find.byType(FloorPlanView), findsNothing);
-    expect(find.textContaining(RegExp('도면|floor plan')), findsOneWidget);
+    final labels =
+        AppLocalizations.of(tester.element(find.byType(RoomLocationCard)));
+    expect(find.text(labels.classroom_room_notFound), findsOneWidget);
   });
 
   testWidgets('full-screen plan lays out and zooms onto the room',

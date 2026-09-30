@@ -30,9 +30,7 @@ class FirestoreFacilityRepository implements FacilityRepository {
     final all = await _loadAll();
     return preserveReadStatus(
         all,
-        all.where((v) =>
-            v.nameKo.toLowerCase().contains(q) ||
-            v.nameEn.toLowerCase().contains(q)));
+        all.where((v) => v.matchesSearch(q)));
   }
 
   @override

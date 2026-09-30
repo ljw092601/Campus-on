@@ -5,6 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/floor_plan.dart';
 
+enum RoomLookupStatus { found, missingRoom, missingPlan }
+
+class RoomLookup {
+  const RoomLookup(this.status, [this.location]);
+  final RoomLookupStatus status;
+  final RoomLocation? location;
+}
+
 /// Bundled room index for the floor-plan drawings.
 const floorPlanIndexAsset = 'assets/floorplans/floorplans.json';
 
@@ -51,12 +59,28 @@ final buildingFloorPlansProvider =
 /// code).
 final roomLocationProvider =
     FutureProvider.family<RoomLocation?, (String, String)>((ref, key) async {
+  return (await ref.watch(roomLookupProvider(key).future)).location;
+});
+
+final roomLookupProvider =
+    FutureProvider.family<RoomLookup, (String, String)>((ref, key) async {
   final (buildingCode, roomCode) = key;
   final plans =
       await ref.watch(buildingFloorPlansProvider(buildingCode).future);
   for (final plan in plans.values) {
     final room = plan.rooms[roomCode];
-    if (room != null) return RoomLocation(plan: plan, room: room);
+    if (room != null) {
+      return RoomLookup(
+          RoomLookupStatus.found, RoomLocation(plan: plan, room: room));
+    }
   }
-  return null;
+  final base = roomCode.split('-').first;
+  final floor = base.startsWith('B') && base.length >= 2
+      ? 'B${base[1]}F'
+      : base.length >= 2
+          ? '${int.tryParse(base.substring(0, 2))}F'
+          : '';
+  return RoomLookup(plans.containsKey(floor)
+      ? RoomLookupStatus.missingRoom
+      : RoomLookupStatus.missingPlan);
 });

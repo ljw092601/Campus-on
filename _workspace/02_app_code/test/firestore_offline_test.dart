@@ -155,6 +155,7 @@ void main() {
         'id': 'a',
         'name_ko': 'Library',
         'name_en': 'Library',
+        'buildingCode': 'S12',
         'category': 'building',
         'lat': 35.1,
         'lng': 129.0
@@ -166,6 +167,10 @@ void main() {
     expect(isCachedRead(found), isTrue);
     expect(isCachedRead(await repo.search('missing')), isTrue);
     expect(isCachedRead(await repo.getByIds(['a'])), isTrue);
+    final byCode = await repo.search(' s12 ');
+    expect(byCode.single.id, 'a');
+    expect(isCachedRead(byCode), isTrue);
+    expect((await repo.search('Lib rary')).single.id, 'a');
   });
   test('permission errors never fall back to cached content', () async {
     db.errorCode = 'permission-denied';

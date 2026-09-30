@@ -1,3 +1,4 @@
+import '../favorite_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -53,11 +54,9 @@ class FacilityListItem extends ConsumerWidget {
         icon: Icon(Symbols.star,
             fill: isFav ? 1 : 0,
             color: isFav ? Theme.of(context).colorScheme.primary : null),
-        tooltip:
-            isFav ? l.facility_favorite_remove : l.facility_favorite_add,
-        onPressed: () => ref
-            .read(favoritesProvider.notifier)
-            .toggle(FavoriteType.facility, facility.id),
+        tooltip: isFav ? l.facility_favorite_remove : l.facility_favorite_add,
+        onPressed: () =>
+            toggleFavorite(context, ref, FavoriteType.facility, facility.id),
       ),
     );
   }

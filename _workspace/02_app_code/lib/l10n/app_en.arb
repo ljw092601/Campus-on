@@ -14,6 +14,7 @@
   "map_error_timeout": "The map could not be loaded. Check your connection and try again.",
 
   "common_retry": "Retry",
+  "favorites_save_failed": "Could not save favorites. Your previous favorites have been kept. Please try again.",
   "data_cached": "Showing saved information. It may be outdated or incomplete.",
   "data_cached_empty": "Saved information is not enough to confirm these results. Connect and try again.",
   "data_offline_unavailable": "Could not connect and no saved information is available. Check your connection and try again.",
@@ -58,9 +59,11 @@
   "classroom_hint_room": "Room",
   "classroom_action_search": "Show location",
   "classroom_suggestions_empty": "No matching rooms.",
-  "classroom_noRoomData": "Room numbers for this building aren't registered yet. You can still search with a 4-digit number.",
+  "classroom_noRoomData": "No verified room list is available. Enter a number to see the building location; the room location cannot be confirmed.",
+  "classroom_room_notFound": "This room number was not found on the floor drawing. Please check the number.",
+  "classroom_room_invalid": "Enter a 4-digit room number. A 3-digit number is accepted only when verified on a drawing.",
   "classroom_suggestion_onPlan": "Shown on the floor plan",
-  "classroom_plan_unavailable": "This room can't be shown on a floor plan yet. See the floor guide below.",
+  "classroom_plan_unavailable": "No drawing is available for this building or floor, so the room location cannot be confirmed. See the building location and floor guide below.",
   "classroom_plan_open": "Open floor plan for {code}",
   "@classroom_plan_open": {
     "placeholders": { "code": { "type": "String" } }

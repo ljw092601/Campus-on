@@ -8,7 +8,7 @@ import 'guide_providers.dart';
 import 'repository_providers.dart';
 
 /// Holds the set of favorite keys ("facility:id" / "guide:id") for fast lookup
-/// and optimistic toggling. Backed by [FavoritesRepository] (local).
+/// and serialized toggling. Backed by [FavoritesRepository] (local).
 class FavoritesNotifier extends AsyncNotifier<Set<String>> {
   @override
   Future<Set<String>> build() async {
@@ -19,30 +19,36 @@ class FavoritesNotifier extends AsyncNotifier<Set<String>> {
   bool contains(FavoriteType type, String id) =>
       state.valueOrNull?.contains('${type.name}:$id') ?? false;
 
-  Future<void> toggle(FavoriteType type, String id) async {
-    final repo = ref.read(favoritesRepositoryProvider);
-    final key = '${type.name}:$id';
-    final previous = Set<String>.from(state.valueOrNull ?? const {});
-    final current = Set<String>.from(previous);
-    try {
-      if (current.contains(key)) {
-        current.remove(key);
-        state = AsyncData(current);
-        await repo.remove(type, id);
-      } else {
-        current.add(key);
-        state = AsyncData(current);
-        await repo.add(FavoriteRef(type: type, id: id, savedAt: DateTime.now()));
+  Future<void> _pending = Future.value();
+
+  Future<bool> toggle(FavoriteType type, String id) {
+    final result = _pending.then((_) async {
+      try {
+        final previous = Set<String>.from(await future);
+        final repo = ref.read(favoritesRepositoryProvider);
+        final key = '${type.name}:$id';
+        if (previous.contains(key)) {
+          await repo.remove(type, id);
+          previous.remove(key);
+        } else {
+          await repo
+              .add(FavoriteRef(type: type, id: id, savedAt: DateTime.now()));
+          previous.add(key);
+        }
+        // Publish only after persistence succeeds; failed writes keep old state.
+        state = AsyncData(previous);
+        return true;
+      } catch (_) {
+        return false;
       }
-    } catch (_) {
-      // Persist failed → roll back the optimistic update (QA X-3).
-      state = AsyncData(previous);
-    }
+    });
+    _pending = result.then<void>((_) {});
+    return result;
   }
 }
 
-final favoritesProvider =
-    AsyncNotifierProvider<FavoritesNotifier, Set<String>>(FavoritesNotifier.new);
+final favoritesProvider = AsyncNotifierProvider<FavoritesNotifier, Set<String>>(
+    FavoritesNotifier.new);
 
 /// Saved facilities for S10 — resolves favorite keys against the facility list.
 /// Rebuilds when favorites toggle or the underlying data changes.

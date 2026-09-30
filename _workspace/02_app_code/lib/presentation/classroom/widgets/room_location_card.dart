@@ -44,7 +44,7 @@ class RoomLocationCard extends ConsumerWidget {
           _ => ownCode,
         };
     final fullCode = '$buildingCode-$roomCode';
-    final async = ref.watch(roomLocationProvider((buildingCode, roomCode)));
+    final async = ref.watch(roomLookupProvider((buildingCode, roomCode)));
 
     final header = Row(
       children: [
@@ -56,8 +56,8 @@ class RoomLocationCard extends ConsumerWidget {
                 .titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
         const Spacer(),
-        if (async.valueOrNull != null)
-          Text(async.valueOrNull!.plan.floorLabel,
+        if (async.valueOrNull?.location != null)
+          Text(async.valueOrNull!.location!.plan.floorLabel,
               style: Theme.of(context)
                   .textTheme
                   .labelLarge
@@ -70,15 +70,24 @@ class RoomLocationCard extends ConsumerWidget {
         height: 120,
         child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
       ),
-      error: (_, __) => const SizedBox.shrink(),
-      data: (loc) {
+      error: (_, __) => Column(children: [
+        Text(l.common_loadFailed),
+        TextButton(
+            onPressed: () => ref.invalidate(floorPlansProvider),
+            child: Text(l.common_retry)),
+      ]),
+      data: (result) {
+        final loc = result.location;
         if (loc == null) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               header,
               SizedBox(height: d.spaceXs),
-              Text(l.classroom_plan_unavailable,
+              Text(
+                  result.status == RoomLookupStatus.missingRoom
+                      ? l.classroom_room_notFound
+                      : l.classroom_plan_unavailable,
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall

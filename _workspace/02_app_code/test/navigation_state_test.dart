@@ -18,6 +18,7 @@ import 'package:campus_on/presentation/guide/guide_item_list_screen.dart';
 import 'package:campus_on/presentation/map/map_screen.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:campus_on/presentation/providers/search_provider.dart';
+import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
 import 'package:campus_on/presentation/search/search_screen.dart';
 import 'package:campus_on/presentation/settings/favorites_screen.dart';
 import 'package:campus_on/presentation/shared/widgets/facility_list_item.dart';
@@ -55,6 +56,13 @@ class _RetryFavorites extends LocalFavoritesRepository {
   }
 }
 
+class _FailRemoveFavorites extends LocalFavoritesRepository {
+  _FailRemoveFavorites(super.prefs);
+  @override
+  Future<void> remove(FavoriteType type, String id) =>
+      Future.error(StateError('storage full'));
+}
+
 void main() {
   late SharedPreferences prefs;
   late ProviderContainer container;
@@ -73,9 +81,14 @@ void main() {
   Future<void> settle(WidgetTester tester) async {
     // Debounce and repository timers may run without scheduling a frame.
     await tester.pump();
+    // Let drawing asset I/O triggered by a new lookup finish in real time.
+    await tester
+        .runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
     await tester.pump(const Duration(milliseconds: 400));
     await tester.pump(const Duration(milliseconds: 400));
-    await tester.pumpAndSettle();
+    // Floor-plan highlights deliberately animate continuously. Advance route
+    // transitions without waiting for every animation in the app to stop.
+    await tester.pump(const Duration(milliseconds: 400));
   }
 
   Future<void> mount(WidgetTester tester, String path,
@@ -85,6 +98,8 @@ void main() {
       ...overrides,
     ]);
     addTearDown(container.dispose);
+    // Asset I/O must complete outside the widget test's fake clock.
+    await tester.runAsync(() => container.read(floorPlansProvider.future));
     AppRouter.router.go(path);
     await tester.pumpWidget(UncontrolledProviderScope(
       container: container,
@@ -232,6 +247,58 @@ void main() {
     expect(
         tester.widget<TextField>(find.byType(TextField).first).controller!.text,
         startsWith('S04 ·'));
+  });
+
+  testWidgets('failed swipe preserves the row and explains the save failure',
+      (tester) async {
+    await mount(tester, '/settings/favorites', overrides: [
+      favoritesRepositoryProvider
+          .overrideWithValue(_FailRemoveFavorites(prefs)),
+    ]);
+    await tester.drag(find.byType(Dismissible), const Offset(-700, 0));
+    await settle(tester);
+    expect(find.byType(FacilityListItem), findsOneWidget);
+    expect(find.textContaining('Could not save favorites.'), findsOneWidget);
+  });
+
+  testWidgets('successful swipe supports undo with a live screen context',
+      (tester) async {
+    await mount(tester, '/settings/favorites');
+    await tester.drag(find.byType(Dismissible), const Offset(-700, 0));
+    await settle(tester);
+    expect(find.byType(FacilityListItem), findsNothing);
+    await tester.tap(find.text('Undo'));
+    await settle(tester);
+    expect(find.byType(FacilityListItem), findsOneWidget);
+  });
+
+  testWidgets(
+      'classroom rejects unknown numbers but permits building-only guidance',
+      (tester) async {
+    await mount(tester, '/classroom-search');
+    await tester.tap(find.byType(TextField).first);
+    await settle(tester);
+    final choice = find.textContaining('S04 ·').last;
+    await tester.ensureVisible(choice);
+    await tester.tap(choice);
+    final room = find.byWidgetPredicate(
+        (w) => w is TextField && w.decoration?.hintText == 'Room');
+    for (final code in ['0399', '101']) {
+      await tester.enterText(room, code);
+      await tester.pump();
+      await tester.tap(find.widgetWithText(FilledButton, 'Show location'));
+      await settle(tester);
+      expect(find.byType(MapScreen), findsNothing);
+      expect(
+          find.textContaining(
+              code == '101' ? 'Enter a 4-digit' : 'was not found'),
+          findsOneWidget);
+    }
+    await tester.enterText(room, '9901');
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Show location'));
+    await settle(tester);
+    expect(find.byType(MapScreen), findsOneWidget);
   });
 
   testWidgets('facility favorites retry performs a second repository read',

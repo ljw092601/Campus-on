@@ -1,3 +1,4 @@
+import '../favorite_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -46,9 +47,8 @@ class GuideListItem extends ConsumerWidget {
             fill: isFav ? 1 : 0,
             color: isFav ? Theme.of(context).colorScheme.primary : null),
         tooltip: isFav ? l.guide_favorite_remove : l.guide_favorite_add,
-        onPressed: () => ref
-            .read(favoritesProvider.notifier)
-            .toggle(FavoriteType.guide, item.id),
+        onPressed: () =>
+            toggleFavorite(context, ref, FavoriteType.guide, item.id),
       ),
     );
   }

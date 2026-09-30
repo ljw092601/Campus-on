@@ -19,6 +19,7 @@ function listDocumentSummaries_(collection) {
       const fields = doc.fields || {};
       docs.push({
         id: doc.name.substring(doc.name.lastIndexOf('/') + 1),
+        updateTime: doc.updateTime,
         title_ko: fields.title_ko && fields.title_ko.stringValue ? fields.title_ko.stringValue : '',
         start: fields.start && fields.start.stringValue ? fields.start.stringValue : '',
       });

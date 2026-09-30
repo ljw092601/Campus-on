@@ -20,9 +20,7 @@ import '../shared/widgets/state_views.dart';
 /// (basement 1). The building half is a single dropdown over the campus-map
 /// buildings — a building whose drawings are split by wing (B04 → B04A /
 /// B04B) gets one entry per wing; the room half is a free input with
-/// suggestions from [classroomEntriesProvider] (real codes for buildings with
-/// floor-plan drawings, placeholder data derived from the floor guide
-/// otherwise). Searching deep-links to
+/// verified suggestions from [classroomEntriesProvider]. Searching deep-links to
 /// `/map?focus=<building>&floor=<03|B1>&room=<code>[&plan=<plan code>]` — pin
 /// focused, peek sheet expanded with the room's floor plan (red dot) above
 /// the floor guide.
@@ -58,6 +56,8 @@ class _BuildingChoice {
 class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
   _BuildingChoice? _building;
   final _roomCtrl = TextEditingController();
+  bool _searching = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -66,19 +66,44 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
   }
 
   bool get _canSearch =>
-      _building != null && roomCodePattern.hasMatch(_roomCtrl.text);
+      !_searching && _building != null && floorLabelOf(_roomCtrl.text) != null;
 
-  void _search() {
+  Future<void> _search() async {
     final b = _building;
     if (b == null || !_canSearch) return;
     final code = _roomCtrl.text;
-    // "03" for 0301, "B1" for B101 (see MapScreen.focusFloorCode).
-    final floor = code.substring(0, 2);
-    final plan = b.planCode == null ? '' : '&plan=${b.planCode}';
-    // `t` makes every search a new request, even an identical repeat.
-    final t = DateTime.now().millisecondsSinceEpoch;
-    context.push(
-        '/classroom-search/result?focus=${b.facility.id}&floor=$floor&room=$code$plan&t=$t');
+    setState(() {
+      _searching = true;
+      _error = null;
+    });
+    try {
+      final result = await ref.read(roomLookupProvider((b.code, code)).future);
+      if (!mounted || _building != b || _roomCtrl.text != code) return;
+      final l = AppLocalizations.of(context);
+      if (RegExp(r'^\d{3}(-|$)').hasMatch(code) &&
+          result.status != RoomLookupStatus.found) {
+        setState(() => _error = l.classroom_room_invalid);
+        return;
+      }
+      if (result.status == RoomLookupStatus.missingRoom) {
+        setState(() => _error = l.classroom_room_notFound);
+        return;
+      }
+      // "03" for 0301, "B1" for B101 (see MapScreen.focusFloorCode).
+      final floor = code.substring(0, 2);
+      final plan = b.planCode == null ? '' : '&plan=${b.planCode}';
+      // `t` makes every search a new request, even an identical repeat.
+      final t = DateTime.now().millisecondsSinceEpoch;
+      context.push(
+          '/classroom-search/result?focus=${b.facility.id}&floor=$floor&room=$code$plan&t=$t');
+    } catch (_) {
+      if (mounted) {
+        setState(() => _error = AppLocalizations.of(context).common_loadFailed);
+        ref.invalidate(floorPlansProvider);
+      }
+    } finally {
+      if (mounted) setState(() => _searching = false);
+    }
   }
 
   /// Campus-map buildings (split per drawing wing) sorted 승학(S) → 구덕(G)
@@ -109,9 +134,20 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
     final locale = ref.watch(localeProvider);
     final scheme = Theme.of(context).colorScheme;
     final facilitiesAsync = ref.watch(allFacilitiesProvider);
-    // No drawings yet (loading / asset error) → plain building list.
-    final planIndex =
-        ref.watch(floorPlansProvider).valueOrNull?.keys ?? const <String>[];
+    final plansAsync = ref.watch(floorPlansProvider);
+    if (!plansAsync.hasValue) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l.classroom_search_title)),
+        body: plansAsync.hasError
+            ? ErrorStateView(
+                message: l.common_loadFailed,
+                retryLabel: l.common_retry,
+                onRetry: () => ref.invalidate(floorPlansProvider),
+              )
+            : const Center(child: CircularProgressIndicator()),
+      );
+    }
+    final planIndex = plansAsync.requireValue.keys;
 
     return Scaffold(
       appBar: AppBar(title: Text(l.classroom_search_title)),
@@ -146,7 +182,10 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                       hintText: l.classroom_hint_building,
                       textStyle: const TextStyle(
                           fontSize: 15, fontWeight: FontWeight.w600),
-                      onSelected: (f) => setState(() => _building = f),
+                      onSelected: (f) => setState(() {
+                        _building = f;
+                        _error = null;
+                      }),
                       dropdownMenuEntries: [
                         for (final f in buildings)
                           DropdownMenuEntry(
@@ -168,7 +207,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                     width: 132,
                     child: TextField(
                       controller: _roomCtrl,
-                      onChanged: (_) => setState(() {}),
+                      onChanged: (_) => setState(() => _error = null),
                       onSubmitted: (_) => _search(),
                       // Plain text keyboard: the numeric pad has no hyphen
                       // on every platform, and codes need "0306-1", "0101-A"
@@ -200,6 +239,11 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                 ],
               ),
               const SizedBox(height: 16),
+              if (_error != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(_error!, style: TextStyle(color: scheme.error)),
+                ),
               FilledButton.icon(
                 onPressed: _canSearch ? _search : null,
                 icon: const Icon(Symbols.pin_drop),
@@ -214,7 +258,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                   query: _roomCtrl.text,
                   onPick: (code) {
                     _roomCtrl.text = code;
-                    setState(() {});
+                    setState(() => _error = null);
                   },
                 ),
               ],
@@ -227,8 +271,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
 }
 
 /// Room-number suggestions for the selected building, filtered by the
-/// current input. Real codes where a floor-plan drawing exists, placeholder
-/// data (floor guide derivation) elsewhere.
+/// current input. Only codes verified on a drawing are offered.
 class _SuggestionList extends ConsumerWidget {
   const _SuggestionList({
     required this.building,

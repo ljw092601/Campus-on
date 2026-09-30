@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:campus_on/domain/entities/floor_plan.dart';
+import 'package:campus_on/data/repositories/mock_facility_repository.dart';
 import 'package:campus_on/presentation/providers/classroom_providers.dart';
 import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
 
@@ -105,25 +106,11 @@ void main() {
         isNull);
   });
 
-  test('classroom entries derive 4-digit codes from the floor guide', () async {
+  test('floor guide names never produce invented room numbers', () async {
     final container = ProviderContainer();
     addTearDown(container.dispose);
-
-    // s01 (대학본부) has registered floor info in the generated data.
-    final entries =
-        await container.read(classroomEntriesProvider(('s01', null)).future);
-
-    expect(entries, isNotEmpty);
-    for (final e in entries) {
-      expect(e.code, matches(RegExp(r'^\d{4}$')));
-      expect(e.roomName, isNotEmpty);
-      // First two digits encode the floor label (e.g. "3F" → "03xx").
-      final floorNo = int.parse(e.code.substring(0, 2));
-      expect('${floorNo}F', e.floorLabel);
-    }
-    // Numbers restart at 01 on each floor and stay unique per building.
-    expect(entries.map((e) => e.code).toSet().length, entries.length);
-    expect(entries.any((e) => e.code.endsWith('01')), isTrue);
+    expect(await container.read(classroomEntriesProvider(('s01', null)).future),
+        isEmpty);
   });
 
   test('building without floor info yields no entries', () async {
@@ -133,5 +120,30 @@ void main() {
     final entries = await container
         .read(classroomEntriesProvider(('no-such-id', null)).future);
     expect(entries, isEmpty);
+  });
+
+  test('facility search accepts official building codes regardless of case',
+      () async {
+    final repo = MockFacilityRepository();
+    expect((await repo.search(' s12 ')).single.buildingCode, 'S12');
+    expect((await repo.search('S04')).single.id, 's04');
+    expect(await repo.search('   '), isEmpty);
+  });
+
+  test(
+      'lookup distinguishes unknown room, missing floor and missing building drawing',
+      () async {
+    final c = ProviderContainer();
+    addTearDown(c.dispose);
+    expect((await c.read(roomLookupProvider(('S04', '0306-1')).future)).status,
+        RoomLookupStatus.found);
+    expect((await c.read(roomLookupProvider(('S04', '0399')).future)).status,
+        RoomLookupStatus.missingRoom);
+    expect((await c.read(roomLookupProvider(('S04', '9901')).future)).status,
+        RoomLookupStatus.missingPlan);
+    expect((await c.read(roomLookupProvider(('S01', '0301')).future)).status,
+        RoomLookupStatus.missingPlan);
+    expect((await c.read(roomLookupProvider(('S07', '059-1')).future)).status,
+        RoomLookupStatus.found);
   });
 }

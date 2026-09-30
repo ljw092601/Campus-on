@@ -39,9 +39,7 @@ class MockFacilityRepository implements FacilityRepository {
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return const [];
     return _data
-        .where((f) =>
-            f.nameKo.toLowerCase().contains(q) ||
-            f.nameEn.toLowerCase().contains(q))
+        .where((f) => f.matchesSearch(q))
         .toList();
   }
 }

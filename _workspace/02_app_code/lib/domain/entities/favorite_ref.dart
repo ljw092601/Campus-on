@@ -18,12 +18,20 @@ class FavoriteRef {
   /// Stable key for a Set/local store: "facility:123".
   String get key => '${type.name}:$id';
 
-  factory FavoriteRef.fromJson(Map<String, dynamic> j) => FavoriteRef(
-        type: j['type'] == 'guide' ? FavoriteType.guide : FavoriteType.facility,
-        id: j['id'] as String,
-        savedAt: DateTime.tryParse(j['savedAt']?.toString() ?? '') ??
-            DateTime.now(),
-      );
+  factory FavoriteRef.fromJson(Map<String, dynamic> j) {
+    final type = switch (j['type']) {
+      'guide' => FavoriteType.guide,
+      'facility' => FavoriteType.facility,
+      _ => throw const FormatException('Unknown favorite type'),
+    };
+    final id = j['id'];
+    final date =
+        j['savedAt'] is String ? DateTime.tryParse(j['savedAt']) : null;
+    if (id is! String || id.trim().isEmpty || date == null) {
+      throw const FormatException('Invalid favorite entry');
+    }
+    return FavoriteRef(type: type, id: id, savedAt: date);
+  }
 
   Map<String, dynamic> toJson() => {
         'type': type.name,
