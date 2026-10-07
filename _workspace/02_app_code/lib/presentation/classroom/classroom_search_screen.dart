@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +14,7 @@ import '../providers/floor_plan_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/map_links.dart';
 import '../shared/widgets/state_views.dart';
+import 'floor_label.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
 /// `/classroom-search`).
@@ -43,6 +46,24 @@ class _BuildingChoice {
 
   /// Code shown to the user and used as the room-code prefix.
   String get code => planCode ?? facility.buildingCode!;
+
+  /// Wing letter ("A" for B04A) when the drawings split the building, else
+  /// null.
+  String? get wing {
+    final p = planCode, b = facility.buildingCode;
+    if (p == null || b == null || !p.startsWith(b) || p.length <= b.length) {
+      return null;
+    }
+    return p.substring(b.length);
+  }
+
+  /// Dropdown label: "B04A · 종합강의동 A동" — wings stay distinguishable
+  /// (L-7d).
+  String label(AppLocalizations l, Locale locale) {
+    final name = facility.name(locale);
+    final w = wing;
+    return '$code · ${w == null ? name : l.classroom_building_wing(name, w)}';
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -94,11 +115,11 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
       final floor = code.substring(0, 2);
       // mapFocusLink adds `t`, making every search a new request, even an
       // identical repeat.
-      context.push(mapFocusLink(b.facility.id,
+      unawaited(context.push(mapFocusLink(b.facility.id,
           floor: floor,
           room: code,
           plan: b.planCode,
-          path: '/classroom-search/result'));
+          path: '/classroom-search/result')));
     } catch (_) {
       if (mounted) {
         setState(() => _error = AppLocalizations.of(context).common_loadFailed);
@@ -151,6 +172,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
       );
     }
     final planIndex = plansAsync.requireValue.keys;
+    final maxRoomLength = maxRoomCodeLength(plansAsync.requireValue);
 
     return Scaffold(
       appBar: AppBar(title: Text(l.classroom_search_title)),
@@ -193,7 +215,7 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                         for (final f in buildings)
                           DropdownMenuEntry(
                             value: f,
-                            label: '${f.code} · ${f.facility.name(locale)}',
+                            label: f.label(l, locale),
                           ),
                       ],
                     ),
@@ -217,10 +239,8 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
                       // and basement "B101".
                       keyboardType: TextInputType.visiblePassword,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'[0-9A-Za-z-]')),
-                        const _UpperCaseFormatter(),
-                        LengthLimitingTextInputFormatter(7),
+                        const _RoomCodeFormatter(),
+                        LengthLimitingTextInputFormatter(maxRoomLength),
                       ],
                       textAlign: TextAlign.center,
                       style: const TextStyle(
@@ -286,6 +306,9 @@ class _SuggestionList extends ConsumerWidget {
   final String query;
   final ValueChanged<String> onPick;
 
+  /// Suggestions rendered at once; the rest is summarised below the list.
+  static const _maxShown = 60;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -316,14 +339,22 @@ class _SuggestionList extends ConsumerWidget {
           for (final e in entries)
             if (e.code.contains(query)) e
         ];
-        // Long lists (drawings list every room) stay light.
-        final shown = matches.take(60).toList();
+        // Long lists (drawings list every room) stay light; the cut is
+        // announced instead of silent (L-7c).
+        final shown = matches.take(_maxShown).toList();
         if (matches.isEmpty) {
           return _InfoNote(text: l.classroom_suggestions_empty);
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (matches.length > shown.length)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: _InfoNote(
+                    text: l.classroom_suggestions_more(
+                        matches.length - shown.length)),
+              ),
             for (final e in shown)
               Card(
                 margin: const EdgeInsets.only(bottom: 8),
@@ -339,7 +370,7 @@ class _SuggestionList extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      e.floorLabel,
+                      localizedFloorLabel(l, e.floorLabel),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 12,
@@ -370,14 +401,23 @@ class _SuggestionList extends ConsumerWidget {
   }
 }
 
-/// Room codes are upper-case ("0101-A", "B101"); lets the user type either.
-class _UpperCaseFormatter extends TextInputFormatter {
-  const _UpperCaseFormatter();
+/// Normalises typed or pasted input with [normalizeRoomCodeInput] instead of
+/// silently dropping characters: full-width digits, en dashes and spaces are
+/// mapped, a pasted "S04-0306-1" keeps its room half, lower case is accepted
+/// (L-7a/b). The caret moves to the end only when the text actually changed.
+class _RoomCodeFormatter extends TextInputFormatter {
+  const _RoomCodeFormatter();
 
   @override
   TextEditingValue formatEditUpdate(
-          TextEditingValue oldValue, TextEditingValue newValue) =>
-      newValue.copyWith(text: newValue.text.toUpperCase());
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final text = normalizeRoomCodeInput(newValue.text);
+    if (text == newValue.text) return newValue;
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
+    );
+  }
 }
 
 class _InfoNote extends StatelessWidget {

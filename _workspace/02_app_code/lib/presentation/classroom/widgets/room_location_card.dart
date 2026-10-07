@@ -7,6 +7,7 @@ import '../../../domain/entities/facility.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../providers/floor_plan_providers.dart';
 import '../../providers/locale_provider.dart';
+import '../floor_label.dart';
 import '../floor_plan_screen.dart';
 import 'floor_plan_view.dart';
 
@@ -26,7 +27,9 @@ class RoomLocationCard extends ConsumerWidget {
   final String roomCode;
 
   /// Floor-plan building code ("B04A") when it differs from
-  /// [Facility.buildingCode]; resolved via [planCodesFor] when null.
+  /// [Facility.buildingCode]. When null (a deep link without `plan=`) the
+  /// lookup tries every wing of the building in order and the drawing that
+  /// has the room wins (L-3); the header then shows that wing's code.
   final String? planCode;
 
   @override
@@ -35,16 +38,10 @@ class RoomLocationCard extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final scheme = Theme.of(context).colorScheme;
     final d = context.dimens;
-    final planIndex =
-        ref.watch(floorPlansProvider).valueOrNull?.keys ?? const <String>[];
-    final ownCode = facility.buildingCode ?? '';
-    final buildingCode = planCode ??
-        switch (planCodesFor(ownCode, planIndex)) {
-          [final only] => only,
-          _ => ownCode,
-        };
-    final fullCode = '$buildingCode-$roomCode';
+    final buildingCode = planCode ?? facility.buildingCode ?? '';
     final async = ref.watch(roomLookupProvider((buildingCode, roomCode)));
+    final location = async.valueOrNull?.location;
+    final fullCode = '${location?.plan.buildingCode ?? buildingCode}-$roomCode';
 
     final header = Row(
       children: [
@@ -56,8 +53,8 @@ class RoomLocationCard extends ConsumerWidget {
                 .titleMedium
                 ?.copyWith(fontWeight: FontWeight.w700, letterSpacing: 0.5)),
         const Spacer(),
-        if (async.valueOrNull?.location != null)
-          Text(async.valueOrNull!.location!.plan.floorLabel,
+        if (location != null)
+          Text(localizedFloorLabel(l, location.plan.floorLabel),
               style: Theme.of(context)
                   .textTheme
                   .labelLarge

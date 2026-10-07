@@ -67,25 +67,39 @@ final roomLocationProvider = FutureProvider.autoDispose
   return (await ref.watch(roomLookupProvider(key).future)).location;
 });
 
+/// Resolves a (building code, room code) pair against the bundled drawings.
+/// The building code may be a floor-plan code ("S04", "B04A") or a campus-map
+/// code whose drawings are split by wing ("B04", as in a `/map?focus=b04&
+/// room=0301` deep link without `plan=`): the wings from [planCodesFor] are
+/// tried in order and the first drawing that has the room wins (L-3).
 final roomLookupProvider = FutureProvider.autoDispose
     .family<RoomLookup, (String, String)>((ref, key) async {
   final (buildingCode, roomCode) = key;
-  final plans =
-      await ref.watch(buildingFloorPlansProvider(buildingCode).future);
-  for (final plan in plans.values) {
-    final room = plan.rooms[roomCode];
-    if (room != null) {
-      return RoomLookup(
-          RoomLookupStatus.found, RoomLocation(plan: plan, room: room));
+  final index = await ref.watch(floorPlansProvider.future);
+  final candidates = planCodesFor(buildingCode, index.keys);
+  final floor = floorKeyOf(roomCode);
+  var floorDrawn = false;
+  for (final code in candidates) {
+    final plans = await ref.watch(buildingFloorPlansProvider(code).future);
+    for (final plan in plans.values) {
+      final room = plan.rooms[roomCode];
+      if (room != null) {
+        return RoomLookup(
+            RoomLookupStatus.found, RoomLocation(plan: plan, room: room));
+      }
     }
+    floorDrawn |= plans.containsKey(floor);
   }
-  final base = roomCode.split('-').first;
-  final floor = base.startsWith('B') && base.length >= 2
-      ? 'B${base[1]}F'
-      : base.length >= 2
-          ? '${int.tryParse(base.substring(0, 2))}F'
-          : '';
-  return RoomLookup(plans.containsKey(floor)
+  return RoomLookup(floorDrawn
       ? RoomLookupStatus.missingRoom
       : RoomLookupStatus.missingPlan);
 });
+
+/// Canonical floor key of a room code as used by the plan index: "0306-1" →
+/// "3F", "B103-2" → "B1F", "" when the code is too short.
+String floorKeyOf(String roomCode) {
+  final base = roomCode.split('-').first;
+  if (base.startsWith('B') && base.length >= 2) return 'B${base[1]}F';
+  if (base.length >= 2) return '${int.tryParse(base.substring(0, 2))}F';
+  return '';
+}

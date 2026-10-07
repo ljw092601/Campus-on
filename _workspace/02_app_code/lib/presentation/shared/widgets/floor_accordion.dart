@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../../classroom/floor_label.dart';
 import '../../providers/facility_providers.dart';
 import 'read_status.dart';
 
@@ -84,7 +85,7 @@ class FloorAccordion extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(d.radiusSm),
                       ),
                       child: Text(
-                        floor.floor,
+                        localizedFloorLabel(l, floor.floor),
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/floor_plan.dart';
+import '../../../l10n/gen/app_localizations.dart';
+import '../floor_label.dart';
 
 /// Red marker colour for the searched room (kept off the theme on purpose —
 /// "red = you are looking for this" reads the same in light and dark).
@@ -58,6 +60,10 @@ class FloorPlanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shape = _shape;
+    final l = AppLocalizations.of(context);
+    // Screen readers get the building/floor and the room instead of "image"
+    // and a colour-only highlight (L-30).
+    final markerLabel = l.floorplan_roomMarker(room.code);
     return AspectRatio(
       aspectRatio: plan.aspectRatio,
       child: LayoutBuilder(builder: (context, c) {
@@ -71,12 +77,18 @@ class FloorPlanView extends StatelessWidget {
                 fit: BoxFit.contain,
                 cacheWidth: decodeWidth,
                 filterQuality: FilterQuality.medium,
+                semanticLabel: l.floorplan_imageLabel(plan.buildingCode,
+                    localizedFloorLabel(l, plan.floorLabel)),
               ),
             ),
             if (shape != null)
               Positioned.fill(
-                child: IgnorePointer(
-                  child: _PulsingRoom(shape: shape, strokeWidth: strokeWidth),
+                child: Semantics(
+                  label: markerLabel,
+                  child: IgnorePointer(
+                    child:
+                        _PulsingRoom(shape: shape, strokeWidth: strokeWidth),
+                  ),
                 ),
               )
             else
@@ -85,12 +97,27 @@ class FloorPlanView extends StatelessWidget {
                 top: room.y * h - dotSize * 1.5,
                 width: dotSize * 3,
                 height: dotSize * 3,
-                child: IgnorePointer(child: _PulsingDot(size: dotSize)),
+                child: Semantics(
+                  label: markerLabel,
+                  child: IgnorePointer(child: _PulsingDot(size: dotSize)),
+                ),
               ),
           ],
         );
       }),
     );
+  }
+}
+
+/// Keeps a pulse controller in step with the platform's reduce-motion
+/// setting: stopped (the builders then paint a static frame) when animations
+/// are disabled, repeating otherwise (L-28).
+void _syncPulse(AnimationController ctrl, bool reduceMotion,
+    {bool reverse = false}) {
+  if (reduceMotion) {
+    if (ctrl.isAnimating) ctrl.stop();
+  } else if (!ctrl.isAnimating) {
+    ctrl.repeat(reverse: reverse);
   }
 }
 
@@ -109,8 +136,13 @@ class _PulsingRoom extends StatefulWidget {
 class _PulsingRoomState extends State<_PulsingRoom>
     with SingleTickerProviderStateMixin {
   late final _ctrl = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 1100))
-    ..repeat(reverse: true);
+      vsync: this, duration: const Duration(milliseconds: 1100));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncPulse(_ctrl, MediaQuery.disableAnimationsOf(context), reverse: true);
+  }
 
   @override
   void dispose() {
@@ -184,8 +216,13 @@ class _PulsingDot extends StatefulWidget {
 class _PulsingDotState extends State<_PulsingDot>
     with SingleTickerProviderStateMixin {
   late final _ctrl = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 1400))
-    ..repeat();
+      vsync: this, duration: const Duration(milliseconds: 1400));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncPulse(_ctrl, MediaQuery.disableAnimationsOf(context));
+  }
 
   @override
   void dispose() {
