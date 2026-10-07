@@ -76,8 +76,25 @@ class CafeteriaMenu {
   final String nameEn;
   final Campus campus;
 
-  /// Meals served that day, breakfast → dinner order. Empty = closed.
+  /// Meals served that day. [CafeteriaMenu.fromJson] already sorts these
+  /// breakfast → lunch → dinner; prefer [mealsInSlotOrder] for display so a
+  /// hand-built list (mock/tests) is shown in slot order too. Empty = closed.
   final List<Meal> meals;
+
+  /// [meals] in serving-slot order (breakfast → lunch → dinner), independent
+  /// of the order the admin typed them into the sheet (L-15). Stable: two
+  /// meals of the same slot keep their source order.
+  List<Meal> get mealsInSlotOrder => sortMealsBySlot(meals);
+
+  /// Stable sort by [MealType] enum order (breakfast, lunch, dinner).
+  static List<Meal> sortMealsBySlot(List<Meal> meals) {
+    final indexed = [for (var i = 0; i < meals.length; i++) (i, meals[i])];
+    indexed.sort((a, b) {
+      final c = a.$2.type.index.compareTo(b.$2.type.index);
+      return c != 0 ? c : a.$1.compareTo(b.$1);
+    });
+    return List.unmodifiable([for (final e in indexed) e.$2]);
+  }
 
   final String? hoursKo;
   final String? hoursEn;
@@ -113,10 +130,12 @@ class CafeteriaMenu {
         nameKo: (j['name_ko'] ?? '') as String,
         nameEn: (j['name_en'] ?? '') as String,
         campus: Campus.fromId(j['campus'] as String?) ?? Campus.seunghak,
-        meals: [
+        // Sheet rows arrive in whatever order the admin typed them; the app
+        // owns the display order (L-15).
+        meals: sortMealsBySlot([
           for (final m in (j['meals'] as List? ?? const []))
             Meal.fromJson((m as Map).cast<String, dynamic>()),
-        ],
+        ]),
         hoursKo: j['hours_ko'] as String?,
         hoursEn: j['hours_en'] as String?,
         facilityId: j['facilityId'] as String?,

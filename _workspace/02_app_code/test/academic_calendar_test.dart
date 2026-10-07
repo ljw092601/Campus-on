@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:campus_on/core/util/campus_clock.dart';
 import 'package:campus_on/data/repositories/mock_academic_calendar_repository.dart';
 import 'package:campus_on/domain/entities/academic_event.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
@@ -39,6 +40,10 @@ void main() {
 
   testWidgets('calendar screen: notice banner, month groups, event rows',
       (tester) async {
+    // Pin the campus clock inside the mock's AY 2026 so this test does not
+    // depend on the machine date (it would break from March 2027; L-14).
+    CampusClock.fix(DateTime(2026, 10, 8, 12));
+    addTearDown(CampusClock.reset);
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
     await tester.pumpWidget(ProviderScope(

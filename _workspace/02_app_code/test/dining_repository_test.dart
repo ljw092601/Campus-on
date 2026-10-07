@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:campus_on/data/repositories/mock_dining_repository.dart';
 import 'package:campus_on/domain/entities/dining_menu.dart';
+import 'package:campus_on/domain/entities/facility.dart';
 
 void main() {
   final repo = MockDiningRepository();
@@ -60,6 +61,42 @@ void main() {
 
     // toJson always carries the resolved status.
     expect(unpublished.toJson()['status'], 'unpublished');
+  });
+
+  test('meals are shown breakfast → lunch → dinner regardless of sheet order',
+      () {
+    // L-15: the admin sheet rows can arrive in any order; the entity owns
+    // the display order and the sort is stable for same-slot duplicates.
+    final menu = CafeteriaMenu.fromJson(const {
+      'id': 'x',
+      'campus': 'seunghak',
+      'meals': [
+        {'type': 'dinner', 'items': ['d']},
+        {'type': 'lunch', 'items': ['l1']},
+        {'type': 'breakfast', 'items': ['b']},
+        {'type': 'lunch', 'items': ['l2']},
+      ],
+    });
+    expect(menu.meals.map((m) => m.type).toList(),
+        [MealType.breakfast, MealType.lunch, MealType.lunch, MealType.dinner]);
+    expect(menu.meals.map((m) => m.items.single).toList(),
+        ['b', 'l1', 'l2', 'd']);
+
+    // A hand-built (const) menu is not re-ordered in place, but the display
+    // accessor still yields slot order.
+    const handBuilt = CafeteriaMenu(
+      id: 'y',
+      nameKo: '',
+      nameEn: '',
+      campus: Campus.bumin,
+      meals: [
+        Meal(type: MealType.dinner, items: ['d']),
+        Meal(type: MealType.breakfast, items: ['b']),
+      ],
+    );
+    expect(handBuilt.mealsInSlotOrder.map((m) => m.type).toList(),
+        [MealType.breakfast, MealType.dinner]);
+    expect(handBuilt.meals.first.type, MealType.dinner);
   });
 
   test('menus rotate by date (deterministic)', () async {

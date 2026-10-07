@@ -42,6 +42,21 @@ class AcademicEvent {
   /// The 학년도 this event belongs to (by its start date).
   int get academicYear => academicYearOf(start);
 
+  /// Whether [day] (date part only) falls within [start]..[endDate].
+  bool containsDay(DateTime day) {
+    final d = DateTime(day.year, day.month, day.day);
+    final s = DateTime(start.year, start.month, start.day);
+    final e = DateTime(endDate.year, endDate.month, endDate.day);
+    return !d.isBefore(s) && !d.isAfter(e);
+  }
+
+  /// Whether the event starts strictly after [day] (date part only).
+  bool startsAfter(DateTime day) {
+    final d = DateTime(day.year, day.month, day.day);
+    final s = DateTime(start.year, start.month, start.day);
+    return s.isAfter(d);
+  }
+
   String title(Locale l) => _pick(l, titleKo, titleEn) ?? id;
 
   static String? _pick(Locale l, String? ko, String? en) {
