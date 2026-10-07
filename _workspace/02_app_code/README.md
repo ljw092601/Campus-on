@@ -45,10 +45,13 @@ site domain (NOT the Android/iOS native key or package name).
 
 Kakao Developers console (https://developers.kakao.com):
 1. 내 애플리케이션 → 애플리케이션 추가하기 → get the **JavaScript 키** (앱 키).
-2. 앱 설정 → 플랫폼 → **Web 플랫폼 등록** → 사이트 도메인에 `http://localhost`.
-   The plugin is initialized with `baseUrl: 'http://localhost'`
+2. 앱 설정 → 플랫폼 → **Web 플랫폼 등록** → 사이트 도메인에 `https://localhost`
+   (`http://localhost` also works — Kakao only compares the host).
+   The plugin is initialized with `baseUrl: 'https://localhost'`
    (`lib/presentation/map/widgets/kakao_init.dart`), so the WebView origin the
-   Kakao JS SDK sees is `http://localhost` — that exact domain must be allow-listed.
+   Kakao JS SDK sees is `https://localhost` — that host must be allow-listed.
+   The https origin matters: the SDK's protocol-relative CDN/service URLs
+   inherit it, and the app ships with cleartext (http) traffic disabled.
 3. **제품 설정 → 카카오맵 → 활성화 설정 ON** ⚠️ *가장 놓치기 쉬운 필수 단계.*
    2024-12-01부터 신규 앱은 이 활성화가 없으면 sdk.js가 HTTP 403
    `{"errorType":"NotAuthorizedError","message":"App(...) disabled OPEN_MAP_AND_LOCAL service."}`

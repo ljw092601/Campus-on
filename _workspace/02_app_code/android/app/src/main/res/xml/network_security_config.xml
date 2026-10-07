@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Replaces the former app-wide android:usesCleartextTraffic="true" (L-32).
+     Everything the app talks to is HTTPS: Cloud Firestore (gRPC/TLS) and the
+     Kakao Maps JS SDK. The WebView page itself is loaded from a string with
+     the synthetic origin https://localhost (kakao_init.dart), so the SDK's
+     protocol-relative script and service URLs resolve to https as well —
+     verified on the emulator: with an http://localhost origin they resolved
+     to http://t1.kakaocdn.net / http://dapi.kakao.com and were blocked. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

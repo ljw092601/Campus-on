@@ -49,7 +49,7 @@ void main() {
     // A rejected SDK key exercises the real WebView failure path, without
     // changing the user's emulator network settings or production data.
     kakao.AuthRepository.initialize(
-        appKey: 'invalid-e2e-key', baseUrl: 'http://localhost');
+        appKey: 'invalid-e2e-key', baseUrl: 'https://localhost');
     AppRouter.router
         .go('/map?focus=s04&floor=03&room=0306-1&plan=S04&t=recovery');
     await until(
@@ -71,7 +71,7 @@ void main() {
         () async => find.text(l.map_error_timeout).evaluate().isNotEmpty,
         'return to map failure');
     kakao.AuthRepository.initialize(
-        appKey: AppConfig.kakaoJsKey, baseUrl: 'http://localhost');
+        appKey: AppConfig.kakaoJsKey, baseUrl: 'https://localhost');
     await tester.tap(find.text(l.common_retry));
     await until(() async {
       try {

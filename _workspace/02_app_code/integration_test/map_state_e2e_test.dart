@@ -4,6 +4,7 @@ import 'package:campus_on/core/router/app_router.dart';
 import 'package:campus_on/domain/entities/facility.dart';
 import 'package:campus_on/domain/entities/user_location.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
+import 'package:campus_on/app.dart' show IntroOverlay;
 import 'package:campus_on/main.dart' as app;
 import 'package:campus_on/presentation/classroom/widgets/room_location_card.dart';
 import 'package:campus_on/presentation/classroom/classroom_search_screen.dart';
@@ -99,7 +100,15 @@ void main() {
     void passed(String name) => debugPrint('E2E_PASS $name');
 
     await app.main();
-    await tester.pump(const Duration(seconds: 6));
+    // Wait for the app shell, then let the intro clip finish on its own
+    // (about 5 s on the emulator). Routing while the intro is still up leaves
+    // its sheet swallowing every later tap, and a fixed pump is not enough.
+    final introSheet = find.descendant(
+        of: find.byType(IntroOverlay), matching: find.byType(AnimatedOpacity));
+    await until(() async => find.byType(IntroOverlay).evaluate().isNotEmpty,
+        'app mounted', seconds: 20);
+    await until(() async => introSheet.evaluate().isEmpty, 'intro finished',
+        seconds: 20);
     await route('/map');
     await until(() async => find.byType(WebViewWidget).evaluate().isNotEmpty,
         'WebView creation');

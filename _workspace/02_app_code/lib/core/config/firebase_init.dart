@@ -52,8 +52,18 @@ Future<void> initFirebaseIfEnabled() async {
 
   // Offline persistence is on by default on mobile; set it explicitly so the
   // repositories' cache fallback (Source.cache) always has a store to read.
+  //
+  // The cache is capped instead of unlimited (L-32): the whole public data
+  // set (48 facilities, 34 floor docs, guides, calendar, a few weeks of menus)
+  // is well under 10 MB, so 100 MB keeps every document the offline fallback
+  // relies on while bounding disk growth. The SDK only evicts via periodic
+  // garbage collection once the cap is exceeded, so offline reads (M-15)
+  // keep working unchanged.
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
-    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+    cacheSizeBytes: firestoreCacheSizeBytes,
   );
 }
+
+/// Firestore on-disk cache cap (100 MB). Must be at least 1 MB per the SDK.
+const int firestoreCacheSizeBytes = 100 * 1024 * 1024;

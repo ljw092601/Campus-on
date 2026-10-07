@@ -4,11 +4,20 @@
     <!-- 내 위치 FAB(S2): 지도에 현재 위치 표시. 앱 사용 중에만 요청(geolocator). -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- allowBackup=false + dataExtractionRules: only favorites/language live
+         on disk, so nothing is worth backing up (L-32).
+         networkSecurityConfig: HTTPS-only except the Kakao WebView's synthetic
+         http://localhost base URL (replaces the old global cleartext flag).
+         enableOnBackInvokedCallback: Android 14 predictive back (go_router
+         handles routes via Flutter's back dispatcher). -->
     <application
         android:label="동아메이트"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
