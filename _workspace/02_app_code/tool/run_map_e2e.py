@@ -14,7 +14,7 @@ import tempfile
 import time
 
 TEST_FILES = {'map': 'map_state', 'recovery': 'recovery', 'offline': 'offline',
-              'medium': 'medium_fixes'}
+              'medium': 'medium_fixes', 'showcase': 'dining_showcase'}
 
 
 def main():
@@ -25,8 +25,9 @@ def main():
     parser.add_argument('--adb', default=shutil.which('adb') or str(
         Path.home() / 'AppData/Local/Android/Sdk/platform-tools/adb.exe'))
     parser.add_argument('--firestore', action='store_true')
-    parser.add_argument('--test', choices=['map', 'recovery', 'offline', 'medium'], default='map')
+    parser.add_argument('--test', choices=['map', 'recovery', 'offline', 'medium', 'showcase'], default='map')
     parser.add_argument('--log', type=Path)
+    parser.add_argument('--shots', type=Path, help='directory for E2E_SHOT screenshots')
     args = parser.parse_args()
     if args.test == 'offline' and not args.firestore:
         parser.error('--test offline requires --firestore')
@@ -66,6 +67,14 @@ def main():
                 for _ in range(3):  # Seoul: ~330 km from every campus (M-24)
                     adb('emu', 'geo', 'fix', '127.0', '37.5')
                     time.sleep(.6)
+            shot = re.search(r'E2E_SHOT (\S+)', line)
+            if shot and args.shots:
+                args.shots.mkdir(parents=True, exist_ok=True)
+                time.sleep(1.0)  # let the frame settle
+                png = subprocess.run([args.adb, '-s', args.device, 'exec-out', 'screencap', '-p'],
+                                     capture_output=True, timeout=30).stdout
+                (args.shots / f'{shot[1]}.png').write_bytes(png)
+                print(f'  saved {shot[1]}.png ({len(png)} bytes)', flush=True)
             match = re.search(r'E2E_GPS_FIX_(\d)', line)
             if match and match[1] not in seen:
                 index = int(match[1])

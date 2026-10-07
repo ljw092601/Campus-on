@@ -23,6 +23,39 @@
   "data_offline_unavailable": "연결할 수 없고 저장된 정보도 없어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
   "data_incomplete": "일부 정보를 불러오지 못했어요. 다시 시도해 주세요.",
   "dining_unavailable": "선택한 날짜의 식단을 확인하지 못했어요. 다시 시도해 주세요.",
+  "dining_campusGroup_seunghak": "승학",
+  "dining_campusGroup_gudeokBumin": "구덕·부민",
+  "dining_slot_breakfast": "아침",
+  "dining_slot_lunch": "점심",
+  "dining_slot_dinner": "저녁",
+  "dining_slot_allDay": "종일",
+  "dining_kind_set": "정식",
+  "dining_kind_alacarte": "일품",
+  "dining_kind_snack": "양분식",
+  "dining_kind_thousandWon": "천원의아침밥",
+  "dining_hours_summary": "{open}~{close}",
+  "@dining_hours_summary": {
+    "placeholders": { "open": { "type": "String" }, "close": { "type": "String" } }
+  },
+  "dining_hours_break": "휴게 {ranges}",
+  "@dining_hours_break": {
+    "placeholders": { "ranges": { "type": "String" } }
+  },
+  "dining_hours_withBreaks": "{hours} · {breaks}",
+  "@dining_hours_withBreaks": {
+    "placeholders": { "hours": { "type": "String" }, "breaks": { "type": "String" } }
+  },
+  "dining_status_open": "식단 등록됨",
+  "dining_a11y_card": "{name}, {status}",
+  "@dining_a11y_card": {
+    "placeholders": { "name": { "type": "String" }, "status": { "type": "String" } }
+  },
+  "dining_showMore": "{count}개 더 보기",
+  "@dining_showMore": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "dining_showLess": "접기",
+  "dining_group_empty": "이 캠퍼스에 등록된 식당이 아직 없어요.",
   "dining_closed_date": "이 날은 운영하지 않아요.",
   "dining_unpublished_date": "이 날 식단이 아직 등록되지 않았어요.",
   "dining_goToday": "오늘로",
@@ -102,9 +135,6 @@
   },
   "classroom_plan_recenter": "강의실 위치로",
 
-  "dining_meal_breakfast": "조식",
-  "dining_meal_lunch": "중식",
-  "dining_meal_dinner": "석식",
   "dining_closed": "오늘은 운영하지 않아요.",
   "dining_unpublished": "오늘 식단이 아직 등록되지 않았어요.",
   "dining_price": "{price}원",

@@ -117,7 +117,7 @@ void main() {
         throwsA(isA<OfflineDataUnavailable>()));
   });
   test(
-      'cached date with partial menus keeps known meals and marks missing menus unavailable',
+      'cached date with partial menus keeps known sections and marks missing menus unavailable',
       () async {
     db.offline = true;
     db.rows['cafeterias'] = [cafeteria('a'), cafeteria('b')];
@@ -127,20 +127,92 @@ void main() {
         'cafeteriaId': 'a',
         'date': '2026-09-30',
         'status': 'open',
-        'meals': [
+        'sections': [
           {
-            'type': 'lunch',
-            'items': ['Rice']
+            'slot': 'lunch',
+            'kind': 'set',
+            'price': 7000,
+            'items': [
+              {'name': 'Rice'}
+            ]
           }
         ],
       }
     ];
     final menus = await FirestoreDiningRepository(db).getMenus(date);
     expect(isCachedRead(menus), isTrue);
-    expect(menus.first.meals.single.items, ['Rice']);
+    expect(menus.first.sections.single.items.single.name, 'Rice');
+    expect(menus.first.sections.single.price, 7000);
     expect(menus.last.status, DiningAvailability.unavailable);
     expect(menus.last.isUnpublished, isFalse);
     expect(menus.last.isClosed, isFalse);
+  });
+  test('legacy meals documents still render as set sections', () async {
+    db.rows['cafeterias'] = [cafeteria('a')];
+    db.rows['dining_menus'] = [
+      {
+        'id': 'a_2026-09-30',
+        'cafeteriaId': 'a',
+        'date': '2026-09-30',
+        'status': 'open',
+        'meals': [
+          {
+            'type': 'lunch',
+            'items': ['Rice', 'Soup'],
+            'price': 5500
+          }
+        ],
+      }
+    ];
+    final menu = (await FirestoreDiningRepository(db).getMenus(date)).single;
+    expect(menu.status, DiningAvailability.open);
+    expect(menu.sections.single.slot, MealSlot.lunch);
+    expect(menu.sections.single.kind, MenuKind.set);
+    expect(menu.sections.single.price, 5500);
+    expect(menu.sections.single.items.map((i) => i.name), ['Rice', 'Soup']);
+  });
+  test('menus come back in display order: campus group → order → id',
+      () async {
+    db.rows['cafeterias'] = [
+      {...cafeteria('bumin-staff'), 'campus': 'bumin', 'order': 4},
+      {...cafeteria('seunghak-library'), 'order': 4},
+      {...cafeteria('gudeok-student'), 'campus': 'gudeok', 'order': 3},
+      {...cafeteria('seunghak-faculty'), 'order': 1},
+      {...cafeteria('bumin-dorm'), 'campus': 'bumin', 'order': 2},
+      {...cafeteria('seunghak-student'), 'order': 2},
+      {...cafeteria('bumin-international'), 'campus': 'bumin', 'order': 1},
+      {...cafeteria('seunghak-engineering'), 'order': 3},
+      // Same group + same order → id breaks the tie.
+      {...cafeteria('seunghak-zz'), 'order': 1},
+      {...cafeteria('seunghak-aa'), 'order': 1},
+    ];
+    final menus = await FirestoreDiningRepository(db).getMenus(date);
+    expect(menus.map((m) => m.id).toList(), [
+      'seunghak-aa',
+      'seunghak-faculty',
+      'seunghak-zz',
+      'seunghak-student',
+      'seunghak-engineering',
+      'seunghak-library',
+      'bumin-international',
+      'bumin-dorm',
+      'gudeok-student',
+      'bumin-staff',
+    ]);
+    // Static hours/order survive the join.
+    db.rows['cafeterias'] = [
+      {
+        ...cafeteria('a'),
+        'order': 7,
+        'hours': [
+          {'open': '11:40', 'close': '13:30'},
+          {'open': 'noon', 'close': '13:30'},
+        ],
+      }
+    ];
+    final a = (await FirestoreDiningRepository(db).getMenus(date)).single;
+    expect(a.order, 7);
+    expect(a.serviceHours, const [ServiceHours(open: '11:40', close: '13:30')]);
   });
   test('online no menu is unpublished; retry rereads cafeteria info too',
       () async {
@@ -204,17 +276,23 @@ void main() {
   test('malformed menu is unavailable instead of unpublished or closed',
       () async {
     db.rows['cafeterias'] = [cafeteria('a')];
-    db.rows['dining_menus'] = [
-      {
-        'id': 'a_date',
-        'cafeteriaId': 'a',
-        'date': '2026-09-30',
-        'status': 'open',
-        'meals': 'broken'
-      }
-    ];
-    final menus = await FirestoreDiningRepository(db).getMenus(date);
-    expect(menus.single.status, DiningAvailability.unavailable);
-    expect(isIncompleteRead(menus), isTrue);
+    for (final broken in [
+      {'sections': 'broken'},
+      {'meals': 'broken'}, // legacy shape
+    ]) {
+      db.rows['dining_menus'] = [
+        {
+          'id': 'a_date',
+          'cafeteriaId': 'a',
+          'date': '2026-09-30',
+          'status': 'open',
+          ...broken,
+        }
+      ];
+      final menus = await FirestoreDiningRepository(db).getMenus(date);
+      expect(menus.single.status, DiningAvailability.unavailable,
+          reason: '$broken');
+      expect(isIncompleteRead(menus), isTrue, reason: '$broken');
+    }
   });
 }

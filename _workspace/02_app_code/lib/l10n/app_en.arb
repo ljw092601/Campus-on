@@ -21,6 +21,39 @@
   "data_offline_unavailable": "Could not connect and no saved information is available. Check your connection and try again.",
   "data_incomplete": "Some information could not be loaded. Please try again.",
   "dining_unavailable": "Could not check the menu for this date. Please try again.",
+  "dining_campusGroup_seunghak": "Seunghak",
+  "dining_campusGroup_gudeokBumin": "Gudeok · Bumin",
+  "dining_slot_breakfast": "Breakfast",
+  "dining_slot_lunch": "Lunch",
+  "dining_slot_dinner": "Dinner",
+  "dining_slot_allDay": "All day",
+  "dining_kind_set": "Set meal",
+  "dining_kind_alacarte": "À la carte",
+  "dining_kind_snack": "Snacks",
+  "dining_kind_thousandWon": "₩1,000 breakfast",
+  "dining_hours_summary": "{open}–{close}",
+  "@dining_hours_summary": {
+    "placeholders": { "open": { "type": "String" }, "close": { "type": "String" } }
+  },
+  "dining_hours_break": "Break {ranges}",
+  "@dining_hours_break": {
+    "placeholders": { "ranges": { "type": "String" } }
+  },
+  "dining_hours_withBreaks": "{hours} · {breaks}",
+  "@dining_hours_withBreaks": {
+    "placeholders": { "hours": { "type": "String" }, "breaks": { "type": "String" } }
+  },
+  "dining_status_open": "Menu posted",
+  "dining_a11y_card": "{name}, {status}",
+  "@dining_a11y_card": {
+    "placeholders": { "name": { "type": "String" }, "status": { "type": "String" } }
+  },
+  "dining_showMore": "Show {count} more",
+  "@dining_showMore": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "dining_showLess": "Show less",
+  "dining_group_empty": "No cafeterias registered for this campus yet.",
   "dining_closed_date": "Closed on this day.",
   "dining_unpublished_date": "The menu for this day hasn't been posted yet.",
   "dining_goToday": "Today",
@@ -103,9 +136,6 @@
   },
   "classroom_plan_recenter": "Back to the room",
 
-  "dining_meal_breakfast": "Breakfast",
-  "dining_meal_lunch": "Lunch",
-  "dining_meal_dinner": "Dinner",
   "dining_closed": "Closed today.",
   "dining_unpublished": "Today's menu hasn't been posted yet.",
   "dining_price": "₩{price}",

@@ -1,38 +1,114 @@
 {
-  "seunghak-student": {
-    "name_ko": "승학캠퍼스 학생식당",
-    "name_en": "Seunghak Student Cafeteria",
+  "seunghak-faculty": {
+    "name_ko": "교수회관 식당",
+    "name_en": "Faculty Hall Cafeteria",
     "campus": "seunghak",
-    "hours_ko": "조식 08:00-09:30 · 중식 11:30-13:30 · 석식 17:00-18:30",
-    "hours_en": "Breakfast 08:00-09:30 · Lunch 11:30-13:30 · Dinner 17:00-18:30",
+    "hours": [
+      {
+        "open": "11:40",
+        "close": "13:30"
+      }
+    ],
+    "hours_ko": "점심만 운영",
+    "hours_en": "Lunch only",
+    "facilityId": "s08",
+    "order": 1
+  },
+  "seunghak-student": {
+    "name_ko": "학생회관 식당",
+    "name_en": "Student Union Cafeteria",
+    "campus": "seunghak",
+    "hours": [
+      {
+        "open": "09:00",
+        "close": "09:30"
+      },
+      {
+        "open": "10:00",
+        "close": "14:30"
+      },
+      {
+        "open": "15:00",
+        "close": "16:30"
+      }
+    ],
+    "hours_ko": "천원의아침밥 09:00부터 선착순",
+    "hours_en": "₩1,000 breakfast from 09:00, first come first served",
     "facilityId": "s02",
-    "mealTypes": [
-      "breakfast",
-      "lunch",
-      "dinner"
-    ]
+    "order": 2
+  },
+  "seunghak-engineering": {
+    "name_ko": "공과대학 식당",
+    "name_en": "Engineering Cafeteria",
+    "campus": "seunghak",
+    "hours_ko": "운영시간 미표기",
+    "hours_en": "Hours not published",
+    "order": 3
+  },
+  "seunghak-library": {
+    "name_ko": "도서관 식당",
+    "name_en": "Library Cafeteria",
+    "campus": "seunghak",
+    "hours": [
+      {
+        "open": "09:00",
+        "close": "10:00"
+      },
+      {
+        "open": "10:40",
+        "close": "15:00"
+      },
+      {
+        "open": "15:40",
+        "close": "16:40"
+      }
+    ],
+    "facilityId": "s10",
+    "order": 4
+  },
+  "bumin-international": {
+    "name_ko": "국제관 식당",
+    "name_en": "International Hall Cafeteria",
+    "campus": "bumin",
+    "hours_ko": "점심 정식·일품",
+    "hours_en": "Lunch set menu and a la carte",
+    "facilityId": "b05",
+    "order": 1
+  },
+  "bumin-dorm": {
+    "name_ko": "국제관 기숙사 식당",
+    "name_en": "International Hall Dormitory Cafeteria",
+    "campus": "bumin",
+    "hours": [
+      {
+        "open": "16:50",
+        "close": "18:40"
+      }
+    ],
+    "hours_ko": "천원의아침밥 09:20부터 선착순, 저녁 운영",
+    "hours_en": "₩1,000 breakfast from 09:20, first come first served; dinner service",
+    "facilityId": "b05",
+    "order": 2
   },
   "gudeok-student": {
-    "name_ko": "구덕캠퍼스 학생식당",
-    "name_en": "Gudeok Student Cafeteria",
+    "name_ko": "구덕 제2캠퍼스 학생회관",
+    "name_en": "Gudeok Student Union Cafeteria",
     "campus": "gudeok",
-    "hours_ko": "중식 11:30-13:30",
-    "hours_en": "Lunch 11:30-13:30",
+    "hours_ko": "덮밥·분식류",
+    "hours_en": "Rice bowls and snacks",
     "facilityId": "g12",
-    "mealTypes": [
-      "lunch"
-    ]
+    "order": 3
   },
-  "bumin-student": {
-    "name_ko": "부민캠퍼스 학생식당",
-    "name_en": "Bumin Student Cafeteria",
+  "bumin-staff": {
+    "name_ko": "부민 교직원 식당",
+    "name_en": "Bumin Faculty Cafeteria",
     "campus": "bumin",
-    "hours_ko": "중식 11:30-13:30 · 석식 17:00-18:30",
-    "hours_en": "Lunch 11:30-13:30 · Dinner 17:00-18:30",
-    "facilityId": "b04",
-    "mealTypes": [
-      "lunch",
-      "dinner"
-    ]
+    "hours": [
+      {
+        "open": "11:00",
+        "close": "13:50"
+      }
+    ],
+    "order": 4
   }
 }

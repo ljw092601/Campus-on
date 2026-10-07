@@ -30,6 +30,7 @@ import 'package:campus_on/data/mock/mock_data.dart';
 import 'package:campus_on/data/repositories/mock_academic_calendar_repository.dart';
 import 'package:campus_on/data/repositories/mock_dining_repository.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
+import 'package:campus_on/domain/entities/dining_menu.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -67,19 +68,22 @@ void main() {
       for (final e in await MockAcademicCalendarRepository().getEvents())
         e.id: _compact(e.toJson()..remove('id')),
     };
-    // Static cafeteria info derived from a weekday mock day (meals stripped;
-    // the served slots become `mealTypes`).
+    // Static cafeteria info (the 8 cafeterias the mock ships), with the day's
+    // sections/status stripped: `hours` is the list of serving windows
+    // (absent when the school publishes none), `hours_ko/en` the free-text
+    // note, `order` the display order inside the campus group. The admin
+    // sheet "식당" tab owns these docs once live; this is only the starter.
     final cafeterias = <String, Map<String, dynamic>>{
-      for (final c in await MockDiningRepository()
-          .getMenus(DateTime(2026, 9, 7))) // a Monday — all slots present
+      for (final c in await MockDiningRepository().getMenus(DateTime(2026, 9, 7)))
         c.id: _compact({
           'name_ko': c.nameKo,
           'name_en': c.nameEn,
           'campus': c.campus.name,
+          'hours': [for (final h in c.serviceHours) h.toJson()],
           'hours_ko': c.hoursKo,
           'hours_en': c.hoursEn,
           'facilityId': c.facilityId,
-          'mealTypes': [for (final m in c.meals) m.type.name],
+          'order': c.order,
         }),
     };
 
@@ -99,11 +103,39 @@ void main() {
     );
     expect(guides, isNotEmpty);
     expect(events, isNotEmpty);
-    expect(cafeterias, hasLength(3));
-    for (final c in cafeterias.values) {
-      expect(c['mealTypes'], isNotEmpty,
-          reason: 'cafeteria seed must list its served meal slots');
+    expect(cafeterias, hasLength(8));
+    expect(cafeterias.keys, [
+      'seunghak-faculty',
+      'seunghak-student',
+      'seunghak-engineering',
+      'seunghak-library',
+      'bumin-international',
+      'bumin-dorm',
+      'gudeok-student',
+      'bumin-staff',
+    ]);
+    for (final e in cafeterias.entries) {
+      final c = e.value;
+      expect(c, isNot(contains('mealTypes')),
+          reason: 'mealTypes was replaced by hours/sections (${e.key})');
+      expect(c, isNot(contains('sections')));
+      expect(c, isNot(contains('status')));
+      expect(c['name_ko'], isNotEmpty);
+      expect(c['name_en'], isNotEmpty);
+      expect(c['campus'], isIn(['seunghak', 'gudeok', 'bumin']));
+      expect(c['order'], isA<int>());
+      // `hours` is omitted entirely when the school publishes no windows.
+      final hours = c['hours'];
+      if (hours != null) {
+        expect(hours, isNotEmpty);
+        for (final h in hours as List) {
+          expect(ServiceHours.fromJson(h), isNotNull,
+              reason: 'invalid window $h for ${e.key}');
+        }
+      }
     }
+    expect(cafeterias['seunghak-student']!['hours'], hasLength(3));
+    expect(cafeterias['seunghak-engineering'], isNot(contains('hours')));
     // Every floor doc must belong to a facility that advertises it.
     final byId = {for (final f in MockData.facilities) f.id: f};
     for (final id in floors.keys) {

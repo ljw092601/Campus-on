@@ -1,10 +1,10 @@
 import 'package:campus_on/core/theme/app_theme.dart';
-import 'package:campus_on/data/repositories/mock_dining_repository.dart';
 import 'package:campus_on/data/repositories/mock_facility_repository.dart';
 import 'package:campus_on/data/repositories/mock_guide_repository.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:campus_on/domain/entities/dining_menu.dart';
 import 'package:campus_on/domain/entities/facility.dart';
+import 'package:campus_on/domain/repositories/dining_repository.dart';
 import 'package:campus_on/domain/repositories/read_result.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
 import 'package:campus_on/presentation/dining/dining_menu_screen.dart';
@@ -18,7 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class _Dining extends MockDiningRepository {
+class _Dining implements DiningRepository {
   bool offline = true;
   bool cached = false;
   int calls = 0;
@@ -32,7 +32,7 @@ class _Dining extends MockDiningRepository {
           nameKo: 'Cafeteria',
           nameEn: 'Cafeteria',
           campus: Campus.seunghak,
-          meals: [],
+          sections: [],
           status: DiningAvailability.unpublished)
     ], fromCache: offline);
   }

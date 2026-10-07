@@ -28,7 +28,15 @@ Seed the two public collections used by Campus-On:
 updated, even with `--overwrite --prune`. Missing starter documents may be
 created; concurrent admin creates are preserved. It is owned by the
 admin sheet sync (`tool/admin_sheets/`), so pruning is always skipped (see
-`_workspace/06_admin_data_pipeline.md` §7). `academic_events` is admin-sheet
+`_workspace/06_admin_data_pipeline.md` §7). Cafeteria info (names, hours,
+map pin, display order) is now managed in the admin sheet's **"식당" tab**;
+this seed is only the one-time starter for the 8 cafeterias. Each doc carries
+`name_ko/en`, `campus`, `hours` (array of `{open, close}` "HH:mm" serving
+windows — omitted when the school publishes none), `hours_ko/en` (free-text
+note), `facilityId` (optional map pin) and `order` (display order inside its
+campus group). The daily menus themselves (`dining_menus/<id>_<yyyy-MM-dd>`,
+with `sections: [{slot, kind, price?, note?, items: [{name, price?}]}]`) are
+never seeded. `academic_events` is admin-sheet
 owned from the start — its seed JSON is kept only as schema documentation and
 `seed.mjs` never uploads the collection (excluded since commit `6a68df2`).
 `dining_menus` is never seeded here at all — it is daily operational data.

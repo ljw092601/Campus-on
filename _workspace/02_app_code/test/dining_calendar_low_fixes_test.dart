@@ -6,6 +6,8 @@
 import 'package:campus_on/core/theme/app_theme.dart';
 import 'package:campus_on/core/util/campus_clock.dart';
 import 'package:campus_on/domain/entities/dining_menu.dart';
+import 'package:campus_on/domain/entities/facility.dart';
+import 'package:campus_on/domain/repositories/dining_repository.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
 import 'package:campus_on/presentation/calendar/academic_calendar_screen.dart';
 import 'package:campus_on/presentation/dining/dining_menu_screen.dart';
@@ -22,6 +24,39 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _phonePhysical = Size(1080, 2340);
 const _phoneDpr = 3.0;
 
+/// Fixed menus for every date, so the dining assertions below do not depend
+/// on the mock repository's day-of-week rotation.
+class _FixedDining implements DiningRepository {
+  const _FixedDining(this.menus);
+  final List<CafeteriaMenu> menus;
+  @override
+  Future<List<CafeteriaMenu>> getMenus(DateTime date) async => menus;
+}
+
+const _closedMenus = [
+  CafeteriaMenu(
+      id: 'a', nameKo: '학생회관', nameEn: 'Student Hall',
+      campus: Campus.seunghak, sections: []),
+  CafeteriaMenu(
+      id: 'b', nameKo: '공과대학', nameEn: 'Engineering',
+      campus: Campus.seunghak, sections: [], order: 1),
+];
+
+const _pricedMenus = [
+  CafeteriaMenu(
+      id: 'a',
+      nameKo: '학생회관',
+      nameEn: 'Student Hall',
+      campus: Campus.seunghak,
+      sections: [
+        MenuSection(
+            slot: MealSlot.lunch,
+            kind: MenuKind.set,
+            items: [MenuItem(name: '제육볶음')],
+            price: 5500),
+      ]),
+];
+
 void main() {
   tearDown(CampusClock.reset);
 
@@ -34,6 +69,7 @@ void main() {
     String locale = 'en',
     double textScale = 1.0,
     bool phone = false,
+    DiningRepository? dining,
   }) async {
     if (phone) {
       tester.view.physicalSize = _phonePhysical;
@@ -46,6 +82,7 @@ void main() {
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
         providerCacheTtlProvider.overrideWithValue(Duration.zero),
+        if (dining != null) diningRepositoryProvider.overrideWithValue(dining),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),
@@ -115,16 +152,23 @@ void main() {
   });
 
   group('L-15 meal slot order', () {
-    test('sortMealsBySlot is stable and slot-ordered', () {
-      const meals = [
-        Meal(type: MealType.dinner, items: ['d']),
-        Meal(type: MealType.lunch, items: ['l1']),
-        Meal(type: MealType.breakfast, items: ['b']),
-        Meal(type: MealType.lunch, items: ['l2']),
+    test('sortSections is stable and slot-ordered', () {
+      const sections = [
+        MenuSection(
+            slot: MealSlot.dinner, kind: MenuKind.set, items: [MenuItem(name: 'd')]),
+        MenuSection(
+            slot: MealSlot.lunch, kind: MenuKind.set, items: [MenuItem(name: 'l1')]),
+        MenuSection(
+            slot: MealSlot.breakfast,
+            kind: MenuKind.set,
+            items: [MenuItem(name: 'b')]),
+        MenuSection(
+            slot: MealSlot.lunch, kind: MenuKind.set, items: [MenuItem(name: 'l2')]),
       ];
-      final sorted = CafeteriaMenu.sortMealsBySlot(meals);
-      expect(sorted.map((m) => m.items.single).toList(), ['b', 'l1', 'l2', 'd']);
-      expect(meals.first.type, MealType.dinner, reason: 'input untouched');
+      final sorted = CafeteriaMenu.sortSections(sections);
+      expect(sorted.map((s) => s.items.single.name).toList(),
+          ['b', 'l1', 'l2', 'd']);
+      expect(sections.first.slot, MealSlot.dinner, reason: 'input untouched');
     });
   });
 
@@ -239,11 +283,12 @@ void main() {
 
   group('L-11 / L-12c dining wording and Today action', () {
     testWidgets('closed wording is "today" only on today', (tester) async {
-      CampusClock.fix(DateTime(2026, 10, 10, 12)); // Saturday: mock closed
-      await mount(tester, const DiningMenuScreen());
+      CampusClock.fix(DateTime(2026, 10, 10, 12)); // Saturday
+      await mount(tester, const DiningMenuScreen(),
+          dining: const _FixedDining(_closedMenus));
       final l = labels(tester);
 
-      expect(find.text(l.dining_closed), findsNWidgets(3));
+      expect(find.text(l.dining_closed), findsNWidgets(2));
       expect(find.text(l.dining_closed_date), findsNothing);
       expect(find.text(l.dining_goToday), findsNothing);
 
@@ -252,14 +297,14 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text(header(DateTime(2026, 10, 11))), findsOneWidget);
       expect(find.text(l.dining_closed), findsNothing);
-      expect(find.text(l.dining_closed_date), findsNWidgets(3));
+      expect(find.text(l.dining_closed_date), findsNWidgets(2));
       expect(find.text(l.dining_goToday), findsOneWidget);
 
       // Today action returns to today and hides itself.
       await tester.tap(find.text(l.dining_goToday));
       await tester.pumpAndSettle();
       expect(find.text(header(DateTime(2026, 10, 10))), findsOneWidget);
-      expect(find.text(l.dining_closed), findsNWidgets(3));
+      expect(find.text(l.dining_closed), findsNWidgets(2));
       expect(find.text(l.dining_goToday), findsNothing);
     });
   });
@@ -345,11 +390,12 @@ void main() {
 
   group('L-12d price formatting', () {
     testWidgets('prices carry a thousands separator', (tester) async {
-      CampusClock.fix(DateTime(2026, 10, 8, 12)); // Thursday: menus served
-      await mount(tester, const DiningMenuScreen());
+      CampusClock.fix(DateTime(2026, 10, 8, 12));
+      await mount(tester, const DiningMenuScreen(),
+          dining: const _FixedDining(_pricedMenus));
       final l = labels(tester);
       expect(l.dining_price(5500), '₩5,500');
-      expect(find.text('₩5,500'), findsWidgets);
+      expect(find.text('₩5,500'), findsOneWidget);
       expect(find.textContaining('₩5500'), findsNothing);
     });
   });
