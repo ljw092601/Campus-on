@@ -10,8 +10,17 @@ enum GuideCategory {
   school,
   emergency;
 
-  static GuideCategory fromId(String id) => GuideCategory.values
-      .firstWhere((e) => e.name == id, orElse: () => GuideCategory.immigration);
+  /// Null for an unknown id. Callers decide the fallback: the router sends a
+  /// bad `/guide/category/<id>` back to the hub (audit L-9 — it used to open
+  /// "Immigration & Stay" as if that were the requested category), while
+  /// [AdminGuideItem.fromJson] keeps a default so one mislabeled document
+  /// still parses.
+  static GuideCategory? fromId(String? id) {
+    for (final e in GuideCategory.values) {
+      if (e.name == id) return e;
+    }
+    return null;
+  }
 
   IconData get icon {
     switch (this) {
@@ -67,6 +76,11 @@ const Map<String, IconData> _guideIcons = {
   'local_fire_department': Symbols.local_fire_department,
   'emergency': Symbols.emergency,
   'translate': Symbols.translate,
+  // Named by seed/Firestore content but previously unmapped (audit L-26), so
+  // those rows fell back to the generic category/info glyph.
+  'description': Symbols.description,
+  'replay': Symbols.replay,
+  'warning': Symbols.warning,
 };
 
 /// Resolves a Material Symbols name to its icon, or null when unknown/absent.
@@ -455,7 +469,8 @@ class AdminGuideItem {
   }
 
   String? checklistOptionalTitle(Locale l) {
-    final s = _pick(checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '', l);
+    final s = _pick(
+        checklistOptionalTitleKo ?? '', checklistOptionalTitleEn ?? '', l);
     return s.trim().isNotEmpty ? s : null;
   }
 
@@ -495,8 +510,8 @@ class AdminGuideItem {
     final meta = (j['meta'] as Map?)?.cast<String, dynamic>() ?? const {};
     return AdminGuideItem(
       id: j['id'] as String,
-      categoryId:
-          GuideCategory.fromId((j['categoryId'] ?? 'immigration') as String),
+      categoryId: GuideCategory.fromId(j['categoryId'] as String?) ??
+          GuideCategory.immigration,
       titleKo: (j['title_ko'] ?? '') as String,
       titleEn: (j['title_en'] ?? '') as String,
       detailTitleKo: j['detail_title_ko'] as String?,
@@ -535,7 +550,8 @@ class AdminGuideItem {
               .toList() ??
           const [],
       links: (j['links'] as List?)
-              ?.map((e) => GuideLink.fromJson((e as Map).cast<String, dynamic>()))
+              ?.map(
+                  (e) => GuideLink.fromJson((e as Map).cast<String, dynamic>()))
               .toList() ??
           const [],
       relatedFacilityIds:

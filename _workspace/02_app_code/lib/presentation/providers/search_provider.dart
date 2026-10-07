@@ -82,26 +82,51 @@ final searchResultsProvider =
 });
 
 /// Recent searches (local, most-recent-first, max 8).
+///
+/// Writes report whether they persisted (audit L-27): the in-memory list is
+/// updated first so the UI reflects the action for this session either way,
+/// and the returned `false` lets a caller decide whether that matters — recent
+/// searches are a convenience, so the search screen does not surface it.
+/// [lastWriteFailed] is exposed for diagnostics/tests.
 class RecentSearchesNotifier extends Notifier<List<String>> {
   static const _key = 'recent_searches_v1';
   static const _max = 8;
+
+  /// True after the most recent persist attempt failed (reset on success).
+  bool lastWriteFailed = false;
 
   @override
   List<String> build() {
     return ref.watch(sharedPreferencesProvider).getStringList(_key) ?? const [];
   }
 
-  Future<void> add(String term) async {
+  /// Returns whether the new list was persisted. The memory state is updated
+  /// regardless (no rollback), matching the favorites repository's contract.
+  Future<bool> add(String term) async {
     final t = term.trim();
-    if (t.isEmpty) return;
+    if (t.isEmpty) return false;
     final list = [t, ...state.where((e) => e != t)].take(_max).toList();
     state = list;
-    await ref.read(sharedPreferencesProvider).setStringList(_key, list);
+    return _persist(
+        () => ref.read(sharedPreferencesProvider).setStringList(_key, list));
   }
 
-  Future<void> clear() async {
+  /// Returns whether the removal was persisted (memory state is cleared
+  /// regardless).
+  Future<bool> clear() async {
     state = const [];
-    await ref.read(sharedPreferencesProvider).remove(_key);
+    return _persist(() => ref.read(sharedPreferencesProvider).remove(_key));
+  }
+
+  Future<bool> _persist(Future<bool> Function() write) async {
+    var ok = false;
+    try {
+      ok = await write();
+    } catch (_) {
+      ok = false;
+    }
+    lastWriteFailed = !ok;
+    return ok;
   }
 }
 

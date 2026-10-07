@@ -13,6 +13,7 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/external_links.dart';
 import '../shared/map_links.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
@@ -539,11 +540,15 @@ class _PhraseCard extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
 
+    // The language label column grows with the font scale (audit L-18): a
+    // fixed 56dp clipped "English" at 200%, so scale it like the text itself.
+    final labelWidth = MediaQuery.textScalerOf(context).scale(56);
+
     Widget line(String label, String value, TextStyle? style) => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 56,
+              width: labelWidth,
               child:
                   Text(label, style: text.labelLarge?.copyWith(color: color)),
             ),
@@ -648,12 +653,18 @@ class _LinkRow extends StatelessWidget {
   /// an external page and opens in the browser as before.
   bool get _isInternal => link.url.startsWith('/');
 
-  Future<void> _openExternal() async {
+  /// Shared launcher: tells the user when nothing can open the link (L-8)
+  /// instead of failing silently, and a malformed url counts as a failure.
+  Future<void> _openExternal(BuildContext context) async {
     final uri = Uri.tryParse(link.url);
-    if (uri == null) return;
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (uri == null) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+            content: Text(AppLocalizations.of(context).common_openFailed)));
+      return;
     }
+    await openExternal(context, uri, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -684,7 +695,7 @@ class _LinkRow extends StatelessWidget {
             ),
       onTap: _isInternal
           ? () => context.go(withMapFocusToken(link.url))
-          : _openExternal,
+          : () => _openExternal(context),
     );
   }
 }
@@ -702,6 +713,7 @@ class _RelatedLocationCard extends ConsumerWidget {
     if (facility == null) return const SizedBox.shrink();
 
     final color = context.catColors.forFacility(facility.category);
+    final name = facility.name(locale);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.dimens.spaceXs),
       child: Card(
@@ -710,36 +722,48 @@ class _RelatedLocationCard extends ConsumerWidget {
           borderRadius: context.dimens.brMd,
           // Single-id focus per the deep-link contract (UX §3).
           onTap: () => context.go(mapFocusLink(facilityId)),
-          child: Padding(
-            padding: EdgeInsets.all(context.dimens.spaceMd),
-            child: Row(
-              children: [
-                Icon(Symbols.location_on, color: color),
-                SizedBox(width: context.dimens.spaceSm),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(facility.name(locale),
-                          style: Theme.of(context).textTheme.titleSmall),
-                      Text(
-                        [
-                          facility.building(locale),
-                          l.guide_relatedLocation_hint
-                        ]
-                            .where((e) => e != null && e.trim().isNotEmpty)
-                            .join(' · '),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+          // The whole card is one button to assistive tech (audit L-30): a
+          // bare InkWell had a tap action but no role or combined label.
+          // Merges with the InkWell's tap action on the Card's node.
+          child: Semantics(
+            button: true,
+            label: '$name · ${l.guide_relatedLocation_hint}',
+            excludeSemantics: true,
+            child: Padding(
+              padding: EdgeInsets.all(context.dimens.spaceMd),
+              child: Row(
+                children: [
+                  Icon(Symbols.location_on, color: color),
+                  SizedBox(width: context.dimens.spaceSm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(facility.name(locale),
+                            style: Theme.of(context).textTheme.titleSmall),
+                        Text(
+                          [
+                            facility.building(locale),
+                            l.guide_relatedLocation_hint
+                          ]
+                              .where((e) => e != null && e.trim().isNotEmpty)
+                              .join(' · '),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Icon(Symbols.chevron_right),
-              ],
+                  const Icon(Symbols.chevron_right),
+                ],
+              ),
             ),
           ),
         ),

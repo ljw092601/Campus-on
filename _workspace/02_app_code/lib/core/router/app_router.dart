@@ -16,6 +16,7 @@ import '../../presentation/search/search_screen.dart';
 import '../../presentation/settings/favorites_screen.dart';
 import '../../presentation/settings/settings_info_screen.dart';
 import '../../presentation/settings/settings_screen.dart';
+import '../../presentation/shared/widgets/route_error_view.dart';
 import '../../presentation/shell/app_shell.dart';
 
 /// go_router configuration.
@@ -37,6 +38,10 @@ class AppRouter {
   AppRouter._();
 
   static final _rootKey = GlobalKey<NavigatorState>();
+
+  /// `/home/guide/category/<id>` — the redirect validates `<id>` before the
+  /// route builds (the legacy `/guide/...` form is rewritten first).
+  static final _categoryRoute = RegExp(r'^/home/guide/category/([^/]+)/?$');
 
   static MapScreen _mapScreen(GoRouterState state,
       {String navigationBase = '/map'}) {
@@ -79,11 +84,22 @@ class AppRouter {
     // live under `/home` so the back stack includes the home screen.
     redirect: (context, state) {
       final uri = state.uri;
+      // A bare `/` (deep link / cold start without a path) is the home tab.
+      if (uri.path.isEmpty || uri.path == '/') return '/home';
       if (uri.path == '/guide' || uri.path.startsWith('/guide/')) {
         return uri.replace(path: '/home${uri.path}').toString();
       }
+      // An unknown category id goes back to the hub instead of silently
+      // opening the first category (audit L-9).
+      final category = _categoryRoute.firstMatch(uri.path);
+      if (category != null && GuideCategory.fromId(category.group(1)) == null) {
+        return '/home/guide';
+      }
       return null;
     },
+    // Unknown locations render an in-app, localized "not found" page with a
+    // way home instead of go_router's default English screen (audit L-10).
+    errorBuilder: (context, state) => const RouteErrorView(),
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navShell) =>
@@ -111,10 +127,14 @@ class AppRouter {
                     routes: [
                       GoRoute(
                         path: 'category/:id',
-                        builder: (context, state) => GuideItemListScreen(
-                          category:
-                              GuideCategory.fromId(state.pathParameters['id']!),
-                        ),
+                        builder: (context, state) {
+                          // The top-level redirect already bounces unknown ids
+                          // to `/home/guide`; this guards the builder itself.
+                          final category =
+                              GuideCategory.fromId(state.pathParameters['id']);
+                          if (category == null) return const RouteErrorView();
+                          return GuideItemListScreen(category: category);
+                        },
                       ),
                       GoRoute(
                         path: 'item/:id',

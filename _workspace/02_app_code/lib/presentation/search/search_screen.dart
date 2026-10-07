@@ -174,8 +174,12 @@ class _RecentSearches extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(l.search_recent_title,
-                style: Theme.of(context).textTheme.titleMedium),
+            // Expanded so the title wraps under large font scale instead of
+            // the row overflowing past the clear button (audit L-18).
+            Expanded(
+              child: Text(l.search_recent_title,
+                  style: Theme.of(context).textTheme.titleMedium),
+            ),
             TextButton(
               onPressed: () =>
                   ref.read(recentSearchesProvider.notifier).clear(),
@@ -199,6 +203,16 @@ class _Results extends ConsumerWidget {
   const _Results({required this.results});
   final SearchResults results;
 
+  /// Opening a result counts as a search worth remembering, same as pressing
+  /// the keyboard's search action (audit L-16: results reached through the
+  /// debounced live list were never saved to recent searches).
+  void _open(BuildContext context, WidgetRef ref, String location) {
+    ref
+        .read(recentSearchesProvider.notifier)
+        .add(ref.read(searchQueryProvider));
+    context.push(location);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -215,7 +229,7 @@ class _Results extends ConsumerWidget {
                   color: context.catColors.forFacility(f.category)),
               title: Text(f.name(locale)),
               subtitle: Text(f.category.label(l)),
-              onTap: () => context.push('/search/facility/${f.id}'),
+              onTap: () => _open(context, ref, '/search/facility/${f.id}'),
             ),
         ],
         if (results.guides.isNotEmpty) ...[
@@ -227,7 +241,7 @@ class _Results extends ConsumerWidget {
               title: Text(g.title(locale)),
               subtitle:
                   g.summary(locale) != null ? Text(g.summary(locale)!) : null,
-              onTap: () => context.push('/search/guide/${g.id}'),
+              onTap: () => _open(context, ref, '/search/guide/${g.id}'),
             ),
         ],
       ],

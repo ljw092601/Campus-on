@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/facility.dart';
@@ -13,6 +12,7 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/locale_provider.dart';
 import '../shared/category_labels.dart';
+import '../shared/external_links.dart';
 import '../shared/map_links.dart';
 import '../shared/widgets/floor_accordion.dart';
 import '../shared/widgets/state_views.dart';
@@ -207,19 +207,26 @@ class _MiniMap extends StatelessWidget {
   Widget build(BuildContext context) {
     // Inline mini-map placeholder → tapping deep-links to the full map (S2).
     // A Kakao static image can replace this container in week 3.
-    return InkWell(
-      borderRadius: context.dimens.brMd,
-      onTap: () => context.go(mapFocusLink(facility.id)),
-      child: Container(
-        height: 120,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.10),
-          borderRadius: context.dimens.brMd,
-          border:
-              Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+    // Announced as one "View on map" button (audit L-30): the InkWell alone
+    // exposed a tap action with no role and only a decorative icon inside.
+    return Semantics(
+      container: true,
+      button: true,
+      label: AppLocalizations.of(context).facility_action_viewOnMap,
+      child: InkWell(
+        borderRadius: context.dimens.brMd,
+        onTap: () => context.go(mapFocusLink(facility.id)),
+        child: Container(
+          height: 120,
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.10),
+            borderRadius: context.dimens.brMd,
+            border:
+                Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+          ),
+          alignment: Alignment.center,
+          child: Icon(Symbols.location_on, color: color, size: 40),
         ),
-        alignment: Alignment.center,
-        child: Icon(Symbols.location_on, color: color, size: 40),
       ),
     );
   }
@@ -275,12 +282,10 @@ class _BottomCta extends ConsumerWidget {
   const _BottomCta({required this.facility});
   final Facility facility;
 
-  Future<void> _call(String phone) async {
-    final uri = Uri(scheme: 'tel', path: phone);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
-  }
+  /// Shared launcher: shows the "couldn't open" snackbar when no dialer can
+  /// take the number (audit L-8) instead of doing nothing.
+  Future<void> _call(BuildContext context, String phone) =>
+      openExternal(context, Uri(scheme: 'tel', path: phone));
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -294,7 +299,7 @@ class _BottomCta extends ConsumerWidget {
       label: Text(l.facility_action_viewOnMap),
     );
     final callBtn = OutlinedButton.icon(
-      onPressed: hasPhone ? () => _call(facility.phone!) : null,
+      onPressed: hasPhone ? () => _call(context, facility.phone!) : null,
       icon: const Icon(Symbols.call),
       label: Text(l.facility_action_call),
     );

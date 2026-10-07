@@ -16,12 +16,18 @@
   "map_error_timeout": "지도를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
 
   "common_retry": "다시 시도",
+  "common_openFailed": "열 수 없어요. 연결된 앱이나 링크를 확인해 주세요.",
   "favorites_save_failed": "즐겨찾기를 저장하지 못했어요. 기존 목록을 유지했으니 다시 시도해 주세요.",
   "data_cached": "저장된 정보를 표시하고 있어요. 최신 정보와 다르거나 일부가 누락될 수 있어요.",
   "data_cached_empty": "저장된 정보만으로는 결과를 확인할 수 없어요. 인터넷 연결 후 다시 시도해 주세요.",
   "data_offline_unavailable": "연결할 수 없고 저장된 정보도 없어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
   "data_incomplete": "일부 정보를 불러오지 못했어요. 다시 시도해 주세요.",
   "dining_unavailable": "선택한 날짜의 식단을 확인하지 못했어요. 다시 시도해 주세요.",
+  "dining_closed_date": "이 날은 운영하지 않아요.",
+  "dining_unpublished_date": "이 날 식단이 아직 등록되지 않았어요.",
+  "dining_goToday": "오늘로",
+  "calendar_today": "오늘",
+  "calendar_upNext": "다음 일정",
   "search_partial_facility": "시설 검색에 실패했어요. 전체 결과를 확인하려면 다시 시도해 주세요.",
   "search_partial_guide": "가이드 검색에 실패했어요. 전체 결과를 확인하려면 다시 시도해 주세요.",
   "common_all": "전체",
@@ -61,6 +67,31 @@
   "classroom_action_search": "위치 보기",
   "classroom_suggestions_empty": "일치하는 호수가 없어요.",
   "classroom_noRoomData": "확인된 호수 목록이 아직 없어요. 번호를 입력하면 건물 위치를 안내하지만, 강의실 위치는 확인할 수 없어요.",
+  "classroom_suggestions_more": "{count}개 더 있어요. 호수를 더 입력하면 목록이 좁혀져요.",
+  "@classroom_suggestions_more": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "classroom_building_wing": "{name} {wing}동",
+  "@classroom_building_wing": {
+    "placeholders": { "name": { "type": "String" }, "wing": { "type": "String" } }
+  },
+  "floorplan_floorLabel": "{n}층",
+  "@floorplan_floorLabel": {
+    "placeholders": { "n": { "type": "String" } }
+  },
+  "floorplan_basementLabel": "지하 {n}층",
+  "@floorplan_basementLabel": {
+    "placeholders": { "n": { "type": "String" } }
+  },
+  "floorplan_imageLabel": "{building} {floor} 도면",
+  "@floorplan_imageLabel": {
+    "placeholders": { "building": { "type": "String" }, "floor": { "type": "String" } }
+  },
+  "floorplan_roomMarker": "{code} 위치",
+  "@floorplan_roomMarker": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "floorplan_doubleTapZoom": "더블탭으로 확대/축소",
   "classroom_room_notFound": "해당 층 도면에서 이 호수를 찾지 못했어요. 강의실 번호를 확인해 주세요.",
   "classroom_room_invalid": "호수는 4자리로 입력해 주세요. 3자리 번호는 도면에서 확인된 경우에만 사용할 수 있어요.",
   "classroom_suggestion_onPlan": "도면에 위치 표시",
@@ -78,7 +109,7 @@
   "dining_unpublished": "오늘 식단이 아직 등록되지 않았어요.",
   "dining_price": "{price}원",
   "@dining_price": {
-    "placeholders": { "price": { "type": "int" } }
+    "placeholders": { "price": { "type": "int", "format": "decimalPattern" } }
   },
   "dining_placeholder_notice": "지금은 예시 식단이에요. 관리자가 식단을 등록하면 실제 메뉴가 표시됩니다.",
   "dining_prevDay": "이전 날짜",
@@ -148,6 +179,9 @@
   "search_section_facility": "시설 ({count})",
   "search_section_guide": "가이드 ({count})",
   "search_empty_noResult": "'{query}' 검색 결과가 없어요.",
+  "route_notFound_title": "페이지를 찾을 수 없어요",
+  "route_notFound_body": "주소가 잘못되었거나 더 이상 없는 페이지예요.",
+  "route_notFound_home": "홈으로",
   "search_empty_hint": "시설과 행정 가이드를 검색하세요.",
   "search_error_failed": "검색에 실패했어요.",
 
@@ -186,6 +220,9 @@
   "guide_detail_error": "안내를 불러오지 못했어요.",
 
   "settings_title": "설정",
+  "settings_language_saveFailed": "언어 설정을 저장하지 못했어요. 다음 실행 때 다시 설정해야 할 수 있어요.",
+  "settings_contact_emailSubject": "[동아메이트] 문의",
+  "home_langToggle_label": "언어 전환",
   "settings_language_title": "언어 · Language",
   "settings_language_ko": "한국어",
   "settings_language_en": "English",
@@ -197,7 +234,10 @@
   "settings_privacy": "개인정보처리방침",
   "settings_licenses": "오픈소스 라이선스",
   "settings_version": "버전",
-  "settings_version_value": "0.2.0 (MVP)",
+  "settings_version_value": "{version} ({build})",
+  "@settings_version_value": {
+    "placeholders": { "version": { "type": "String" }, "build": { "type": "String" } }
+  },
   "settings_about_body": "동아메이트는 외국인 유학생이 캠퍼스 시설과 행정 절차를 한국어·영어로 한 곳에서 찾도록 돕는 앱입니다. 로그인 없이 지도와 행정 가이드를 이용할 수 있어요.",
   "settings_dataSource_body": "시설·행정 정보는 국제교류처 제공 자료를 바탕으로 정리했습니다. 최신 내용은 학교 공식 안내를 함께 확인해 주세요. 지도는 카카오맵을 사용합니다.",
   "settings_contact_body": "앱 오류나 정보 수정 제안은 아래 이메일로 보내 주세요.",

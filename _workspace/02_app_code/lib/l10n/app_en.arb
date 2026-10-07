@@ -14,12 +14,18 @@
   "map_error_timeout": "The map could not be loaded. Check your connection and try again.",
 
   "common_retry": "Retry",
+  "common_openFailed": "Couldn't open this. Check the linked app or address.",
   "favorites_save_failed": "Could not save favorites. Your previous favorites have been kept. Please try again.",
   "data_cached": "Showing saved information. It may be outdated or incomplete.",
   "data_cached_empty": "Saved information is not enough to confirm these results. Connect and try again.",
   "data_offline_unavailable": "Could not connect and no saved information is available. Check your connection and try again.",
   "data_incomplete": "Some information could not be loaded. Please try again.",
   "dining_unavailable": "Could not check the menu for this date. Please try again.",
+  "dining_closed_date": "Closed on this day.",
+  "dining_unpublished_date": "The menu for this day hasn't been posted yet.",
+  "dining_goToday": "Today",
+  "calendar_today": "Today",
+  "calendar_upNext": "Up next",
   "search_partial_facility": "Could not load facility results. Retry to check all results.",
   "search_partial_guide": "Could not load guide results. Retry to check all results.",
   "common_all": "All",
@@ -42,7 +48,7 @@
   "home_hero_title_suffix": "!",
   "home_hero_subtitle": "Essential info and services for international students,\nquick and easy in Korea.",
   "home_card_guide_desc": "Entry & visa, enrollment, certificates — all the admin how-tos.",
-  "home_card_calendar_title": "Academic calendar",
+  "home_card_calendar_title": "Calendar",
   "home_card_calendar_desc": "Key semester dates — course registration, exams, breaks.",
   "home_card_map_title": "Campus map",
   "home_card_map_desc": "Find buildings and key spots on the campus map.",
@@ -62,6 +68,31 @@
   "classroom_action_search": "Show location",
   "classroom_suggestions_empty": "No matching rooms.",
   "classroom_noRoomData": "No verified room list is available. Enter a number to see the building location; the room location cannot be confirmed.",
+  "classroom_suggestions_more": "{count} more. Type more of the number to narrow the list.",
+  "@classroom_suggestions_more": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "classroom_building_wing": "{name} · Wing {wing}",
+  "@classroom_building_wing": {
+    "placeholders": { "name": { "type": "String" }, "wing": { "type": "String" } }
+  },
+  "floorplan_floorLabel": "{n}F",
+  "@floorplan_floorLabel": {
+    "placeholders": { "n": { "type": "String" } }
+  },
+  "floorplan_basementLabel": "B{n}F",
+  "@floorplan_basementLabel": {
+    "placeholders": { "n": { "type": "String" } }
+  },
+  "floorplan_imageLabel": "{building} {floor} floor plan",
+  "@floorplan_imageLabel": {
+    "placeholders": { "building": { "type": "String" }, "floor": { "type": "String" } }
+  },
+  "floorplan_roomMarker": "Location of {code}",
+  "@floorplan_roomMarker": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "floorplan_doubleTapZoom": "Double-tap to zoom",
   "classroom_room_notFound": "This room number was not found on the floor drawing. Please check the number.",
   "classroom_room_invalid": "Enter a 4-digit room number. A 3-digit number is accepted only when verified on a drawing.",
   "classroom_suggestion_onPlan": "Shown on the floor plan",
@@ -79,7 +110,7 @@
   "dining_unpublished": "Today's menu hasn't been posted yet.",
   "dining_price": "₩{price}",
   "@dining_price": {
-    "placeholders": { "price": { "type": "int" } }
+    "placeholders": { "price": { "type": "int", "format": "decimalPattern" } }
   },
   "dining_placeholder_notice": "Sample menus for now — real menus will appear once the cafeteria staff publish them.",
   "dining_prevDay": "Previous day",
@@ -161,6 +192,9 @@
     "placeholders": { "count": { "type": "int" } }
   },
   "search_empty_noResult": "No results for '{query}'.",
+  "route_notFound_title": "Page not found",
+  "route_notFound_body": "The address may be wrong or the page no longer exists.",
+  "route_notFound_home": "Go home",
   "@search_empty_noResult": {
     "placeholders": { "query": { "type": "String" } }
   },
@@ -205,6 +239,9 @@
   "guide_detail_error": "Couldn't load the guide.",
 
   "settings_title": "Settings",
+  "settings_language_saveFailed": "Couldn't save the language setting. You may need to set it again next time.",
+  "settings_contact_emailSubject": "[Dong-A Mate] Feedback",
+  "home_langToggle_label": "Switch language",
   "settings_language_title": "Language",
   "settings_language_ko": "한국어",
   "settings_language_en": "English",
@@ -216,7 +253,10 @@
   "settings_privacy": "Privacy policy",
   "settings_licenses": "Open-source licenses",
   "settings_version": "Version",
-  "settings_version_value": "0.2.0 (MVP)",
+  "settings_version_value": "{version} ({build})",
+  "@settings_version_value": {
+    "placeholders": { "version": { "type": "String" }, "build": { "type": "String" } }
+  },
   "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place, in Korean and English. Browse the map and admin guides without signing in.",
   "settings_dataSource_body": "Facility and administrative information is compiled from materials provided by the Office of International Affairs. Please also check the university's official notices for the latest updates. Maps are powered by Kakao Maps.",
   "settings_contact_body": "For bugs or content corrections, please email us below.",

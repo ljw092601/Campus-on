@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:campus_on/core/router/app_router.dart';
@@ -145,7 +146,7 @@ void main() {
       'search result back preserves query; a new session shows recent searches',
       (tester) async {
     await mount(tester, '/home');
-    AppRouter.router.push('/search');
+    unawaited(AppRouter.router.push('/search'));
     await settle(tester);
     await tester.enterText(find.byType(TextField), 'library');
     await settle(tester);
@@ -162,7 +163,7 @@ void main() {
         'library');
     expect(container.read(searchQueryProvider), 'library');
     await back(tester);
-    AppRouter.router.push('/search');
+    unawaited(AppRouter.router.push('/search'));
     await settle(tester);
     expect(
         tester.widget<TextField>(find.byType(TextField)).controller!.text, '');
@@ -183,7 +184,7 @@ void main() {
       (tester) async {
     await mount(tester, '/map?focus=s04&floor=03&room=0306-1&plan=S04&t=list');
     final before = tester.state(find.byType(MapScreen));
-    AppRouter.router.push('/map/list');
+    unawaited(AppRouter.router.push('/map/list'));
     await settle(tester);
     await tester.tap(find.byType(FacilityListItem).first);
     await settle(tester);
@@ -237,7 +238,7 @@ void main() {
     expect(find.byType(MapScreen), findsOneWidget);
     final before = tester.widget<MapScreen>(find.byType(MapScreen));
     final beforeState = tester.state(find.byType(MapScreen));
-    AppRouter.router.push('/classroom-search/result/facility/s04');
+    unawaited(AppRouter.router.push('/classroom-search/result/facility/s04'));
     await settle(tester);
     expect(find.byType(FacilityDetailScreen), findsOneWidget);
     await back(tester);
