@@ -56,9 +56,9 @@ int compareRoomCodes(String a, String b) {
 }
 
 /// Only verified room numbers from bundled drawings are offered as suggestions.
-final classroomEntriesProvider =
-    FutureProvider.family<List<ClassroomEntry>, (String, String?)>(
-        (ref, key) async {
+/// Plain autoDispose (bundle-derived, no TTL — see [buildingFloorPlansProvider]).
+final classroomEntriesProvider = FutureProvider.autoDispose
+    .family<List<ClassroomEntry>, (String, String?)>((ref, key) async {
   final (_, planCode) = key;
   if (planCode == null) return const [];
   final plans = await ref.watch(buildingFloorPlansProvider(planCode).future);

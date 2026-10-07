@@ -19,6 +19,7 @@ import 'package:campus_on/presentation/map/map_screen.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:campus_on/presentation/providers/search_provider.dart';
 import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
+import 'package:campus_on/presentation/providers/provider_cache.dart';
 import 'package:campus_on/presentation/search/search_screen.dart';
 import 'package:campus_on/presentation/settings/favorites_screen.dart';
 import 'package:campus_on/presentation/shared/widgets/facility_list_item.dart';
@@ -95,6 +96,9 @@ void main() {
       {List<Override> overrides = const []}) async {
     container = ProviderContainer(overrides: [
       sharedPreferencesProvider.overrideWithValue(prefs),
+      // The container outlives the widget tree (disposed in tearDown), so the
+      // M-25 keep-alive timers would be reported as pending; turn them off.
+      providerCacheTtlProvider.overrideWithValue(Duration.zero),
       ...overrides,
     ]);
     addTearDown(container.dispose);

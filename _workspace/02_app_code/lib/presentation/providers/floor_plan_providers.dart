@@ -48,8 +48,13 @@ List<String> planCodesFor(String buildingCode, Iterable<String> indexCodes) {
 
 /// Drawings of one building (empty when it has none). `.family` on the
 /// floor-plan building code (see [planCodesFor]).
-final buildingFloorPlansProvider =
-    FutureProvider.family<Map<String, FloorPlan>, String>((ref, code) async {
+///
+/// This and the derived families below are plain autoDispose (no TTL, M-25):
+/// they are cheap lookups over the always-alive [floorPlansProvider], so
+/// re-deriving on the next visit costs nothing while nothing lingers per
+/// building/room key.
+final buildingFloorPlansProvider = FutureProvider.autoDispose
+    .family<Map<String, FloorPlan>, String>((ref, code) async {
   final all = await ref.watch(floorPlansProvider.future);
   return all[code] ?? const {};
 });
@@ -57,13 +62,13 @@ final buildingFloorPlansProvider =
 /// Resolves "S04" + "0306-1" to its drawing and dot position; null when the
 /// room is not on any drawing (no plan for that building/floor, or unknown
 /// code).
-final roomLocationProvider =
-    FutureProvider.family<RoomLocation?, (String, String)>((ref, key) async {
+final roomLocationProvider = FutureProvider.autoDispose
+    .family<RoomLocation?, (String, String)>((ref, key) async {
   return (await ref.watch(roomLookupProvider(key).future)).location;
 });
 
-final roomLookupProvider =
-    FutureProvider.family<RoomLookup, (String, String)>((ref, key) async {
+final roomLookupProvider = FutureProvider.autoDispose
+    .family<RoomLookup, (String, String)>((ref, key) async {
   final (buildingCode, roomCode) = key;
   final plans =
       await ref.watch(buildingFloorPlansProvider(buildingCode).future);

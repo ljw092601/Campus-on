@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/building_floors.dart';
 import '../../domain/entities/facility.dart';
 import '../../domain/repositories/read_result.dart';
+import 'provider_cache.dart';
 import 'repository_providers.dart';
 
 /// All facilities (S2/S3 load-all + client filter strategy).
@@ -10,9 +11,10 @@ final allFacilitiesProvider = FutureProvider<List<Facility>>((ref) {
   return ref.watch(facilityRepositoryProvider).getAll();
 });
 
-/// Single facility for S4. `.family` on id.
+/// Single facility for S4. `.family` on id; autoDispose + TTL (M-25).
 final facilityByIdProvider =
-    FutureProvider.family<Facility?, String>((ref, id) {
+    FutureProvider.autoDispose.family<Facility?, String>((ref, id) {
+  ref.cacheFor();
   return ref.watch(facilityRepositoryProvider).getById(id);
 });
 
@@ -46,8 +48,10 @@ final mapFacilitiesProvider = Provider<AsyncValue<List<Facility>>>((ref) {
 });
 
 /// Floor guide for one building (pin tap / S4 detail). `.family` on facility
-/// id; null = the building has no registered floor info.
-final buildingFloorsProvider =
-    FutureProvider.family<BuildingFloors?, String>((ref, facilityId) {
+/// id; null = the building has no registered floor info. autoDispose + TTL
+/// (M-25).
+final buildingFloorsProvider = FutureProvider.autoDispose
+    .family<BuildingFloors?, String>((ref, facilityId) {
+  ref.cacheFor();
   return ref.watch(floorGuideRepositoryProvider).getByFacilityId(facilityId);
 });

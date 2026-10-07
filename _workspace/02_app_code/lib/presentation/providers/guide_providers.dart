@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/admin_guide.dart';
+import 'provider_cache.dart';
 import 'repository_providers.dart';
 
 /// All guide items (small dataset) — backs S5 category counts + the search index.
@@ -21,14 +22,17 @@ final guideCategoryCountsProvider =
   return counts;
 });
 
-/// Items in one category, ordered for S6 (published first). `.family` on category.
-final guideItemsByCategoryProvider =
-    FutureProvider.family<List<AdminGuideItem>, GuideCategory>((ref, category) {
+/// Items in one category, ordered for S6 (published first). `.family` on
+/// category; autoDispose + TTL (M-25).
+final guideItemsByCategoryProvider = FutureProvider.autoDispose
+    .family<List<AdminGuideItem>, GuideCategory>((ref, category) {
+  ref.cacheFor();
   return ref.watch(guideRepositoryProvider).getByCategory(category);
 });
 
-/// Single guide item for S7 detail. `.family` on id.
+/// Single guide item for S7 detail. `.family` on id; autoDispose + TTL (M-25).
 final guideByIdProvider =
-    FutureProvider.family<AdminGuideItem?, String>((ref, id) {
+    FutureProvider.autoDispose.family<AdminGuideItem?, String>((ref, id) {
+  ref.cacheFor();
   return ref.watch(guideRepositoryProvider).getById(id);
 });
