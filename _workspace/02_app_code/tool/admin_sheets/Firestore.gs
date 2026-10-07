@@ -6,8 +6,9 @@ function documentName_(collection, id) {
   return `projects/${CONFIG.projectId}/databases/${CONFIG.databaseId}/documents/${collection}/${id}`;
 }
 
-// Returns { id, title_ko, start } per document so delete confirmations can show
-// a human-readable summary instead of bare ids.
+// Returns { id, updateTime, title_ko, start, name_ko } per document so delete
+// confirmations can show a human-readable summary instead of bare ids
+// (title_ko/start for academic_events, name_ko for cafeterias).
 function listDocumentSummaries_(collection) {
   const docs = [];
   let pageToken = '';
@@ -22,6 +23,7 @@ function listDocumentSummaries_(collection) {
         updateTime: doc.updateTime,
         title_ko: fields.title_ko && fields.title_ko.stringValue ? fields.title_ko.stringValue : '',
         start: fields.start && fields.start.stringValue ? fields.start.stringValue : '',
+        name_ko: fields.name_ko && fields.name_ko.stringValue ? fields.name_ko.stringValue : '',
       });
     });
     pageToken = result.nextPageToken || '';

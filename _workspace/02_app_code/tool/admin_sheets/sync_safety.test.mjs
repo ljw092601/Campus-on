@@ -24,10 +24,11 @@ function fixture(change = () => {}, answer = 'yes', reacquire = true) {
     },
   };
   const context = vm.createContext({
-    CONFIG: { collections: { academicEvents: 'academic_events' }, maxCommitWrites: 500 },
     SpreadsheetApp: { getUi: () => ui },
   });
-  vm.runInContext(readFileSync(new URL('Sync.gs', import.meta.url), 'utf8'), context);
+  for (const file of ['Config.gs', 'Sync.gs']) {
+    vm.runInContext(readFileSync(new URL(file, import.meta.url), 'utf8'), context, { filename: file });
+  }
   Object.assign(context, {
     readAcademicRows_: () => ({ sheet: {}, rows: structuredClone(state.rows), errors: [] }),
     listDocumentSummaries_: () => structuredClone(state.docs),

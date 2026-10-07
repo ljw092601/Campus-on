@@ -135,3 +135,70 @@ academic_events, cafeterias, dining_menus: read: true, write: false
 - **Claude**: 앱 코드(status enum, Firestore 리포지토리 2종, FirestorePaths, 플래그·firebase_init, l10n, 테스트), firestore.rules, seed ADC 전환·초기 시드.
 - **Codex**: `tool/admin_sheets/` — Apps Script 소스, 시트 템플릿 생성 스크립트, 비개발자용 안내 문서.
 - **사용자 액션 필요**: 기존 서비스 계정 키 폐기(GCP 콘솔), Apps Script GCP 프로젝트 연결, 관리자 그룹 IAM 부여.
+
+---
+
+## 8. 학식 양식 2차 개정 (2026-10-08) — 식당 8곳 · 유형별 섹션 · 메뉴별 가격
+
+> 배경: 실제 동아대 학식은 승학 4곳 / 구덕·부민 4곳, 끼니마다 **정식(세트 1가격)·일품(메뉴별 가격)·양분식·천원의아침밥**이 나란히 나오고, 영업시간에 휴게시간이 있다. 1차 양식(식당 3곳, 조·중·석 1가격)으로는 표현이 안 돼 아래로 바꿨다. D1(상태)·D2(동기화 정책)는 그대로.
+
+### 8-1. 데이터 모델 (`lib/domain/entities/dining_menu.dart`가 정본)
+
+`cafeterias/<id>`
+
+| 필드 | 타입 | 비고 |
+|---|---|---|
+| `name_ko` / `name_en` | string | |
+| `campus` | string | `seunghak\|gudeok\|bumin` — 앱은 승학 / 구덕·부민 두 그룹으로 묶어 보여줌 |
+| `hours` | array | `[{open:"09:00", close:"09:30"}, …]` 연속 배식 구간. 구간 사이 = 휴게시간. 미표기면 `[]` |
+| `hours_ko` / `hours_en` | string | 자유 비고("운영시간 미표기", "천원의아침밥 09:00부터 선착순") |
+| `facilityId` | string? | 지도 핀 |
+| `order` | int | 그룹 안 표시 순서 |
+
+`dining_menus/<cafeteriaId>_<YYYY-MM-DD>` — `meals` 대신 `sections`
+
+```json
+{ "cafeteriaId": "seunghak-student", "date": "2026-10-13", "status": "open",
+  "sections": [
+    { "slot": "breakfast", "kind": "thousandWon", "price": 1000, "note": "09:00부터 선착순",
+      "items": [{ "name": "훈제오리솥밥" }] },
+    { "slot": "allDay", "kind": "set", "price": 6000,
+      "items": [{ "name": "미역국" }, { "name": "제육볶음" }, { "name": "김치" }] },
+    { "slot": "allDay", "kind": "alacarte",
+      "items": [{ "name": "국밥", "price": 6000 }, { "name": "돈까스", "price": 7500 }] }
+  ] }
+```
+
+- `slot`: `breakfast | lunch | dinner | allDay`, `kind`: `set | alacarte | snack | thousandWon`.
+- 가격: `set`·`thousandWon`은 섹션 `price`(세트 가격), `alacarte`·`snack`은 항목별 `price`.
+- 앱 `fromJson`은 옛 `meals` 문서도 읽는다(조·중·석 → 같은 슬롯의 `set` 섹션). 지난 주 데이터 호환용이며 시트는 더 이상 `meals`를 쓰지 않는다.
+- 모르는 `slot`/`kind`는 조용히 바꾸지 않고 **섹션을 버린다**(옛 `MealType.fromId`의 lunch 기본값 제거).
+
+### 8-2. 시트 양식
+
+**"학식"** — 행 1개 = 식당 1곳의 섹션 1개. 같은 (식당, 날짜, 시간대)에 유형이 다른 행 여러 개 허용.
+
+| 날짜 | 식당(드롭다운, "식당" 탭 참조) | 시간대(아침/점심/저녁/종일) | 유형(정식/일품/양분식/천원의아침밥) | 메뉴 | 가격 | 비고 | 상태 | 동기화 결과 |
+
+- 메뉴: 줄바꿈 또는 쉼표로 항목 구분. 항목 끝의 숫자("돈까스 7,500원")는 항목 가격.
+- 가격 열: 정식·천원의아침밥은 필수(항목 가격 금지), 일품·양분식은 비움(항목 가격 선택).
+- 그룹 키 (식당, 날짜). 중복 오류는 (시간대, 유형) 조합 기준.
+
+**"식당"(신규)** — 식당 정보를 관리자가 직접 관리. 동기화는 `cafeterias` full replace(시트에 없는 id 삭제, 확인 다이얼로그).
+
+| 식당ID | 이름(국문) | 이름(영문) | 캠퍼스 | 운영시간(`09:00-09:30, 10:00-14:30`) | 운영 비고(국문) | 운영 비고(영문) | 지도 건물ID | 표시 순서 | 동기화 결과 |
+
+**"예시"(신규)** — 동기화되지 않는 입력 예시 2일치.
+
+### 8-3. 앱
+
+- 학식 화면 상단 캠퍼스 그룹 탭(승학 | 구덕·부민), 카드 안에 슬롯 헤더 → 유형 칩 → 정식은 "정식 7,000원 + 반찬", 일품은 항목별 가격 줄.
+- 운영시간은 `hours` 구간에서 "09:00~16:30 · 휴게 09:30~10:00, 14:30~15:00"로 생성. 추후 "지금 운영중" 배지의 근거 데이터.
+- mock(`USE_FIRESTORE_DINING=false`)은 8곳 + 가짜 1주일치 식단을 예시로 제공한다.
+
+### 8-4. 전환 절차
+
+1. 앱 배포(새 `sections` 읽기 + 옛 `meals` 호환).
+2. `clasp push` → 시트 메뉴 "시트 초기화" 실행: 옛 "학식" 열 구조를 자동 마이그레이션(식사→시간대, 유형=정식), "식당" 탭 8행·"예시" 탭 생성.
+3. "식당 동기화" 1회 → `cafeterias` 8곳으로 교체(옛 `bumin-student` 삭제).
+4. 이후 주간 입력은 "학식" 탭 → "학식 동기화".
