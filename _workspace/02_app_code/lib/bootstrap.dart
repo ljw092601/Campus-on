@@ -60,11 +60,11 @@ class _AppBootstrapState extends State<AppBootstrap> {
     // A timeout cannot cancel a native operation. Reuse it until it completes
     // rather than starting concurrent Firebase / preferences initialization.
     final operation = _inFlight ??= Future.sync(widget.initialize);
-    operation.then((_) {
+    unawaited(operation.then((_) {
       if (identical(_inFlight, operation)) _inFlight = null;
     }, onError: (Object _, StackTrace __) {
       if (identical(_inFlight, operation)) _inFlight = null;
-    });
+    }));
     try {
       final prefs = await operation.timeout(widget.timeout);
       if (!mounted || attempt != _attempt) return;

@@ -7,6 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/config/app_config.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
+import '../shared/external_links.dart';
+import 'app_version_provider.dart';
 
 /// S9 — Settings. Language switch (instant, no restart), favorites entry, and
 /// the About/data-source/contact/privacy/licenses info section.
@@ -19,6 +21,14 @@ class SettingsScreen extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     final notifier = ref.read(localeProvider.notifier);
     final scheme = Theme.of(context).colorScheme;
+    // Runtime version from the platform bundle (audit L-31) - nothing to show
+    // while it loads; a dash if the platform channel is unavailable.
+    final version = ref.watch(appVersionProvider).when(
+          data: (info) =>
+              l.settings_version_value(info.version, info.buildNumber),
+          loading: () => '',
+          error: (_, __) => '\u2014',
+        );
 
     return Scaffold(
       appBar: AppBar(title: Text(l.settings_title)),
@@ -27,8 +37,20 @@ class SettingsScreen extends ConsumerWidget {
           _SectionHeader(l.settings_language_title),
           RadioGroup<String>(
             groupValue: locale.languageCode,
-            onChanged: (value) {
-              if (value != null) notifier.setLocale(Locale(value));
+            onChanged: (value) async {
+              if (value == null) return;
+              final saved = await notifier.setLocale(Locale(value));
+              // The language already switched in memory; only warn that it
+              // may not survive a restart (audit L-27). Looked up for the
+              // *new* locale: the inherited AppLocalizations is still the old
+              // one until the next frame.
+              if (!saved && context.mounted) {
+                final message = lookupAppLocalizations(Locale(value))
+                    .settings_language_saveFailed;
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(content: Text(message)));
+              }
             },
             child: Column(
               children: [
@@ -76,7 +98,7 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l.settings_privacy),
             trailing: Icon(Symbols.open_in_new,
                 size: 18, color: scheme.onSurfaceVariant),
-            onTap: () => _openUrl(AppConfig.privacyPolicyUrl),
+            onTap: () => _openUrl(context, AppConfig.privacyPolicyUrl),
           ),
           ListTile(
             leading: const Icon(Symbols.description),
@@ -85,7 +107,7 @@ class SettingsScreen extends ConsumerWidget {
             onTap: () => showLicensePage(
               context: context,
               applicationName: l.appTitle,
-              applicationVersion: l.settings_version_value,
+              applicationVersion: version,
             ),
           ),
           ListTile(
@@ -93,7 +115,7 @@ class SettingsScreen extends ConsumerWidget {
             title: Text(l.settings_version),
             // Value as subtitle (not trailing) so it never overflows the row
             // under large font scale (QA A-4).
-            subtitle: Text(l.settings_version_value,
+            subtitle: Text(version,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: scheme.onSurfaceVariant,
                     )),
@@ -103,12 +125,11 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _openUrl(String url) async {
+  Future<void> _openUrl(BuildContext context, String url) async {
     final uri = Uri.tryParse(url);
     if (uri == null) return;
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+    // Shows the shared "couldn't open" notice on failure (audit L-8).
+    await openExternal(context, uri, mode: LaunchMode.externalApplication);
   }
 }
 

@@ -35,10 +35,12 @@ class HomeScreen extends ConsumerWidget {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Decorative emblem: the wordmark beside it carries the name.
             Image.asset(
               'assets/home/app_emblem.png',
               width: 30,
               height: 30,
+              excludeFromSemantics: true,
             ),
             const SizedBox(width: 8),
             // Flexible + scaleDown: on a 360dp phone the actions leave the
@@ -100,19 +102,49 @@ class _LangToggle extends ConsumerWidget {
           color: on ? active : inactive,
         );
 
-    // The styled "KO | EN" spans mean nothing to a screen reader, so expose
-    // the control as a button labeled with the language-setting title.
-    return Semantics(
-      button: true,
-      label: l.settings_language_title,
-      child: TextButton(
-        onPressed: () => ref.read(localeProvider.notifier).toggle(),
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(text: 'KO', style: st(isKo)),
-            TextSpan(text: '  |  ', style: st(false)),
-            TextSpan(text: 'EN', style: st(!isKo)),
-          ]),
+    Future<void> onToggle() async {
+      final saved = await ref.read(localeProvider.notifier).toggle();
+      // The language already switched in memory; only warn that it may not
+      // survive a restart (audit L-27). Looked up for the *new* locale: the
+      // inherited AppLocalizations is still the old one until the next frame.
+      if (!saved && context.mounted) {
+        final message = lookupAppLocalizations(ref.read(localeProvider))
+            .settings_language_saveFailed;
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(message)));
+      }
+    }
+
+    // The styled "KO | EN" spans mean nothing to a screen reader, so the
+    // control is one merged node: a button labeled "switch language" whose
+    // value is the current language (audit L-18/L-31). `toggled` reads the
+    // control left-to-right, KO -> EN: it is "on" when English is active.
+    return MergeSemantics(
+      child: Semantics(
+        label: l.home_langToggle_label,
+        value: isKo ? l.settings_language_ko : l.settings_language_en,
+        toggled: !isKo,
+        child: TextButton(
+          onPressed: onToggle,
+          child: ExcludeSemantics(
+            // The app bar is a fixed 56dp; at 200% font the 15pt chip would
+            // exceed its box. Cap the chip's scale like Flutter's own app-bar
+            // title (1.34) and shrink-to-fit as a last resort (audit L-18).
+            child: MediaQuery.withClampedTextScaling(
+              maxScaleFactor: 1.34,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text.rich(
+                  TextSpan(children: [
+                    TextSpan(text: 'KO', style: st(isKo)),
+                    TextSpan(text: '  |  ', style: st(false)),
+                    TextSpan(text: 'EN', style: st(!isKo)),
+                  ]),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -158,6 +190,8 @@ class _HeroBanner extends StatelessWidget {
                   'assets/home/hero_photo.png',
                   fit: BoxFit.fitHeight,
                   alignment: Alignment.centerRight,
+                  // Decorative: the tile's Semantics label names the action.
+                  excludeFromSemantics: true,
                 ),
               ),
               // Navy wash over the left half so the headline stays readable where
@@ -190,15 +224,18 @@ class _HeroBanner extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        l.classroom_search_title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 21,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.3,
-                          color: Colors.white,
+                      // Already announced through the tile's Semantics label.
+                      child: ExcludeSemantics(
+                        child: Text(
+                          l.classroom_search_title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: -0.3,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -319,65 +356,80 @@ class _FeatureCard extends StatelessWidget {
       elevation: isDark ? 0 : 1,
       shadowColor: Colors.black.withValues(alpha: 0.35),
       surfaceTintColor: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: data.onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 18, 14, 14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+      // One semantics node per card (audit L-30): a button labeled with the
+      // card title (+ the teaser text), instead of an unlabeled tap target
+      // followed by two loose text nodes.
+      child: MergeSemantics(
+        child: Semantics(
+          button: true,
+          label: data.title,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: data.onTap,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 18, 14, 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        // Already announced through the Semantics label.
+                        child: ExcludeSemantics(
+                          child: Text(
+                            data.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: titleColor,
+                              letterSpacing: -0.3,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Icon(Symbols.chevron_right, size: 22, color: titleColor),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    data.description,
+                    // Capped: at 360dp the English copy wraps past the cell
+                    // height and the Column overflows; the card is a teaser,
+                    // not the doc.
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      height: 1.45,
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
                   Expanded(
-                    child: Text(
-                      data.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        color: titleColor,
-                        letterSpacing: -0.3,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        // Rounded clip so the illustration's white backdrop
+                        // reads as a deliberate plate on dark surfaces.
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            data.asset,
+                            fit: BoxFit.contain,
+                            width: double.infinity,
+                            height: double.infinity,
+                            // Decorative illustration.
+                            excludeFromSemantics: true,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  Icon(Symbols.chevron_right, size: 22, color: titleColor),
                 ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                data.description,
-                // Capped: at 360dp the English copy wraps past the cell height
-                // and the Column overflows; the card is a teaser, not the doc.
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12.5,
-                  height: 1.45,
-                  color: scheme.onSurfaceVariant,
-                ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    // Rounded clip so the illustration's white backdrop reads
-                    // as a deliberate plate on dark surfaces.
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.asset(
-                        data.asset,
-                        fit: BoxFit.contain,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

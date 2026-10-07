@@ -20,16 +20,29 @@ class LocaleNotifier extends Notifier<Locale> {
     return device == 'ko' ? const Locale('ko') : const Locale('en');
   }
 
-  Future<void> setLocale(Locale locale) async {
-    if (locale.languageCode == state.languageCode) return;
+  /// Switches the in-memory locale immediately and persists it. Returns
+  /// whether the preference was written (audit L-27): on a failed or throwing
+  /// write the UI language still changes for this session, but the caller can
+  /// warn that it may not survive a restart. Same policy as the favorites
+  /// repository's `_checkWrite` — SharedPreferences updates its memory cache
+  /// even when the native write fails, so the cache is reloaded on failure.
+  Future<bool> setLocale(Locale locale) async {
+    if (locale.languageCode == state.languageCode) return true;
     state = locale;
-    await ref
-        .read(sharedPreferencesProvider)
-        .setString(_key, locale.languageCode);
+    final prefs = ref.read(sharedPreferencesProvider);
+    try {
+      if (await prefs.setString(_key, locale.languageCode)) return true;
+    } catch (_) {
+      // Fall through: reported as a failed write below.
+    }
+    try {
+      await prefs.reload();
+    } catch (_) {}
+    return false;
   }
 
   /// Toggle used by the home app-bar [KO|EN] quick action.
-  Future<void> toggle() =>
+  Future<bool> toggle() =>
       setLocale(state.languageCode == 'ko' ? const Locale('en') : const Locale('ko'));
 }
 

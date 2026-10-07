@@ -14,7 +14,8 @@ class FirestoreAcademicCalendarRepository
     final docs = await readQuery(
         _db.collection(FirestorePaths.academicEvents).orderBy('start'),
         limit: FirestoreListLimits.academicEvents);
-    final result = mapReadDocuments(docs, academicEventFromDoc);
+    final result = mapReadDocuments(docs, academicEventFromDoc,
+        collection: FirestorePaths.academicEvents);
     final sorted = result.toList()..sort((a, b) => a.start.compareTo(b.start));
     return preserveReadStatus(result, sorted);
   }

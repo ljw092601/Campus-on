@@ -14,7 +14,8 @@ class FirestoreFacilityRepository implements FacilityRepository {
   Future<List<Facility>> _loadAll() async =>
       mapReadDocuments(
           await readQuery(_col, limit: FirestoreListLimits.facilities),
-          facilityFromDoc);
+          facilityFromDoc,
+          collection: FirestorePaths.facilities);
 
   @override
   Future<List<Facility>> getAll() => _loadAll();
@@ -22,7 +23,7 @@ class FirestoreFacilityRepository implements FacilityRepository {
   @override
   Future<Facility?> getById(String id) async {
     final doc = await readDocument(_col.doc(id));
-    return doc.exists ? facilityFromDoc(doc) : null;
+    return mapSingleDocument(doc, FirestorePaths.facilities, facilityFromDoc);
   }
 
   @override

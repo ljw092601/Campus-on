@@ -14,7 +14,8 @@ class FirestoreGuideRepository implements GuideRepository {
   Future<List<AdminGuideItem>> _loadAll() async =>
       mapReadDocuments(
           await readQuery(_col, limit: FirestoreListLimits.guideItems),
-          guideFromDoc);
+          guideFromDoc,
+          collection: FirestorePaths.guideItems);
 
   @override
   Future<List<AdminGuideItem>> getAllItems() => _loadAll();
@@ -22,7 +23,7 @@ class FirestoreGuideRepository implements GuideRepository {
   @override
   Future<AdminGuideItem?> getById(String id) async {
     final doc = await readDocument(_col.doc(id));
-    return doc.exists ? guideFromDoc(doc) : null;
+    return mapSingleDocument(doc, FirestorePaths.guideItems, guideFromDoc);
   }
 
   @override

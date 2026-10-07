@@ -11,7 +11,9 @@ class FirestoreFloorGuideRepository implements FloorGuideRepository {
   Future<BuildingFloors?> getByFacilityId(String facilityId) async {
     final doc = await readDocument(
         _db.collection(FirestorePaths.buildingFloors).doc(facilityId));
-    // A malformed or unavailable document is an error, not "no floor guide".
-    return doc.exists ? buildingFloorsFromDoc(doc) : null;
+    // A malformed or unavailable document is an error, not "no floor guide":
+    // a parse failure surfaces as MalformedDocumentException (L-23).
+    return mapSingleDocument(
+        doc, FirestorePaths.buildingFloors, buildingFloorsFromDoc);
   }
 }

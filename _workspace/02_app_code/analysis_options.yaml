@@ -8,3 +8,5 @@ linter:
   rules:
     prefer_const_constructors: true
     prefer_final_locals: true
+    # Audit L-27: a dropped Future hides write failures (prefs, launches).
+    unawaited_futures: true

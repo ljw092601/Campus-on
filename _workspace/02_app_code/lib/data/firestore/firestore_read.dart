@@ -71,14 +71,22 @@ Future<RepositoryList<QueryDocumentSnapshot<Map<String, dynamic>>>> readQuery(
   );
 }
 
+/// Maps a page of documents, dropping the ones that fail to parse. Every drop
+/// is recorded in [FirestoreReadLog] under [collection] so a broken admin
+/// write can be traced; the result is marked `incomplete` so the UI shows the
+/// partial-data banner.
 RepositoryList<T> mapReadDocuments<T>(
     RepositoryList<QueryDocumentSnapshot<Map<String, dynamic>>> docs,
-    T Function(DocumentSnapshot<Map<String, dynamic>>) mapper) {
+    T Function(DocumentSnapshot<Map<String, dynamic>>) mapper,
+    {String collection = ''}) {
   final values = <T>[];
   for (final doc in docs) {
     try {
       values.add(mapper(doc));
-    } catch (_) {/* Report partial data below. */}
+    } catch (e) {
+      // Report partial data below.
+      FirestoreReadLog.record(collection, doc.id, e);
+    }
   }
   if (docs.isNotEmpty && values.isEmpty) {
     throw const DataRepositoryException('No readable documents');
@@ -107,5 +115,24 @@ Future<DocumentSnapshot<Map<String, dynamic>>> readDocument(
       if (doc.exists) return doc;
     } catch (_) {/* No trustworthy cached document. */}
     throw const OfflineDataUnavailable();
+  }
+}
+
+/// Maps one fetched document (audit L-23). A document that exists but cannot
+/// be parsed is surfaced as a [MalformedDocumentException] naming the
+/// `collection/docId` and recorded in [FirestoreReadLog], instead of leaking
+/// the raw cast error (`type 'int' is not a subtype…`) up to a generic error
+/// screen. Returns `null` when the document does not exist.
+T? mapSingleDocument<T>(
+  DocumentSnapshot<Map<String, dynamic>> doc,
+  String collection,
+  T Function(DocumentSnapshot<Map<String, dynamic>>) mapper,
+) {
+  if (!doc.exists) return null;
+  try {
+    return mapper(doc);
+  } catch (e) {
+    FirestoreReadLog.record(collection, doc.id, e);
+    throw MalformedDocumentException(collection, doc.id, e);
   }
 }

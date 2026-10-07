@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/config/app_config.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../../core/theme/app_theme.dart';
+import '../shared/external_links.dart';
 
 /// Which static info page to render (Settings sub-pages, S9).
 enum SettingsInfoType { about, dataSource, contact }
@@ -39,7 +39,7 @@ class SettingsInfoScreen extends StatelessWidget {
           if (type == SettingsInfoType.contact) ...[
             SizedBox(height: d.spaceLg),
             FilledButton.tonalIcon(
-              onPressed: () => _sendEmail(AppConfig.contactEmail),
+              onPressed: () => _sendEmail(context, AppConfig.contactEmail),
               icon: const Icon(Symbols.mail),
               label: Text(l.settings_contact_emailLabel),
             ),
@@ -56,14 +56,15 @@ class SettingsInfoScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _sendEmail(String email) async {
+  Future<void> _sendEmail(BuildContext context, String email) async {
+    // Localized subject (audit L-31) and the shared "couldn't open" notice
+    // when no mail client handles the link (audit L-8).
+    final subject = AppLocalizations.of(context).settings_contact_emailSubject;
     final uri = Uri(
       scheme: 'mailto',
       path: email,
-      query: 'subject=${Uri.encodeComponent('[Dong-A Mate] Feedback')}',
+      query: 'subject=${Uri.encodeComponent(subject)}',
     );
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    }
+    await openExternal(context, uri);
   }
 }

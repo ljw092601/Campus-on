@@ -48,6 +48,9 @@ dependencies:
 
   # Utilities
   url_launcher: ^6.3.0
+  # Runtime app version for the Settings screen (audit L-31: no hardcoded
+  # version string in the ARB files).
+  package_info_plus: ^8.1.0
   video_player: ^2.14.0
 
 dev_dependencies:

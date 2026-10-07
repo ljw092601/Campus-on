@@ -131,6 +131,11 @@ class Facility {
     return null;
   }
 
+  /// Required fields (`id`, names, `lat`/`lng`, `category`) are cast strictly
+  /// — a facility without a position or name is unusable and must be
+  /// rejected. Optional fields are read leniently (audit L-23): a `phone`
+  /// typed as a number or an `hours_ko` left as a map by an admin edit
+  /// degrades to `null` instead of dropping the whole facility from the map.
   factory Facility.fromJson(Map<String, dynamic> j) => Facility(
         id: j['id'] as String,
         nameKo: (j['name_ko'] ?? '') as String,
@@ -138,23 +143,27 @@ class Facility {
         category: FacilityCategory.fromId((j['category'] ?? 'etc') as String),
         lat: (j['lat'] as num).toDouble(),
         lng: (j['lng'] as num).toDouble(),
-        campus: Campus.fromId(j['campus'] as String?),
-        buildingCode: j['buildingCode'] as String?,
-        hasFloorInfo: (j['hasFloorInfo'] as bool?) ?? false,
-        addressKo: j['address_ko'] as String?,
-        addressEn: j['address_en'] as String?,
-        buildingKo: j['building_ko'] as String?,
-        buildingEn: j['building_en'] as String?,
-        hoursKo: j['hours_ko'] as String?,
-        hoursEn: j['hours_en'] as String?,
-        phone: j['phone'] as String?,
-        descriptionKo: j['description_ko'] as String?,
-        descriptionEn: j['description_en'] as String?,
-        imageUrl: j['imageUrl'] as String?,
+        campus: Campus.fromId(_optString(j['campus'])),
+        buildingCode: _optString(j['buildingCode']),
+        hasFloorInfo: j['hasFloorInfo'] == true,
+        addressKo: _optString(j['address_ko']),
+        addressEn: _optString(j['address_en']),
+        buildingKo: _optString(j['building_ko']),
+        buildingEn: _optString(j['building_en']),
+        hoursKo: _optString(j['hours_ko']),
+        hoursEn: _optString(j['hours_en']),
+        phone: _optString(j['phone']),
+        descriptionKo: _optString(j['description_ko']),
+        descriptionEn: _optString(j['description_en']),
+        imageUrl: _optString(j['imageUrl']),
         updatedAt: j['updatedAt'] == null
             ? null
             : DateTime.tryParse(j['updatedAt'].toString()),
       );
+
+  /// Lenient optional-string read: anything that is not a `String` is
+  /// treated as absent.
+  static String? _optString(Object? v) => v is String ? v : null;
 
   Map<String, dynamic> toJson() => {
         'id': id,

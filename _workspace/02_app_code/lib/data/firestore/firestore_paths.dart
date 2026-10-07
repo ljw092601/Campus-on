@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart' show debugPrint, visibleForTesting;
+import 'package:flutter/foundation.dart' show visibleForTesting;
 
 import '../../domain/entities/academic_event.dart';
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/entities/building_floors.dart';
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
+import 'repository_exceptions.dart';
 
 /// Single source of truth for Firestore collection names + document→entity
 /// mapping. Keeping the mapping here (not in the entities) means the domain
@@ -101,10 +102,10 @@ Map<String, dynamic> _normalize(
   return data;
 }
 
-/// Maps [docs] to entities, skipping (and logging) any document whose mapping
-/// throws — one malformed admin write must not blank the whole list. Same
-/// policy as `FirestoreAcademicCalendarRepository`'s per-document skip;
-/// [collection] only labels the log line.
+/// Maps [docs] to entities, skipping any document whose mapping throws — one
+/// malformed admin write must not blank the whole list. Each skipped document
+/// is recorded in [FirestoreReadLog] under [collection] (audit L-27: no
+/// `debugPrint`, so the record exists in release builds too).
 List<T> mapDocsSkippingMalformed<T>(
   Iterable<DocumentSnapshot<Map<String, dynamic>>> docs,
   String collection,
@@ -115,7 +116,7 @@ List<T> mapDocsSkippingMalformed<T>(
     try {
       out.add(fromDoc(doc));
     } catch (e) {
-      debugPrint('$collection/${doc.id}: skipped malformed doc ($e)');
+      FirestoreReadLog.record(collection, doc.id, e);
     }
   }
   return out;
