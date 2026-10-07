@@ -12,7 +12,9 @@ class FirestoreGuideRepository implements GuideRepository {
       _db.collection(FirestorePaths.guideItems);
 
   Future<List<AdminGuideItem>> _loadAll() async =>
-      mapReadDocuments(await readQuery(_col), guideFromDoc);
+      mapReadDocuments(
+          await readQuery(_col, limit: FirestoreListLimits.guideItems),
+          guideFromDoc);
 
   @override
   Future<List<AdminGuideItem>> getAllItems() => _loadAll();

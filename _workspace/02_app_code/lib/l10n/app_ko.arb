@@ -1,6 +1,8 @@
 {
   "@@locale": "ko",
   "map_focus_notFound": "해당 건물을 찾을 수 없어요. 다시 검색해 주세요.",
+  "intro_skipHint": "탭하여 건너뛰기",
+  "map_location_farFromCampus": "현재 위치가 캠퍼스에서 멀어요. 캠퍼스 지도를 그대로 보여드려요.",
 
   "appTitle": "동아메이트",
 

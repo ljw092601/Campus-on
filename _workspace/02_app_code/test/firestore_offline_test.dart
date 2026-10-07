@@ -52,11 +52,12 @@ class _Db extends Fake implements FirebaseFirestore {
 }
 
 class _Query extends Fake implements CollectionReference<Map<String, dynamic>> {
-  _Query(this.db, this.path, [this.date]);
+  _Query(this.db, this.path, [this.date, this.limitCount]);
   final _Db db;
   @override
   final String path;
   final Object? date;
+  final int? limitCount;
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> get([GetOptions? options]) async {
     final source = options?.source ?? Source.serverAndCache;
@@ -65,16 +66,21 @@ class _Query extends Fake implements CollectionReference<Map<String, dynamic>> {
       throw FirebaseException(
           plugin: 'cloud_firestore', code: db.errorCode ?? 'unavailable');
     }
-    final rows = (db.rows[path] ?? [])
+    var rows = (db.rows[path] ?? [])
         .where((r) => date == null || r['date'] == date)
         .toList();
+    if (limitCount != null) rows = rows.take(limitCount!).toList();
     return _Snapshot(rows, source == Source.cache);
   }
 
   @override
+  Query<Map<String, dynamic>> limit(int limit) =>
+      _Query(db, path, date, limit);
+
+  @override
   dynamic noSuchMethod(Invocation i) {
     if (i.memberName == #where) {
-      return _Query(db, path, i.namedArguments[#isEqualTo]);
+      return _Query(db, path, i.namedArguments[#isEqualTo], limitCount);
     }
     if (i.memberName == #orderBy) return this;
     return super.noSuchMethod(i);

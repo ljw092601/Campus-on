@@ -13,21 +13,36 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Public campus facilities — anyone may read, nobody may write from a client.
+    // M-26: single-document `get` stays open, but every collection `list`
+    // must carry an explicit `.limit()` no larger than the per-collection
+    // cap. A query without `.limit()` has no `request.query.limit`, so the
+    // comparison errors out and the read is denied — the app therefore
+    // always passes a limit (lib/data/firestore/firestore_read.dart
+    // `readQuery`, constants in FirestoreListLimits). Keep each cap here
+    // >= the app constant; test/firestore_limits_test.dart cross-checks.
+    function boundedList(max) {
+      return request.query.limit <= max;
+    }
+
+    // Public campus facilities — anyone may read (list capped), nobody may write
+    // from a client.
     match /facilities/{facilityId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(500);
       allow write: if false;
     }
 
     // Public admin-guide items — same policy.
     match /guide_items/{itemId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(200);
       allow write: if false;
     }
 
     // Public building floor guides (doc id == facility id) — same policy.
     match /building_floors/{facilityId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(200);
       allow write: if false;
     }
 
@@ -35,15 +50,18 @@ service cloud.firestore {
     // §7): written only by the admin sheet sync via the Firestore REST API
     // with IAM auth, which bypasses these rules. Clients read-only.
     match /academic_events/{eventId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(500);
       allow write: if false;
     }
     match /cafeterias/{cafeteriaId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(50);
       allow write: if false;
     }
     match /dining_menus/{menuId} {
-      allow read: if true;
+      allow get: if true;
+      allow list: if boundedList(50);
       allow write: if false;
     }
 

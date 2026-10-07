@@ -11,9 +11,11 @@ import 'package:shared_preferences_platform_interface/shared_preferences_platfor
 class _Store extends InMemorySharedPreferencesStore {
   _Store(super.data) : super.withData();
   bool fail = false;
+  int writes = 0;
   @override
   Future<bool> setValue(String type, String key, Object value) async {
     if (fail) return false;
+    writes++;
     return super.setValue(type, key, value);
   }
 }
@@ -100,5 +102,69 @@ void main() {
     await expectLater(
         LocalFavoritesRepository(p).add(item('b')), throwsStateError);
     expect(p.getString('favorites_v1'), raw);
+  });
+
+  group('legacy id migration (M-20)', () {
+    Future<(ProviderContainer, SharedPreferences, _Store)> load(
+        List<FavoriteRef> items) async {
+      SharedPreferences.resetStatic();
+      final store = _Store({
+        'flutter.favorites_v1':
+            jsonEncode(items.map((e) => e.toJson()).toList())
+      });
+      SharedPreferencesStorePlatform.instance = store;
+      final p = await SharedPreferences.getInstance();
+      final container = ProviderContainer(
+          overrides: [sharedPreferencesProvider.overrideWithValue(p)]);
+      addTearDown(container.dispose);
+      await container.read(favoritesProvider.future);
+      return (container, p, store);
+    }
+
+    List<String> storedIds(SharedPreferences p) => [
+          for (final e in jsonDecode(p.getString('favorites_v1')!) as List)
+            (e as Map)['id'] as String
+        ];
+
+    test('p4 alone is served as s12 and the store is rewritten', () async {
+      final (container, p, _) = await load([item('p4')]);
+      expect(container.read(favoritesProvider).requireValue, {'facility:s12'});
+      expect(storedIds(p), ['s12']);
+      expect(
+          await LocalFavoritesRepository(p)
+              .isFavorite(FavoriteType.facility, 'p4'),
+          isFalse);
+    });
+    test('p4 and s12 together collapse to a single s12', () async {
+      final (container, p, _) = await load([item('p4'), item('s12')]);
+      expect(container.read(favoritesProvider).requireValue, {'facility:s12'});
+      expect(storedIds(p), ['s12']);
+    });
+    test('no legacy ids means no store write', () async {
+      final (container, p, store) = await load([item('a'), item('s12')]);
+      expect(container.read(favoritesProvider).requireValue,
+          {'facility:a', 'facility:s12'});
+      expect(store.writes, 0);
+      expect(storedIds(p), ['a', 's12']);
+    });
+    test('unknown ids are kept untouched alongside the migrated one', () async {
+      final (container, p, _) = await load([item('zzz'), item('p4')]);
+      expect(container.read(favoritesProvider).requireValue,
+          {'facility:zzz', 'facility:s12'});
+      expect(storedIds(p), ['zzz', 's12']);
+    });
+    test('failed write keeps the mapped key in memory and the old entry on disk',
+        () async {
+      SharedPreferences.resetStatic();
+      final raw = jsonEncode([item('p4').toJson()]);
+      final store = _Store({'flutter.favorites_v1': raw})..fail = true;
+      SharedPreferencesStorePlatform.instance = store;
+      final p = await SharedPreferences.getInstance();
+      final container = ProviderContainer(
+          overrides: [sharedPreferencesProvider.overrideWithValue(p)]);
+      addTearDown(container.dispose);
+      expect(await container.read(favoritesProvider.future), {'facility:s12'});
+      expect(p.getString('favorites_v1'), raw);
+    });
   });
 }

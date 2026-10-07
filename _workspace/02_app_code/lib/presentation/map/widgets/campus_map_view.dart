@@ -26,7 +26,8 @@ import 'nearby_search_bridge.dart';
 ///    those markers (single id → recenter) per the deep-link contract. A
 ///    single pin is centred in the part of the map left visible above
 ///    [focusObscuredFraction] (the open peek sheet).
-///  - Reports marker taps via [onMarkerTap] (facility id).
+///  - Reports marker taps via [onMarkerTap] (facility id) and taps on the bare
+///    map via [onMapTap] (the screen uses it to dismiss the peek sheet).
 ///  - Draws [userLocation] as a blue dot (pixel-fixed CustomOverlay) plus a
 ///    translucent accuracy halo (meter-based Circle). While [following], every
 ///    NEW [UserLocation] instance recenters the camera (instance identity marks
@@ -58,6 +59,7 @@ class CampusMapView extends StatefulWidget {
     required this.facilities,
     required this.focusIds,
     required this.onMarkerTap,
+    this.onMapTap,
     this.campus,
     this.campusCenter,
     this.selectedId,
@@ -106,6 +108,9 @@ class CampusMapView extends StatefulWidget {
 
   final String? selectedId;
   final ValueChanged<String> onMarkerTap;
+
+  /// Tap on the map itself (not on a marker/overlay). Null = not interested.
+  final VoidCallback? onMapTap;
   final UserLocation? userLocation;
   final bool following;
   final VoidCallback? onUserPan;
@@ -635,6 +640,14 @@ class _CampusMapViewState extends State<CampusMapView> {
           if (!mounted || attempt != _loadAttempt || _loadFailed) return;
           widget.onMarkerTap(markerId);
         },
+        // Only registered when the screen cares: the plugin injects a JS click
+        // listener solely when the callback is non-null.
+        onMapTap: widget.onMapTap == null
+            ? null
+            : (_) {
+                if (!mounted || attempt != _loadAttempt || _loadFailed) return;
+                widget.onMapTap!();
+              },
         onCustomOverlayTap: (message, _) {
           if (!mounted || attempt != _loadAttempt || _loadFailed) return;
           _placeSearch?.receiveOverlayMessage(message);

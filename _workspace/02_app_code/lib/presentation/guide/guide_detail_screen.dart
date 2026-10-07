@@ -13,6 +13,7 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/map_links.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
 
@@ -681,7 +682,9 @@ class _LinkRow extends StatelessWidget {
               child: Icon(Symbols.open_in_new,
                   size: 18, color: scheme.onSurfaceVariant),
             ),
-      onTap: _isInternal ? () => context.go(link.url) : _openExternal,
+      onTap: _isInternal
+          ? () => context.go(withMapFocusToken(link.url))
+          : _openExternal,
     );
   }
 }
@@ -706,7 +709,7 @@ class _RelatedLocationCard extends ConsumerWidget {
         child: InkWell(
           borderRadius: context.dimens.brMd,
           // Single-id focus per the deep-link contract (UX §3).
-          onTap: () => context.go('/map?focus=$facilityId'),
+          onTap: () => context.go(mapFocusLink(facilityId)),
           child: Padding(
             padding: EdgeInsets.all(context.dimens.spaceMd),
             child: Row(

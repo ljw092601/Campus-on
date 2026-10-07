@@ -10,6 +10,7 @@ import '../providers/classroom_providers.dart';
 import '../providers/facility_providers.dart';
 import '../providers/floor_plan_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/map_links.dart';
 import '../shared/widgets/state_views.dart';
 
 /// Classroom-location search (entered from the home hero tile, full-screen at
@@ -91,11 +92,13 @@ class _ClassroomSearchScreenState extends ConsumerState<ClassroomSearchScreen> {
       }
       // "03" for 0301, "B1" for B101 (see MapScreen.focusFloorCode).
       final floor = code.substring(0, 2);
-      final plan = b.planCode == null ? '' : '&plan=${b.planCode}';
-      // `t` makes every search a new request, even an identical repeat.
-      final t = DateTime.now().millisecondsSinceEpoch;
-      context.push(
-          '/classroom-search/result?focus=${b.facility.id}&floor=$floor&room=$code$plan&t=$t');
+      // mapFocusLink adds `t`, making every search a new request, even an
+      // identical repeat.
+      context.push(mapFocusLink(b.facility.id,
+          floor: floor,
+          room: code,
+          plan: b.planCode,
+          path: '/classroom-search/result'));
     } catch (_) {
       if (mounted) {
         setState(() => _error = AppLocalizations.of(context).common_loadFailed);

@@ -12,7 +12,9 @@ class FirestoreFacilityRepository implements FacilityRepository {
       _db.collection(FirestorePaths.facilities);
 
   Future<List<Facility>> _loadAll() async =>
-      mapReadDocuments(await readQuery(_col), facilityFromDoc);
+      mapReadDocuments(
+          await readQuery(_col, limit: FirestoreListLimits.facilities),
+          facilityFromDoc);
 
   @override
   Future<List<Facility>> getAll() => _loadAll();

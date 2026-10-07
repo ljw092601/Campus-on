@@ -37,6 +37,53 @@ class FirestorePaths {
   static const String diningMenus = 'dining_menus';
 }
 
+/// Hard upper bounds for collection `list` queries (audit M-26).
+///
+/// Every list query the app issues must go through `readQuery` with one of
+/// these, because `firestore.rules` only allows `list` when
+/// `request.query.limit <= N` — an un-limited query has no `limit` field and
+/// is rejected. Keep the rules' N >= the value here for the same collection
+/// (`test/firestore_limits_test.dart` cross-checks the two).
+///
+/// Sized at roughly 5–10x the seeded data (tool/firestore_seed/*.seed.json)
+/// so normal growth never truncates; when a result does fill the limit,
+/// `readQuery` marks it `incomplete` so the existing partial-data banner
+/// shows instead of silently dropping rows.
+class FirestoreListLimits {
+  const FirestoreListLimits._();
+
+  /// Seeded: 48 facilities.
+  static const int facilities = 500;
+
+  /// Seeded: 18 guide items.
+  static const int guideItems = 200;
+
+  /// Seeded: 34 floor guides. The app only `get`s single docs here; the limit
+  /// exists so the rules' `list` bound has a matching app-side constant.
+  static const int buildingFloors = 200;
+
+  /// Seeded: 14 events per academic year; the collection accumulates across
+  /// years, so leave the most headroom here.
+  static const int academicEvents = 500;
+
+  /// Seeded: 3 cafeterias.
+  static const int cafeterias = 50;
+
+  /// Queried per date (`where date == yyyy-MM-dd`), so a result is at most
+  /// one doc per cafeteria.
+  static const int diningMenus = 50;
+
+  /// Collection name → app-side limit, for the rules cross-check test.
+  static const Map<String, int> byCollection = {
+    FirestorePaths.facilities: facilities,
+    FirestorePaths.guideItems: guideItems,
+    FirestorePaths.buildingFloors: buildingFloors,
+    FirestorePaths.academicEvents: academicEvents,
+    FirestorePaths.cafeterias: cafeterias,
+    FirestorePaths.diningMenus: diningMenus,
+  };
+}
+
 /// Normalizes a raw Firestore document map onto the JSON shape the entity
 /// `fromJson` expects:
 ///  - injects `id` from the document id (schema stores id as the doc key),

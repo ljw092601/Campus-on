@@ -19,6 +19,7 @@ import '../providers/location_providers.dart';
 import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
+import 'campus_proximity.dart';
 import 'widgets/campus_map_view.dart';
 import 'widgets/campus_selector.dart';
 import 'widgets/peek_sheet.dart';
@@ -76,6 +77,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
   static const _peekMin = 0.17;
   static const _peekMax = 0.75;
 
+  /// Sheet extent at (or below) which a downward swipe counts as "dismiss".
+  /// With `minChildSize: 0` the sheet snaps to 0 when released below half of
+  /// [_peekMin]; this threshold catches that landing without firing on an
+  /// ordinary collapse to [_peekMin].
+  static const _peekDismissExtent = 0.02;
+
   String? _selectedId;
   bool _mapLoadFailed = false;
 
@@ -106,6 +113,11 @@ class _MapScreenState extends ConsumerState<MapScreen>
   Stream<double>? _headingStream;
   Timer? _firstFixTimeout;
   bool _resumeTrackingOnForeground = false;
+
+  /// Far-from-campus notice (audit M-24) already shown for the current
+  /// "outside" stretch. Reset by a fix back inside the radius, so the user is
+  /// told once per excursion, not on every 2 m GPS update.
+  bool _farNotified = false;
 
   bool get _tracking => _positionSub != null;
 
@@ -159,6 +171,18 @@ class _MapScreenState extends ConsumerState<MapScreen>
     _following = false;
   }
 
+  /// Dismisses the peek sheet (bare-map tap, close button, swipe-down —
+  /// audit M-8). Unlike [_clearFocus] it leaves follow mode alone: closing a
+  /// sheet is not a camera gesture. Dropping [_focusActive] also removes the
+  /// classroom red dot, matching what a tap on another pin does.
+  void _deselect() {
+    if (_selectedId == null) return;
+    setState(() {
+      _focusActive = false;
+      _selectedId = null;
+    });
+  }
+
   void _markFocusApplied() {
     final key = _focusKeyOf(widget);
     // Camera callbacks can arrive during a child's build/update.
@@ -202,17 +226,29 @@ class _MapScreenState extends ConsumerState<MapScreen>
   Future<void> _onMyLocationPressed(AppLocalizations l) async {
     setState(_clearFocus);
     if (_tracking) {
-      // Already tracking → just re-enable follow (recenters via the map view).
-      setState(() => _following = true);
+      // Already tracking → just re-enable follow (recenters via the map view),
+      // unless the last fix is off-campus: then repeat the notice instead of
+      // flying to an empty map (the press is an explicit ask, so re-telling
+      // is not spam).
+      final loc = _userLocation;
+      final follow = loc == null || _allowFollow(loc, l, userInitiated: true);
+      setState(() => _following = follow);
       return;
     }
-    await _startTracking(l);
+    await _startTracking(l, userInitiated: true);
   }
 
-  Future<void> _startTracking(AppLocalizations l) async {
+  Future<void> _startTracking(AppLocalizations l,
+      {bool userInitiated = false}) async {
+    // A stale fix from an earlier session may already be off-campus — decide
+    // before the first rebuild, or the map view would chase it the moment
+    // follow turns on.
+    final stale = _userLocation;
+    final follow =
+        stale == null || _allowFollow(stale, l, userInitiated: userInitiated);
     setState(() {
-      _following = true;
-      _locating = _userLocation == null; // spinner only before the first dot
+      _following = follow;
+      _locating = stale == null; // spinner only before the first dot
     });
     final service = ref.read(locationServiceProvider);
     final access = await service.ensureAccess();
@@ -230,9 +266,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
     _positionSub = service.positionUpdates().listen((location) {
       _firstFixTimeout?.cancel();
       if (!mounted) return;
+      // Off-campus fix: keep drawing the dot, but drop follow so the camera
+      // stays on campus (M-24). The FAB then shows "not locked", and a fresh
+      // press re-evaluates.
+      final follow = _allowFollow(location, l);
       setState(() {
         _locating = false;
         _userLocation = location;
+        if (!follow) _following = false;
       });
     }, onError: (Object _) {
       if (!mounted) return;
@@ -253,6 +294,39 @@ class _MapScreenState extends ConsumerState<MapScreen>
         ..showSnackBar(SnackBar(content: Text(l.map_myLocation_failed)));
     });
     setState(() {}); // reflect the tracking state on the FAB
+  }
+
+  /// Camera policy for a GPS fix (M-24): true when the camera may follow it.
+  /// Shows the far-from-campus notice once per excursion outside the radius
+  /// (or again on an explicit [userInitiated] FAB press).
+  bool _allowFollow(UserLocation loc, AppLocalizations l,
+      {bool userInitiated = false}) {
+    final far = CampusProximity.isFarFromCampus(
+        lat: loc.lat, lng: loc.lng, centers: _campusCenters());
+    if (!far) {
+      _farNotified = false;
+      return true;
+    }
+    if (!_farNotified || userInitiated) {
+      _farNotified = true;
+      _showSnackBar(l.map_location_farFromCampus);
+    }
+    return false;
+  }
+
+  /// Centres of every campus with known facilities (facility-average, like
+  /// [_campusCenter]); the configured default when none are loaded yet.
+  List<({double lat, double lng})> _campusCenters() {
+    final centers = <({double lat, double lng})>[];
+    for (final campus in Campus.values) {
+      final center = _campusCenter(campus);
+      if (center != null) centers.add(center);
+    }
+    if (centers.isEmpty) {
+      centers.add(
+          (lat: AppConfig.campusCenterLat, lng: AppConfig.campusCenterLng));
+    }
+    return centers;
   }
 
   void _stopTracking({bool keepFollowing = false}) {
@@ -363,7 +437,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       final target = _find(all, widget.focusIds.first);
       if (target == null) {
         setState(_clearFocus);
-        _showPlacesSnackBar(AppLocalizations.of(context).map_focus_notFound);
+        _showSnackBar(AppLocalizations.of(context).map_focus_notFound);
         return;
       }
       ref.read(facilityCategoryFilterProvider.notifier).state = null;
@@ -390,10 +464,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
       _places = places;
       _placesSearched = true;
     });
-    if (places.isEmpty) _showPlacesSnackBar(l.map_nearby_empty);
+    if (places.isEmpty) _showSnackBar(l.map_nearby_empty);
   }
 
-  void _showPlacesSnackBar(String message) {
+  void _showSnackBar(String message) {
     if (!mounted) return;
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
@@ -535,7 +609,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
               placeQueries: widget.nearbyQueries,
               places: _places,
               onPlacesFound: (places) => _onPlacesFound(places, l),
-              onPlacesFailed: () => _showPlacesSnackBar(l.map_nearby_failed),
+              onPlacesFailed: () => _showSnackBar(l.map_nearby_failed),
               onUserPan: () {
                 if (_following) setState(() => _following = false);
               },
@@ -543,6 +617,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 _clearFocus();
                 _selectedId = id;
               }),
+              // Tapping the bare map dismisses whichever peek sheet is open.
+              onMapTap: _deselect,
             ),
           ),
           if (!_mapLoadFailed) ...[
@@ -602,32 +678,47 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
             if (selected != null)
               Positioned.fill(
-                // Key resets the sheet extent when another pin is tapped — or
-                // when a new search targets this same building.
-                child: DraggableScrollableSheet(
-                  key: ValueKey(_focusActive &&
-                          widget.focusIds.isNotEmpty &&
-                          selected.id == widget.focusIds.first
-                      ? '${selected.id}|${_focusKeyOf(widget)}'
-                      : selected.id),
-                  // A `?floor=` / `?room=` deep link lands with the guide open.
-                  initialChildSize:
-                      _opensExpanded(selected) ? _peekMax : _peekMin,
-                  minChildSize: _peekMin,
-                  // Nothing below the header (no floor info, no searched
-                  // room) → lock the sheet.
-                  maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
-                  // min/max are the implicit snap targets — half-open states
-                  // settle to collapsed or expanded on release.
-                  snap: _expandable(selected),
-                  builder: (context, scrollController) => PeekSheet(
-                    facility: selected,
-                    scrollController: scrollController,
-                    expandedFloor: _floorLabelFor(selected),
-                    roomCode: _roomCodeFor(selected),
-                    roomPlanCode: widget.focusPlanCode,
-                    onViewDetail: () => context.push(
-                        '${widget.navigationBase}/facility/${selected.id}'),
+                // Swipe-down past the collapsed header snaps the sheet to 0 —
+                // treat that landing as a dismiss (M-8).
+                child: NotificationListener<DraggableScrollableNotification>(
+                  onNotification: (n) {
+                    if (n.extent <= _peekDismissExtent) _deselect();
+                    return false;
+                  },
+                  // Key resets the sheet extent when another pin is tapped —
+                  // or when a new search targets this same building.
+                  child: DraggableScrollableSheet(
+                    key: ValueKey(_focusActive &&
+                            widget.focusIds.isNotEmpty &&
+                            selected.id == widget.focusIds.first
+                        ? '${selected.id}|${_focusKeyOf(widget)}'
+                        : selected.id),
+                    // A `?floor=` / `?room=` deep link lands with the guide
+                    // open.
+                    initialChildSize:
+                        _opensExpanded(selected) ? _peekMax : _peekMin,
+                    // 0 lets a downward swipe dismiss; the collapsed header
+                    // is a snap stop, never a resting place below it.
+                    minChildSize: 0,
+                    // Nothing below the header (no floor info, no searched
+                    // room) → lock the sheet at the collapsed size.
+                    maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
+                    // Snap stops: 0 (dismiss) · collapsed · expanded. A
+                    // non-expandable sheet has max == collapsed, so listing it
+                    // again as a snap size would violate the ascending rule.
+                    snap: true,
+                    snapSizes:
+                        _expandable(selected) ? const [_peekMin] : null,
+                    builder: (context, scrollController) => PeekSheet(
+                      facility: selected,
+                      scrollController: scrollController,
+                      expandedFloor: _floorLabelFor(selected),
+                      roomCode: _roomCodeFor(selected),
+                      roomPlanCode: widget.focusPlanCode,
+                      onViewDetail: () => context.push(
+                          '${widget.navigationBase}/facility/${selected.id}'),
+                      onClose: _deselect,
+                    ),
                   ),
                 ),
               )
@@ -643,6 +734,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   onOpen: (selectedPlace.placeUrl ?? '').isEmpty
                       ? null
                       : () => _openPlace(selectedPlace, l),
+                  onClose: _deselect,
                 ),
               ),
           ],

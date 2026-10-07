@@ -51,6 +51,8 @@
 
   "map_zoomIn_tooltip": "Zoom in",
   "map_focus_notFound": "Couldn't find this building. Please search again.",
+  "intro_skipHint": "Tap to skip",
+  "map_location_farFromCampus": "You are far from campus, so the campus map stays put.",
   "map_zoomOut_tooltip": "Zoom out",
 
   "classroom_search_title": "Classroom search",

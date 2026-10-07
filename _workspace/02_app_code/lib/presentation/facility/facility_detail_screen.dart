@@ -13,6 +13,7 @@ import '../providers/facility_providers.dart';
 import '../providers/favorites_provider.dart';
 import '../providers/locale_provider.dart';
 import '../shared/category_labels.dart';
+import '../shared/map_links.dart';
 import '../shared/widgets/floor_accordion.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
@@ -208,7 +209,7 @@ class _MiniMap extends StatelessWidget {
     // A Kakao static image can replace this container in week 3.
     return InkWell(
       borderRadius: context.dimens.brMd,
-      onTap: () => context.go('/map?focus=${facility.id}'),
+      onTap: () => context.go(mapFocusLink(facility.id)),
       child: Container(
         height: 120,
         decoration: BoxDecoration(
@@ -288,7 +289,7 @@ class _BottomCta extends ConsumerWidget {
     final hasPhone = facility.phone != null;
 
     final mapBtn = FilledButton.icon(
-      onPressed: () => context.go('/map?focus=${facility.id}'),
+      onPressed: () => context.go(mapFocusLink(facility.id)),
       icon: const Icon(Symbols.map),
       label: Text(l.facility_action_viewOnMap),
     );

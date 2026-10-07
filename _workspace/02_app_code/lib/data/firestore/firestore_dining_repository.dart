@@ -22,14 +22,17 @@ class FirestoreDiningRepository implements DiningRepository {
   @override
   Future<List<CafeteriaMenu>> getMenus(DateTime date) async {
     // Provider caching avoids redundant reads; retry must reread BOTH collections.
-    final cafeterias =
-        await readQuery(_db.collection(FirestorePaths.cafeterias));
+    final cafeterias = await readQuery(_db.collection(FirestorePaths.cafeterias),
+        limit: FirestoreListLimits.cafeterias);
     if (cafeterias.isEmpty) return RepositoryList(const []);
-    final menuDocs = await readQuery(_db
-        .collection(FirestorePaths.diningMenus)
-        .where('date', isEqualTo: _ymd(date)));
+    final menuDocs = await readQuery(
+        _db
+            .collection(FirestorePaths.diningMenus)
+            .where('date', isEqualTo: _ymd(date)),
+        limit: FirestoreListLimits.diningMenus);
     final byId = <String, Map<String, dynamic>>{};
-    var incomplete = false;
+    // A page that filled its list limit may be missing cafeterias or menus.
+    var incomplete = cafeterias.incomplete || menuDocs.incomplete;
     for (final doc in menuDocs) {
       final data = doc.data();
       if (data['cafeteriaId'] is String) {

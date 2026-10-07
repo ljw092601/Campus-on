@@ -27,11 +27,15 @@ class PeekSheet extends ConsumerWidget {
     this.expandedFloor,
     this.roomCode,
     this.roomPlanCode,
+    this.onClose,
   });
 
   final Facility facility;
   final VoidCallback onViewDetail;
   final ScrollController scrollController;
+
+  /// Explicit dismiss (audit M-8). Null hides the close button.
+  final VoidCallback? onClose;
 
   /// Floor label to open pre-expanded (classroom search deep link).
   final String? expandedFloor;
@@ -82,6 +86,7 @@ class PeekSheet extends ConsumerWidget {
               onPressed: onViewDetail,
               child: Text(l.map_peek_viewDetail),
             ),
+            if (onClose != null) _CloseButton(onPressed: onClose!),
           ],
         ),
         if (roomCode != null) ...[
@@ -109,10 +114,14 @@ class PlacePeekSheet extends StatelessWidget {
     super.key,
     required this.place,
     required this.onOpen,
+    this.onClose,
   });
 
   final NearbyPlace place;
   final VoidCallback? onOpen;
+
+  /// Explicit dismiss (audit M-8). Null hides the close button.
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -157,9 +166,33 @@ class PlacePeekSheet extends StatelessWidget {
               onPressed: onOpen,
               child: Text(l.map_peek_openPlace),
             ),
+            if (onClose != null) _CloseButton(onPressed: onClose!),
           ],
         ),
       ],
+    );
+  }
+}
+
+/// Compact "×" at the end of the header row. Keeps the 48dp tap target but
+/// drops the extra horizontal padding so the title keeps its room on narrow
+/// phones.
+class _CloseButton extends StatelessWidget {
+  const _CloseButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Padding(
+      padding: EdgeInsets.only(left: context.dimens.spaceXs),
+      child: IconButton(
+        icon: const Icon(Symbols.close),
+        tooltip: l.common_close,
+        visualDensity: VisualDensity.compact,
+        onPressed: onPressed,
+      ),
     );
   }
 }

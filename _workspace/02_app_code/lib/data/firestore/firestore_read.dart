@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/repositories/read_result.dart';
+import 'firestore_paths.dart';
 import 'repository_exceptions.dart';
 
 bool _canUseCache(Object error) =>
@@ -41,18 +42,34 @@ Future<RepositoryList<T>> readWithCache<T>({
   }
 }
 
+/// Runs a collection query with a hard `limit` (audit M-26).
+///
+/// [limit] is required: `firestore.rules` only allows `list` when
+/// `request.query.limit <= N`, so an un-limited query is rejected server-side.
+/// Pass the collection's constant from [FirestoreListLimits]. A page that
+/// fills the limit may have dropped rows, so it is returned `incomplete` and
+/// the UI shows the existing partial-data banner rather than a silently
+/// truncated list.
 Future<RepositoryList<QueryDocumentSnapshot<Map<String, dynamic>>>> readQuery(
-        Query<Map<String, dynamic>> query) =>
-    readWithCache(
-      server: () async {
-        final snap = await query.get(const GetOptions(source: Source.server));
-        return RepositoryList(snap.docs, fromCache: snap.metadata.isFromCache);
-      },
-      cache: () async {
-        final snap = await query.get(const GetOptions(source: Source.cache));
-        return RepositoryList(snap.docs, fromCache: true);
-      },
-    );
+  Query<Map<String, dynamic>> query, {
+  required int limit,
+}) {
+  assert(limit > 0, 'readQuery limit must be positive');
+  final limited = query.limit(limit);
+  return readWithCache(
+    server: () async {
+      final snap = await limited.get(const GetOptions(source: Source.server));
+      return RepositoryList(snap.docs,
+          fromCache: snap.metadata.isFromCache,
+          incomplete: snap.docs.length >= limit);
+    },
+    cache: () async {
+      final snap = await limited.get(const GetOptions(source: Source.cache));
+      return RepositoryList(snap.docs,
+          fromCache: true, incomplete: snap.docs.length >= limit);
+    },
+  );
+}
 
 RepositoryList<T> mapReadDocuments<T>(
     RepositoryList<QueryDocumentSnapshot<Map<String, dynamic>>> docs,

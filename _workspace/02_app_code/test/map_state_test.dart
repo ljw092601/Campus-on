@@ -3,14 +3,18 @@ import 'dart:convert';
 
 import 'package:campus_on/core/config/app_config.dart';
 import 'package:campus_on/core/theme/app_theme.dart';
+import 'package:campus_on/data/services/location_service.dart';
 import 'package:campus_on/domain/entities/facility.dart';
 import 'package:campus_on/domain/entities/nearby_place.dart';
 import 'package:campus_on/domain/entities/user_location.dart';
 import 'package:campus_on/l10n/gen/app_localizations.dart';
+import 'package:campus_on/presentation/map/campus_proximity.dart';
 import 'package:campus_on/presentation/map/map_screen.dart';
 import 'package:campus_on/presentation/map/widgets/campus_map_view.dart';
 import 'package:campus_on/presentation/map/widgets/campus_selector.dart';
+import 'package:campus_on/presentation/map/widgets/peek_sheet.dart';
 import 'package:campus_on/presentation/providers/facility_providers.dart';
+import 'package:campus_on/presentation/providers/location_providers.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -104,6 +108,18 @@ class _WebController extends PlatformWebViewController {
               ]
             })}',
       });
+}
+
+/// Location service whose fixes the test feeds by hand (no geolocator).
+class _FakeLocationService extends LocationService {
+  _FakeLocationService(this.positions);
+  final Stream<UserLocation> positions;
+  @override
+  Future<LocationResult> ensureAccess() async => const LocationReady();
+  @override
+  Stream<UserLocation> positionUpdates() => positions;
+  @override
+  Stream<double> headingUpdates() => const Stream.empty();
 }
 
 Widget _app(Widget child) => MaterialApp(
@@ -394,6 +410,249 @@ void main() {
     web.reply(web.searches.last['id'] as int, 'cafe-1');
     await _flush(tester);
     expect(map().places.single.id, 'cafe-1');
+    await tester.pumpWidget(const SizedBox());
+  }, skip: !AppConfig.hasKakaoKey);
+
+  // ── M-8: peek sheet dismissal ─────────────────────────────────────────────
+
+  testWidgets('map view forwards bare-map taps and ignores stale ones',
+      (tester) async {
+    var taps = 0;
+    await tester.pumpWidget(_app(CampusMapView(
+      facilities: const [_s],
+      focusIds: const [],
+      onMarkerTap: (_) {},
+      onMapTap: () => taps++,
+      loadTimeout: const Duration(seconds: 1),
+    )));
+    await _flush(tester);
+    final web = platform.controller;
+    web.send('onMapCreated', {});
+    await _flush(tester);
+    web.send('onMapTap', {'latitude': 35.11, 'longitude': 128.96});
+    expect(taps, 1);
+    // No callback → no listener is registered on the plugin side at all.
+    await tester.pumpWidget(_app(CampusMapView(
+      facilities: const [_s],
+      focusIds: const [],
+      onMarkerTap: (_) {},
+    )));
+    await _flush(tester);
+    expect(
+        tester.widget<kakao.KakaoMap>(find.byType(kakao.KakaoMap)).onMapTap,
+        isNull);
+  });
+
+  testWidgets('peek sheets expose a close button labelled with common_close',
+      (tester) async {
+    var closed = 0;
+    await tester.pumpWidget(ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      child: _app(Scaffold(
+        body: PeekSheet(
+          facility: _s,
+          scrollController: ScrollController(),
+          onViewDetail: () {},
+          onClose: () => closed++,
+        ),
+      )),
+    ));
+    await tester.pump();
+    final l = AppLocalizations.of(tester.element(find.byType(PeekSheet)));
+    await tester.tap(find.byTooltip(l.common_close));
+    expect(closed, 1);
+
+    await tester.pumpWidget(_app(Scaffold(
+      body: PlacePeekSheet(
+        place: const NearbyPlace(id: 'p', name: 'Store', lat: 35, lng: 129),
+        onOpen: null,
+        onClose: () => closed++,
+      ),
+    )));
+    await tester.pump();
+    await tester.tap(find.byTooltip(l.common_close));
+    expect(closed, 2);
+
+    // Without a handler the button is simply absent (no dead control).
+    await tester.pumpWidget(_app(const Scaffold(
+      body: PlacePeekSheet(
+        place: NearbyPlace(id: 'p', name: 'Store', lat: 35, lng: 129),
+        onOpen: null,
+      ),
+    )));
+    await tester.pump();
+    expect(find.byTooltip(l.common_close), findsNothing);
+  });
+
+  testWidgets('screen: map tap, close button and swipe-down dismiss the sheet',
+      (tester) async {
+    final container = ProviderContainer(overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+      allFacilitiesProvider.overrideWith((ref) async => const [_s, _b]),
+    ]);
+    addTearDown(container.dispose);
+    await tester.pumpWidget(UncontrolledProviderScope(
+        container: container, child: _app(const MapScreen())));
+    await _flush(tester);
+    final web = platform.controller;
+    web.send('onMapCreated', {});
+    await _flush(tester);
+    final l = AppLocalizations.of(tester.element(find.byType(MapScreen)));
+
+    Future<void> selectMarker() async {
+      web.send('onMarkerTap', {
+        'markerId': 's',
+        'latitude': 35.115,
+        'longitude': 128.968,
+        'zoomLevel': 3,
+      });
+      await _flush(tester);
+      expect(find.byType(PeekSheet), findsOneWidget);
+    }
+
+    // 1. Bare-map tap.
+    await selectMarker();
+    web.send('onMapTap', {'latitude': 35.11, 'longitude': 128.96});
+    await _flush(tester);
+    expect(find.byType(PeekSheet), findsNothing);
+    // A second tap with nothing selected is a no-op (no stray rebuild/throw).
+    web.send('onMapTap', {'latitude': 35.11, 'longitude': 128.96});
+    await _flush(tester);
+    expect(tester.takeException(), isNull);
+
+    // 2. Close button.
+    await selectMarker();
+    await tester.tap(find.byTooltip(l.common_close));
+    await _flush(tester);
+    expect(find.byType(PeekSheet), findsNothing);
+
+    // 3. Swipe down past the collapsed header.
+    await selectMarker();
+    final sheetTop = tester.getTopLeft(find.byType(PeekSheet));
+    await tester.timedDragFrom(sheetTop + const Offset(100, 12),
+        const Offset(0, 400), const Duration(milliseconds: 300));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.byType(PeekSheet), findsNothing);
+
+    // Selecting again after a swipe-dismiss reopens at the collapsed size.
+    await selectMarker();
+    await tester.pumpWidget(const SizedBox());
+  }, skip: !AppConfig.hasKakaoKey);
+
+  // ── M-24: off-campus location keeps the camera home ───────────────────────
+
+  test('campus proximity: 3 km radius around the nearest campus', () {
+    const centers = [
+      (lat: 35.115, lng: 128.968), // 승학
+      (lat: 35.104, lng: 129.019), // 부민
+    ];
+    // Emulator default (Googleplex) and Seoul are far from every campus.
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 37.422, lng: -122.084, centers: centers),
+        isTrue);
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 37.566, lng: 126.978, centers: centers),
+        isTrue);
+    // ~1 km from 승학 → near.
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 35.124, lng: 128.968, centers: centers),
+        isFalse);
+    // Closer to 부민 than 승학, well inside 3 km of 부민 → near.
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 35.100, lng: 129.030, centers: centers),
+        isFalse);
+    // Custom radius is honoured.
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 35.124, lng: 128.968, centers: centers, radiusMeters: 500),
+        isTrue);
+    // No centres at all → never follow.
+    expect(
+        CampusProximity.isFarFromCampus(
+            lat: 35.115, lng: 128.968, centers: const []),
+        isTrue);
+    // Sanity on the haversine itself: 승학 ↔ 부민 is roughly 4.8 km.
+    final d = CampusProximity.distanceMeters(35.115, 128.968, 35.104, 129.019);
+    expect(d, closeTo(4800, 300));
+  });
+
+  testWidgets(
+      'off-campus fix keeps the camera, drops follow and notifies once per excursion',
+      (tester) async {
+    final positions = StreamController<UserLocation>.broadcast();
+    addTearDown(positions.close);
+    final container = ProviderContainer(overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+      allFacilitiesProvider.overrideWith((ref) async => const [_s, _b]),
+      locationServiceProvider
+          .overrideWithValue(_FakeLocationService(positions.stream)),
+    ]);
+    addTearDown(container.dispose);
+    await tester.pumpWidget(UncontrolledProviderScope(
+        container: container, child: _app(const MapScreen())));
+    await _flush(tester);
+    final web = platform.controller;
+    web.send('onMapCreated', {});
+    await _flush(tester);
+    final l = AppLocalizations.of(tester.element(find.byType(MapScreen)));
+    int centers() =>
+        web.scripts.where((s) => s.startsWith('setCenter(')).length;
+    CampusMapView map() =>
+        tester.widget<CampusMapView>(find.byType(CampusMapView));
+
+    await tester.tap(find.byTooltip(l.map_myLocation_tooltip));
+    await _flush(tester);
+    final before = centers();
+    expect(map().following, isTrue);
+
+    // Googleplex (emulator default) → dot drawn, camera untouched, notice.
+    positions.add(const UserLocation(lat: 37.422, lng: -122.084));
+    await _flush(tester);
+    expect(map().userLocation?.lat, 37.422);
+    expect(map().following, isFalse);
+    expect(centers(), before);
+    expect(find.text(l.map_location_farFromCampus), findsOneWidget);
+
+    // Let the snackbar expire, then another far fix must NOT re-notify.
+    await tester.pump(const Duration(seconds: 1)); // entrance done → timer
+    await tester.pump(const Duration(seconds: 5)); // 4 s display timer
+    await tester.pump(const Duration(seconds: 1)); // exit animation (250ms)
+    await tester.pump(); // frame that removes the dismissed snackbar
+    expect(find.text(l.map_location_farFromCampus), findsNothing);
+    positions.add(const UserLocation(lat: 37.423, lng: -122.085));
+    await _flush(tester);
+    expect(find.text(l.map_location_farFromCampus), findsNothing);
+    expect(centers(), before);
+
+    // Explicit FAB press while still far: repeat the notice, stay put.
+    await tester.tap(find.byTooltip(l.map_myLocation_tooltip));
+    await _flush(tester);
+    expect(find.text(l.map_location_farFromCampus), findsOneWidget);
+    expect(map().following, isFalse);
+    expect(centers(), before);
+    await tester.pump(const Duration(seconds: 1)); // entrance done → timer
+    await tester.pump(const Duration(seconds: 5)); // 4 s display timer
+    await tester.pump(const Duration(seconds: 1)); // exit animation (250ms)
+    await tester.pump(); // frame that removes the dismissed snackbar
+
+    // Back on campus: a fresh press follows again (camera moves), and the
+    // notice is armed again for the next excursion.
+    positions.add(const UserLocation(lat: 35.116, lng: 128.969));
+    await _flush(tester);
+    await tester.tap(find.byTooltip(l.map_myLocation_tooltip));
+    await _flush(tester);
+    expect(map().following, isTrue);
+    expect(centers(), greaterThan(before));
+    expect(find.text(l.map_location_farFromCampus), findsNothing);
+    final afterHome = centers();
+    positions.add(const UserLocation(lat: 37.422, lng: -122.084));
+    await _flush(tester);
+    expect(find.text(l.map_location_farFromCampus), findsOneWidget);
+    expect(centers(), afterHome);
     await tester.pumpWidget(const SizedBox());
   }, skip: !AppConfig.hasKakaoKey);
 }

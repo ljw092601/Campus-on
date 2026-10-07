@@ -12,7 +12,8 @@ class FirestoreAcademicCalendarRepository
   @override
   Future<List<AcademicEvent>> getEvents() async {
     final docs = await readQuery(
-        _db.collection(FirestorePaths.academicEvents).orderBy('start'));
+        _db.collection(FirestorePaths.academicEvents).orderBy('start'),
+        limit: FirestoreListLimits.academicEvents);
     final result = mapReadDocuments(docs, academicEventFromDoc);
     final sorted = result.toList()..sort((a, b) => a.start.compareTo(b.start));
     return preserveReadStatus(result, sorted);

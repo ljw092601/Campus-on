@@ -10,6 +10,7 @@ import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/dining_providers.dart';
 import '../providers/locale_provider.dart';
+import '../shared/map_links.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
 
@@ -286,7 +287,8 @@ class _CafeteriaCard extends ConsumerWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton.icon(
-                  onPressed: () => context.go('/map?focus=${menu.facilityId}'),
+                  onPressed: () =>
+                      context.go(mapFocusLink(menu.facilityId!)),
                   icon: const Icon(Symbols.pin_drop, size: 18),
                   label: Text(l.facility_action_viewOnMap),
                 ),
