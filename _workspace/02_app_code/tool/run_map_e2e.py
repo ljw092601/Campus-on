@@ -13,6 +13,9 @@ import subprocess
 import tempfile
 import time
 
+TEST_FILES = {'map': 'map_state', 'recovery': 'recovery', 'offline': 'offline',
+              'medium': 'medium_fixes'}
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -22,7 +25,7 @@ def main():
     parser.add_argument('--adb', default=shutil.which('adb') or str(
         Path.home() / 'AppData/Local/Android/Sdk/platform-tools/adb.exe'))
     parser.add_argument('--firestore', action='store_true')
-    parser.add_argument('--test', choices=['map', 'recovery', 'offline'], default='map')
+    parser.add_argument('--test', choices=['map', 'recovery', 'offline', 'medium'], default='map')
     parser.add_argument('--log', type=Path)
     args = parser.parse_args()
     if args.test == 'offline' and not args.firestore:
@@ -31,7 +34,7 @@ def main():
     mode = 'firestore' if args.firestore else 'mock'
     log_path = args.log or Path(tempfile.gettempdir()) / f'campus-{args.test}-e2e-{mode}.log'
     command = [args.flutter, 'test', '-d', args.device,
-               f'integration_test/{"map_state" if args.test == "map" else args.test}_e2e_test.dart',
+               f'integration_test/{TEST_FILES[args.test]}_e2e_test.dart',
                '--dart-define-from-file=env.json', '--no-pub']
     for flag in ('USE_FIRESTORE', 'USE_FIRESTORE_CALENDAR', 'USE_FIRESTORE_DINING'):
         command.append(f'--dart-define={flag}={str(args.firestore).lower()}')
@@ -58,6 +61,11 @@ def main():
                 for permission in ('ACCESS_COARSE_LOCATION', 'ACCESS_FINE_LOCATION'):
                     adb('shell', 'pm', 'grant', 'io.github.ljw092601.campuson',
                         f'android.permission.{permission}')
+            if 'E2E_GPS_FAR' in line and 'far' not in seen:
+                seen.add('far')
+                for _ in range(3):  # Seoul: ~330 km from every campus (M-24)
+                    adb('emu', 'geo', 'fix', '127.0', '37.5')
+                    time.sleep(.6)
             match = re.search(r'E2E_GPS_FIX_(\d)', line)
             if match and match[1] not in seen:
                 index = int(match[1])

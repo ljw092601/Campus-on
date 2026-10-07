@@ -89,6 +89,8 @@ with an authorized Kakao JavaScript key, and run from this app directory:
 ```bash
 python tool/run_map_e2e.py --device emulator-5554
 python tool/run_map_e2e.py --device emulator-5554 --firestore
+python tool/run_map_e2e.py --test medium   # intro skip, sheet dismiss, link
+                                           # refocus, favorites migration, far GPS
 ```
 
 The runner grants location permission to the app and injects three emulator
