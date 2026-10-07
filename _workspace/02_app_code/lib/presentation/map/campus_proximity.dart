@@ -43,6 +43,28 @@ class CampusProximity {
     return best;
   }
 
+  /// Key of the closest centre in [centers] when it lies within
+  /// [radiusMeters]; null when every centre is further away (or there are
+  /// none). Used to keep the campus selector in step with a followed GPS fix
+  /// (audit L-36).
+  static T? nearestWithin<T>({
+    required double lat,
+    required double lng,
+    required Map<T, ({double lat, double lng})> centers,
+    double radiusMeters = followRadiusMeters,
+  }) {
+    T? best;
+    var bestDistance = double.infinity;
+    for (final entry in centers.entries) {
+      final d = distanceMeters(lat, lng, entry.value.lat, entry.value.lng);
+      if (d < bestDistance) {
+        bestDistance = d;
+        best = entry.key;
+      }
+    }
+    return bestDistance <= radiusMeters ? best : null;
+  }
+
   /// True when the fix lies outside [radiusMeters] of every campus centre.
   static bool isFarFromCampus({
     required double lat,

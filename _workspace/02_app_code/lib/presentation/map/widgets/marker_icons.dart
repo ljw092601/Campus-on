@@ -21,6 +21,30 @@ class CategoryMarkerIcons {
   static const int offsetX = 16;
   static const int offsetY = 40;
 
+  // ── Selected-pin emphasis (audit L-35) ────────────────────────────────────
+  // The same PNG rendered 1.3× larger (no extra asset): the plugin scales the
+  // base64 image to the Marker's width/height inside the WebView. The tip
+  // stays anchored on the coordinate.
+  static const double selectedScale = 1.3;
+  static const int selectedWidth = 42; // round(32 × 1.3)
+  static const int selectedHeight = 52; // round(40 × 1.3)
+  static const int selectedOffsetX = 21;
+  static const int selectedOffsetY = 52;
+
+  /// kakao_map_plugin 0.3.7 never updates a marker whose id already exists
+  /// (`addMarker` returns early), so a selection change must re-add the pin
+  /// under a different id. The selected pin carries this suffix; everything
+  /// that reports marker ids back to the screen strips it again.
+  static const String selectedIdSuffix = '#sel';
+
+  static String selectedMarkerId(String id) => '$id$selectedIdSuffix';
+
+  /// Original marker id for a tap on either the plain or the selected pin.
+  static String baseMarkerId(String markerId) =>
+      markerId.endsWith(selectedIdSuffix)
+          ? markerId.substring(0, markerId.length - selectedIdSuffix.length)
+          : markerId;
+
   static Future<Map<FacilityCategory, kakao.MarkerIcon>> load() {
     final cached = _cache;
     if (cached != null) return Future.value(cached);

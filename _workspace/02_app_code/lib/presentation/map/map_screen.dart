@@ -16,6 +16,7 @@ import '../../domain/entities/user_location.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/facility_providers.dart';
 import '../providers/location_providers.dart';
+import '../shared/external_links.dart';
 import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
@@ -113,6 +114,15 @@ class _MapScreenState extends ConsumerState<MapScreen>
   Stream<double>? _headingStream;
   Timer? _firstFixTimeout;
   bool _resumeTrackingOnForeground = false;
+
+  /// Whether this screen is on screen at all (audit L-19). go_router wraps
+  /// every inactive shell branch in `Offstage` + `TickerMode(enabled: false)`,
+  /// and the Navigator disables tickers under an opaque pushed route (detail,
+  /// list, search), so [TickerMode.valuesOf] is "the map tab is visible" without
+  /// knowing the tab index. The high-accuracy GPS stream only runs while
+  /// true; [_resumeTrackingOnVisible] restarts it when the tab comes back.
+  bool _visible = true;
+  bool _resumeTrackingOnVisible = false;
 
   /// Far-from-campus notice (audit M-24) already shown for the current
   /// "outside" stretch. Reset by a fix back inside the radius, so the user is
@@ -219,8 +229,37 @@ class _MapScreenState extends ConsumerState<MapScreen>
     } else if (state == AppLifecycleState.resumed &&
         _resumeTrackingOnForeground) {
       _resumeTrackingOnForeground = false;
-      _startTracking(AppLocalizations.of(context));
+      if (_visible) {
+        _startTracking(AppLocalizations.of(context));
+      } else {
+        _resumeTrackingOnVisible = true; // wait for the tab instead
+      }
     }
+  }
+
+  /// Tab visibility (L-19): the map tab left (other tab, pushed detail) →
+  /// stop the GPS stream but keep the last fix so the dot is back instantly;
+  /// tab visible again → resume if we were tracking when it went away.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final visible = TickerMode.valuesOf(context).enabled;
+    if (visible == _visible) return;
+    _visible = visible;
+    if (!visible) {
+      if (_tracking) {
+        _stopTracking(keepFollowing: true);
+        _resumeTrackingOnVisible = true;
+      }
+      return;
+    }
+    if (!_resumeTrackingOnVisible) return;
+    _resumeTrackingOnVisible = false;
+    // Dependencies change mid-build; restart once the frame is out.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_visible || _tracking) return;
+      _startTracking(AppLocalizations.of(context));
+    });
   }
 
   Future<void> _onMyLocationPressed(AppLocalizations l) async {
@@ -259,6 +298,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
         _following = false;
       });
       _showAccessSnackBar(access, l, service);
+      // The denied snackbar says "showing campus center" — do it (L-21).
+      if (access is LocationPermissionDenied) _zoomHandle.centerOnCampus();
       return;
     }
 
@@ -275,6 +316,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
         _userLocation = location;
         if (!follow) _following = false;
       });
+      // Camera is chasing this fix: keep the campus selector (and marker
+      // set) on the campus it is actually over (L-36).
+      if (_following) _syncCampusToLocation(location);
     }, onError: (Object _) {
       if (!mounted) return;
       _stopTracking();
@@ -312,6 +356,24 @@ class _MapScreenState extends ConsumerState<MapScreen>
       _showSnackBar(l.map_location_farFromCampus);
     }
     return false;
+  }
+
+  /// Switches [mapCampusProvider] to the campus a followed GPS fix is on
+  /// (L-36). Deliberately NOT [_selectCampus]: that path is the user's own
+  /// selector tap and clears focus/selection/nearby results (M-29); a GPS
+  /// update must not throw the user's state away. The map view skips its
+  /// campus refit while following, so the camera stays on the fix.
+  void _syncCampusToLocation(UserLocation loc) {
+    final centers = <Campus, ({double lat, double lng})>{};
+    for (final campus in Campus.values) {
+      final center = _campusCenter(campus);
+      if (center != null) centers[campus] = center;
+    }
+    final nearest = CampusProximity.nearestWithin(
+        lat: loc.lat, lng: loc.lng, centers: centers);
+    if (nearest == null) return;
+    final notifier = ref.read(mapCampusProvider.notifier);
+    if (notifier.state != nearest) notifier.state = nearest;
   }
 
   /// Centres of every campus with known facilities (facility-average, like
@@ -474,14 +536,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
-  Future<void> _openPlace(NearbyPlace place, AppLocalizations l) async {
+  /// Kakao place page in the browser; a failed launch tells the user (L-8).
+  Future<void> _openPlace(NearbyPlace place) async {
     final url = place.placeUrl;
     if (url == null || url.isEmpty) return;
     final uri = Uri.tryParse(url);
     if (uri == null) return;
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+    await openExternal(context, uri, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -733,7 +794,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   // hidden rather than dead when Kakao gives us no page for it.
                   onOpen: (selectedPlace.placeUrl ?? '').isEmpty
                       ? null
-                      : () => _openPlace(selectedPlace, l),
+                      : () => _openPlace(selectedPlace),
                   onClose: _deselect,
                 ),
               ),

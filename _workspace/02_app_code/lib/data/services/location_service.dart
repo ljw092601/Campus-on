@@ -62,11 +62,24 @@ class LocationService {
     }
   }
 
+  /// Oldest cached OS fix still worth showing as the first dot (audit L-20).
+  /// A last-known position can be hours old (previous session, another app);
+  /// placing the dot there would send the camera to a stale spot.
+  static const Duration lastKnownMaxAge = Duration(minutes: 2);
+
+  /// Whether a cached fix taken at [timestamp] is recent enough to use as the
+  /// first position. Pure, so the policy is unit-testable without geolocator.
+  static bool isRecentFix(DateTime timestamp, {DateTime? now}) {
+    final age = (now ?? DateTime.now()).difference(timestamp);
+    return !age.isNegative && age <= lastKnownMaxAge;
+  }
+
   /// Continuous position fixes (call after [ensureAccess] returns
-  /// [LocationReady]). Emits the OS's last known fix first, if any, so the dot
-  /// appears immediately while the live GPS fix warms up. distanceFilter keeps
-  /// updates meaningful (and the WebView redraws cheap) — one event per ~2m
-  /// moved, nothing while standing still.
+  /// [LocationReady]). Emits the OS's last known fix first — only if it is at
+  /// most [lastKnownMaxAge] old — so the dot appears immediately while the
+  /// live GPS fix warms up. distanceFilter keeps updates meaningful (and the
+  /// WebView redraws cheap) — one event per ~2m moved, nothing while standing
+  /// still.
   Stream<UserLocation> positionUpdates() async* {
     final last = await _lastKnownOrNull();
     if (last != null) yield last;
@@ -98,7 +111,8 @@ class LocationService {
   Future<UserLocation?> _lastKnownOrNull() async {
     try {
       final position = await Geolocator.getLastKnownPosition();
-      return position == null ? null : _toUserLocation(position);
+      if (position == null || !isRecentFix(position.timestamp)) return null;
+      return _toUserLocation(position);
     } catch (_) {
       return null;
     }

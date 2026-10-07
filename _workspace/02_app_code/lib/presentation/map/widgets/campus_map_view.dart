@@ -51,6 +51,10 @@ class CampusMapZoomHandle {
 
   Future<void> zoomIn() async => _state?._zoomBy(-1);
   Future<void> zoomOut() async => _state?._zoomBy(1);
+
+  /// Moves the camera to the current campus centre (audit L-21: the location
+  /// permission snackbar promises "showing campus center" — this keeps it).
+  void centerOnCampus() => _state?._centerOnCampus();
 }
 
 class CampusMapView extends StatefulWidget {
@@ -146,6 +150,7 @@ class _CampusMapViewState extends State<CampusMapView> {
     final attempt = ++_loadAttempt;
     _loadFailed = false;
     _icons = null;
+    _sentMarkers = null;
     _loadTimer?.cancel();
     _loadTimer = Timer(widget.loadTimeout, () => _failLoading(attempt));
     _loadIcons(attempt);
@@ -230,7 +235,9 @@ class _CampusMapViewState extends State<CampusMapView> {
     // Once applied, ordinary campus/filter rebuilds must never replay it.
     if (focusChanged && widget.focusIds.isNotEmpty) {
       _applyFocus();
-    } else if (widget.campus != oldWidget.campus) {
+    } else if (widget.campus != oldWidget.campus && !widget.following) {
+      // While following, the campus switch came from the user's own GPS fix
+      // (L-36) and the camera is already there — refitting would yank it.
       _fitToFacilities();
     }
 
@@ -421,45 +428,83 @@ class _CampusMapViewState extends State<CampusMapView> {
 
   // ── Map ────────────────────────────────────────────────────────────────────
 
+  /// One pin per facility/place. The selected pin (L-35) is re-added under
+  /// `<id>#sel` with the 1.3× icon and a high zIndex: the plugin keeps an
+  /// existing id untouched, so only an id change makes it swap the image.
+  /// [_syncMarkers] then clears `<id>` and adds `<id>#sel` (or back) through
+  /// the ordinary list diff.
+  kakao.Marker _marker(String id, double lat, double lng,
+      kakao.MarkerIcon? icon) {
+    final selected = id == widget.selectedId;
+    return kakao.Marker(
+      markerId: selected ? CategoryMarkerIcons.selectedMarkerId(id) : id,
+      latLng: kakao.LatLng(lat, lng),
+      icon: icon,
+      width: selected
+          ? CategoryMarkerIcons.selectedWidth
+          : CategoryMarkerIcons.width,
+      height: selected
+          ? CategoryMarkerIcons.selectedHeight
+          : CategoryMarkerIcons.height,
+      offsetX: selected
+          ? CategoryMarkerIcons.selectedOffsetX
+          : CategoryMarkerIcons.offsetX,
+      offsetY: selected
+          ? CategoryMarkerIcons.selectedOffsetY
+          : CategoryMarkerIcons.offsetY,
+      // Selected marker draws above its neighbours.
+      zIndex: selected ? 10 : 0,
+    );
+  }
+
   List<kakao.Marker> _markers(Map<FacilityCategory, kakao.MarkerIcon> icons) =>
       [
         for (final f in widget.facilities)
-          kakao.Marker(
-            markerId: f.id,
-            latLng: kakao.LatLng(f.lat, f.lng),
-            icon: icons[f.category],
-            width: CategoryMarkerIcons.width,
-            height: CategoryMarkerIcons.height,
-            offsetX: CategoryMarkerIcons.offsetX,
-            offsetY: CategoryMarkerIcons.offsetY,
-            // Selected marker draws above its neighbours.
-            zIndex: f.id == widget.selectedId ? 10 : 0,
-          ),
+          _marker(f.id, f.lat, f.lng, icons[f.category]),
         // Off-campus search results share the pin set — "etc" keeps them
         // visually distinct from every curated campus category.
         for (final p in widget.places)
-          kakao.Marker(
-            markerId: p.markerId,
-            latLng: kakao.LatLng(p.lat, p.lng),
-            icon: icons[FacilityCategory.etc],
-            width: CategoryMarkerIcons.width,
-            height: CategoryMarkerIcons.height,
-            offsetX: CategoryMarkerIcons.offsetX,
-            offsetY: CategoryMarkerIcons.offsetY,
-            zIndex: p.markerId == widget.selectedId ? 10 : 0,
-          ),
+          _marker(p.markerId, p.lat, p.lng, icons[FacilityCategory.etc]),
       ];
+
+  /// Marker list last handed to the plugin (null = nothing sent yet, or the
+  /// map was recreated). Every rebuild used to re-send all pins plus their
+  /// base64 icons (~170 KB, audit M-22); now only a real change does.
+  List<kakao.Marker>? _sentMarkers;
+
+  static bool _sameMarker(kakao.Marker a, kakao.Marker b) =>
+      a.markerId == b.markerId &&
+      a.latLng.latitude == b.latLng.latitude &&
+      a.latLng.longitude == b.latLng.longitude &&
+      identical(a.icon, b.icon) &&
+      a.width == b.width &&
+      a.height == b.height &&
+      a.offsetX == b.offsetX &&
+      a.offsetY == b.offsetY &&
+      a.zIndex == b.zIndex;
+
+  static bool _sameMarkers(List<kakao.Marker>? a, List<kakao.Marker> b) {
+    if (a == null || a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (!_sameMarker(a[i], b[i])) return false;
+    }
+    return true;
+  }
 
   // ── Keyword search (off-campus places) ────────────────────────────────────
 
   /// The plugin starts one asynchronous add per marker. Serialize updates so
   /// an old batch cannot add pins after a newer empty filter has cleared them.
+  /// A rebuild that leaves the marker list unchanged (GPS fix, sheet drag,
+  /// follow toggle) sends nothing.
   void _syncMarkers() {
     final controller = _controller;
     final icons = _icons;
     if (controller == null || icons == null) return;
-    final revision = ++_markerRevision;
     final markers = _markers(icons);
+    if (_sameMarkers(_sentMarkers, markers)) return;
+    _sentMarkers = markers;
+    final revision = ++_markerRevision;
     _markerSync = _markerSync.then((_) async {
       if (!mounted || revision != _markerRevision) return;
       if (markers.isEmpty) {
@@ -468,8 +513,18 @@ class _CampusMapViewState extends State<CampusMapView> {
         await controller.addMarker(markers: markers);
       }
     }).catchError((Object error) {
-      debugPrint('Map marker update failed: $error');
+      // Unknown plugin state after a failed batch — force the next sync.
+      if (identical(_sentMarkers, markers)) _sentMarkers = null;
+      if (kDebugMode) debugPrint('Map marker update failed: $error');
     });
+  }
+
+  /// Camera to the campus centre (permission denied, L-21).
+  void _centerOnCampus() {
+    final controller = _controller;
+    if (controller == null) return;
+    _cameraRevision++;
+    controller.setCenter(_campusCenter);
   }
 
   /// Runs every query around the campus center and reports the merged result.
@@ -625,6 +680,7 @@ class _CampusMapViewState extends State<CampusMapView> {
           // filter change), not on first create — so add them explicitly once
           // the controller is ready, otherwise the initial (unfiltered) map
           // renders with no pins until the user interacts.
+          _sentMarkers = null; // fresh WebView: nothing is drawn yet
           _syncMarkers();
           if (widget.userLocation != null) {
             controller.addCircle(circles: _userCircles());
@@ -638,7 +694,9 @@ class _CampusMapViewState extends State<CampusMapView> {
         },
         onMarkerTap: (markerId, latLng, zoomLevel) {
           if (!mounted || attempt != _loadAttempt || _loadFailed) return;
-          widget.onMarkerTap(markerId);
+          // The selected pin lives under `<id>#sel` (L-35); the screen only
+          // ever sees the facility/place id.
+          widget.onMarkerTap(CategoryMarkerIcons.baseMarkerId(markerId));
         },
         // Only registered when the screen cares: the plugin injects a JS click
         // listener solely when the callback is non-null.
