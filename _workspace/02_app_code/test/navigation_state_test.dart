@@ -118,6 +118,22 @@ void main() {
     await settle(tester);
   }
 
+  /// The redesigned building picker is a custom field + overlay list (no
+  /// DropdownMenu text field any more): open it by its hint, then tap the row
+  /// whose code is [code].
+  Future<void> pickBuilding(WidgetTester tester, String code) async {
+    final l = AppLocalizations.of(
+        tester.element(find.byType(ClassroomSearchScreen)));
+    await tester.tap(find.text(l.classroom_hint_building));
+    await settle(tester);
+    final row = find
+        .ancestor(of: find.text(code), matching: find.byType(InkWell))
+        .first;
+    await tester.ensureVisible(row);
+    await tester.tap(row);
+    await settle(tester);
+  }
+
   Future<void> back(WidgetTester tester) async {
     await tester.binding.handlePopRoute();
     await settle(tester);
@@ -224,11 +240,7 @@ void main() {
       'classroom result and detail pop without losing form or map parameters',
       (tester) async {
     await mount(tester, '/classroom-search');
-    await tester.tap(find.byType(TextField).first);
-    await settle(tester);
-    final choice = find.textContaining('S04 ·').last;
-    await tester.ensureVisible(choice);
-    await tester.tap(choice);
+    await pickBuilding(tester, 'S04');
     final room = find.byWidgetPredicate(
         (w) => w is TextField && w.decoration?.hintText == 'Room');
     await tester.enterText(room, '0306-1');
@@ -249,9 +261,8 @@ void main() {
     await back(tester);
     expect(find.byType(ClassroomSearchScreen), findsOneWidget);
     expect(tester.widget<TextField>(room).controller!.text, '0306-1');
-    expect(
-        tester.widget<TextField>(find.byType(TextField).first).controller!.text,
-        startsWith('S04 ·'));
+    // The picked building survives the pops: the picker field still shows it.
+    expect(find.textContaining(RegExp(r'^S04 · ')), findsOneWidget);
   });
 
   testWidgets('failed swipe preserves the row and explains the save failure',
@@ -281,11 +292,7 @@ void main() {
       'classroom rejects unknown numbers but permits building-only guidance',
       (tester) async {
     await mount(tester, '/classroom-search');
-    await tester.tap(find.byType(TextField).first);
-    await settle(tester);
-    final choice = find.textContaining('S04 ·').last;
-    await tester.ensureVisible(choice);
-    await tester.tap(choice);
+    await pickBuilding(tester, 'S04');
     final room = find.byWidgetPredicate(
         (w) => w is TextField && w.decoration?.hintText == 'Room');
     for (final code in ['0399', '101']) {

@@ -27,10 +27,12 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
     final items = <_TabItem>[
       _TabItem(Symbols.home, l.tab_home_label),
       _TabItem(Symbols.map, l.tab_map_label),
-      _TabItem(Symbols.settings, l.tab_settings_label),
+      // Sliders glyph for 설정, per the DONG-A-MATE mockup.
+      _TabItem(Symbols.tune, l.tab_settings_label),
     ];
 
     final isCupertino = !kIsWeb && _isIOS;
@@ -51,24 +53,51 @@ class AppShell extends StatelessWidget {
       },
       child: Scaffold(
         body: navigationShell,
-        bottomNavigationBar: isCupertino
-            ? CupertinoTabBar(
-                currentIndex: navigationShell.currentIndex,
-                onTap: _onTap,
-                items: [
-                  for (final it in items)
-                    BottomNavigationBarItem(
-                        icon: Icon(it.icon), label: it.label),
-                ],
-              )
-            : NavigationBar(
-                selectedIndex: navigationShell.currentIndex,
-                onDestinationSelected: _onTap,
-                destinations: [
-                  for (final it in items)
-                    NavigationDestination(icon: Icon(it.icon), label: it.label),
-                ],
-              ),
+        // A tab label gets one line and a third of a phone's width, so at very
+        // large text a longer language is cut to a couple of characters
+        // (`Trang chủ` → `Tra…`, `Settings` → `Sett…`). Capping the scale keeps
+        // the whole word readable; the content itself still scales all the way
+        // (감사 05/034 S-7).
+        // Flutter's NavigationBar already clamps its own labels to 1.3
+        // (_kMaxLabelTextScaleFactor), and measurement shows the label then wraps
+        // to two lines inside the default 80px bar and is fully shown — so no
+        // height override is needed here (감사 05/037 SF-2). The clamp below is
+        // kept because it is what limits the Cupertino tab bar on iOS.
+        bottomNavigationBar: MediaQuery.withClampedTextScaling(
+          maxScaleFactor: 1.3,
+          child: isCupertino
+              ? CupertinoTabBar(
+                  currentIndex: navigationShell.currentIndex,
+                  onTap: _onTap,
+                  activeColor: scheme.primary,
+                  inactiveColor: scheme.onSurfaceVariant,
+                  backgroundColor: scheme.surface,
+                  border:
+                      Border(top: BorderSide(color: scheme.outlineVariant)),
+                  items: [
+                    for (final it in items)
+                      BottomNavigationBarItem(
+                          icon: Icon(it.icon), label: it.label),
+                  ],
+                )
+              // Hairline top border above the bar (mockup); the theme supplies
+              // the light-blue pill indicator and label colors.
+              : DecoratedBox(
+                  decoration: BoxDecoration(
+                    border:
+                        Border(top: BorderSide(color: scheme.outlineVariant)),
+                  ),
+                  child: NavigationBar(
+                    selectedIndex: navigationShell.currentIndex,
+                    onDestinationSelected: _onTap,
+                    destinations: [
+                      for (final it in items)
+                        NavigationDestination(
+                            icon: Icon(it.icon), label: it.label),
+                    ],
+                  ),
+                ),
+        ),
       ),
     );
   }

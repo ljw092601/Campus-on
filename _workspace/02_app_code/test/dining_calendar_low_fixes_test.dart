@@ -110,7 +110,10 @@ void main() {
       tester.widget<IconButton>(iconButtonWithTooltip(tooltip)).onPressed !=
       null;
 
-  String header(DateTime d) => DateFormat.yMMMEd('en').format(d);
+  // The redesigned date pill: month-day-weekday, then the year in one
+  // paragraph ("Thu, Oct 8  2026").
+  String header(DateTime d) =>
+      '${DateFormat.MMMEd('en').format(d)}  ${DateFormat.y('en').format(d)}';
 
   group('L-14 CampusClock', () {
     test('today is the Seoul date of the current UTC instant', () {

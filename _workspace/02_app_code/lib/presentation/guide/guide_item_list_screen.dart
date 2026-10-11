@@ -10,6 +10,7 @@ import '../shared/category_labels.dart';
 import '../shared/widgets/guide_list_item.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S6 — Guide Item List. Items within one category (published first). Tapping a
 /// row opens the S7 detail; the star toggles a local favorite.
@@ -43,13 +44,23 @@ class GuideItemListScreen extends ConsumerWidget {
                   title: l.guide_list_empty_title,
                 );
               }
-              return ListView.separated(
-                itemCount: items.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
-                itemBuilder: (context, i) => GuideListItem(
-                  item: items[i],
-                  onTap: () => context.push('/guide/item/${items[i].id}'),
-                ),
+              // One grouped white card (DONG-A-MATE mockup), rows split by
+              // inset dividers.
+              return ListView(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                children: [
+                  GroupCard(
+                    children: [
+                      for (final item in items)
+                        GuideListItem(
+                          item: item,
+                          // push, not go: back returns to this list instead
+                          // of the hub.
+                          onTap: () => context.push('/guide/item/${item.id}'),
+                        ),
+                    ],
+                  ),
+                ],
               );
             })),
       ),

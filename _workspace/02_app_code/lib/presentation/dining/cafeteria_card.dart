@@ -3,12 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
+import '../../data/i18n/place_text.dart';
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
 import '../shared/map_links.dart';
+import '../shared/widgets/ui_kit.dart';
 import 'dining_labels.dart';
 
 /// Item rows shown before an a-la-carte / snack section folds the rest
@@ -46,6 +49,12 @@ class CafeteriaCard extends ConsumerWidget {
         Campus.bumin => l.map_campus_bumin,
       };
 
+  Tone _campusTone(Campus c) => switch (c) {
+        Campus.seunghak => Tone.navy,
+        Campus.gudeok => Tone.green,
+        Campus.bumin => Tone.purple,
+      };
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -56,6 +65,7 @@ class CafeteriaCard extends ConsumerWidget {
     final hours = diningHoursLine(l, locale, menu);
     final status = diningStatusText(l, menu, isToday: isToday);
     final sections = menu.sectionsInOrder;
+    final large = prefersFlexibleLayout(context);
 
     return Semantics(
       container: true,
@@ -64,11 +74,15 @@ class CafeteriaCard extends ConsumerWidget {
       // button keeps its own action instead of being folded into one blob.
       explicitChildNodes: true,
       label: l.dining_a11y_card(name, status ?? l.dining_status_open),
-      child: Card(
-        margin: EdgeInsets.zero,
+      child: Container(
+        decoration: BoxDecoration(
+          color: scheme.surface,
+          borderRadius: BorderRadius.circular(AppColors.cardRadius),
+          border: Border.all(color: scheme.outlineVariant),
+          boxShadow: softShadow(context),
+        ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
-              dimens.spaceMd, 14, dimens.spaceMd, dimens.spaceXs + 2),
+          padding: EdgeInsets.fromLTRB(dimens.spaceMd, 18, dimens.spaceMd, 14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -77,46 +91,56 @@ class CafeteriaCard extends ConsumerWidget {
                 children: [
                   if (showCampus) ...[
                     Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: _Badge(
-                        text: _campusLabel(l, menu.campus),
-                        background: scheme.primaryContainer,
-                        foreground: scheme.onPrimaryContainer,
+                      padding: const EdgeInsets.only(top: 1),
+                      child: ToneBadge(
+                        _campusLabel(l, menu.campus),
+                        tone: _campusTone(menu.campus),
                       ),
                     ),
-                    SizedBox(width: dimens.spaceSm),
+                    const SizedBox(width: 10),
                   ],
                   Expanded(
                     // Name is in the Semantics label above; don't read twice.
                     child: ExcludeSemantics(
                       child: Text(
                         name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                        // Two lines at the default size. Above it (or on a
+                        // 320dp phone) the redesigned 18pt heading beside the
+                        // campus badge cut long English names ('Faculty Hall
+                        // Cafeteria' at 1.3x); the card grows instead, as the
+                        // home cards do. An ellipsis with no line limit would
+                        // ellipsize at the first line, so it goes too.
+                        maxLines: large ? null : 2,
+                        overflow: large
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
+                          color: headingColor(context),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
               if (hours != null) ...[
-                SizedBox(height: dimens.spaceXs + 2),
+                SizedBox(height: dimens.spaceSm),
                 Semantics(
                   container: true,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 2),
+                        padding: const EdgeInsets.only(top: 1),
                         child: Icon(Symbols.schedule,
-                            size: 14, color: scheme.onSurfaceVariant),
+                            size: 16, color: scheme.outline),
                       ),
-                      SizedBox(width: dimens.spaceXs),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: Text(hours,
                             style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 13,
                                 height: 1.4,
                                 color: scheme.onSurfaceVariant)),
                       ),
@@ -124,14 +148,14 @@ class CafeteriaCard extends ConsumerWidget {
                   ),
                 ),
               ],
-              SizedBox(height: dimens.spaceSm + 2),
+              SizedBox(height: dimens.spaceMd - 4),
               if (status != null)
                 Padding(
                   padding: EdgeInsets.only(bottom: dimens.spaceSm + 2),
                   child: ExcludeSemantics(
                     child: Text(status,
                         style: TextStyle(
-                            fontSize: 13.5,
+                            fontSize: 14,
                             height: 1.4,
                             color: menu.status == DiningAvailability.unavailable
                                 ? scheme.onSurface
@@ -143,18 +167,17 @@ class CafeteriaCard extends ConsumerWidget {
                   // One header per run of equal slots; sectionsInOrder keeps
                   // slots contiguous so this is one header per slot.
                   if (i == 0 || sections[i - 1].slot != sections[i].slot)
-                    _SlotHeader(
-                        label: sections[i].slot.label(l), first: i == 0),
+                    _SlotHeader(slot: sections[i].slot, first: i == 0),
                   MenuSectionView(section: sections[i]),
                   SizedBox(height: dimens.spaceSm + 2),
                 ],
               if (menu.facilityId != null)
                 Align(
                   alignment: Alignment.centerRight,
-                  child: TextButton.icon(
+                  child: SoftPillButton(
                     onPressed: () => context.go(mapFocusLink(menu.facilityId!)),
-                    icon: const Icon(Symbols.pin_drop, size: 18),
-                    label: Text(l.facility_action_viewOnMap),
+                    icon: Symbols.location_on,
+                    label: l.facility_action_viewOnMap,
                   ),
                 ),
             ],
@@ -165,15 +188,24 @@ class CafeteriaCard extends ConsumerWidget {
   }
 }
 
-/// "점심 ───────" divider-style header above a slot's sections.
+/// "(점심) ───────" header above a slot's sections: the meal-time pill in its
+/// tone (아침 yellow · 점심 blue · 저녁 purple · 종일 green), then a hairline.
 class _SlotHeader extends StatelessWidget {
-  const _SlotHeader({required this.label, required this.first});
-  final String label;
+  const _SlotHeader({required this.slot, required this.first});
+  final MealSlot slot;
   final bool first;
+
+  static Tone toneOf(MealSlot slot) => switch (slot) {
+        MealSlot.breakfast => Tone.yellow,
+        MealSlot.lunch => Tone.blue,
+        MealSlot.dinner => Tone.purple,
+        MealSlot.allDay => Tone.green,
+      };
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l = AppLocalizations.of(context);
     return Padding(
       padding: EdgeInsets.only(
           top: first ? 0 : context.dimens.spaceXs,
@@ -182,16 +214,9 @@ class _SlotHeader extends StatelessWidget {
         children: [
           Semantics(
             header: true,
-            child: Text(
-              label,
-              style: TextStyle(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.2,
-                  color: scheme.primary),
-            ),
+            child: ToneBadge(slot.label(l), tone: toneOf(slot), minWidth: 48),
           ),
-          SizedBox(width: context.dimens.spaceSm),
+          SizedBox(width: context.dimens.spaceSm + 2),
           Expanded(
             child:
                 Divider(height: 1, thickness: 1, color: scheme.outlineVariant),
@@ -219,19 +244,26 @@ class _MenuSectionViewState extends State<MenuSectionView> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    // Menu lines are keyed by their Korean text (data/i18n/place_text.dart);
+    // a dish with no translation keeps its Korean name.
+    final locale = Localizations.localeOf(context);
+    String itemName(MenuItem i) => menuItemText(i.name, locale);
     final scheme = Theme.of(context).colorScheme;
     final dimens = context.dimens;
     final s = widget.section;
     final emphasized = s.kind == MenuKind.thousandWon;
 
-    final chip = _Badge(
-      text: s.kind.label(l),
-      background: emphasized ? scheme.primary : scheme.secondaryContainer,
-      foreground: emphasized ? scheme.onPrimary : scheme.onSecondaryContainer,
+    final chip = ToneBadge(
+      s.kind.label(l),
+      tone: emphasized ? Tone.coral : Tone.neutral,
+      fontSize: 12,
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
     );
+    final priceColor = Tone.blue.fg(context);
+    const itemStyle = TextStyle(fontSize: 15, height: 1.45);
 
     final noteStyle =
-        TextStyle(fontSize: 12, height: 1.4, color: scheme.onSurfaceVariant);
+        TextStyle(fontSize: 13, height: 1.4, color: scheme.onSurfaceVariant);
 
     if (s.kind.hasSectionPrice) {
       // Read as one unit: "정식, 7,000원, 제육볶음 · 미역국 …, 셀프바".
@@ -253,9 +285,9 @@ class _MenuSectionViewState extends State<MenuSectionView> {
                     // format (decimalPattern), L-12d.
                     l.dining_price(s.price!),
                     style: TextStyle(
-                        fontSize: 13.5,
-                        fontWeight: FontWeight.w700,
-                        color: emphasized ? scheme.primary : scheme.onSurface),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: emphasized ? Tone.coral.fg(context) : priceColor),
                   ),
               ],
             ),
@@ -263,8 +295,8 @@ class _MenuSectionViewState extends State<MenuSectionView> {
               Padding(
                 padding: EdgeInsets.only(top: dimens.spaceXs + 2),
                 child: Text(
-                  s.items.map((i) => i.name).join(' · '),
-                  style: const TextStyle(fontSize: 13.5, height: 1.5),
+                  s.items.map(itemName).join(' · '),
+                  style: itemStyle,
                 ),
               ),
             if (s.note != null)
@@ -297,18 +329,17 @@ class _MenuSectionViewState extends State<MenuSectionView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Text(item.name,
-                        style: const TextStyle(fontSize: 13.5, height: 1.5)),
+                    child: Text(itemName(item), style: itemStyle),
                   ),
                   if (item.price != null) ...[
                     SizedBox(width: dimens.spaceSm),
                     Text(
                       l.dining_price(item.price!),
                       style: TextStyle(
-                          fontSize: 13.5,
-                          height: 1.5,
-                          fontWeight: FontWeight.w600,
-                          color: scheme.primary),
+                          fontSize: 15,
+                          height: 1.45,
+                          fontWeight: FontWeight.w800,
+                          color: priceColor),
                     ),
                   ],
                 ],
@@ -337,32 +368,6 @@ class _MenuSectionViewState extends State<MenuSectionView> {
             ),
           ),
       ],
-    );
-  }
-}
-
-/// Small rounded label (campus / menu kind). Plain [Text], so screen readers
-/// announce it rather than treating it as decoration.
-class _Badge extends StatelessWidget {
-  const _Badge(
-      {required this.text, required this.background, required this.foreground});
-  final String text;
-  final Color background;
-  final Color foreground;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: context.dimens.brSm,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.w600, color: foreground),
-      ),
     );
   }
 }

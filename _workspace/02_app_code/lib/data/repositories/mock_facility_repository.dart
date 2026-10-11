@@ -38,6 +38,8 @@ class MockFacilityRepository implements FacilityRepository {
     await Future<void>.delayed(const Duration(milliseconds: 120));
     final q = query.trim().toLowerCase();
     if (q.isEmpty) return const [];
+    // Every written form, not just Korean and English: the name on screen is
+    // the one a Chinese or Vietnamese reader will type.
     return _data
         .where((f) => f.matchesSearch(q))
         .toList();

@@ -21,6 +21,7 @@ import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
 import 'campus_proximity.dart';
+import '../shared/widgets/ui_kit.dart';
 import 'widgets/campus_map_view.dart';
 import 'widgets/campus_selector.dart';
 import 'widgets/peek_sheet.dart';
@@ -74,14 +75,30 @@ class MapScreen extends ConsumerStatefulWidget {
 class _MapScreenState extends ConsumerState<MapScreen>
     with WidgetsBindingObserver {
   // Peek sheet extents (fractions of the map area). Collapsed shows the
-  // header row; dragging up reveals the floor guide.
-  static const _peekMin = 0.17;
+  // header + quick-action rows (≈[_peekCollapsedPx] tall, never below
+  // [_peekMinFloor] of the map); dragging up reveals the floor guide.
+  static const _peekMinFloor = 0.17;
   static const _peekMax = 0.75;
+  static const _peekCollapsedPx = 184.0;
+
+  /// Programmatic expand for the peek sheet's "층별 안내" action. One
+  /// controller per sheet key — a keyed sheet swap would otherwise attach the
+  /// new sheet before the old one detaches.
+  DraggableScrollableController? _sheetController;
+  Object? _sheetControllerKey;
+
+  DraggableScrollableController _sheetControllerFor(Object key) {
+    if (_sheetController == null || _sheetControllerKey != key) {
+      _sheetControllerKey = key;
+      _sheetController = DraggableScrollableController();
+    }
+    return _sheetController!;
+  }
 
   /// Sheet extent at (or below) which a downward swipe counts as "dismiss".
   /// With `minChildSize: 0` the sheet snaps to 0 when released below half of
-  /// [_peekMin]; this threshold catches that landing without firing on an
-  /// ordinary collapse to [_peekMin].
+  /// the collapsed peek extent; this threshold catches that landing without
+  /// firing on an ordinary collapse.
   static const _peekDismissExtent = 0.02;
 
   String? _selectedId;
@@ -590,22 +607,28 @@ class _MapScreenState extends ConsumerState<MapScreen>
       body: Column(
         children: [
           CampusSelector(onSelected: _selectCampus),
+          const SizedBox(height: 4),
           const CategoryFilterBar(),
           Expanded(
-            child: filtered.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => ErrorStateView(
-                message: readErrorMessage(e, l, l.map_error_loadFailed),
-                retryLabel: l.common_retry,
-                onRetry: () => ref.invalidate(allFacilitiesProvider),
-                secondaryLabel: l.map_error_openList,
-                onSecondary: () =>
-                    context.push('${widget.navigationBase}/list'),
-              ),
-              data: (facilities) => ReadStatusContent(
-                  data: facilities,
+            // Map card: rounded top corners under the filter row (mockup).
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(AppColors.cardRadius)),
+              child: filtered.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (e, _) => ErrorStateView(
+                  message: readErrorMessage(e, l, l.map_error_loadFailed),
+                  retryLabel: l.common_retry,
                   onRetry: () => ref.invalidate(allFacilitiesProvider),
-                  child: _buildMap(context, l, facilities)),
+                  secondaryLabel: l.map_error_openList,
+                  onSecondary: () =>
+                      context.push('${widget.navigationBase}/list'),
+                ),
+                data: (facilities) => ReadStatusContent(
+                    data: facilities,
+                    onRetry: () => ref.invalidate(allFacilitiesProvider),
+                    child: _buildMap(context, l, facilities)),
+              ),
             ),
           ),
         ],
@@ -630,10 +653,27 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final selected = _find(facilities, _selectedId);
     final selectedPlace = _selectedPlace;
     final campus = ref.watch(mapCampusProvider);
+    // Key resets the sheet extent when another pin is tapped — or when a new
+    // search targets this same building.
+    final sheetKey = selected == null
+        ? ''
+        : (_focusActive &&
+                widget.focusIds.isNotEmpty &&
+                selected.id == widget.focusIds.first
+            ? '${selected.id}|${_focusKeyOf(widget)}'
+            : selected.id);
 
     return LayoutBuilder(builder: (context, constraints) {
-      // Keep the FAB above the collapsed Peek sheet (a fraction of THIS box).
-      final peekHeight = constraints.maxHeight * _peekMin;
+      // Collapsed peek = header + action rows, as a fraction of THIS box
+      // (grows a little with the font scale).
+      final textScale = MediaQuery.textScalerOf(context).scale(1.0);
+      final peekMin = constraints.maxHeight <= 0
+          ? _peekMinFloor
+          : ((_peekCollapsedPx + (textScale - 1).clamp(0.0, 1.0) * 48) /
+                  constraints.maxHeight)
+              .clamp(_peekMinFloor, _peekMax - 0.05);
+      // Keep the FAB above the collapsed Peek sheet.
+      final peekHeight = constraints.maxHeight * peekMin;
       return Stack(
         children: [
           Positioned.fill(
@@ -661,7 +701,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
               // pin above it.
               focusObscuredFraction: selected == null
                   ? 0
-                  : (_opensExpanded(selected) ? _peekMax : _peekMin),
+                  : (_opensExpanded(selected) ? _peekMax : peekMin),
               selectedId: _selectedId,
               zoomHandle: _zoomHandle,
               userLocation: _userLocation,
@@ -704,8 +744,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  FloatingActionButton.small(
-                    heroTag: 'myLocation',
+                  _MapRoundButton(
                     tooltip: l.map_myLocation_tooltip,
                     onPressed: _locating ? null : () => _onMyLocationPressed(l),
                     child: _locating
@@ -720,16 +759,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
                             ? Symbols.location_searching
                             : Symbols.my_location),
                   ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton.small(
-                    heroTag: 'zoomIn',
+                  const SizedBox(height: 12),
+                  _MapRoundButton(
                     tooltip: l.map_zoomIn_tooltip,
                     onPressed: _zoomHandle.zoomIn,
                     child: const Icon(Symbols.add),
                   ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton.small(
-                    heroTag: 'zoomOut',
+                  const SizedBox(height: 12),
+                  _MapRoundButton(
                     tooltip: l.map_zoomOut_tooltip,
                     onPressed: _zoomHandle.zoomOut,
                     child: const Icon(Symbols.remove),
@@ -746,36 +783,41 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     if (n.extent <= _peekDismissExtent) _deselect();
                     return false;
                   },
-                  // Key resets the sheet extent when another pin is tapped —
-                  // or when a new search targets this same building.
                   child: DraggableScrollableSheet(
-                    key: ValueKey(_focusActive &&
-                            widget.focusIds.isNotEmpty &&
-                            selected.id == widget.focusIds.first
-                        ? '${selected.id}|${_focusKeyOf(widget)}'
-                        : selected.id),
+                    key: ValueKey(sheetKey),
+                    controller: _sheetControllerFor(sheetKey),
                     // A `?floor=` / `?room=` deep link lands with the guide
                     // open.
                     initialChildSize:
-                        _opensExpanded(selected) ? _peekMax : _peekMin,
+                        _opensExpanded(selected) ? _peekMax : peekMin,
                     // 0 lets a downward swipe dismiss; the collapsed header
                     // is a snap stop, never a resting place below it.
                     minChildSize: 0,
                     // Nothing below the header (no floor info, no searched
                     // room) → lock the sheet at the collapsed size.
-                    maxChildSize: _expandable(selected) ? _peekMax : _peekMin,
+                    maxChildSize: _expandable(selected) ? _peekMax : peekMin,
                     // Snap stops: 0 (dismiss) · collapsed · expanded. A
                     // non-expandable sheet has max == collapsed, so listing it
                     // again as a snap size would violate the ascending rule.
                     snap: true,
-                    snapSizes:
-                        _expandable(selected) ? const [_peekMin] : null,
+                    snapSizes: _expandable(selected) ? [peekMin] : null,
                     builder: (context, scrollController) => PeekSheet(
                       facility: selected,
                       scrollController: scrollController,
                       expandedFloor: _floorLabelFor(selected),
                       roomCode: _roomCodeFor(selected),
                       roomPlanCode: widget.focusPlanCode,
+                      // "층별 안내" quick action expands to the floor guide.
+                      onShowFloors: selected.hasFloorInfo
+                          ? () {
+                              final c = _sheetControllerFor(sheetKey);
+                              if (c.isAttached) {
+                                c.animateTo(_peekMax,
+                                    duration: const Duration(milliseconds: 280),
+                                    curve: Curves.easeOutCubic);
+                              }
+                            }
+                          : null,
                       onViewDetail: () => context.push(
                           '${widget.navigationBase}/facility/${selected.id}'),
                       onClose: _deselect,
@@ -802,6 +844,59 @@ class _MapScreenState extends ConsumerState<MapScreen>
         ],
       );
     });
+  }
+}
+
+/// Floating white circular map control (my location, zoom ±) with a soft
+/// shadow — the mockup's round buttons stacked at the bottom-right.
+class _MapRoundButton extends StatelessWidget {
+  const _MapRoundButton({
+    required this.tooltip,
+    required this.onPressed,
+    required this.child,
+  });
+
+  final String tooltip;
+  final VoidCallback? onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final fg = headingColor(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: dark
+            ? null
+            : [
+                BoxShadow(
+                  color: const Color(0xFF1B3A7A).withValues(alpha: 0.16),
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+      ),
+      child: IconButton(
+        tooltip: tooltip,
+        onPressed: onPressed,
+        icon: child,
+        iconSize: 26,
+        style: IconButton.styleFrom(
+          fixedSize: const Size(52, 52),
+          backgroundColor: scheme.surface,
+          disabledBackgroundColor: scheme.surface,
+          foregroundColor: fg,
+          disabledForegroundColor: fg,
+          shape: CircleBorder(
+            side: dark
+                ? BorderSide(color: scheme.outlineVariant)
+                : BorderSide.none,
+          ),
+        ),
+      ),
+    );
   }
 }
 

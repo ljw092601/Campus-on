@@ -1,0 +1,127 @@
+{
+ "id": "financial-scam-response",
+ "category": "emergency",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "금융사기·피싱 긴급 대응",
+   "en": "Fraud and phishing: act now"
+  },
+  "summary": {
+   "ko": "송금 직후 지급정지·신고·피해구제 순서",
+   "en": "Freeze, report, claim — in that order"
+  },
+  "overview": {
+   "ko": "돈을 보낸 뒤에는 시간이 가장 중요합니다. 사기 계좌에서 돈이 빠져나가기 전에 지급정지를 요청해야 돌려받을 가능성이 생깁니다.\n\n순서는 지급정지 → 경찰 신고 → 은행 피해구제입니다. 은행은 경찰이 발급한 확인서를 요구하므로 세 절차가 이어져 있습니다.\n\n검찰·경찰·금융감독원이라며 «안전계좌로 옮기라»고 하는 전화는 없습니다. 이미 앱을 설치했거나 인증번호를 알려 줬다면 아래 6단계를 함께 하세요.",
+   "en": "Once the money has gone, time is everything. Getting a payment suspension on the receiving account before it is emptied is what makes recovery possible at all.\n\nThe order is: freeze the account, report to the police, then claim through your bank. The bank will ask for the confirmation the police issue, which is why the three steps are linked.\n\nNo prosecutor, police officer or financial regulator will ever ring you and tell you to move your money to a «safe account». If you have already installed an app or passed on a verification code, do step 6 as well."
+  },
+  "checklist": {
+   "ko": [
+    "이체 내역(은행 앱 화면 캡처)",
+    "상대 계좌번호와 은행 이름",
+    "통화·문자·메신저 기록",
+    "신분증",
+    "설치한 앱 이름(있다면)"
+   ],
+   "en": [
+    "The transfer record — a screenshot from your banking app",
+    "The receiving account number and bank",
+    "Call, text and messenger records",
+    "Photo ID",
+    "The name of any app you were asked to install"
+   ],
+   "count": 5
+  },
+  "checklist_note": {
+   "ko": "자료를 모으느라 지급정지를 미루지 마세요. 먼저 전화하고 나중에 정리해도 됩니다.",
+   "en": null
+  },
+  "steps": {
+   "ko": [
+    "추가 송금·인증번호 전달·원격제어를 즉시 멈춘다통화를 끊고, 인증번호를 알려 주지 말고, 원격제어 앱을 열지 마세요.",
+    "은행에 지급정지를 요청한다내가 보낸 은행과 상대 계좌의 은행 모두에 연락해 지급정지를 요청하세요. 가장 급한 단계입니다.",
+    "경찰에 신고한다긴급하면 112. 온라인·방문 신고 방법은 경찰 ECRM 안내에서 확인하세요. 상담은 182입니다.",
+    "필요한 확인서를 발급받는다경찰이 안내하는 사건사고사실확인원 등 은행 제출용 서류를 발급받습니다.",
+    "은행에 피해구제를 신청한다확인서와 이체 내역을 제출해 피해구제를 신청하세요. 기한이 있으므로 은행이 안내한 날짜를 지키세요.",
+    "비밀번호·인증수단을 안전한 기기에서 바꾼다악성 앱이 설치됐을 수 있으므로, 사기에 쓰인 기기가 아닌 안전한 기기에서 은행·이메일·메신저 비밀번호와 인증수단을 바꾸세요.",
+    "접수번호와 기한을 기록한다경찰 신고번호, 은행 접수번호, 제출 기한을 적어 두고 안내에 따라 후속 조치를 하세요."
+   ],
+   "en": [
+    "Stop sending money, codes and access — nowHang up, give no verification codes, and do not open any remote-control app.",
+    "Ask the bank to freeze the accountContact both your own bank and the bank of the receiving account and ask for a payment suspension. This is the urgent one.",
+    "Report it to the policeIn an emergency call 112. For online or in-person reporting follow the police ECRM guidance; 182 is the enquiry line.",
+    "Get the confirmation documentObtain the document the police direct you to — the incident confirmation the bank will ask for.",
+    "File the claim with your bankSubmit the confirmation and the transfer record to claim. There are deadlines — keep the date the bank gives you.",
+    "Change your passwords from a clean deviceA malicious app may still be watching. Change your banking, email and messenger passwords — and your verification methods — from a device that was not involved.",
+    "Write down the case numbers and deadlinesNote the police report number, the bank's reference and every deadline, then follow what each of them tells you next."
+   ],
+   "count": 7
+  },
+  "search_aliases": {
+   "ko": [
+    "보이스피싱",
+    "피싱",
+    "사기송금",
+    "지급정지",
+    "금융사기",
+    "대포통장",
+    "악성앱"
+   ],
+   "en": [
+    "voice phishing",
+    "phishing",
+    "scam transfer",
+    "payment suspension",
+    "fraud",
+    "malicious app"
+   ],
+   "count": 7
+  },
+  "sections[0].title": {
+   "ko": "알아두기",
+   "en": "Good to know"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "돌려받는다고 약속할 수는 없습니다",
+   "en": "No one can promise you get it back"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "지급정지와 피해구제는 돈이 계좌에 남아 있을 때 효과가 있습니다. 그래서 속도가 중요합니다. 결과는 사건마다 다릅니다."
+   ],
+   "en": [
+    "A freeze and a claim work when the money is still in the account — which is why speed matters. Outcomes differ case by case."
+   ],
+   "count": 1
+  },
+  "sections[0].notes[1].title": {
+   "ko": "부끄러워할 일이 아닙니다",
+   "en": "This is not something to be ashamed of"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "수법이 정교해서 누구나 당할 수 있습니다. 늦었다고 생각해도 신고하세요 — 같은 계좌의 다음 피해를 막습니다."
+   ],
+   "en": [
+    "These are well-built operations and they catch careful people. Report it even if you think it is too late — it stops the same account taking someone else."
+   ],
+   "count": 1
+  },
+  "links[0].label": {
+   "ko": "112 전화하기",
+   "en": "Call 112"
+  },
+  "links[1].label": {
+   "ko": "경찰 ECRM 피해자 구제 안내",
+   "en": "Police ECRM — help for victims"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 사건·사고 대응",
+   "en": "Guide — If something happens"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 은행 계좌 개설",
+   "en": "Guide — Opening a bank account"
+  }
+ }
+}

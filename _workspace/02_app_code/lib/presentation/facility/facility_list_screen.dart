@@ -9,6 +9,7 @@ import '../shared/widgets/category_filter_bar.dart';
 import '../shared/widgets/facility_list_item.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S3 — Facility List. Category filter + list; toggles with the map (S2).
 class FacilityListScreen extends ConsumerWidget {
@@ -71,14 +72,24 @@ class FacilityListScreen extends ConsumerWidget {
                           /* The provider displays the read error. */
                         }
                       },
-                      child: ListView.separated(
-                        itemCount: list.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
-                        itemBuilder: (context, i) => FacilityListItem(
-                          facility: list[i],
-                          onTap: () => context
-                              .push('$navigationBase/facility/${list[i].id}'),
-                        ),
+                      // Grouped white card (DONG-A-MATE mockup); rows carry
+                      // their own ListTile padding.
+                      child: ListView(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                        children: [
+                          GroupCard(
+                            padding: EdgeInsets.zero,
+                            dividerIndent: 16,
+                            children: [
+                              for (final f in list)
+                                FacilityListItem(
+                                  facility: f,
+                                  onTap: () => context.push(
+                                      '$navigationBase/facility/${f.id}'),
+                                ),
+                            ],
+                          ),
+                        ],
                       ),
                     );
                   })),

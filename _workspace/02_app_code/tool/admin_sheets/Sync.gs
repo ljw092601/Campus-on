@@ -73,13 +73,16 @@ function syncCafeteriasLocked_(run, lock) {
 function fullReplaceSync_(run, lock, spec) {
   const ui = SpreadsheetApp.getUi();
   const parsed = spec.read();
-  clearResultColumn_(parsed.sheet, spec.resultColumn);
+  // 학사일정 returns its header-resolved result column (translation columns sit
+  // before it); 식당 uses the fixed column from the spec.
+  const resultColumn = parsed.resultColumn || spec.resultColumn;
+  clearResultColumn_(parsed.sheet, resultColumn);
 
   if (parsed.errors.length) {
     const invalidRows = new Set(parsed.errors.map(error => error.rowNumber));
-    parsed.errors.forEach(error => setRowResult_(parsed.sheet, error.rowNumber, spec.resultColumn, `❌ ${error.errors.join(' / ')}`, true));
+    parsed.errors.forEach(error => setRowResult_(parsed.sheet, error.rowNumber, resultColumn, `❌ ${error.errors.join(' / ')}`, true));
     parsed.rows.filter(row => !invalidRows.has(row.rowNumber)).forEach(row =>
-      setRowResult_(parsed.sheet, row.rowNumber, spec.resultColumn, '⏸ 다른 행 오류로 전체 게시 중단', true));
+      setRowResult_(parsed.sheet, row.rowNumber, resultColumn, '⏸ 다른 행 오류로 전체 게시 중단', true));
     const summaries = summarizeErrors_(parsed.errors);
     finishRun_(run, 'validation_failed', { input: parsed.rows.length, failure: parsed.errors.length }, summaries);
     ui.alert('게시 중단', `오류 ${parsed.errors.length}행이 있습니다. ${spec.label}은 한 행이라도 오류면 전체 게시하지 않습니다.`, ui.ButtonSet.OK);
@@ -106,7 +109,7 @@ function fullReplaceSync_(run, lock, spec) {
     }
   }
   if (!confirmed) {
-    parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, spec.resultColumn, '⏸ 삭제 확인에서 취소됨', false));
+    parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, resultColumn, '⏸ 삭제 확인에서 취소됨', false));
     finishRun_(run, 'cancelled', { input: parsed.rows.length, deleted: 0 }, [`삭제 예정 ${staleDocs.length}건을 사용자가 취소함`]);
     return;
   }
@@ -124,7 +127,7 @@ function fullReplaceSync_(run, lock, spec) {
     throw new Error(`게시 ${parsed.rows.length}건 + 삭제 ${staleDocs.length}건이 atomic commit 한도 ${CONFIG.maxCommitWrites}건을 넘습니다.`);
   }
   commitWrites_(writes);
-  parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, spec.resultColumn, '✅ 동기화됨', false));
+  parsed.rows.forEach(row => setRowResult_(parsed.sheet, row.rowNumber, resultColumn, '✅ 동기화됨', false));
   finishRun_(run, 'succeeded', {
     input: parsed.rows.length,
     success: parsed.rows.length,

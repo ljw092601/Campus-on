@@ -7,6 +7,7 @@
 // here depends on the mock repository's sample data.
 import 'package:campus_on/core/theme/app_theme.dart';
 import 'package:campus_on/core/util/campus_clock.dart';
+import 'package:campus_on/data/i18n/place_text.dart';
 import 'package:campus_on/domain/entities/dining_menu.dart';
 import 'package:campus_on/domain/entities/facility.dart';
 import 'package:campus_on/domain/repositories/dining_repository.dart';
@@ -14,6 +15,7 @@ import 'package:campus_on/l10n/gen/app_localizations.dart';
 import 'package:campus_on/presentation/dining/dining_menu_screen.dart';
 import 'package:campus_on/presentation/providers/provider_cache.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
+import 'package:campus_on/presentation/shared/widgets/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -173,10 +175,12 @@ void main() {
   AppLocalizations labels(WidgetTester tester) =>
       AppLocalizations.of(tester.element(find.byType(Scaffold).first));
 
-  ColorScheme scheme(WidgetTester tester) =>
-      Theme.of(tester.element(find.byType(Scaffold).first)).colorScheme;
-
   Finder card(String id) => find.byKey(ValueKey('cafeteria-$id'));
+
+  // Menu lines are shown through the menu-line translation table, so an
+  // English screen shows a translated dish where one exists (Korean else).
+  String dish(String ko, [String locale = 'en']) =>
+      menuItemText(ko, Locale(locale));
 
   Finder inCard(String id, Finder f) =>
       find.descendant(of: card(id), matching: f);
@@ -285,20 +289,23 @@ void main() {
       expect((tester.getCenter(chip).dy - tester.getCenter(price).dy).abs(),
           lessThan(4),
           reason: 'kind chip and price on one line');
-      expect(inCard('hall', find.text('제육볶음 · 미역국 · 쌀밥')), findsOneWidget);
+      expect(
+          inCard('hall',
+              find.text(['제육볶음', '미역국', '쌀밥'].map(dish).join(' · '))),
+          findsOneWidget);
       expect(inCard('hall', find.text('셀프바')), findsOneWidget);
       // Items of a set section carry no own price.
-      expect(inCard('hall', find.text('제육볶음')), findsNothing);
+      expect(inCard('hall', find.text(dish('제육볶음'))), findsNothing);
     });
 
     testWidgets('à la carte: one priced row per item', (tester) async {
       await mount(tester);
       final l = labels(tester);
-      expect(inCard('hall', find.text('국밥')), findsOneWidget);
+      expect(inCard('hall', find.text(dish('국밥'))), findsOneWidget);
       expect(inCard('hall', find.text(l.dining_price(6000))), findsOneWidget);
-      expect(inCard('hall', find.text('돈까스')), findsOneWidget);
+      expect(inCard('hall', find.text(dish('돈까스'))), findsOneWidget);
       expect(inCard('hall', find.text(l.dining_price(7500))), findsOneWidget);
-      final name = tester.getCenter(inCard('hall', find.text('국밥')));
+      final name = tester.getCenter(inCard('hall', find.text(dish('국밥'))));
       final price =
           tester.getCenter(inCard('hall', find.text(l.dining_price(6000))));
       expect((name.dy - price.dy).abs(), lessThan(4), reason: 'same row');
@@ -313,34 +320,36 @@ void main() {
       expect(chipText, findsOneWidget);
       expect(inCard('hall', find.text('09:00부터 선착순')), findsOneWidget);
       expect(inCard('hall', find.text(l.dining_price(1000))), findsOneWidget);
+      // Redesign tones: the ₩1,000 breakfast chip is coral, other kinds the
+      // neutral pill.
+      final ctx = tester.element(chipText);
       final box = tester.widget<Container>(
           find.ancestor(of: chipText, matching: find.byType(Container)).first);
-      expect((box.decoration as BoxDecoration).color, scheme(tester).primary);
+      expect((box.decoration as BoxDecoration).color, Tone.coral.bg(ctx));
       final setBox = tester.widget<Container>(find
           .ancestor(
               of: inCard('hall', find.text(l.dining_kind_set)),
               matching: find.byType(Container))
           .first);
-      expect((setBox.decoration as BoxDecoration).color,
-          scheme(tester).secondaryContainer);
+      expect((setBox.decoration as BoxDecoration).color, Tone.neutral.bg(ctx));
     });
 
     testWidgets('long à la carte lists fold after 6 rows', (tester) async {
       await mount(tester);
       final l = labels(tester);
       await switchTo(tester, CampusGroup.gudeokBumin);
-      expect(inCard('gudeok', find.text('김밥')), findsOneWidget);
-      expect(inCard('gudeok', find.text('토스트')), findsOneWidget);
-      expect(inCard('gudeok', find.text('유부초밥')), findsNothing);
-      expect(inCard('gudeok', find.text('컵과일')), findsNothing);
+      expect(inCard('gudeok', find.text(dish('김밥'))), findsOneWidget);
+      expect(inCard('gudeok', find.text(dish('토스트'))), findsOneWidget);
+      expect(inCard('gudeok', find.text(dish('유부초밥'))), findsNothing);
+      expect(inCard('gudeok', find.text(dish('컵과일'))), findsNothing);
       expect(find.text(l.dining_showMore(2)), findsOneWidget);
       // The one-item all-day section is not foldable.
       expect(find.text(l.dining_showMore(0)), findsNothing);
 
       await tester.tap(find.text(l.dining_showMore(2)));
       await tester.pumpAndSettle();
-      expect(inCard('gudeok', find.text('유부초밥')), findsOneWidget);
-      expect(inCard('gudeok', find.text('컵과일')), findsOneWidget);
+      expect(inCard('gudeok', find.text(dish('유부초밥'))), findsOneWidget);
+      expect(inCard('gudeok', find.text(dish('컵과일'))), findsOneWidget);
       expect(find.text(l.dining_showLess), findsOneWidget);
       expect(find.text(l.dining_showMore(2)), findsNothing);
     });
@@ -408,11 +417,12 @@ void main() {
       // own node followed by one node per dish row.
       expect(
           find.bySemanticsLabel(
-              '${l.dining_kind_thousandWon}\n${l.dining_price(1000)}\n계란죽\n09:00부터 선착순'),
+              '${l.dining_kind_thousandWon}\n${l.dining_price(1000)}\n${dish('계란죽')}\n09:00부터 선착순'),
           findsOneWidget);
       expect(find.bySemanticsLabel(l.dining_kind_alacarte), findsOneWidget);
       expect(
-          find.bySemanticsLabel('국밥\n${l.dining_price(6000)}'), findsOneWidget);
+          find.bySemanticsLabel('${dish('국밥')}\n${l.dining_price(6000)}'),
+          findsOneWidget);
       handle.dispose();
     });
   });

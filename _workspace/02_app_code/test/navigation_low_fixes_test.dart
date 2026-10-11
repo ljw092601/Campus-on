@@ -277,15 +277,15 @@ void main() {
   });
 
   group('L-30 custom cards expose a button role', () {
-    testWidgets('facility mini-map is a "View on map" button', (tester) async {
+    testWidgets('facility "View on map" is a labelled button', (tester) async {
       await mount(tester, '/map/facility/s04');
       expect(find.byType(FacilityDetailScreen), findsOneWidget);
-      final semantics = find.byWidgetPredicate((w) =>
-          w is Semantics &&
-          w.properties.button == true &&
-          w.properties.label == 'View on map');
-      expect(semantics, findsOneWidget);
-      final node = tester.getSemantics(semantics);
+      // The redesign replaced the tappable mini-map card with a bottom CTA
+      // (a FilledButton). The L-30 requirement is unchanged: the way to the
+      // map is announced as a button, labelled, and tappable.
+      final cta = find.widgetWithText(FilledButton, 'View on map');
+      expect(cta, findsOneWidget);
+      final node = tester.getSemantics(cta);
       expect(node.flagsCollection.isButton, isTrue);
       expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
       expect(node.label, contains('View on map'));

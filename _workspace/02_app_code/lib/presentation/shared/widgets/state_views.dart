@@ -23,30 +23,41 @@ class EmptyStateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(context.dimens.spaceLg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 56, color: scheme.onSurfaceVariant),
-            SizedBox(height: context.dimens.spaceMd),
-            Text(title,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium),
-            if (body != null) ...[
-              SizedBox(height: context.dimens.spaceSm),
-              Text(body!,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      )),
-            ],
-            if (actionLabel != null && onAction != null) ...[
-              SizedBox(height: context.dimens.spaceLg),
-              FilledButton.tonal(onPressed: onAction, child: Text(actionLabel!)),
-            ],
-          ],
+    // Centred when there is room, scrollable when there is not: on a 320×568
+    // phone at 200 % text the favourites empty state overflowed by 22 px, so its
+    // last line could not be reached. It happens in every language, so this is
+    // about the text size, not the translations (감사 05/035 SF-4 route sweep).
+    return LayoutBuilder(
+      builder: (context, constraints) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(context.dimens.spaceLg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, size: 56, color: scheme.onSurfaceVariant),
+                  SizedBox(height: context.dimens.spaceMd),
+                  Text(title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium),
+                  if (body != null) ...[
+                    SizedBox(height: context.dimens.spaceSm),
+                    Text(body!,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            )),
+                  ],
+                  if (actionLabel != null && onAction != null) ...[
+                    SizedBox(height: context.dimens.spaceLg),
+                    FilledButton.tonal(onPressed: onAction, child: Text(actionLabel!)),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -73,24 +84,35 @@ class ErrorStateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(context.dimens.spaceLg),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Symbols.error, size: 48, color: scheme.error),
-            SizedBox(height: context.dimens.spaceMd),
-            Text(message,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge),
-            SizedBox(height: context.dimens.spaceLg),
-            FilledButton(onPressed: onRetry, child: Text(retryLabel)),
-            if (secondaryLabel != null && onSecondary != null) ...[
-              SizedBox(height: context.dimens.spaceSm),
-              TextButton(onPressed: onSecondary, child: Text(secondaryLabel!)),
-            ],
-          ],
+    // Centred when there is room, scrollable when there is not: on a 320×568
+    // phone at 200 % text the favourites empty state overflowed by 22 px, so its
+    // last line could not be reached. It happens in every language, so this is
+    // about the text size, not the translations (감사 05/035 SF-4 route sweep).
+    return LayoutBuilder(
+      builder: (context, constraints) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(context.dimens.spaceLg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Symbols.error, size: 48, color: scheme.error),
+                  SizedBox(height: context.dimens.spaceMd),
+                  Text(message,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  SizedBox(height: context.dimens.spaceLg),
+                  FilledButton(onPressed: onRetry, child: Text(retryLabel)),
+                  if (secondaryLabel != null && onSecondary != null) ...[
+                    SizedBox(height: context.dimens.spaceSm),
+                    TextButton(onPressed: onSecondary, child: Text(secondaryLabel!)),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -19,10 +19,14 @@ void main() {
     );
     await tester.pump();
 
-    // Home hub renders its branded title (동아메이트 / Dong-A Mate by locale).
+    // Home hub renders its branded title (DONG-A-MATE wordmark).
     expect(
-      find.textContaining(RegExp('동아메이트|Dong-A Mate')),
+      find.textContaining(RegExp('동아메이트|Dong-A Mate|DONG-A-MATE')),
       findsWidgets,
     );
+
+    // Let the home "upcoming events" mock-calendar fetch (120ms latency)
+    // finish so no timer is left pending at teardown.
+    await tester.pump(const Duration(seconds: 1));
   });
 }

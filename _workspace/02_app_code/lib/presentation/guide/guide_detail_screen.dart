@@ -1,10 +1,11 @@
-import '../shared/favorite_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/i18n/app_languages.dart';
+import '../../core/layout/flexible_text_layout.dart';
 import '../../core/theme/app_theme.dart';
 import '../../domain/entities/admin_guide.dart';
 import '../../domain/entities/favorite_ref.dart';
@@ -14,9 +15,12 @@ import '../providers/favorites_provider.dart';
 import '../providers/guide_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/external_links.dart';
+import '../shared/favorite_actions.dart';
 import '../shared/map_links.dart';
-import '../shared/widgets/state_views.dart';
+import '../shared/widgets/guide_list_item.dart' show GuideCategoryTone;
 import '../shared/widgets/read_status.dart';
+import '../shared/widgets/state_views.dart';
+import '../shared/widgets/ui_kit.dart';
 
 /// S7 — Guide Detail. Fixed section template (overview → checklist → steps →
 /// tips → phrases → links/locations) rendered as scrollable cards, each headed
@@ -82,8 +86,9 @@ class _DetailBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
-    final accent =
-        accentFor(context, context.catColors.forGuide(item.categoryId));
+    // Category tone shared with the hub / list tiles (DONG-A-MATE mockup);
+    // [Tone.fg] already lightens itself for dark mode.
+    final accent = item.categoryId.tone.fg(context);
     final d = context.dimens;
     final scheme = Theme.of(context).colorScheme;
 
@@ -106,7 +111,10 @@ class _DetailBody extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(item.detailTitle(locale),
-                  style: Theme.of(context).textTheme.headlineSmall),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: headingColor(context),
+                      )),
               SizedBox(height: d.spaceSm),
               _MetaRow(item: item, color: accent),
             ],
@@ -204,7 +212,7 @@ class _DetailBody extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (final p in item.phrases)
-                    _PhraseCard(phrase: p, color: accent),
+                    _PhraseCard(phrase: p, color: accent, locale: locale),
                 ],
               ),
             ),
@@ -230,21 +238,6 @@ class _DetailBody extends ConsumerWidget {
   }
 }
 
-/// Category accent adjusted for the current brightness.
-///
-/// The category tokens (§4.1) are single mid-tone values shared by both themes
-/// — e.g. living = teal `#00838F`, which does not clear text contrast on the
-/// dark surface. Light mode keeps the exact token; dark mode gets a lightened,
-/// slightly desaturated variant so the dark palette itself stays unchanged.
-Color accentFor(BuildContext context, Color base) {
-  if (Theme.of(context).brightness == Brightness.light) return base;
-  final hsl = HSLColor.fromColor(base);
-  return hsl
-      .withLightness((hsl.lightness + 0.32).clamp(0.0, 1.0))
-      .withSaturation((hsl.saturation * 0.85).clamp(0.0, 1.0))
-      .toColor();
-}
-
 class _MetaRow extends StatelessWidget {
   const _MetaRow({required this.item, required this.color});
   final AdminGuideItem item;
@@ -264,7 +257,11 @@ class _MetaRow extends StatelessWidget {
         children: [
           Icon(Symbols.schedule, size: 16, color: scheme.onSurfaceVariant),
           const SizedBox(width: 4),
-          Text(duration, style: Theme.of(context).textTheme.bodySmall),
+          // Flexible so a long label wraps instead of overflowing at large
+          // text sizes on narrow phones.
+          Flexible(
+              child: Text(duration,
+                  style: Theme.of(context).textTheme.bodySmall)),
         ],
       ));
     }
@@ -276,8 +273,9 @@ class _MetaRow extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('${l.guide_meta_difficulty} ',
-                  style: Theme.of(context).textTheme.bodySmall),
+              Flexible(
+                  child: Text('${l.guide_meta_difficulty} ',
+                      style: Theme.of(context).textTheme.bodySmall)),
               for (var i = 1; i <= 3; i++)
                 Icon(Symbols.circle,
                     fill: i <= item.difficulty! ? 1 : 0,
@@ -321,20 +319,29 @@ class _Section extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: accent),
-                SizedBox(width: d.spaceSm),
+                Container(
+                  width: 32,
+                  height: 32,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: accent.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, size: 18, color: accent),
+                ),
+                SizedBox(width: d.spaceSm + 2),
                 Expanded(
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: accent,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                         ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: d.spaceSm),
+            SizedBox(height: d.spaceSm + 2),
             Divider(
                 height: 1, thickness: 1, color: accent.withValues(alpha: 0.25)),
             SizedBox(height: d.spaceMd),
@@ -526,16 +533,17 @@ class _TipRow extends StatelessWidget {
   }
 }
 
-/// Korean sentence + its English meaning, tinted with the category accent.
-/// Both lines always render — the Korean line is the one to show at a counter.
+/// Korean sentence + what it means in the reader's language, tinted with the
+/// category accent. Both lines always render — the Korean line is the one to
+/// show at a counter.
 class _PhraseCard extends StatelessWidget {
-  const _PhraseCard({required this.phrase, required this.color});
+  const _PhraseCard({required this.phrase, required this.color, required this.locale});
   final GuidePhrase phrase;
   final Color color;
+  final Locale locale;
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
     final d = context.dimens;
     final text = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
@@ -569,12 +577,15 @@ class _PhraseCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            line(l.settings_language_ko, phrase.ko,
+            // The Korean sentence is what the user shows at the counter, so it
+            // is always here; the second line is what it means, in whichever
+            // language the reader picked (English when untranslated).
+            line(appLanguageNames['ko']!, phrase.ko,
                 text.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
             SizedBox(height: d.spaceSm),
             line(
-              l.settings_language_en,
-              phrase.en,
+              appLanguageNames[locale.languageCode] ?? appLanguageNames['en']!,
+              phrase.meaning(locale),
               text.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
             ),
           ],
@@ -653,6 +664,23 @@ class _LinkRow extends StatelessWidget {
   /// an external page and opens in the browser as before.
   bool get _isInternal => link.url.startsWith('/');
 
+  static const _guideItemPrefix = '/guide/item/';
+
+  /// Another guide opens on top of this one so back returns here. It stays on
+  /// the stack the current detail came from: search details live on the root
+  /// navigator (`/search/item/:id`) and favorites details in the Settings
+  /// branch (`/settings/favorites/guide/:id`); pushing the Home-branch route
+  /// from either would leave that stack.
+  static String _stackedGuideRoute(BuildContext context, String url) {
+    final id = url.substring(_guideItemPrefix.length);
+    final from = GoRouterState.of(context).matchedLocation;
+    if (from.startsWith('/search/')) return '/search/item/$id';
+    if (from.startsWith('/settings/favorites/')) {
+      return '/settings/favorites/guide/$id';
+    }
+    return url;
+  }
+
   /// Shared launcher: tells the user when nothing can open the link (L-8)
   /// instead of failing silently, and a malformed url counts as a failure.
   Future<void> _openExternal(BuildContext context) async {
@@ -693,9 +721,13 @@ class _LinkRow extends StatelessWidget {
               child: Icon(Symbols.open_in_new,
                   size: 18, color: scheme.onSurfaceVariant),
             ),
-      onTap: _isInternal
-          ? () => context.go(withMapFocusToken(link.url))
-          : () => _openExternal(context),
+      onTap: !_isInternal
+          ? () => _openExternal(context)
+          : link.url.startsWith(_guideItemPrefix)
+              ? () => context.push(_stackedGuideRoute(context, link.url))
+              // Other in-app routes (the map tab) switch branches as before;
+              // a map link gets a fresh focus token so a repeat tap re-focuses.
+              : () => context.go(withMapFocusToken(link.url)),
     );
   }
 }
@@ -712,14 +744,12 @@ class _RelatedLocationCard extends ConsumerWidget {
     final facility = async.valueOrNull;
     if (facility == null) return const SizedBox.shrink();
 
-    final color = context.catColors.forFacility(facility.category);
-    final name = facility.name(locale);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: context.dimens.spaceXs),
       child: Card(
         margin: EdgeInsets.zero,
         child: InkWell(
-          borderRadius: context.dimens.brMd,
+          borderRadius: BorderRadius.circular(AppColors.cardRadius),
           // Single-id focus per the deep-link contract (UX §3).
           onTap: () => context.go(mapFocusLink(facilityId)),
           // The whole card is one button to assistive tech (audit L-30): a
@@ -727,14 +757,14 @@ class _RelatedLocationCard extends ConsumerWidget {
           // Merges with the InkWell's tap action on the Card's node.
           child: Semantics(
             button: true,
-            label: '$name · ${l.guide_relatedLocation_hint}',
+            label: '${facility.name(locale)} · ${l.guide_relatedLocation_hint}',
             excludeSemantics: true,
             child: Padding(
               padding: EdgeInsets.all(context.dimens.spaceMd),
               child: Row(
                 children: [
-                  Icon(Symbols.location_on, color: color),
-                  SizedBox(width: context.dimens.spaceSm),
+                  const IconTile(icon: Symbols.location_on, size: 40),
+                  SizedBox(width: context.dimens.spaceSm + 4),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -748,15 +778,19 @@ class _RelatedLocationCard extends ConsumerWidget {
                           ]
                               .where((e) => e != null && e.trim().isNotEmpty)
                               .join(' · '),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.onSurfaceVariant),
+                          // At 320dp and 200 % text this line held only the
+                          // building name and dropped the hint that the card
+                          // opens the map (감사 05/042 NIT-5). The card grows
+                          // with its content, so above the boundary the line
+                          // simply wraps; the ellipsis has to go with it, or the
+                          // first line would still be cut.
+                          maxLines: prefersFlexibleLayout(context) ? null : 1,
+                          overflow: prefersFlexibleLayout(context)
+                              ? TextOverflow.visible
+                              : TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -782,12 +816,14 @@ class _ComingSoonCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(context.dimens.spaceLg),
       decoration: BoxDecoration(
-        color: scheme.surfaceContainerHighest,
-        borderRadius: context.dimens.brMd,
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(AppColors.cardRadius),
+        border: Border.all(color: scheme.outlineVariant),
+        boxShadow: softShadow(context),
       ),
       child: Row(
         children: [
-          Icon(Symbols.hourglass_top, color: scheme.onSurfaceVariant),
+          const IconTile(icon: Symbols.hourglass_top, tone: Tone.neutral, size: 40),
           SizedBox(width: context.dimens.spaceMd),
           Expanded(
             child: Text(text,

@@ -20,3 +20,7 @@ node_modules/
 
 # Apps Script deployment identifiers (per-environment)
 tool/admin_sheets/.clasp.json
+
+# tool/i18n is run with python; its bytecode cache is not source.
+__pycache__/
+*.pyc

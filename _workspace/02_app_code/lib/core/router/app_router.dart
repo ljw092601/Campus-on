@@ -177,6 +177,8 @@ class AppRouter {
                   GoRoute(
                     path: 'favorites',
                     builder: (context, state) => const FavoritesScreen(),
+                    // Guide/facility opened from favorites stays in the
+                    // Settings branch, so back returns to the favorites list.
                     routes: _details(),
                   ),
                   GoRoute(
@@ -205,7 +207,19 @@ class AppRouter {
         parentNavigatorKey: _rootKey,
         path: '/search',
         builder: (context, state) => const SearchScreen(),
-        routes: _details(),
+        routes: [
+          ..._details(),
+          // Guide detail opened from a guide's related links while on the
+          // search stack. It lives on the root navigator next to the search
+          // screen, so back returns to the results; pushing the tab-bar guide
+          // route from here would leave the shell's navigator empty.
+          GoRoute(
+            parentNavigatorKey: _rootKey,
+            path: 'item/:id',
+            builder: (context, state) =>
+                GuideDetailScreen(itemId: state.pathParameters['id']!),
+          ),
+        ],
       ),
       // Full-screen classroom-location search above the shell.
       GoRoute(

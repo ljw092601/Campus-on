@@ -12,7 +12,17 @@
     "hours_ko": "점심만 운영",
     "hours_en": "Lunch only",
     "facilityId": "s08",
-    "order": 1
+    "order": 1,
+    "i18n": {
+      "zh": {
+        "name": "教授会馆食堂",
+        "hours": "仅供应午餐"
+      },
+      "vi": {
+        "name": "Nhà ăn Nhà giảng viên",
+        "hours": "Chỉ phục vụ bữa trưa"
+      }
+    }
   },
   "seunghak-student": {
     "name_ko": "학생회관 식당",
@@ -35,7 +45,17 @@
     "hours_ko": "천원의아침밥 09:00부터 선착순",
     "hours_en": "₩1,000 breakfast from 09:00, first come first served",
     "facilityId": "s02",
-    "order": 2
+    "order": 2,
+    "i18n": {
+      "zh": {
+        "name": "学生会馆食堂",
+        "hours": "千元早餐 09:00起，先到先得"
+      },
+      "vi": {
+        "name": "Nhà ăn Nhà sinh viên",
+        "hours": "Bữa sáng 1.000 won từ 09:00, ai đến trước được phục vụ trước"
+      }
+    }
   },
   "seunghak-engineering": {
     "name_ko": "공과대학 식당",
@@ -43,7 +63,17 @@
     "campus": "seunghak",
     "hours_ko": "운영시간 미표기",
     "hours_en": "Hours not published",
-    "order": 3
+    "order": 3,
+    "i18n": {
+      "zh": {
+        "name": "工科大学食堂",
+        "hours": "未公布营业时间"
+      },
+      "vi": {
+        "name": "Nhà ăn Đại học Kỹ thuật",
+        "hours": "Chưa công bố giờ phục vụ"
+      }
+    }
   },
   "seunghak-library": {
     "name_ko": "도서관 식당",
@@ -64,7 +94,15 @@
       }
     ],
     "facilityId": "s10",
-    "order": 4
+    "order": 4,
+    "i18n": {
+      "zh": {
+        "name": "图书馆食堂"
+      },
+      "vi": {
+        "name": "Nhà ăn Thư viện"
+      }
+    }
   },
   "bumin-international": {
     "name_ko": "국제관 식당",
@@ -73,7 +111,17 @@
     "hours_ko": "점심 정식·일품",
     "hours_en": "Lunch set menu and a la carte",
     "facilityId": "b05",
-    "order": 1
+    "order": 1,
+    "i18n": {
+      "zh": {
+        "name": "国际馆食堂",
+        "hours": "午餐套餐·单点"
+      },
+      "vi": {
+        "name": "Nhà ăn Tòa Quốc tế",
+        "hours": "Bữa trưa: suất cơm và món gọi riêng"
+      }
+    }
   },
   "bumin-dorm": {
     "name_ko": "국제관 기숙사 식당",
@@ -88,7 +136,17 @@
     "hours_ko": "천원의아침밥 09:20부터 선착순, 저녁 운영",
     "hours_en": "₩1,000 breakfast from 09:20, first come first served; dinner service",
     "facilityId": "b05",
-    "order": 2
+    "order": 2,
+    "i18n": {
+      "zh": {
+        "name": "国际馆宿舍食堂",
+        "hours": "千元早餐 09:20起，先到先得；供应晚餐"
+      },
+      "vi": {
+        "name": "Nhà ăn Ký túc xá Tòa Quốc tế",
+        "hours": "Bữa sáng 1.000 won từ 09:20, ai đến trước được phục vụ trước; có phục vụ bữa tối"
+      }
+    }
   },
   "gudeok-student": {
     "name_ko": "구덕 제2캠퍼스 학생회관",
@@ -97,7 +155,17 @@
     "hours_ko": "덮밥·분식류",
     "hours_en": "Rice bowls and snacks",
     "facilityId": "g12",
-    "order": 3
+    "order": 3,
+    "i18n": {
+      "zh": {
+        "name": "Gudeok第二校区学生会馆食堂",
+        "hours": "盖饭·小吃"
+      },
+      "vi": {
+        "name": "Nhà ăn Nhà sinh viên cơ sở 2 Gudeok",
+        "hours": "Cơm phủ và món ăn nhẹ"
+      }
+    }
   },
   "bumin-staff": {
     "name_ko": "부민 교직원 식당",
@@ -109,6 +177,14 @@
         "close": "13:50"
       }
     ],
-    "order": 4
+    "order": 4,
+    "i18n": {
+      "zh": {
+        "name": "Bumin教职工食堂"
+      },
+      "vi": {
+        "name": "Nhà ăn cán bộ giảng viên Bumin"
+      }
+    }
   }
 }

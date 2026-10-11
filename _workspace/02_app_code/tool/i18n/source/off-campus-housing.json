@@ -1,0 +1,881 @@
+{
+ "id": "off-campus-housing",
+ "category": "housing",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "교외주거 구하기",
+   "en": "Finding Off-Campus Housing"
+  },
+  "summary": {
+   "ko": "방 찾기 · 계약 · 입주 전 확인",
+   "en": "Finding a room, contracts & move-in checks"
+  },
+  "overview": {
+   "ko": "기숙사를 이용하지 않는 학생은 학교 주변이나 대중교통으로 이동하기 편리한 지역에서 원룸, 오피스텔, 고시원 등 교외주거를 구할 수 있습니다.\n\n한국의 임대차 계약은 보증금, 월세, 관리비 등 확인해야 할 항목이 많으므로 계약 전에 조건과 집 상태를 충분히 확인하는 것이 중요합니다.\n\n계약서 내용을 이해하기 어렵다면 혼자 서명하기보다 한국어를 잘 아는 사람이나 공식 상담기관의 도움을 받는 것이 좋습니다.",
+   "en": "If you are not living in a dormitory, you can rent a studio (원룸), an officetel or a goshiwon near campus or somewhere with a good transport link.\n\nA Korean lease has more moving parts than you might expect — a deposit, monthly rent and a maintenance fee — so take the time to check both the terms and the condition of the place before you sign.\n\nIf the contract is hard to follow, do not sign it alone. Ask someone who reads Korean well, or one of the official advice services listed at the bottom of this page."
+  },
+  "checklist_title": {
+   "ko": "계약서에서 확인할 내용",
+   "en": "What to Check in the Lease"
+  },
+  "checklist": {
+   "ko": [
+    "임대인 이름",
+    "임차인 이름",
+    "정확한 주소와 동 · 호수",
+    "계약기간",
+    "보증금",
+    "월세",
+    "월세 납부일",
+    "관리비",
+    "관리비에 포함되는 항목",
+    "입주일",
+    "계약 종료 조건",
+    "시설 및 옵션",
+    "수리 책임",
+    "특약사항"
+   ],
+   "en": [
+    "The landlord's name",
+    "Your own name as tenant",
+    "The exact address, including the unit number",
+    "The contract period",
+    "The deposit",
+    "The monthly rent",
+    "The day rent is due each month",
+    "The maintenance fee",
+    "What that maintenance fee covers",
+    "The move-in date",
+    "How the contract can be ended",
+    "The fittings and included appliances",
+    "Who pays for repairs",
+    "Any special terms (특약사항)"
+   ],
+   "count": 14
+  },
+  "checklist_optional_title": {
+   "ko": "관리비에 무엇이 포함되나요?",
+   "en": "What does the maintenance fee cover?"
+  },
+  "checklist_optional": {
+   "ko": [
+    "수도",
+    "인터넷",
+    "공용전기",
+    "청소비",
+    "승강기 · 경비 등 공용 관리 비용",
+    "전기 · 가스 등 개별 사용료가 별도인지"
+   ],
+   "en": [
+    "Water",
+    "Internet",
+    "Electricity for shared areas",
+    "Cleaning",
+    "Lift, security and other shared-building costs",
+    "Whether electricity and gas are billed to you separately"
+   ],
+   "count": 6
+  },
+  "checklist_note": {
+   "ko": "관리비는 금액보다 무엇이 포함되는지가 중요합니다. 포함되지 않은 항목은 매달 따로 내야 하므로, 월세와 관리비와 개별 사용료를 합쳐 실제로 매달 나가는 금액을 계산해 보세요.",
+   "en": "With the maintenance fee, what it covers matters more than the number. Anything not covered is billed to you separately — so add rent, maintenance fee and utilities together to see what a month really costs."
+  },
+  "steps": {
+   "ko": [
+    "원하는 지역과 예산 정하기",
+    "여러 집을 비교하고 직접 방문하기",
+    "집 상태 확인하기",
+    "등기사항증명서로 소유자 · 권리관계 확인",
+    "계약조건과 계약서 내용 확인",
+    "계약서 작성 및 서명",
+    "계약금 · 보증금 지급 후 계약서와 송금내역 보관",
+    "입주 후 신고 및 보호 절차 확인"
+   ],
+   "en": [
+    "Decide on the area and your budget",
+    "Compare several places and go and see them",
+    "Check the condition of the room",
+    "Check the owner and any claims in the property register",
+    "Go through the terms and the contract itself",
+    "Sign the contract",
+    "Pay, then keep the contract and the transfer records",
+    "Move in, then deal with the reporting and protection steps"
+   ],
+   "count": 8
+  },
+  "tips": {
+   "ko": [
+    "🏠 여러 집을 비교하세요 — 첫 번째로 본 집을 바로 계약하기보다 위치와 비용, 시설을 비교해보세요.",
+    "💰 월세만 보지 마세요 — 보증금과 함께, 월세 · 관리비 · 전기 · 가스 등 실제로 매달 나가는 비용을 합쳐 확인하세요.",
+    "📄 계약서를 이해한 뒤 서명하세요 — 이해하지 못한 내용이 있다면 서명하기 전에 반드시 확인하세요.",
+    "📸 입주 전 사진을 남겨두세요 — 기존 손상이나 시설 상태를 입주 전에 사진으로 기록하세요.",
+    "📍 이사 후 신고를 잊지 마세요 — 외국인등록을 한 학생은 이사하면 15일 이내에 체류지 변경 신고를 해야 합니다.",
+    "🧾 모든 기록을 보관하세요 — 계약서, 송금내역, 중개 관련 영수증 등 계약과 관련된 기록을 보관하세요."
+   ],
+   "en": [
+    "🏠 Compare a few places — do not sign for the first room you see; weigh location, cost and condition against each other.",
+    "💰 Rent is not the whole cost — besides the deposit, add rent, the maintenance fee and utilities to see what a month actually costs.",
+    "📄 Understand the contract before you sign — if any part is unclear, ask before signing, not after.",
+    "📸 Take photos before moving in — record any existing damage and the state of the fittings.",
+    "📍 Report your new address after moving — with an alien registration, you must report a change of address within 15 days.",
+    "🧾 Keep every record — the contract, the transfers and the agency receipts."
+   ],
+   "count": 6
+  },
+  "search_aliases": {
+   "ko": [
+    "원룸",
+    "자취",
+    "방 구하기",
+    "월세",
+    "부동산",
+    "집 구하기"
+   ],
+   "en": [
+    "one-room",
+    "studio",
+    "rent",
+    "apartment",
+    "housing"
+   ],
+   "count": 6
+  },
+  "duration": {
+   "ko": "수일~수주",
+   "en": "A few days to weeks"
+  },
+  "top_sections[0].title": {
+   "ko": "한국의 주거 형태",
+   "en": "Types of Housing in Korea"
+  },
+  "top_sections[0].body": {
+   "ko": "방의 형태와 임대 방식은 별개입니다. 어떤 형태의 방을 구할지, 어떤 방식으로 임대료를 낼지를 나누어 생각하면 조건을 비교하기 쉬워집니다.",
+   "en": "The kind of room and the way you pay for it are two separate choices. Separating them makes it much easier to compare listings."
+  },
+  "top_sections[0].notice": {
+   "ko": "전세는 보증금이 매우 큰 계약이에요\n전세는 맡기는 금액이 큰 만큼 확인해야 할 것도 많습니다. 보증금이 큰 계약이라면 계약 전에 공공기관 또는 전문 상담기관을 통해 보호절차를 확인하세요.",
+   "en": "Jeonse means a very large deposit\nBecause the sum is large, there is much more to check. If you are considering a contract with a big deposit, ask a public body or an official advice service about how that money is protected before you commit."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "🏠 방의 형태",
+   "en": "🏠 Kinds of room"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "원룸 — 방, 주방, 욕실 등이 한 공간에 있는 1인 주거 형태입니다.",
+    "오피스텔 — 주거와 업무 용도로 사용되는 건물 형태로, 원룸보다 시설이 다양할 수 있습니다.",
+    "고시원 · 고시텔 — 작은 개인실을 이용하고 주방이나 세탁실 등을 공동으로 사용하는 경우가 많은 주거 형태입니다.",
+    "쉐어하우스 — 여러 사람이 하나의 주택을 함께 사용하면서 개인방과 공용공간을 나누어 사용하는 형태입니다."
+   ],
+   "en": [
+    "One-room (원룸) — a single space holding the room, kitchen and bathroom, meant for one person.",
+    "Officetel (오피스텔) — a building used for both living and work; facilities are often more varied than in a one-room.",
+    "Goshiwon / goshitel (고시원 · 고시텔) — a small private room, usually with a shared kitchen and laundry.",
+    "Share house (쉐어하우스) — several people share one house, each with a private room plus common areas."
+   ],
+   "count": 4
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "💳 임대 방식",
+   "en": "💳 Ways of paying"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "월세 — 보증금을 맡기고 매달 정해진 임대료를 납부하는 방식입니다.",
+    "전세 — 큰 금액의 보증금을 맡기고 계약기간 동안 거주하는 한국의 임대차 형태입니다."
+   ],
+   "en": [
+    "Wolse (월세) — you leave a deposit and pay a set rent every month.",
+    "Jeonse (전세) — you leave one large deposit and live there for the contract period instead of paying monthly rent."
+   ],
+   "count": 2
+  },
+  "top_sections[1].title": {
+   "ko": "방을 찾는 방법",
+   "en": "How to Find a Room"
+  },
+  "top_sections[1].body": {
+   "ko": "어느 경로로 찾더라도 계약 전에 확인해야 할 절차는 같습니다. 여러 경로를 함께 쓰면 조건을 비교하기 쉽습니다.",
+   "en": "Whichever route you use, the checks you make before signing are the same. Using more than one route makes it easier to compare."
+  },
+  "top_sections[1].footnote": {
+   "ko": "※ Campus-On은 특정 중개사무소나 부동산 앱을 추천하지 않습니다. 어느 경로를 이용하든 계약 전 확인 절차는 동일합니다.",
+   "en": "※ Campus-On does not recommend any particular agency or property app. The checks before signing are the same either way."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "🏢 공인중개사 사무소",
+   "en": "🏢 Licensed agency office"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "원하는 지역의 부동산 중개사무소를 방문하여 조건에 맞는 방을 소개받을 수 있습니다.",
+    "중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.",
+    "등록 여부가 확실하지 않다면 관할 시·군·구청의 부동산 담당 부서나 국가공간정보포털의 부동산중개업 조회에서 확인할 수 있습니다."
+   ],
+   "en": [
+    "Visit an agency in the area you want and ask them to show you rooms that fit your conditions.",
+    "By law the office must display its commission rates and ceilings where you can see them.",
+    "If you are unsure the office is registered, you can check with the property team at the district office, or through the national spatial information portal."
+   ],
+   "count": 3
+  },
+  "top_sections[1].notes[1].title": {
+   "ko": "📱 부동산 플랫폼",
+   "en": "📱 Online property platforms"
+  },
+  "top_sections[1].notes[1].lines": {
+   "ko": [
+    "국내 부동산 플랫폼 등을 통해 위치, 보증금, 월세 등의 조건을 미리 확인하고 비교할 수 있습니다.",
+    "온라인 정보는 실제와 다를 수 있으므로 반드시 직접 방문해 확인하세요."
+   ],
+   "en": [
+    "Korean property platforms let you compare location, deposit and rent before you go anywhere.",
+    "What is online may not match the actual room — always visit in person before deciding."
+   ],
+   "count": 2
+  },
+  "top_sections[1].notes[2].title": {
+   "ko": "👥 지인 · 학교 커뮤니티",
+   "en": "👥 Friends & student communities"
+  },
+  "top_sections[1].notes[2].lines": {
+   "ko": [
+    "다른 학생에게 지역이나 평균적인 주거환경에 대한 정보를 물어보는 것도 도움이 됩니다.",
+    "개인 간 직거래는 중개사가 확인해 주는 절차가 없으므로, 소유자 확인과 계약서 작성이 더욱 중요합니다."
+   ],
+   "en": [
+    "Other students are a good source for what a neighbourhood is actually like.",
+    "Renting directly from a person means no licensed agent checks and explains the paperwork for you — verifying the owner and putting everything in a written contract matters even more."
+   ],
+   "count": 2
+  },
+  "top_sections[2].title": {
+   "ko": "동아대학교 주변에서 찾을 때",
+   "en": "Looking Near Dong-A University"
+  },
+  "top_sections[2].body": {
+   "ko": "동아대학교는 캠퍼스가 나뉘어 있습니다. 본인 수업이 어느 캠퍼스에서 열리는지 먼저 확인한 뒤 그 캠퍼스를 기준으로 지역을 고르세요.",
+   "en": "Dong-A University is split across campuses. Work out where your classes actually are first, then choose an area around that campus."
+  },
+  "top_sections[2].notice": {
+   "ko": "거리보다 실제 이동시간을 확인하세요\n지도에서 가까워 보여도 버스·지하철 노선과 환승에 따라 실제 이동시간은 크게 달라질 수 있습니다. 계약 전에 수업 시간대에 맞춰 한 번 이동해 보세요.",
+   "en": "Travel time matters more than distance\nA place that looks close on a map can take much longer once bus and subway routes and transfers are involved. Before you sign, make the trip once at the time of day you would actually go."
+  },
+  "top_sections[2].footnote": {
+   "ko": "※ Campus-On은 부동산 매물이나 지역별 시세 정보를 제공하지 않습니다. 특정 지역의 가격이나 주거환경은 공식 부동산 정보나 중개사무소에서 확인하세요.",
+   "en": "※ Campus-On does not list properties or local price levels. Check prices and conditions with official property sources or an agency."
+  },
+  "top_sections[2].notes[0].title": {
+   "ko": "🚇 캠퍼스별로 확인하세요",
+   "en": "🚇 Check by campus"
+  },
+  "top_sections[2].notes[0].lines": {
+   "ko": [
+    "승학캠퍼스 — 하단역 및 승학캠퍼스로 이동하기 편리한 지역인지 확인하세요.",
+    "부민캠퍼스 — 토성역 및 부민캠퍼스로 이동하기 편리한 지역인지 확인하세요.",
+    "구덕캠퍼스 — 수업이 구덕캠퍼스에 있다면 학교까지의 실제 이동시간을 확인하세요."
+   ],
+   "en": [
+    "Seunghak campus — check the area connects easily to Hadan station and the campus itself.",
+    "Bumin campus — check the area connects easily to Toseong station and the campus itself.",
+    "Gudeok campus — if your classes are here, check how long the trip actually takes."
+   ],
+   "count": 3
+  },
+  "top_sections[2].links[0].label": {
+   "ko": "지도에서 승학캠퍼스 보기",
+   "en": "View the Seunghak campus on the map"
+  },
+  "top_sections[2].links[1].label": {
+   "ko": "지도에서 부민캠퍼스 보기",
+   "en": "View the Bumin campus on the map"
+  },
+  "top_sections[2].links[2].label": {
+   "ko": "지도에서 구덕캠퍼스 보기",
+   "en": "View the Gudeok campus on the map"
+  },
+  "top_sections[3].title": {
+   "ko": "집을 보러 갈 때 확인",
+   "en": "What to Check During a Viewing"
+  },
+  "top_sections[3].body": {
+   "ko": "사진만으로는 알 수 없는 것들이 많습니다. 방문했을 때 아래 항목을 직접 확인하세요.",
+   "en": "Photos hide a lot. Check these yourself while you are standing in the room."
+  },
+  "top_sections[3].notice": {
+   "ko": "발견한 하자는 그 자리에서 기록하세요\n곰팡이, 누수, 파손처럼 이미 있는 문제는 사진이나 동영상으로 남겨두세요. 나중에 책임 범위를 정리할 때 근거가 됩니다.",
+   "en": "Record any damage while you are there\nPhotograph or film anything already broken — mould, leaks, damaged fittings. It is your evidence if responsibility is ever questioned."
+  },
+  "top_sections[3].notes[0].title": {
+   "ko": "🚪 집 내부",
+   "en": "🚪 Inside the room"
+  },
+  "top_sections[3].notes[0].lines": {
+   "ko": [
+    "창문과 환기 상태",
+    "곰팡이 또는 누수 흔적",
+    "난방 작동 여부",
+    "온수와 수압",
+    "에어컨 · 냉장고 · 세탁기",
+    "도어락",
+    "인터넷 제공 여부",
+    "가구 및 옵션 상태"
+   ],
+   "en": [
+    "Windows and ventilation",
+    "Any sign of mould or water damage",
+    "Whether the heating works",
+    "Hot water and water pressure",
+    "Air conditioner, fridge, washing machine",
+    "The door lock",
+    "Whether internet is included",
+    "The condition of the furniture and fittings"
+   ],
+   "count": 8
+  },
+  "top_sections[3].notes[1].title": {
+   "ko": "🏢 건물",
+   "en": "🏢 The building"
+  },
+  "top_sections[3].notes[1].lines": {
+   "ko": [
+    "건물 출입 방식과 공동현관",
+    "엘리베이터 여부",
+    "쓰레기 배출 장소",
+    "택배 수령 방법",
+    "주차가 필요한 경우 주차 조건"
+   ],
+   "en": [
+    "How you get in, and the main entrance",
+    "Whether there is a lift",
+    "Where rubbish goes",
+    "How parcels are received",
+    "Parking terms, if you need parking"
+   ],
+   "count": 5
+  },
+  "top_sections[3].notes[2].title": {
+   "ko": "📍 주변 환경",
+   "en": "📍 The neighbourhood"
+  },
+  "top_sections[3].notes[2].lines": {
+   "ko": [
+    "학교까지 이동시간",
+    "지하철 · 버스 이용",
+    "편의점 · 마트",
+    "늦은 시간 귀가 동선"
+   ],
+   "en": [
+    "How long it takes to reach campus",
+    "Subway and bus access",
+    "Convenience stores and supermarkets",
+    "The walk home late at night"
+   ],
+   "count": 4
+  },
+  "top_sections[4].title": {
+   "ko": "계약 전에 확인하세요",
+   "en": "Before You Sign"
+  },
+  "top_sections[4].body": {
+   "ko": "계약 전에 반드시 세 가지를 확인하세요 — 계약 상대방이 누구인지, 계약서의 주소가 맞는지, 돈을 보내는 계좌가 맞는지.",
+   "en": "Three things to settle before you sign: who you are actually contracting with, whether the address on the contract is the right one, and whose account the money goes to."
+  },
+  "top_sections[4].notice": {
+   "ko": "이해하지 못한 상태로 서명하지 마세요\n계약서 내용을 이해하기 어렵다면 혼자 서명하지 말고, 한국어를 잘 아는 사람이나 이 페이지 아래의 공식 상담기관에 먼저 물어보세요.",
+   "en": "Do not sign what you do not understand\nIf the contract is hard to follow, do not sign it alone — ask someone who reads Korean well, or one of the official advice services at the bottom of this page."
+  },
+  "top_sections[4].footnote": {
+   "ko": "※ 근거: 「주택임대차보호법」 제3조의7, 「국세징수법」 제109조 — 법제처 「찾기쉬운 생활법령정보」와 국세청 안내 기준. Campus-On은 법률 자문을 제공하지 않습니다. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.",
+   "en": "※ Based on the Housing Lease Protection Act art. 3-7 and the National Tax Collection Act art. 109, as explained by the Korean Ministry of Government Legislation and the National Tax Service. Campus-On does not give legal advice. What applies to your particular contract can differ, so check with an official body or a professional."
+  },
+  "top_sections[4].notes[0].title": {
+   "ko": "📄 등기사항증명서로 소유자 확인",
+   "en": "📄 Check the owner in the property register"
+  },
+  "top_sections[4].notes[0].lines": {
+   "ko": [
+    "등기사항증명서(등기부등본)를 통해 집의 등기상 소유자와 근저당권 등 등기된 권리관계를 확인할 수 있습니다.",
+    "등기사항증명서는 대한민국 법원 인터넷등기소에서 누구나 열람하거나 발급받을 수 있습니다.",
+    "계약하려는 사람이 등기상 소유자와 같은 사람인지 신분증으로 확인하세요.",
+    "소유자가 아닌 대리인이 계약한다면 위임장 등 위임 사실을 확인할 수 있는 서류와 신분 확인을 요청하세요.",
+    "등기사항증명서만으로 모든 위험을 알 수는 없습니다. 임대인의 미납 세금이나 다른 임차인의 보증금은 등기부에 나타나지 않을 수 있습니다.",
+    "임대인은 계약할 때 확정일자 부여일 · 보증금 등 다른 임대차 정보와 국세 · 지방세 납세증명서를 임차인에게 보여줘야 합니다. 계약 전에 임차인이 직접 열람하는 데 동의하는 것으로 대신할 수도 있습니다.",
+    "임대인의 미납 국세는 세무서나 홈택스에서 열람을 신청할 수 있습니다. 계약 전에는 임대인의 동의가 필요하고, 계약 후 임대차 시작일까지는 보증금이 1천만원을 넘으면 동의 없이도, 1천만원 이하이면 동의를 받아 신청할 수 있습니다. 홈택스로 신청했더라도 열람은 신청한 세무서에 방문해서 합니다."
+   ],
+   "en": [
+    "The property register (등기사항증명서) shows the registered owner of the place and what claims — such as a mortgage — are registered against it.",
+    "Anyone can view or obtain it from the Korean Court Internet Registry Office.",
+    "Check the ID of the person signing against the owner named in the register.",
+    "If an agent signs instead of the owner, ask for the power of attorney and for ID you can check.",
+    "The register does not show every risk — the landlord's unpaid taxes, or other tenants' deposits, may not appear on it.",
+    "When signing, the landlord must show you information on other leases of the home (fixed dates, deposits and so on) and national and local tax payment certificates. Before signing, the landlord can instead consent to you viewing these records yourself.",
+    "You can apply at a tax office or on Hometax to see the landlord's unpaid national taxes. Before signing you need the landlord's consent; after signing and up to the lease start date, you can apply without consent if the deposit is over 10 million won, or with consent if it is 10 million won or less. Even if you apply on Hometax, you view the record in person at the tax office you applied to."
+   ],
+   "count": 7
+  },
+  "top_sections[4].notes[1].title": {
+   "ko": "🏠 주소 확인",
+   "en": "🏠 Check the address"
+  },
+  "top_sections[4].notes[1].lines": {
+   "ko": [
+    "계약서의 주소와 실제 방문한 집의 주소가 동일한지 확인하세요.",
+    "건물 이름뿐 아니라 동 · 호수까지 반드시 일치하는지 확인하세요."
+   ],
+   "en": [
+    "The address on the contract must be the address of the place you actually viewed.",
+    "Check the building AND the unit number — not just the building name."
+   ],
+   "count": 2
+  },
+  "top_sections[4].notes[2].title": {
+   "ko": "💳 송금 전 확인",
+   "en": "💳 Check before you transfer"
+  },
+  "top_sections[4].notes[2].lines": {
+   "ko": [
+    "계약금과 보증금을 보내기 전에 받는 계좌의 명의가 계약 상대방과 같은지 확인하세요.",
+    "제3자 명의의 계좌로 보내달라고 하는 경우에는 이유를 확인하고, 그 근거를 서면으로 받아두세요.",
+    "송금 기록은 반드시 보관하세요."
+   ],
+   "en": [
+    "Before sending the down payment or deposit, check the account is in the name of the person you are contracting with.",
+    "If you are asked to send it to a third party account, ask why and get it in writing.",
+    "Keep the transfer records."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "입주 전 · 입주 후 확인",
+   "en": "Moving In"
+  },
+  "sections[0].body": {
+   "ko": "입주 당일에 확인하고 기록해 두면 나중에 문제가 생겼을 때 정리하기 훨씬 쉬워집니다.",
+   "en": "What you check and record on moving-in day makes it much easier to sort things out if a problem comes up later."
+  },
+  "sections[0].notice": {
+   "ko": "기존 하자는 기록이 남는 방법으로 알리세요\n입주 전부터 있던 손상은 문자나 메시지처럼 기록이 남는 방법으로 집주인에게 알려두세요. 전화로만 말하면 나중에 확인하기 어렵습니다.",
+   "en": "Report existing damage in writing\nTell the landlord about anything already damaged by text or message, not only by phone — you want a record with a date on it."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "📁 보관할 것",
+   "en": "📁 Keep these"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "계약서 원본 또는 사본",
+    "보증금 · 계약금 송금내역",
+    "중개보수 등 지급 기록과 영수증"
+   ],
+   "en": [
+    "The contract, original or a copy",
+    "Records of the deposit and down-payment transfers",
+    "Receipts for the agency commission and anything else you paid"
+   ],
+   "count": 3
+  },
+  "sections[0].notes[1].title": {
+   "ko": "📸 입주 당일 확인",
+   "en": "📸 Check on the day"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "집 상태를 사진으로 촬영",
+    "계량기 상태 확인이 필요한지 확인",
+    "도어락 비밀번호 변경 또는 확인",
+    "전기 · 가스 · 수도 사용방법 확인",
+    "쓰레기 분리배출 방법 확인",
+    "관리인 또는 집주인 연락처 저장"
+   ],
+   "en": [
+    "Photograph the condition of the place",
+    "Check whether the meters need reading",
+    "Change or confirm the door lock code",
+    "Find out how the electricity, gas and water work",
+    "Find out how rubbish is separated and put out",
+    "Save the manager or landlord contact number"
+   ],
+   "count": 6
+  },
+  "sections[1].title": {
+   "ko": "이사 후 신고와 보증금 보호",
+   "en": "Reporting Your Address & Protecting Your Deposit"
+  },
+  "sections[1].body": {
+   "ko": "외국인등록을 한 학생이 이사하면 체류지 변경 신고가 필요합니다. 이 신고는 체류 관리뿐 아니라 보증금을 지키는 절차와도 이어져 있습니다.",
+   "en": "If you have an alien registration and you move, you must report your new address. That report is not only an immigration formality — it is also part of how your deposit is protected."
+  },
+  "sections[1].notice": {
+   "ko": "신고를 미루지 마세요\n체류지 변경 신고는 전입한 날부터 15일 이내에 해야 하고, 기한을 넘기면 출입국관리법에 따라 100만원 이하의 벌금이 부과될 수 있습니다. 보증금 보호와도 이어지므로 이사 후 먼저 처리하세요.",
+   "en": "Do not put the report off\nThe change-of-residence report is due within 15 days of moving in, and missing it can mean a fine of up to 1 million won under the Immigration Control Act. It also ties into how your deposit is protected — so make it the first thing you do after moving."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 근거: 「출입국관리법」 제36조 · 제88조의2 · 제98조, 「주택임대차보호법」 제3조 · 제3조의2 · 제3조의6, 「부동산 거래신고 등에 관한 법률」 제6조의2 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 안내 기준. 신고 대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 확인하세요. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.",
+   "en": "※ Based on the Immigration Control Act arts. 36, 88-2 and 98, the Housing Lease Protection Act arts. 3, 3-2 and 3-6, and the Act on Report on Real Estate Transactions art. 6-2, as explained by the Korean Ministry of Government Legislation, HiKorea and the property transaction system. Thresholds and deadlines change — check the current official guidance, and ask an official body about your own contract."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "🪪 체류지 변경 신고",
+   "en": "🪪 Report your change of residence"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "대상 — 외국인등록을 한 사람이 체류지를 옮긴 경우",
+    "기한 — 전입한 날부터 15일 이내",
+    "장소 — 새 체류지의 시·군·구 또는 읍·면·동, 또는 새 체류지를 관할하는 출입국·외국인청(사무소·출장소)",
+    "온라인 — 하이코리아 전자민원으로도 신청할 수 있습니다(본인 신청).",
+    "서류 — 체류지 변경신고서, 외국인등록증, 임대차계약서 등 체류지 이전을 확인할 수 있는 서류"
+   ],
+   "en": [
+    "Who — anyone with an alien registration who has moved",
+    "When — within 15 days of moving in",
+    "Where — the si/gun/gu or eup/myeon/dong office for your new address, or the immigration office covering it",
+    "Online — you can also file it yourself through HiKorea",
+    "What to bring — the change-of-residence form, your ARC, and your lease (or another document proving the new address)"
+   ],
+   "count": 5
+  },
+  "sections[1].notes[1].title": {
+   "ko": "🛡 보증금 보호와 확정일자",
+   "en": "🛡 Your deposit and the fixed date"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "주택임대차보호법의 대항력은 주택을 인도받고 주민등록(전입신고)을 마친 다음 날부터 생깁니다.",
+    "외국인은 출입국관리법에 따른 외국인등록과 체류지 변경 신고가 주민등록과 전입신고를 갈음합니다. 주택을 인도받고 이 등록 · 신고를 마치면 같은 보호를 받을 수 있습니다.",
+    "우선변제권은 대항요건에 더해 임대차계약서에 확정일자를 받아야 생깁니다.",
+    "확정일자는 읍·면사무소, 동 주민센터, 시·군·구의 출장소, 지방법원 · 등기소, 공증인 등에서 받을 수 있습니다."
+   ],
+   "en": [
+    "Under the Housing Lease Protection Act, protection against third parties starts the day AFTER you take possession and register your address.",
+    "For foreign nationals, the alien registration and the change-of-residence report under the Immigration Control Act stand in for the resident registration. Once you have taken possession and completed them, you have the same footing.",
+    "To rank ahead of later claims you also need a fixed date (확정일자) stamped on the lease.",
+    "You can get that stamp at an eup/myeon office, a community centre, a si/gun/gu branch office, a district court or registry office, or a notary."
+   ],
+   "count": 4
+  },
+  "sections[1].notes[2].title": {
+   "ko": "📝 주택 임대차계약 신고",
+   "en": "📝 Reporting the lease itself"
+  },
+  "sections[1].notes[2].lines": {
+   "ko": [
+    "부산을 포함한 광역시 등에서는 보증금 6천만원 또는 월세 30만원을 넘는 주택 임대차계약을 계약 체결일부터 30일 이내에 신고해야 합니다. 둘 중 하나만 넘어도 대상입니다.",
+    "임대인과 임차인이 함께 신고하는 것이 원칙이지만, 임차인이 계약서를 첨부하면 혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 부여됩니다.",
+    "2025년 6월 1일 이후 체결한 계약은 신고하지 않으면 과태료가 부과될 수 있습니다. 신고 방법은 계약한 공인중개사나 주민센터에서 확인하세요."
+   ],
+   "en": [
+    "In Busan and other metropolitan cities, among other areas, a housing lease with a deposit over 60 million won or monthly rent over 300,000 won must be reported within 30 days of signing. Passing either threshold is enough.",
+    "Landlord and tenant normally report together, but a tenant who attaches the contract can file alone — and the fixed date is then applied automatically.",
+    "For contracts signed on or after 1 June 2025, failing to report can lead to a fine. Ask your agent or the community centre how to file."
+   ],
+   "count": 3
+  },
+  "sections[2].title": {
+   "ko": "보증금 · 월세 이해하기",
+   "en": "Deposits, Rent & Fees"
+  },
+  "sections[2].body": {
+   "ko": "계약서에 나오는 돈은 크게 네 가지입니다. 각각 언제 내고, 계약이 끝날 때 어떻게 처리되는지가 다릅니다.",
+   "en": "Four kinds of money appear in a lease. They are paid at different times, and what happens to each of them when the contract ends is different."
+  },
+  "sections[2].footnote": {
+   "ko": "※ 계약금이 보증금의 몇 퍼센트인지와 같은 비율은 계약마다 다릅니다. Campus-On은 시세나 비율을 제시하지 않으므로, 실제 금액과 지급 시기는 계약 상대방 및 중개사와 확인하세요.",
+   "en": "※ There is no fixed ratio between the down payment and the deposit — it differs by contract. Campus-On does not quote prices or ratios, so agree the actual amounts and dates with the landlord and the agent."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "계약금",
+   "en": "Down payment (계약금)"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "계약을 진행하기로 하면서 먼저 지급하는 금액입니다.",
+    "계약이 어떻게 끝나느냐에 따라 처리가 달라집니다. 특약이 없다면, 예를 들어 계약 이행이 시작되기 전에 임차인이 계약금을 포기하고 계약을 해제하면 계약금은 돌려받지 못합니다. 그 밖의 경우는 계약서의 특약과 계약이 끝난 사유에 따라 달라지므로 서명 전에 확인하세요."
+   ],
+   "en": [
+    "Paid up front when you agree to go ahead with the contract.",
+    "What happens to it depends on how the contract ends. Unless the contract says otherwise, if for example you give it up to cancel the contract before performance has begun, you do not get it back. In other cases it depends on the special terms and why the contract ended, so check before you sign."
+   ],
+   "count": 2
+  },
+  "sections[2].notes[1].title": {
+   "ko": "보증금",
+   "en": "Deposit (보증금)"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "임대인에게 맡기는 금액으로, 계약이 끝나면 미납금이나 손해 등을 제외하고 돌려받는 것이 일반적입니다."
+   ],
+   "en": [
+    "Held by the landlord and normally returned when the contract ends, minus anything unpaid or any damage."
+   ],
+   "count": 1
+  },
+  "sections[2].notes[2].title": {
+   "ko": "월세",
+   "en": "Monthly rent (월세)"
+  },
+  "sections[2].notes[2].lines": {
+   "ko": [
+    "매달 임대인에게 납부하는 임대료입니다."
+   ],
+   "en": [
+    "What you pay the landlord every month."
+   ],
+   "count": 1
+  },
+  "sections[2].notes[3].title": {
+   "ko": "관리비",
+   "en": "Maintenance fee (관리비)"
+  },
+  "sections[2].notes[3].lines": {
+   "ko": [
+    "건물 관리 등에 필요한 비용으로, 월세와 별도로 납부하는 경우가 많습니다."
+   ],
+   "en": [
+    "The cost of running the building. Usually billed on top of the rent, not inside it."
+   ],
+   "count": 1
+  },
+  "sections[3].title": {
+   "ko": "부동산 중개 이용",
+   "en": "Using a Licensed Agent"
+  },
+  "sections[3].body": {
+   "ko": "공인중개사를 통해 계약하면 중개보수가 발생합니다. 금액은 미리 확인하고, 지급한 기록을 남겨두세요.",
+   "en": "Going through a licensed agent means paying a commission. Agree the amount in advance, and keep proof that you paid it."
+  },
+  "sections[3].footnote": {
+   "ko": "※ 근거: 「공인중개사법」 제17조 · 제25조 · 제30조 · 제32조 및 같은 법 시행규칙 제20조 — 법제처 「찾기쉬운 생활법령정보」 안내 기준. 주택의 요율은 시·도 조례로, 오피스텔 등 주택이 아닌 중개대상물의 요율은 국토교통부령으로 정해지며 바뀔 수 있어 앱에 고정 표를 두지 않았습니다. 아래 링크에서 최신 기준을 확인하세요.",
+   "en": "※ Based on the Licensed Real Estate Agents Act arts. 17, 25, 30 and 32 and its enforcement rules art. 20, as explained by the Korean Ministry of Government Legislation. Housing rates are set by each province or metropolitan city by ordinance, and officetels and other non-housing property follow a national rule; because rates change, no fixed table is built into the app — use the link below for the current figures."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "💵 중개보수",
+   "en": "💵 The commission"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "중개보수는 거래금액과 계약 형태 등에 따라 상한이 정해질 수 있으며, 주택 임대차의 상한 요율은 시·도의 조례로 정해집니다.",
+    "오피스텔 등 주택이 아닌 중개대상물은 상한을 정하는 근거가 다르므로, 본인 계약이 어느 구분인지 중개사에게 확인하세요.",
+    "그 상한 안에서 의뢰인과 개업공인중개사가 협의해 정합니다.",
+    "중개사무소 안에는 중개보수 요율과 한도액 표가 게시되어 있습니다.",
+    "요율은 바뀔 수 있으므로 계약 전에 최신 공식 안내를 확인하세요."
+   ],
+   "en": [
+    "There is a ceiling on the commission. For housing leases it is set by the province or metropolitan city by ordinance, and it depends on the transaction amount and the type of contract.",
+    "An officetel or other non-housing property follows a different, nationally set ceiling, so ask the agent which category your contract falls under.",
+    "Within that ceiling, you and the agent agree the figure.",
+    "The rate table must be displayed inside the agency office.",
+    "Rates change, so check the current official guidance before you sign."
+   ],
+   "count": 5
+  },
+  "sections[3].notes[1].title": {
+   "ko": "📑 받아야 할 서류",
+   "en": "📑 What you should receive"
+  },
+  "sections[3].notes[1].lines": {
+   "ko": [
+    "계약을 체결할 때 중개대상물 확인 · 설명서를 받게 됩니다.",
+    "중개사의 손해배상책임을 보장하는 증서(공제증서 등)의 사본이나 전자문서도 받게 됩니다.",
+    "현금으로 비용을 지불한 경우 영수증 등 지급 기록을 남겨두세요."
+   ],
+   "en": [
+    "When the contract is made you should be given the property confirmation and explanation document.",
+    "You should also get a copy, or an electronic version, of the document showing the agent's liability guarantee, such as a mutual-aid certificate (공제증서).",
+    "If you pay in cash, get a receipt or some other record of the payment."
+   ],
+   "count": 3
+  },
+  "sections[4].title": {
+   "ko": "사기 · 분쟁 예방",
+   "en": "Avoiding Rental Scams & Disputes"
+  },
+  "sections[4].body": {
+   "ko": "아래 네 가지를 지키면 흔한 피해를 줄이는 데 도움이 됩니다. 다만 이것만으로 모든 위험을 막을 수는 없으니, 보증금이 크거나 의심스러운 점이 있으면 공식 상담기관에 먼저 확인하세요.",
+   "en": "These four habits help you avoid common problems. They cannot rule out every risk, so if the deposit is large or anything seems wrong, check with an official advice service first."
+  },
+  "sections[4].notice": {
+   "ko": "보증금이 큰 계약이라면 미리 확인하세요\nHUG 주택도시보증공사의 안심전세포털에서 전세사기 예방 정보와 보증 안내를 볼 수 있습니다. 다만 모든 계약에서 보증 가입이 가능한 것은 아니므로, 이용 가능 여부와 조건은 해당 상품 안내에서 확인해야 합니다.",
+   "en": "Check in advance if the deposit is large\nHUG (Korea Housing and Urban Guarantee Corporation) runs a portal with scam-prevention information and guarantee products. Not every contract qualifies, so check the eligibility and conditions on the product page itself."
+  },
+  "sections[4].notes[0].title": {
+   "ko": "🚫 집을 보지 않고 큰 금액을 보내지 마세요",
+   "en": "🚫 Do not send money for a place you have not seen"
+  },
+  "sections[4].notes[0].lines": {
+   "ko": [
+    "온라인 사진만 보고 계약하거나 큰 보증금을 먼저 송금하지 않는 것이 좋습니다."
+   ],
+   "en": [
+    "Do not sign — or wire a large deposit — on the strength of photos alone."
+   ],
+   "count": 1
+  },
+  "sections[4].notes[1].title": {
+   "ko": "👤 계약 상대방을 확인하세요",
+   "en": "👤 Check who you are dealing with"
+  },
+  "sections[4].notes[1].lines": {
+   "ko": [
+    "등기사항증명서상의 소유자와 계약자가 같은 사람인지 확인하세요.",
+    "대리인이 계약하는 경우 위임 사실을 확인할 수 있는 서류를 요청하세요."
+   ],
+   "en": [
+    "The person signing should be the owner named in the property register.",
+    "If an agent signs for the owner, ask to see the document that authorises them."
+   ],
+   "count": 2
+  },
+  "sections[4].notes[2].title": {
+   "ko": "🗂 계약서를 꼭 보관하세요",
+   "en": "🗂 Keep the contract"
+  },
+  "sections[4].notes[2].lines": {
+   "ko": [
+    "계약서 원본 또는 사본과 송금내역을 보관하세요."
+   ],
+   "en": [
+    "Keep the contract — original or copy — and the transfer records."
+   ],
+   "count": 1
+  },
+  "sections[4].notes[3].title": {
+   "ko": "🔍 너무 좋은 조건은 한 번 더 확인하세요",
+   "en": "🔍 Look twice at a deal that seems too good"
+  },
+  "sections[4].notes[3].lines": {
+   "ko": [
+    "주변보다 지나치게 낮은 보증금이나 월세가 광고되어 있다면, 실제 조건과 집 상태를 다시 확인하세요."
+   ],
+   "en": [
+    "If the deposit or rent is far below everything else nearby, go back and check the actual terms and the actual room."
+   ],
+   "count": 1
+  },
+  "sections[5].title": {
+   "ko": "계약에서 자주 나오는 말",
+   "en": "Words You Will See in the Lease"
+  },
+  "sections[5].body": {
+   "ko": "계약서와 부동산에서 자주 나오는 표현입니다. 한국어 단어를 그대로 보여주면 의사소통이 쉬워집니다.",
+   "en": "The words you will meet in the contract and at the agency. Showing the Korean word itself is often the fastest way to make yourself understood."
+  },
+  "sections[5].notes[0].title": {
+   "ko": "💬 계약 용어",
+   "en": "💬 Lease vocabulary"
+  },
+  "sections[5].notes[0].lines": {
+   "ko": [
+    "보증금 — Deposit",
+    "월세 — Monthly rent",
+    "관리비 — Maintenance fee",
+    "계약금 — Down payment (contract deposit)",
+    "임대인 — Landlord",
+    "임차인 — Tenant",
+    "공인중개사 — Licensed real estate agent",
+    "임대차계약서 — Lease agreement",
+    "등기사항증명서 — Certified copy of the property register",
+    "확정일자 — Fixed date recorded on the lease",
+    "특약사항 — Special terms",
+    "체류지 변경 신고 — Report of change of residence"
+   ],
+   "en": [
+    "Deposit — 보증금 (bojeunggeum)",
+    "Monthly rent — 월세 (wolse)",
+    "Maintenance fee — 관리비 (gwallibi)",
+    "Down payment — 계약금 (gyeyakgeum)",
+    "Landlord — 임대인 (imdaein)",
+    "Tenant — 임차인 (imchain)",
+    "Licensed real estate agent — 공인중개사 (gongin junggaesa)",
+    "Lease agreement — 임대차계약서 (imdaecha gyeyakseo)",
+    "Certified copy of the property register — 등기사항증명서 (deunggi sahang jeungmyeongseo)",
+    "Fixed date on the lease — 확정일자 (hwakjeong ilja)",
+    "Special terms — 특약사항 (teugyak sahang)",
+    "Report of change of residence — 체류지 변경 신고 (chelyuji byeongyeong singo)"
+   ],
+   "count": 12
+  },
+  "links[0].label": {
+   "ko": "주택임대차 보증금 보호 안내 (법제처)",
+   "en": "Housing lease & deposit protection (Ministry of Government Legislation)"
+  },
+  "links[0].description": {
+   "ko": "대항력 · 확정일자 · 우선변제권 안내",
+   "en": "How tenants gain protection: possession, registration, fixed date and priority"
+  },
+  "links[1].label": {
+   "ko": "대한민국 법원 인터넷등기소",
+   "en": "Korean Court Internet Registry Office"
+  },
+  "links[1].description": {
+   "ko": "등기사항증명서 — 부동산 소유자 · 권리관계 확인",
+   "en": "The property register — owner and registered claims"
+  },
+  "links[2].label": {
+   "ko": "주택 임대차계약 신고 (부동산거래관리시스템)",
+   "en": "Reporting a housing lease (property transaction system)"
+  },
+  "links[2].description": {
+   "ko": "신고 대상 · 방법 · 확정일자 자동 부여 안내",
+   "en": "Who must report, how, and the automatic fixed date"
+  },
+  "links[3].label": {
+   "ko": "중개보수 · 개업공인중개사의 책임 (법제처)",
+   "en": "Agency commission & agent duties (Ministry of Government Legislation)"
+  },
+  "links[3].description": {
+   "ko": "중개보수 상한 · 확인 · 설명서 안내",
+   "en": "Commission ceilings and the documents you should get"
+  },
+  "links[4].label": {
+   "ko": "HUG 안심전세포털",
+   "en": "HUG safe-lease portal"
+  },
+  "links[4].description": {
+   "ko": "보증금 보호 · 전세사기 예방 정보",
+   "en": "Deposit protection and scam-prevention information"
+  },
+  "links[5].label": {
+   "ko": "하이코리아 전자민원 — 체류지 변경 신고",
+   "en": "HiKorea e-application — change of residence"
+  },
+  "links[5].description": {
+   "ko": "외국인 주소(체류지) 변경 신고",
+   "en": "Report your new address as a registered foreigner"
+  },
+  "links[6].label": {
+   "ko": "부산외국인통합콜센터",
+   "en": "Busan Foreign Resident Call Center"
+  },
+  "links[6].description": {
+   "ko": "1600-0051 · 부동산 · 법률 등 다국어 생활상담",
+   "en": "1600-0051 — multilingual advice, property and legal matters included"
+  },
+  "links[7].label": {
+   "ko": "대한법률구조공단",
+   "en": "Korea Legal Aid Corporation"
+  },
+  "links[7].description": {
+   "ko": "임대차 분쟁 법률상담 (국번없이 132)",
+   "en": "Legal advice on lease disputes (dial 132)"
+  },
+  "links[8].label": {
+   "ko": "외국인등록증 발급 안내",
+   "en": "Guide — Residence Card (ARC)"
+  },
+  "links[8].description": {
+   "ko": "앱 안에서 바로 보기",
+   "en": "Open the in-app guide"
+  },
+  "links[9].label": {
+   "ko": "가이드 — 임대차 보증금 지키기",
+   "en": "Guide — Protecting Your Rental Deposit"
+  },
+  "links[9].description": {
+   "ko": "계약 전 심화 확인과 보증금 미반환 대응",
+   "en": "Extra checks, and what to do if the deposit is not returned"
+  }
+ }
+}

@@ -1,0 +1,258 @@
+{
+ "id": "emergency-contacts",
+ "category": "emergency",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "긴급 연락처",
+   "en": "Emergency Contacts"
+  },
+  "summary": {
+   "ko": "112 · 119 긴급신고 안내",
+   "en": "Police 112 · Fire & Ambulance 119"
+  },
+  "tips": {
+   "ko": [
+    "🚨 112와 119는 긴급신고 번호입니다 — 긴급한 상황에서만 이용하세요.",
+    "📍 위치를 확인하세요 — 신고하기 전에 가능하면 현재 캠퍼스와 건물 이름을 확인하세요.",
+    "📱 휴대전화로 바로 신고할 수 있습니다 — 지역번호 없이 112 또는 119를 입력하세요.",
+    "🗣 한국어가 어렵다면 — 112 · 119 어느 쪽이든 한국어가 서툴다고 먼저 말하고, 천천히 현재 상황과 위치를 설명하세요. 112에는 영어 · 중국어 통역이 24시간 연결됩니다.",
+    "💬 말하기 어렵다면 — 112와 119 모두 문자로 신고할 수 있습니다. 한국말이 서툰 외국인은 119안전신고센터(119.go.kr)에서 인터넷으로도 119에 신고할 수 있습니다. 지금 위험하다면 전화나 문자가 가장 빠릅니다."
+   ],
+   "en": [
+    "🚨 112 and 119 are emergency lines — use them only for emergencies.",
+    "📍 Know where you are — check the campus and building name before you call if you can.",
+    "📱 Dial straight from your phone — just 112 or 119, no area code.",
+    "🗣 If Korean is hard — whether you call 112 or 119, say so first, then describe what is happening and where you are, slowly. 112 connects English and Chinese interpreters 24 hours a day.",
+    "💬 If you cannot talk — you can report to both 112 and 119 by text message. If Korean is difficult for you, you can also report to 119 online at 119.go.kr (119안전신고센터). If you are in danger right now, a call or a text is fastest."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "119",
+    "112",
+    "긴급 전화",
+    "응급"
+   ],
+   "en": [
+    "emergency",
+    "ambulance",
+    "fire",
+    "police number"
+   ],
+   "count": 4
+  },
+  "top_sections[0].title": {
+   "ko": "긴급상황 안내",
+   "en": "In an emergency"
+  },
+  "top_sections[0].notice": {
+   "ko": "지금 즉시 위험한 상황인가요?\n범죄 · 폭행 · 위협 등 경찰의 도움이 필요하면 112\n화재 · 사고 · 응급환자 · 구조가 필요하면 119 (다친 사람이 있으면 반드시 119)",
+   "en": "Are you in immediate danger?\nCrime, assault, threats — anything you need the police for: 112\nFire, an accident, a medical emergency, someone who needs rescuing: 119 (always 119 if someone is hurt)"
+  },
+  "top_sections[1].title": {
+   "ko": "112 — 경찰",
+   "en": "112 — Police"
+  },
+  "top_sections[1].body": {
+   "ko": "범죄 피해를 입었거나 신변의 위협을 받고 있는 등 즉각적인 경찰 도움이 필요한 경우 112에 신고하세요.",
+   "en": "Call 112 when you need the police right now — you have been the victim of a crime, or you are being threatened."
+  },
+  "top_sections[1].notes[0].title": {
+   "ko": "이런 상황에서 전화하세요",
+   "en": "Call when"
+  },
+  "top_sections[1].notes[0].lines": {
+   "ko": [
+    "폭행 또는 위협을 받고 있을 때",
+    "절도 · 강도 등 범죄 피해를 입었을 때",
+    "스토킹 등 즉각적인 경찰 도움이 필요할 때",
+    "위험한 범죄 상황을 목격했을 때"
+   ],
+   "en": [
+    "You are being assaulted or threatened",
+    "You have been robbed, or something was stolen from you",
+    "You are being stalked, or otherwise need the police now",
+    "You witness a dangerous crime"
+   ],
+   "count": 4
+  },
+  "top_sections[1].links[0].label": {
+   "ko": "112 전화하기",
+   "en": "Call 112"
+  },
+  "top_sections[2].title": {
+   "ko": "119 — 화재 · 구조 · 구급",
+   "en": "119 — Fire · Rescue · Ambulance"
+  },
+  "top_sections[2].body": {
+   "ko": "화재, 사고, 구조가 필요한 상황 또는 응급환자가 발생한 경우 119에 신고하세요. 다친 사람이 있으면 반드시 119에 알리세요. 위급한 상황이라면 119 구급차는 거리와 관계없이 무료입니다.",
+   "en": "Call 119 for a fire, an accident, a rescue, or a medical emergency — always call 119 if someone is hurt. In an emergency the 119 ambulance is free, however far it has to go."
+  },
+  "top_sections[2].notes[0].title": {
+   "ko": "이런 상황에서 전화하세요",
+   "en": "Call when"
+  },
+  "top_sections[2].notes[0].lines": {
+   "ko": [
+    "불이 났을 때",
+    "사람이 크게 다쳤을 때",
+    "의식이 없거나 호흡에 문제가 있을 때",
+    "교통사고 등으로 구조가 필요할 때",
+    "즉각적인 응급의료 도움이 필요한 경우"
+   ],
+   "en": [
+    "There is a fire",
+    "Someone is badly injured",
+    "Someone is unconscious, or having trouble breathing",
+    "Someone needs to be rescued, for example after a traffic accident",
+    "Someone needs emergency medical help right now"
+   ],
+   "count": 5
+  },
+  "top_sections[2].links[0].label": {
+   "ko": "119 전화하기",
+   "en": "Call 119"
+  },
+  "sections[0].title": {
+   "ko": "신고할 때 알려주세요",
+   "en": "What to tell the operator"
+  },
+  "sections[0].steps": {
+   "ko": [
+    "어떤 일이 발생했는지",
+    "현재 위치",
+    "다친 사람이 있는지",
+    "현재 상황이 계속 위험한지",
+    "신고자의 연락 가능한 전화번호",
+    "구급차가 필요하면 환자의 나이, 아픈 곳, 의식 · 호흡이 있는지, 지병과 복용 중인 약",
+    "119 구급 신고라면 전화를 끊지 말고 응급처치 안내를 따르기"
+   ],
+   "en": [
+    "What has happened",
+    "Where you are",
+    "Whether anyone is hurt",
+    "Whether the situation is still dangerous",
+    "A phone number they can reach you on",
+    "If you need an ambulance: the patient's age, where it hurts, whether they are conscious and breathing, and any illness or medicines",
+    "On a 119 ambulance call, stay on the line and follow the first-aid instructions"
+   ],
+   "count": 7
+  },
+  "sections[0].notice": {
+   "ko": "위치를 정확히 알려주세요\n정확한 주소를 알면 주소를 말하고, 모르면 학교 이름, 캠퍼스, 건물 이름이나 주변의 큰 건물처럼 눈에 보이는 표지를 알려주세요. 휴대전화 위치 서비스(GPS)도 켜 두세요.\n· 동아대학교 승학캠퍼스 — 부산 사하구 낙동대로550번길 37\n· 동아대학교 부민캠퍼스 — 부산 서구 구덕로 225\n· 동아대학교 구덕캠퍼스 — 부산 서구 대신공원로 32",
+   "en": "Make sure they know where you are\nGive the exact address if you know it. If you do not, give the university, campus and building name, or a large building or landmark you can see, and turn on your phone's location services (GPS).\n· Dong-A University, Seunghak Campus — 부산 사하구 낙동대로550번길 37\n· Dong-A University, Bumin Campus — 부산 서구 구덕로 225\n· Dong-A University, Gudeok Campus — 부산 서구 대신공원로 32"
+  },
+  "sections[1].title": {
+   "ko": "긴급상황 표현",
+   "en": "Emergency phrases"
+  },
+  "sections[1].body": {
+   "ko": "한국어로 말하기 어렵다면 아래 문장을 그대로 읽어도 됩니다.",
+   "en": "If speaking Korean is hard, just read the Korean line out loud."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "경찰이 필요합니다",
+   "en": "I need the police."
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "I need the police."
+   ],
+   "en": [
+    "경찰이 필요합니다"
+   ],
+   "count": 1
+  },
+  "sections[1].notes[1].title": {
+   "ko": "구급차를 보내주세요",
+   "en": "Please send an ambulance."
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "Please send an ambulance."
+   ],
+   "en": [
+    "구급차를 보내주세요"
+   ],
+   "count": 1
+  },
+  "sections[1].notes[2].title": {
+   "ko": "불이 났습니다",
+   "en": "There is a fire."
+  },
+  "sections[1].notes[2].lines": {
+   "ko": [
+    "There is a fire."
+   ],
+   "en": [
+    "불이 났습니다"
+   ],
+   "count": 1
+  },
+  "sections[1].notes[3].title": {
+   "ko": "사람이 다쳤습니다",
+   "en": "Someone is injured."
+  },
+  "sections[1].notes[3].lines": {
+   "ko": [
+    "Someone is injured."
+   ],
+   "en": [
+    "사람이 다쳤습니다"
+   ],
+   "count": 1
+  },
+  "sections[1].notes[4].title": {
+   "ko": "저는 동아대학교에 있습니다",
+   "en": "I am at Dong-A University."
+  },
+  "sections[1].notes[4].lines": {
+   "ko": [
+    "I am at Dong-A University."
+   ],
+   "en": [
+    "저는 동아대학교에 있습니다"
+   ],
+   "count": 1
+  },
+  "sections[1].notes[5].title": {
+   "ko": "한국어를 잘 못합니다",
+   "en": "I don't speak Korean well."
+  },
+  "sections[1].notes[5].lines": {
+   "ko": [
+    "I don't speak Korean well."
+   ],
+   "en": [
+    "한국어를 잘 못합니다"
+   ],
+   "count": 1
+  },
+  "links[0].label": {
+   "ko": "경찰청 112신고 안내",
+   "en": "Korean National Police — 112"
+  },
+  "links[0].description": {
+   "ko": "범죄 · 긴급 경찰 신고 · 문자 · 영상 신고",
+   "en": "Crime and emergency police reports, including text and video reports"
+  },
+  "links[1].label": {
+   "ko": "소방청 119 구급신고 요령",
+   "en": "National Fire Agency — 119 ambulance calls"
+  },
+  "links[1].description": {
+   "ko": "구급차가 필요할 때 알릴 내용과 순서",
+   "en": "What to say, step by step, when you need an ambulance"
+  },
+  "links[2].label": {
+   "ko": "119안전신고센터 인터넷 신고",
+   "en": "National Fire Agency — report to 119 online"
+  },
+  "links[2].description": {
+   "ko": "말하기 어렵거나 한국말이 서툰 외국인을 위한 119 인터넷 신고",
+   "en": "Report to 119 online if you cannot speak or find Korean difficult"
+  }
+ }
+}

@@ -6,7 +6,6 @@
 
   "tab_home_label": "Home",
   "tab_map_label": "Map",
-  "tab_guide_label": "Guide",
   "tab_settings_label": "Settings",
 
   "startup_loading": "Starting Dong-A Mate…",
@@ -80,13 +79,30 @@
   "home_hero_title_highlight": "your new beginning",
   "home_hero_title_suffix": "!",
   "home_hero_subtitle": "Essential info and services for international students,\nquick and easy in Korea.",
-  "home_card_guide_desc": "Entry & visa, enrollment, certificates — all the admin how-tos.",
+  "home_card_guide_desc": "Visas, enrollment, certificates",
   "home_card_calendar_title": "Calendar",
-  "home_card_calendar_desc": "Key semester dates — course registration, exams, breaks.",
+  "home_card_calendar_desc": "Registration, exams, breaks",
   "home_card_map_title": "Campus map",
-  "home_card_map_desc": "Find buildings and key spots on the campus map.",
+  "home_card_map_desc": "Find buildings and rooms",
   "home_card_dining_title": "Today's menu",
-  "home_card_dining_desc": "Check cafeteria menus and opening hours.",
+  "home_card_dining_desc": "Menus and hours by cafeteria",
+  "home_greeting": "Where to today?",
+  "home_semesterWeek": "{year} Semester {term} · Week {week}",
+  "@home_semesterWeek": {
+    "placeholders": { "year": { "type": "int" }, "term": { "type": "int" }, "week": { "type": "int" } }
+  },
+  "home_break_summer": "{year} Summer break",
+  "@home_break_summer": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "home_break_winter": "{year} Winter break",
+  "@home_break_winter": {
+    "placeholders": { "year": { "type": "int" } }
+  },
+  "home_classroom_subtitle": "Find it by building name or room number",
+  "home_classroom_hint": "e.g. Engineering Bldg 2, 301",
+  "home_upcoming_title": "Upcoming",
+  "home_viewAll": "See all",
 
   "map_zoomIn_tooltip": "Zoom in",
   "map_focus_notFound": "Couldn't find this building. Please search again.",
@@ -95,7 +111,7 @@
   "map_zoomOut_tooltip": "Zoom out",
 
   "classroom_search_title": "Classroom search",
-  "classroom_help": "Pick a building and type the room number.\ne.g. S01 - 0301, S04 - 0306-1 (first 2 digits = floor; basement 1 is B101)",
+  "classroom_help": "Pick a building and type the room number.\ne.g. S01 - 0301, S04 - 0306-1 (first 2 digits = floor; basement 1 is B101)\n※ In a building with a floor plan you can search by room number only. To look by name, open the floor guide below.",
   "classroom_hint_building": "Select a building",
   "classroom_hint_room": "Room",
   "classroom_action_search": "Show location",
@@ -156,6 +172,7 @@
   "calendar_cat_exam": "Exams",
   "calendar_cat_holiday": "Holiday",
   "calendar_cat_graduation": "Graduation",
+  "calendar_thisMonth": "This month",
 
   "facility_category_building": "Building",
   "facility_category_classroom": "Classroom",
@@ -168,6 +185,10 @@
   "map_campus_seunghak": "Seunghak",
   "map_campus_gudeok": "Gudeok",
   "map_campus_bumin": "Bumin",
+  "map_campus_full": "{campus} Campus",
+  "@map_campus_full": {
+    "placeholders": { "campus": { "type": "String" } }
+  },
   "map_toggle_toList": "List",
   "map_toggle_toMap": "Map",
   "map_empty_noMarker": "No facilities in this category.",
@@ -202,6 +223,10 @@
   "facility_floors_error": "Couldn't load floor info.",
   "facility_floors_roomCount": "{count} rooms",
   "@facility_floors_roomCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "facility_floors_total": "{count} total",
+  "@facility_floors_total": {
     "placeholders": { "count": { "type": "int" } }
   },
   "facility_detail_error": "Couldn't load the info.",
@@ -239,6 +264,9 @@
   "guide_category_emergency": "Emergency & Help",
 
   "guide_appbar_title": "Admin guide",
+  "guide_search_hint": "What do you need? e.g. visa extension",
+  "guide_contactCard_title": "Can't find what you need?",
+  "guide_contactCard_body": "Ask the Office of International Affairs directly",
   "guide_categorySummary_immigration": "Visa, ARC, extension of stay",
   "guide_categorySummary_housing": "Dormitory & off-campus housing",
   "guide_categorySummary_living": "Banking, mobile, transit card",
@@ -269,13 +297,10 @@
   "guide_detail_error": "Couldn't load the guide.",
 
   "settings_title": "Settings",
-  "settings_language_saveFailed": "Couldn't save the language setting. You may need to set it again next time.",
   "settings_contact_emailSubject": "[Dong-A Mate] Feedback",
-  "home_langToggle_label": "Switch language",
   "settings_language_title": "Language",
-  "settings_language_ko": "한국어",
-  "settings_language_en": "English",
   "settings_favorites_title": "Favorites",
+  "settings_favorites_subtitle": "Saved buildings and restaurants in one place",
   "settings_section_info": "About",
   "settings_about": "About the app",
   "settings_dataSource": "Data sources",
@@ -287,7 +312,7 @@
   "@settings_version_value": {
     "placeholders": { "version": { "type": "String" }, "build": { "type": "String" } }
   },
-  "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place, in Korean and English. Browse the map and admin guides without signing in.",
+  "settings_about_body": "Dong-A Mate helps international students find campus facilities and administrative procedures in one place. The screens and the 30 admin guides are available in Korean, English, Simplified Chinese and Vietnamese; the academic calendar and the names and details of facilities and cafeterias are available in all four languages. In the floor guides and the cafeteria menus, the entries that have been translated appear in your language; the rest stay in Korean so they match the signs on the doors. Browse the map and admin guides without signing in.",
   "settings_dataSource_body": "Facility and administrative information is compiled from materials provided by the Office of International Affairs. Please also check the university's official notices for the latest updates. Maps are powered by Kakao Maps.",
   "settings_contact_body": "For bugs or content corrections, please email us below.",
   "settings_contact_emailLabel": "Send email",
@@ -301,5 +326,6 @@
   "favorites_action_openMap": "Open map",
   "favorites_action_openGuide": "Open guide",
   "favorites_removed": "Removed from favorites.",
-  "common_undo": "Undo"
+  "common_undo": "Undo",
+  "settings_language_save_failed": "The language changed now, but it could not be saved on this device. It may go back to the previous language when you restart the app."
 }

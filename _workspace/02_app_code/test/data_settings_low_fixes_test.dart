@@ -312,6 +312,9 @@ void main() {
         ),
       );
       await tester.pump();
+      // The redesigned home also lists the next academic events; let the mock
+      // calendar repository (120 ms) answer so no timer is left pending.
+      await tester.pump(const Duration(milliseconds: 200));
       return store;
     }
 
@@ -322,34 +325,53 @@ void main() {
       await pumpHome(tester, scale: 2.0);
       await tester.pump();
       expect(tester.takeException(), isNull);
+      // At 200 % the feature cards stack full width, so the calendar card is
+      // further down the scrolling home body; it must still be there, whole.
+      await tester.scrollUntilVisible(find.text('Calendar'), 200,
+          scrollable: find.byType(Scrollable).first);
+      expect(tester.takeException(), isNull);
       expect(find.text('Calendar'), findsOneWidget);
     });
 
-    testWidgets('language toggle exposes label, value and toggled state',
+    // With four languages the KO|EN toggle became a language button that
+    // opens the list (redesign). L-18/L-31 still hold: one labelled button
+    // whose value is the current language's full name, and the two-letter
+    // glyphs are not announced on their own. A two-state "toggled" flag no
+    // longer describes a four-way choice, so it is not asserted.
+    Future<void> pickLanguage(WidgetTester tester, String name) async {
+      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(name).last);
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('language button exposes its name, role and current language',
         (tester) async {
       final handle = tester.ensureSemantics();
       await pumpHome(tester);
-      final toggle = find.bySemanticsLabel('Switch language');
-      expect(toggle, findsOneWidget);
+      final button = find.byType(PopupMenuButton<String>);
+      expect(button, findsOneWidget);
+      // Named by its tooltip ("Language"), valued with the full language name.
       expect(
-        tester.getSemantics(toggle),
+        tester.getSemantics(button),
         isSemantics(
-          label: 'Switch language',
+          tooltip: 'Language',
           value: 'English',
           isButton: true,
-          hasToggledState: true,
-          isToggled: true,
           hasTapAction: true,
         ),
       );
-      // The raw "KO | EN" glyphs are not announced separately.
-      expect(find.bySemanticsLabel(RegExp('KO')), findsNothing);
+      // The raw "EN" / "KO" glyphs are not announced separately.
+      expect(find.bySemanticsLabel(RegExp(r'^(EN|KO)$')), findsNothing);
 
-      await tester.tap(find.byType(TextButton));
-      await tester.pumpAndSettle();
+      await pickLanguage(tester, '한국어');
+      final ko = lookupAppLocalizations(const Locale('ko'));
       expect(
-        tester.getSemantics(find.bySemanticsLabel('언어 전환')),
-        isSemantics(value: '한국어', isToggled: false),
+        tester.getSemantics(button),
+        isSemantics(
+            tooltip: ko.settings_language_title,
+            value: '한국어',
+            isButton: true),
       );
       handle.dispose();
     });
@@ -358,10 +380,15 @@ void main() {
         (tester) async {
       final store = await pumpHome(tester);
       store.fail = true;
-      await tester.tap(find.byType(TextButton));
-      await tester.pumpAndSettle();
+      await pickLanguage(tester, '한국어');
       // Now in Korean (in memory) with the Korean warning text.
-      expect(find.textContaining('언어 설정을 저장하지 못했어요'), findsOneWidget);
+      expect(find.byType(HomeScreen), findsOneWidget);
+      expect(
+          find.text(lookupAppLocalizations(const Locale('ko'))
+              .settings_language_save_failed),
+          findsOneWidget);
+      expect(find.text('학사일정'), findsOneWidget,
+          reason: 'the switch still happened in memory');
     });
 
     testWidgets('feature cards are buttons labeled with their title',
@@ -385,9 +412,10 @@ void main() {
       final handle = tester.ensureSemantics();
       await pumpHome(tester);
       final images = find.byType(Image);
-      // Emblem, hero photo and the four card illustrations.
-      expect(images, findsNWidgets(6));
-      for (var i = 0; i < 6; i++) {
+      // App-bar emblem and the hero card's emblem; the redesigned feature
+      // cards use icon tiles instead of illustrations.
+      expect(images, findsNWidgets(2));
+      for (var i = 0; i < 2; i++) {
         // An excluded image has no node of its own, so the nearest node is an
         // ancestor (card button / app bar) and never carries the image flag.
         final node = tester.getSemantics(images.at(i));
@@ -431,9 +459,10 @@ void main() {
       await pumpSettings(tester);
       // The version row is the last tile; the lazy ListView builds it on
       // scroll.
-      await tester.scrollUntilVisible(find.text('9.8.7 (42)'), 200,
+      // The redesigned footer is one line, "Version  9.8.7 (42)".
+      await tester.scrollUntilVisible(find.textContaining('9.8.7 (42)'), 200,
           scrollable: find.byType(Scrollable));
-      expect(find.text('9.8.7 (42)'), findsOneWidget);
+      expect(find.textContaining('9.8.7 (42)'), findsOneWidget);
       expect(find.textContaining('MVP'), findsNothing);
     });
 
@@ -443,7 +472,11 @@ void main() {
       store.fail = true;
       await tester.tap(find.text('한국어'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('언어 설정을 저장하지 못했어요'), findsOneWidget);
+      // Shown in the language just picked (L-27).
+      expect(
+          find.text(lookupAppLocalizations(const Locale('ko'))
+              .settings_language_save_failed),
+          findsOneWidget);
     });
   });
 }

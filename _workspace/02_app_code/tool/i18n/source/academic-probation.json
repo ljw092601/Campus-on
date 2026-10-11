@@ -1,0 +1,253 @@
+{
+ "id": "academic-probation",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "학사경고·제적 예방",
+   "en": "Academic Warning & Avoiding Dismissal"
+  },
+  "detail_title": {
+   "ko": "학사경고·유급을 받았거나 받을 것 같을 때",
+   "en": "If You Get — or May Get — an Academic Warning"
+  },
+  "summary": {
+   "ko": "평점 1.5 미만·F 9학점 이상이면 경고, 통산 3회면 제적",
+   "en": "GPA under 1.5 or 9+ F credits means a warning; 3 means dismissal"
+  },
+  "overview": {
+   "ko": "학사경고는 한 학기 성적이 낮은 학생에게 주의를 주는 제도입니다. 통산 3회가 되면 성적불량으로 제적되므로, 첫 경고부터 다음 학기 계획을 세우는 것이 중요합니다.\n\n외국인 유학생은 성적이 체류와도 이어집니다. 직전 학기 성적이 낮으면 시간제취업 허가가 제한될 수 있고 학교의 비자연장 단체접수에서도 빠질 수 있으며, 제적되면 학교가 출입국에 신고합니다.",
+   "en": "An academic warning is a caution given to students whose grades for a semester are low. A third warning in total means dismissal for poor grades, so plan the next semester from the first warning.\n\nFor international students, grades also affect your stay. Low grades last semester can limit part-time work permission and take you out of the university’s group visa extension, and if you are dismissed the university reports it to immigration."
+  },
+  "checklist_title": {
+   "ko": "경고를 받았다면 확인할 것",
+   "en": "If you have been warned, check"
+  },
+  "checklist": {
+   "ko": [
+    "학사경고 통지서와 지금까지 받은 경고 횟수",
+    "이번 학기 과목별 성적과 F를 받은 과목",
+    "다음 학기 수강신청 가능 학점(2회째라면 3학점 제한)",
+    "평생지도교수 상담 일정",
+    "시간제취업 허가·비자연장·장학금처럼 성적 기준이 붙은 허가나 혜택"
+   ],
+   "en": [
+    "The warning letter, and how many warnings you have in total",
+    "Your grades this semester and which courses you failed",
+    "How many credits you may register for next semester (3 fewer after a 2nd warning)",
+    "When you will meet your lifelong academic adviser",
+    "Permissions or benefits with grade conditions — part-time work, visa extension, scholarships"
+   ],
+   "count": 5
+  },
+  "steps": {
+   "ko": [
+    "통합정보시스템에서 성적과 경고 여부 확인",
+    "평생지도교수와 상담 — 경고를 받으면 반드시 해야 합니다.",
+    "낮은 성적의 원인(언어, 결석, 과목 난이도 등)을 정리하고 다음 학기 수강 계획 조정",
+    "재수강·수강 학점 조정 방법은 수강신청 안내와 소속 학과에서 확인",
+    "시간제취업이나 비자연장을 앞두고 있다면 국제교류과에 성적 요건을 미리 확인"
+   ],
+   "en": [
+    "Check your grades and any warning in the integrated information system.",
+    "Meet your lifelong academic adviser — this is required after a warning.",
+    "Work out why your grades were low (language, absences, course difficulty…) and adjust next semester’s plan.",
+    "Check how to retake courses or change your load in the course registration guidance and with your department.",
+    "If part-time work permission or a visa extension is coming up, ask the Office of International Affairs about the grade conditions."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "학사경고 2회째에는 수강신청 학점이 줄고, 그 학기에는 이월학점도 쓸 수 없습니다(수강신청 가이드 참고).",
+    "결석이 쌓여도 제적될 수 있습니다. 중간시험 종료일까지 무단결석이 통산 4주 이상이면 장기결석제적 대상입니다.",
+    "공부나 생활이 힘들다면 경고 전에라도 학생상담센터나 국제교류과에 도움을 요청하세요."
+   ],
+   "en": [
+    "After a 2nd warning your course load drops and you cannot use carried credits that semester (see the course registration guide).",
+    "Absences can also lead to dismissal: 4 or more weeks of unexcused absence in total by the end of midterms counts as long absence.",
+    "If study or life is getting hard, ask the student counseling centre or the Office of International Affairs for help — even before a warning."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "학사경고",
+    "유급",
+    "성적 불량",
+    "학점 낮음"
+   ],
+   "en": [
+    "academic warning",
+    "probation",
+    "low GPA",
+    "repeat year"
+   ],
+   "count": 4
+  },
+  "top_sections[0].title": {
+   "ko": "누가 학사경고를 받나요?",
+   "en": "Who gets an academic warning?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 동아대학교 학부 학사안내(학칙 제46조, 졸업·학사경고·유급에 관한 규정) 기준, 2026-09-13 확인. 대학원생은 소속 대학원 규정을 확인하세요.",
+   "en": "※ Based on Dong-A’s undergraduate academic guidance (academic rules art. 46 and its regulation on graduation, warnings and repeating a year), checked 2026-09-13. Graduate students should check their own school’s rules."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "📉 경고 기준",
+   "en": "📉 The threshold"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "매 학기 평점평균이 1.5 미만이거나, 9학점 이상을 F로 받은 경우(의예과·의학과 제외)",
+    "다음 학기 개강 전에 본인·보호자·소속대학장에게 통보되고(통지서 우편 발송), 평생지도교수와 상담해야 합니다."
+   ],
+   "en": [
+    "A semester GPA below 1.5, or 9 or more credits graded F (except pre-medicine and medicine).",
+    "You, your guardian and your college dean are notified before the next semester (a letter is posted), and you must meet your lifelong academic adviser."
+   ],
+   "count": 2
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "⚠️ 횟수가 쌓이면",
+   "en": "⚠️ As warnings add up"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "2회째: 그다음 학기 수강신청 학점이 3학점 제한됩니다.",
+    "통산 3회: 성적불량으로 제적됩니다(의예과·의학과 제외).",
+    "성적불량으로 제적되면 한 학기가 지난 뒤 여석이 있을 때 재입학할 수 있습니다."
+   ],
+   "en": [
+    "2nd warning: your course load next semester is cut by 3 credits.",
+    "3rd in total: dismissal for poor grades (except pre-medicine and medicine).",
+    "After dismissal for poor grades you may be readmitted after one semester, if a place is available."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "유급도 제적으로 이어져요",
+   "en": "Repeating a year can also lead to dismissal"
+  },
+  "sections[0].notes[0].title": {
+   "ko": "유급 기준",
+   "en": "When you repeat a year"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "직권유급: 해당 학년(1·2학기) 평점평균 1.2 미만(의예과·의학과는 기준이 다름)",
+    "희망유급: 해당 학년 평점평균 2.7 미만(간호학과 2.3 미만)이면 원하는 학생만 신청",
+    "유급되면 그 학년 수업료와 취득 학점이 모두 소멸하고 그 학년을 다시 이수합니다. B등급 이상이나 P등급 과목은 성적복원을 신청할 수 있습니다.",
+    "유급 통산 2회(희망유급 제외)면 성적불량으로 제적됩니다."
+   ],
+   "en": [
+    "Compulsory: a GPA below 1.2 for the academic year (both semesters); pre-medicine and medicine differ.",
+    "Voluntary: students with a year GPA below 2.7 (nursing: below 2.3) may ask to repeat.",
+    "Repeating cancels that year’s tuition and credits, and you take the year again. Courses graded B or above, or P, can be restored on request.",
+    "Two compulsory repeats in total (voluntary ones excluded) mean dismissal for poor grades."
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "성적과 체류",
+   "en": "Grades and your stay"
+  },
+  "sections[1].notice": {
+   "ko": "성적 기준은 허가 종류와 학기 공지마다 다를 수 있습니다. 신청 전에 해당 가이드와 국제교류과 공지로 확인하세요.",
+   "en": "Grade conditions can differ by permission and by semester notice. Check the relevant guide and the office notices before you apply."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "성적이 낮으면 영향을 받는 것",
+   "en": "What low grades can affect"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "시간제취업: 직전 학기 평균 성적이 C학점(2.0) 미만이면 허가가 제한될 수 있습니다(하이코리아 매뉴얼).",
+    "비자연장: 동아대 단체접수에서 직전 학기 성적 2.0 미만 재학생은 개인접수로 서류를 더 냅니다(체류기간 연장 가이드 참고).",
+    "제적되면 학교가 15일 안에 출입국에 신고하므로, 체류 계획을 따로 세워야 합니다."
+   ],
+   "en": [
+    "Part-time work: permission can be restricted if your previous semester average is below C (2.0) (HiKorea manual).",
+    "Visa extension: students with a previous-semester GPA below 2.0 are left out of Dong-A’s group filing and apply individually with extra documents (see the extension guide).",
+    "If you are dismissed, the university reports it to immigration within 15 days, so you need your own stay plan."
+   ],
+   "count": 3
+  },
+  "links[0].label": {
+   "ko": "동아대 학사안내 — 학사경고",
+   "en": "Dong-A academic guide — academic warning"
+  },
+  "links[0].description": {
+   "ko": "기준·통지·학점 제한·제적",
+   "en": "Threshold, notice, credit limit and dismissal (Korean)"
+  },
+  "links[1].label": {
+   "ko": "동아대 학사안내 — 유급",
+   "en": "Dong-A academic guide — repeating a year"
+  },
+  "links[1].description": {
+   "ko": "직권·희망유급과 성적복원",
+   "en": "Compulsory and voluntary repeats, restoring grades (Korean)"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[2].description": {
+   "ko": "재수강·학점 제한·이월학점",
+   "en": "Retakes, credit limits and carried credits"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 휴학·복학·자퇴와 체류",
+   "en": "Guide — Leave, Return, Withdrawal & Your Stay"
+  },
+  "links[3].description": {
+   "ko": "제적 후 체류와 재입학",
+   "en": "Your stay after dismissal, and readmission"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 체류기간 연장",
+   "en": "Guide — Extension of Stay"
+  },
+  "links[4].description": {
+   "ko": "단체접수 제외 대상과 개인접수 서류",
+   "en": "Who is left out of the group filing, and what to bring"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 상담 창구",
+   "en": "Guide — Counseling"
+  },
+  "links[5].description": {
+   "ko": "학업·생활 고민 상담",
+   "en": "Help with study and life worries"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[6].description": {
+   "ko": "성적과 시간제취업 허가 요건",
+   "en": "Grades and part-time work permission"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[7].description": {
+   "ko": "미등록제적을 피하려면",
+   "en": "Avoiding dismissal for non-registration"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 출결·공결·시험·성적",
+   "en": "Guide — Attendance, Exams & Grades"
+  },
+  "links[8].description": {
+   "ko": "결석·공결과 시험",
+   "en": "Absences, excused absence and exams"
+  },
+  "phrases[0].text": {
+   "ko": "학사경고를 받았는데 상담을 예약하고 싶습니다.",
+   "en": "I received an academic warning and would like to book a counseling session."
+  }
+ }
+}

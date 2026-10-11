@@ -1,0 +1,283 @@
+{
+ "id": "class-attendance-and-exams",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "출결·공결·시험·성적",
+   "en": "Attendance, Exams & Grades"
+  },
+  "detail_title": {
+   "ko": "수업에 빠질 때부터 성적을 확인할 때까지",
+   "en": "From Missing a Class to Checking Your Grades"
+  },
+  "summary": {
+   "ko": "결석이 수업시간의 1/3을 넘으면 F, 공결은 정해진 기한 안에 신청",
+   "en": "Miss over a third of class time and you get an F; apply for excused absence on time"
+  },
+  "overview": {
+   "ko": "동아대학교 학부 성적은 출석, 과제, 시험을 종합해 매깁니다. 수업실시 시간의 3분의 1을 넘게 결석하면 그 과목은 F(또는 NP)가 됩니다.\n\n부득이하게 결석해야 한다면 정해진 사유와 증빙으로 공결을 신청할 수 있습니다. 시험 시간·장소와 성적 공시·확정 날짜는 매 학기 학사일정과 공지로 확인하세요.",
+   "en": "Dong-A undergraduate grades combine attendance, coursework and exams. If you are absent for more than a third of a course’s class time, you get an F (or NP) for it.\n\nIf you have to miss class, you can apply for an excused absence (공결) with an accepted reason and proof. Check exam times and rooms, and the dates grades are posted and finalised, in each semester’s academic calendar and notices."
+  },
+  "checklist_title": {
+   "ko": "공결 신청 전에 준비할 것",
+   "en": "Before applying for an excused absence"
+  },
+  "checklist": {
+   "ko": [
+    "결석 사유가 인정 사유에 해당하는지(아래 대표 사유)",
+    "증빙서류 — 입·퇴원확인서, 전염병은 의사소견서 등",
+    "통합정보시스템 로그인 계정"
+   ],
+   "en": [
+    "Whether your reason is an accepted one (see common reasons below)",
+    "Proof — admission/discharge record, a doctor’s note for infectious disease, and so on",
+    "Your integrated information system login"
+   ],
+   "count": 3
+  },
+  "steps": {
+   "ko": [
+    "통합정보시스템 › 학생정보서비스 › 학부학사 › 수업 › 공결신청에서 신청",
+    "증빙서류를 신청 페이지에 올리기(방문 제출 불필요)",
+    "소속 단과대학 행정지원실의 승인 여부 확인",
+    "승인되면 공결허가서를 출력해 보관하고 전자출결(출결현황)에 반영됐는지 확인",
+    "전자출결을 쓰지 않는 과목은 공결허가서를 담당 교강사에게 제출"
+   ],
+   "en": [
+    "Apply under Integrated Information System › Student Information Service › Undergraduate › Classes › Excused absence.",
+    "Upload your proof on the application page (no need to visit).",
+    "Check whether your college’s administrative office approved it.",
+    "Once approved, print and keep the approval letter and check that electronic attendance shows it.",
+    "For courses without electronic attendance, give the approval letter to the instructor."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "공결 승인 뒤에도 전자출결에 반영됐는지 꼭 확인하세요.",
+    "시험 전날 시간표와 강의실 공지를 다시 확인하세요.",
+    "수강취소는 번복할 수 없고, 취소 후 신청학점이 0학점이면 이수학기에 포함되지 않습니다. 기간은 학기 공지를 확인하세요."
+   ],
+   "en": [
+    "Even after approval, check that electronic attendance shows it.",
+    "Recheck the exam time and room the day before.",
+    "A course drop cannot be undone, and if it leaves you with 0 credits the semester does not count as completed. Check the dates in the semester notice."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "출석",
+    "결석",
+    "공결",
+    "시험",
+    "중간고사",
+    "기말고사",
+    "성적 확인",
+    "성적 이의신청"
+   ],
+   "en": [
+    "attendance",
+    "absence",
+    "excused absence",
+    "exam",
+    "midterm",
+    "final exam",
+    "grades"
+   ],
+   "count": 8
+  },
+  "top_sections[0].title": {
+   "ko": "결석이 많으면 어떻게 되나요?",
+   "en": "What if I miss too many classes?"
+  },
+  "top_sections[0].notice": {
+   "ko": "외국인 유학생은 출석과 성적이 시간제취업 허가에도 영향을 줄 수 있어요. 조건은 시간제취업 가이드에서 확인하세요.",
+   "en": "For international students, attendance and grades can also affect part-time work permission — see the part-time work guide."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 동아대학교 학부 학사안내(공결·시험·성적관리·성적조회)와 2026-2학기 공결 신청 공지 기준, 2026-09-13 확인. 대학원은 이 가이드 범위가 아닙니다.",
+   "en": "※ Based on Dong-A’s undergraduate academic guidance (excused absence, exams, grading, grade checks) and the autumn 2026 excused-absence notice, checked 2026-09-13. Graduate study is outside this guide."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "⚠️ 기준",
+   "en": "⚠️ The rules"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "수업실시 시간의 3분의 1을 초과해 결석하면 해당 과목 성적은 F 또는 NP입니다.",
+    "중간시험 종료일까지 통산 무단결석이 4주 이상이면 장기결석으로 제적될 수 있습니다.",
+    "공결로 인정받을 수 있는 한도는 해당 학기 수업일수의 3분의 1까지입니다."
+   ],
+   "en": [
+    "Missing more than a third of a course’s class time means an F or NP for that course.",
+    "If unexcused absences add up to 4 weeks or more by the end of mid-terms, you can be dismissed for long absence.",
+    "Excused absences are allowed for up to a third of the semester’s class days."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "공결 기한·한도·사유",
+   "en": "Excused absence: deadlines, limits, reasons"
+  },
+  "sections[0].notice": {
+   "ko": "LMS 온라인 수업은 공결 대상이 아니므로 출석인정 기간 안에 들어야 합니다. 실시간 화상 수업은 학사안내(가능)와 2026-2학기 공지(대면 수업만)가 달라, 해당 학기 공지를 확인하세요.",
+   "en": "Online LMS classes are not covered — complete them within the attendance window. For live video classes the academic guidance (allowed) and the autumn 2026 notice (in-person classes only) differ, so check that semester’s notice."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "기한과 한도",
+   "en": "Deadlines and limits"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "학사안내는 「사유 발생 전후 2주 이내(휴일 포함)」로, 2026-2학기 공지의 절차표는 「사유 발생일로부터 2주 이내」로도 적고 있습니다. 늦지 않게 사유가 생기면 바로 신청하세요.",
+    "신청 후 2주 안에 증빙을 올리지 않으면 자동 취소됩니다.",
+    "일반 공결은 처리 중에만 시스템에서 취소할 수 있습니다. 다만 승인된 취·창업 공결의 조건을 더 이상 유지하지 못하면 공결취소원과 관련 서류를 내야 하므로 단과대학 행정지원실에 바로 문의하세요."
+   ],
+   "en": [
+    "The academic guidance says “within 2 weeks before or after the reason arises (holidays included)”, while the autumn 2026 notice’s procedure table also says “within 2 weeks of the reason arising”. Apply as soon as the reason arises.",
+    "If you do not upload proof within 2 weeks of applying, it is cancelled automatically.",
+    "A general excused absence can be cancelled in the system only while it is being processed. If you no longer meet the conditions of an approved employment or start-up absence, submit the cancellation form and documents — contact your college office straight away."
+   ],
+   "count": 3
+  },
+  "sections[0].notes[1].title": {
+   "ko": "대표적인 인정 사유",
+   "en": "Common accepted reasons"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "입원·전염성 질병: 입원·격리치료 기간",
+    "본인·배우자의 부모·자녀 사망: 5일 이내(토·공휴일 제외)",
+    "본인·배우자의 (외)조부모·형제자매 사망: 3일 이내(토·공휴일 제외)",
+    "학교가 주관·인정한 답사·현장실습 등: 해당 기간"
+   ],
+   "en": [
+    "Hospital stay or infectious disease: the hospital or isolation period",
+    "Death of your or your spouse’s parent or child: up to 5 days (excluding Saturdays and public holidays)",
+    "Death of your or your spouse’s grandparent or sibling: up to 3 days (excluding Saturdays and public holidays)",
+    "University-run or approved field trips or placements: the period itself"
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "시험",
+   "en": "Exams"
+  },
+  "sections[1].notice": {
+   "ko": "시험을 못 봤을 때의 처리(추가시험 등)나 공결이 시험에도 적용되는지는 학교 안내에 정해져 있지 않아요. 바로 담당 교수에게 연락하세요.",
+   "en": "The university’s guidance sets no rule for a missed exam (such as a make-up) or for whether an excused absence covers an exam — contact your instructor straight away."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "알아둘 것",
+   "en": "Good to know"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "중간시험은 개강 후 8주차, 기말시험은 15주차에 봅니다. 날짜는 학사일정으로 확인하세요.",
+    "강의시간표상 시간·강의실이 원칙이지만 바뀔 수 있고, 시간·장소를 몰라 못 본 책임은 학생에게 있습니다.",
+    "시험장에는 외국인등록증이나 여권을 가져가세요. 시험안내의 외국인 인정 신분증은 외국인등록증·여권·재외국민 주민등록증이며, 학생증과 모바일학생증은 외국인 칸에 없습니다. 시험 시작 전까지 입실하세요.",
+    "대리시험 등 부정행위는 정학·성적 무효 처분 대상입니다."
+   ],
+   "en": [
+    "Mid-terms are in week 8 and finals in week 15; check the dates in the academic calendar.",
+    "Exams are normally at the timetabled time and room, but these can change — missing one because you did not check is your responsibility.",
+    "Bring your Residence Card or passport — for international students the exam guidance accepts a Residence Card, passport or overseas-Korean resident card; student IDs, including the mobile student ID, are not on that list. Be in the room before the exam starts.",
+    "Cheating, such as sitting an exam for someone else, can lead to suspension and cancelled grades."
+   ],
+   "count": 4
+  },
+  "sections[2].title": {
+   "ko": "성적 확인과 이의신청",
+   "en": "Checking grades and raising a concern"
+  },
+  "sections[2].steps": {
+   "ko": [
+    "성적공시 기간에 성적입력조회로 성적 확인(기간은 학사일정)",
+    "강의평가를 마친 뒤 일정 시간이 지나야 조회됩니다(기말 평가 후 24시간, 중간·기말 모두 마쳤다면 12시간).",
+    "이의가 있으면 공시기간 안에 담당 교수에게 직접 이의신청",
+    "성적확정일 이후 다시 확인 — 공시기간 성적은 바뀔 수 있어요"
+   ],
+   "en": [
+    "During the grade review period, check your grades under grade entry lookup (dates in the academic calendar).",
+    "Grades appear some time after course evaluation: 24 hours after the final evaluation, or 12 hours if you did both.",
+    "If something looks wrong, raise it directly with the instructor within the review period.",
+    "Check again after grades are finalised — they can change during review."
+   ],
+   "count": 4
+  },
+  "sections[2].footnote": {
+   "ko": "※ 이의신청 결과 통지·정정 절차는 학교 안내에 자세히 적혀 있지 않습니다.",
+   "en": "※ The university’s guidance does not detail how the result of a grade concern is notified or corrected."
+  },
+  "links[0].label": {
+   "ko": "동아대 학사안내 — 공결",
+   "en": "Dong-A academic guide — excused absence"
+  },
+  "links[0].description": {
+   "ko": "인정 사유·기한·신청",
+   "en": "Reasons, deadlines and applying (Korean)"
+  },
+  "links[1].label": {
+   "ko": "동아대 학사안내 — 시험",
+   "en": "Dong-A academic guide — exams"
+  },
+  "links[1].description": {
+   "ko": "시험 시기·신분증·부정행위",
+   "en": "Exam periods, ID and misconduct (Korean)"
+  },
+  "links[2].label": {
+   "ko": "동아대 학사안내 — 성적관리 기준",
+   "en": "Dong-A academic guide — grading rules"
+  },
+  "links[2].description": {
+   "ko": "결석 1/3 초과 F 기준",
+   "en": "The over-one-third absence F rule (Korean)"
+  },
+  "links[3].label": {
+   "ko": "동아대 학사안내 — 성적조회",
+   "en": "Dong-A academic guide — checking grades"
+  },
+  "links[3].description": {
+   "ko": "공시·이의신청·확정",
+   "en": "Review, concerns and finalisation (Korean)"
+  },
+  "links[4].label": {
+   "ko": "동아대 학사일정",
+   "en": "Dong-A academic calendar"
+  },
+  "links[4].description": {
+   "ko": "시험·성적 공시·수강취소 날짜",
+   "en": "Exam, grade review and drop dates (Korean)"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 학사경고·제적 예방",
+   "en": "Guide — Academic Warning & Avoiding Dismissal"
+  },
+  "links[5].description": {
+   "ko": "장기결석·성적 불량 제적",
+   "en": "Dismissal for long absence or poor grades"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[6].description": {
+   "ko": "출석·성적 요건",
+   "en": "Attendance and grade conditions"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[7].description": {
+   "ko": "수강신청과 정정",
+   "en": "Registering and changing courses"
+  },
+  "phrases[0].text": {
+   "ko": "입원 때문에 결석했습니다. 공결 신청을 했는데 출결에 반영되었는지 확인해 주실 수 있을까요?",
+   "en": "I was absent because I was in hospital. I applied for an excused absence — could you check whether it shows in attendance?"
+  }
+ }
+}

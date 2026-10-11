@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/i18n/entity_i18n.dart';
 import 'facility.dart';
 
 /// When during the day a menu section is served.
@@ -284,6 +285,7 @@ class CafeteriaMenu {
     this.facilityId,
     this.order = 0,
     DiningAvailability? status,
+    this.i18n = noI18n,
   }) : _status = status;
 
   final String id;
@@ -334,6 +336,11 @@ class CafeteriaMenu {
   /// Display order within its campus group (admin sheet "표시 순서").
   final int order;
 
+  /// Chinese and Vietnamese text for `name` and `hours`. The menu lines are
+  /// not in here — they change daily and are translated by their own text
+  /// (see data/i18n/place_text.dart).
+  final EntityI18n i18n;
+
   /// Explicit availability when the data source provides one; null falls back
   /// to the legacy rule (no sections == closed) so mock data stays valid.
   final DiningAvailability? _status;
@@ -345,20 +352,59 @@ class CafeteriaMenu {
   bool get isClosed => status == DiningAvailability.closed;
   bool get isUnpublished => status == DiningAvailability.unpublished;
 
-  String name(Locale l) => _pick(l, nameKo, nameEn) ?? id;
+  /// Never falls back to [id]: an internal key must not reach the screen.
+  String name(Locale l) => _pick(l, nameKo, nameEn, 'name') ?? '—';
 
   /// Free-text hours note in the UI locale, if any. Structured hours are in
-  /// [hoursSummary]; the screen formats those with localized labels.
-  String? hoursNote(Locale l) => _pick(l, hoursKo, hoursEn);
+  /// [hoursSummary]; the screen formats those with localized labels. The
+  /// Chinese/Vietnamese text comes from [i18n] under the key `hours`.
+  String? hoursNote(Locale l) => _pick(l, hoursKo, hoursEn, 'hours');
 
-  static String? _pick(Locale l, String? ko, String? en) {
-    final wantKo = l.languageCode == 'ko';
-    final primary = wantKo ? ko : en;
-    final secondary = wantKo ? en : ko;
-    if (primary != null && primary.trim().isNotEmpty) return primary;
-    if (secondary != null && secondary.trim().isNotEmpty) return secondary;
-    return null;
+  String? _pick(Locale l, String? ko, String? en, String key) {
+    final t = pickI18nText(ko ?? '', en ?? '', l, i18n, key);
+    return t.isEmpty ? null : t;
   }
+
+  /// The same cafeteria with empty English fields filled in from [en] — see
+  /// [Facility.withEnglish] for why English needs this and the other languages
+  /// do not.
+  CafeteriaMenu withEnglish(Map<String, Object?> en) {
+    String? pick(String? current, String key) {
+      if ((current ?? '').trim().isNotEmpty) return current;
+      final v = en[key];
+      return v is String && v.trim().isNotEmpty ? v : current;
+    }
+
+    return _copy(
+      nameEn: pick(nameEn, 'name') ?? nameEn,
+      hoursEn: pick(hoursEn, 'hours'),
+      i18n: i18n,
+    );
+  }
+
+  /// The same cafeteria carrying [i18n].
+  CafeteriaMenu withI18n(EntityI18n i18n) =>
+      _copy(nameEn: nameEn, hoursEn: hoursEn, i18n: i18n);
+
+  CafeteriaMenu _copy({
+    required String nameEn,
+    required String? hoursEn,
+    required EntityI18n i18n,
+  }) =>
+      CafeteriaMenu(
+        id: id,
+        nameKo: nameKo,
+        nameEn: nameEn,
+        campus: campus,
+        sections: sections,
+        serviceHours: serviceHours,
+        hoursKo: hoursKo,
+        hoursEn: hoursEn,
+        facilityId: facilityId,
+        order: order,
+        status: _status,
+        i18n: i18n,
+      );
 
   /// Accepts both the current shape (`sections`, `hours: [{open, close}]`)
   /// and pre-redesign documents (`meals: [{type, items, price}]`, free-text
@@ -391,6 +437,7 @@ class CafeteriaMenu {
       facilityId: j['facilityId'] as String?,
       order: _intOrNull(j['order']) ?? 0,
       status: DiningAvailability.fromId(j['status'] as String?),
+      i18n: entityI18nFromJson(j['i18n']),
     );
   }
 
@@ -406,5 +453,6 @@ class CafeteriaMenu {
         'facilityId': facilityId,
         'order': order,
         'status': status.name,
+        if (entityI18nToJson(i18n) != null) 'i18n': entityI18nToJson(i18n),
       };
 }

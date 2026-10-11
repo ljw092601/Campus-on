@@ -1,4 +1,6 @@
+import '../../core/i18n/entity_i18n.dart';
 import '../../domain/entities/academic_event.dart';
+import '../i18n/calendar_translations.g.dart';
 import '../../domain/repositories/academic_calendar_repository.dart';
 
 /// PLACEHOLDER academic calendar until the official Dong-A schedule is
@@ -120,6 +122,13 @@ class MockAcademicCalendarRepository implements AcademicCalendarRepository {
   @override
   Future<List<AcademicEvent>> getEvents() async {
     await Future<void>.delayed(_latency);
-    return [..._events]..sort((a, b) => a.start.compareTo(b.start));
+    // Chinese and Vietnamese names come from the generated overlay, so the
+    // literals above stay the Korean/English the calendar was written with —
+    // the same split the guides use. An event that is not in the overlay falls
+    // back to English, then Korean.
+    return [
+      for (final e in _events)
+        e.withI18n(calendarTitleI18n[e.id] ?? noI18n),
+    ]..sort((a, b) => a.start.compareTo(b.start));
   }
 }

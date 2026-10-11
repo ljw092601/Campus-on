@@ -373,7 +373,7 @@ void main() {
   });
 
   group('L-7c/d classroom search screen', () {
-    // Explicit frames instead of pumpAndSettle: the dropdown menu's open /
+    // Explicit frames instead of pumpAndSettle: the building picker's open /
     // close transitions are what we wait for here.
     Future<void> settle(WidgetTester tester) async {
       for (var i = 0; i < 6; i++) {
@@ -381,12 +381,39 @@ void main() {
       }
     }
 
-    Future<void> pickBuilding(WidgetTester tester, String label) async {
-      await tester.tap(find.byType(TextField).first);
-      await settle(tester);
-      await tester.tap(find.text(label).last);
+    // The building field is a picker overlay (DONG-A-MATE redesign), not a
+    // DropdownMenu: the closed field shows its hint, and each list row shows
+    // the code and the building name as separate texts.
+    Future<void> openPicker(WidgetTester tester) async {
+      final l = AppLocalizations.of(
+          tester.element(find.byType(ClassroomSearchScreen)));
+      await tester.tap(find.text(l.classroom_hint_building));
       await settle(tester);
     }
+
+    /// The picker row (an InkWell) holding [code], checked to also hold
+    /// [name] — code and name of one row belong together.
+    Finder pickerRow(String code, String name) {
+      final row = find.ancestor(
+          of: find.text(code), matching: find.byType(InkWell));
+      expect(row, findsWidgets, reason: 'no picker row for $code');
+      expect(find.descendant(of: row.first, matching: find.text(name)),
+          findsOneWidget,
+          reason: '$code row should read "$name"');
+      return row.first;
+    }
+
+    Future<void> pickBuilding(
+        WidgetTester tester, String code, String name) async {
+      await openPicker(tester);
+      await tester.tap(pickerRow(code, name));
+      await settle(tester);
+      // The closed field shows the combined label (L-7d).
+      expect(find.text('$code · $name'), findsOneWidget);
+    }
+
+    // Suggestion rows: one ListTile per room inside the suggestions card.
+    final suggestionRows = find.byType(ListTile);
 
     // A family instance first created inside the test's fake-async zone
     // never leaves AsyncLoading (its awaited bundle future resolved in the
@@ -410,20 +437,17 @@ void main() {
       await tester.pumpWidget(app(const ClassroomSearchScreen()));
       await settle(tester);
 
-      // Open the dropdown: B04 is listed per wing with distinct names.
-      await tester.tap(find.byType(TextField).first);
+      // Open the picker: B04 is listed per wing with distinct names.
+      await openPicker(tester);
+      pickerRow('B04A', 'General Lecture Building (BA-BD) · Wing A');
+      pickerRow('B04B', 'General Lecture Building (BA-BD) · Wing B');
+      await tester.tap(pickerRow('S04', 'Engineering Building 2'));
       await settle(tester);
-      expect(find.text('B04A · General Lecture Building (BA-BD) · Wing A'),
-          findsWidgets);
-      expect(find.text('B04B · General Lecture Building (BA-BD) · Wing B'),
-          findsWidgets);
-      expect(find.text('S04 · Engineering Building 2'), findsWidgets);
-      await tester.tap(find.text('S04 · Engineering Building 2').last);
-      await settle(tester);
+      expect(find.text('S04 · Engineering Building 2'), findsOneWidget);
 
       // S04 has 131 drawn rooms → 60 shown, the rest announced.
       expect(entries.length, greaterThan(60));
-      expect(find.byType(Card), findsNWidgets(60));
+      expect(suggestionRows, findsNWidgets(60));
       final labels = AppLocalizations.of(
           tester.element(find.byType(ClassroomSearchScreen)));
       expect(find.text(labels.classroom_suggestions_more(entries.length - 60)),
@@ -433,7 +457,18 @@ void main() {
       await tester.enterText(find.byType(TextField).last, '0306');
       await settle(tester);
       expect(find.textContaining('more'), findsNothing);
-      expect(find.byType(Card), findsWidgets);
+      expect(suggestionRows, findsWidgets);
+    }, timeout: const Timeout(Duration(seconds: 60)));
+
+    testWidgets('wing choice is kept apart in the field after picking',
+        (tester) async {
+      await warmUp(tester);
+      await tester.pumpWidget(app(const ClassroomSearchScreen()));
+      await settle(tester);
+      await pickBuilding(
+          tester, 'B04B', 'General Lecture Building (BA-BD) · Wing B');
+      expect(find.text('B04A · General Lecture Building (BA-BD) · Wing A'),
+          findsNothing);
     }, timeout: const Timeout(Duration(seconds: 60)));
 
     testWidgets('pasting a full code with an en dash keeps the room half',
@@ -441,7 +476,7 @@ void main() {
       await warmUp(tester);
       await tester.pumpWidget(app(const ClassroomSearchScreen()));
       await settle(tester);
-      await pickBuilding(tester, 'S04 · Engineering Building 2');
+      await pickBuilding(tester, 'S04', 'Engineering Building 2');
 
       final room = find.byType(TextField).last;
       await tester.enterText(room, 'S04–0306-1');

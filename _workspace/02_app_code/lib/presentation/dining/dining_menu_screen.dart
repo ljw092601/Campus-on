@@ -14,6 +14,7 @@ import '../providers/dining_providers.dart';
 import '../providers/locale_provider.dart';
 import '../shared/widgets/state_views.dart';
 import '../shared/widgets/read_status.dart';
+import '../shared/widgets/ui_kit.dart';
 import 'cafeteria_card.dart';
 import 'dining_labels.dart';
 
@@ -57,7 +58,9 @@ List<CafeteriaMenu> cafeteriasOfGroup(
 /// header follows along (timer + app resume, L-12a); navigation is clamped to
 /// [diningPastDayLimit]/[diningFutureDayLimit] around today (L-12b) and a
 /// "Today" action brings the user back whenever they left today (L-12c).
-/// The selected campus group survives day changes.
+/// The selected campus group survives day changes. Pull-to-refresh re-fetches
+/// the shown day (including the empty states), so menus published via the
+/// admin sheet appear without restarting the app.
 class DiningMenuScreen extends ConsumerStatefulWidget {
   const DiningMenuScreen({super.key, this.initialGroup = CampusGroup.seunghak});
 
@@ -162,53 +165,25 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen>
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 4),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Symbols.chevron_left),
-                  tooltip: l.dining_prevDay,
-                  onPressed: _canShift(-1) ? () => _shiftDay(-1) : null,
-                ),
-                Expanded(
-                  child: Text(
-                    DateFormat.yMMMEd(locale.toLanguageTag()).format(_date),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Symbols.chevron_right),
-                  tooltip: l.dining_nextDay,
-                  onPressed: _canShift(1) ? () => _shiftDay(1) : null,
-                ),
-              ],
+            padding: EdgeInsets.fromLTRB(
+                dimens.spaceMd, 4, dimens.spaceMd, dimens.spaceSm),
+            child: _DateNavigator(
+              date: _date,
+              localeTag: locale.toLanguageTag(),
+              prevTooltip: l.dining_prevDay,
+              nextTooltip: l.dining_nextDay,
+              onPrev: _canShift(-1) ? () => _shiftDay(-1) : null,
+              onNext: _canShift(1) ? () => _shiftDay(1) : null,
             ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(
                 dimens.spaceMd, 0, dimens.spaceMd, dimens.spaceSm),
-            child: SegmentedButton<CampusGroup>(
-              segments: [
-                for (final g in CampusGroup.values)
-                  ButtonSegment(
-                    value: g,
-                    label: Text(g.label(l),
-                        maxLines: 1, overflow: TextOverflow.ellipsis),
-                  ),
-              ],
-              selected: {_group},
-              showSelectedIcon: false,
-              // Fill the width so each segment gets an equal, bounded share
-              // and the label can ellipsize at large text scales (L-18).
-              expandedInsets: EdgeInsets.zero,
-              style: const ButtonStyle(
-                visualDensity: VisualDensity.compact,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              onSelectionChanged: (selection) =>
-                  setState(() => _group = selection.first),
+            child: PillSegmented<CampusGroup>(
+              values: CampusGroup.values,
+              selected: _group,
+              labelOf: (g) => g.label(l),
+              onChanged: (g) => setState(() => _group = g),
             ),
           ),
           Expanded(
@@ -219,48 +194,69 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen>
                 retryLabel: l.common_retry,
                 onRetry: () => ref.invalidate(diningMenusProvider(_date)),
               ),
-              data: (menus) => ReadStatusContent(
+              data: (menus) {
+                // Pull-to-refresh re-fetches this day, so menus published via
+                // the admin sheet show up without restarting the app.
+                Future<void> refresh() =>
+                    ref.refresh(diningMenusProvider(_date).future);
+
+                // Empty states stay pullable. EmptyStateView is already its
+                // own viewport-filling scroll view (it scrolls at large text);
+                // making its physics always-scrollable lets the
+                // RefreshIndicator drag it even when the content fits.
+                Widget pullableEmpty(String title) => RefreshIndicator(
+                      onRefresh: refresh,
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(
+                            physics: const AlwaysScrollableScrollPhysics()),
+                        child: EmptyStateView(
+                          icon: Symbols.restaurant,
+                          title: title,
+                        ),
+                      ),
+                    );
+
+                return ReadStatusContent(
                   data: menus,
                   onRetry: () => ref.invalidate(diningMenusProvider(_date)),
                   child: Builder(builder: (context) {
                     // Firestore mode with no seeded cafeterias yields an empty
                     // list — show an empty state instead of a bare date header.
-                    if (menus.isEmpty) {
-                      return EmptyStateView(
-                        icon: Symbols.restaurant,
-                        title: l.dining_empty,
-                      );
-                    }
+                    if (menus.isEmpty) return pullableEmpty(l.dining_empty);
                     final cafeterias = cafeteriasOfGroup(menus, _group);
                     if (cafeterias.isEmpty) {
-                      return EmptyStateView(
-                        icon: Symbols.restaurant,
-                        title: l.dining_group_empty,
-                      );
+                      return pullableEmpty(l.dining_group_empty);
                     }
-                    return ListView(
-                      key: PageStorageKey(_group),
-                      padding: EdgeInsets.fromLTRB(dimens.spaceMd,
-                          dimens.spaceXs, dimens.spaceMd, dimens.spaceLg),
-                      children: [
-                        // The sample-data disclaimer only applies to mock data; in
-                        // Firestore mode the menus are real admin-entered content.
-                        if (!useFirestoreDining) ...[
-                          _NoticeBanner(text: l.dining_placeholder_notice),
-                          SizedBox(height: dimens.spaceMd - 4),
+                    return RefreshIndicator(
+                      onRefresh: refresh,
+                      child: ListView(
+                        key: PageStorageKey(_group),
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.fromLTRB(dimens.spaceMd,
+                            dimens.spaceSm, dimens.spaceMd, dimens.spaceLg),
+                        children: [
+                          // The sample-data disclaimer only applies to mock
+                          // data; in Firestore mode the menus are real
+                          // admin-entered content.
+                          if (!useFirestoreDining) ...[
+                            InfoBanner(text: l.dining_placeholder_notice),
+                            SizedBox(height: dimens.spaceMd),
+                          ],
+                          for (final c in cafeterias) ...[
+                            CafeteriaCard(
+                              key: ValueKey('cafeteria-${c.id}'),
+                              menu: c,
+                              isToday: _isToday,
+                              showCampus: _group == CampusGroup.gudeokBumin,
+                            ),
+                            SizedBox(height: dimens.spaceMd),
+                          ],
                         ],
-                        for (final c in cafeterias) ...[
-                          CafeteriaCard(
-                            key: ValueKey('cafeteria-${c.id}'),
-                            menu: c,
-                            isToday: _isToday,
-                            showCampus: _group == CampusGroup.gudeokBumin,
-                          ),
-                          SizedBox(height: dimens.spaceMd - 4),
-                        ],
-                      ],
+                      ),
                     );
-                  })),
+                  }),
+                );
+              },
             ),
           ),
         ],
@@ -269,29 +265,79 @@ class _DiningMenuScreenState extends ConsumerState<DiningMenuScreen>
   }
 }
 
-class _NoticeBanner extends StatelessWidget {
-  const _NoticeBanner({required this.text});
-  final String text;
+/// White pill with chevrons around the date ("10월 8일 (목)  2026"). A null
+/// [onPrev]/[onNext] disables that chevron (navigation window edge, L-12b).
+class _DateNavigator extends StatelessWidget {
+  const _DateNavigator({
+    required this.date,
+    required this.localeTag,
+    required this.prevTooltip,
+    required this.nextTooltip,
+    required this.onPrev,
+    required this.onNext,
+  });
+
+  final DateTime date;
+  final String localeTag;
+  final String prevTooltip;
+  final String nextTooltip;
+  final VoidCallback? onPrev;
+  final VoidCallback? onNext;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final fg = headingColor(context);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       decoration: BoxDecoration(
-        color: scheme.secondaryContainer.withValues(alpha: 0.5),
-        borderRadius: context.dimens.brMd,
+        color: scheme.surface,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: scheme.outlineVariant),
+        boxShadow: softShadow(context),
       ),
       child: Row(
         children: [
-          Icon(Symbols.info, size: 18, color: scheme.onSurfaceVariant),
-          const SizedBox(width: 10),
+          IconButton(
+            icon: const Icon(Symbols.chevron_left),
+            color: fg,
+            tooltip: prevTooltip,
+            onPressed: onPrev,
+          ),
           Expanded(
-            child: Text(text,
-                style: TextStyle(
-                    fontSize: 12.5,
-                    height: 1.4,
-                    color: scheme.onSurfaceVariant)),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: DateFormat.MMMEd(localeTag).format(date),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        color: fg,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '  ${DateFormat.y(localeTag).format(date)}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: scheme.outline,
+                      ),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Symbols.chevron_right),
+            color: fg,
+            tooltip: nextTooltip,
+            onPressed: onNext,
           ),
         ],
       ),

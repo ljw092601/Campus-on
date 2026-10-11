@@ -1,6 +1,7 @@
 import '../../domain/entities/dining_menu.dart';
 import '../../domain/entities/facility.dart';
 import '../../domain/repositories/dining_repository.dart';
+import '../i18n/place_text.dart';
 
 /// Mock dining data for the default dev mode (no Firebase required).
 ///
@@ -131,6 +132,12 @@ class MockDiningRepository implements DiningRepository {
   Future<List<CafeteriaMenu>> getMenus(DateTime date) async {
     await Future<void>.delayed(latency);
     final day = _Day(date);
+    // The generated English/Chinese/Vietnamese name and free-text hours note
+    // are laid over the Korean/English literals, the same way facilities get
+    // theirs. The table's `hours` entries translate [MockCafeteriaInfo.hoursKo]
+    // (exported by tool/i18n/place_source_export_test.dart); the structured
+    // [MockCafeteriaInfo.hours] are never translated as text — the screen
+    // formats them with localized labels.
     return [
       for (final c in cafeterias)
         switch (_dayMenu(c.id, day)) {
@@ -146,7 +153,7 @@ class MockDiningRepository implements DiningRepository {
               facilityId: c.facilityId,
               order: c.order,
               status: status,
-            ),
+            ).withI18n(cafeteriaOverlay(c.id)),
         },
     ];
   }
