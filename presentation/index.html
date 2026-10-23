@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>동아메이트 개발 발표</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --blue: #2F6FED;
+    --blue-soft: #E8F0FE;
+    --navy: #0F1E46;
+    --ink: #16203A;
+    --muted: #5B6680;
+    --line: #DCE3F0;
+    --bg: #F4F7FC;
+    --card: #FFFFFF;
+    --yellow: #FFF1C7;
+    --green: #E3F6EC;
+    --red: #FDE8E4;
+    --amber-ink: #8A5A00;
+    --red-ink: #B42318;
+    --green-ink: #1B7A4A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #0B1530; overflow: hidden; }
+  body { font-family: "Pretendard", -apple-system, "Malgun Gothic", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+  #stage { position: absolute; width: 1600px; height: 900px; left: 50%; top: 50%; transform-origin: center center; }
+  .slide { position: absolute; inset: 0; background: var(--bg); padding: 72px 96px; display: flex; flex-direction: column;
+           opacity: 0; pointer-events: none; transition: opacity .35s ease; overflow: hidden; border-radius: 4px; }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.dark { background: var(--navy); color: #fff; }
+
+  .kicker { font-size: 24px; font-weight: 700; color: var(--blue); letter-spacing: .02em; margin-bottom: 14px; }
+  .dark .kicker { color: #8FB1FF; }
+  h1 { font-size: 92px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+  h2 { font-size: 55px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 36px; }
+  h3 { font-size: 31px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+  p, li { font-size: 26px; line-height: 1.6; color: var(--muted); }
+  .dark p, .dark li { color: #B9C6E4; }
+  strong { color: var(--ink); font-weight: 700; }
+  .dark strong { color: #fff; }
+  ul.plain { list-style: none; }
+  ul.plain li { padding-left: 22px; position: relative; margin-bottom: 8px; }
+  ul.plain li::before { content: ""; position: absolute; left: 0; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+
+  .row { display: flex; gap: 32px; }
+  .grow { flex: 1; min-width: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+  .phone { width: 300px; border-radius: 30px; overflow: hidden; border: 8px solid #10182F; box-shadow: 0 24px 60px rgba(15,30,70,.25); background: #fff; flex-shrink: 0; align-self: flex-start; }
+  .phone img { display: block; width: 100%; }
+  .phone.sm { width: 250px; }
+
+  .tag { display: inline-block; white-space: nowrap; flex-shrink: 0; font-size: 18px; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); margin-right: 6px; }
+  .tag.y { background: var(--yellow); color: var(--amber-ink); }
+  .tag.g { background: var(--green); color: var(--green-ink); }
+  .tag.r { background: var(--red); color: var(--red-ink); }
+
+  .stat .num { font-size: 67px; font-weight: 800; color: var(--blue); letter-spacing: -0.03em; line-height: 1; }
+  .stat .num small { font-size: 34px; font-weight: 700; margin-left: 4px; }
+  .stat .lbl { font-size: 23px; color: var(--muted); margin-top: 10px; line-height: 1.45; }
+
+  code, .mono { font-family: "JetBrains Mono", Consolas, monospace; font-size: .9em; background: var(--blue-soft); color: var(--blue); padding: 2px 8px; border-radius: 6px; }
+
+  .footer { position: absolute; left: 96px; right: 96px; bottom: 32px; display: flex; justify-content: space-between; font-size: 18px; color: #9AA5BD; }
+  .dark .footer { color: #5F6F99; }
+
+  /* timeline */
+  .tl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 8px; position: relative; }
+  .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 23px; height: 4px; background: var(--line); border-radius: 2px; }
+  .tl .m { position: relative; padding-right: 28px; }
+  .tl .dot { width: 50px; height: 50px; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 22px; box-shadow: 0 0 0 8px var(--bg); }
+  .tl h3 { font-size: 29px; }
+  .tl li { font-size: 23px; margin-bottom: 6px; }
+
+  /* flow diagram */
+  .flow { display: flex; align-items: stretch; gap: 0; }
+  .flow .node { flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px; text-align: center; }
+  .flow .node h3 { font-size: 26px; margin-bottom: 6px; }
+  .flow .node p { font-size: 20px; line-height: 1.5; }
+  .flow .arrow { width: 54px; display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 36px; font-weight: 800; }
+  .flow .node.hl { border: 2px solid var(--blue); }
+
+  /* layers */
+  .layer { border-radius: 16px; padding: 18px 26px; display: flex; align-items: center; gap: 24px; margin-bottom: 12px; }
+  .layer .name { width: 210px; font-weight: 800; font-size: 26px; }
+  .layer .desc { font-size: 23px; color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 13px 16px; font-size: 23px; border-bottom: 1px solid var(--line); }
+  th { font-size: 19px; color: var(--muted); font-weight: 700; }
+  td { color: var(--ink); }
+
+  .bar { height: 20px; border-radius: 6px; display: inline-block; vertical-align: middle; }
+
+  /* chrome */
+  #progress { position: fixed; left: 0; top: 0; height: 4px; background: var(--blue); transition: width .3s; z-index: 10; }
+  #counter { position: fixed; right: 18px; bottom: 14px; color: #8FA0C8; font-size: 17px; z-index: 10; font-variant-numeric: tabular-nums; }
+  #hint { position: fixed; left: 18px; bottom: 14px; color: #5F6F99; font-size: 16px; z-index: 10; }
+  @media print {
+    html, body { overflow: visible; background: #fff; }
+    #stage { position: static; transform: none !important; width: auto; height: auto; }
+    .slide { position: relative; opacity: 1; width: 1600px; height: 900px; page-break-after: always; }
+    #progress, #counter, #hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="stage">
+
+<!-- 1. 표지 -->
+<section class="slide dark">
+  <div style="flex:1; display:flex; align-items:center; gap:72px;">
+    <div class="grow">
+      <div class="kicker">외국인 유학생 캠퍼스 생활 안내 앱 · 개발 경과 발표</div>
+      <h1>동아메이트<br><span style="color:#8FB1FF">DONG-A MATE</span></h1>
+      <p style="font-size:34px; margin-top:28px; max-width:760px;">외국인 유학생이 입학부터 졸업까지 필요한 학교 생활 정보를 한 앱에서 찾을 수 있도록 만들었습니다.</p>
+      <p style="margin-top:40px; font-size:24px;">Flutter · 카카오맵 · Firebase &nbsp;|&nbsp; 2026.07 – 2026.10</p>
+    </div>
+    <img src="img/icon.png" alt="동아메이트 아이콘" style="width:280px; border-radius:56px; box-shadow:0 30px 80px rgba(0,0,0,.4);">
+  </div>
+</section>
+
+<!-- 2. 문제 -->
+<section class="slide">
+  <div class="kicker">01 · 왜 만들었나</div>
+  <h2>유학생은 정보가 없는 게 아니라<br>흩어져 있어서 못 찾습니다</h2>
+  <div class="row" style="flex:1;">
+    <div class="grid2 grow" style="align-content:start;">
+      <div class="card"><h3>언어 장벽</h3><p>학교 공지·행정 안내 대부분이 한국어로만 제공됩니다.</p></div>
+      <div class="card"><h3>흩어진 정보</h3><p>지도, 학식, 학사일정, 비자 절차가 사이트마다 따로 있습니다.</p></div>
+      <div class="card"><h3>복잡한 행정</h3><p>외국인등록, 체류연장, 건강보험은 순서와 준비물을 알기 어렵습니다.</p></div>
+      <div class="card"><h3>낯선 캠퍼스</h3><p>승학·구덕·부민 3개 캠퍼스, 48개 건물에서 강의실을 찾아야 합니다.</p></div>
+    </div>
+    <div class="card" style="width:460px; background:var(--blue-soft); border:none;">
+      <h3 style="color:var(--blue)">타깃 페르소나</h3>
+      <p style="margin-top:12px;"><strong>교환학생 A</strong><br>한 학기 체류. 교통·식당·생활 정보로 빨리 적응해야 합니다.</p>
+      <p style="margin-top:18px;"><strong>학위과정 유학생 B</strong><br>장기 체류. 비자·수강신청 같은 행정 정보가 중요합니다.</p>
+      <p style="margin-top:18px;"><strong>공통 니즈</strong><br>모국어 지원 · 오프라인 접근 · 믿을 수 있는 최신 정보</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 타임라인 -->
+<section class="slide">
+  <div class="kicker">02 · 개발 경과</div>
+  <h2>4개월, 91개 커밋</h2>
+  <div class="tl">
+    <div class="m"><div class="dot">7월</div><h3>골격과 지도</h3>
+      <ul class="plain"><li>UX 설계 · Flutter 골격</li><li>카카오맵 실 키 연동</li><li>GPS 실시간 위치 · 나침반</li><li>Firebase 실연동</li></ul></div>
+    <div class="m"><div class="dot">8월</div><h3>콘텐츠 확장</h3>
+      <ul class="plain"><li>행정 가이드 18종 완성</li><li>48개 건물 층별 안내</li><li>강의실 위치 검색</li><li>오늘의 학식 · 앱명 확정</li></ul></div>
+    <div class="m"><div class="dot">9월</div><h3>운영 체계</h3>
+      <ul class="plain"><li>관리자 시트 → Firestore</li><li>학사일정 화면</li><li>도면 위 방 하이라이트</li><li>UI 리디자인 · 4개 언어</li></ul></div>
+    <div class="m"><div class="dot">10월</div><h3>품질 다지기</h3>
+      <ul class="plain"><li>AI 이중 감사 · E2E</li><li>Medium·Low 결함 수정</li><li>학식 모델 재설계 (식당 8곳)</li><li>Android 보안 설정</li></ul></div>
+  </div>
+  <div class="card" style="margin-top:auto; display:flex; gap:40px; align-items:center;">
+    <span class="tag">마일스톤</span>
+    <p><strong>07.14</strong> 첫 커밋 &nbsp;→&nbsp; <strong>08.31</strong> 동아메이트 이름·아이콘 확정 &nbsp;→&nbsp; <strong>09.27</strong> 4개 언어·가이드 34종 통합 &nbsp;→&nbsp; <strong>10.11</strong> main 통합 APK</p>
+  </div>
+</section>
+
+<!-- 5. 앱 한눈에 -->
+<section class="slide">
+  <div class="kicker">03 · 앱 한눈에 보기</div>
+  <h2 style="margin-bottom:28px;">홈에서 4가지 핵심 기능으로 바로 이동합니다</h2>
+  <div class="row" style="justify-content:space-between; align-items:flex-start;">
+    <figure style="text-align:center"><div class="phone sm"><img src="img/home.png" alt="홈 화면"></div><p style="margin-top:12px; font-size:22px;"><strong>홈</strong></p></figure>
+    <figure style="text-align:center"><div class="phone sm"><img src="img/guide.png" alt="행정 가이드"></div><p style="margin-top:12px; font-size:22px;"><strong>행정 가이드</strong></p></figure>
+    <figure style="text-align:center"><div class="phone sm"><img src="img/map.png" alt="캠퍼스 지도"></div><p style="margin-top:12px; font-size:22px;"><strong>캠퍼스 지도</strong></p></figure>
+    <figure style="text-align:center"><div class="phone sm"><img src="img/dining.png" alt="오늘의 학식"></div><p style="margin-top:12px; font-size:22px;"><strong>오늘의 학식</strong></p></figure>
+    <figure style="text-align:center"><div class="phone sm"><img src="img/calendar.png" alt="학사일정"></div><p style="margin-top:12px; font-size:22px;"><strong>학사일정</strong></p></figure>
+  </div>
+</section>
+
+<!-- 6. 지도 & 층별 안내 -->
+<section class="slide">
+  <div class="kicker">04 · 캠퍼스 지도 & 건물 층별 안내</div>
+  <div class="row" style="flex:1; gap:56px;">
+    <div class="grow">
+      <h2>건물 핀을 누르면<br>층마다 무엇이 있는지 보입니다</h2>
+      <ul class="plain">
+        <li><strong>3개 캠퍼스 전환</strong> — 승학 24 · 구덕 15 · 부민 9개 건물</li>
+        <li><strong>층별 안내</strong> — 34개 건물, 249개 층 정보를 markdown에서 자동 파싱해 시드 생성</li>
+        <li><strong>좌표 자동 수집</strong> — 학교 공식 캠퍼스맵 페이지에서 위경도 추출</li>
+        <li><strong>내 위치</strong> — GPS 실시간 추적 + 나침반 방향, 캠퍼스 밖이면 안내</li>
+        <li><strong>카테고리 필터</strong> — 건물·강의실·식당 등 6색 핀, 주변 장소 검색</li>
+      </ul>
+    </div>
+    <div class="row" style="gap:24px;">
+      <div class="phone sm"><img src="img/map_peek.png" alt="지도 피크 시트"></div>
+      <div class="phone sm"><img src="img/building.png" alt="건물 층별 안내"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. 강의실 검색 -->
+<section class="slide">
+  <div class="kicker">05 · 강의실 위치 검색</div>
+  <h2>강의실 번호만 입력하면 건물과 실제 방 위치를 찾아줍니다</h2>
+  <div class="flow" style="margin-bottom:32px;">
+    <div class="node"><h3>입력</h3><p><code>S04-0301</code><br>"공과대학 2호관 301"</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><h3>코드 정규화</h3><p>지하 B101, 세부 0101-A,<br>동 분할 B04A/B까지 해석</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><h3>지도 이동</h3><p>캠퍼스 자동 전환 후<br>해당 건물에 빨간 점</p></div>
+    <div class="arrow">→</div>
+    <div class="node hl"><h3>도면 하이라이트</h3><p>층 도면 위에 실제<br>방 모양을 강조 표시</p></div>
+  </div>
+  <div class="grid3">
+    <div class="card stat"><div class="num">86</div><div class="lbl">층별 도면 이미지 (webp)<br>PNG 도면 → OCR로 방 번호 좌표화</div></div>
+    <div class="card stat"><div class="num">48</div><div class="lbl">건물 영문명 등록<br>영어 이름으로도 검색 가능</div></div>
+    <div class="card"><h3>사용 편의</h3><p>더블탭 확대, 회전해도 확대 유지, 호수 입력 형식 자동 보정, 최근 검색 저장</p></div>
+  </div>
+</section>
+
+<!-- 8. 가이드 & 다국어 -->
+<section class="slide">
+  <div class="kicker">06 · 행정 가이드 & 다국어</div>
+  <div class="row" style="flex:1; gap:56px;">
+    <div class="phone"><img src="img/guide.png" alt="행정 가이드 화면"></div>
+    <div class="grow">
+      <h2>행정 절차를 6개 분야로 정리하고<br>4개 언어로 제공합니다</h2>
+      <div class="grid3" style="margin-bottom:24px;">
+        <div class="card" style="padding:18px 22px;"><strong>입국·체류</strong><p style="font-size:20px">비자 · 외국인등록 · 체류연장</p></div>
+        <div class="card" style="padding:18px 22px;"><strong>주거</strong><p style="font-size:20px">기숙사 · 교외 주거</p></div>
+        <div class="card" style="padding:18px 22px;"><strong>생활 인프라</strong><p style="font-size:20px">은행 · 휴대폰 · 교통카드</p></div>
+        <div class="card" style="padding:18px 22px;"><strong>건강·보험</strong><p style="font-size:20px">건강보험 · 보건소 · 병원</p></div>
+        <div class="card" style="padding:18px 22px;"><strong>학교 행정</strong><p style="font-size:20px">수강신청 · 증명서 · 국제교류</p></div>
+        <div class="card" style="padding:18px 22px;"><strong>긴급·도움</strong><p style="font-size:20px">연락처 · 사건사고 · 상담</p></div>
+      </div>
+      <ul class="plain">
+        <li>모든 가이드는 <strong>개요 → 준비물 → 단계 → 관련 링크·위치</strong> 순서로 통일</li>
+        <li>18종으로 시작해 <strong>34종</strong>까지 확장, 입국·체류 항목은 출입국 공식 자료로 교차 검증</li>
+        <li><span class="tag">한국어</span><span class="tag">English</span><span class="tag">中文</span><span class="tag">Tiếng Việt</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 9. 관리자 파이프라인 -->
+<section class="slide">
+  <div class="kicker">07 · 학식 · 학사일정 데이터</div>
+  <h2>관리자가 시트에 입력한 학식·학사일정을<br>앱이 받아와서 보여 줍니다</h2>
+  <div class="flow" style="margin-bottom:36px;">
+    <div class="node"><h3>Google Sheets</h3><p>관리자가 학식·학사일정을<br>익숙한 표 양식으로 입력</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><h3>Apps Script</h3><p>형식 검증, 잘못된 행 격리,<br>500건 단위 청크 커밋</p></div>
+    <div class="arrow">→</div>
+    <div class="node"><h3>Firestore</h3><p>보안 규칙으로 앱은 읽기만,<br>100MB 오프라인 캐시</p></div>
+    <div class="arrow">→</div>
+    <div class="node hl"><h3>앱</h3><p>당겨서 새로고침,<br>한국 시간 기준 날짜 표시</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>오늘의 학식</h3><p>식당 8곳, 시간대 × 유형 섹션, 메뉴별 가격, 휴게시간이 포함된 운영시간까지 표시합니다. 날짜를 넘겨 다른 날 메뉴도 볼 수 있습니다.</p></div>
+    <div class="card"><h3>학사일정</h3><p>현재 학년도(3월~이듬해 2월) 일정만 보여 주고 오늘 날짜를 강조합니다. 홈 화면에 "다가오는 일정"으로 함께 노출됩니다.</p></div>
+  </div>
+</section>
+
+<!-- 10. 아키텍처 -->
+<section class="slide">
+  <div class="kicker">08 · 앱 구조</div>
+  <h2>계층을 나눠서 데이터 출처를 바꿔도 화면은 그대로입니다</h2>
+  <div class="row" style="gap:48px;">
+    <div class="grow">
+      <div class="layer" style="background:#DCE7FD;"><div class="name">presentation</div><div class="desc">화면 12개 영역 — 홈, 지도, 강의실, 가이드, 학식, 학사일정, 검색, 설정 …</div></div>
+      <div class="layer" style="background:#E8F0FE;"><div class="name">domain</div><div class="desc">엔티티 + 저장소 인터페이스 (Firebase를 모르는 순수 Dart)</div></div>
+      <div class="layer" style="background:#F1F5FD;"><div class="name">data</div><div class="desc">Mock 저장소 ↔ Firestore 저장소를 플래그 하나로 교체</div></div>
+      <div class="layer" style="background:#fff; border:1px solid var(--line);"><div class="name">core</div><div class="desc">라우터, 테마 토큰, i18n, 레이아웃 유틸</div></div>
+      <p style="margin-top:14px; font-size:23px;">상태 관리 <strong>Riverpod</strong> (autoDispose + 5분 TTL 캐시) · 라우팅 <strong>go_router</strong> · 하단 3탭 셸</p>
+    </div>
+    <div style="width:420px;">
+      <div class="card" style="margin-bottom:20px;"><h3>도구 체인</h3>
+        <ul class="plain">
+          <li style="font-size:23px">층별 안내 md 파서 → 시드 JSON</li>
+          <li style="font-size:23px">도면 OCR 파이프라인</li>
+          <li style="font-size:23px">Firestore 시드 업로더</li>
+          <li style="font-size:23px">관리자 시트 (clasp 배포)</li>
+          <li style="font-size:23px">에뮬레이터 E2E 러너</li>
+        </ul>
+      </div>
+      <div class="card stat"><div class="num">106<small>파일</small></div><div class="lbl">Dart 소스 약 52,000줄 (생성 코드 제외)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. 품질 -->
+<section class="slide">
+  <div class="kicker">09 · 품질 검증</div>
+  <h2>서로 다른 AI 두 팀이 각자 감사하고, 결과를 교차 검증했습니다</h2>
+  <div class="row" style="gap:40px;">
+    <div class="grow">
+      <div class="card" style="margin-bottom:22px;">
+        <h3>9월 감사 — 결함 70건 (Critical 0)</h3>
+        <div style="margin-top:14px;">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:10px;"><span style="width:90px; font-size:22px;">High</span><span class="bar" style="width:calc(5/36*100%); background:#D92D20;"></span><strong style="font-size:24px">5</strong></div>
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:10px;"><span style="width:90px; font-size:22px;">Medium</span><span class="bar" style="width:calc(29/36*80%); background:#F79009;"></span><strong style="font-size:24px">29</strong></div>
+          <div style="display:flex; align-items:center; gap:14px;"><span style="width:90px; font-size:22px;">Low</span><span class="bar" style="width:80%; background:#98A2B3;"></span><strong style="font-size:24px">36</strong></div>
+        </div>
+        <p style="margin-top:14px; font-size:22px;">두 팀이 독립적으로 같은 결함을 찾은 건이 11건, 실제 기기에서 재현된 건이 30건 이상입니다.</p>
+      </div>
+      <div class="card">
+        <h3>수정 결과</h3>
+        <p>지도 필터·내 위치 동기화, 검색·뒤로가기 상태 보존, 시작·지도 로딩 실패 복구, 오프라인 구분 안내 등 High·Medium·Low 결함을 영역별로 나눠 수정하고 <strong>에뮬레이터 E2E로 다시 확인</strong>했습니다.</p>
+      </div>
+    </div>
+    <div style="width:430px; display:flex; flex-direction:column; gap:20px;">
+      <div class="card stat"><div class="num">137<small>/137</small></div><div class="lbl">단위·위젯 테스트 통과</div></div>
+      <div class="card stat"><div class="num">0</div><div class="lbl"><code>flutter analyze</code> 경고</div></div>
+      <div class="card"><h3>10월 재감사</h3><p style="font-size:23px">main 통합본을 Claude·Codex가 다시 감사. 남은 지적은 P1 1건(릴리스 서명), P2 약 10건입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. 숫자 -->
+<section class="slide dark">
+  <div class="kicker">10 · 숫자로 보는 현재</div>
+  <h2>지금까지 만든 것</h2>
+  <div class="grid4" style="margin-top:12px;">
+    <div class="stat"><div class="num" style="color:#8FB1FF">48</div><div class="lbl" style="color:#B9C6E4">건물 (3개 캠퍼스)</div></div>
+    <div class="stat"><div class="num" style="color:#8FB1FF">249</div><div class="lbl" style="color:#B9C6E4">층별 안내 데이터</div></div>
+    <div class="stat"><div class="num" style="color:#8FB1FF">86</div><div class="lbl" style="color:#B9C6E4">강의실 도면</div></div>
+    <div class="stat"><div class="num" style="color:#8FB1FF">34</div><div class="lbl" style="color:#B9C6E4">행정 가이드</div></div>
+    <div class="stat" style="margin-top:56px;"><div class="num" style="color:#8FB1FF">4</div><div class="lbl" style="color:#B9C6E4">지원 언어</div></div>
+    <div class="stat" style="margin-top:56px;"><div class="num" style="color:#8FB1FF">8</div><div class="lbl" style="color:#B9C6E4">학식 식당</div></div>
+    <div class="stat" style="margin-top:56px;"><div class="num" style="color:#8FB1FF">91</div><div class="lbl" style="color:#B9C6E4">커밋</div></div>
+    <div class="stat" style="margin-top:56px;"><div class="num" style="color:#8FB1FF">137</div><div class="lbl" style="color:#B9C6E4">통과한 테스트</div></div>
+  </div>
+</section>
+
+<!-- 13. 다음 단계 -->
+<section class="slide">
+  <div class="kicker">11 · 남은 과제</div>
+  <h2>출시까지 남은 일</h2>
+  <div class="grid3">
+    <div class="card"><span class="tag r">스토어 심사 필수</span><h3 style="margin-top:14px;">출시 준비</h3>
+      <ul class="plain"><li>Android 릴리스 서명 키 적용</li><li>개인정보처리방침 페이지 배포 (현재 404)</li><li>iOS 빌드 · 스토어 메타데이터</li></ul></div>
+    <div class="card"><span class="tag y">운영 데이터</span><h3 style="margin-top:14px;">Firestore 최신화</h3>
+      <ul class="plain"><li>가이드 34종 중 미게시 16종 업로드</li><li>학식 식당 3곳 → 8곳 반영</li><li>학기 중 학식·학사일정 정기 입력</li></ul></div>
+    <div class="card"><span class="tag g">개선</span><h3 style="margin-top:14px;">남은 P2 결함</h3>
+      <ul class="plain"><li>좁은 화면 피크 시트 overflow</li><li>스크린리더 접근성 보완</li><li>검색 시 컬렉션 재조회 최적화</li></ul></div>
+  </div>
+  <div class="card" style="margin-top:28px; background:var(--blue-soft); border:none;">
+    <p><strong>Phase 2 후보</strong> — 공지 알림(푸시), 로그인 기반 개인화, 유학생 커뮤니티/Q&amp;A, 다른 대학 확장</p>
+  </div>
+</section>
+
+<!-- 14. 마무리 -->
+<section class="slide dark">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+    <img src="img/icon.png" alt="" style="width:160px; border-radius:36px; margin-bottom:40px;">
+    <h1 style="font-size:101px;">감사합니다</h1>
+    <p style="font-size:31px; margin-top:24px;">동아메이트 — 유학생의 첫 학기를 함께하는 앱</p>
+    <p style="font-size:24px; margin-top:40px;">질문 받겠습니다</p>
+  </div>
+</section>
+
+</div>
+<div id="counter"></div>
+<div id="hint">← → / Space 이동 · F 전체화면</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const stage = document.getElementById('stage');
+  let cur = 0;
+  try { const s = parseInt(location.hash.slice(1), 10); if (s >= 1 && s <= slides.length) cur = s - 1; } catch (e) {}
+
+  function fit() {
+    const k = Math.min(innerWidth / 1600, innerHeight / 900);
+    stage.style.transform = `translate(-50%, -50%) scale(${k})`;
+  }
+  function show(i) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === cur));
+    document.getElementById('counter').textContent = `${cur + 1} / ${slides.length}`;
+    document.getElementById('progress').style.width = `${(cur + 1) / slides.length * 100}%`;
+    history.replaceState(null, '', '#' + (cur + 1));
+  }
+  addEventListener('resize', fit);
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'f' || e.key === 'F') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  });
+  addEventListener('click', e => { if (e.clientX > innerWidth / 3) show(cur + 1); else show(cur - 1); });
+  let tx = null;
+  addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1)); tx = null; });
+  fit(); show(cur);
+</script>
+</body>
+</html>
