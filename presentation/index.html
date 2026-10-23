@@ -43,6 +43,7 @@
   .dark strong { color: #fff; }
   ul.plain { list-style: none; }
   ul.plain li { padding-left: 22px; position: relative; margin-bottom: 8px; }
+  ul.map-list li { margin-bottom: 26px; line-height: 1.7; }
   ul.plain li::before { content: ""; position: absolute; left: 0; top: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
 
   .row { display: flex; gap: 32px; }
@@ -183,10 +184,10 @@
 <!-- 6. 지도 & 층별 안내 -->
 <section class="slide">
   <div class="kicker">04 · 캠퍼스 지도 & 건물 층별 안내</div>
-  <div class="row" style="flex:1; gap:56px;">
+  <div class="row" style="flex:1; gap:48px;">
     <div class="grow">
       <h2>건물 핀을 누르면<br>층마다 무엇이 있는지 보입니다</h2>
-      <ul class="plain">
+      <ul class="plain map-list">
         <li><strong>3개 캠퍼스 전환</strong> — 승학 24 · 구덕 15 · 부민 9개 건물</li>
         <li><strong>층별 안내</strong> — 34개 건물, 249개 층 정보를 markdown에서 자동 파싱해 시드 생성</li>
         <li><strong>좌표 자동 수집</strong> — 학교 공식 캠퍼스맵 페이지에서 위경도 추출</li>
@@ -195,8 +196,8 @@
       </ul>
     </div>
     <div class="row" style="gap:24px;">
-      <div class="phone sm"><img src="img/map_peek.png" alt="지도 피크 시트"></div>
-      <div class="phone sm"><img src="img/building.png" alt="건물 층별 안내"></div>
+      <div class="phone" style="width:310px;"><img src="img/map_peek.png" alt="지도 피크 시트"></div>
+      <div class="phone" style="width:310px;"><img src="img/building.png" alt="건물 층별 안내"></div>
     </div>
   </div>
 </section>
