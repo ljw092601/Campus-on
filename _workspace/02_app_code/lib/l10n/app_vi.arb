@@ -275,5 +275,10 @@
   "favorites_action_openGuide": "Mở hướng dẫn",
   "favorites_removed": "Đã xóa khỏi mục yêu thích.",
   "common_undo": "Hoàn tác",
-  "settings_language_save_failed": "Ngôn ngữ đã thay đổi nhưng chưa được lưu trên thiết bị này. Khi khởi động lại ứng dụng, ngôn ngữ có thể trở về lựa chọn trước."
+  "settings_language_save_failed": "Ngôn ngữ đã thay đổi nhưng chưa được lưu trên thiết bị này. Khi khởi động lại ứng dụng, ngôn ngữ có thể trở về lựa chọn trước.",
+  "settings_theme_title": "Chế độ hiển thị",
+  "settings_theme_system": "Theo hệ thống",
+  "settings_theme_light": "Sáng",
+  "settings_theme_dark": "Tối",
+  "settings_theme_save_failed": "Chế độ hiển thị đã được đổi nhưng không lưu được trên thiết bị này. Có thể quay lại chế độ cũ khi khởi động lại ứng dụng."
 }

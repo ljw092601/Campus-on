@@ -8,6 +8,7 @@ import '../../core/config/app_config.dart';
 import '../../core/i18n/app_languages.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../providers/locale_provider.dart';
+import '../providers/theme_mode_provider.dart';
 import '../shared/external_links.dart';
 import '../shared/widgets/ui_kit.dart';
 import 'app_version_provider.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final locale = ref.watch(localeProvider);
     final notifier = ref.read(localeProvider.notifier);
+    final themeMode = ref.watch(themeModeProvider);
     // Runtime version from the platform bundle (audit L-31) - nothing to show
     // while it loads; a dash if the platform channel is unavailable.
     final version = ref.watch(appVersionProvider).when(
@@ -71,6 +73,31 @@ class SettingsScreen extends ConsumerWidget {
                 onTap: () => context.go('/settings/favorites'),
               ),
             ],
+          ),
+          const SizedBox(height: 24),
+          SectionCaption(l.settings_theme_title),
+          RadioGroup<ThemeMode>(
+            groupValue: themeMode,
+            onChanged: (mode) {
+              if (mode == null) return;
+              _changeThemeMode(context, ref, mode);
+            },
+            child: GroupCard(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              dividerIndent: 12,
+              children: [
+                for (final (mode, label) in [
+                  (ThemeMode.system, l.settings_theme_system),
+                  (ThemeMode.light, l.settings_theme_light),
+                  (ThemeMode.dark, l.settings_theme_dark),
+                ])
+                  _ChoiceTile<ThemeMode>(
+                    value: mode,
+                    label: label,
+                    selected: themeMode == mode,
+                  ),
+              ],
+            ),
           ),
           const SizedBox(height: 24),
           SectionCaption(l.settings_section_info),
@@ -138,6 +165,20 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
 
+  Future<void> _changeThemeMode(
+      BuildContext context, WidgetRef ref, ThemeMode mode) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final failed = AppLocalizations.of(context).settings_theme_save_failed;
+    if (!await ref.read(themeModeProvider.notifier).setThemeMode(mode)) {
+      messenger
+        ..clearSnackBars()
+        ..showSnackBar(SnackBar(
+          duration: const Duration(seconds: 10),
+          content: Text(failed),
+        ));
+    }
+  }
+
   Future<void> _openUrl(BuildContext context, String url) async {
     final uri = Uri.tryParse(url);
     if (uri == null) return;
@@ -168,6 +209,39 @@ class _LanguageTile extends StatelessWidget {
       title: Text(
         appLanguageNames[code]!,
         locale: Locale(code),
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+          color: selected ? headingColor(context) : scheme.onSurface,
+        ),
+      ),
+    );
+  }
+}
+
+/// One plain radio choice (e.g. theme mode), styled like [_LanguageTile].
+class _ChoiceTile<T> extends StatelessWidget {
+  const _ChoiceTile({
+    required this.value,
+    required this.label,
+    required this.selected,
+  });
+
+  final T value;
+  final String label;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return RadioListTile<T>(
+      value: value,
+      activeColor: scheme.primary,
+      controlAffinity: ListTileControlAffinity.trailing,
+      contentPadding: const EdgeInsets.only(left: 12, right: 4),
+      shape: const RoundedRectangleBorder(),
+      title: Text(
+        label,
         style: TextStyle(
           fontSize: 17,
           fontWeight: selected ? FontWeight.w800 : FontWeight.w500,

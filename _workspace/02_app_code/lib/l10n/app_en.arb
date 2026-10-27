@@ -327,5 +327,10 @@
   "favorites_action_openGuide": "Open guide",
   "favorites_removed": "Removed from favorites.",
   "common_undo": "Undo",
-  "settings_language_save_failed": "The language changed now, but it could not be saved on this device. It may go back to the previous language when you restart the app."
+  "settings_language_save_failed": "The language changed now, but it could not be saved on this device. It may go back to the previous language when you restart the app.",
+  "settings_theme_title": "Appearance",
+  "settings_theme_system": "System default",
+  "settings_theme_light": "Light",
+  "settings_theme_dark": "Dark",
+  "settings_theme_save_failed": "The appearance changed, but it couldn't be saved on this device. It may revert after the app restarts."
 }

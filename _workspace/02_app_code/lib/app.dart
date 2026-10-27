@@ -9,6 +9,7 @@ import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'l10n/gen/app_localizations.dart';
 import 'presentation/providers/locale_provider.dart';
+import 'presentation/providers/theme_mode_provider.dart';
 
 class CampusOnApp extends ConsumerWidget {
   const CampusOnApp({super.key});
@@ -22,7 +23,7 @@ class CampusOnApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ref.watch(themeModeProvider),
       locale: locale,
       supportedLocales: supportedLocales,
       localizationsDelegates: const [

@@ -275,5 +275,10 @@
   "favorites_action_openGuide": "查看指南",
   "favorites_removed": "已从收藏中移除。",
   "common_undo": "撤销",
-  "settings_language_save_failed": "语言现在已切换，但未能保存到本设备。重启应用后可能会恢复为之前的语言。"
+  "settings_language_save_failed": "语言现在已切换，但未能保存到本设备。重启应用后可能会恢复为之前的语言。",
+  "settings_theme_title": "显示模式",
+  "settings_theme_system": "跟随系统",
+  "settings_theme_light": "浅色",
+  "settings_theme_dark": "深色",
+  "settings_theme_save_failed": "显示模式已切换，但未能保存在此设备上。重新启动应用后可能会恢复为之前的模式。"
 }

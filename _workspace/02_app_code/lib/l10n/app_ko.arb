@@ -311,5 +311,13 @@
   "settings_language_save_failed": "언어는 지금 바뀌었지만 이 기기에 저장하지 못했습니다. 앱을 다시 시작하면 이전 언어로 돌아갈 수 있어요.",
   "@settings_language_save_failed": {
     "description": "Shown when the chosen language could not be persisted (private window, blocked storage)."
+  },
+  "settings_theme_title": "화면 모드",
+  "settings_theme_system": "시스템 설정",
+  "settings_theme_light": "라이트",
+  "settings_theme_dark": "다크",
+  "settings_theme_save_failed": "화면 모드는 지금 바뀌었지만 이 기기에 저장하지 못했습니다. 앱을 다시 시작하면 이전 모드로 돌아갈 수 있어요.",
+  "@settings_theme_save_failed": {
+    "description": "Shown when the chosen theme mode could not be persisted."
   }
 }
