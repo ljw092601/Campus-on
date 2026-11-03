@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -30,11 +32,34 @@ android {
         versionName = flutter.versionName
     }
 
+    // 업로드 키: android/key.properties(git 제외)가 keystore를 가리킨다.
+    // 파일이 없는 환경(다른 개발자·CI)은 debug 키로 서명 — Play는 debug 서명 번들을
+    // 거부하므로 그런 빌드가 실수로 올라갈 일은 없다.
+    val keystoreProperties = Properties().apply {
+        val file = rootProject.file("key.properties")
+        if (file.exists()) file.inputStream().use { load(it) }
+    }
+    val hasUploadKey = keystoreProperties.getProperty("storeFile") != null
+
+    signingConfigs {
+        if (hasUploadKey) {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (hasUploadKey) {
+                signingConfigs.getByName("release")
+            } else {
+                logger.warn("android/key.properties 없음 — release를 debug 키로 서명합니다.")
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

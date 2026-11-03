@@ -31,8 +31,8 @@ class AppConfig {
   /// Contact email shown on the Settings → Contact page (S9).
   static const String contactEmail = 'donga.campus.on@gmail.com';
 
-  /// Privacy policy URL (store-review requirement). Placeholder until the real
-  /// policy is hosted (plan.md suggests GitHub Pages); overridable at build time.
+  /// Privacy policy URL (store-review requirement), hosted on the repo's
+  /// gh-pages branch (`privacy/index.html`); overridable at build time.
   static const String privacyPolicyUrl = String.fromEnvironment(
     'PRIVACY_URL',
     defaultValue: 'https://ljw092601.github.io/Campus-on/privacy',
