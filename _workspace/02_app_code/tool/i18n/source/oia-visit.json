@@ -26,7 +26,7 @@
   "checklist": {
    "ko": [
     "방문 목적 확인 — 비자, 체류, 장학, 교환학생 등 문의 내용에 따라 담당자가 다를 수 있습니다.",
-    "관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 있으므로 방문 전에 국제교류과 공지를 확인하세요. 단체접수 서류는 사무실이 아니라 공지에 적힌 장소에서 받을 수 있습니다.",
+    "관련 공지 확인 — 외국인등록, 체류기간 연장 등은 학교 단체접수 기간이 별도로 운영될 수 있으므로 방문 전에 국제교류과 공지를 확인하세요. 단체접수 장소는 사무실이 아니라 공지에 적힌 곳일 수 있습니다.",
     "필요한 서류 확인 — 업무에 따라 여권, 외국인등록증, 신청서, 재학증명서 등 필요한 서류가 달라질 수 있습니다.",
     "담당 번호 확인 — 비자 · 체류 · 학사 문의는 아래 「연락처」의 업무별 번호로 먼저 문의하세요. 홈페이지 Q&A · 상담신청 게시판은 「국제교류 프로그램」 메뉴 아래에 있습니다."
    ],
@@ -312,6 +312,78 @@
     "Korean language school (한국어학당): 051-200-6446"
    ],
    "count": 5
+  },
+  "sections[1].title": {
+   "ko": "전공 공부 · 학교 적응 도움받기",
+   "en": "Help with your major and settling in"
+  },
+  "sections[1].body": {
+   "ko": "한국어로 듣는 전공 수업이 어렵다면 학교의 학습 지원 프로그램을 이용할 수 있습니다. 운영 부서마다 대상과 신청 방법이 다릅니다.",
+   "en": "If following your major in Korean is hard, the university runs learning-support programmes. Each office has its own eligibility and way of applying."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 교수학습개발센터 페이지의 「신청」 링크는 아직 DECO를 가리킵니다. DECO는 학생역량통합관리시스템으로 통합되었으므로(상담 창구 가이드 참고), 프로그램을 찾을 수 없으면 센터에 신청 방법을 문의하세요.",
+   "en": "※ The centre’s “신청” (apply) links still point to DECO, which has been merged into the student competency system (see the Counseling guide). If you cannot find a programme there, ask the centre how to apply."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "🤝 국제교류과 Global Win-Win",
+   "en": "🤝 Global Win-Win (International Affairs)"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "글로벌 학습 튜터링 — 한국인 튜터 한 명이 외국인 신 · 편입생 튜티 한 명 또는 여러 명과 함께하는 학습 튜터링입니다. 같은 학과나 계열 학생과 우선 매칭됩니다.",
+    "글로벌 전공 스터디그룹 — 학부 2학년 이상 외국인 재학생 튜티들이 한국인 튜터와 함께하는 전공 그룹 스터디입니다.",
+    "2026학년도 1학기 공지 기준으로 한 학기 동안 주 1회 이상, 총 8차시 진행됩니다.",
+    "학기마다 올라오는 모집 공지는 한국인 튜터 모집입니다. 튜티로 참여하려면 국제교류과(051-200-6449, 6447)에 참여 방법을 문의하세요."
+   ],
+   "en": [
+    "Global learning tutoring — a Korean tutor working with one or several new or transfer international students as tutees, matched with students from the same department or field first.",
+    "Global major study groups — group study in your major for international undergraduates in year 2 or above, led by Korean tutors.",
+    "Per the notice for the first semester of 2026, it runs once a week or more over a semester, 8 sessions in all.",
+    "The recruitment notices posted each semester are for Korean tutors. To take part as a tutee, ask the office (051-200-6449, 6447) how to join."
+   ],
+   "count": 4
+  },
+  "sections[1].notes[1].title": {
+   "ko": "📚 교수학습개발센터",
+   "en": "📚 Center for Teaching and Learning"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "학습스타일 클리닉 · 기초전공지식컨설팅 · 동아스터디 등 — 센터 안내의 대상은 「동아대학교 재학생 누구나」입니다. 외국인 유학생을 따로 적지는 않습니다.",
+    "JUMP-UP 전공 멘토링 — 직전 학기 평점평균 4.0 미만 학생이 멘티로 참여합니다.",
+    "문의: 051-200-6291~2"
+   ],
+   "en": [
+    "Learning-style clinic, basic major consulting, Donga Study and more — the centre lists them for “동아대학교 재학생 누구나” (any enrolled Dong-A student); it does not mention international students separately.",
+    "JUMP-UP major mentoring — students with a previous-semester GPA below 4.0 can join as mentees.",
+    "Contact: 051-200-6291~2"
+   ],
+   "count": 3
+  },
+  "sections[1].links[0].label": {
+   "ko": "Global Win-Win — 글로벌 학습 튜터링",
+   "en": "Global Win-Win — learning tutoring"
+  },
+  "sections[1].links[0].description": {
+   "ko": "국제교류과 프로그램 소개",
+   "en": "Programme page (Korean)"
+  },
+  "sections[1].links[1].label": {
+   "ko": "교수학습개발센터",
+   "en": "Center for Teaching and Learning"
+  },
+  "sections[1].links[1].description": {
+   "ko": "학습 지원 프로그램과 공지",
+   "en": "Learning-support programmes and notices (Korean)"
+  },
+  "sections[1].links[2].label": {
+   "ko": "학습지원 프로그램 문의 (국제교류과)",
+   "en": "Ask about learning support (International Affairs)"
+  },
+  "sections[1].links[2].description": {
+   "ko": "051-200-6449",
+   "en": "051-200-6449"
   },
   "links[0].label": {
    "ko": "동아대학교 대외국제처 국제교류과",

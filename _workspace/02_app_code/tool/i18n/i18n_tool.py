@@ -117,11 +117,15 @@ def cmd_source():
                 for path, ko, en in entries
             },
         }
-        with open(os.path.join(SRC_DIR, f'{gid}.json'), 'w', encoding='utf-8') as f:
+        # 감사 05/062 S-7: 체크인된 blob 은 LF 다. Windows 기본 개행(CRLF)으로 쓰면
+        # 내용이 같은 34개도 바뀐 파일로 잡힌다.
+        with open(os.path.join(SRC_DIR, f'{gid}.json'), 'w', encoding='utf-8',
+                  newline='\n') as f:
             json.dump(payload, f, ensure_ascii=False, indent=1)
         index.append({'id': gid, 'category': doc.get('categoryId'),
                       'title_ko': doc.get('title_ko'), 'fields': len(entries)})
-    with open(os.path.join(SRC_DIR, '_index.json'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(SRC_DIR, '_index.json'), 'w', encoding='utf-8',
+              newline='\n') as f:
         json.dump(index, f, ensure_ascii=False, indent=1)
     print(f'wrote {len(index)} source files to tool/i18n/source/')
     print('total translatable fields:', sum(i['fields'] for i in index))

@@ -76,15 +76,19 @@
     "등록증 분실",
     "외국인등록증 분실",
     "재발급",
-    "잃어버렸어요"
+    "잃어버렸어요",
+    "사실증명",
+    "외국인등록 사실증명",
+    "사실증명서"
    ],
    "en": [
     "lost card",
     "lost residence card",
     "reissue",
-    "replacement card"
+    "replacement card",
+    "certificate of foreign resident registration"
    ],
-   "count": 5
+   "count": 8
   },
   "top_sections[0].title": {
    "ko": "재발급을 받는 경우",
@@ -147,13 +151,15 @@
   "sections[0].notes[1].lines": {
    "ko": [
     "외국인등록 사실증명을 발급받을 수 있지만, 은행·통신사·병원 등이 이를 등록증 대신 인정하는지는 제출처마다 다르므로 먼저 확인하세요.",
-    "처리 기간과 카드 수령 방법은 신청할 때 관서에 확인하세요."
+    "처리 기간과 카드 수령 방법은 신청할 때 관서에 확인하세요.",
+    "외국인등록 사실증명은 정부24에서 본인이 온라인으로 신청할 수 있습니다(인터넷 발급 무료, 본인확인 필요, 대리 신청 불가). 출입국 · 외국인관서나 시 · 군 · 구청 · 주민센터 창구에서도 신청할 수 있고 수수료는 1통 2,000원입니다. 창구는 방문 전에 발급이 되는지 확인하세요."
    ],
    "en": [
     "You can get a certificate of foreign resident registration, but whether a bank, phone company or hospital accepts it instead of the card is up to each of them — ask first.",
-    "Ask the office about processing time and how you will collect the card when you apply."
+    "Ask the office about processing time and how you will collect the card when you apply.",
+    "You can apply for the certificate of foreign resident registration yourself online at Government24 (정부24) — free online, identity check needed, no applying on someone else's behalf. You can also apply at an immigration office or a city, district or community centre counter for ₩2,000 a copy; check before you go that the counter issues it."
    ],
-   "count": 2
+   "count": 3
   },
   "sections[1].title": {
    "ko": "모바일 외국인등록증",
@@ -214,6 +220,14 @@
   "links[5].description": {
    "ko": "출국 시 등록증 반납",
    "en": "Handing in the card when leaving"
+  },
+  "links[6].label": {
+   "ko": "정부24 — 외국인등록 사실증명",
+   "en": "Government24 — Certificate of foreign resident registration"
+  },
+  "links[6].description": {
+   "ko": "온라인 본인 신청(무료) · 신청 방법과 제출 서류",
+   "en": "Apply online yourself (free) — how to apply and what to bring"
   },
   "phrases[0].text": {
    "ko": "외국인등록증을 잃어버려서 재발급을 신청하려고 합니다.",

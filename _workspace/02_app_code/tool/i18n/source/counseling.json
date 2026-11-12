@@ -32,23 +32,46 @@
    "ko": [
     "상담",
     "심리상담",
-    "고민"
+    "고민",
+    "학생상담센터",
+    "인권침해",
+    "인권센터",
+    "109",
+    "자살",
+    "자살예방",
+    "스터디부산허브",
+    "부산글로벌도시재단",
+    "1600-0051",
+    "마을변호사",
+    "법률상담",
+    "1345"
    ],
    "en": [
     "counseling",
     "counselling",
     "mental health",
-    "therapy"
+    "therapy",
+    "human rights",
+    "suicide",
+    "suicide prevention",
+    "109",
+    "student counseling centre",
+    "Study Busan Hub",
+    "Busan Global City Foundation",
+    "1600-0051",
+    "village lawyer",
+    "legal advice",
+    "1345"
    ],
-   "count": 3
+   "count": 15
   },
   "top_sections[0].title": {
    "ko": "지금 즉시 위험한 상황이라면",
    "en": "If you are in immediate danger"
   },
   "top_sections[0].body": {
-   "ko": "본인이나 다른 사람의 안전이 지금 위협받고 있다면 상담을 기다리지 말고 112 또는 119에 연락하세요.\n\n경찰의 도움이 필요하면 112, 화재 · 사고 · 부상 등 구조나 구급이 필요하면 119입니다.",
-   "en": "If your safety or someone else's is under threat right now, do not wait for a counselling appointment — call 112 or 119.\n\n112 reaches the police. 119 reaches the fire, rescue and ambulance service."
+   "ko": "본인이나 다른 사람의 안전이 지금 위협받고 있다면 상담을 기다리지 말고 112 또는 119에 연락하세요.\n\n경찰의 도움이 필요하면 112, 화재 · 사고 · 부상 등 구조나 구급이 필요하면 119입니다.\n\n자살과 관련된 생각이 든다면 24시간 운영되는 자살예방상담전화 109로 전화할 수 있습니다.",
+   "en": "If your safety or someone else's is under threat right now, do not wait for a counselling appointment — call 112 or 119.\n\n112 reaches the police. 119 reaches the fire, rescue and ambulance service.\n\nIf you are having thoughts of suicide, the suicide prevention line 109 answers 24 hours a day."
   },
   "top_sections[0].links[0].label": {
    "ko": "112 전화하기",
@@ -294,12 +317,12 @@
    "en": "Where the office is, and what it handles."
   },
   "sections[4].title": {
-   "ko": "인권침해 · 성희롱 · 성폭력 문제라면",
-   "en": "Harassment, sexual violence and rights violations"
+   "ko": "인권침해 문제라면",
+   "en": "If your rights have been violated"
   },
   "sections[4].body": {
-   "ko": "인권침해나 성희롱 · 성폭력 문제는 동아대학교 인권센터에서 상담과 신고를 접수하고 사건 처리를 지원합니다.",
-   "en": "Harassment, sexual violence and other violations of your rights go to the university's human rights centre (인권센터). It takes both counselling requests and formal reports, and supports the handling of a case."
+   "ko": "학교 구성원 사이에서 또는 구성원에게 일어난 인권침해 문제는 동아대학교 인권센터에서 상담과 신고를 접수하고 사건 처리를 지원합니다.",
+   "en": "Violations of your rights involving members of the university go to its human rights centre (인권센터). It takes both counselling requests and formal reports, and supports the handling of a case."
   },
   "sections[4].footnote": {
    "ko": "※ 조사나 처리 절차가 어떻게 진행되는지는 이 페이지에서 다루지 않습니다. 절차는 인권센터에 문의하세요.",
@@ -357,6 +380,160 @@
   "sections[5].links[1].description": {
    "ko": "보건복지상담센터 공식 안내",
    "en": "Official information from the national health and welfare call centre"
+  },
+  "sections[6].title": {
+   "ko": "스터디부산허브 (부산 외국인 유학생 통합지원허브)",
+   "en": "Study Busan Hub (Busan international student support hub)"
+  },
+  "sections[6].body": {
+   "ko": "학교 밖에도 유학생을 위한 상담 창구가 있습니다. 스터디부산허브는 부산에서 공부하는 외국인 유학생을 위한 창구로, 생활 · 행정 · 체류 · 근로 · 통번역 상담을 방문이나 전화로 받을 수 있습니다.\n\n노무 · 법률 · 체류 · 세무 · 금융 · 심리 · 부동산 · 인권 문제는 이메일이나 전화로 먼저 상담한 뒤, 예약해서 분야별 전문가에게 무료로 상담받을 수 있다고 안내되어 있습니다.",
+   "en": "There is help for international students outside the university too. Study Busan Hub is a desk for international students studying in Busan. You can visit or phone for advice on daily life, paperwork, your stay, work, and interpreting or translation.\n\nFor labour, legal, immigration-status, tax, money, mental-health, housing or human-rights problems, the hub says you first talk it through by email or phone, then book a free session with a specialist in that field."
+  },
+  "sections[6].footnote": {
+   "ko": "※ 학교 안의 상담은 위의 학생상담센터와 국제교류과가 먼저입니다. 자동응답에서 고를 번호는 허브 안내 페이지마다 다르게 적혀 있으니, 연결되면 스터디부산허브를 요청하세요.",
+   "en": "※ On campus, start with the counseling centre and the Office of International Affairs above. The hub's own pages give different menu numbers for the phone line, so just ask for Study Busan Hub when you get through."
+  },
+  "sections[6].notes[0].title": {
+   "ko": "연락처와 운영시간",
+   "en": "Contact and hours"
+  },
+  "sections[6].notes[0].lines": {
+   "ko": [
+    "대표번호 1600-0051 — 연결되면 「스터디부산허브」 연결을 요청하세요",
+    "이메일 studybusanhub@gmail.com",
+    "월~금 09:00~18:00",
+    "안내된 언어: 한국어 · 영어 · 중국어 · 베트남어 · 러시아어 · 우크라이나어"
+   ],
+   "en": [
+    "Main number 1600-0051 — when you get through, ask for Study Busan Hub",
+    "Email studybusanhub@gmail.com",
+    "Monday to Friday, 09:00–18:00",
+    "Languages listed: Korean, English, Chinese, Vietnamese, Russian, Ukrainian"
+   ],
+   "count": 4
+  },
+  "sections[6].notes[1].title": {
+   "ko": "위치",
+   "en": "Where it is"
+  },
+  "sections[6].notes[1].lines": {
+   "ko": [
+    "부산 연제구 중앙대로 1000, 2층",
+    "지하철 1호선 시청역 2번 출구에서 걸어서 약 5분"
+   ],
+   "en": [
+    "2F, 1000 Jungang-daero, Yeonje-gu, Busan",
+    "About a 5-minute walk from exit 2 of City Hall station (Line 1)"
+   ],
+   "count": 2
+  },
+  "sections[6].links[0].label": {
+   "ko": "1600-0051 전화하기",
+   "en": "Call 1600-0051"
+  },
+  "sections[6].links[0].description": {
+   "ko": "연결되면 스터디부산허브를 요청하세요",
+   "en": "Ask for Study Busan Hub when you get through"
+  },
+  "sections[6].links[1].label": {
+   "ko": "스터디부산허브 — 위치 · 연락처",
+   "en": "Study Busan Hub — location and contact"
+  },
+  "sections[6].links[1].description": {
+   "ko": "주소 · 전화 · 운영시간 · 언어 (한국어)",
+   "en": "Address, phone, hours and languages (Korean page)"
+  },
+  "sections[6].links[2].label": {
+   "ko": "스터디부산허브 — 주요 지원프로그램",
+   "en": "Study Busan Hub — programmes"
+  },
+  "sections[6].links[2].description": {
+   "ko": "생활상담 · 전문상담 · 교육 · 취업 · 건강관리 지원",
+   "en": "Counselling, classes, jobs and health support"
+  },
+  "sections[7].title": {
+   "ko": "부산글로벌도시재단 외국인 종합상담",
+   "en": "Busan Global City Foundation help line for foreign residents"
+  },
+  "sections[7].body": {
+   "ko": "부산글로벌도시재단은 부산에 사는 외국인을 위한 종합상담(부산외국인통합콜센터)을 운영합니다. 법률 · 임금 · 고용 · 출입국과 생활 전반을 무료로 상담하며, 전화 · 방문 · 실시간 SNS(페이스북 · 카카오톡)로 이용할 수 있습니다.\n\n노무 · 법률 · 체류 · 세무 · 부동산 · 인권 분야 전문가 상담은 1600-0051로 미리 예약해야 합니다.",
+   "en": "The Busan Global City Foundation runs a general help line for foreign residents of Busan (부산외국인통합콜센터). Advice on legal questions, wages, employment, immigration and everyday life is free, by phone, in person or by live chat on Facebook or KakaoTalk.\n\nSessions with specialists in labour, law, immigration status, tax, housing and human rights must be booked in advance on 1600-0051."
+  },
+  "sections[7].footnote": {
+   "ko": "※ 이 상담은 유학생만이 아니라 부산에 사는 외국인 모두를 위한 창구입니다. 유학생을 위한 창구는 위의 스터디부산허브입니다.",
+   "en": "※ This line is for all foreign residents of Busan, not only students. The desk for international students is Study Busan Hub, above."
+  },
+  "sections[7].notes[0].title": {
+   "ko": "연락처와 운영시간",
+   "en": "Contact and hours"
+  },
+  "sections[7].notes[0].lines": {
+   "ko": [
+    "대표번호 1600-0051",
+    "월~금 09:00~18:00 (공휴일 · 대체공휴일 제외)",
+    "안내된 언어: 한국어 · 영어 · 중국어 · 베트남어 · 인도네시아어 · 러시아어 (같은 페이지의 다른 안내에는 우즈베크어도 있습니다)",
+    "부산 연제구 중앙대로 1000 국민연금 부산회관 13층"
+   ],
+   "en": [
+    "Main number 1600-0051",
+    "Monday to Friday, 09:00–18:00 (closed on public and substitute holidays)",
+    "Languages listed: Korean, English, Chinese, Vietnamese, Indonesian, Russian (another part of the same page also lists Uzbek)",
+    "13F, NPS Busan Bldg., 1000 Jungang-daero, Yeonje-gu, Busan"
+   ],
+   "count": 4
+  },
+  "sections[7].links[0].label": {
+   "ko": "1600-0051 전화하기",
+   "en": "Call 1600-0051"
+  },
+  "sections[7].links[0].description": {
+   "ko": "부산외국인통합콜센터",
+   "en": "Busan help line for foreign residents"
+  },
+  "sections[7].links[1].label": {
+   "ko": "부산글로벌도시재단 — 외국인 종합상담",
+   "en": "Busan Global City Foundation — help line page"
+  },
+  "sections[7].links[1].description": {
+   "ko": "상담 내용 · 언어 · 이용 방법 (한국어)",
+   "en": "What it covers, languages, how to use it (Korean page)"
+  },
+  "sections[8].title": {
+   "ko": "1345 외국인 마을변호사 법률상담",
+   "en": "Free legal advice through 1345 (village lawyers)"
+  },
+  "sections[8].body": {
+   "ko": "법률 문제를 한국어로 설명하기 어렵다면 법무부 외국인종합안내센터(1345)를 통해 「외국인을 위한 마을변호사」 무료 법률상담을 요청할 수 있습니다. 법무부 안내는 국내에 사는 외국인이면 체류자격과 관계없이 이용할 수 있다고 적고 있습니다.\n\n1345에 전화해 상담 언어를 고른 뒤 법률상담을 요청하면, 필요에 따라 변호사와 바로 연결되거나 1345 상담원이 함께하는 3자 통역으로 상담이 진행된다고 안내되어 있습니다.",
+   "en": "If a legal problem is hard to explain in Korean, you can ask the Ministry of Justice's immigration contact centre (1345) for free legal advice from a \"village lawyer for foreigners\" (외국인을 위한 마을변호사). The ministry says any foreign resident of Korea can use it, whatever their status of stay.\n\nCall 1345, choose your language and ask for legal advice. The ministry says you are then put through to a lawyer directly or, if needed, the 1345 adviser joins the call to interpret."
+  },
+  "sections[8].footnote": {
+   "ko": "※ 상담이 무료라는 뜻이며, 소송 대리나 계속 상담까지 보장한다는 뜻은 아닙니다. 예약 · 대기 · 분야별 배정 방식은 공개 안내로 확인되지 않았습니다.",
+   "en": "※ The advice itself is free. That does not promise representation in court or ongoing help, and how sessions are booked or assigned is not published."
+  },
+  "sections[8].notes[0].title": {
+   "ko": "1345 이용 안내",
+   "en": "Using 1345"
+  },
+  "sections[8].notes[0].lines": {
+   "ko": [
+    "국번 없이 1345 — 평일 09:00~22:00(공휴일 제외)",
+    "18:00 이후에는 안내 언어가 한국어 · 영어 · 중국어로 줄어듭니다",
+    "법무부 안내에 1345 전화는 「유료」로 표기되어 있습니다(통화요금)"
+   ],
+   "en": [
+    "1345 (no area code) — weekdays 09:00–22:00, closed on public holidays",
+    "After 18:00 the line runs in Korean, English and Chinese only",
+    "The ministry marks calls to 1345 as charged (you pay the call)"
+   ],
+   "count": 3
+  },
+  "sections[8].links[0].label": {
+   "ko": "법무부 — 외국인종합안내센터(1345)",
+   "en": "Ministry of Justice — 1345 contact centre"
+  },
+  "sections[8].links[0].description": {
+   "ko": "상담 시간 · 언어 · 마을변호사 3자 통역 지원 (한국어)",
+   "en": "Hours, languages and village-lawyer interpreting (Korean page)"
   },
   "links[0].label": {
    "ko": "학생상담센터 홈페이지",

@@ -1,6 +1,12 @@
 import 'package:campus_on/app.dart';
+import 'package:campus_on/data/mock/guide_items_arrival.dart';
+import 'package:campus_on/data/mock/guide_items_disaster.dart';
 import 'package:campus_on/data/mock/guide_items_expansion.dart';
+import 'package:campus_on/data/mock/guide_items_extra.dart';
+import 'package:campus_on/data/mock/guide_items_graduate.dart';
+import 'package:campus_on/data/mock/guide_items_mobility.dart';
 import 'package:campus_on/data/mock/guide_items_safety.dart';
+import 'package:campus_on/data/mock/guide_items_support.dart';
 import 'package:campus_on/data/mock/mock_data.dart';
 import 'package:campus_on/domain/entities/admin_guide.dart';
 import 'package:campus_on/domain/repositories/guide_repository.dart';
@@ -139,6 +145,15 @@ void main() {
     expect(find.text('Prepaid plans'), findsOneWidget);
     expect(find.text('Postpaid plans'), findsOneWidget);
     expect(find.text('Best for'), findsNWidgets(2));
+    // r24 후보 29 added the M-Safer section after the postpaid one, which
+    // pushed the tips below the test surface — scroll to each instead.
+    await tester.scrollUntilVisible(
+        find.text('Check Lines in Your Name and Block New Ones'), 400);
+    await tester.pumpAndSettle();
+    expect(find.text('Check Lines in Your Name and Block New Ones'),
+        findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Good to know'), 400);
+    await tester.pumpAndSettle();
     expect(find.text('Good to know'), findsOneWidget);
     // The KT conditions made the page taller than the test surface, so the
     // last section needs a scroll (same as the nearby-store test below).
@@ -737,7 +752,9 @@ void main() {
       'Dong-A University course registration',
       'Dong-A University single sign-on',
       'Dong-A University academic notices',
-      'Registration guide',
+      // r22 R4-3: the address says spring but the page is the 2nd-semester
+      // 2026 guide, so the label names the edition it actually is.
+      'Registration guide (2nd semester 2026)',
       'Curriculum guide',
       'Retake guidance',
       'Removal from the register',
@@ -1409,6 +1426,8 @@ void main() {
         '/guide/item/campus-clinic',
         '/guide/item/health-insurance',
         '/guide/item/emergency-contacts',
+        // r22 R2: the hub's table of hospitals, languages and benefits.
+        'https://mybusan.kr/studyhub/sub1_1.php',
       ],
     );
     // campus-clinic links here, so the pair is symmetric.
@@ -1471,6 +1490,10 @@ void main() {
         'tel:119',
         '/guide/item/health-insurance',
         'https://www.e-gen.or.kr/',
+        // r22 R2: the hub's health-support page and the foundation's free
+        // escort-interpreting page, both in the partner-hospital section.
+        'https://mybusan.kr/studyhub/sub1_1.php',
+        'https://mybusan.kr/sub4/sub3_3.php',
       ],
     );
 
@@ -1509,6 +1532,48 @@ void main() {
     // No named hospital, and no Dong-A hospital building in particular.
     expect(dump.contains('동아대학교병원'), isFalse);
     expect(dump.contains('대신요양병원'), isFalse);
+    // r22 R2: the only hospitals named are the ones Busan's Study Busan Hub
+    // lists as partner hospitals for international students, and only inside
+    // that section — which says the hospital decides any benefit, the app
+    // promises none, and the student should ask the hospital first.
+    final partner = item.sections
+        .singleWhere((s) => s.titleKo == '부산 유학생 지원 의료기관');
+    // 감사 05/074 R-1: English names too.
+    const partnerNames = [
+      '좋은강안병원', '동의의료원', '대동병원', '이루미치과',
+      'Good Gang-an Hospital', 'Dong-Eui Medical Center', 'Daedong Hospital',
+      'Erumi Dental Clinic',
+    ];
+    final partnerStrings = [
+      partner.bodyKo, partner.bodyEn, partner.footnoteKo, partner.footnoteEn,
+      for (final n in partner.notes) ...[...n.linesKo, ...n.linesEn],
+    ].whereType<String>().toList();
+    for (final name in partnerNames) {
+      expect(partnerStrings.join(' ').contains(name), isTrue, reason: name);
+    }
+    final outside =
+        partnerStrings.fold(dump, (d, x) => d.replaceAll(x, ''));
+    for (final name in partnerNames) {
+      expect(outside.contains(name), isFalse, reason: 'named outside: $name');
+    }
+    expect(partner.footnoteKo, contains('이 앱이 적용을 약속하지 않습니다'));
+    expect(partner.bodyKo, contains('병원에 직접 물어보세요'));
+    expect(partner.bodyKo, contains('학생증'));
+    // 감사 05/074 R-2: the numbers are each hospital's own (checked on the
+    // hospital sites), not the hub table's, which had wrong digits — those
+    // must not come back.
+    final partnerJoined = partnerStrings.join(' ');
+    for (final tel in const [
+      '051-625-0900', '051-867-5101', '051-850-8941', '1877-0075',
+      '051-816-8980',
+    ]) {
+      expect(partnerJoined.contains(tel), isTrue, reason: tel);
+    }
+    for (final wrong in const ['051-6252-0900', '051-554-1233']) {
+      expect(dump.contains(wrong), isFalse, reason: wrong);
+    }
+    expect(RegExp(r'051-867-510(?!1)').hasMatch(dump), isFalse,
+        reason: 'hub table 051-867-510');
 
     // No medical judgement: no symptom triage, no department steering. The
     // page never grades how severe anything is — "증상이 가볍" in particular was
@@ -1894,7 +1959,8 @@ void main() {
     expect(police.links.single.url.startsWith('/'), isFalse);
     expect(fire.links.single.url.startsWith('/'), isFalse);
 
-    expect(item.summaryKo, '112 · 119 긴급신고 안내');
+    // 조사 04/052 결함 1: ko 는 번호의 용도를 떨어뜨리고 있었다(en·vi 에는 있다).
+    expect(item.summaryKo, '경찰 112 · 화재·구급 119');
     expect(item.summaryEn, 'Police 112 · Fire & Ambulance 119');
 
     // 1345 is immigration counselling, not an emergency line — it must not
@@ -2097,7 +2163,7 @@ void main() {
     await _openGuideHub(tester, ko: true);
     await _tapCategory(tester, '긴급·도움');
     await tester.pumpAndSettle();
-    expect(find.text('112 · 119 긴급신고 안내'), findsOneWidget);
+    expect(find.text('경찰 112 · 화재·구급 119'), findsOneWidget);
 
     await tester.tap(find.text('긴급 연락처'));
     await tester.pumpAndSettle();
@@ -2217,8 +2283,11 @@ void main() {
     expect(find.textContaining('For the exact amount'), findsOneWidget);
 
     // Bedding stays conditional; the TB result is required by both halls.
-    expect(find.textContaining('Some dormitories do not provide bedding'),
-        findsOneWidget);
+    // r19 M3: the same bedding/meals note appeared three times in this one
+    // guide. The repetition is gone; the conditional wording still reaches the
+    // reader from 「입사 전 확인」 and the two halls' own notes.
+    expect(find.textContaining('Whether you need to bring bedding'),
+        findsWidgets);
     expect(find.textContaining('You need a tuberculosis test result to move in'),
         findsOneWidget);
 
@@ -2463,8 +2532,16 @@ void main() {
     // official guidance.
     expect(find.textContaining('within 15 days of moving in'),
         findsNWidgets(2));
+    // r19 M1: the 확정일자 detail — including "the day AFTER you take
+    // possession" — moved to the rental-deposit-protection guide, which owns
+    // priority of repayment. This guide links there instead of restating it.
     expect(find.textContaining('the day AFTER you take possession'),
-        findsOneWidget);
+        findsNothing);
+    // The rule itself survived the move, in the deposit guide's own wording.
+    expect(
+        _guideTextEn(MockData.guideItems
+            .firstWhere((g) => g.id == 'rental-deposit-protection')),
+        contains('can be asserted against third parties from the next day'));
     expect(find.textContaining('fixed date'), findsWidgets);
     expect(find.textContaining('Immigration Control Act arts. 36, 88-2'),
         findsOneWidget);
@@ -2593,7 +2670,13 @@ void main() {
     expect(find.text('지도에서 승학캠퍼스 보기'), findsOneWidget);
     // Statutory thresholds are stated; market prices and commission rates are
     // not.
-    expect(find.textContaining('보증금 6천만원 또는 월세 30만원'), findsOneWidget);
+    // r19 M1: the lease-reporting thresholds moved to the deposit guide, so
+    // they are asserted there and must not be duplicated here.
+    expect(find.textContaining('보증금 6천만원 또는 월세 30만원'), findsNothing);
+    expect(
+        _guideTextKo(MockData.guideItems
+            .firstWhere((g) => g.id == 'rental-deposit-protection')),
+        contains('보증금 6천만원 또는 월세 30만원'));
     expect(find.textContaining('0.3%'), findsNothing);
     expect(find.textContaining('0.5%'), findsNothing);
   });
@@ -2659,8 +2742,19 @@ void main() {
         '어디에서 상담받나요?',
         '상담 신청 방법',
         '유학생 학사 · 학교생활 문의',
-        '인권침해 · 성희롱 · 성폭력 문제라면',
+        // r23 D2 S3: 성 관련 전용 안내 정리(사용자 지시) — 일반 인권침해만 남았다.
+        '인권침해 문제라면',
         '24시간 자살예방 상담',
+        // r22 R2: the hub and the foundation's help line, kept apart. r21's
+        // single section copied one source, the city's English page (name,
+        // 1577-7716, seven languages, 13F); those languages and that address
+        // match the foundation's help line, not the hub's own page. How that
+        // centre relates to the hub and the foundation is unconfirmed
+        // (감사 05/076).
+        '스터디부산허브 (부산 외국인 유학생 통합지원허브)',
+        '부산글로벌도시재단 외국인 종합상담',
+        // r23 D2 보강 10: 법무부 1345 마을변호사 법률상담 — 끝에 붙였다.
+        '1345 외국인 마을변호사 법률상담',
       ],
     );
 
@@ -2679,11 +2773,19 @@ void main() {
       'tel:0512006447',
       'tel:0512005711',
       'tel:109',
+      // r22 R2: the operators' own pages give 1600-0051 for both the hub and
+      // the foundation's help line.
+      'tel:16000051',
     ]) {
       expect(allUrls.contains(tel), isTrue, reason: tel);
     }
-    // No other tel: row slipped in.
-    expect(allUrls.where((u) => u.startsWith('tel:')).length, 7);
+    // No other tel: row slipped in — 1600-0051 sits once in each of the two
+    // Busan sections, so nine rows in all.
+    expect(allUrls.where((u) => u.startsWith('tel:')).length, 9);
+    expect(allUrls.where((u) => u == 'tel:16000051').length, 2);
+    // 1577-7716 is not on either operator's page; the guide no longer lists
+    // it (without claiming it was discontinued).
+    expect(allUrls.contains('tel:15777716'), isFalse);
 
     // Bottom block: four rows, in the agreed order.
     expect(
@@ -2721,8 +2823,64 @@ void main() {
             '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
     ].whereType<String>().join('\n');
 
-    // No language support is claimed anywhere — no official source states
-    // which languages any of these desks can work in.
+    // No language support is claimed for the school desks — no official
+    // source states which languages they can work in. The two Busan sections
+    // are the exception: each operator's page lists its languages, and the
+    // guide repeats each list as exactly that — "languages listed" — not as a
+    // promise (감사 05/070 R-5, r22 R2).
+    final hub = item.sections
+        .singleWhere((s) => s.titleKo.startsWith('스터디부산허브'));
+    final foundation = item.sections
+        .singleWhere((s) => s.titleKo == '부산글로벌도시재단 외국인 종합상담');
+    final languageLines = <String>[];
+    for (final s in [hub, foundation]) {
+      final contact = s.notes.first;
+      final ko = contact.linesKo.where((l) => l.startsWith('안내된 언어:'));
+      final en = contact.linesEn.where((l) => l.startsWith('Languages listed:'));
+      expect(ko, hasLength(1), reason: s.titleKo);
+      expect(en, hasLength(1), reason: s.titleKo);
+      languageLines..addAll(ko)..addAll(en);
+    }
+    // Only the language lines themselves are exempt (감사 05/072 R-1) — a
+    // promise such as 「통역」 anywhere else in either section still fails.
+    // 감사 05/074 R-3: the exempt lines are themselves checked — they may name
+    // English as a listed language, but carry no promise such as 「통역」.
+    for (final line in languageLines) {
+      for (final banned in const [
+        '영어 상담', '영어로 상담', '외국어 상담', '다국어', '통역',
+        'in your own language', 'interpreter',
+      ]) {
+        expect(line.contains(banned), isFalse, reason: '$banned in $line');
+      }
+    }
+    // r23 D2 보강 10 (리드 결정 a): 1345 절은 법무부가 상담 언어 선택과 3자 통역을
+    // 원문으로 밝힌다(immigration.go.kr 1574 · mojhome.moj.go.kr 196, 2026-10-31
+    // 열람). 그 사실을 옮긴 세 문자열 — 본문(「3자 통역」), 18시 이후 안내 언어 줄,
+    // 법무부 링크(「3자 통역 지원」) — 만 아래 금지어 검사에서 뺀다. 같은 절의 다른
+    // 문장과 학교 창구 문구는 그대로 검사한다.
+    final legalAid = item.sections
+        .singleWhere((s) => s.titleKo == '1345 외국인 마을변호사 법률상담');
+    final legalAidLanguageLines = <String>[
+      legalAid.bodyKo!,
+      legalAid.notes.single.linesEn[1],
+      for (final l in legalAid.links)
+        '${l.labelKo}${l.labelEn}${l.url}'
+            '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+    ];
+    expect(legalAidLanguageLines[0], contains('3자 통역'));
+    expect(legalAidLanguageLines[1], startsWith('After 18:00'));
+    expect(legalAid.links.single.url, 'https://mojhome.moj.go.kr/moj/196/subview.do');
+    // 면제한 줄도 「모국어로」 같은 약속은 담지 않는다.
+    for (final line in legalAidLanguageLines) {
+      for (final banned in const [
+        '영어 상담', '영어로 상담', '외국어 상담', '다국어',
+        'in your own language', 'interpreter',
+      ]) {
+        expect(line.contains(banned), isFalse, reason: '$banned in $line');
+      }
+    }
+    final schoolDump = [...languageLines, ...legalAidLanguageLines]
+        .fold(dump, (d, x) => d.replaceAll(x, ''));
     for (final banned in const [
       '영어 상담',
       '영어로 상담',
@@ -2733,7 +2891,8 @@ void main() {
       'in your own language',
       'interpreter',
     ]) {
-      expect(dump.contains(banned), isFalse, reason: 'language claim: $banned');
+      expect(schoolDump.contains(banned), isFalse,
+          reason: 'language claim: $banned');
     }
 
     // Eligibility is quoted, never widened: the centre says "본교 구성원
@@ -2807,10 +2966,11 @@ void main() {
       expect(dump.contains(banned), isFalse, reason: 'app advice: $banned');
     }
 
-    // No counselling body beyond the five the brief settled on.
+    // No counselling body beyond the five the brief settled on — plus, since
+    // r21/r22, the two Busan bodies the user asked for (Study Busan Hub and the
+    // foundation's help line). Their shared number 1600-0051 may appear only
+    // inside those two sections; every other body stays out.
     for (final banned in const [
-      '1345',
-      '1600-0051',
       '1577-0199',
       '1577-1366',
       '1393',
@@ -2818,6 +2978,38 @@ void main() {
     ]) {
       expect(dump.contains(banned), isFalse, reason: 'extra body: $banned');
     }
+    // r23 D2 보강 10: 1345 는 이제 자기 절(법무부 마을변호사 법률상담) 안에만 있다.
+    final legalAidStrings = [
+      legalAid.titleKo, legalAid.titleEn, legalAid.bodyKo, legalAid.bodyEn,
+      legalAid.footnoteKo, legalAid.footnoteEn,
+      for (final n in legalAid.notes) ...[
+        n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn,
+      ],
+      for (final l in legalAid.links)
+        '${l.labelKo}${l.labelEn}${l.url}'
+            '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+    ].whereType<String>();
+    final outsideLegalAid =
+        legalAidStrings.fold(dump, (d, x) => d.replaceAll(x, ''));
+    expect(outsideLegalAid.contains('1345'), isFalse,
+        reason: 'extra body: 1345 outside its own section');
+    final busanStrings = [
+      for (final s in [hub, foundation]) ...[
+        s.titleKo, s.titleEn, s.bodyKo, s.bodyEn, s.footnoteKo, s.footnoteEn,
+        for (final n in s.notes) ...[n.titleKo, n.titleEn, ...n.linesKo, ...n.linesEn],
+        for (final l in s.links)
+          '${l.labelKo}${l.labelEn}${l.url}'
+              '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
+      ],
+    ].whereType<String>();
+    final outsideBusan = busanStrings.fold(dump, (d, x) => d.replaceAll(x, ''));
+    expect(outsideBusan.contains('1600-0051'), isFalse,
+        reason: '1600-0051 outside the Busan sections');
+    // 감사 05/073 R-5 → 074 R-4: the hub is described as the desk *for*
+    // international students, never as student-only.
+    expect(foundation.footnoteKo, contains('유학생을 위한 창구는'));
+    expect(dump.contains('유학생 전용 상담'), isFalse);
+    expect(dump.contains('student-only'), isFalse);
 
     // ── 학생상담센터 ────────────────────────────────────────────────────────
     final centre = item.sections[0];
@@ -2911,6 +3103,26 @@ void main() {
     expect(oia.bodyKo!.contains('심리'), isFalse);
     expect(oia.footnoteKo, contains('학생상담센터에서 진행합니다'));
 
+    // r23 D2 S1–S6: 성 관련 전용 안내는 정리했다(사용자 지시). 어느 가이드의 ko·en
+    // 화면 문구와 검색어에도 「성희롱」·「성폭력」이 남지 않는다. (zh·vi 의 같은 자리
+    // 재번역은 번역 담당 몫이라 여기서는 원문 두 언어만 본다.)
+    for (final g in MockData.guideItems) {
+      final text = [
+        _guideTextKo(g),
+        _guideTextEn(g),
+        ...g.searchAliasesKo,
+        ...g.searchAliasesEn,
+      ].join('\n');
+      for (final banned in const [
+        '성희롱',
+        '성폭력',
+        'sexual harassment',
+        'sexual violence',
+      ]) {
+        expect(text.contains(banned), isFalse, reason: '${g.id}: $banned');
+      }
+    }
+
     // ── 인권센터 ────────────────────────────────────────────────────────────
     final rights = item.sections[4];
     expect(rights.bodyKo, contains('상담과 신고를 접수'));
@@ -2987,7 +3199,8 @@ void main() {
       'Where to go, and when',
       'How to book',
       'Academic support for international students',
-      'Harassment, sexual violence and rights violations',
+      // r23 D2 S3: 성 관련 전용 안내 정리 — 일반 인권침해 제목.
+      'If your rights have been violated',
       '24-hour suicide-prevention support',
       'Good to know',
       'Links & Locations',
@@ -3159,7 +3372,7 @@ void main() {
       '어디에서 상담받나요?',
       '상담 신청 방법',
       '유학생 학사 · 학교생활 문의',
-      '인권침해 · 성희롱 · 성폭력 문제라면',
+      '인권침해 문제라면',
       '24시간 자살예방 상담',
     ]) {
       expect(find.text(title), findsOneWidget, reason: title);
@@ -3308,6 +3521,11 @@ void main() {
         // 2026-09 expansion: wage and deposit problems route to their owners.
         '/guide/item/part-time-work',
         '/guide/item/rental-deposit-protection',
+        // r19: appended at the END so the zh/vi `links[N].label` overlay keys
+        // keep pointing at the same links (A 02/079 confirmed all 10 new links
+        // across the catalogue landed at the last index of their array).
+        '/guide/item/financial-scam-response',
+        '/guide/item/residence-card-reissue',
       ],
     );
 
@@ -3332,21 +3550,30 @@ void main() {
             '${l.descriptionKo ?? ''}${l.descriptionEn ?? ''}',
     ].whereType<String>().join('\n');
 
-    // The only amount is the ARC replacement fee HiKorea publishes, with its
-    // cash-only condition; nothing else is priced.
+    // r19: no amount at all belongs in this guide now. The ARC replacement fee
+    // was the only one, and `residence-card-reissue` owns it — restating a
+    // price here is how the two copies drift apart.
     expect(
       RegExp(r'[0-9][0-9,]*\s*원').allMatches(dump).map((m) => m.group(0)),
-      ['35,000원'],
+      isEmpty,
     );
-    expect(dump, contains('35,000원(현금 수납만 가능)'));
+    // r19: this guide no longer restates the ARC reissue fee. The figure had no
+    // source verified for THIS guide, and `residence-card-reissue` owns it —
+    // incident-response links there instead. No money figure belongs here now.
+    expect(dump.contains('35,000'), isFalse);
+    expect(RegExp(r'KRW\s*[0-9][0-9,]*').allMatches(dump), isEmpty);
     expect(
-      RegExp(r'KRW\s*[0-9][0-9,]*').allMatches(dump).map((m) => m.group(0)),
-      ['KRW 35,000'],
-    );
-    expect(dump, contains('KRW 35,000 (cash only)'));
-    // The photo is needed under the decree even though HiKorea makes it
-    // conditional, and the English no longer orders a victim to report.
-    expect(dump, contains('시행령은 조건 없이 사진 1장을'));
+        [...item.links, for (final s in item.sections) ...s.links]
+            .map((l) => l.url),
+        contains('/guide/item/residence-card-reissue'));
+    // The photo requirement is no longer restated here — it belongs to the
+    // reissue guide, which states it with its own sourcing. Asserted there so
+    // the trim did not simply drop it.
+    expect(dump.contains('시행령은 조건 없이 사진 1장을'), isFalse);
+    expect(
+        _guideTextKo(MockData.guideItems
+            .firstWhere((g) => g.id == 'residence-card-reissue')),
+        contains('사진 1장'));
     expect(dump.contains('so contact the police instead'), isFalse);
     expect(dump.contains('₩'), isFalse);
 
@@ -3523,18 +3750,27 @@ void main() {
     // one (15 days applies only to changes in registered details).
     expect(dump.contains('14일'), isFalse);
     expect(dump.contains('14 days'), isFalse);
-    // …without reading as "no deadline, so later is fine".
-    expect(dump, contains('재발급 신청은 미루지 말고'));
-    expect(dump, contains('do not put the application off'));
+    // …without reading as "no deadline, so later is fine". r19: the nudge moved
+    // to the guide that owns the reissue, so it is asserted there — the point
+    // must not simply disappear with the trimmed copy.
+    final reissueKo = _guideTextKo(
+        MockData.guideItems.firstWhere((g) => g.id == 'residence-card-reissue'));
+    expect(reissueKo, contains('미루지 말고'));
     for (final banned in const ['기한이 없', 'no deadline', '늦게 신청해도']) {
       expect(dump.contains(banned), isFalse, reason: banned);
     }
-    expect(arc.linesKo.any((l) => l.contains('분실 신고와 별도로')), isTrue);
+    // r19 reworded: the loss report is still clearly separated from the
+    // reissue application, and the reissue detail now sits in its own guide.
+    expect(arc.linesKo.any((l) => l.contains('재발급 신청이 아닙니다')), isTrue);
     expect(
-      arc.linesEn.any((l) => l.contains('does not replace the card')),
+      arc.linesEn
+          .any((l) => l.contains('is not an application for a new card')),
       isTrue,
     );
-    expect(arc.linesKo.any((l) => l.contains('하이코리아 또는 1345')), isTrue);
+    expect(arc.linesKo.any((l) => l.contains('미루지 마세요')), isTrue);
+    // Both channels stay: online on HiKorea, and the immigration office.
+    expect(arc.linesKo.any((l) => l.contains('하이코리아')), isTrue);
+    expect(arc.linesKo.any((l) => l.contains('출입국 · 외국인관서')), isTrue);
     expect(dump.contains('Residence Card (ARC)'), isTrue);
     expect(dump.toLowerCase().contains('alien registration'), isFalse);
 
@@ -3696,7 +3932,8 @@ void main() {
     );
     expect(find.textContaining('within 24 hours'), findsOneWidget);
     expect(find.textContaining('within 14 days'), findsNothing);
-    expect(find.textContaining('KRW 35,000 (cash only)'), findsOneWidget);
+    // r19: the reissue fee is not restated here (see the data test above).
+    expect(find.textContaining('KRW 35,000 (cash only)'), findsNothing);
     expect(find.textContaining('within 15 days'), findsOneWidget);
     expect(find.textContaining('depends on your nationality'), findsOneWidget);
 
@@ -3935,11 +4172,21 @@ void main() {
     );
     expect(withOverview.hasNoContent, isFalse);
 
-    // …and every shipped guide is written and published: the original 18,
-    // the 2026-09 expansion, and the 2026-09-26 safety batch
-    // (guide_expansion_test.dart pins which ids are in each).
-    expect(MockData.guideItems.length,
-        18 + ExpansionGuides.items.length + SafetyGuides.items.length);
+    // …and every shipped guide is written and published: the r19 arrival
+    // guide, the original 18, the 2026-09 expansion, and the 2026-09-26 safety
+    // batch (guide_expansion_test.dart pins which ids are in each).
+    expect(
+        MockData.guideItems.length,
+        ArrivalGuide.items.length +
+            18 +
+            ExpansionGuides.items.length +
+            SafetyGuides.items.length +
+            SupportGuides.items.length +
+            ExtraGuides.items.length +
+            // r23: 사용자 선택 신규 — 대학원 길잡이, 운전면허·전동킥보드, 재난 대비.
+            GraduateGuides.items.length +
+            MobilityGuides.items.length +
+            DisasterGuides.items.length);
     for (final g in MockData.guideItems) {
       expect(g.hasNoContent, isFalse, reason: g.id);
       expect(g.status, GuideStatus.published, reason: g.id);
@@ -4117,6 +4364,8 @@ void main() {
     // bucket either.
     expect(ko, isNot(contains('결핵')));
     expect(en.toLowerCase(), isNot(contains('tuberculosis')));
+    // 감사 05/085 R-2: 철회한 r23 링크의 en 설명은 「TB certificates」였다.
+    expect(RegExp(r'\bTB\b').hasMatch(en), isFalse);
     expect(ko, isNot(contains('건강검진')));
     for (final broad in const ['health-check', 'health check']) {
       expect(en, isNot(contains(broad)), reason: broad);
@@ -4537,14 +4786,23 @@ void main() {
     expect(ko, contains('1천만원'));
     expect(en, contains('10 million won'));
 
-    // 부동산거래신고법: the Busan thresholds and 30-day deadline.
-    expect(ko, contains('보증금 6천만원 또는 월세 30만원'));
-    expect(ko, contains('30일 이내'));
-    expect(en, contains('60 million won'));
-    expect(en, contains('300,000 won'));
+    // 부동산거래신고법: the Busan thresholds and the 30-day deadline. r19 M1
+    // moved this detail to the guide that owns deposit protection, so it is
+    // asserted there — and asserted absent here, so the two guides cannot
+    // drift apart again.
+    final deposit = MockData.guideItems
+        .firstWhere((g) => g.id == 'rental-deposit-protection');
+    final depositKo = _guideTextKo(deposit);
+    final depositEn = _guideTextEn(deposit);
+    expect(depositKo, contains('보증금 6천만원 또는 월세 30만원'));
+    expect(depositKo, contains('30일 이내'));
+    expect(depositEn, contains('60 million won'));
+    expect(depositEn, contains('300,000 won'));
+    expect(ko, isNot(contains('보증금 6천만원 또는 월세 30만원')));
 
     // 출입국관리법 §88-2 covers the registration itself; §98 sets the fine.
-    expect(ko, contains('외국인등록과 체류지 변경 신고'));
+    // r19 M1: the section was renamed when the deposit detail moved out.
+    expect(ko, contains('이사 후 신고와 보증금 보호'));
     expect(ko, contains('100만원 이하의 벌금'));
     expect(en, contains('up to 1 million won'));
 
@@ -4564,16 +4822,42 @@ void main() {
       return counts;
     }
 
+    // r19 M1: 6천만원 / 30만원 are the lease-reporting thresholds, which moved to
+    // the deposit guide. They must be gone from here and present there — the
+    // count is asserted on both sides so neither copy can quietly come back.
     expect(count(RegExp(r'\d+(?:천|백)?만\s?원'), ko),
-        {'1천만원': 2, '6천만원': 1, '30만원': 1, '100만원': 1});
+        {'1천만원': 2, '100만원': 1});
+    expect(
+        count(RegExp(r'\d+(?:천|백)?만\s?원'),
+                _guideTextKo(MockData.guideItems
+                    .firstWhere((g) => g.id == 'rental-deposit-protection')))
+            .keys,
+        containsAll(['6천만원', '30만원']));
     expect(count(RegExp(r'[\d,.]+(?: million)? won'), en), {
       '10 million won': 2,
-      '60 million won': 1,
-      '300,000 won': 1,
       '1 million won': 1,
     });
-    expect(RegExp(r'\d(?:\.\d+)?\s?%').hasMatch(ko), isFalse);
-    expect(RegExp(r'\d(?:\.\d+)?\s?%').hasMatch(en), isFalse);
+    expect(
+        count(
+            RegExp(r'[\d,.]+(?: million)? won'),
+            _guideTextEn(MockData.guideItems
+                .firstWhere((g) => g.id == 'rental-deposit-protection'))),
+        allOf(containsPair('60 million won', 1),
+            containsPair('300,000 won', 1)));
+    // r23 보강 12: 고시원 환불 기준(공정위 고시 2025-14 별표, 「총이용요금의
+    // 10%」·「남은 이용금액의 10%」)만 비율을 쓴다. 중개보수 요율은 여전히 금지 —
+    // 그 두 번 말고 다른 비율이 나오면 실패한다. 감사 05/085 R-1: 두 번 모두
+    // 고시원 환불 줄 안에 있어야 하고, 그 줄을 뺀 나머지에는 비율이 없다.
+    final percent = RegExp(r'\d+(?:\.\d+)?\s?%');
+    final goshiwonKo =
+        ko.split('\n').singleWhere((l) => l.startsWith('고시원은 공정거래위원회'));
+    final goshiwonEn = en
+        .split('\n')
+        .singleWhere((l) => l.startsWith('For goshiwon, the Fair Trade'));
+    expect(count(percent, goshiwonKo), {'10%': 2});
+    expect(count(percent, goshiwonEn), {'10%': 2});
+    expect(percent.hasMatch(ko.replaceAll(goshiwonKo, '')), isFalse);
+    expect(percent.hasMatch(en.replaceAll(goshiwonEn, '')), isFalse);
 
     // No unsourced distribution claims or absolute statements.
     for (final removed in const [
@@ -4628,16 +4912,22 @@ void main() {
     // Registration: §31① sets the 90-day clock, §31④ replaces that DEADLINE for
     // someone not yet registered — it never creates a second registration, so
     // an already-registered D-4 → D-2 student files a change of status instead.
+    // r19: visa-types became a hub. It still states the 90-day rule, but the
+    // §31③④ substitute-deadline detail is no longer restated here — `arc-issue`
+    // owns it (asserted in its own test) and this guide links to it. Keeping
+    // both copies was the duplication the review asked us to remove.
     expect(ko, contains('90일을 초과해'));
     expect(ko, contains('90일 이내'));
     expect(en, contains('more than 90 days'));
-    expect(en, contains('within 90 days of entry'));
-    expect(ko, contains('아직 외국인등록을 하지 않은'));
-    expect(en, contains('If you have not registered yet'));
-    expect(ko, contains('허가를 받는 때에 외국인등록'));
-    expect(en, contains('at the time that permission is granted'));
-    expect(ko, contains('새로 등록하는 것이 아니라'));
-    expect(en, contains('not a new registration'));
+    expect(en, contains('within 90 days of arriving'));
+    for (final moved in const [
+      '아직 외국인등록을 하지 않은',
+      '허가를 받는 때에 외국인등록',
+      '새로 등록하는 것이 아니라',
+    ]) {
+      expect(ko, isNot(contains(moved)),
+          reason: 'arc-issue 가 담당한다 — 여기서 되풀이하지 않는다: $moved');
+    }
     final arcLink =
         item.links.firstWhere((l) => l.url == '/guide/item/arc-issue');
     expect(arcLink.labelKo, '가이드 — 외국인등록증(ARC) 발급');
@@ -4646,7 +4936,8 @@ void main() {
     // §24① makes a change of status a PRIOR permission, not a thing to look
     // into after the fact.
     expect(ko, contains('미리 체류자격 변경허가'));
-    expect(en, contains('before you start'));
+    // r19: the hub wording says the same thing in one line — permission first.
+    expect(en, contains('change your status first'));
 
     // Already in Korea? Then the visa-abroad flow above is not yours.
     expect(ko, contains('국내에서 체류자격 변경허가를 받는 경우가 있습니다'));
@@ -4665,35 +4956,33 @@ void main() {
     final work = item.sections
         .expand((s) => s.notes)
         .firstWhere((n) => n.titleKo.contains('아르바이트'));
-    expect(work.linesKo.first, contains('자동으로 허용되는 것은 아닙니다'));
-    expect(work.linesEn.first, contains('does not automatically allow'));
-    expect(
-      work.linesKo.any((l) => l.contains('일을 시작하기 전에 허가를 받아야')),
-      isTrue,
-    );
-    expect(
-      work.linesEn.any((l) => l.contains('need permission before starting')),
-      isTrue,
-    );
-    expect(
-      work.linesKo.any((l) => l.contains('여러 조건에 따라 달라질 수 있습니다')),
-      isTrue,
-    );
-    expect(
-      work.linesEn.any((l) => l.contains('Eligibility and permitted hours can depend')),
-      isTrue,
-    );
-    // The one eligibility condition that changes what a D-4 student does —
-    // stated without the figure, which 법제처 and 동아대 word differently and which
-    // the dedicated part-time-work guide will own.
-    expect(work.linesKo.any((l) => l.contains('일정 기간이 지나야')), isTrue);
-    expect(
-      work.linesEn.any((l) => l.contains('once a set period has passed')),
-      isTrue,
-    );
+    // r19: the hub line keeps the "not automatic" point and names the owner
+    // instead of restating the hour and proficiency rules.
+    expect(work.linesKo.first, contains('허용되는 것은 아닙니다'));
+    expect(work.linesKo.first, contains('시간제취업(아르바이트) 허가'));
+    expect(work.linesEn.first, contains('does not allow part-time work'));
+    expect(work.linesEn.first, contains('part-time work guide'));
+    // r19: the three separate lines (permission first / conditions vary / the
+    // waiting period) collapsed into the single hub line above. The points
+    // themselves are still made — conditions vary and the reader is sent to the
+    // owner — and `part-time-work` owns the detail, which its own test covers.
+    expect(work.linesKo, hasLength(1));
+    expect(work.linesKo.first, contains('달라지므로'));
+    expect(work.linesEn.first, contains('depends on'));
+    final ptw = MockData.guideItems.firstWhere((g) => g.id == 'part-time-work');
+    expect(_guideTextKo(ptw), contains('시간제취업 허가'));
+    // The waiting-period condition that changes what a D-4 student does is now
+    // stated by the guide that owns it, and this hub points there. The figure
+    // still appears in neither place's hub copy (법제처 and 동아대 word it
+    // differently), which the assertions below keep enforcing.
+    expect(_guideTextKo(ptw), contains('한국어 능력 기준'));
     expect(work.linesEn, hasLength(work.linesKo.length));
-    expect(RegExp(r'\d+\s*시간').hasMatch(ko), isFalse, reason: 'hour figure');
-    expect(RegExp(r'\d+\s*hours').hasMatch(en), isFalse, reason: 'hour figure');
+    // r23 보강 7: 전자입국신고 노트의 「72시간」(신고서 유효기간, 법무부
+    // e-arrivalcard)만 허용한다. 시간제취업 시간 수는 여전히 이 허브에 없다.
+    expect(RegExp(r'\d+\s*시간').allMatches(ko).map((m) => m.group(0)),
+        ['72시간'], reason: 'hour figure');
+    expect(RegExp(r'\d+\s*hours').allMatches(en).map((m) => m.group(0)),
+        ['72 hours'], reason: 'hour figure');
     expect(ko, isNot(contains('TOPIK')));
     expect(ko, isNot(contains('6개월 경과')), reason: 'part-time waiting figure');
 
@@ -4794,11 +5083,12 @@ void main() {
     expect(item.checklistEn, hasLength(item.checklistKo.length));
     expect(item.checklistOptionalEn, hasLength(item.checklistOptionalKo.length));
 
-    // 법제처 시간제취업: the waiting condition also covers 방문학생(D-2-8) — still
-    // without the figure.
-    expect(work.linesKo.any((l) => l.contains('방문학생(D-2-8)')), isTrue);
-    expect(work.linesEn.any((l) => l.contains('visiting students (D-2-8)')),
-        isTrue);
+    // 법제처 시간제취업: the waiting condition also covers 방문학생(D-2-8). r19 moved
+    // that detail to the guide that owns part-time work — with the figure,
+    // which is why this hub must not carry it (asserted below).
+    expect(_guideTextKo(ptw), contains('방문학생(D-2-8)'));
+    expect(_guideTextEn(ptw), contains('visiting students'));
+    expect(work.linesKo.any((l) => l.contains('D-2-8')), isFalse);
     // The source of record for the sub-type codes is linked, and the Study in
     // Korea link (which still prints D-4-2 as 외국어연수) points to it.
     expect(
@@ -5143,7 +5433,12 @@ void main() {
     // shows both instead of asserting one.
     expect(ko, contains('「인문과학대학 로비」'));
     expect(ko, contains('「인문대학 지하1층」'));
-    expect(en, contains('two official pages disagree'));
+    // r22 R4-4: the two pages differ only on the floor, so the line now names
+    // the building (from the campus map data) and says the floors differ —
+    // still giving both wordings, plus where to ask.
+    expect(en, contains('two pages give different floors'));
+    expect(ko, contains('층 표기가 다릅니다'));
+    expect(ko, contains('학사관리과(051-200-6090~1)'));
 
     // Gudeok: the notice says to ask, not that there is no kiosk.
     expect(en, isNot(contains('there is no kiosk')));
@@ -5255,11 +5550,27 @@ void main() {
 
   test('Guide catalogue: 18 original items kept, all published, reterm scoped '
       'to three', () {
-    final total =
-        18 + ExpansionGuides.items.length + SafetyGuides.items.length;
+    final total = ArrivalGuide.items.length +
+        18 +
+        ExpansionGuides.items.length +
+        SafetyGuides.items.length +
+        SupportGuides.items.length +
+        ExtraGuides.items.length +
+        GraduateGuides.items.length +
+        MobilityGuides.items.length +
+        DisasterGuides.items.length;
     expect(MockData.guideItems, hasLength(total));
-    // The original 18 stay first, in their original order, with their ids.
-    expect(MockData.guideItems.take(18).map((g) => g.id), const [
+    // r19: the arrival guide is declared first, so the original 18 now start
+    // after it. They keep their original order and ids — asserted by skipping
+    // exactly the arrival batch rather than by a hard-coded offset, so a
+    // silent reorder fails here (B 코덱스 03/109 F-4).
+    expect(MockData.guideItems.first.id, 'arrival-first-steps');
+    expect(
+        MockData.guideItems
+            .skip(ArrivalGuide.items.length)
+            .take(18)
+            .map((g) => g.id),
+        const [
       'arc-issue', 'stay-extension', 'visa-types', 'dormitory',
       'off-campus-housing', 'bank-account', 'mobile-plan', 'transit-card',
       'health-insurance', 'campus-clinic', 'hospital-guide',

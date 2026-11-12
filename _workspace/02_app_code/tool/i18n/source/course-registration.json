@@ -98,15 +98,17 @@
     "아이디: 동아대학교 원서접수 수험번호",
     "초기 비밀번호: 생년월일 6자리 + 지원 당시 휴대폰번호 뒤 4자리",
     "신입생과 편입생 모두 같은 방법으로 로그인하며, 학번이 발급된 뒤에는 학번으로 로그인합니다.",
-    "수험번호를 모르면 수강신청 로그인 화면에 안내된 수험번호 조회(진학어플라이, www.jinhakapply.com)를 이용하고, 그곳에서 조회되지 않으면 지원한 입학 담당 부서에 확인하세요."
+    "수험번호를 모르면 수강신청 로그인 화면에 안내된 수험번호 조회(진학어플라이, www.jinhakapply.com)를 이용하고, 그곳에서 조회되지 않으면 지원한 입학 담당 부서에 확인하세요.",
+    "국제교류과의 2026년 8월 외국인 신입생 안내책자에는 같은 수강신청 화면의 초기 비밀번호가 「생년월일 6자리 + 0000」(예: 2002.01.01. → 0201010000)으로 적혀 있어 위 안내와 다릅니다. 어느 쪽이 적용되는지 모르면 수강신청 전에 국제교류과(051-200-6447)에 확인하세요."
    ],
    "en": [
     "ID: the application (exam) number from your Dong-A University admission application",
     "Initial password: your date of birth (6 digits) followed by the last 4 digits of the mobile number you gave when you applied",
     "New students and transfer students both log in this way, and you switch to your student ID number once it is issued.",
-    "If you do not know your application number, look it up through the link on the registration login page (Jinhakapply, www.jinhakapply.com); if it is not found there, ask the admissions office you applied through."
+    "If you do not know your application number, look it up through the link on the registration login page (Jinhakapply, www.jinhakapply.com); if it is not found there, ask the admissions office you applied through.",
+    "The Office of International Affairs' August 2026 handbook for new international students gives a different initial password for the same registration page: date of birth (6 digits) + 0000 (e.g. 2002.01.01. → 0201010000). If you are not sure which applies to you, ask the Office of International Affairs (051-200-6447) before registration opens."
    ],
-   "count": 4
+   "count": 5
   },
   "top_sections[1].title": {
    "ko": "최대 수강신청 학점",
@@ -143,109 +145,125 @@
    ],
    "count": 4
   },
-  "top_sections[2].title": {
-   "ko": "학점이월제",
-   "en": "Credit carryover"
+  "sections[0].title": {
+   "ko": "반드시 기간 안에 신청하세요",
+   "en": "Register within the period"
   },
-  "top_sections[2].body": {
-   "ko": "최대 수강신청 학점을 모두 사용하지 않은 경우, 남은 학점이 1~2학점이면 다음 학기로 이월하여 최대 수강신청 학점에 더해 사용할 수 있습니다.",
-   "en": "If you do not use your whole course load, and 1–2 credits are left over, those credits carry over to the next semester and are added on top of your maximum course load then."
+  "sections[0].notice": {
+   "ko": "한 학기 내내 수강신청을 하지 않으면 제적될 수 있습니다\n등록금을 납부했더라도 수강신청을 하지 않으면 학칙에 따라 제적(미수강제적)될 수 있습니다. 학적을 잃으면 학업뿐 아니라 체류자격 유지에도 영향을 줄 수 있습니다.\n1차 수강신청 기간을 놓쳤다고 바로 제적되는 것은 아닙니다. 미수강신청자는 2차 수강신청 기간에 신규 신청·정정·삭제를 할 수 있고, 이후 정정 기간과 마지막 수강신청 기간에도 신청할 수 있습니다.\n다만 마지막 수강신청 기간이 끝나면 추가 신청과 정정이 일절 불허되므로, 놓쳤다면 즉시 소속 학과사무실 또는 학사관리과에 연락하세요.",
+   "en": "Going a whole semester without registering can remove you from the register\nEven if you have paid tuition, not registering can mean removal from the register under university regulations (미수강제적). Losing your student status affects more than your studies — it can affect your ability to keep your status of stay.\nMissing the first registration period does not remove you on the spot. If you have not registered, the second registration period lets you add, change and delete courses, and you can still register during the add/drop period and the final registration period after that.\nOnce the final registration period closes, no further registration or changes are allowed at all — so if you have missed it, contact your department office or the Office of Academic Affairs immediately."
   },
-  "top_sections[2].notice": {
-   "ko": "이월 학점은 그 학기에 쓰지 않으면 사라집니다\n이월된 학점을 해당 학기에 사용하지 않으면 다시 다음 학기로 이월되지 않고 소멸됩니다.\n수강취소 기간에 취소한 학점은 이월되지 않습니다.\n학점이월제 적용 제외 대상이 있으므로 본인의 적용 여부를 확인하세요.",
-   "en": "Carried credits expire if you do not use them\nCredits carried into a semester do not roll over again — if you do not use them that semester, they are gone.\nCredits you cancel during the cancellation period do not carry over.\nSome students are excluded from carryover, so check whether it applies to you."
+  "sections[0].footnote": {
+   "ko": "※ 이미 납부한 등록금을 돌려받을 수 있는지와 그 절차는 소속 대학 행정실 또는 학사관리과 학적팀(051-200-6126)에 확인하세요.",
+   "en": "※ Whether any tuition you have already paid can be refunded, and how to apply, should be checked with your college's administration office or the student records team at the Office of Academic Affairs (051-200-6126)."
   },
-  "top_sections[2].footnote": {
-   "ko": "※ 적용 제외 대상은 2026학년도 2학기 수강신청 공지 기준입니다. 본인에게 적용되는지는 소속 학과사무실 또는 학사관리과 수업팀(051-200-6122~4)에 확인하세요.",
-   "en": "※ These exclusions follow the course-registration notice for the second semester of 2026. Confirm how they apply to you with your department office or the course administration team at the Office of Academic Affairs (051-200-6122~4)."
+  "sections[1].title": {
+   "ko": "외국인 유학생 필수이수교과목",
+   "en": "Required courses for international students"
   },
-  "top_sections[2].notes[0].title": {
-   "ko": "이월 가능한 학점 (최대 신청학점이 19학점인 경우)",
-   "en": "Credits eligible for carryover (with a 19-credit limit)"
+  "sections[1].body": {
+   "ko": "2023학년도 이후 외국인 특별전형으로 신입학한 학생이 대상입니다. 편입학으로 입학한 학생은 제외되며, 다른 전형으로 입학한 외국 국적 학생에게 자동으로 적용되지도 않습니다.\n\n지정된 교과목은 소속 학과의 교과과정 영역별 이수학점 안에서 이수하며, 이 과목만 채운다고 졸업요건이 모두 충족되는 것은 아닙니다.\n\n지정 교과목의 구성과 학점은 입학연도에 따라 다릅니다. 현재 학년이 아니라 본인의 입학연도를 기준으로 확인하세요.",
+   "en": "This applies to students who entered through the international special admission from the 2023 academic year onwards. Students who entered as transfer students are not included, and it does not apply automatically to international students admitted through a different track.\n\nYou take the designated courses within your own department’s general-education credit requirements — finishing them does not by itself complete your graduation requirements.\n\nWhich courses are designated, and how many credits they carry, depends on the year you were admitted — not on what year of study you are in now."
   },
-  "top_sections[2].notes[0].lines": {
+  "sections[1].notice": {
+   "ko": "필수과목 시간이 겹친다면\n학과에서 지정한 과목과 시간이 겹치면 어느 쪽을 먼저 들을지 학과사무실 또는 교양대학(051-200-6432~4)과 상담하세요.\n대부분의 과목은 1학기 또는 2학기 한쪽에만 개설되므로, 한 번 놓치면 다음 학기가 아니라 1년 뒤에 들어야 할 수 있습니다.\nTOPIK 성적으로 면제받거나 다른 과목으로 대체할 수 있는지도 교양대학에 확인하세요.",
+   "en": "If a required course clashes with another one\nIf it overlaps with a course your department requires, ask your department office or the College of General Education (051-200-6432~4) which one to take first.\nMost of these courses run in one semester only — the first or the second — so missing one can mean waiting a full year, not one semester.\nAsk them as well whether a TOPIK score can exempt you from any of these courses or let you substitute another course."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 적용 대상은 2026학년도 2학기 수강신청안내 기준이고, 연도별 지정 교과목은 교과과정 안내 기준입니다. 두 자료의 2023~2025학년도 내용이 서로 다르므로 본인의 졸업요건은 학사관리과 또는 소속 학과에 확인하세요.",
+   "en": "※ Who this applies to follows the registration guide for the second semester of 2026; the courses designated for each year follow the curriculum guide. The two describe 2023–2025 differently, so confirm your own graduation requirements with the Office of Academic Affairs or your department."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "2026학년도 입학생 — 필수교양 5과목 (14학점)",
+   "en": "Admitted in 2026 — required general education, 5 courses (14 credits)"
+  },
+  "sections[1].notes[0].lines": {
    "ko": [
-    "18학점 신청 → 1학점 이월 가능",
-    "17학점 신청 → 2학점 이월 가능",
-    "16학점 신청 → 잔여 3학점이므로 이월 불가"
+    "01GEN091 대학한국어Ⅰ — 3학점 / 1학기",
+    "01GEN092 대학한국어Ⅱ — 3학점 / 2학기",
+    "01GEN093 한국어발표와작문Ⅰ — 3학점 / 1학기",
+    "01GEN094 한국어발표와작문Ⅱ — 3학점 / 2학기",
+    "01GEN095 응용한국어 — 2학점 / 매 학기 개설"
    ],
    "en": [
-    "You registered for 18 credits → 1 credit carries over",
-    "You registered for 17 credits → 2 credits carry over",
-    "You registered for 16 credits → 3 left over, so nothing carries over"
-   ],
-   "count": 3
-  },
-  "top_sections[2].notes[1].title": {
-   "ko": "적용 제외 대상",
-   "en": "Who it does not apply to"
-  },
-  "top_sections[2].notes[1].lines": {
-   "ko": [
-    "산업공학과, 의과대학 의학과, 석당인재학부 소속 학생",
-    "시간제 등록생, 그리고 타 대학에 적을 두고 있는 파견·교환학생",
-    "조기졸업, 학·석사 연계과정 등 학점 초과취득이 별도로 가능한 학생 (중복 적용되지 않습니다). 이 사유로 제외된 학생이 해당 자격을 잃으면 다시 학점이월제 적용 대상이 됩니다."
-   ],
-   "en": [
-    "Students in Industrial Engineering, the Department of Medicine (의학과), or Seokdang Honors",
-    "Part-time registered students, and visiting or exchange students enrolled at another university",
-    "Students who can already exceed the credit limit another way — early graduation, or a combined bachelor's–master's programme — since the two do not stack. If you were excluded on this ground and lose that status, carryover applies to you again."
-   ],
-   "count": 3
-  },
-  "top_sections[2].notes[2].title": {
-   "ko": "이월 학점이 사라지는 경우",
-   "en": "When carried credits disappear"
-  },
-  "top_sections[2].notes[2].lines": {
-   "ko": [
-    "그 학기에 사용하지 않으면 자동 소멸하며, 남은 이월학점이 다시 다음 학기로 넘어가지 않습니다.",
-    "자퇴하거나 제적되는 경우, 그리고 학기를 초과하여 등록하는 경우 소멸합니다.",
-    "학사경고를 통산 2회 받아 다음 학기 신청학점이 3학점 제한되면 그 학기에는 이월학점을 사용할 수 없습니다.",
-    "수강취소 기간에 취소한 학점은 이월되지 않습니다.",
-    "휴학·전과 자체로 기존 이월학점이 소멸하지는 않습니다. 다만 복학·복귀 학기에 사용할 수 있는 학점과 사용 시점은 수강신청 전에 학사관리과 수업팀(051-200-6122~4)에 확인하세요."
-   ],
-   "en": [
-    "If you do not use them that semester they expire automatically, and any leftover does not roll on again.",
-    "They expire if you withdraw from the university, are removed from the register, or register for a semester beyond your required number of semesters.",
-    "If two academic warnings cut your next semester limit by 3 credits, you cannot use carried credits that semester.",
-    "Credits you cancel during the cancellation period do not carry over.",
-    "Taking leave or changing departments does not by itself cancel existing carried credits. Before registering for the semester you return, ask the course administration team at the Office of Academic Affairs (051-200-6122~4) how many carried credits you can use and when."
+    "01GEN091 대학한국어Ⅰ (College Korean I) — 3 credits, 1st semester",
+    "01GEN092 대학한국어Ⅱ (College Korean II) — 3 credits, 2nd semester",
+    "01GEN093 한국어발표와작문Ⅰ (Korean Presentation and Writing I) — 3 credits, 1st semester",
+    "01GEN094 한국어발표와작문Ⅱ (Korean Presentation and Writing II) — 3 credits, 2nd semester",
+    "01GEN095 응용한국어 (Applied Korean) — 2 credits, offered every semester"
    ],
    "count": 5
   },
-  "top_sections[2].notes[3].title": {
-   "ko": "외국인 학생은 어떻게 되나요?",
-   "en": "What about international students?"
+  "sections[1].notes[1].title": {
+   "ko": "2026학년도 입학생 — 토대교양 4과목 (12학점)",
+   "en": "Admitted in 2026 — foundation general education, 4 courses (12 credits)"
   },
-  "top_sections[2].notes[3].lines": {
+  "sections[1].notes[1].lines": {
    "ko": [
-    "동아대학교 정규 학위과정에 재학 중인 외국인 학생이 외국 국적이라는 이유만으로 학점이월제에서 제외된다는 내용은 공식 수강신청 안내에서 확인되지 않습니다.",
-    "위 제외 대상 중 파견·교환학생은 타 대학에 적을 두고 있는 학생을 말하며, 동아대학교 학위과정 재학생에게는 해당하지 않습니다."
+    "01BAS106 한류속한국어와한국문화Ⅰ — 3학점 / 1학기",
+    "01BAS107 한류속한국어와한국문화Ⅱ — 3학점 / 2학기",
+    "01BAS130 한국사회의이해Ⅰ — 3학점 / 1학기",
+    "01BAS131 한국사회의이해Ⅱ — 3학점 / 2학기"
    ],
    "en": [
-    "Nothing in the official registration guidance excludes you from carryover simply because you are an international student on a degree program at Dong-A.",
-    "The visiting and exchange exclusion above applies to students enrolled at another university; it does not apply to students in a degree program at Dong-A."
+    "01BAS106 한류속한국어와한국문화Ⅰ (Korean Language and Culture in the Korean Wave I) — 3 credits, 1st semester",
+    "01BAS107 한류속한국어와한국문화Ⅱ (Korean Language and Culture in the Korean Wave II) — 3 credits, 2nd semester",
+    "01BAS130 한국사회의이해Ⅰ (Understanding Korean Society I) — 3 credits, 1st semester",
+    "01BAS131 한국사회의이해Ⅱ (Understanding Korean Society II) — 3 credits, 2nd semester"
    ],
-   "count": 2
+   "count": 4
   },
-  "sections[0].title": {
+  "sections[1].notes[2].title": {
+   "ko": "2023~2025학년도 입학생 — 신청 전 확인",
+   "en": "Admitted in 2023–2025 — check before registering"
+  },
+  "sections[1].notes[2].lines": {
+   "ko": [
+    "입학연도별 교과과정 안내와 2026학년도 2학기 수강신청안내의 지정 과목이 서로 달라, 본인에게 적용되는 과목을 확인해야 합니다.",
+    "새 과목을 추가하거나 이미 이수한 과목을 다시 신청하기 전에, 소속 학과사무실 또는 교양대학(051-200-6432~4)에 필수 과목과 기존 이수 과목의 인정 여부를 확인하세요.",
+    "아래 교과과정 안내에서 본인의 입학연도 자료를 확인하고, 이미 이수한 과목의 내역을 함께 준비하세요."
+   ],
+   "en": [
+    "The curriculum guide for your admission year and the registration guide for the second semester of 2026 list different designated courses. Confirm which courses apply to you.",
+    "Before adding a new course or retaking one you have already completed, ask your department office or the College of General Education (051-200-6432~4) which courses are required and how your completed courses count.",
+    "Use the Curriculum guide link below to find your admission year, and have a record of your completed courses ready."
+   ],
+   "count": 3
+  },
+  "sections[1].notes[3].title": {
+   "ko": "중핵교양은 따로 채워야 합니다",
+   "en": "Core general education is a separate requirement"
+  },
+  "sections[1].notes[3].lines": {
+   "ko": [
+    "중핵교양은 학과별 졸업이수 학점만큼 이수해야 하는 영역이며, 입학연도에 따라 영역별 최소 요건도 다릅니다.",
+    "유학생 전용 중핵교양 과목이 개설되어 있어 그 과목들로 중핵교양 학점을 채울 수 있지만, 네 과목을 모두 들어야 하는 것은 아닙니다.",
+    "같은 영역의 다른 중핵교양 과목으로 채울 수 있는지는 소속 학과의 영역별 이수학점표에서 확인하세요."
+   ],
+   "en": [
+    "Core general education is an area you must complete for the number of credits your department requires, and the minimum per area also differs by year of admission.",
+    "There are core general-education courses set up for international students, and you can use them to fill those credits — but you do not have to take all four.",
+    "To find out whether another core course in the same area can fill the requirement, check your department's credit-requirement table."
+   ],
+   "count": 3
+  },
+  "sections[2].title": {
    "ko": "수업 내용을 미리 확인하세요",
    "en": "Check what the course actually covers"
   },
-  "sections[0].body": {
+  "sections[2].body": {
    "ko": "과목명만 보고 신청하지 말고 강의계획서, 수업방식, 평가방법 등을 확인하세요.",
    "en": "Do not register based on the course title alone. Check the syllabus, how the class is taught, and how it is graded."
   },
-  "sections[1].title": {
+  "sections[3].title": {
    "ko": "수강신청 방법",
    "en": "How to register"
   },
-  "sections[1].body": {
+  "sections[3].body": {
    "ko": "동아대학교 홈페이지 → 학사안내 → 수강신청 및 수강정정 → 로그인 순서로 접속할 수 있습니다.",
    "en": "You can get there from the university homepage: 학사안내 (Academic Information) → 수강신청 및 수강정정 (Course registration & add/drop) → log in."
   },
-  "sections[1].steps": {
+  "sections[3].steps": {
    "ko": [
     "동아대학교 수강신청 시스템 접속",
     "학번과 비밀번호로 로그인",
@@ -266,27 +284,27 @@
    ],
    "count": 7
   },
-  "sections[1].notice": {
+  "sections[3].notice": {
    "ko": "수강신청은 보통 학기가 시작되기 전에 진행되지만 정확한 기간은 매 학기 학사공지로 안내됩니다. 신청 전에 최신 공지를 확인하세요.",
    "en": "Registration normally takes place before the semester begins, but the exact dates are announced each semester in the academic notices. Check them before you register."
   },
-  "sections[2].title": {
+  "sections[4].title": {
    "ko": "수강확정 · 탈락",
    "en": "Confirmation & rejection"
   },
-  "sections[2].body": {
+  "sections[4].body": {
    "ko": "교과목을 신청했다고 해서 모든 과목이 바로 최종 확정되는 것은 아닐 수 있습니다.\n\n신청 인원과 수강제한 인원 등에 따라 수강확정 또는 탈락 결과가 발생할 수 있으므로 신청 후 반드시 결과를 확인해야 합니다.\n\n1차 수강신청(교과목담기)은 선착순이 아닙니다. 신청 인원이 제한인원을 넘으면 이수구분별 수강확정 기준(4학년 F학점 재수강자, 소속학과 제1전공자, 학년순 등)에 따라 확정되고, 2차 수강신청부터는 선착순입니다.",
    "en": "Registering for a course does not always mean your place in it is final.\n\nDepending on how many students applied and the enrollment limit, a course can come back confirmed or not confirmed — so you have to check the result after you register.\n\nThe first round (교과목담기) is not first-come, first-served. If a course is oversubscribed, places are decided by set priority rules for each course type — such as fourth-year students retaking an F, students whose first major is the offering department, and year of study. From the second round on, places go first-come, first-served."
   },
-  "sections[2].notice": {
+  "sections[4].notice": {
    "ko": "신청 후 결과를 꼭 확인하세요\n수강신청 버튼을 눌렀다고 끝난 것이 아닙니다. 수강확정 또는 탈락 여부를 반드시 다시 확인하세요.",
    "en": "Check your registration result\nPressing the register button is not the end of it. Go back and check whether each course was confirmed or not."
   },
-  "sections[2].notes[0].title": {
+  "sections[4].notes[0].title": {
    "ko": "탈락한 과목이 있다면",
    "en": "If one of your courses was not confirmed"
   },
-  "sections[2].notes[0].lines": {
+  "sections[4].notes[0].lines": {
    "ko": [
     "개설 학과에 증원 가능 여부를 문의할 수 있습니다.",
     "교양교과목(필수교양·토대교양·중핵교양)은 개설부서가 교양대학이므로 교양대학(051-200-6432~4)에 문의하세요.",
@@ -301,15 +319,15 @@
    ],
    "count": 4
   },
-  "sections[3].title": {
+  "sections[5].title": {
    "ko": "수강정정",
    "en": "Course add/drop"
   },
-  "sections[3].body": {
+  "sections[5].body": {
    "ko": "수강신청 후 과목을 변경해야 한다면 학교에서 정한 수강정정 기간을 이용할 수 있습니다.",
    "en": "If you need to change your courses after registering, you can do it during the add/drop period set by the university."
   },
-  "sections[3].steps": {
+  "sections[5].steps": {
    "ko": [
     "수강정정 희망 교과목 확인",
     "교과목 추가 또는 변경",
@@ -324,15 +342,15 @@
    ],
    "count": 4
   },
-  "sections[3].notice": {
+  "sections[5].notice": {
    "ko": "수강정정은 보통 학기 초에 진행되지만 정확한 일정은 매 학기 학사공지에서 확인하세요.",
    "en": "Add/drop normally runs at the start of the semester, but check the exact dates in the academic notices for that semester."
   },
-  "sections[3].notes[0].title": {
+  "sections[5].notes[0].title": {
    "ko": "수강정정 이후의 수강취소 기간",
    "en": "The cancellation period after add/drop"
   },
-  "sections[3].notes[0].lines": {
+  "sections[5].notes[0].lines": {
    "ko": [
     "수강정정이 끝난 뒤 별도의 수강취소 기간이 있을 수 있습니다.",
     "이 기간에는 이미 신청한 교과목의 취소만 가능하며 새로운 과목을 추가할 수 없습니다.",
@@ -351,11 +369,11 @@
    ],
    "count": 6
   },
-  "sections[3].notes[1].title": {
+  "sections[5].notes[1].title": {
    "ko": "신청한 과목이 폐강될 수 있어요",
    "en": "A course you registered for can be closed"
   },
-  "sections[3].notes[1].lines": {
+  "sections[5].notes[1].lines": {
    "ko": [
     "수강 인원이 적은 과목은 폐강될 수 있습니다. 2026학년도 2학기 기준으로 전공 · 학과교양은 15명 미만, 필수교양 · 중핵교양 · 토대교양 · 일반선택 등은 20명 미만이면 폐강 대상입니다(Communication English는 유사 · 대체교과목을 포함해 10명 미만).",
     "폐강 교과목 목록은 학기 초 학사공지에 여러 차례 게시됩니다. 신청한 과목이 폐강되었다면 이후 수강신청 기간에 다른 과목으로 정정하세요."
@@ -366,19 +384,19 @@
    ],
    "count": 2
   },
-  "sections[4].title": {
+  "sections[6].title": {
    "ko": "최종 수강신청 확인",
    "en": "Check your final registration"
   },
-  "sections[4].notice": {
+  "sections[6].notice": {
    "ko": "최종 수강신청 내역을 확인하세요\n수강확정 후에는 수강신청 확인서를 확인하여 교과목, 분반, 재수강 여부 등을 정확하게 확인하세요.\n최종 수강신청 확인서에 기재되지 않은 교과목은 실제로 수업에 참여하더라도 학점과 성적이 인정되지 않을 수 있습니다.",
    "en": "Check your final course registration\nOnce registration is confirmed, open your course registration confirmation and check every course, section, and retake flag.\nA course that is not on that confirmation may not earn you credits or a grade, even if you attend the classes."
   },
-  "sections[4].notes[0].title": {
+  "sections[6].notes[0].title": {
    "ko": "개강 후 출석부에 이름이 없다면",
    "en": "If your name is not on the class list after term starts"
   },
-  "sections[4].notes[0].lines": {
+  "sections[6].notes[0].lines": {
    "ko": [
     "수강정정 등으로 출석부에 이름이 아직 없으면 담당 교수님께 미리 양해를 구한 뒤 수업에 참석하세요. 그렇게 하지 않아 출석하지 못하면 원칙적으로 결석으로 처리됩니다.",
     "같은 과목이라도 신청한 분반이 아닌 다른 분반의 수업을 들으면 성적과 학점을 받을 수 없습니다."
@@ -388,108 +406,6 @@
     "Attending a different section of the same course than the one you registered for does not earn you a grade or credits."
    ],
    "count": 2
-  },
-  "sections[5].title": {
-   "ko": "외국인 유학생 필수이수교과목",
-   "en": "Required courses for international students"
-  },
-  "sections[5].body": {
-   "ko": "2023학년도 이후 외국인 특별전형으로 신입학한 학생이 대상입니다. 편입학으로 입학한 학생은 제외되며, 다른 전형으로 입학한 외국 국적 학생에게 자동으로 적용되지도 않습니다.\n\n지정된 교과목은 소속 학과의 교과과정 영역별 이수학점 안에서 이수하며, 이 과목만 채운다고 졸업요건이 모두 충족되는 것은 아닙니다.\n\n지정 교과목의 구성과 학점은 입학연도에 따라 다릅니다. 현재 학년이 아니라 본인의 입학연도를 기준으로 확인하세요.",
-   "en": "This applies to students who entered through the international special admission from the 2023 academic year onwards. Students who entered as transfer students are not included, and it does not apply automatically to international students admitted through a different track.\n\nYou take the designated courses within your own department’s general-education credit requirements — finishing them does not by itself complete your graduation requirements.\n\nWhich courses are designated, and how many credits they carry, depends on the year you were admitted — not on what year of study you are in now."
-  },
-  "sections[5].notice": {
-   "ko": "필수과목 시간이 겹친다면\n학과에서 지정한 과목과 시간이 겹치면 어느 쪽을 먼저 들을지 학과사무실 또는 교양대학(051-200-6432~4)과 상담하세요.\n대부분의 과목은 1학기 또는 2학기 한쪽에만 개설되므로, 한 번 놓치면 다음 학기가 아니라 1년 뒤에 들어야 할 수 있습니다.\nTOPIK 성적으로 면제받거나 다른 과목으로 대체할 수 있는지도 교양대학에 확인하세요.",
-   "en": "If a required course clashes with another one\nIf it overlaps with a course your department requires, ask your department office or the College of General Education (051-200-6432~4) which one to take first.\nMost of these courses run in one semester only — the first or the second — so missing one can mean waiting a full year, not one semester.\nAsk them as well whether a TOPIK score can exempt you from any of these courses or let you substitute another course."
-  },
-  "sections[5].footnote": {
-   "ko": "※ 적용 대상은 2026학년도 2학기 수강신청안내 기준이고, 연도별 지정 교과목은 교과과정 안내 기준입니다. 두 자료의 2023~2025학년도 내용이 서로 다르므로 본인의 졸업요건은 학사관리과 또는 소속 학과에 확인하세요.",
-   "en": "※ Who this applies to follows the registration guide for the second semester of 2026; the courses designated for each year follow the curriculum guide. The two describe 2023–2025 differently, so confirm your own graduation requirements with the Office of Academic Affairs or your department."
-  },
-  "sections[5].notes[0].title": {
-   "ko": "2026학년도 입학생 — 필수교양 5과목 (14학점)",
-   "en": "Admitted in 2026 — required general education, 5 courses (14 credits)"
-  },
-  "sections[5].notes[0].lines": {
-   "ko": [
-    "01GEN091 대학한국어Ⅰ — 3학점 / 1학기",
-    "01GEN092 대학한국어Ⅱ — 3학점 / 2학기",
-    "01GEN093 한국어발표와작문Ⅰ — 3학점 / 1학기",
-    "01GEN094 한국어발표와작문Ⅱ — 3학점 / 2학기",
-    "01GEN095 응용한국어 — 2학점 / 매 학기 개설"
-   ],
-   "en": [
-    "01GEN091 대학한국어Ⅰ (College Korean I) — 3 credits, 1st semester",
-    "01GEN092 대학한국어Ⅱ (College Korean II) — 3 credits, 2nd semester",
-    "01GEN093 한국어발표와작문Ⅰ (Korean Presentation and Writing I) — 3 credits, 1st semester",
-    "01GEN094 한국어발표와작문Ⅱ (Korean Presentation and Writing II) — 3 credits, 2nd semester",
-    "01GEN095 응용한국어 (Applied Korean) — 2 credits, offered every semester"
-   ],
-   "count": 5
-  },
-  "sections[5].notes[1].title": {
-   "ko": "2026학년도 입학생 — 토대교양 4과목 (12학점)",
-   "en": "Admitted in 2026 — foundation general education, 4 courses (12 credits)"
-  },
-  "sections[5].notes[1].lines": {
-   "ko": [
-    "01BAS106 한류속한국어와한국문화Ⅰ — 3학점 / 1학기",
-    "01BAS107 한류속한국어와한국문화Ⅱ — 3학점 / 2학기",
-    "01BAS130 한국사회의이해Ⅰ — 3학점 / 1학기",
-    "01BAS131 한국사회의이해Ⅱ — 3학점 / 2학기"
-   ],
-   "en": [
-    "01BAS106 한류속한국어와한국문화Ⅰ (Korean Language and Culture in the Korean Wave I) — 3 credits, 1st semester",
-    "01BAS107 한류속한국어와한국문화Ⅱ (Korean Language and Culture in the Korean Wave II) — 3 credits, 2nd semester",
-    "01BAS130 한국사회의이해Ⅰ (Understanding Korean Society I) — 3 credits, 1st semester",
-    "01BAS131 한국사회의이해Ⅱ (Understanding Korean Society II) — 3 credits, 2nd semester"
-   ],
-   "count": 4
-  },
-  "sections[5].notes[2].title": {
-   "ko": "2023~2025학년도 입학생 — 신청 전 확인",
-   "en": "Admitted in 2023–2025 — check before registering"
-  },
-  "sections[5].notes[2].lines": {
-   "ko": [
-    "입학연도별 교과과정 안내와 2026학년도 2학기 수강신청안내의 지정 과목이 서로 달라, 본인에게 적용되는 과목을 확인해야 합니다.",
-    "새 과목을 추가하거나 이미 이수한 과목을 다시 신청하기 전에, 소속 학과사무실 또는 교양대학(051-200-6432~4)에 필수 과목과 기존 이수 과목의 인정 여부를 확인하세요.",
-    "아래 교과과정 안내에서 본인의 입학연도 자료를 확인하고, 이미 이수한 과목의 내역을 함께 준비하세요."
-   ],
-   "en": [
-    "The curriculum guide for your admission year and the registration guide for the second semester of 2026 list different designated courses. Confirm which courses apply to you.",
-    "Before adding a new course or retaking one you have already completed, ask your department office or the College of General Education (051-200-6432~4) which courses are required and how your completed courses count.",
-    "Use the Curriculum guide link below to find your admission year, and have a record of your completed courses ready."
-   ],
-   "count": 3
-  },
-  "sections[5].notes[3].title": {
-   "ko": "중핵교양은 따로 채워야 합니다",
-   "en": "Core general education is a separate requirement"
-  },
-  "sections[5].notes[3].lines": {
-   "ko": [
-    "중핵교양은 학과별 졸업이수 학점만큼 이수해야 하는 영역이며, 입학연도에 따라 영역별 최소 요건도 다릅니다.",
-    "유학생 전용 중핵교양 과목이 개설되어 있어 그 과목들로 중핵교양 학점을 채울 수 있지만, 네 과목을 모두 들어야 하는 것은 아닙니다.",
-    "같은 영역의 다른 중핵교양 과목으로 채울 수 있는지는 소속 학과의 영역별 이수학점표에서 확인하세요."
-   ],
-   "en": [
-    "Core general education is an area you must complete for the number of credits your department requires, and the minimum per area also differs by year of admission.",
-    "There are core general-education courses set up for international students, and you can use them to fill those credits — but you do not have to take all four.",
-    "To find out whether another core course in the same area can fill the requirement, check your department's credit-requirement table."
-   ],
-   "count": 3
-  },
-  "sections[6].title": {
-   "ko": "반드시 기간 안에 신청하세요",
-   "en": "Register within the period"
-  },
-  "sections[6].notice": {
-   "ko": "한 학기 내내 수강신청을 하지 않으면 제적될 수 있습니다\n등록금을 납부했더라도 수강신청을 하지 않으면 학칙에 따라 제적(미수강제적)될 수 있습니다. 학적을 잃으면 학업뿐 아니라 체류자격 유지에도 영향을 줄 수 있습니다.\n1차 수강신청 기간을 놓쳤다고 바로 제적되는 것은 아닙니다. 미수강신청자는 2차 수강신청 기간에 신규 신청·정정·삭제를 할 수 있고, 이후 정정 기간과 마지막 수강신청 기간에도 신청할 수 있습니다.\n다만 마지막 수강신청 기간이 끝나면 추가 신청과 정정이 일절 불허되므로, 놓쳤다면 즉시 소속 학과사무실 또는 학사관리과에 연락하세요.",
-   "en": "Going a whole semester without registering can remove you from the register\nEven if you have paid tuition, not registering can mean removal from the register under university regulations (미수강제적). Losing your student status affects more than your studies — it can affect your ability to keep your status of stay.\nMissing the first registration period does not remove you on the spot. If you have not registered, the second registration period lets you add, change and delete courses, and you can still register during the add/drop period and the final registration period after that.\nOnce the final registration period closes, no further registration or changes are allowed at all — so if you have missed it, contact your department office or the Office of Academic Affairs immediately."
-  },
-  "sections[6].footnote": {
-   "ko": "※ 이미 납부한 등록금을 돌려받을 수 있는지와 그 절차는 소속 대학 행정실 또는 학사관리과 학적팀(051-200-6126)에 확인하세요.",
-   "en": "※ Whether any tuition you have already paid can be refunded, and how to apply, should be checked with your college's administration office or the student records team at the Office of Academic Affairs (051-200-6126)."
   },
   "sections[7].title": {
    "ko": "꼭 알아두세요",
@@ -572,6 +488,92 @@
    ],
    "count": 5
   },
+  "sections[8].title": {
+   "ko": "학점이월제",
+   "en": "Credit carryover"
+  },
+  "sections[8].body": {
+   "ko": "최대 수강신청 학점을 모두 사용하지 않은 경우, 남은 학점이 1~2학점이면 다음 학기로 이월하여 최대 수강신청 학점에 더해 사용할 수 있습니다.",
+   "en": "If you do not use your whole course load, and 1–2 credits are left over, those credits carry over to the next semester and are added on top of your maximum course load then."
+  },
+  "sections[8].notice": {
+   "ko": "이월 학점은 그 학기에 쓰지 않으면 사라집니다\n이월된 학점을 해당 학기에 사용하지 않으면 다시 다음 학기로 이월되지 않고 소멸됩니다.\n수강취소 기간에 취소한 학점은 이월되지 않습니다.\n학점이월제 적용 제외 대상이 있으므로 본인의 적용 여부를 확인하세요.",
+   "en": "Carried credits expire if you do not use them\nCredits carried into a semester do not roll over again — if you do not use them that semester, they are gone.\nCredits you cancel during the cancellation period do not carry over.\nSome students are excluded from carryover, so check whether it applies to you."
+  },
+  "sections[8].footnote": {
+   "ko": "※ 적용 제외 대상은 2026학년도 2학기 수강신청 공지 기준입니다. 본인에게 적용되는지는 소속 학과사무실 또는 학사관리과 수업팀(051-200-6122~4)에 확인하세요.",
+   "en": "※ These exclusions follow the course-registration notice for the second semester of 2026. Confirm how they apply to you with your department office or the course administration team at the Office of Academic Affairs (051-200-6122~4)."
+  },
+  "sections[8].notes[0].title": {
+   "ko": "이월 가능한 학점 (최대 신청학점이 19학점인 경우)",
+   "en": "Credits eligible for carryover (with a 19-credit limit)"
+  },
+  "sections[8].notes[0].lines": {
+   "ko": [
+    "18학점 신청 → 1학점 이월 가능",
+    "17학점 신청 → 2학점 이월 가능",
+    "16학점 신청 → 잔여 3학점이므로 이월 불가"
+   ],
+   "en": [
+    "You registered for 18 credits → 1 credit carries over",
+    "You registered for 17 credits → 2 credits carry over",
+    "You registered for 16 credits → 3 left over, so nothing carries over"
+   ],
+   "count": 3
+  },
+  "sections[8].notes[1].title": {
+   "ko": "적용 제외 대상",
+   "en": "Who it does not apply to"
+  },
+  "sections[8].notes[1].lines": {
+   "ko": [
+    "산업공학과, 의과대학 의학과, 석당인재학부 소속 학생",
+    "시간제 등록생, 그리고 타 대학에 적을 두고 있는 파견·교환학생",
+    "조기졸업, 학·석사 연계과정 등 학점 초과취득이 별도로 가능한 학생 (중복 적용되지 않습니다). 이 사유로 제외된 학생이 해당 자격을 잃으면 다시 학점이월제 적용 대상이 됩니다."
+   ],
+   "en": [
+    "Students in Industrial Engineering, the Department of Medicine (의학과), or Seokdang Honors",
+    "Part-time registered students, and visiting or exchange students enrolled at another university",
+    "Students who can already exceed the credit limit another way — early graduation, or a combined bachelor's–master's programme — since the two do not stack. If you were excluded on this ground and lose that status, carryover applies to you again."
+   ],
+   "count": 3
+  },
+  "sections[8].notes[2].title": {
+   "ko": "이월 학점이 사라지는 경우",
+   "en": "When carried credits disappear"
+  },
+  "sections[8].notes[2].lines": {
+   "ko": [
+    "그 학기에 사용하지 않으면 자동 소멸하며, 남은 이월학점이 다시 다음 학기로 넘어가지 않습니다.",
+    "자퇴하거나 제적되는 경우, 그리고 학기를 초과하여 등록하는 경우 소멸합니다.",
+    "학사경고를 통산 2회 받아 다음 학기 신청학점이 3학점 제한되면 그 학기에는 이월학점을 사용할 수 없습니다.",
+    "수강취소 기간에 취소한 학점은 이월되지 않습니다.",
+    "휴학·전과 자체로 기존 이월학점이 소멸하지는 않습니다. 다만 복학·복귀 학기에 사용할 수 있는 학점과 사용 시점은 수강신청 전에 학사관리과 수업팀(051-200-6122~4)에 확인하세요."
+   ],
+   "en": [
+    "If you do not use them that semester they expire automatically, and any leftover does not roll on again.",
+    "They expire if you withdraw from the university, are removed from the register, or register for a semester beyond your required number of semesters.",
+    "If two academic warnings cut your next semester limit by 3 credits, you cannot use carried credits that semester.",
+    "Credits you cancel during the cancellation period do not carry over.",
+    "Taking leave or changing departments does not by itself cancel existing carried credits. Before registering for the semester you return, ask the course administration team at the Office of Academic Affairs (051-200-6122~4) how many carried credits you can use and when."
+   ],
+   "count": 5
+  },
+  "sections[8].notes[3].title": {
+   "ko": "외국인 학생은 어떻게 되나요?",
+   "en": "What about international students?"
+  },
+  "sections[8].notes[3].lines": {
+   "ko": [
+    "동아대학교 정규 학위과정에 재학 중인 외국인 학생이 외국 국적이라는 이유만으로 학점이월제에서 제외된다는 내용은 공식 수강신청 안내에서 확인되지 않습니다.",
+    "위 제외 대상 중 파견·교환학생은 타 대학에 적을 두고 있는 학생을 말하며, 동아대학교 학위과정 재학생에게는 해당하지 않습니다."
+   ],
+   "en": [
+    "Nothing in the official registration guidance excludes you from carryover simply because you are an international student on a degree program at Dong-A.",
+    "The visiting and exchange exclusion above applies to students enrolled at another university; it does not apply to students in a degree program at Dong-A."
+   ],
+   "count": 2
+  },
   "links[0].label": {
    "ko": "동아대학교 수강신청",
    "en": "Dong-A University course registration"
@@ -597,12 +599,12 @@
    "en": "The latest registration dates and academic notices"
   },
   "links[3].label": {
-   "ko": "수강신청안내",
-   "en": "Registration guide"
+   "ko": "수강신청안내 (2026학년도 2학기판)",
+   "en": "Registration guide (2nd semester 2026)"
   },
   "links[3].description": {
-   "ko": "학점 · 학점이월 · 재수강 · 지정 교과목 원문",
-   "en": "Credit limits, carryover, retakes and the designated courses"
+   "ko": "학기별 안내서 PDF · 학점 · 재수강 · 지정 교과목. 주소가 바뀌면 학사안내 › 서비스 바로가기에서 찾으세요",
+   "en": "The per-semester guide (PDF): credits, retakes, designated courses. If the link moves, find it under 학사안내 › 서비스 바로가기 on the university site"
   },
   "links[4].label": {
    "ko": "교과과정 안내",
@@ -643,6 +645,22 @@
   "links[8].description": {
    "ko": "학업성적 사정표로 졸업요건 점검",
    "en": "Checking graduation requirements in the grade audit"
+  },
+  "links[9].label": {
+   "ko": "전과 안내",
+   "en": "Changing departments (전과)"
+  },
+  "links[9].description": {
+   "ko": "매년 2월 초 인터넷 신청 · 평점평균 2.0 이상 · 외국인 편입생은 전과 불가",
+   "en": "Apply online in early February each year; GPA 2.0 or above; not open to international transfer students (Korean)"
+  },
+  "links[10].label": {
+   "ko": "복수전공 안내",
+   "en": "Double major (복수전공)"
+  },
+  "links[10].description": {
+   "ko": "매년 1월 · 7월 신청 · 1학년 수료 후 · 졸업예정자와 휴학생은 신청 불가",
+   "en": "Apply in January or July; after completing year 1; not open to students about to graduate or on leave (Korean)"
   }
  }
 }

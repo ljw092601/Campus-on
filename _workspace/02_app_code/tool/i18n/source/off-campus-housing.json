@@ -34,7 +34,8 @@
     "계약 종료 조건",
     "시설 및 옵션",
     "수리 책임",
-    "특약사항"
+    "특약사항",
+    "중도 해지 특약 — 졸업 · 귀국 등으로 계약 중에 나가야 할 때 어떻게 되는지 (자세한 내용은 「임대차 보증금 지키기」 가이드)"
    ],
    "en": [
     "The landlord's name",
@@ -50,9 +51,10 @@
     "How the contract can be ended",
     "The fittings and included appliances",
     "Who pays for repairs",
-    "Any special terms (특약사항)"
+    "Any special terms (특약사항)",
+    "An early-termination clause — what happens if graduation or going home means leaving mid-lease (details in the \"Protecting Your Rental Deposit\" guide)"
    ],
-   "count": 14
+   "count": 15
   },
   "checklist_optional_title": {
    "ko": "관리비에 무엇이 포함되나요?",
@@ -130,16 +132,34 @@
     "방 구하기",
     "월세",
     "부동산",
-    "집 구하기"
+    "집 구하기",
+    "고시원",
+    "쉐어하우스",
+    "셰어하우스",
+    "표준계약서",
+    "계약서 번역본",
+    "층간소음",
+    "소음",
+    "금연",
+    "고장",
+    "수리",
+    "수선"
    ],
    "en": [
     "one-room",
     "studio",
     "rent",
     "apartment",
-    "housing"
+    "housing",
+    "goshiwon",
+    "share house",
+    "standard lease",
+    "lease translation",
+    "noise",
+    "smoking",
+    "repair"
    ],
-   "count": 6
+   "count": 17
   },
   "duration": {
    "ko": "수일~수주",
@@ -190,6 +210,25 @@
     "Jeonse (전세) — you leave one large deposit and live there for the contract period instead of paying monthly rent."
    ],
    "count": 2
+  },
+  "top_sections[0].notes[2].title": {
+   "ko": "⚠️ 고시원 · 쉐어하우스를 계약하기 전에",
+   "en": "⚠️ Before signing for a goshiwon or share house"
+  },
+  "top_sections[0].notes[2].lines": {
+   "ko": [
+    "주택임대차보호법의 보호를 받는지는 건물 서류상 표시가 아니라 실제 용도로, 계약할 때를 기준으로 판단합니다. 주거용이 아닌 건물의 일부를 쓰거나 잠깐 머무는 일시사용 계약이면 보호 대상에서 빠질 수 있으니, 원룸과 같다고 생각하지 말고 계약 전에 상담 기관에 확인하세요.",
+    "고시원은 공정거래위원회 소비자분쟁해결기준에 환불 기준이 있습니다. 이용 시작 전에 해지하면 총이용요금의 10%를, 시작 뒤에는 해지일까지의 이용료와 남은 이용금액의 10%를 빼고 돌려주는 것이 기준입니다(보증금은 이 계산에 들어가지 않습니다).",
+    "이 기준은 분쟁을 합의 · 조정할 때 쓰는 기준입니다. 「환불 불가」 같은 조항이 있는지 서명 전에 확인하고, 다툼이 생기면 1372 소비자상담센터에 상담하세요.",
+    "쉐어하우스에서 집주인이 아닌 사람에게 방을 빌리거나 내 방을 다른 사람에게 넘길 때 확인할 점(집주인 동의)은 「임대차 보증금 지키기」 가이드에 있습니다."
+   ],
+   "en": [
+    "Whether the Housing Lease Protection Act protects you depends on how the place is actually used, judged when the contract is made — not on what the building papers say. Using part of a non-residential building, or a lease for temporary use, may fall outside it, so do not assume it works like a one-room; check with an advice service before you sign.",
+    "For goshiwon, the Fair Trade Commission's consumer dispute standards set a refund rule: cancel before your stay starts and 10% of the total fee is deducted; after it starts, the fee up to the cancellation day plus 10% of the remaining amount is deducted. (Any deposit is outside this calculation.)",
+    "That rule is a standard for settling disputes by agreement or mediation. Before signing, check for terms such as \"no refunds\", and if a dispute arises, contact the 1372 consumer counselling centre.",
+    "If you rent a share-house room from someone other than the owner, or hand your room to someone else, what to check (the owner's consent) is in the \"Protecting Your Rental Deposit\" guide."
+   ],
+   "count": 4
   },
   "top_sections[1].title": {
    "ko": "방을 찾는 방법",
@@ -447,6 +486,23 @@
    ],
    "count": 3
   },
+  "top_sections[4].notes[3].title": {
+   "ko": "🌐 번역본으로 조항 비교하기",
+   "en": "🌐 Compare clauses with a translation"
+  },
+  "top_sections[4].notes[3].lines": {
+   "ko": [
+    "법무부는 주택임대차 표준계약서의 영어 · 중국어 · 베트남어 번역본을 배포하고 있습니다. 아래 「법무부 — 주택임대차 표준계약서 번역본」 링크에서 받을 수 있습니다.",
+    "실제로 서명할 계약서는 표준계약서와 양식이 다를 수 있습니다. 번역본으로 조항의 뜻을 이해하고, 실제 계약서와 특약에 빠지거나 다른 내용이 없는지 비교하세요.",
+    "서명은 실제 계약서와 특약을 이해한 뒤에 하세요."
+   ],
+   "en": [
+    "The Ministry of Justice publishes the standard housing lease in English, Chinese and Vietnamese. Download it from the «Ministry of Justice — Standard housing lease translations» link below.",
+    "The contract you actually sign may not follow the standard form. Use the translation to understand what each clause means, then compare it with your real contract and special terms for anything missing or different.",
+    "Sign only once you understand the real contract and its special terms."
+   ],
+   "count": 3
+  },
   "sections[0].title": {
    "ko": "입주 전 · 입주 후 확인",
    "en": "Moving In"
@@ -499,6 +555,42 @@
    ],
    "count": 6
   },
+  "sections[0].notes[2].title": {
+   "ko": "🔧 사는 동안 고장이 나면",
+   "en": "🔧 If something breaks while you live there"
+  },
+  "sections[0].notes[2].lines": {
+   "ko": [
+    "수리가 필요한 문제가 생기면 집주인에게 알리세요. 문자나 메시지처럼 기록이 남는 방법으로 알리고, 고장 부위 사진과 날짜를 함께 남겨두세요.",
+    "일반적으로 생활에 지장을 주는 고장(예: 난방 · 수도 · 전기 설비)은 집주인에게 고칠 의무가 있지만, 쉽게 고칠 수 있는 사소한 것이나 본인 잘못으로 생긴 고장은 다를 수 있습니다.",
+    "누가 수리하고 비용을 내는지는 고장 원인, 수리 범위, 계약서와 특약에 따라 달라집니다. 일률적으로 정해져 있지 않으니 계약서의 수리 · 수선 조항과 특약을 먼저 확인하세요.",
+    "퇴실할 때의 원상회복과 보증금 공제는 「임대차 보증금 지키기」 가이드에 정리했습니다."
+   ],
+   "en": [
+    "If something needs repair, tell the landlord. Do it by text or message so there is a record, and keep a photo of the fault with the date.",
+    "As a rule, the landlord has to fix faults that get in the way of normal living (such as heating, water or electrical fittings), but small things that are easy to fix, or damage you caused, may be treated differently.",
+    "Who repairs it and who pays depends on what caused it, how big the repair is, and the contract and its special terms. There is no single rule, so check the repair clauses and special terms in your contract first.",
+    "Restoring the room and deposit deductions when you move out are covered in the «Protecting Your Rental Deposit» guide."
+   ],
+   "count": 4
+  },
+  "sections[0].notes[3].title": {
+   "ko": "🤝 함께 사는 건물에서",
+   "en": "🤝 Living alongside neighbours"
+  },
+  "sections[0].notes[3].lines": {
+   "ko": [
+    "늦은 시간에는 발소리 · 음악 · 통화 · 세탁기처럼 벽과 바닥을 타고 울리는 소리를 줄여 주세요. 층간소음 이웃사이센터(1661-2642)에 문의할 때는 거주 주택과 소음 종류가 상담 대상인지 먼저 확인하세요.",
+    "흡연은 건물의 금연 표지와 관리 규칙을 먼저 확인하세요. 복도 · 계단 · 엘리베이터 등이 금연구역으로 지정된 건물도 있습니다.",
+    "공용 세탁실 · 주방 · 복도 · 쓰레기 배출 장소는 쓴 뒤 정리하세요."
+   ],
+   "en": [
+    "Late at night, keep down sounds that travel through walls and floors — footsteps, music, calls, the washing machine. When you contact the Floor Noise Neighbour Centre (1661-2642), first check whether both your type of housing and the kind of noise are within what it handles.",
+    "Check the building's no-smoking signs and house rules before you smoke. In some buildings the corridors, stairs and lifts are designated no-smoking areas.",
+    "Tidy up after using a shared laundry, kitchen, corridor or rubbish area."
+   ],
+   "count": 3
+  },
   "sections[1].title": {
    "ko": "이사 후 신고와 보증금 보호",
    "en": "Reporting Your Address & Protecting Your Deposit"
@@ -512,8 +604,8 @@
    "en": "Do not put the report off\nThe change-of-residence report is due within 15 days of moving in, and missing it can mean a fine of up to 1 million won under the Immigration Control Act. It also ties into how your deposit is protected — so make it the first thing you do after moving."
   },
   "sections[1].footnote": {
-   "ko": "※ 근거: 「출입국관리법」 제36조 · 제88조의2 · 제98조, 「주택임대차보호법」 제3조 · 제3조의2 · 제3조의6, 「부동산 거래신고 등에 관한 법률」 제6조의2 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 · 부동산거래관리시스템 안내 기준. 신고 대상과 기한, 금액 기준은 바뀔 수 있으므로 최신 공식 안내를 확인하세요. 개별 계약에 따라 적용되는 절차가 다를 수 있으므로 공식 기관 또는 전문가에게 확인하세요.",
-   "en": "※ Based on the Immigration Control Act arts. 36, 88-2 and 98, the Housing Lease Protection Act arts. 3, 3-2 and 3-6, and the Act on Report on Real Estate Transactions art. 6-2, as explained by the Korean Ministry of Government Legislation, HiKorea and the property transaction system. Thresholds and deadlines change — check the current official guidance, and ask an official body about your own contract."
+   "ko": "※ 근거: 「출입국관리법」 제36조 · 제88조의2 · 제98조 — 법제처 「찾기쉬운 생활법령정보」와 하이코리아 안내 기준. 확정일자·우선변제권과 주택 임대차계약 신고는 아래 「임대차 보증금 지키기」 가이드에 모았습니다.",
+   "en": "※ Based on the Immigration Control Act arts. 36, 88-2 and 98, as explained by the Korean Ministry of Government Legislation and HiKorea. The fixed date, priority repayment and the duty to report the lease are collected in the \"Protecting your deposit\" guide linked below."
   },
   "sections[1].notes[0].title": {
    "ko": "🪪 체류지 변경 신고",
@@ -521,56 +613,14 @@
   },
   "sections[1].notes[0].lines": {
    "ko": [
-    "대상 — 외국인등록을 한 사람이 체류지를 옮긴 경우",
-    "기한 — 전입한 날부터 15일 이내",
-    "장소 — 새 체류지의 시·군·구 또는 읍·면·동, 또는 새 체류지를 관할하는 출입국·외국인청(사무소·출장소)",
-    "온라인 — 하이코리아 전자민원으로도 신청할 수 있습니다(본인 신청).",
-    "서류 — 체류지 변경신고서, 외국인등록증, 임대차계약서 등 체류지 이전을 확인할 수 있는 서류"
+    "외국인등록을 한 사람이 이사하면 전입한 날부터 15일 이내에 체류지 변경신고를 해야 합니다.",
+    "새 체류지의 시·군·구청·주민센터나 관할 출입국·외국인관서를 방문하거나 하이코리아 전자민원으로 신고할 수 있습니다. 필요한 서류와 대리신청 가능 여부는 아래 「체류지·등록사항 변경신고」 가이드에서 확인하세요."
    ],
    "en": [
-    "Who — anyone with an alien registration who has moved",
-    "When — within 15 days of moving in",
-    "Where — the si/gun/gu or eup/myeon/dong office for your new address, or the immigration office covering it",
-    "Online — you can also file it yourself through HiKorea",
-    "What to bring — the change-of-residence form, your ARC, and your lease (or another document proving the new address)"
+    "If you have an alien registration and you move, the change of residence must be reported within 15 days of moving in.",
+    "File it at the city/district office or community centre for your new address, at your immigration office, or through HiKorea. The documents — and whether someone may file for you — are in the change-of-residence guide linked below."
    ],
-   "count": 5
-  },
-  "sections[1].notes[1].title": {
-   "ko": "🛡 보증금 보호와 확정일자",
-   "en": "🛡 Your deposit and the fixed date"
-  },
-  "sections[1].notes[1].lines": {
-   "ko": [
-    "주택임대차보호법의 대항력은 주택을 인도받고 주민등록(전입신고)을 마친 다음 날부터 생깁니다.",
-    "외국인은 출입국관리법에 따른 외국인등록과 체류지 변경 신고가 주민등록과 전입신고를 갈음합니다. 주택을 인도받고 이 등록 · 신고를 마치면 같은 보호를 받을 수 있습니다.",
-    "우선변제권은 대항요건에 더해 임대차계약서에 확정일자를 받아야 생깁니다.",
-    "확정일자는 읍·면사무소, 동 주민센터, 시·군·구의 출장소, 지방법원 · 등기소, 공증인 등에서 받을 수 있습니다."
-   ],
-   "en": [
-    "Under the Housing Lease Protection Act, protection against third parties starts the day AFTER you take possession and register your address.",
-    "For foreign nationals, the alien registration and the change-of-residence report under the Immigration Control Act stand in for the resident registration. Once you have taken possession and completed them, you have the same footing.",
-    "To rank ahead of later claims you also need a fixed date (확정일자) stamped on the lease.",
-    "You can get that stamp at an eup/myeon office, a community centre, a si/gun/gu branch office, a district court or registry office, or a notary."
-   ],
-   "count": 4
-  },
-  "sections[1].notes[2].title": {
-   "ko": "📝 주택 임대차계약 신고",
-   "en": "📝 Reporting the lease itself"
-  },
-  "sections[1].notes[2].lines": {
-   "ko": [
-    "부산을 포함한 광역시 등에서는 보증금 6천만원 또는 월세 30만원을 넘는 주택 임대차계약을 계약 체결일부터 30일 이내에 신고해야 합니다. 둘 중 하나만 넘어도 대상입니다.",
-    "임대인과 임차인이 함께 신고하는 것이 원칙이지만, 임차인이 계약서를 첨부하면 혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 부여됩니다.",
-    "2025년 6월 1일 이후 체결한 계약은 신고하지 않으면 과태료가 부과될 수 있습니다. 신고 방법은 계약한 공인중개사나 주민센터에서 확인하세요."
-   ],
-   "en": [
-    "In Busan and other metropolitan cities, among other areas, a housing lease with a deposit over 60 million won or monthly rent over 300,000 won must be reported within 30 days of signing. Passing either threshold is enough.",
-    "Landlord and tenant normally report together, but a tenant who attaches the contract can file alone — and the fixed date is then applied automatically.",
-    "For contracts signed on or after 1 June 2025, failing to report can lead to a fine. Ask your agent or the community centre how to file."
-   ],
-   "count": 3
+   "count": 2
   },
   "sections[2].title": {
    "ko": "보증금 · 월세 이해하기",
@@ -876,6 +926,30 @@
   "links[9].description": {
    "ko": "계약 전 심화 확인과 보증금 미반환 대응",
    "en": "Extra checks, and what to do if the deposit is not returned"
+  },
+  "links[10].label": {
+   "ko": "가이드 — 쓰레기 버리기·분리배출",
+   "en": "Guide — Waste and recycling"
+  },
+  "links[10].description": {
+   "ko": "배출 장소·요일과 봉투는 구와 건물마다 다릅니다.",
+   "en": "Collection point, days and bags differ by district and building."
+  },
+  "links[11].label": {
+   "ko": "가이드 — 소비자 피해·환불 분쟁",
+   "en": "Guide — Refunds and consumer disputes"
+  },
+  "links[11].description": {
+   "ko": "고시원 환불 다툼은 1372 소비자상담센터에서 상담합니다.",
+   "en": "For a goshiwon refund dispute, start at 1372."
+  },
+  "links[12].label": {
+   "ko": "법무부 — 주택임대차 표준계약서 번역본",
+   "en": "Ministry of Justice — Standard housing lease translations"
+  },
+  "links[12].description": {
+   "ko": "영어 · 중국어 · 베트남어. 실제 계약서와 비교하는 데 쓰세요.",
+   "en": "English, Chinese and Vietnamese — use it to compare with your real contract."
   }
  }
 }

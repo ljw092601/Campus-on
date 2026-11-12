@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -16,13 +17,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// The 30-guide catalogue as a user moves through it: every guide opens and
-/// lays out on a small phone with large text in both languages, search reaches
+/// The guide catalogue as a user moves through it: every guide opens and lays
+/// out on a small phone with large text in all four languages, search reaches
 /// the owning guide, and back returns to where the user came from (search
 /// results, the previous guide, the category list).
 ///
 /// Widget tests use the test font, so this proves layout without overflow and
 /// navigation; how the real fonts look is checked on a device or browser.
+///
+/// r19 D8: zh·vi were added here. Chinese wraps without spaces and Vietnamese
+/// runs longer than Korean, so both are the ones that overflow first — and a
+/// missing overlay key would surface as a raw `sections[N]` on screen, which
+/// [_noRawKeys] fails on.
 
 Future<ProviderScope> _app(String locale,
     {List<String> favoriteGuides = const []}) async {
@@ -58,6 +64,28 @@ void _smallPhone(WidgetTester tester) {
 Future<void> _largeText(WidgetTester tester) async {
   tester.platformDispatcher.textScaleFactorTestValue = 2.0;
   await tester.pumpAndSettle();
+}
+
+Future<void> _textScale(WidgetTester tester, double scale) async {
+  tester.platformDispatcher.textScaleFactorTestValue = scale;
+  await tester.pumpAndSettle();
+}
+
+/// Index-addressed overlay keys (`sections[3].notice`, `links[0].label`) and
+/// unfilled placeholders must never reach the screen. If a translation is
+/// missing, `_pickText` falls back to another language — it does not print the
+/// key — so a key on screen means the data itself holds one.
+final _rawKey = RegExp(r'(top_sections|sections|notes|links|checklist)\[\d+\]'
+    r'|\{\w+\}|^null$');
+
+void _noRawKeys(WidgetTester tester, Finder screen, String where) {
+  for (final e in find
+      .descendant(of: screen, matching: find.byType(Text))
+      .evaluate()) {
+    final t = (e.widget as Text).data;
+    if (t == null) continue;
+    expect(_rawKey.hasMatch(t), isFalse, reason: '$where 화면에 내부 키: $t');
+  }
 }
 
 void _tallPhone(WidgetTester tester) {
@@ -115,10 +143,20 @@ String _title(String id, String lang) => MockData.guideItems
     .title(Locale(lang));
 
 void main() {
-  group('every guide lays out on a small phone at 200 % text', () {
-    for (final lang in const ['ko', 'en']) {
+  group('every guide lays out on a small phone', () {
+    // 200 % is the binding case for overflow; zh·vi also run at 130 % because
+    // that is the common accessibility setting and their lines are longest.
+    const passes = [
+      ('ko', 2.0),
+      ('en', 2.0),
+      ('zh', 2.0),
+      ('vi', 2.0),
+      ('zh', 1.3),
+      ('vi', 1.3),
+    ];
+    for (final (lang, scale) in passes) {
       for (final g in MockData.guideItems) {
-        testWidgets('$lang ${g.id}', (tester) async {
+        testWidgets('$lang ${(scale * 100).round()} % ${g.id}', (tester) async {
           _smallPhone(tester);
           await tester.pumpWidget(await _app(lang));
           await tester.pumpAndSettle();
@@ -127,12 +165,14 @@ void main() {
           await tester.pumpAndSettle();
           AppRouter.router.go('/home/guide/item/${g.id}');
           await tester.pumpAndSettle();
-          await _largeText(tester);
+          await _textScale(tester, scale);
 
           final screen = find.byType(GuideDetailScreen);
           expect(screen, findsOneWidget);
           expect(find.text(g.detailTitle(Locale(lang))), findsOneWidget);
-          await _scrollThrough(tester, screen);
+          _noRawKeys(tester, screen, '$lang ${g.id}');
+          await _scrollThrough(tester, screen,
+              eachStep: () => _noRawKeys(tester, screen, '$lang ${g.id}'));
         });
       }
     }
@@ -141,7 +181,7 @@ void main() {
   testWidgets('category lists lay out on a small phone at 200 % text',
       (tester) async {
     _smallPhone(tester);
-    for (final lang in const ['ko', 'en']) {
+    for (final lang in const ['ko', 'en', 'zh', 'vi']) {
       tester.platformDispatcher.clearTextScaleFactorTestValue();
       await tester.pumpWidget(await _app(lang));
       await tester.pumpAndSettle();
@@ -200,7 +240,39 @@ void main() {
         'graduation': 'graduation-requirements',
         'D-4': 'status-change-d4-to-d2',
       },
+      // r19 D8: 실제 중국어·베트남어 질의가 검색 **화면**까지 닿는지 본다.
+      // 저장소 수준은 `guide_r19_reach_test.dart` 가 보고, 여기서는 결과 타일에
+      // 그 언어 제목이 실제로 뜨는지 확인한다. `nhap canh` 는 무성조 입력이다.
+      'zh': {
+        '被骗': 'financial-scam-response',
+        '垃圾袋': 'waste-and-recycling',
+        '入境': 'arrival-first-steps',
+      },
+      'vi': {
+        'lừa đảo': 'financial-scam-response',
+        'túi rác': 'waste-and-recycling',
+        'nhap canh': 'arrival-first-steps',
+        'cấp cứu': 'emergency-contacts',
+      },
     };
+    for (final lang in const ['zh', 'vi']) {
+      testWidgets('$lang 질의', (tester) async {
+        _tallPhone(tester);
+        await tester.pumpWidget(await _app(lang));
+        await tester.pumpAndSettle();
+        AppRouter.router.go('/home');
+        await tester.pumpAndSettle();
+        unawaited(AppRouter.router.push('/search'));
+        await tester.pumpAndSettle();
+        final screen = find.byType(SearchScreen);
+        for (final e in cases[lang]!.entries) {
+          await _search(tester, e.key);
+          expect(_resultTile(_title(e.value, lang)), findsOneWidget,
+              reason: '$lang "${e.key}" → ${e.value}');
+          _noRawKeys(tester, screen, '$lang 검색 "${e.key}"');
+        }
+      });
+    }
     for (final lang in const ['ko', 'en']) {
       testWidgets(lang, (tester) async {
         _tallPhone(tester);
@@ -208,7 +280,7 @@ void main() {
         await tester.pumpAndSettle();
         AppRouter.router.go('/home');
         await tester.pumpAndSettle();
-        AppRouter.router.push('/search');
+        unawaited(AppRouter.router.push('/search'));
         await tester.pumpAndSettle();
         // Queries in either language list titles in the UI language.
         for (final e in {...cases['ko']!, ...cases['en']!}.entries) {
@@ -234,7 +306,7 @@ void main() {
     await tester.pumpAndSettle();
     AppRouter.router.go('/home');
     await tester.pumpAndSettle();
-    AppRouter.router.push('/search');
+    unawaited(AppRouter.router.push('/search'));
     await tester.pumpAndSettle();
     await _search(tester, '알바');
 

@@ -1,0 +1,447 @@
+{
+ "id": "scholarships-and-topik",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "장학금·TOPIK 지원받기",
+   "en": "Scholarships & TOPIK Support"
+  },
+  "detail_title": {
+   "ko": "외국인 유학생 장학금과 TOPIK 응시료·성적장려금 받기",
+   "en": "Scholarships, TOPIK Exam Fees and Score Awards"
+  },
+  "summary": {
+   "ko": "성적우수장학 · TOPIK 응시료·장려금",
+   "en": "Merit awards; TOPIK fee & score awards"
+  },
+  "overview": {
+   "ko": "이 가이드는 동아대학교 외국인 학부 재학생이 신청하거나 받는 교내 장학 가운데 두 가지를 다룹니다. 직전 학기 성적순위에 따라 수업료를 감면하는 외국인 성적우수장학금과, TOPIK 응시료 일부와 급수별 성적장려금을 주는 TOPIK 장학금입니다. 입학 때 받는 신입생 장학금은 입학전형·트랙·어학 성적으로 이미 정해집니다. 장학 규정에는 이 밖에도 대외국제처가 자체 기준으로 선발하는 외국인 장학(해외자매대학 편입생·협약기관 추천·특별장학·초기정착지원)이 있지만, 개인이 신청할 기준이 공개돼 있지 않아 여기서는 다루지 않습니다.\n\n두 장학 모두 대상이 정해져 있고, 금액과 일정은 해마다 바뀔 수 있습니다. 이 가이드는 본인이 대상인지 확인하는 순서와 신청에서 놓치기 쉬운 점을 정리합니다. 숫자에는 출처와 기준 시점을 함께 적었으니, 신청 전에 국제교류과 공지로 다시 확인하세요.\n\n이 안내는 학부 기준입니다. 대학원생·교환학생·GKS 장학생·한국어학당 학생은 아래 「나에게 해당하나요?」에서 확인할 곳을 보세요.",
+   "en": "This guide covers two of the on-campus scholarships that international undergraduates at Dong-A apply for or receive while studying: the international merit scholarship, which reduces tuition according to your class rank last semester, and the TOPIK scholarship, which covers part of the TOPIK exam fee and pays a score award for each level. Freshman scholarships are fixed at admission by your admission track and language scores. The scholarship rules also list international scholarships selected by the Office of External and International Affairs on its own criteria (partner-university transfers, partner referrals, special awards, settling-in support); no criteria for individual applicants are published, so they are not covered here.\n\nBoth have a defined target group, and the amounts and dates can change every year. This guide sets out how to check whether you qualify and what is easy to miss when you apply. Figures are given with their source and date — check the Office of International Affairs notice again before you apply.\n\nThis guide is for undergraduates. Graduate, exchange, GKS and Korean Language Institute students: see «Does this apply to me?» below for where to check."
+  },
+  "checklist_title": {
+   "ko": "신청 전에 확인할 것",
+   "en": "Check before you apply"
+  },
+  "checklist": {
+   "ko": [
+    "입학전형(외국인 특별전형인지)·트랙(한국어/영어)·소속 학과",
+    "직전 학기 성적 — 수강신청을 하지 않아 성적이 나오지 않으면 성적 기준을 채우지 못한 것으로 봅니다",
+    "TOPIK 성적표 원본과 입학 때 제출한 TOPIK 급수",
+    "통합정보시스템에 등록된 본인 계좌번호",
+    "이번 학년도 국제교류과 장학 공지"
+   ],
+   "en": [
+    "Your admission track (international or not), language track (Korean/English) and department",
+    "Last semester’s grades — if no grade was produced because you did not register for courses, you are treated as not meeting the grade condition",
+    "Your original TOPIK score report, and the level you submitted at admission",
+    "Your own bank account number, registered in the integrated information system",
+    "This year’s scholarship notice from the Office of International Affairs"
+   ],
+   "count": 5
+  },
+  "steps": {
+   "ko": [
+    "내가 어느 장학의 대상인지 확인한다. 입학전형·트랙·과정에 따라 장학 종류가 다릅니다. 위 「나에게 해당하나요?」를 먼저 보세요.",
+    "국제교류과 공지사항에서 이번 학년도 장학 공지를 찾는다. 금액·일정·제외 대상은 해마다 바뀔 수 있습니다. 공지의 「유학생지원」 분류를 확인하세요.",
+    "성적우수장학금은 직전 학기 성적으로 정해진다. 학과 안 성적순위로 등급이 갈리므로 학기 중 수강과 시험을 관리하고, 수강취소로 학점이 줄면 선발에서 빠질 수 있다는 점을 기억하세요.",
+    "TOPIK을 보고 성적표 원본을 기한 안에 국제교류과에 낸다. 응시료 지원은 급수와 관계없이 성적표를 내면 받고, 성적장려금은 급수마다 한 번입니다. 시험 회차마다 제출기한이 있습니다.",
+    "통합정보시스템에 본인 계좌번호를 등록해 둔다. 장려금은 이 계좌로 지급되며, 제출 뒤 약 2개월 안에 지급된다고 안내합니다(상황에 따라 바뀔 수 있음).",
+    "감면 결과는 등록금고지서에서 확인한다. 장학금이 반영된 금액과 납부는 「등록금 납부·등록 확인」 가이드를 보세요."
+   ],
+   "en": [
+    "Work out which scholarship applies to you. It depends on your admission track, language track and programme — start with «Does this apply to me?» above.",
+    "Find this year’s scholarship notice on the Office of International Affairs notice board. Amounts, dates and exclusions can change every year — look under the «유학생지원» (student support) category.",
+    "The merit scholarship is decided by last semester’s grades. The grade depends on your rank within your department, so keep up with your courses and exams — and remember that dropping courses can take you below the credits needed for selection.",
+    "Take TOPIK and hand the original score report to the Office of International Affairs before the deadline. The fee support is paid whatever level you get; the score award is paid once per level. Each exam round has its own deadline.",
+    "Register your own bank account in the integrated information system. Awards are paid into it, about 2 months after you hand in the report according to the notice (this can change).",
+    "Check the tuition reduction on your tuition bill. For the amount after the scholarship and how to pay, see the tuition payment guide."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "📅 TOPIK 성적이 나오면 바로 제출하세요 — 회차별 제출기한이 정해져 있습니다.",
+    "🧾 성적표는 원본을 냅니다. 내기 전에 사본을 따로 남겨 두세요.",
+    "💳 계좌번호가 등록돼 있어야 장려금이 지급됩니다.",
+    "📉 수강취소 전에 장학 학점 기준을 확인하세요. 신청 학점이 장학생 선발 기준보다 적어지면 선발 대상에서 빠질 수 있습니다(장학 기준 문의: 학생복지과 장학팀 051-200-6212)."
+   ],
+   "en": [
+    "📅 Hand in your TOPIK report as soon as results are out — each round has a fixed deadline.",
+    "🧾 The original report is handed in, so keep a copy for yourself first.",
+    "💳 The award can only be paid once your account number is registered.",
+    "📉 Check the scholarship credit rule before you drop a course. If your registered credits fall below the selection rule you can lose eligibility (scholarship rules: Student Welfare, Scholarship Team, 051-200-6212)."
+   ],
+   "count": 4
+  },
+  "search_aliases": {
+   "ko": [
+    "장학금",
+    "장학",
+    "토픽",
+    "TOPIK 장학금",
+    "응시료",
+    "성적장려금",
+    "성적우수장학금",
+    "한국어능력시험"
+   ],
+   "en": [
+    "scholarship",
+    "scholarships",
+    "TOPIK scholarship",
+    "exam fee",
+    "tuition waiver",
+    "Korean test",
+    "merit scholarship"
+   ],
+   "count": 8
+  },
+  "top_sections[0].title": {
+   "ko": "나에게 해당하나요?",
+   "en": "Does this apply to me?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 대상은 동아대학교 장학 규정 및 지침(학사안내 › 장학)과 국제교류과 「2026학년도 한국어능력시험(TOPIK) 응시료 및 성적장려금 지원 안내」(2025-11-21 게시) 기준, 2026-10-30 확인.",
+   "en": "※ Based on Dong-A’s scholarship rules (Academics › Scholarships) and the Office of International Affairs notice on 2026 TOPIK exam fee and score award support (posted 2025-11-21), checked 2026-10-30."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "✅ 외국인 학부 재학생",
+   "en": "✅ International undergraduates"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "TOPIK 장학금은 외국인 학부 재학생이 대상입니다. 공지는 입학전형을 따로 한정하지 않습니다.",
+    "외국인 성적우수장학금은 외국인 특별전형으로 입학한 학부생이 대상이며, 융합경영학과는 빠집니다.",
+    "영어트랙 재학생의 성적장학은 「영어트랙 성적우수장학금」으로 따로 정해지며, 학과 장학생 선발 기준을 따릅니다."
+   ],
+   "en": [
+    "The TOPIK scholarship is for international undergraduates currently enrolled; the notice does not limit it by admission track.",
+    "The international merit scholarship is for undergraduates admitted through the international track, except the Department of Convergence Management.",
+    "English-track students have a separate English-track merit scholarship, awarded under the department’s selection rules."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "↪ 다른 과정이라면",
+   "en": "↪ If you are on a different programme"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "대학원생: 국제교류과 「대학원 › 장학금」 안내를 따릅니다. 이 가이드의 범위가 아닙니다. 대학원 학위과정 절차와 외국인장학금 안내는 「대학원 학위과정 길잡이」 가이드에 있습니다.",
+    "GKS 장학생·교환학생: 2026학년도 TOPIK 장학 대상에서 빠집니다. GKS 장학생은 GKS 담당(051-200-6449)에 문의하세요.",
+    "한국어학당 학생: 학당을 2개 학기 이상 수료하고 마지막 2개 학기 출석률이 80% 이상인 학생이 외국인 특별전형으로 입학하면 입학 학기에 DAU 외국인 우수신입생 장학금을 받을 수 있습니다. 학당에 다니는 동안 받는 장학이 아닙니다."
+   ],
+   "en": [
+    "Graduate students: follow the Office of International Affairs «Graduate › Scholarships» page. Not covered here. Graduate degree steps and the international scholarship are in the \"Graduate Degree Roadmap\" guide.",
+    "GKS scholars and exchange students are excluded from the 2026 TOPIK scholarship. GKS scholars should ask the GKS desk (051-200-6449).",
+    "Korean Language Institute students: if you complete two or more institute terms with at least 80% attendance in the last two and then enter through the international track, you can receive the DAU freshman scholarship for your first semester. It is not paid while you are at the institute."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "외국인 성적우수장학금",
+   "en": "International merit scholarship"
+  },
+  "sections[0].notice": {
+   "ko": "「최대」 감면율입니다 / 학교 장학 규정은 감면율 앞에 「최대」를 붙입니다. 국제교류과 안내책자(2026.8)에는 같은 등급이 수업료 전액·70%·40%·20%로 적혀 있습니다. 실제 감면액은 등록금고지서에서 확인하세요.",
+   "en": "These are maximum rates / The university’s scholarship rules put «up to» before each rate; the Office of International Affairs handbook (Aug 2026) lists the same grades as full tuition, 70%, 40% and 20%. Check the actual reduction on your tuition bill."
+  },
+  "sections[0].footnote": {
+   "ko": "※ 동아대학교 장학 규정 및 지침(게시일 표기 없음)과 국제교류과 「외국인 유학생 수강신청 안내 책자」 2026.8판 인쇄 p.14 기준, 2026-10-30 확인. 교내 장학 공통사항의 평점평균 2.5 기준이 이 장학에도 함께 적용되는지는 공식 안내에 따로 적혀 있지 않으니 국제교류과에 확인하세요.",
+   "en": "※ Based on Dong-A’s scholarship rules (no posting date shown) and the Office of International Affairs handbook for international students, Aug 2026 edition, printed p.14, checked 2026-10-30. Whether the general on-campus condition of a 2.5 GPA also applies to this scholarship is not stated separately — ask the office."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "대상과 기준",
+   "en": "Who and how"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "외국인 특별전형으로 입학한 학부생(융합경영학과 제외)",
+    "성적이 산출된 직전 학기의 성적순위로 등급을 정합니다."
+   ],
+   "en": [
+    "Undergraduates admitted through the international track (Convergence Management excluded)",
+    "The grade is set by your rank in the last semester for which grades were produced."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[1].title": {
+   "ko": "등급과 감면율",
+   "en": "Grades and reductions"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "성적순위 10% 미만: A — 수업료 최대 100%",
+    "40% 미만: B — 수업료 최대 70%",
+    "60% 미만: C — 수업료 최대 40%",
+    "80% 미만: D — 수업료 최대 20%"
+   ],
+   "en": [
+    "Rank in the top 10% (below 10%): A — up to 100% of tuition",
+    "Below 40%: B — up to 70% of tuition",
+    "Below 60%: C — up to 40% of tuition",
+    "Below 80%: D — up to 20% of tuition"
+   ],
+   "count": 4
+  },
+  "sections[1].title": {
+   "ko": "TOPIK 장학금 — 응시료와 성적장려금",
+   "en": "TOPIK scholarship — exam fee and score award"
+  },
+  "sections[1].notice": {
+   "ko": "시험마다 제출기한이 있습니다 / 2026학년도 안내는 시험 성적 발표일로부터 1주일 이내(제출기한 내)에 성적표 원본을 국제교류과에 내라고 하고, 첨부 일정표에 시험 회차별 성적제출기간을 따로 적었습니다. 성적이 나오면 바로 그 회차의 기한을 확인하세요.",
+   "en": "Every exam has a deadline / The 2026 notice asks for the original score report at the office within one week of the results (within the deadline), and its attached timetable gives a submission period for each exam round. Check your round’s deadline as soon as results are out."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 국제교류과 「2026학년도 한국어능력시험(TOPIK) 응시료 및 성적장려금 지원 안내」(2025-11-21 게시)와 첨부 안내 기준, 2026-10-30 확인. 금액과 대상은 해마다 바뀔 수 있습니다. 같은 안내의 문의처는 국제교류과 051-200-6447입니다.",
+   "en": "※ Based on the Office of International Affairs notice on 2026 TOPIK exam fee and score award support (posted 2025-11-21) and its attachment, checked 2026-10-30. Amounts and eligibility can change every year. The contact given in that notice is 051-200-6447."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "대상",
+   "en": "Who"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "외국인 학부 재학생",
+    "GKS 장학생·교환학생·휴학생·초과학기생·수료생은 대상이 아닙니다."
+   ],
+   "en": [
+    "International undergraduates currently enrolled",
+    "Not GKS scholars, exchange students, students on leave, students beyond their regular semesters, or those who have completed coursework without graduating."
+   ],
+   "count": 2
+  },
+  "sections[1].notes[1].title": {
+   "ko": "응시료 지원 (2026학년도)",
+   "en": "Exam fee support (2026)"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "TOPIK(PBT) 35,000원 · TOPIK IBT 45,000원 · TOPIK 말하기 평가 40,000원",
+    "응시료의 나머지는 본인이 냅니다. 급수와 관계없이 성적표를 내면 지원하고, 횟수 제한은 없습니다."
+   ],
+   "en": [
+    "TOPIK (PBT) 35,000 won · TOPIK IBT 45,000 won · TOPIK Speaking 40,000 won",
+    "You pay the rest of the fee. Support is paid whatever your level once you hand in the score report, with no limit on the number of times."
+   ],
+   "count": 2
+  },
+  "sections[1].notes[2].title": {
+   "ko": "성적장려금 (2026학년도, 세전)",
+   "en": "Score award (2026, before tax)"
+  },
+  "sections[1].notes[2].lines": {
+   "ko": [
+    "3급 500,000원 · 4급 700,000원 · 5급 500,000원 · 6급 500,000원",
+    "TOPIK(PBT)·TOPIK IBT 성적만 해당하고, 말하기 평가는 해당하지 않습니다.",
+    "같은 급수는 한 번만 받습니다. 4급을 받은 뒤 5급을 받으면 두 번 다 받을 수 있습니다.",
+    "입학 때 낸 급수보다 높은 급수부터 받을 수 있습니다. 같은 급수라면 국제교류과에 확인하세요 — 공지 본문은 「입학 당시 급수 이상」, 첨부 안내는 「입학 당시보다 급수가 높아야」로 적었습니다.",
+    "세금을 뺀 금액이 입금됩니다."
+   ],
+   "en": [
+    "Level 3: 500,000 won · Level 4: 700,000 won · Level 5: 500,000 won · Level 6: 500,000 won",
+    "Only TOPIK (PBT) and TOPIK IBT scores count — not the Speaking test.",
+    "Each level is paid once. If you get Level 4 and later Level 5, you receive both.",
+    "Only levels above the one you entered with are paid. If it is the same level, ask the office — the notice says «at or above the level at admission», the attached guide «higher than at admission».",
+    "The amount paid in is after tax."
+   ],
+   "count": 5
+  },
+  "sections[2].title": {
+   "ko": "TOPIK 시험 접수는 따로 합니다",
+   "en": "You register for TOPIK yourself"
+  },
+  "sections[2].body": {
+   "ko": "TOPIK 원서 접수는 학교가 아니라 TOPIK 홈페이지에서 본인이 합니다. 학교 지원금은 시험을 본 뒤 성적표를 내야 받는 별도 절차입니다. 응시료는 먼저 본인이 내고, 지원금은 나중에 받습니다.",
+   "en": "You register for TOPIK yourself on the TOPIK website, not through the university. The university’s support is a separate step after the exam, once you hand in your score report — you pay the exam fee first and get the support later."
+  },
+  "sections[2].notice": {
+   "ko": "접수기간·시험일·성적 발표일은 회차마다 다르고 바뀔 수 있습니다. 시험을 보기 전에 TOPIK 홈페이지에서 그 회차 일정을 확인하세요.",
+   "en": "Registration periods, exam dates and result dates differ by round and can change. Check the round on the TOPIK website before you plan around it."
+  },
+  "sections[2].footnote": {
+   "ko": "※ 국립국제교육원 공고 제2025-317호 「2026년 한국어능력시험 시행계획」(2025-10-10) 기준, 2026-10-30 확인. 국외 접수기간과 응시수수료는 현지 시행기관 기준입니다.",
+   "en": "※ Based on National Institute for International Education notice No. 2025-317, the 2026 TOPIK plan (2025-10-10), checked 2026-10-30. Outside Korea, the local administering body sets the dates and fees."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "2026년 국내 응시수수료",
+   "en": "2026 exam fees in Korea"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "TOPIK PBT: 토픽 Ⅰ 40,000원 · 토픽 Ⅱ 55,000원",
+    "TOPIK IBT: 토픽 Ⅰ 70,000원 · 토픽 Ⅱ 95,000원",
+    "TOPIK 말하기 평가: 80,000원"
+   ],
+   "en": [
+    "TOPIK PBT: TOPIK I 40,000 won · TOPIK II 55,000 won",
+    "TOPIK IBT: TOPIK I 70,000 won · TOPIK II 95,000 won",
+    "TOPIK Speaking: 80,000 won"
+   ],
+   "count": 3
+  },
+  "sections[3].title": {
+   "ko": "TOPIK 성적이 쓰이는 다른 곳",
+   "en": "Other places your TOPIK score is used"
+  },
+  "sections[3].body": {
+   "ko": "같은 TOPIK 성적이라도 장학·졸업·체류는 각각 따로 판단하고 따로 냅니다. 장학금을 받았다고 다른 요건이 채워지는 것은 아닙니다.",
+   "en": "The same TOPIK score is judged and submitted separately for scholarships, graduation and your stay. Receiving a scholarship does not satisfy any of the other requirements."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "어디에 필요한지",
+   "en": "Where it is needed"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "졸업: 외국인 특별전형 입학생은 졸업예정학기에 성적증명서를 냅니다 — 「졸업요건 확인」 가이드",
+    "시간제취업: 급수에 따라 허용 시간이 달라집니다 — 「시간제취업(아르바이트) 허가」 가이드",
+    "졸업 후 구직(D-10): 점수제 면제 요건 가운데 하나입니다 — 「졸업 후 구직(D-10) 체류」 가이드",
+    "외국인 필수교양: TOPIK으로 면제·대체되는지는 교양대학에 확인합니다 — 「수강신청」 가이드"
+   ],
+   "en": [
+    "Graduation: international-track students submit a score certificate in their expected final semester — see the graduation requirements guide",
+    "Part-time work: the hours allowed depend on your level — see the part-time work guide",
+    "Job-seeking (D-10) after graduation: one of the conditions for skipping the points test — see the D-10 guide",
+    "Required Korean courses for international students: ask the College of General Education whether TOPIK can exempt you — see the course registration guide"
+   ],
+   "count": 4
+  },
+  "sections[4].title": {
+   "ko": "입학 때 받은 신입생 장학금",
+   "en": "The freshman scholarship you got at admission"
+  },
+  "sections[4].body": {
+   "ko": "외국인 신입생 장학금은 입학 학기 수업료에만 적용되며, 입학전형·트랙·어학 성적과 한국어학당 수료 여부에 따라 등급이 다릅니다. 이미 입학했다면 본인이 받은 감면은 입학 학기 등록금고지서에서 확인할 수 있습니다.",
+   "en": "Freshman scholarships for international students apply only to tuition in your first semester, and the grade depends on your admission track, language scores and whether you completed the Korean Language Institute. If you have already enrolled, your first-semester tuition bill shows the reduction you received."
+  },
+  "sections[4].notice": {
+   "ko": "두 공식 안내의 등급표가 다릅니다 / 학교 장학 규정은 외국인 우수신입생 장학금을 A~E 다섯 등급(동아 TOPIK 3급 이상 D 40%, 나머지 입학자 E 30%)으로, 국제교류과 학부 한국어트랙 안내는 A~D 네 등급(나머지 입학자 D 30%)으로 적습니다. 입학 예정이라면 본인 모집요강과 국제교류과에 적용 기준을 확인하세요.",
+   "en": "Two official tables differ / The university’s scholarship rules give five grades A–E for the international freshman scholarship (Dong-A TOPIK level 3 or above: D, 40%; everyone else: E, 30%), while the office’s Korean-track page gives four grades A–D (everyone else: D, 30%). If you are about to enrol, check which applies in your admission guidelines and with the office."
+  },
+  "sections[4].footnote": {
+   "ko": "※ 동아대학교 장학 규정 및 지침과 국제교류과 「학부 한국어트랙 › 장학금」 페이지(둘 다 게시일 표기 없음) 기준, 2026-10-30 확인.",
+   "en": "※ Based on Dong-A’s scholarship rules and the office’s «Undergraduate Korean track › Scholarships» page (neither shows a posting date), checked 2026-10-30."
+  },
+  "links[0].label": {
+   "ko": "동아대 장학 규정 및 지침",
+   "en": "Dong-A scholarship rules"
+  },
+  "links[0].description": {
+   "ko": "외국인 신입생·성적우수 장학 등급표",
+   "en": "Freshman and merit scholarship tables for international students (Korean)"
+  },
+  "links[1].label": {
+   "ko": "국제교류과 — 2026학년도 TOPIK 장학 안내",
+   "en": "International Affairs — 2026 TOPIK scholarship notice"
+  },
+  "links[1].description": {
+   "ko": "대상·지원액·회차별 제출기한(첨부)",
+   "en": "Who, how much, and the deadline for each round (attachment, Korean)"
+  },
+  "links[2].label": {
+   "ko": "국제교류과 공지사항",
+   "en": "International Affairs notices"
+  },
+  "links[2].description": {
+   "ko": "「유학생지원」 분류 — 학년도별 장학 공지",
+   "en": "«유학생지원» category — each year’s scholarship notices"
+  },
+  "links[3].label": {
+   "ko": "국제교류과 — 학부 한국어트랙 장학금",
+   "en": "International Affairs — Korean-track scholarships"
+  },
+  "links[3].description": {
+   "ko": "신입생 장학 등급(국제교류과 안내)",
+   "en": "Freshman scholarship grades (office page)"
+  },
+  "links[4].label": {
+   "ko": "TOPIK 한국어능력시험",
+   "en": "TOPIK — Test of Proficiency in Korean"
+  },
+  "links[4].description": {
+   "ko": "원서 접수·시험 일정·성적 확인",
+   "en": "Registration, exam dates and results"
+  },
+  "links[5].label": {
+   "ko": "국제교류과 051-200-6447",
+   "en": "International Affairs 051-200-6447"
+  },
+  "links[5].description": {
+   "ko": "TOPIK 장학 문의(2026학년도 안내 기준)",
+   "en": "TOPIK scholarship questions (per the 2026 notice)"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[6].description": {
+   "ko": "장학 반영액 확인과 납부",
+   "en": "Checking the amount after scholarships, and paying"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 졸업요건 확인",
+   "en": "Guide — Checking Graduation Requirements"
+  },
+  "links[7].description": {
+   "ko": "졸업용 TOPIK 성적 제출",
+   "en": "Submitting TOPIK for graduation"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 시간제취업(아르바이트) 허가",
+   "en": "Guide — Part-time Work Permission"
+  },
+  "links[8].description": {
+   "ko": "TOPIK 급수와 허용 시간",
+   "en": "TOPIK level and hours allowed"
+  },
+  "links[9].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — International Affairs Office"
+  },
+  "links[9].description": {
+   "ko": "위치와 업무별 연락처",
+   "en": "Location and contacts by task"
+  },
+  "links[10].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[10].description": {
+   "ko": "장학금 수혜 확인서",
+   "en": "Scholarship receipt certificate"
+  },
+  "links[11].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[11].description": {
+   "ko": "수강취소와 장학 학점 기준",
+   "en": "Dropping courses and the scholarship credit rule"
+  },
+  "links[12].label": {
+   "ko": "가이드 — 졸업 후 구직(D-10) 체류",
+   "en": "Guide — Job-Seeking Visa (D-10) after Graduation"
+  },
+  "links[12].description": {
+   "ko": "졸업 후 구직 변경과 한국어 요건",
+   "en": "Changing to D-10 after graduation, and the Korean-language condition"
+  },
+  "links[13].label": {
+   "ko": "가이드 — 대학원 학위과정 길잡이",
+   "en": "Guide — Graduate Degree Roadmap"
+  },
+  "links[13].description": {
+   "ko": "대학원생: 외국어시험·종합시험·학위논문과 외국인장학금",
+   "en": "For graduate students: language and comprehensive exams, thesis, and the international scholarship"
+  },
+  "phrases[0].text": {
+   "ko": "TOPIK 성적표 원본을 제출하러 왔습니다. 응시료 지원과 성적장려금을 신청하고 싶습니다.",
+   "en": "I have come to hand in my original TOPIK score report. I would like to apply for the exam fee support and the score award."
+  },
+  "phrases[1].text": {
+   "ko": "이번 학기 외국인 성적우수장학금 대상인지 확인하고 싶습니다.",
+   "en": "I would like to check whether I qualify for the international merit scholarship this semester."
+  }
+ }
+}

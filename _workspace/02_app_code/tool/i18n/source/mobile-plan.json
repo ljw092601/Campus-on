@@ -93,16 +93,25 @@
     "휴대폰",
     "핸드폰",
     "스마트폰",
-    "전화 개통"
+    "전화 개통",
+    "휴대폰 유심",
+    "전화 카드",
+    "엠세이퍼",
+    "명의도용",
+    "가입사실현황조회",
+    "가입제한"
    ],
    "en": [
     "USIM",
     "SIM",
     "phone",
     "mobile",
-    "cell phone"
+    "cell phone",
+    "msafer",
+    "identity theft",
+    "phone line check"
    ],
-   "count": 5
+   "count": 11
   },
   "sections[0].title": {
    "ko": "외국인등록증(ARC) 유무 안내",
@@ -198,6 +207,80 @@
    ],
    "count": 3
   },
+  "sections[3].title": {
+   "ko": "내 명의 휴대폰 확인과 새 개통 막기",
+   "en": "Check Lines in Your Name and Block New Ones"
+  },
+  "sections[3].body": {
+   "ko": "한국정보통신진흥협회의 엠세이퍼(M-Safer)에서는 서로 다른 두 가지를 할 수 있습니다. 개인정보가 유출됐거나 신분증 사진을 남에게 보낸 적이 있다면 확인해 보세요. 서비스 이용은 무료입니다.",
+   "en": "M-Safer, run by the Korea Association for ICT Promotion, does two separate things. Use it if your personal details have leaked or you have sent a photo of your ID to someone. The service is free."
+  },
+  "sections[3].footnote": {
+   "ko": "※ 근거: 한국정보통신진흥협회 엠세이퍼 안내와 공지(2026-11-01 확인). 문의 1670-1382(평일 09:00~18:00).",
+   "en": "※ Based on M-Safer's guidance and notices, checked 2026-11-01. Enquiries: 1670-1382 (weekdays 09:00–18:00)."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "🔍 가입사실현황조회",
+   "en": "🔍 Check lines in your name"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "내 명의로 개통된 통신 회선을 한 번에 확인합니다.",
+    "조회만으로 모르는 회선이 해지되지는 않습니다. 모르는 회선이 있으면 해당 통신사에 확인하세요."
+   ],
+   "en": [
+    "Shows every phone line opened in your name, in one place.",
+    "Checking does not cancel a line you do not recognise. If you find one, contact that carrier."
+   ],
+   "count": 2
+  },
+  "sections[3].notes[1].title": {
+   "ko": "🚫 가입제한 서비스",
+   "en": "🚫 Block new sign-ups"
+  },
+  "sections[3].notes[1].lines": {
+   "ko": [
+    "내 명의로 휴대폰이 개통되는 것을 미리 막습니다. 신규 가입뿐 아니라 번호이동 · 명의변경도 막힙니다. 지금 쓰고 있는 회선을 정지하는 것은 아닙니다.",
+    "직접 새로 개통하려면 먼저 제한을 해제해야 합니다. 같은 번호로 기기만 바꿀 때도 막히는지는 통신사마다 다를 수 있으니 엠세이퍼 안내나 통신사에서 확인하세요."
+   ],
+   "en": [
+    "Stops mobile lines being opened in your name — new sign-ups, number transfers and changes of name holder. It does not suspend the line you already use.",
+    "To open a line yourself, you have to lift the block first. Whether it also stops a device change on the same number can differ by carrier — check M-Safer's guidance or your carrier."
+   ],
+   "count": 2
+  },
+  "sections[3].notes[2].title": {
+   "ko": "🪪 외국인 본인확인",
+   "en": "🪪 Identity check for foreigners"
+  },
+  "sections[3].notes[2].lines": {
+   "ko": [
+    "홈페이지에서는 공동인증서나 금융인증서로 본인확인을 합니다.",
+    "외국인이 인증서를 발급받으려면 외국인등록증(또는 국내거소신고증)이 있어야 하고, 금융인증서는 발급하는 은행의 계좌도 필요합니다. 외국인 발급을 제한하는 기관도 있으니 은행에 먼저 확인하세요."
+   ],
+   "en": [
+    "The website checks your identity with a joint certificate or a financial certificate.",
+    "To get a certificate, a foreigner needs a Residence Card (or a domestic residence report card), and a financial certificate also needs an account at the issuing bank. Some institutions limit issuing to foreigners, so ask your bank first."
+   ],
+   "count": 2
+  },
+  "sections[3].notes[3].title": {
+   "ko": "🏬 온라인이 어렵다면",
+   "en": "🏬 If you cannot do it online"
+  },
+  "sections[3].notes[3].lines": {
+   "ko": [
+    "가입제한은 신분증을 가지고 통신사의 명의도용 신고 접수처(지점 · 직영점 · 플라자)를 방문해 신청할 수 있습니다. 제한을 풀 때는 해제하려는 통신사의 지점을 방문합니다. 방문할 지점은 통신사 고객센터에서 확인하세요.",
+    "전화나 이메일로는 조회나 가입제한을 신청할 수 없습니다.",
+    "PASS 등 연계 앱은 일시 중단될 때가 있으니, 이용 전에 엠세이퍼 공지사항을 확인하세요."
+   ],
+   "en": [
+    "You can apply for the block in person: take your ID to a carrier's identity-theft reporting desk (a branch, company-run store or plaza). To lift it, visit a branch of the carrier you want to lift it for. Ask the carrier's customer centre which store to visit.",
+    "Checks and blocks cannot be requested by phone or email.",
+    "Linked apps such as PASS are sometimes suspended, so check the M-Safer notices before you use one."
+   ],
+   "count": 3
+  },
   "links[0].label": {
    "ko": "SKT 외국인 USIM 가입",
    "en": "SKT — USIM sign-up for foreign residents"
@@ -217,6 +300,14 @@
   "links[3].label": {
    "ko": "가까운 통신사 매장 찾기",
    "en": "Find a nearby carrier store"
+  },
+  "links[4].label": {
+   "ko": "엠세이퍼 (한국정보통신진흥협회)",
+   "en": "M-Safer (Korea Association for ICT Promotion)"
+  },
+  "links[4].description": {
+   "ko": "내 명의 회선 조회와 가입제한 · 공지사항",
+   "en": "Check lines in your name, block new ones, and notices"
   },
   "phrases[0].text": {
    "ko": "휴대폰을 개통하고 싶습니다.",

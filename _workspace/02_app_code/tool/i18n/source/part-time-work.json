@@ -12,8 +12,8 @@
    "en": "Getting Permission for Part-time Work"
   },
   "summary": {
-   "ko": "일을 시작하기 전에 학교 확인과 출입국 허가",
-   "en": "School confirmation and immigration permission before you start"
+   "ko": "일하기 전 학교 확인·출입국 허가 필수",
+   "en": "Get school and immigration OK first"
   },
   "overview": {
    "ko": "유학(D-2)이나 어학연수(D-4) 체류자격만으로 아르바이트를 할 수 있는 것은 아닙니다. 일을 시작하기 전에 학교 유학생 담당자의 확인을 받고, 출입국·외국인관서에서 시간제취업 허가(체류자격외 활동허가)를 받아야 합니다.\n\n학교 확인서는 허가가 아닙니다. 허가 여부와 조건은 출입국·외국인관서가 심사해 정하며, 허가를 받은 뒤에도 허가된 근무처와 허용 시간 안에서만 일할 수 있습니다.",
@@ -103,7 +103,10 @@
     "노동청",
     "산재",
     "직장괴롭힘",
-    "퇴직금"
+    "퇴직금",
+    "노동 분쟁",
+    "보건증",
+    "보건소"
    ],
    "en": [
     "part-time job",
@@ -115,9 +118,12 @@
     "labour office",
     "workplace injury",
     "harassment at work",
-    "severance pay"
+    "severance pay",
+    "labour dispute",
+    "health certificate",
+    "public health centre"
    ],
-   "count": 11
+   "count": 14
   },
   "top_sections[0].title": {
    "ko": "신청할 수 있나요?",
@@ -135,12 +141,12 @@
    "ko": [
     "유학(D-2) 중 세부 자격 D-2-1~D-2-4, D-2-6, D-2-7: 입국 후 바로 신청할 수 있습니다.",
     "어학연수(D-4-1, D-4-7)와 방문학생(D-2-8): 자격 변경일(사증을 받아 입국했다면 입국일)부터 6개월이 지나야 신청할 수 있습니다.",
-    "과정에 맞는 언어능력 기준(일반 과정은 한국어, 영어트랙은 인정되는 영어 기준)을 갖추고, 학교 유학생 담당자의 확인을 받아야 합니다."
+    "학교 유학생 담당자의 확인을 받아야 합니다. 과정에 맞는 언어능력 기준(일반 과정은 한국어, 영어트랙은 인정되는 영어 기준)을 충족했는지에 따라 허용 시간이 달라집니다(아래)."
    ],
    "en": [
     "Student (D-2) sub-types D-2-1 to D-2-4, D-2-6 and D-2-7: you can apply straight after arrival.",
     "Language training (D-4-1, D-4-7) and visiting students (D-2-8): only once 6 months have passed since your status was changed (or since you entered Korea, if you came on that visa).",
-    "You need to meet the language standard for your programme (Korean for regular programmes, an accepted English standard for English-track programmes) and get a confirmation from the university's international student adviser."
+    "You need a confirmation from the university's international student adviser. Whether you meet the language standard for your programme (Korean for regular programmes, an accepted English standard for English-track programmes) decides how many hours you may work (below)."
    ],
    "count": 3
   },
@@ -385,6 +391,51 @@
   "sections[3].links[1].description": {
    "ko": "임금체불 진정 등 민원(고용노동부)",
    "en": "Petitions such as unpaid wages (Ministry of Employment and Labor, Korean)"
+  },
+  "sections[4].title": {
+   "ko": "식당 · 카페처럼 음식을 다루는 일이라면",
+   "en": "If the job involves handling food"
+  },
+  "sections[4].body": {
+   "ko": "식품을 조리 · 가공 · 저장 · 운반 · 판매하는 일에 직접 종사하는 사람은 일을 시작하기 전에 건강진단(장티푸스 · 파라티푸스 · 폐결핵)을 받아야 하고, 그 뒤에도 해마다 1회 받아야 합니다. 완전히 포장된 식품만 운반 · 판매하는 일은 대상에서 빠집니다.\n\n이 건강진단 결과서를 흔히 「보건증」(건강진단결과서)이라고 부릅니다. 부산 서구보건소와 사하구보건소가 발급하는 것을 확인했고, 다른 보건소는 발급 여부를 먼저 확인하세요.",
+   "en": "Anyone directly involved in cooking, processing, storing, carrying or selling food must have a health check (typhoid, paratyphoid and pulmonary TB) before starting work, and once a year after that. Carrying or selling only fully packaged food is excluded.\n\nThe result is commonly called a 보건증 (건강진단결과서). Seo-gu and Saha-gu public health centres (보건소) in Busan are confirmed to issue it; check with any other centre first."
+  },
+  "sections[4].notice": {
+   "ko": "보건증은 시간제취업 허가가 아니에요\n보건증이 있어도 일을 시작하기 전에 시간제취업 허가는 따로 받아야 합니다.",
+   "en": "A 보건증 is not work permission\nEven with a 보건증, you still need part-time work permission before you start."
+  },
+  "sections[4].notes[0].title": {
+   "ko": "🏥 보건소에서 받을 때",
+   "en": "🏥 Getting it at a health centre"
+  },
+  "sections[4].notes[0].lines": {
+   "ko": [
+    "예: 부산 서구보건소 · 사하구보건소 모두 3,000원, 5일(서구는 검사일 포함, 사하구는 업무일 기준 — 2026년 수수료표). 보건소마다 다를 수 있습니다.",
+    "신분증 원본을 가져가세요.",
+    "건강진단을 받지 않으면 300만원 이하의 과태료가 부과될 수 있습니다."
+   ],
+   "en": [
+    "For example, Seo-gu and Saha-gu health centres in Busan both charge ₩3,000 and take 5 days (Seo-gu counts the test day, Saha-gu counts working days — 2026 fee lists). Other centres may differ.",
+    "Bring your original ID.",
+    "Not having the health check can lead to a fine of up to ₩3 million."
+   ],
+   "count": 3
+  },
+  "sections[4].links[0].label": {
+   "ko": "찾기쉬운 생활법령 — 음식점 종업원 건강진단",
+   "en": "Easy-to-find Law — health checks for restaurant staff"
+  },
+  "sections[4].links[0].description": {
+   "ko": "대상 · 시기 · 항목 · 과태료",
+   "en": "Who, when, what is tested, and the fine (Korean)"
+  },
+  "sections[4].links[1].label": {
+   "ko": "가이드 — 기숙사 신청",
+   "en": "Guide — Dormitory Application"
+  },
+  "sections[4].links[1].description": {
+   "ko": "보건소 수수료표 링크와 결핵 서류 안내",
+   "en": "Health-centre fee lists and TB paperwork"
   },
   "links[0].label": {
    "ko": "하이코리아 — 시간제취업 허가 신청 안내",

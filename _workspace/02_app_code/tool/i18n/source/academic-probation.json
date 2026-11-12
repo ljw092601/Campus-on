@@ -12,8 +12,8 @@
    "en": "If You Get — or May Get — an Academic Warning"
   },
   "summary": {
-   "ko": "평점 1.5 미만·F 9학점 이상이면 경고, 통산 3회면 제적",
-   "en": "GPA under 1.5 or 9+ F credits means a warning; 3 means dismissal"
+   "ko": "학사경고 기준 · 통산 3회면 제적",
+   "en": "Warning rules; 3 total = dismissal"
   },
   "overview": {
    "ko": "학사경고는 한 학기 성적이 낮은 학생에게 주의를 주는 제도입니다. 통산 3회가 되면 성적불량으로 제적되므로, 첫 경고부터 다음 학기 계획을 세우는 것이 중요합니다.\n\n외국인 유학생은 성적이 체류와도 이어집니다. 직전 학기 성적이 낮으면 시간제취업 허가가 제한될 수 있고 학교의 비자연장 단체접수에서도 빠질 수 있으며, 제적되면 학교가 출입국에 신고합니다.",
@@ -172,6 +172,68 @@
     "If you are dismissed, the university reports it to immigration within 15 days, so you need your own stay plan."
    ],
    "count": 3
+  },
+  "sections[2].title": {
+   "ko": "학습 도움 프로그램",
+   "en": "Programmes that can help"
+  },
+  "sections[2].footnote": {
+   "ko": "※ 교수학습개발센터 페이지의 「신청」 링크는 아직 DECO를 가리킵니다. 신청 방법은 센터에 확인하세요.",
+   "en": "※ The centre’s “신청” (apply) links still point to DECO. Ask the centre how to apply."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "학사경고 1회 — 학생상담센터",
+   "en": "After a 1st warning — student counseling centre"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "학사경고 1회 학생의 학교생활 적응을 위해 전화상담과 Learning Talk(학습관리 수업)를 학기마다 운영합니다.",
+    "학생역량통합관리시스템에서 신청합니다. 프로그램마다 신청 방법이 다를 수 있으니 안내문을 확인하세요."
+   ],
+   "en": [
+    "The centre runs phone counselling and Learning Talk (a study-management class) every semester for students with one academic warning.",
+    "Apply through the student competency system (학생역량통합관리시스템). Each programme may have its own way of applying, so read its notice."
+   ],
+   "count": 2
+  },
+  "sections[2].notes[1].title": {
+   "ko": "학사경고 2회 누적 — 교수학습개발센터",
+   "en": "After 2 warnings — Center for Teaching and Learning"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "DAU자기관리학습법 — 학습코칭과 심리상담을 함께 하는 맞춤형 프로그램입니다. 센터는 우수참여자 장학금과 1학점 인정을 안내합니다.",
+    "문의: 051-200-6291~2"
+   ],
+   "en": [
+    "DAU self-managed learning (DAU자기관리학습법) — a tailored programme combining study coaching and counselling. The centre lists a scholarship for top participants and 1 credit.",
+    "Contact: 051-200-6291~2"
+   ],
+   "count": 2
+  },
+  "sections[2].links[0].label": {
+   "ko": "학생상담센터 — 심리지원 프로그램",
+   "en": "Student counseling centre — support programmes"
+  },
+  "sections[2].links[0].description": {
+   "ko": "Learning Talk 등 학기별 프로그램",
+   "en": "Learning Talk and other programmes each semester (Korean)"
+  },
+  "sections[2].links[1].label": {
+   "ko": "교수학습개발센터 — DAU자기관리학습법",
+   "en": "Center for Teaching and Learning — DAU self-managed learning"
+  },
+  "sections[2].links[1].description": {
+   "ko": "학사경고 2회 누적자 대상",
+   "en": "For students with 2 warnings (Korean)"
+  },
+  "sections[2].links[2].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — International Affairs Office"
+  },
+  "sections[2].links[2].description": {
+   "ko": "유학생 학습 튜터링 · 전공 스터디그룹",
+   "en": "Tutoring and major study groups for international students"
   },
   "links[0].label": {
    "ko": "동아대 학사안내 — 학사경고",

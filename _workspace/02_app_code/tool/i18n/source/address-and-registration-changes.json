@@ -12,7 +12,7 @@
    "en": "Moved, or Got a New Passport? Report the Change"
   },
   "summary": {
-   "ko": "이사는 전입일부터, 여권·학교 변경은 변경일부터 15일 안에",
+   "ko": "15일 안에 신고 — 이사는 전입일, 여권·학교 변경은 변경일부터",
    "en": "Within 15 days — of moving in, or of the change"
   },
   "overview": {
@@ -72,16 +72,18 @@
     "학교 포털(학생정보)에서 주소를 바꾸는 것만으로 출입국 신고가 된다는 공식 안내는 없습니다. 출입국 신고는 따로 하세요.",
     "기숙사에 들어가거나 나와 다른 곳으로 옮기는 것도 체류지 변경입니다.",
     "대학 휴학 자체는 등록사항 변경신고 항목으로 규정돼 있지 않습니다. 학교를 옮기는 경우가 신고 대상입니다.",
-    "체류기간 연장 등 다른 신청을 할 때도 새 주소 입증서류가 필요하니 계약서를 보관하세요."
+    "체류기간 연장 등 다른 신청을 할 때도 새 주소 입증서류가 필요하니 계약서를 보관하세요.",
+    "하이코리아 방문예약은 방문 날짜를 잡는 것일 뿐 신고 접수가 아닙니다. 하이코리아 안내에는 예약 없이 관서를 방문하면 민원 접수가 되지 않으며, 체류지 변경 신고와 여권 변경 신고만 예약 없이 방문해 처리할 수 있다고 되어 있습니다. 그 밖의 신고를 기한 안에 예약할 날짜가 없으면 하이코리아는 신고기간이 지나기 전에 관할 관서를 방문하라고 안내하니, 가기 전에 1345에 처리 방법을 확인하세요."
    ],
    "en": [
     "For foreign residents, the change-of-address report takes the place of the resident move-in report (Immigration Act art. 88-2).",
     "No official guidance says that changing your address in the university portal counts as reporting to immigration. Report to immigration separately.",
     "Moving into a dormitory, or out of one to somewhere else, is also a change of address.",
     "Taking leave from university is not itself listed as a registration change; moving to a different school is.",
-    "Other applications such as an extension of stay also ask for proof of your address, so keep your lease."
+    "Other applications such as an extension of stay also ask for proof of your address, so keep your lease.",
+    "Booking a HiKorea visit only reserves a date — it is not the report itself. HiKorea says an office will not take your application if you turn up without a booking; only address-change and passport-change reports can be handled without one. For other reports, if no date is free before your deadline, HiKorea says to visit the office before the deadline passes — call 1345 first to check how it will be handled."
    ],
-   "count": 5
+   "count": 6
   },
   "search_aliases": {
    "ko": [
@@ -90,24 +92,30 @@
     "체류지 변경",
     "여권 변경",
     "새 여권",
-    "전입신고"
+    "전입신고",
+    "체류지 신고"
    ],
    "en": [
     "moving",
     "move house",
     "change of address",
     "new passport",
-    "passport change"
+    "passport change",
+    "residence report"
    ],
-   "count": 6
+   "count": 7
   },
   "top_sections[0].title": {
    "ko": "어떤 신고인가요?",
    "en": "Which report do I need?"
   },
+  "top_sections[0].notice": {
+   "ko": "신고를 미루지 마세요\n체류지 변경 신고는 전입한 날부터 15일 이내에 해야 하고, 기한을 넘기면 출입국관리법에 따라 100만원 이하의 벌금이 부과될 수 있습니다. 보증금 보호와도 이어지므로 이사 후 먼저 처리하세요.",
+   "en": "Do not put this off\nThe change-of-residence report is due within 15 days of moving in, and missing that deadline can mean a fine of up to ₩1 million under the Immigration Act. It also feeds into protecting your deposit, so deal with it first after you move."
+  },
   "top_sections[0].footnote": {
-   "ko": "※ 출입국관리법·시행령·시행규칙과 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 기준, 2026-09-13 확인.",
-   "en": "※ Based on the Immigration Act, its Decree and Rules and the HiKorea stay manual by status (posted September 2026), checked 2026-09-13."
+   "ko": "※ 출입국관리법·시행령·시행규칙과 하이코리아 「체류민원 자격별 안내 매뉴얼」(2026년 9월 게시) 기준, 2026-09-13 확인. 체류지 변경신고의 온라인 경로는 법무부 「온라인 민원 서비스」 안내 기준, 2026-10-25 확인(조사 04/045 §1).",
+   "en": "※ Based on the Immigration Act, its Decree and Rules and the HiKorea stay manual by status (posted September 2026), checked 2026-09-13. The online route for a change-of-residence report follows the Ministry of Justice online-services guidance, checked 2026-10-25."
   },
   "top_sections[0].notes[0].title": {
    "ko": "🏠 체류지 변경신고(이사)",
@@ -117,16 +125,18 @@
    "ko": [
     "기한: 새 주소로 전입한 날부터 15일 이내",
     "신고처: 새 체류지의 시·군·구청이나 읍·면·동 주민센터, 또는 관할 출입국·외국인관서",
+    "온라인: 하이코리아 전자민원으로도 신고할 수 있습니다. 외국인등록을 마친 D-2·D-4도 이용할 수 있고, 다른 사람이 대신 신청할 수 있는지는 신청 화면이나 1345에서 확인하세요. 최초 외국인등록은 이 전자민원으로 대신할 수 없습니다.",
     "제출: 체류지변경신고서, 여권, 외국인등록증과 이사 사실을 확인할 수 있는 서류(임대차계약서 등). 신고하면 등록증에 새 주소가 적힙니다.",
     "늦거나 안 하면: 100만원 이하의 벌금 대상(출입국관리법 제98조)"
    ],
    "en": [
     "Deadline: within 15 days of moving in to the new address",
     "Where: the city/county/district office or the community service centre (eup/myeon/dong) for your new address, or your immigration office",
+    "Online: you can also file it through HiKorea e-Government. Registered D-2 and D-4 holders can use it; whether someone may file on your behalf is not stated in the public guidance, so check the form or call 1345. A first-time alien registration cannot be done this way.",
     "Bring: the change-of-address form, passport, Residence Card and proof of the move (such as the lease). The new address is written on your card.",
     "If late or not reported: a fine of up to ₩1 million (Immigration Act art. 98)"
    ],
-   "count": 4
+   "count": 5
   },
   "top_sections[0].notes[1].title": {
    "ko": "🪪 외국인등록사항 변경신고",

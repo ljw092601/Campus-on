@@ -1,0 +1,468 @@
+{
+ "id": "graduate-degree-guide",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "대학원 학위과정 길잡이",
+   "en": "Graduate Degree Roadmap"
+  },
+  "detail_title": {
+   "ko": "대학원 유학생 학위과정 길잡이 — 외국어시험·종합시험·학위논문",
+   "en": "Graduate Degree Roadmap for International Students — Language Exam, Comprehensive Exam and Thesis"
+  },
+  "summary": {
+   "ko": "외국어·종합시험 → 학위논문 순서",
+   "en": "Language exam → comps → thesis"
+  },
+  "overview": {
+   "ko": "이 가이드는 동아대학교 일반대학원에 다니는 외국인 석사·박사·통합과정 학생이 학위를 받기까지 무엇을, 몇 학기에 해야 하는지 정리합니다. 학위논문 심사를 받으려면(학위청구) 그 학기 전까지 교과학점, 외국어시험, 종합시험, 연구계획서, 논문계획 공개발표를 마쳐야 합니다. 하나라도 늦으면 학위청구 학기가 밀릴 수 있습니다.\n\n다른 학교 가이드(수강신청·졸업요건·학사경고 등)는 학부 기준입니다. 대학원 학사는 대학원 행정지원실과 소속 학과 사무실이 맡습니다.\n\n일정은 학기마다 바뀔 수 있어 「몇 학기에 무엇을」만 적고, 날짜는 대학원 학사공지로 안내합니다. 외국어시험 면제 기준과 외국인장학금 비율은 대학원 안내끼리 서로 달라 두 안내를 함께 적었습니다. 성적을 내거나 장학을 확인하기 전에 대학원 행정지원실에 지금 적용되는 기준을 물어보세요.",
+   "en": "This guide sets out what an international master’s, doctoral or integrated-programme student at Dong-A’s Graduate School has to do, and in which semester, to get a degree. Before the semester in which your thesis is examined (the «degree claim»), you must have finished your coursework credits, the foreign language exam, the comprehensive exam, the research plan and the thesis plan presentation. If any of these is late, your degree claim can slip by a semester.\n\nThe other school guides (course registration, graduation requirements, academic probation and so on) are written for undergraduates. Graduate academic matters are handled by the Graduate School Administrative Support Office and your department office.\n\nDates change every semester, so this guide says which semester and what, and sends you to the Graduate School notices for exact dates. Graduate School pages disagree on the language-exam exemption and on international scholarship rates, so both versions are shown. Before you hand in a score or count on a scholarship, ask the Administrative Support Office which rule applies now."
+  },
+  "checklist": {
+   "ko": [
+    "학번과 통합정보시스템 로그인 (외국어시험 신청)",
+    "지도교수와 소속 학과 사무실 연락처",
+    "외국어시험을 면제받으려면 공인어학성적표 (TOEIC·TOEFL·IELTS 등, 외국인은 TOPIK)",
+    "시험 날 신분증 (모바일 학생증으로는 본인확인이 안 됩니다)",
+    "박사·통합과정은 학과가 정한 연구실적 요건"
+   ],
+   "en": [
+    "Your student number and a working login for the university information system (to apply for the language exam)",
+    "Contact details for your advisor and your department office",
+    "An official test score if you want the language exam waived (TOEIC, TOEFL, IELTS etc.; international students can use TOPIK)",
+    "ID on exam day (a mobile student ID is not accepted for the identity check)",
+    "Doctoral and integrated students: your department’s research output requirement"
+   ],
+   "count": 5
+  },
+  "checklist_note": {
+   "ko": "연구실적 요건과 세부 일정은 학과마다 다릅니다. 입학한 첫 학기에 학과 사무실에서 본인 과정의 학위청구 요건을 확인해 두세요.",
+   "en": "Research output requirements and detailed schedules differ by department. In your first semester, ask your department office for the degree-claim requirements of your programme."
+  },
+  "steps": {
+   "ko": [
+    "첫 학기에 학위청구 요건을 확인한다. 학과 사무실과 지도교수를 통해 본인 과정의 교과학점, 연구실적 요건, 졸업 예정 학기를 확인합니다. 아래 단계는 4학기에 졸업하는 경우를 기준으로 한 대학원 안내입니다.",
+    "외국어 요건을 채운다 (1~3학기). 한 학기 이상 등록하면 외국어시험을 볼 수 있습니다. 시험은 5월과 11월에 있고 60점 이상이면 합격입니다. 시험 대신 공인어학성적을 내거나 방학 영어강좌를 이수해도 됩니다. 세 가지 중 하나를 학위청구 학기 전까지 마치면 됩니다.",
+    "종합시험을 본다 (2~3학기). 석사 18학점, 박사 27학점, 통합과정 45학점 이상을 이수하면 응시할 수 있습니다. 접수기간 안에 종합시험 지원서를 대학원 행정지원실에 내고, 시험은 학과가 정한 장소에서 봅니다. 학기마다 일정이 달라 학과에 꼭 물어보라고 대학원은 안내합니다.",
+    "연구계획서를 내고 논문계획을 발표한다 (3학기). 연구계획서를 내고, 논문계획 공개발표를 한 뒤 결과보고서를 냅니다. 논문 대신 대체실적을 낼 사람도 공개발표 결과보고서를 냅니다. 박사·통합과정은 학과가 정한 연구실적을 채운 뒤 연구실적확인서를 냅니다.",
+    "수료했다면 연구등록을 한다. 교과를 마치고 수료한 뒤 학위청구를 하려면 연구등록을 한 번 해야 합니다. 연구등록을 하지 않은 수료생은 연구계획서 등 학위청구 자격 서류를 낼 수 없습니다.",
+    "학위청구 학기에 논문 심사를 받는다. 학과 추천 → 예비심사 → 본심사 서류 제출과 심사료 납부 → 심사위원 추천 → 본심사 → 논문 1차 제출 → 최종 제출 순서입니다. 예비심사에 떨어지면 그 학기에는 논문을 낼 수 없습니다. 날짜는 매 학기 초 대학원 학사공지로 다시 확인하세요."
+   ],
+   "en": [
+    "Check your degree-claim requirements in your first semester. Through your department office and advisor, confirm the coursework credits, research output requirement and the semester you expect to graduate. The steps below follow the Graduate School’s guide for finishing in four semesters.",
+    "Meet the foreign language requirement (semesters 1–3). Once you have registered for at least one semester you can sit the foreign language exam. It is held in May and November, and 60 points is a pass. Instead of the exam you can hand in an official test score or complete the vacation English course. One of the three, done before your degree-claim semester, is enough.",
+    "Take the comprehensive exam (semesters 2–3). You can sit it after 18 credits (master’s), 27 (doctoral) or 45 (integrated). Hand the application to the Graduate School Administrative Support Office within the application period; the exam is held where your department decides. The Graduate School says to ask your department, as the schedule differs each semester.",
+    "Submit your research plan and present your thesis plan (semester 3). Hand in the research plan, give the public thesis plan presentation, then hand in its report. Students submitting thesis-equivalent work instead of a thesis also hand in the presentation report. Doctoral and integrated students hand in a research output confirmation once they meet the department’s requirement.",
+    "If you have completed coursework, do research registration. After completing coursework, you must do research registration once before claiming the degree. A student who has not done it cannot hand in the research plan or other degree-claim documents.",
+    "Have your thesis examined in the degree-claim semester. The order is: department recommendation → preliminary examination → final examination documents and fee → examination panel recommendation → final examination → first submission → final submission. If you fail the preliminary examination you cannot submit a thesis that semester. Check the dates in the Graduate School notices at the start of every semester."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "📅 외국어 요건은 일찍 끝내 두세요 — 한 학기 이상 등록하면 시험을 볼 수 있고, 대학원 안내는 1~3학기에 마치도록 적습니다.",
+    "🗂️ 접수증과 제출한 성적표의 사본을 보관하세요.",
+    "📢 학기 초마다 대학원 학사공지를 확인하세요 — 외국어시험 신청, 학위청구 일정, 유학생 프로그램이 여기에 올라옵니다."
+   ],
+   "en": [
+    "📅 Finish the language requirement early — you can sit the exam once you have registered for a semester, and the Graduate School places it in semesters 1–3.",
+    "🗂️ Keep copies of your exam receipt and any score report you hand in.",
+    "📢 Check the Graduate School notices at the start of each semester — language exam applications, degree-claim schedules and programmes for international students are posted there."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "대학원",
+    "대학원생",
+    "석사",
+    "박사",
+    "통합과정",
+    "외국어시험",
+    "외국어 시험 면제",
+    "영어시험",
+    "종합시험",
+    "학위청구",
+    "학위논문",
+    "논문심사",
+    "예비심사",
+    "본심사",
+    "연구계획서",
+    "공개발표",
+    "연구등록",
+    "수료생",
+    "외국인장학금"
+   ],
+   "en": [
+    "graduate school",
+    "graduate student",
+    "master's",
+    "doctoral",
+    "PhD",
+    "integrated programme",
+    "foreign language exam",
+    "English exam",
+    "language exam exemption",
+    "comprehensive exam",
+    "qualifying exam",
+    "thesis",
+    "dissertation",
+    "thesis examination",
+    "degree claim",
+    "research plan",
+    "research registration",
+    "graduate scholarship"
+   ],
+   "count": 19
+  },
+  "top_sections[0].title": {
+   "ko": "나에게 해당하나요?",
+   "en": "Does this apply to me?"
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 「대학원 외국어 및 종합시험에 관한 규정」(2021-09-01 시행본, 대학원 학사공지 2023-01-05 첨부) 제5조 기준, 2026-10-31 확인.",
+   "en": "※ Based on Article 5 of the Graduate School rules on the foreign language and comprehensive exams (version in force from 2021-09-01, attached to a 2023-01-05 notice), checked 2026-10-31."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "✅ 일반대학원 외국인 학생",
+   "en": "✅ International students at the Graduate School"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "동아대학교 일반대학원 석사·박사·석박사통합과정에 다니는 외국인 학생(재학·휴학·수료)이 대상입니다."
+   ],
+   "en": [
+    "International students in a master’s, doctoral or integrated programme at Dong-A’s Graduate School — enrolled, on leave or having completed coursework."
+   ],
+   "count": 1
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "↪ 다른 과정이라면",
+   "en": "↪ If you are on a different programme"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "국제전문대학원·특수대학원: 대학원 규정은 각 대학원장이 외국어시험과 종합시험을 따로 정할 수 있게 합니다. 소속 대학원 행정실에 기준을 확인하세요.",
+    "학부생: 「졸업요건 확인」 가이드를 보세요."
+   ],
+   "en": [
+    "International professional and special graduate schools: the Graduate School rules let each dean set the language and comprehensive exams separately. Check with your own school’s office.",
+    "Undergraduates: see the «Checking Graduation Requirements» guide."
+   ],
+   "count": 2
+  },
+  "sections[0].title": {
+   "ko": "외국어시험",
+   "en": "Foreign language exam"
+  },
+  "sections[0].notice": {
+   "ko": "TOPIK 면제 기준이 안내마다 다릅니다 / 대학원 「종합 및 외국어 시험」 페이지와 2021년 시행 규정은 TOPIK 3급 이상, 2026년 9월에 고친 학위청구 안내의 기준표는 4급 이상으로 적습니다(한국어 성적은 외국인만). 어느 기준이 언제부터 누구에게 적용되는지는 어느 안내에도 없습니다. 성적 유효기간 2년을 세는 기준도 「응시일로부터」와 「제출일 기준」으로 다르고, 성적을 내는 곳도 대학원 행정지원실과 학과로 다르게 적혀 있습니다. 성적을 내기 전에 대학원 행정지원실(051-200-5502~4)에 지금 기준과 제출처를 확인하세요. 가장 이른 시기를 적은 안내는 외국어시험 접수기간 안에 내라고 하므로, 그때 맞춰 내면 제출 시기로는 모든 안내를 지키는 셈입니다. 다만 제출처와 급수 기준이 서로 다른 점은 그대로 남으니, 이 둘은 따로 확인해야 합니다.",
+   "en": "The TOPIK exemption differs between pages / The Graduate School’s exam page and the rules in force from 2021 say TOPIK level 3 or above; the degree-claim guide revised in September 2026 says level 4 or above (Korean scores count only for international students). None of them says from when or for whom each applies. They also differ on what the two-year score validity counts from («from the test date» or «as of the submission date») and on where to hand the score in (the Administrative Support Office or your department). Before you hand in a score, ask the Administrative Support Office (051-200-5502~4) which rule applies now and where to submit. The earliest deadline any page gives is within the language exam application period, so handing it in then meets every page’s timing. It does not settle where to submit or which level counts — check those two separately."
+  },
+  "sections[0].footnote": {
+   "ko": "※ 동아대 대학원 「종합 및 외국어 시험」 페이지(게시일 표기 없음), 「학위청구 자격요건 및 논문심사 절차안내(최종수정)」(2026-09-04 파일), 「2026학년도 1학기 대학원 외국어(영어) 시험 안내」(2026-05-04 게시)와 「대학원 외국어 및 종합시험에 관한 규정」(2021-09-01 시행) 기준, 2026-10-31 확인.",
+   "en": "※ Based on the Graduate School’s exam page (no posting date shown), its revised degree-claim guide (file dated 2026-09-04), the spring 2026 language exam notice (posted 2026-05-04) and the rules on the language and comprehensive exams (in force from 2021-09-01), checked 2026-10-31."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "시험",
+   "en": "The exam"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "대상: 한 학기 이상 등록한 학생 (2026학년도 1학기 안내는 재학생·휴학생·수료생 모두 응시 가능이라고 적습니다)",
+    "시기: 해마다 5월과 11월 · 과목: 영어 · 합격: 60점 이상",
+    "유형은 신청할 때 고르고 바꿀 수 없습니다. 유형 1은 영어 지문을 한국어로 옮기는 주관식(종이사전 가능, 전자사전 불가), 유형 2는 토익 Part 5~6과 비슷한 객관식 어휘·어법 문제(사전 불가)입니다.",
+    "신청: 통합정보시스템(안내문 표기 「통합정보서비스」) → 졸업 → 졸업신청 → 외국어시험 신청 → 접수증을 출력해 학과 사무실에 냅니다."
+   ],
+   "en": [
+    "Who: students with at least one registered semester (the spring 2026 notice says enrolled students, students on leave and those who have completed coursework can all apply)",
+    "When: every May and November · Subject: English · Pass: 60 points or more",
+    "You choose the format when you apply and cannot change it. Format 1 is written translation of an English passage into Korean (paper dictionary allowed, no electronic ones); format 2 is multiple-choice vocabulary and grammar like TOEIC Parts 5–6 (no dictionary).",
+    "Apply: university information system (the notice calls it «통합정보서비스») → Graduation → Graduation application → Foreign language exam application → print the receipt and hand it to your department office."
+   ],
+   "count": 4
+  },
+  "sections[0].notes[1].title": {
+   "ko": "시험 대신 — 공인성적 또는 방학 영어강좌",
+   "en": "Instead of the exam — a test score or the vacation course"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "시험에 떨어져도 공인어학성적을 내거나 방학 영어강좌를 이수하면 외국어 요건을 채울 수 있습니다.",
+    "영어 성적 기준(영어영문학 외 전공): TOEIC 700점, TOEFL iBT 76점, TEPS 600점(NEW TEPS 327점), IELTS 5.5, TOEIC Speaking·OPIc Intermediate Mid2 이상. 영어영문학 전공자는 기준이 더 높습니다.",
+    "방학 영어강좌: 매 방학 오프라인 45시간, 3분의 2 이상 출석하고 평가에서 70점 이상이면 시험을 면제합니다."
+   ],
+   "en": [
+    "Even if you fail the exam, an official test score or the vacation English course still meets the requirement.",
+    "English score thresholds (majors other than English language and literature): TOEIC 700, TOEFL iBT 76, TEPS 600 (NEW TEPS 327), IELTS 5.5, TOEIC Speaking or OPIc Intermediate Mid 2 or above. English majors need higher scores.",
+    "Vacation English course: 45 hours in person each vacation; attend at least two-thirds and score 70 or more on the assessment and the exam is waived."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "종합시험",
+   "en": "Comprehensive exam"
+  },
+  "sections[1].body": {
+   "ko": "석사과정은 재학 중 이수한 과목 가운데 2과목, 박사·통합과정은 3과목을 봅니다. 과목마다 100점 만점에 70점 이상이어야 합격입니다. 시험은 한 해에 두 번 있고, 대학원 학위청구 안내는 2~3학기에 마치도록 적습니다. 학기마다 일정이 달라 정확한 날짜는 학과에 물어보세요.",
+   "en": "Master’s students take 2 subjects and doctoral and integrated students 3, chosen from courses taken in the programme. Each subject is marked out of 100 and needs 70 to pass. The exam is held twice a year, and the Graduate School’s degree-claim guide places it in semesters 2–3. The schedule differs each semester, so ask your department for the dates."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 동아대 대학원 「종합 및 외국어 시험」 페이지와 「학위청구 자격요건 및 논문심사 절차안내(최종수정)」(2026-09-04 파일) 기준, 2026-10-31 확인.",
+   "en": "※ Based on the Graduate School’s exam page and its revised degree-claim guide (file dated 2026-09-04), checked 2026-10-31."
+  },
+  "sections[2].title": {
+   "ko": "학위청구 전까지 마칠 것",
+   "en": "What to finish before the degree claim"
+  },
+  "sections[2].footnote": {
+   "ko": "※ 동아대 대학원 「학위청구 자격요건 및 논문심사 절차안내(최종수정)」(2026-09-04 파일) 1쪽 기준, 2026-10-31 확인. 학과 사정에 따라 다를 수 있습니다.",
+   "en": "※ Based on page 1 of the Graduate School’s revised degree-claim guide (file dated 2026-09-04), checked 2026-10-31. Your department may differ."
+  },
+  "sections[2].notes[0].title": {
+   "ko": "교과학점 (4학기 졸업 기준)",
+   "en": "Coursework credits (four-semester track)"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "석사 24학점 이상 + 논문연구 2학점",
+    "박사 36학점 이상(2026학년도 1학기 신입생부터 33학점) + 논문연구 4학점",
+    "석박사통합 60학점 이상(2026학년도 1학기 신입생부터 48학점) + 논문연구 6학점"
+   ],
+   "en": [
+    "Master’s: 24 credits or more + 2 thesis research credits",
+    "Doctoral: 36 credits or more (33 for students entering from spring 2026) + 4 thesis research credits",
+    "Integrated: 60 credits or more (48 for students entering from spring 2026) + 6 thesis research credits"
+   ],
+   "count": 3
+  },
+  "sections[2].notes[1].title": {
+   "ko": "학기별로 할 일",
+   "en": "By semester"
+  },
+  "sections[2].notes[1].lines": {
+   "ko": [
+    "1~3학기: 외국어 요건 (시험은 5월·11월)",
+    "2~3학기: 종합시험",
+    "3학기: 연구계획서 제출 (안내 기준 5월 초·11월 초)",
+    "3학기: 논문계획 공개발표 결과보고서 제출 (안내 기준 6월 말·12월 말)",
+    "3학기(박사·통합): 학과 연구실적을 채우고 연구실적확인서 제출",
+    "수료 뒤: 연구등록 1회 (안내 기준 3월 초·9월 초)"
+   ],
+   "en": [
+    "Semesters 1–3: language requirement (exam in May and November)",
+    "Semesters 2–3: comprehensive exam",
+    "Semester 3: research plan (the guide says early May or early November)",
+    "Semester 3: thesis plan presentation report (the guide says end of June or end of December)",
+    "Semester 3 (doctoral and integrated): meet your department’s research output requirement and hand in the confirmation",
+    "After completing coursework: research registration once (the guide says early March or early September)"
+   ],
+   "count": 6
+  },
+  "sections[3].title": {
+   "ko": "논문 심사 — 대략의 일정",
+   "en": "Thesis examination — rough timeline"
+  },
+  "sections[3].notice": {
+   "ko": "예비심사에 떨어지면 / 그 학기에는 논문(대체실적)을 낼 수 없습니다. 위 일정은 대략이며 바뀔 수 있어, 대학원은 매 학기 초 다시 확인하라고 안내합니다.",
+   "en": "If you fail the preliminary examination / You cannot submit the thesis (or thesis-equivalent work) that semester. The timeline above is approximate and can change; the Graduate School asks you to recheck it at the start of every semester."
+  },
+  "sections[3].footnote": {
+   "ko": "※ 동아대 대학원 「학위청구 자격요건 및 논문심사 절차안내(최종수정)」(2026-09-04 파일) 2쪽 기준, 2026-10-31 확인.",
+   "en": "※ Based on page 2 of the Graduate School’s revised degree-claim guide (file dated 2026-09-04), checked 2026-10-31."
+  },
+  "sections[3].notes[0].title": {
+   "ko": "8월 졸업 (1학기에 심사)",
+   "en": "Graduating in August (examined in spring)"
+  },
+  "sections[3].notes[0].lines": {
+   "ko": [
+    "3월 중순 추천 → 3월 말 예비심사 → 4월 초 본심사 서류·심사료 → 4월 중순 심사위원 추천 → 4월 말~6월 초 본심사 → 6월 중순 1차 제출 → 6월 말 최종 제출"
+   ],
+   "en": [
+    "Mid-March recommendation → late March preliminary examination → early April final-exam documents and fee → mid-April panel recommendation → late April to early June final examination → mid-June first submission → end of June final submission"
+   ],
+   "count": 1
+  },
+  "sections[3].notes[1].title": {
+   "ko": "2월 졸업 (2학기에 심사)",
+   "en": "Graduating in February (examined in autumn)"
+  },
+  "sections[3].notes[1].lines": {
+   "ko": [
+    "9월 중순 추천 → 9월 말 예비심사 → 10월 초 본심사 서류·심사료 → 10월 중순 심사위원 추천 → 10월 말~12월 초 본심사 → 12월 중순 1차 제출 → 12월 말 최종 제출"
+   ],
+   "en": [
+    "Mid-September recommendation → late September preliminary examination → early October final-exam documents and fee → mid-October panel recommendation → late October to early December final examination → mid-December first submission → end of December final submission"
+   ],
+   "count": 1
+  },
+  "sections[4].title": {
+   "ko": "외국인장학금 — 안내마다 다른 점",
+   "en": "International scholarship — where the pages differ"
+  },
+  "sections[4].notice": {
+   "ko": "내 장학 조건은 확인하세요 / 두 안내 모두 게시일이 없고 적용 학년도도 적혀 있지 않습니다. 등록금고지서에서 실제 감면액을 보고, 유지 조건과 비율은 대학원 행정지원실(등록·장학 담당) 또는 국제교류과에 확인하세요.",
+   "en": "Check your own scholarship terms / Neither page shows a posting date or the academic year it applies to. See the actual reduction on your tuition bill, and ask the Administrative Support Office (registration and scholarships) or International Affairs about the conditions and rate."
+  },
+  "sections[4].footnote": {
+   "ko": "※ 국제교류과 「대학원 › 장학금」, 대학원 영문 사이트 「Scholarships」, 대학원 「장학금 안내」 페이지(모두 게시일 표기 없음) 기준, 2026-10-31 확인.",
+   "en": "※ Based on the International Affairs «Graduate › Scholarships» page, the Graduate School English site’s «Scholarships» page and the Graduate School scholarship page (none shows a posting date), checked 2026-10-31."
+  },
+  "sections[4].notes[0].title": {
+   "ko": "국제교류과 · 대학원 영문 장학 안내",
+   "en": "International Affairs and the Graduate School English page"
+  },
+  "sections[4].notes[0].lines": {
+   "ko": [
+    "어학성적에 따라 B 수업료 70%(TOPIK 5급 이상), C 50%(TOPIK 4급 이상), D 25%(TOPIK 3급, 또는 B·C에 해당하지 않는 학과 추천자)로 적습니다. 영어트랙 입학자는 영어 성적 기준을 따릅니다.",
+    "지급기간 2년. 재학생은 매 학기 성적 백분율 85점 이상을 유지해야 하며, 직전 학기 평균이 85점 미만이면 지급하지 않는다고 적습니다."
+   ],
+   "en": [
+    "By language score: B, 70% of tuition (TOPIK level 5 or above); C, 50% (level 4 or above); D, 25% (level 3, or department recommendation for those not meeting B or C). English-track entrants follow English score criteria.",
+    "Paid for 2 years. Current students must keep a grade of 85 or above every semester; the pages say it is not paid if the previous semester’s average is below 85."
+   ],
+   "count": 2
+  },
+  "sections[4].notes[1].title": {
+   "ko": "대학원 장학금 안내",
+   "en": "The Graduate School scholarship page"
+  },
+  "sections[4].notes[1].lines": {
+   "ko": [
+    "외국인장학금은 어학성적에 따라 수업료의 50%~70%를 차등 지급한다고 적습니다. 25% 등급과 85점·2년 조건은 이 페이지에 없습니다."
+   ],
+   "en": [
+    "Says the international scholarship is 50%–70% of tuition depending on language scores. The 25% grade and the 85-point and two-year conditions are not on this page."
+   ],
+   "count": 1
+  },
+  "sections[5].title": {
+   "ko": "알아두기",
+   "en": "Good to know"
+  },
+  "sections[5].notes[0].title": {
+   "ko": "한국어로 외국어시험을 볼 수 있나요?",
+   "en": "Can I take the language exam in Korean?"
+  },
+  "sections[5].notes[0].lines": {
+   "ko": [
+    "2021년 시행 규정은 외국인 학생이 시험 과목으로 한국어를 고를 수 있다고 적지만, 현행 시험 안내는 영어 시험만 안내합니다. 원하면 대학원 행정지원실에 물어보세요."
+   ],
+   "en": [
+    "The rules in force from 2021 say international students may choose Korean as the exam subject, but the current exam notices describe an English exam only. If you want this, ask the Administrative Support Office."
+   ],
+   "count": 1
+  },
+  "sections[5].notes[1].title": {
+   "ko": "유학생 담당이 있습니다",
+   "en": "There is a desk for international students"
+  },
+  "sections[5].notes[1].lines": {
+   "ko": [
+    "대학원 업무별 담당자 안내에 대학원 유학생의 사증·체류 관리와 학사 지원·상담 담당이 따로 있습니다. 시험·학위논문은 학위논문 담당, 등록금·장학은 등록·장학 담당이 맡습니다."
+   ],
+   "en": [
+    "The Graduate School staff list has a separate person for international students’ visa and stay matters and academic support. Exams and theses go to the thesis desk; tuition and scholarships to the registration and scholarship desk."
+   ],
+   "count": 1
+  },
+  "links[0].label": {
+   "ko": "대학원 — 종합 및 외국어 시험",
+   "en": "Graduate School — comprehensive and language exams"
+  },
+  "links[0].description": {
+   "ko": "응시자격·과목·합격 기준·면제 기준",
+   "en": "Eligibility, subjects, pass marks and exemptions (Korean)"
+  },
+  "links[1].label": {
+   "ko": "대학원 — 학위논문 진행 절차",
+   "en": "Graduate School — thesis procedure"
+  },
+  "links[1].description": {
+   "ko": "학위청구 자격요건과 논문심사 절차 (PDF·HWP)",
+   "en": "Degree-claim requirements and thesis examination (PDF/HWP, Korean)"
+  },
+  "links[2].label": {
+   "ko": "대학원 학사공지",
+   "en": "Graduate School notices"
+  },
+  "links[2].description": {
+   "ko": "외국어시험 신청·학위청구 일정·유학생 프로그램",
+   "en": "Language exam applications, degree-claim schedules, programmes for international students (Korean)"
+  },
+  "links[3].label": {
+   "ko": "대학원 — 장학금 안내",
+   "en": "Graduate School — scholarships"
+  },
+  "links[3].description": {
+   "ko": "교내·교외 장학과 외국인장학금",
+   "en": "On- and off-campus scholarships, international scholarship (Korean)"
+  },
+  "links[4].label": {
+   "ko": "국제교류과 — 대학원 장학금",
+   "en": "International Affairs — graduate scholarships"
+  },
+  "links[4].description": {
+   "ko": "어학장학금 등급과 유지 조건",
+   "en": "Language scholarship grades and conditions (Korean)"
+  },
+  "links[5].label": {
+   "ko": "대학원 영문 사이트 — Scholarships",
+   "en": "Graduate School English site — Scholarships"
+  },
+  "links[5].description": {
+   "ko": "어학장학금 안내 (영어)",
+   "en": "Language scholarship in English"
+  },
+  "links[6].label": {
+   "ko": "대학원 — 업무별 담당자",
+   "en": "Graduate School — staff by task"
+  },
+  "links[6].description": {
+   "ko": "시험·학위논문·장학·유학생 담당",
+   "en": "Who handles exams, theses, scholarships and international students (Korean)"
+  },
+  "links[7].label": {
+   "ko": "대학원 행정지원실 051-200-5502",
+   "en": "Graduate School Administrative Support Office 051-200-5502"
+  },
+  "links[7].description": {
+   "ko": "대표 051-200-5502~4",
+   "en": "Main lines 051-200-5502~4"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 장학금·TOPIK 지원받기",
+   "en": "Guide — Scholarships & TOPIK Support"
+  },
+  "links[8].description": {
+   "ko": "TOPIK 시험 접수 방법",
+   "en": "How to register for TOPIK"
+  },
+  "links[9].label": {
+   "ko": "가이드 — 학교 온라인 서비스 사용하기",
+   "en": "Guide — Using the University’s Online Services"
+  },
+  "links[9].description": {
+   "ko": "통합정보시스템 로그인",
+   "en": "Logging in to the university information system"
+  },
+  "links[10].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[10].description": {
+   "ko": "대학원 수강신청 페이지로 가는 링크",
+   "en": "Link to the graduate course registration page"
+  },
+  "phrases[0].text": {
+   "ko": "외국어시험 면제를 받으려고 TOPIK 성적표를 내려고 합니다. 지금 적용되는 급수 기준과 제출처를 알려 주시겠어요?",
+   "en": "I would like to hand in my TOPIK score to be exempted from the foreign language exam. Could you tell me which level applies now and where to submit it?"
+  },
+  "phrases[1].text": {
+   "ko": "다음 학기에 학위청구를 하려고 합니다. 제가 자격요건을 다 갖췄는지 확인할 수 있을까요?",
+   "en": "I plan to claim my degree next semester. Could you check whether I meet all the requirements?"
+  }
+ }
+}

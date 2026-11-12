@@ -23,17 +23,23 @@ abstract final class ExpansionGuides {
       categoryId: GuideCategory.immigration,
       // 조사 04/029 §4.1: the guide already covers unpaid wages and the 1350
       // route; these are the words students look for.
+      // 조사 04/052 결함 2-8: vi `tranh chấp lao động` 가 0건이었다.
       searchAliasesKo: ['알바', '아르바이트', '시간제 취업', '일자리', '임금체불',
-        '근로계약', '급여명세서', '노동청', '산재', '직장괴롭힘', '퇴직금'],
+        '근로계약', '급여명세서', '노동청', '산재', '직장괴롭힘', '퇴직금', '노동 분쟁',
+        // r23 D1(보강 16): 보건증 안내 본문은 이미 있다 — 검색어만 붙인다.
+        '보건증', '보건소'],
       searchAliasesEn: ['part-time job', 'work permit', 'side job', 'unpaid wages',
         'employment contract', 'payslip', 'labour office', 'workplace injury',
-        'harassment at work', 'severance pay'],
+        'harassment at work', 'severance pay', 'labour dispute',
+        'health certificate', 'public health centre'],
       titleKo: '시간제취업(아르바이트) 허가',
       titleEn: 'Part-time Work Permission',
       detailTitleKo: '유학생 시간제취업 허가 받기',
       detailTitleEn: 'Getting Permission for Part-time Work',
-      summaryKo: '일을 시작하기 전에 학교 확인과 출입국 허가',
-      summaryEn: 'School confirmation and immigration permission before you start',
+      // r20 F-1: 320dp·100% 두 줄(36폭) 안에 숫자뿐 아니라 그 숫자의 조건·결과가
+      // 들어와야 한다. 네 언어를 같은 정보로 맞춘다.
+      summaryKo: '일하기 전 학교 확인·출입국 허가 필수',
+      summaryEn: 'Get school and immigration OK first',
       iconName: 'work',
       overviewKo: '유학(D-2)이나 어학연수(D-4) 체류자격만으로 아르바이트를 할 수 있는 것은 '
           '아닙니다. 일을 시작하기 전에 학교 유학생 담당자의 확인을 받고, 출입국·외국인관서에서 '
@@ -64,8 +70,9 @@ abstract final class ExpansionGuides {
                     '있습니다.',
                 '어학연수(D-4-1, D-4-7)와 방문학생(D-2-8): 자격 변경일(사증을 받아 입국했다면 '
                     '입국일)부터 6개월이 지나야 신청할 수 있습니다.',
-                '과정에 맞는 언어능력 기준(일반 과정은 한국어, 영어트랙은 인정되는 영어 기준)을 '
-                    '갖추고, 학교 유학생 담당자의 확인을 받아야 합니다.',
+                '학교 유학생 담당자의 확인을 받아야 합니다. 과정에 맞는 언어능력 기준(일반 과정은 '
+                    '한국어, 영어트랙은 인정되는 영어 기준)을 충족했는지에 따라 허용 시간이 '
+                    '달라집니다(아래).',
               ],
               linesEn: [
                 'Student (D-2) sub-types D-2-1 to D-2-4, D-2-6 and D-2-7: you '
@@ -74,10 +81,11 @@ abstract final class ExpansionGuides {
                     '(D-2-8): only once 6 months have passed since your status '
                     'was changed (or since you entered Korea, if you came on '
                     'that visa).',
-                'You need to meet the language standard for your programme '
-                    '(Korean for regular programmes, an accepted English standard '
-                    'for English-track programmes) and get a confirmation from '
-                    "the university's international student adviser.",
+                "You need a confirmation from the university's international "
+                    'student adviser. Whether you meet the language standard for '
+                    'your programme (Korean for regular programmes, an accepted '
+                    'English standard for English-track programmes) decides how '
+                    'many hours you may work (below).',
               ],
             ),
             GuideNote(
@@ -513,6 +521,75 @@ abstract final class ExpansionGuides {
           footnoteEn: '※ For stay questions, call the Immigration Contact Center '
               'on 1345 (paid call).',
         ),
+        // r21 W2: 식품위생 쪽 의무. 근거는 법제처 생활법령(식품위생법 제40조·
+        // 건강진단 규칙 제2조 요약)과 보건소 두 곳의 수수료표. 과태료는 「받지 않은
+        // 경우」 문장만 옮긴다(감사 067 K-6: 영업자 쪽 과태료는 이 페이지에 없음).
+        GuideSection(
+          titleKo: '식당 · 카페처럼 음식을 다루는 일이라면',
+          titleEn: 'If the job involves handling food',
+          iconName: 'fact_check',
+          bodyKo: '식품을 조리 · 가공 · 저장 · 운반 · 판매하는 일에 직접 종사하는 사람은 일을 '
+              '시작하기 전에 건강진단(장티푸스 · 파라티푸스 · 폐결핵)을 받아야 하고, 그 뒤에도 '
+              '해마다 1회 받아야 합니다. 완전히 포장된 식품만 운반 · 판매하는 일은 대상에서 '
+              '빠집니다.\n\n'
+              '이 건강진단 결과서를 흔히 「보건증」(건강진단결과서)이라고 부릅니다. 부산 '
+              '서구보건소와 사하구보건소가 발급하는 것을 확인했고, 다른 보건소는 발급 여부를 '
+              '먼저 확인하세요.',
+          bodyEn: 'Anyone directly involved in cooking, processing, storing, '
+              'carrying or selling food must have a health check (typhoid, '
+              'paratyphoid and pulmonary TB) before starting work, and once a '
+              'year after that. Carrying or selling only fully packaged food is '
+              'excluded.\n\n'
+              'The result is commonly called a 보건증 (건강진단결과서). Seo-gu '
+              'and Saha-gu public health centres (보건소) in Busan are confirmed '
+              'to issue it; check with any other centre first.',
+          notes: [
+            GuideNote(
+              titleKo: '🏥 보건소에서 받을 때',
+              titleEn: '🏥 Getting it at a health centre',
+              linesKo: [
+                '예: 부산 서구보건소 · 사하구보건소 모두 3,000원, 5일(서구는 검사일 포함, '
+                    '사하구는 업무일 기준 — 2026년 수수료표). 보건소마다 다를 수 있습니다.',
+                '신분증 원본을 가져가세요.',
+                '건강진단을 받지 않으면 300만원 이하의 과태료가 부과될 수 있습니다.',
+              ],
+              linesEn: [
+                'For example, Seo-gu and Saha-gu health centres in Busan both '
+                    'charge ₩3,000 and take 5 days (Seo-gu counts the test day, '
+                    'Saha-gu counts working days — 2026 fee lists). Other centres '
+                    'may differ.',
+                'Bring your original ID.',
+                'Not having the health check can lead to a fine of up to ₩3 '
+                    'million.',
+              ],
+            ),
+          ],
+          noticeKo: '보건증은 시간제취업 허가가 아니에요\n'
+              '보건증이 있어도 일을 시작하기 전에 시간제취업 허가는 따로 받아야 합니다.',
+          noticeEn: 'A 보건증 is not work permission\n'
+              'Even with a 보건증, you still need part-time work permission '
+              'before you start.',
+          noticeIconName: 'info',
+          links: [
+            GuideLink(
+              labelKo: '찾기쉬운 생활법령 — 음식점 종업원 건강진단',
+              labelEn: 'Easy-to-find Law — health checks for restaurant staff',
+              descriptionKo: '대상 · 시기 · 항목 · 과태료',
+              descriptionEn: 'Who, when, what is tested, and the fine (Korean)',
+              url: 'https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=840'
+                  '&ccfNo=4&cciNo=2&cnpClsNo=1',
+              iconName: 'gavel',
+            ),
+            GuideLink(
+              labelKo: '가이드 — 기숙사 신청',
+              labelEn: 'Guide — Dormitory Application',
+              descriptionKo: '보건소 수수료표 링크와 결핵 서류 안내',
+              descriptionEn: 'Health-centre fee lists and TB paperwork',
+              url: '/guide/item/dormitory',
+              iconName: 'home_work',
+            ),
+          ],
+        ),
       ],
       tipsKo: [
         '방학 중이나 주말에 일할 때도 허가가 있어야 합니다. 시간 제한이 없다는 것은 허가를 받은 '
@@ -637,14 +714,20 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'academic-status-and-visa',
       categoryId: GuideCategory.school,
-      searchAliasesKo: ['휴학', '복학', '자퇴', '제적', '재입학'],
-      searchAliasesEn: ['leave of absence', 'return to school', 'withdrawal', 'dismissal'],
+      // r22 B 119 F-1: 휴학 뒤 출국(학교 안내·법무부 안내)을 찾는 말을 목록 끝에.
+      searchAliasesKo: ['휴학', '복학', '자퇴', '제적', '재입학', '휴학 출국', '휴학 후 출국'],
+      searchAliasesEn: ['leave of absence', 'return to school', 'withdrawal', 'dismissal',
+        'departure during leave', 'leaving Korea on leave'],
       titleKo: '휴학·복학·자퇴와 체류',
       titleEn: 'Leave, Return, Withdrawal & Your Stay',
       detailTitleKo: '휴학·복학·자퇴·제적 전에 체류까지 확인하기',
       detailTitleEn: 'Leave, Return, Withdrawal or Dismissal — and Your Stay',
       summaryKo: '학교 절차와 출입국 체류 판단은 따로 확인',
-      summaryEn: 'The school procedure and your stay are decided separately',
+      // r20 F-1: 320dp·100% 두 줄(36폭) 안에 숫자뿐 아니라 그 숫자의 조건·결과가
+      // 들어와야 한다. 네 언어를 같은 정보로 맞춘다.
+      // 감사 05/065 필수-1: 35폭이지만 Roboto 에서는 「…decide」에서 잘려 뜻이
+      // 뒤집혔다(폭 단위는 비례 글꼴의 경계가 아니다). 「따로」를 맨 앞에 둔다.
+      summaryEn: 'Ask separately: school, immigration',
       iconName: 'event_busy',
       overviewKo: '휴학·복학·자퇴는 학교에 신청하는 학적 절차이지만, 외국인 유학생은 그 결과가 '
           '체류에도 이어집니다. 학교는 유학생이 등록하지 않거나 휴학하거나 제적·자퇴 등으로 '
@@ -715,14 +798,38 @@ abstract final class ExpansionGuides {
               ],
             ),
           ],
-          noticeKo: '휴학한 유학생이 한국에 계속 머물 수 있는지를 일반적으로 정한 공식 안내는 '
-              '찾지 못했습니다. 휴학 기간·사유·남은 체류기간에 따라 달라지므로 신청 전에 1345나 '
-              '관할 출입국·외국인관서에 확인하세요.',
-          noticeEn: 'We found no official guidance that says in general whether '
-              'an international student on leave may stay in Korea. It depends '
-              'on the length and reason of the leave and on your remaining '
-              'period of stay, so check with 1345 or your immigration office '
-              'before you apply.',
+          // r21 W2 정정: 국제교류과 「2026. 8. 신입생 오리엔테이션 학사안내」 책자
+          // (예비대학 공지 board_seq=8510707 첨부, sha256 ec55229d…, 인쇄 p.15 =
+          // PDF p.17)가 휴학 절차 끝 단계로 「30일내 출국」을 적는다. 법령 근거와
+          // 30일의 기산점은 책자에 없고 확인하지 못했다 — 학교 안내라는 것만 적는다.
+          // r22 R1: 학교 책자(인쇄 p.15)의 「30일내 출국」과 출입국 처리를 나눈다.
+          // 법무부 「유학생이 자주 물어보는 질문 & 답변」(2025-03-07, 출입국기획과):
+          // 휴학 통보를 받으면 출입국이 「출국 안내」를 한다. 출국 기한·기산점은 법·영·
+          // 규칙·매뉴얼(2026-09-01판)·생활법령·이 Q&A 어디에도 없다 — 30일을 법정 기한으로 쓰지 않는다.
+          noticeKo: '휴학하면 출국해야 할 수 있어요\n'
+              '학교가 휴학을 출입국에 알리면, 출입국은 그 학생이 더 이상 학교를 다니지 '
+              '않는 것으로 보고 출국 안내를 합니다(법무부 안내).\n'
+              '국제교류과의 2026년 8월 학부 신입생 학사안내는 휴학 절차를 「국제교류과 '
+              '담당자에게 문의 → 휴학신청 → 학과에 휴학처리 확인 → 30일내 출국」으로 '
+              '적고, 휴학을 신청하기 전에 반드시 국제교류과 담당자에게 먼저 연락하라고 '
+              '합니다. 이 30일은 학교 안내이고, 언제부터 세는지와 법적 근거는 적혀 있지 '
+              '않습니다. 실제로 언제까지 출국해야 하는지는 출입국 안내를 따라야 하므로, '
+              '30일을 그대로 머물 수 있다고 여기지 말고 휴학 신청 전에 국제교류과와 '
+              '1345에서 확인하세요.',
+          noticeEn: 'Taking leave may mean you have to leave Korea\n'
+              'When the university reports your leave, the immigration office '
+              'treats you as no longer attending school and tells you to leave '
+              'Korea (Ministry of Justice guidance).\n'
+              'The Office of International Affairs’ August 2026 orientation '
+              'guide for new undergraduates lists the leave procedure as “ask '
+              'the office → apply for leave → confirm the leave with your '
+              'department → leave Korea within 30 days”, and says you must '
+              'contact the office before you apply. These 30 days are the '
+              'university’s guidance; it does not say when they start or what '
+              'rule they come from. Your actual departure deadline follows '
+              'immigration’s instructions, so do not assume you can stay for '
+              '30 days — check with the office and with 1345 before you apply '
+              'for leave.',
           noticeIconName: 'info',
         ),
       ],
@@ -732,7 +839,7 @@ abstract final class ExpansionGuides {
         '외국인등록증의 체류기간 만료일',
         '휴학·자퇴 사유와 기간(질병이면 진단서 등 증빙)',
         '등록금 납부 여부와 신청 날짜 — 이월·환불 금액이 달라집니다',
-        '휴학 중 한국에 머물지, 출국할지에 대한 계획',
+        '휴학하면 출국해야 할 수 있다는 점 — 출국 날짜와, 국내에 남아야 할 사유(질병 등)가 있는지',
         '장학금·기숙사·시간제취업 허가 등 학적에 묶인 혜택이나 허가',
       ],
       checklistEn: [
@@ -741,7 +848,8 @@ abstract final class ExpansionGuides {
             'illness, a medical certificate or other proof)',
         'Whether you have paid tuition and on what date you apply — the '
             'carry-over or refund amount depends on it',
-        'Whether you plan to stay in Korea or leave during the leave',
+        'That taking leave may mean leaving Korea — your departure date, and '
+            'whether you have a reason (such as illness) you must stay',
         'Scholarships, dormitory places, part-time work permission and other '
             'benefits or permissions tied to your enrolment',
       ],
@@ -754,8 +862,11 @@ abstract final class ExpansionGuides {
         '국제교류과와 출입국(1345)에 휴학·자퇴가 체류에 미치는 영향을 먼저 확인',
         '학교 절차 신청 — 일반휴학·복학은 인터넷, 자퇴는 소속대학 행정실 방문(지도교수 상담)',
         '승인 결과와 등록금 이월·환불 내역 확인, 필요한 증명서(휴학증명서·제적증명서 등) 발급',
-        '출입국 안내에 따라 체류 조치 — 계속 체류, 체류기간 연장·체류자격 변경 신청, 또는 출국',
-        '복학할 때는 복학 신청 → 학적이 「재학」으로 바뀐 뒤 등록금 납부 → 수강신청 순서로 진행',
+        '휴학이면 학교·출입국 안내에 따라 출국 준비 — 질병 등으로 국내에 남아야 하면 출국 전에 '
+            '1345·관할 출입국에 먼저 확인. 자퇴·제적이면 출국할지 다른 체류자격으로 바꿀 수 '
+            '있는지 확인',
+        '복학할 때는 복학 신청 → 학적이 「재학」으로 바뀐 뒤 등록금 납부 → 수강신청 순서로 진행 '
+            '(휴학 중 출국했다면 국제교류과에 비자 서류를 신청해 비자를 받은 뒤 입국)',
       ],
       stepsEn: [
         'First check with the Office of International Affairs and immigration '
@@ -765,10 +876,15 @@ abstract final class ExpansionGuides {
             '(with a talk with your academic adviser).',
         'Check the decision and any tuition carry-over or refund, and get the '
             'certificates you need (certificate of leave, of dismissal, etc.).',
-        'Follow immigration’s guidance on your stay — keep staying, apply to '
-            'extend or change your status, or leave Korea.',
+        'If you take leave, prepare to leave Korea as the university and '
+            'immigration instruct — if illness or a similar reason means you '
+            'must stay, check with 1345 or your immigration office before you '
+            'leave. If you withdraw or are dismissed, check whether you must '
+            'leave or can change to another status.',
         'To return: apply for return → once your status shows “enrolled”, pay '
-            'tuition → register for courses.',
+            'tuition → register for courses (if you left Korea during your '
+            'leave, request visa documents from the Office of International '
+            'Affairs and get a visa before you come back).',
       ],
       sections: [
         GuideSection(
@@ -856,11 +972,21 @@ abstract final class ExpansionGuides {
               'online before that semester starts and check the semester’s '
               'academic notice for the exact dates. A leave extension can be '
               'used only once while enrolled.',
-          footnoteKo: '※ 휴학 중 출국했다면 체류기간이 남아 있는지, 다시 들어올 때 사증이 '
-              '필요한지 복학 신청 전에 확인하세요.',
-          footnoteEn: '※ If you left Korea during your leave, check before you '
-              'apply to return whether your period of stay is still valid and '
-              'whether you need a visa to come back.',
+          // r22 R1(070 R-2): 국제교류과 책자 인쇄 p.16 복학 절차. 법무부 Q&A — 휴학
+          // 통보 뒤 출국했으면 잔여 체류기간과 관계없이 유학비자 말소 → 새 비자.
+          footnoteKo: '※ 휴학 중 출국했다면: 국제교류과의 2026년 8월 학부 신입생 학사안내는 '
+              '복학 절차를 「온라인 복학신청 → 국제교류과 담당자 문의 → 등록금 납부 → '
+              '학교에서 비자 관련 서류를 받아 비자 신청 → 입국」으로 안내하고, 복학(재입학)을 '
+              '신청할 때 국제교류과 담당자에게 연락해 비자 서류를 신청하라고 적고 있습니다. '
+              '안내는 해마다 바뀔 수 있으니 그 학기 공지도 확인하세요.',
+          footnoteEn: '※ If you left Korea during your leave: the Office of '
+              'International Affairs’ August 2026 orientation guide for new '
+              'undergraduates lists the return steps as “apply to return online '
+              '→ contact the office → pay tuition → get visa documents from the '
+              'university and apply for a visa → enter Korea”, and says to '
+              'contact the office to request the visa documents when you apply '
+              'to return (or for readmission). The guidance can change every '
+              'year, so also check that semester’s notice.',
         ),
         GuideSection(
           titleKo: '자퇴와 제적',
@@ -929,34 +1055,42 @@ abstract final class ExpansionGuides {
               'depends on places being available.',
         ),
         GuideSection(
-          titleKo: '휴학 중 본국에 다녀오려면',
-          titleEn: 'Going home during your leave',
+          // r22 R1: 법무부 Q&A(2025-03-07) — 휴학 통보 뒤 이미 출국했으면 잔여 체류기간과
+          // 관계없이 유학비자 말소, 재입국은 새 비자. 재입국허가 면제(법 제30조)는 재학 중
+          // 일시 출국의 일반 규정이라 이 섹션에서 뺐다. 복학 비자 서류는 책자 p.16.
+          titleKo: '휴학하고 출국할 때',
+          titleEn: 'Leaving Korea during your leave',
           iconName: 'flight_takeoff',
           notes: [
             GuideNote(
-              titleKo: '재입국과 외국인등록증',
-              titleEn: 'Re-entry and your Residence Card',
+              titleKo: '다시 들어오려면 새 비자',
+              titleEn: 'You need a new visa to come back',
               linesKo: [
-                '외국인등록을 한 유학(D-2)·일반연수(D-4) 체류자는 출국한 날부터 1년(남은 체류기간이 '
-                    '1년보다 짧으면 그 기간) 안에 다시 들어오면 재입국허가가 면제될 수 있습니다.',
-                '체류기간 안에 다시 들어올 예정이라면 출국할 때 외국인등록증을 반납하지 않아도 되는 '
-                    '경우가 있습니다. 반납 대상인지 출국 전에 확인하세요.',
-                '휴학 중 체류기간이 끝나면 연장이 제한될 수 있으므로, 만료일을 넘겨 해외에 머물 '
-                    '계획이라면 복학 때 새 사증이 필요한지 미리 확인하세요.',
+                // r22 감사 073 R-1: 법무부 원문은 「통보를 받을 때 이미 출국을 한 상태」 —
+                // 통보 전에 먼저 나간 학생도 해당한다.
+                '법무부 안내에 따르면, 학교가 휴학을 출입국에 통보할 때 이미 출국해 있는 상태라면 '
+                    '체류기간이 남아 있어도 유학비자가 말소되고, 다시 들어올 때는 새 비자를 받아야 '
+                    '합니다.',
+                '외국인등록증에 남은 체류기간이나 재입국허가 면제만 믿고 출국하지 마세요. 휴학 '
+                    '중 출국과 재입국은 출국 전에 국제교류과와 1345에 확인하세요.',
+                '복학할 때 필요한 비자 서류는 국제교류과에 신청합니다. 순서는 위 「복학」을 '
+                    '보세요.',
                 '건강보험 지역가입자는 출국해 1개월 이상 해외에 머물면 출국 다음 날로 자격이 '
                     '끝납니다. 자세한 내용은 건강보험 가이드를 보세요.',
               ],
               linesEn: [
-                'Registered student (D-2) and general training (D-4) residents '
-                    'who come back within 1 year of leaving (or within their '
-                    'remaining period of stay, if shorter) may be exempt from '
-                    'a re-entry permit.',
-                'If you will come back within your period of stay, you may not '
-                    'need to hand in your Residence Card when you leave. Check '
-                    'whether you must return it before departure.',
-                'Extensions can be restricted during leave, so if you plan to '
-                    'stay abroad past your expiry date, check in advance '
-                    'whether you will need a new visa to return.',
+                'According to the Ministry of Justice, if you are already '
+                    'outside Korea when the university reports your leave to '
+                    'immigration, your student visa is cancelled even if your '
+                    'period of stay has not ended, and you need a new visa to '
+                    'come back.',
+                'Do not rely on the remaining period on your Residence Card or '
+                    'on the re-entry permit exemption. Before you leave, check '
+                    'departure and re-entry with the Office of International '
+                    'Affairs and with 1345.',
+                'You apply to the Office of International Affairs for the visa '
+                    'documents you need to return. See “Returning” above for '
+                    'the steps.',
                 'For regional health insurance subscribers, coverage ends from '
                     'the day after departure once you stay abroad 1 month or '
                     'more. See the health insurance guide for details.',
@@ -1007,7 +1141,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '종류·기간·등록금 이월·신청 바로가기',
           descriptionEn: 'Types, periods, tuition carry-over and the online '
               'application (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN124',
+          url: 'https://www.donga.ac.kr/academics/academic-records/leave',
           iconName: 'school',
         ),
         GuideLink(
@@ -1016,7 +1150,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '복학 신청과 미복학제적',
           descriptionEn: 'Applying to return, and dismissal for non-return '
               '(Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN125',
+          url: 'https://www.donga.ac.kr/academics/academic-records/return',
           iconName: 'school',
         ),
         GuideLink(
@@ -1024,7 +1158,7 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — withdrawal',
           descriptionKo: '신청 방법과 수업료 반환 기준',
           descriptionEn: 'How to withdraw and the refund table (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN127',
+          url: 'https://www.donga.ac.kr/academics/academic-records/withdrawal',
           iconName: 'school',
         ),
         GuideLink(
@@ -1032,12 +1166,14 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — dismissal',
           descriptionKo: '제적 요건과 재입학',
           descriptionEn: 'Grounds for dismissal and readmission (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN126',
+          url: 'https://www.donga.ac.kr/academics/academic-records/expulsion',
           iconName: 'school',
         ),
         GuideLink(
           labelKo: '생활법령 — 입국 및 재입국',
           labelEn: 'Easy-to-find Law — entry and re-entry',
+          // r22: R1 C-9 의 「재학 중」 한정은 생활법령 원문에 없어(감사 073 R-2) r21 문구로
+          // 되돌렸다. 휴학 출국의 주의는 sections[3] 이 맡는다.
           descriptionKo: '법제처 외국인유학생 — 재입국허가 면제',
           descriptionEn: 'Ministry of Government Legislation — re-entry permit '
               'exemption (Korean)',
@@ -1117,6 +1253,26 @@ abstract final class ExpansionGuides {
           url: '/guide/item/health-insurance',
           iconName: 'receipt_long',
         ),
+        GuideLink(
+          labelKo: '국제교류과 — 2026학년도 후기 예비대학 안내',
+          labelEn: 'International Affairs — 2026 autumn pre-college notice',
+          descriptionKo: '첨부 「외국인 유학생 수강신청 안내 책자_(국제교류과)」 15~16쪽에 휴학 · '
+              '복학 절차',
+          descriptionEn: 'The attached OIA booklet has the leave and return '
+              'steps on pages 15–16 (Korean)',
+          url: 'https://global.donga.ac.kr/global/CMS/Board/Board.do?mCode=MN066'
+              '&mode=view&mgr_seq=717&board_seq=8510707',
+          iconName: 'description',
+        ),
+        GuideLink(
+          labelKo: '법무부 — 유학생이 자주 묻는 질문',
+          labelEn: 'Ministry of Justice — FAQ for international students',
+          descriptionKo: '휴학 통보 때 이미 출국해 있으면 유학비자 말소·새 비자',
+          descriptionEn: 'Already abroad when your leave is reported: student '
+              'visa cancelled, new visa needed (Korean)',
+          url: 'https://www.moj.go.kr/bbs/immigration/220/592667/artclView.do',
+          iconName: 'gavel',
+        ),
       ],
       difficulty: 3,
       status: GuideStatus.published,
@@ -1136,8 +1292,11 @@ abstract final class ExpansionGuides {
       titleEn: 'Academic Warning & Avoiding Dismissal',
       detailTitleKo: '학사경고·유급을 받았거나 받을 것 같을 때',
       detailTitleEn: 'If You Get — or May Get — an Academic Warning',
-      summaryKo: '평점 1.5 미만·F 9학점 이상이면 경고, 통산 3회면 제적',
-      summaryEn: 'GPA under 1.5 or 9+ F credits means a warning; 3 means dismissal',
+      // r20 F-1: 기준 숫자 셋(1.5·9·3)과 조건·결과를 36폭에 다 넣을 수 없어, 일부만
+      // 보이면 기준 숫자가 무엇을 일으키는지 화면에서 사라졌다. 요약은 「기준이 있고
+      // 통산 3회면 제적」만 말하고, 1.5·9 는 상세 첫 화면에 둔다.
+      summaryKo: '학사경고 기준 · 통산 3회면 제적',
+      summaryEn: 'Warning rules; 3 total = dismissal',
       iconName: 'fact_check',
       overviewKo: '학사경고는 한 학기 성적이 낮은 학생에게 주의를 주는 제도입니다. 통산 3회가 되면 '
           '성적불량으로 제적되므로, 첫 경고부터 다음 학기 계획을 세우는 것이 중요합니다.\n\n'
@@ -1300,6 +1459,85 @@ abstract final class ExpansionGuides {
               'you apply.',
           noticeIconName: 'info',
         ),
+        // r21 W2: 경고 횟수별 학교 프로그램. 학생상담센터 MN031(Learning Talk,
+        // 학사경고 1회자, 매 학기, 학생역량통합관리시스템 신청)과 교수학습개발센터
+        // MN028(DAU자기관리학습법, 2회 누적자)을 직접 열었다.
+        GuideSection(
+          titleKo: '학습 도움 프로그램',
+          titleEn: 'Programmes that can help',
+          iconName: 'menu_book',
+          notes: [
+            GuideNote(
+              titleKo: '학사경고 1회 — 학생상담센터',
+              titleEn: 'After a 1st warning — student counseling centre',
+              linesKo: [
+                '학사경고 1회 학생의 학교생활 적응을 위해 전화상담과 Learning Talk(학습관리 '
+                    '수업)를 학기마다 운영합니다.',
+                '학생역량통합관리시스템에서 신청합니다. 프로그램마다 신청 방법이 다를 수 있으니 '
+                    '안내문을 확인하세요.',
+              ],
+              linesEn: [
+                'The centre runs phone counselling and Learning Talk (a '
+                    'study-management class) every semester for students with '
+                    'one academic warning.',
+                'Apply through the student competency system (학생역량통합관리시스템). '
+                    'Each programme may have its own way of applying, so read '
+                    'its notice.',
+              ],
+            ),
+            GuideNote(
+              titleKo: '학사경고 2회 누적 — 교수학습개발센터',
+              titleEn: 'After 2 warnings — Center for Teaching and Learning',
+              linesKo: [
+                'DAU자기관리학습법 — 학습코칭과 심리상담을 함께 하는 맞춤형 프로그램입니다. '
+                    '센터는 우수참여자 장학금과 1학점 인정을 안내합니다.',
+                '문의: 051-200-6291~2',
+              ],
+              linesEn: [
+                'DAU self-managed learning (DAU자기관리학습법) — a tailored '
+                    'programme combining study coaching and counselling. The '
+                    'centre lists a scholarship for top participants and 1 '
+                    'credit.',
+                'Contact: 051-200-6291~2',
+              ],
+            ),
+          ],
+          links: [
+            GuideLink(
+              labelKo: '학생상담센터 — 심리지원 프로그램',
+              labelEn: 'Student counseling centre — support programmes',
+              descriptionKo: 'Learning Talk 등 학기별 프로그램',
+              descriptionEn: 'Learning Talk and other programmes each semester '
+                  '(Korean)',
+              url: 'https://guide.donga.ac.kr/guide/CMS/Contents/Contents.do'
+                  '?mCode=MN031',
+              iconName: 'help',
+            ),
+            GuideLink(
+              labelKo: '교수학습개발센터 — DAU자기관리학습법',
+              labelEn: 'Center for Teaching and Learning — DAU self-managed '
+                  'learning',
+              descriptionKo: '학사경고 2회 누적자 대상',
+              descriptionEn: 'For students with 2 warnings (Korean)',
+              url: 'https://ctl.donga.ac.kr/ctl/CMS/Contents/Contents.do'
+                  '?mCode=MN028',
+              iconName: 'menu_book',
+            ),
+            GuideLink(
+              labelKo: '가이드 — 국제교류과 방문 안내',
+              labelEn: 'Guide — International Affairs Office',
+              descriptionKo: '유학생 학습 튜터링 · 전공 스터디그룹',
+              descriptionEn: 'Tutoring and major study groups for '
+                  'international students',
+              url: '/guide/item/oia-visit',
+              iconName: 'school',
+            ),
+          ],
+          footnoteKo: '※ 교수학습개발센터 페이지의 「신청」 링크는 아직 DECO를 가리킵니다. '
+              '신청 방법은 센터에 확인하세요.',
+          footnoteEn: '※ The centre’s “신청” (apply) links still point to DECO. '
+              'Ask the centre how to apply.',
+        ),
       ],
       tipsKo: [
         '학사경고 2회째에는 수강신청 학점이 줄고, 그 학기에는 이월학점도 쓸 수 없습니다'
@@ -1331,7 +1569,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '기준·통지·학점 제한·제적',
           descriptionEn: 'Threshold, notice, credit limit and dismissal '
               '(Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN134',
+          url: 'https://www.donga.ac.kr/academics/grades/warning',
           iconName: 'school',
         ),
         GuideLink(
@@ -1340,7 +1578,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '직권·희망유급과 성적복원',
           descriptionEn: 'Compulsory and voluntary repeats, restoring grades '
               '(Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN135',
+          url: 'https://www.donga.ac.kr/academics/grades/repeat',
           iconName: 'school',
         ),
         GuideLink(
@@ -1414,13 +1652,16 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'address-and-registration-changes',
       categoryId: GuideCategory.immigration,
-      searchAliasesKo: ['이사', '주소 변경', '체류지 변경', '여권 변경', '새 여권', '전입신고'],
-      searchAliasesEn: ['moving', 'move house', 'change of address', 'new passport', 'passport change'],
+      // 조사 04/052 결함 2-9: vi `đăng ký tạm trú` 가 엉뚱한 가이드로 갔다.
+      searchAliasesKo: ['이사', '주소 변경', '체류지 변경', '여권 변경', '새 여권',
+        '전입신고', '체류지 신고'],
+      searchAliasesEn: ['moving', 'move house', 'change of address', 'new passport',
+        'passport change', 'residence report'],
       titleKo: '체류지·등록사항 변경신고',
       titleEn: 'Reporting Address & Registration Changes',
       detailTitleKo: '이사했거나 여권·인적사항이 바뀌었을 때 신고하기',
       detailTitleEn: 'Moved, or Got a New Passport? Report the Change',
-      summaryKo: '이사는 전입일부터, 여권·학교 변경은 변경일부터 15일 안에',
+      summaryKo: '15일 안에 신고 — 이사는 전입일, 여권·학교 변경은 변경일부터',
       summaryEn: 'Within 15 days — of moving in, or of the change',
       iconName: 'edit_location_alt',
       overviewKo: '외국인등록을 한 유학생은 사는 곳이나 등록된 정보가 바뀌면 직접 신고해야 합니다. '
@@ -1451,6 +1692,13 @@ abstract final class ExpansionGuides {
               linesKo: [
                 '기한: 새 주소로 전입한 날부터 15일 이내',
                 '신고처: 새 체류지의 시·군·구청이나 읍·면·동 주민센터, 또는 관할 출입국·외국인관서',
+                // 조사 04/045 §1: 법무부 온라인 민원 안내가 이용 가능 등록외국인
+                // 체류자격으로 D-2·D-4를 명시한다. 온라인 대리신청 가능 범위는
+                // 공개자료로 확인되지 않아 단정하지 않는다.
+                '온라인: 하이코리아 전자민원으로도 신고할 수 있습니다. 외국인등록을 마친 '
+                    'D-2·D-4도 이용할 수 있고, 다른 사람이 대신 신청할 수 있는지는 신청 '
+                    '화면이나 1345에서 확인하세요. 최초 외국인등록은 이 전자민원으로 '
+                    '대신할 수 없습니다.',
                 '제출: 체류지변경신고서, 여권, 외국인등록증과 이사 사실을 확인할 수 있는 '
                     '서류(임대차계약서 등). 신고하면 등록증에 새 주소가 적힙니다.',
                 '늦거나 안 하면: 100만원 이하의 벌금 대상(출입국관리법 제98조)',
@@ -1460,6 +1708,11 @@ abstract final class ExpansionGuides {
                 'Where: the city/county/district office or the community '
                     'service centre (eup/myeon/dong) for your new address, or '
                     'your immigration office',
+                'Online: you can also file it through HiKorea e-Government. '
+                    'Registered D-2 and D-4 holders can use it; whether someone '
+                    'may file on your behalf is not stated in the public '
+                    'guidance, so check the form or call 1345. A first-time '
+                    'alien registration cannot be done this way.',
                 'Bring: the change-of-address form, passport, Residence Card '
                     'and proof of the move (such as the lease). The new address '
                     'is written on your card.',
@@ -1496,11 +1749,26 @@ abstract final class ExpansionGuides {
               ],
             ),
           ],
+          // 경고를 note 안의 한 줄로만 두면 교외주거 가이드에서 옮겨 온 「신고를
+          // 미루지 마세요」보다 약해진다(감사 05/061 §B). 같은 수준의 notice 로 올린다.
+          noticeKo: '신고를 미루지 마세요\n'
+              '체류지 변경 신고는 전입한 날부터 15일 이내에 해야 하고, 기한을 넘기면 '
+              '출입국관리법에 따라 100만원 이하의 벌금이 부과될 수 있습니다. 보증금 보호와도 '
+              '이어지므로 이사 후 먼저 처리하세요.',
+          noticeEn: 'Do not put this off\n'
+              'The change-of-residence report is due within 15 days of moving '
+              'in, and missing that deadline can mean a fine of up to ₩1 '
+              'million under the Immigration Act. It also feeds into protecting '
+              'your deposit, so deal with it first after you move.',
+          noticeIconName: 'warning',
           footnoteKo: '※ 출입국관리법·시행령·시행규칙과 하이코리아 「체류민원 자격별 안내 매뉴얼」'
-              '(2026년 9월 게시) 기준, 2026-09-13 확인.',
+              '(2026년 9월 게시) 기준, 2026-09-13 확인. 체류지 변경신고의 온라인 경로는 '
+              '법무부 「온라인 민원 서비스」 안내 기준, 2026-10-25 확인(조사 04/045 §1).',
           footnoteEn: '※ Based on the Immigration Act, its Decree and Rules and '
               'the HiKorea stay manual by status (posted September 2026), '
-              'checked 2026-09-13.',
+              'checked 2026-09-13. The online route for a change-of-residence '
+              'report follows the Ministry of Justice online-services guidance, '
+              'checked 2026-10-25.',
         ),
       ],
       checklistKo: [
@@ -1646,6 +1914,18 @@ abstract final class ExpansionGuides {
         '대학 휴학 자체는 등록사항 변경신고 항목으로 규정돼 있지 않습니다. 학교를 옮기는 경우가 '
             '신고 대상입니다.',
         '체류기간 연장 등 다른 신청을 할 때도 새 주소 입증서류가 필요하니 계약서를 보관하세요.',
+        // r23 D2 보강 8: 하이코리아 ResvIntroR.pt(2026-10-31 열람). 예약 예외는 같은
+        // 페이지의 안내 이미지 대체텍스트에 있다(본문 텍스트 아님) — 단일 근거.
+        // 감사 05/082 R-3: 대체텍스트 「예약을 하지 않고 관서를 방문할 경우 민원 접수가
+        // 불가합니다. 단, 체류지/거소지 변경 신고 및 여권 변경 신고의 경우 별도 예약 없이
+        // 방문처리 가능」에 맞춰 무예약 방문을 두 신고로 한정했다. 같은 페이지 본문 ③ 「신고기간
+        // 안에 예약할 수 있는 날짜가 없는 경우에는 신고기간이 지나기 전에 관할 관서를 방문」도
+        // 원문이므로 「하이코리아 안내」로 옮기고 1345 확인을 붙였다(AP 재확인 2026-10-31).
+        '하이코리아 방문예약은 방문 날짜를 잡는 것일 뿐 신고 접수가 아닙니다. 하이코리아 '
+            '안내에는 예약 없이 관서를 방문하면 민원 접수가 되지 않으며, 체류지 변경 신고와 '
+            '여권 변경 신고만 예약 없이 방문해 처리할 수 있다고 되어 있습니다. 그 밖의 신고를 '
+            '기한 안에 예약할 날짜가 없으면 하이코리아는 신고기간이 지나기 전에 관할 관서를 '
+            '방문하라고 안내하니, 가기 전에 1345에 처리 방법을 확인하세요.',
       ],
       tipsEn: [
         'For foreign residents, the change-of-address report takes the place '
@@ -1659,6 +1939,13 @@ abstract final class ExpansionGuides {
             'change; moving to a different school is.',
         'Other applications such as an extension of stay also ask for proof '
             'of your address, so keep your lease.',
+        'Booking a HiKorea visit only reserves a date — it is not the report '
+            'itself. HiKorea says an office will not take your application if '
+            'you turn up without a booking; only address-change and '
+            'passport-change reports can be handled without one. For other '
+            'reports, if no date is free before your deadline, HiKorea says to '
+            'visit the office before the deadline passes — call 1345 first to '
+            'check how it will be handled.',
       ],
       phrases: [
         GuidePhrase(
@@ -1759,9 +2046,11 @@ abstract final class ExpansionGuides {
       titleEn: 'Job-Seeking Visa (D-10) after Graduation',
       detailTitleKo: '졸업 후 한국에서 일자리를 찾으려면 — 구직(D-10)',
       detailTitleEn: 'Staying On to Look for Work — Job-Seeking (D-10)',
-      summaryKo: '전문 분야 구직·인턴용, 첫 변경은 점수제 면제 특례',
-      summaryEn: 'For professional job-seeking and internships; first change '
-          'skips the points test',
+      // 감사 05/065 필수-2: 꼬리가 잘리면 「첫 변경은 점수제…」만 남아 「점수제가
+      // 적용된다」로 읽혔다. 결과(면제)를 앞에 둔다.
+      summaryKo: '첫 변경은 점수제 면제 — 전문 분야 구직·인턴용',
+      summaryEn: 'First change skips the points test — for professional '
+          'job-seeking and internships',
       iconName: 'work',
       overviewKo: '구직(D-10-1) 체류자격은 교수·회화지도·특정활동 등 전문 분야(E-1~E-7)에 '
           '취업하기 위해 한국에서 구직활동을 하거나, 정식 취업 전에 연수비를 받는 단기 인턴을 하는 '
@@ -2345,7 +2634,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '납부기간·은행·고지서·납입확인서·학기초과자 표',
           descriptionEn: 'Periods, banks, bills, receipts and the '
               'extra-semester table (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN159',
+          url: 'https://www.donga.ac.kr/academics/tuition/payment-info',
           iconName: 'payments',
         ),
         GuideLink(
@@ -2354,7 +2643,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '학기별 등록금 납부·분할납부 공지',
           descriptionEn: 'Each semester’s tuition and instalment notices '
               '(Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Board/Board.do?mCode=MN170',
+          url: 'https://www.donga.ac.kr/community/notices',
           iconName: 'info',
         ),
         GuideLink(
@@ -2403,8 +2692,10 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'residence-card-reissue',
       categoryId: GuideCategory.immigration,
-      searchAliasesKo: ['분실', '등록증 분실', '외국인등록증 분실', '재발급', '잃어버렸어요'],
-      searchAliasesEn: ['lost card', 'lost residence card', 'reissue', 'replacement card'],
+      searchAliasesKo: ['분실', '등록증 분실', '외국인등록증 분실', '재발급', '잃어버렸어요',
+        '사실증명', '외국인등록 사실증명', '사실증명서'],
+      searchAliasesEn: ['lost card', 'lost residence card', 'reissue', 'replacement card',
+        'certificate of foreign resident registration'],
       titleKo: '외국인등록증 재발급',
       titleEn: 'Replacing Your Residence Card',
       detailTitleKo: '외국인등록증을 잃어버렸거나 새로 받아야 할 때',
@@ -2536,6 +2827,13 @@ abstract final class ExpansionGuides {
                 '외국인등록 사실증명을 발급받을 수 있지만, 은행·통신사·병원 등이 이를 등록증 대신 '
                     '인정하는지는 제출처마다 다르므로 먼저 확인하세요.',
                 '처리 기간과 카드 수령 방법은 신청할 때 관서에 확인하세요.',
+                // r24 후보 34: 정부24 「외국인등록 사실증명」(최근 변경 2026-06-01, 조사 04/078
+                // 2026-11-01 열람) — 인터넷 · 방문, 온라인은 대리인 신청 불가, 1통 2,000원 ·
+                // 인터넷 무료, 근무시간 내 3시간. 등록증 대체 여부는 위 줄(제출처 확인)을 유지.
+                '외국인등록 사실증명은 정부24에서 본인이 온라인으로 신청할 수 있습니다(인터넷 '
+                    '발급 무료, 본인확인 필요, 대리 신청 불가). 출입국 · 외국인관서나 시 · 군 · '
+                    '구청 · 주민센터 창구에서도 신청할 수 있고 수수료는 1통 2,000원입니다. '
+                    '창구는 방문 전에 발급이 되는지 확인하세요.',
               ],
               linesEn: [
                 'You can get a certificate of foreign resident registration, '
@@ -2543,6 +2841,12 @@ abstract final class ExpansionGuides {
                     'instead of the card is up to each of them — ask first.',
                 'Ask the office about processing time and how you will collect '
                     'the card when you apply.',
+                'You can apply for the certificate of foreign resident '
+                    'registration yourself online at Government24 (정부24) — free '
+                    'online, identity check needed, no applying on someone else\'s '
+                    'behalf. You can also apply at an immigration office or a '
+                    'city, district or community centre counter for ₩2,000 a copy; '
+                    'check before you go that the counter issues it.',
               ],
             ),
           ],
@@ -2635,6 +2939,16 @@ abstract final class ExpansionGuides {
           url: '/guide/item/departure-checklist',
           iconName: 'flight_takeoff',
         ),
+        // r24 후보 34
+        GuideLink(
+          labelKo: '정부24 — 외국인등록 사실증명',
+          labelEn: 'Government24 — Certificate of foreign resident registration',
+          descriptionKo: '온라인 본인 신청(무료) · 신청 방법과 제출 서류',
+          descriptionEn: 'Apply online yourself (free) — how to apply and what to '
+              'bring',
+          url: 'https://www.gov.kr/mw/AA020InfoCappView.do?CappBizCD=12700000027',
+          iconName: 'description',
+        ),
       ],
       difficulty: 1,
       status: GuideStatus.published,
@@ -2649,8 +2963,10 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'departure-checklist',
       categoryId: GuideCategory.immigration,
-      searchAliasesKo: ['출국', '귀국', '한국 떠나기', '본국 귀국', '등록증 반납'],
-      searchAliasesEn: ['leaving Korea', 'departure', 'go home', 'return home'],
+      searchAliasesKo: ['출국', '귀국', '한국 떠나기', '본국 귀국', '등록증 반납', '짐 보내기',
+        'EMS 금지물품'],
+      searchAliasesEn: ['leaving Korea', 'departure', 'go home', 'return home',
+        'shipping belongings home'],
       titleKo: '귀국·출국 전 행정 정리',
       titleEn: 'Before You Leave Korea',
       detailTitleKo: '한국을 떠나기 전에 정리할 것',
@@ -2741,6 +3057,11 @@ abstract final class ExpansionGuides {
         '일했다면: 마지막 임금 정산, 퇴직급여 대상인지, 국민연금 반환일시금 대상인지 확인',
         '주거: 임대차 보증금 반환 일정, 공과금·관리비 정산',
         '휴대폰·은행: 해지하거나 유지할지 각 회사에 확인(해외에서 본인 확인이 필요한 서비스 포함)',
+        // r23 D1(보강 14): 우체국 EMS 「보낼 수 있는 물품/보낼 수 없는 물품」(게시일 없음,
+        // 확인 2026-10-31) — 단일 근거. 민간 국제특송은 기준이 달라 우체국 EMS 로 한정.
+        '짐을 우체국 EMS로 부친다면: 충전식 배터리(니켈류 제외)와 배터리를 뺄 수 없는 노트북 · '
+            '휴대폰 등, 향수 · 스프레이는 보낼 수 없음 — 음식물 · 한약처럼 도착 국가가 막는 '
+            '물품도 있으니 우체국에 확인',
       ],
       checklistEn: [
         'Stay: whether to hand in your Residence Card, your expiry date, and a '
@@ -2757,6 +3078,11 @@ abstract final class ExpansionGuides {
             'maintenance fees',
         'Phone and bank: ask each company whether to cancel or keep it '
             '(including services that need identity checks from abroad)',
+        'Shipping your things home by Korea Post EMS: rechargeable batteries '
+            '(other than nickel types), laptops and phones whose battery cannot '
+            'be removed, perfume and sprays cannot be sent — and the destination '
+            'country may ban items such as food or herbal medicine, so check '
+            'with the post office',
       ],
       stepsKo: [
         '출국 한 달 전쯤: 완전 출국인지 정하고, 집주인·기숙사·통신사·은행에 필요한 해지나 '
@@ -2951,6 +3277,23 @@ abstract final class ExpansionGuides {
           url: '/guide/item/rental-deposit-protection',
           iconName: 'home_work',
         ),
+        GuideLink(
+          labelKo: '가이드 — 이사·공과금 정산',
+          labelEn: 'Guide — Moving in and out: utilities',
+          url: '/guide/item/moving-and-utilities',
+          descriptionKo: '퇴거일 계량값과 정산내역을 남기는 순서입니다.',
+          descriptionEn: 'How to record the final meter readings and the settlement.',
+          iconName: 'receipt_long',
+        ),
+        GuideLink(
+          labelKo: '우체국 EMS — 보낼 수 없는 물품',
+          labelEn: 'Korea Post EMS — items you cannot send',
+          descriptionKo: '배터리 · 향수 · 스프레이 등 항공운송 금지품목',
+          descriptionEn: 'Batteries, perfume, sprays and other items barred '
+              'from air transport (Korean)',
+          url: 'https://ems.epost.go.kr/front.Introduction04.postal',
+          iconName: 'flight_takeoff',
+        ),
       ],
       difficulty: 2,
       status: GuideStatus.published,
@@ -2965,7 +3308,7 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'graduation-requirements',
       categoryId: GuideCategory.school,
-      searchAliasesKo: ['졸업', '졸업요건', '졸업 학점', '학위취득 유예', '졸업유예'],
+      searchAliasesKo: ['졸업', '졸업요건', '졸업 학점', '학위취득 유예', '졸업유예', '졸업 조건', '졸업 요건'],
       searchAliasesEn: ['graduation', 'graduate', 'degree requirements', 'credits to graduate'],
       titleKo: '졸업요건 확인',
       titleEn: 'Checking Graduation Requirements',
@@ -3199,7 +3542,7 @@ abstract final class ExpansionGuides {
           descriptionKo: '졸업대상자·졸업사정·평점·외국인 요건',
           descriptionEn: 'Candidates, review dates, GPA and international '
               'student rules (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN137',
+          url: 'https://www.donga.ac.kr/academics/graduation/criteria',
           iconName: 'school',
         ),
         GuideLink(
@@ -3207,7 +3550,7 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — degree deferral',
           descriptionKo: '신청 조건·유예비·기간',
           descriptionEn: 'Conditions, fee and period (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN139',
+          url: 'https://www.donga.ac.kr/academics/graduation/defer',
           iconName: 'school',
         ),
         GuideLink(
@@ -3282,8 +3625,10 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'rental-deposit-protection',
       categoryId: GuideCategory.housing,
-      searchAliasesKo: ['보증금', '전세', '전세사기', '확정일자', '보증금 반환'],
-      searchAliasesEn: ['deposit', 'jeonse', 'lease deposit', 'fixed date', 'rental scam'],
+      searchAliasesKo: ['보증금', '전세', '전세사기', '확정일자', '보증금 반환', '중도 해지',
+        '방 넘기기', '원상회복', '원상복구', '보증금 공제', '퇴실'],
+      searchAliasesEn: ['deposit', 'jeonse', 'lease deposit', 'fixed date', 'rental scam',
+        'early termination', 'sublet', 'move-out', 'deposit deduction'],
       titleKo: '임대차 보증금 지키기',
       titleEn: 'Protecting Your Rental Deposit',
       detailTitleKo: '보증금을 지키려면 — 계약 전·입주 후·계약 끝날 때',
@@ -3339,11 +3684,57 @@ abstract final class ExpansionGuides {
                     'it all back.',
               ],
             ),
+            // M1 이동: 교외주거 구하기 가이드에만 있던 두 항목을 여기로 옮겼다.
+            // 「공증인」은 34개 전체에서 그 한 곳에만 있던 표기이고, 임대차계약
+            // 신고의 과태료와 법령 근거도 받는 쪽에 없었다(감사 05/061 §B).
+            GuideNote(
+              titleKo: '📍 확정일자는 어디서 받나요?',
+              titleEn: '📍 Where to get the fixed date',
+              linesKo: [
+                '읍·면사무소, 동 주민센터, 시·군·구의 출장소, 지방법원·등기소, 공증인 등에서 '
+                    '받을 수 있습니다.',
+                '여권이나 외국인등록증과 계약서 원본을 가져가세요(1건 600원).',
+              ],
+              linesEn: [
+                'At an eup/myeon office, a community service centre, a '
+                    'si/gun/gu branch office, a district court or registry '
+                    'office, or a notary.',
+                'Take your passport or Residence Card and the original lease '
+                    '(₩600 per copy).',
+              ],
+            ),
+            GuideNote(
+              titleKo: '📝 주택 임대차계약 신고',
+              titleEn: '📝 Reporting the lease itself',
+              linesKo: [
+                '부산을 포함한 광역시 등에서는 보증금 6천만원 또는 월세 30만원을 넘는 주택 '
+                    '임대차계약을 계약 체결일부터 30일 이내에 신고해야 합니다. 둘 중 하나만 '
+                    '넘어도 대상입니다.',
+                '임대인과 임차인이 함께 신고하는 것이 원칙이지만, 임차인이 계약서를 첨부하면 '
+                    '혼자서도 신고할 수 있고, 이때 확정일자가 자동으로 부여됩니다.',
+                '2025년 6월 1일 이후 체결한 계약은 신고하지 않으면 과태료가 부과될 수 '
+                    '있습니다. 신고 방법은 계약한 공인중개사나 주민센터에서 확인하세요.',
+              ],
+              linesEn: [
+                'In Busan and other metropolitan cities, among other areas, a '
+                    'housing lease with a deposit over 60 million won or monthly '
+                    'rent over 300,000 won must be reported within 30 days of '
+                    'signing. Passing either threshold is enough.',
+                'Landlord and tenant normally report together, but a tenant who '
+                    'attaches the contract can file alone — and the fixed date '
+                    'is then applied automatically.',
+                'For contracts signed on or after 1 June 2025, failing to report '
+                    'can lead to a fine. Ask your agent or the community centre '
+                    'how to file.',
+              ],
+            ),
           ],
-          footnoteKo: '※ 주택임대차보호법·출입국관리법 조문과 HUG 안심전세포털 기준, 2026-09-13 '
-              '확인. 개별 사건의 법률 판단은 아래 공식 상담 기관에 받으세요.',
+          footnoteKo: '※ 주택임대차보호법·출입국관리법 조문, 「부동산 거래신고 등에 관한 법률」 '
+              '제6조의2 와 HUG 안심전세포털 기준, 2026-09-13 확인. 개별 사건의 법률 판단은 '
+              '아래 공식 상담 기관에 받으세요.',
           footnoteEn: '※ Based on the Housing Lease Protection Act, the '
-              'Immigration Act and the HUG Safe Jeonse portal, checked '
+              'Immigration Act, article 6-2 of the Act on Report of Real '
+              'Estate Transactions and the HUG Safe Jeonse portal, checked '
               '2026-09-13. For legal advice on your case, use the official '
               'services below.',
         ),
@@ -3392,9 +3783,12 @@ abstract final class ExpansionGuides {
         '계약 전: 위 체크리스트 확인, 공인중개사를 통한 계약서 작성',
         '잔금 직전: 등기사항증명서 다시 확인',
         '입주한 날부터 15일 안에 체류지 변경신고',
+        // M1: 전에는 이 단계가 "자세한 내용은 교외주거 구하기 가이드"로 끝나
+        // 심화 가이드가 기본 가이드를 상세본으로 가리키는 역전이 있었다(A 02/078,
+        // 감사 05/061). 상세를 이 가이드로 모았으므로 위 섹션을 가리킨다.
         '주택 임대차계약 신고 대상(부산은 보증금 6천만원 또는 월세 30만원 초과)이면 계약 '
-            '체결일부터 30일 안에 신고 — 임차인이 계약서를 첨부해 신고하면 확정일자가 자동 부여됩니다. '
-            '자세한 내용은 교외주거 구하기 가이드',
+            '체결일부터 30일 안에 신고 — 임차인이 계약서를 첨부해 신고하면 확정일자가 자동 '
+            '부여됩니다. 신고 기준과 과태료는 위 「주택 임대차계약 신고」에 있습니다.',
         '신고 대상이 아니면 계약서 원본과 여권 또는 외국인등록증을 가지고 주민센터 등에서 '
             '확정일자 받기(1건 600원)',
         '필요하면 전세보증금반환보증 가입 조건 확인',
@@ -3408,7 +3802,8 @@ abstract final class ExpansionGuides {
         'If the lease must be reported (in Busan, a deposit over ₩60 million '
             'or rent over ₩300,000), report it within 30 days of signing — '
             'if the tenant reports it with the lease attached, a fixed date is '
-            'given automatically. See the off-campus housing guide.',
+            'given automatically. The thresholds and the fine are in '
+            '"Reporting the lease itself" above.',
         'If it does not need reporting, take the original lease and your '
             'passport or Residence Card to a community service centre or '
             'similar to get a fixed date (₩600 per contract).',
@@ -3495,6 +3890,99 @@ abstract final class ExpansionGuides {
                     'term is treated as 2 years. Statutory refusal grounds, such '
                     'as the landlord genuinely moving in, may apply, so check '
                     'your situation.',
+              ],
+            ),
+            // r23 D1(보강 6): 계약 기간 중 중도 해지·새 임차인·중개보수·양도·전대.
+            // 근거(확인 2026-10-31): 법제처 생활법령 「주택임대차계약의 종료」
+            // (2026-10-15 기준, 민법 제635~637조·제629조), 백문백답 2463(2026-10-15 기준)
+            // ·3021(2026-09-15 기준), 「임차권 양도의 제한」·「전대차의 제한」(2026-10-15
+            // 기준). 모두 법제처 = 기관 기준 단일(민법 조문 인용). 쉐어하우스 전대 주의는
+            // 여기 한 곳에 두고 off-campus-housing 은 연결만 한다(6·12 겹침).
+            GuideNote(
+              titleKo: '계약 기간 중에 나가야 한다면',
+              titleEn: 'If you need to leave before the term ends',
+              linesKo: [
+                '약정한 기간이 끝나면 나갈 수 있습니다(위 첫 줄). 그 전에 나가려면 계약서에 중도 '
+                    '해지 특약이 있거나 임대인과 해지에 합의해야 합니다.',
+                '예를 들어 「취학 등 부득이한 사유가 생기면 통보한 날부터 1개월 뒤 해지된 것으로 '
+                    '본다」는 특약이 있으면, 그 사유를 증명하고 해지를 통고할 수 있습니다. 임대인이 '
+                    '통고를 받은 날부터 1개월이 지나면 해지됩니다.',
+                '특약도 합의도 없으면 임대인은 약정 기간이 끝날 때까지 보증금을 돌려줄 의무가 없고, '
+                    '남은 기간의 월세도 내야 합니다.',
+                '임대인은 해지에 합의하는 조건으로 새 임차인을 구해 오거나 중개보수를 내라고 하는 '
+                    '경우가 많습니다. 나가는 임차인에게 중개보수를 낼 법적 의무는 없다는 법제처 '
+                    '해석이 있지만, 조건을 받아들일지는 임대인과 협의할 일입니다.',
+                '계약서에 따로 정하지 않았다면, 방을 다른 사람에게 넘기거나(임차권 양도) 다시 '
+                    '빌려주려면(전대) 임대인의 동의가 필요합니다. 동의 없이 하면 임대인이 계약을 '
+                    '해지할 수 있습니다. 쉐어하우스처럼 집주인이 아닌 임차인에게서 방을 빌릴 때도 '
+                    '집주인이 동의했는지 확인하세요.',
+                '해지 의사는 내용증명 우편처럼 기록이 남는 방법으로, 해지 사유와 보증금 반환 요청을 '
+                    '적어 알리세요.',
+              ],
+              linesEn: [
+                'You can leave when the agreed term ends (first line above). To '
+                    'leave earlier, the lease needs an early-termination clause, '
+                    'or the landlord has to agree to end it.',
+                'For example, with a clause such as “if an unavoidable reason '
+                    'such as study arises, the lease ends 1 month after notice”, '
+                    'you can prove the reason and give notice. The lease ends 1 '
+                    'month after the landlord receives the notice.',
+                'With no clause and no agreement, the landlord does not have to '
+                    'return the deposit until the agreed term ends, and you still '
+                    'owe rent for the rest of the term.',
+                'Landlords often agree to end the lease only if you find a new '
+                    'tenant or pay the agent\'s commission. The Ministry of '
+                    'Government Legislation has interpreted that a departing '
+                    'tenant has no legal duty to pay the commission, but whether '
+                    'to accept such conditions is for you and the landlord to '
+                    'negotiate.',
+                'Unless the lease says otherwise, handing your room to someone '
+                    'else (assigning the lease) or renting it out again '
+                    '(subletting) needs the landlord\'s consent. Without it, the '
+                    'landlord can end your lease. If you rent a room in a share '
+                    'house from another tenant rather than the owner, check that '
+                    'the owner has agreed.',
+                'Give notice in a way that leaves a record, such as certified '
+                    'mail, stating why you are ending the lease and asking for '
+                    'the deposit back.',
+              ],
+            ),
+            // r24 후보 27: 생활법령 「임차인의 권리·의무」(2026-10-15 기준) — 원상회복 범위는
+            // 계약 경위·입주 당시 상태 등으로 개별 판단. 법무부 표준계약서 제9조는 노후·통상
+            // 파손을 제외하지만 실제 계약은 다를 수 있다. 보증금 공제 원칙: 대법원
+            // 2016다277880. 유지·수선 분쟁 조정: 주택임대차보호법 제14조제2항(조사 04/078).
+            // 「공제에 반드시 동의 필요」「도배·청소비 언제나 가능/불가」는 쓰지 않는다.
+            GuideNote(
+              titleKo: '나갈 때 — 원상회복과 보증금 공제',
+              titleEn: 'Moving out — restoring the room and deductions',
+              linesKo: [
+                '퇴실 전에 방 상태를 사진과 동영상으로 남기고, 입주 때 기록과 비교해 보세요.',
+                '집주인이 수리비나 청소비 등을 보증금에서 빼려고 하면 항목 · 사유 · 계산 '
+                    '내역을 받아 계약서 · 특약과 입주 · 퇴실 기록에 비추어 확인하세요.',
+                '어디까지 원래대로 돌려놓아야 하는지(원상회복)는 계약 내용과 입주 당시 상태 '
+                    '등에 따라 달라집니다. 법무부 표준계약서는 시설이 낡거나 통상 생길 수 있는 '
+                    '파손을 원상복구 의무에서 빼는 문구를 두고 있지만, 실제 계약서는 다를 수 '
+                    '있으니 본인 계약서를 확인하세요.',
+                '수리나 공제를 두고 다툼이 생기면 아래 「도움받을 수 있는 곳」의 '
+                    '주택임대차분쟁조정위원회에 조정을 신청할 수 있습니다. 유지 · 수선에 관한 '
+                    '분쟁도 조정 대상입니다.',
+              ],
+              linesEn: [
+                'Before you leave, photograph and film the room and compare it '
+                    'with your move-in record.',
+                'If the landlord wants to take repair, cleaning or other costs '
+                    'out of the deposit, ask for each item, the reason and how it '
+                    'was worked out, and check them against the contract, its '
+                    'special terms and your move-in and move-out records.',
+                'How far you must put the room back as it was depends on the '
+                    'contract and the condition when you moved in. The Ministry '
+                    'of Justice standard lease leaves ageing and ordinary wear '
+                    'out of the duty to restore, but your own contract may say '
+                    'something different, so check it.',
+                'If you disagree about repairs or deductions, you can apply for '
+                    'mediation to the Housing Lease Dispute Mediation Committee '
+                    'under «Where to get help» below. Disputes about upkeep and '
+                    'repairs are also covered.',
               ],
             ),
           ],
@@ -3667,6 +4155,16 @@ abstract final class ExpansionGuides {
           url: '/guide/item/departure-checklist',
           iconName: 'flight_takeoff',
         ),
+        GuideLink(
+          labelKo: '생활법령 — 주택임대차계약의 종료',
+          labelEn: 'Easy-to-find Law — ending a housing lease',
+          descriptionKo: '중도 해지 특약·해지 사유·내용증명',
+          descriptionEn: 'Early-termination clauses, grounds and certified '
+              'mail (Korean)',
+          url: 'https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629'
+              '&ccfNo=5&cciNo=1&cnpClsNo=1',
+          iconName: 'menu_book',
+        ),
       ],
       difficulty: 3,
       status: GuideStatus.published,
@@ -3686,8 +4184,10 @@ abstract final class ExpansionGuides {
       titleEn: 'Changing from D-4 to D-2',
       detailTitleKo: '어학연수(D-4)에서 학위과정 유학(D-2)으로 바꿀 때',
       detailTitleEn: 'Moving from Language Study (D-4) to a Degree (D-2)',
-      summaryKo: '입학 허가를 받았다면 학위과정 수업 전에 변경허가',
-      summaryEn: 'Admitted to a degree? Get the change approved before classes',
+      // r20 F-1: 320dp·100% 두 줄(36폭) 안에 숫자뿐 아니라 그 숫자의 조건·결과가
+      // 들어와야 한다. 네 언어를 같은 정보로 맞춘다.
+      summaryKo: '입학 허가 후 학위 수업 전에 변경허가',
+      summaryEn: 'Admitted? Get D-2 before classes',
       iconName: 'compare_arrows',
       overviewKo: '한국어학당 같은 어학연수(D-4) 과정에 있다가 학부나 대학원 입학 허가를 받았다면, 학위과정 '
           '수업을 시작하기 전에 유학(D-2)으로 체류자격 변경허가를 받아야 합니다. 현재 체류자격과 다른 활동을 '
@@ -3939,7 +4439,7 @@ abstract final class ExpansionGuides {
     AdminGuideItem(
       id: 'class-attendance-and-exams',
       categoryId: GuideCategory.school,
-      searchAliasesKo: ['출석', '결석', '공결', '시험', '중간고사', '기말고사', '성적 확인', '성적 이의신청'],
+      searchAliasesKo: ['출석', '결석', '공결', '시험', '중간고사', '기말고사', '성적 확인', '성적 이의신청', '출결'],
       searchAliasesEn: ['attendance', 'absence', 'excused absence', 'exam', 'midterm', 'final exam', 'grades'],
       titleKo: '출결·공결·시험·성적',
       titleEn: 'Attendance, Exams & Grades',
@@ -4177,15 +4677,16 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — excused absence',
           descriptionKo: '인정 사유·기한·신청',
           descriptionEn: 'Reasons, deadlines and applying (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN100',
+          url: 'https://www.donga.ac.kr/academics/lectures/official-absence',
           iconName: 'school',
         ),
         GuideLink(
           labelKo: '동아대 학사안내 — 시험',
           labelEn: 'Dong-A academic guide — exams',
-          descriptionKo: '시험 시기·신분증·부정행위',
-          descriptionEn: 'Exam periods, ID and misconduct (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN099',
+          // r21 B 117 S-2: 이 페이지는 시험 시간·장소·신분증·수험규정을 안내한다(주차는 학사일정).
+          descriptionKo: '시험 시간·장소·신분증·수험규정',
+          descriptionEn: 'Exam times and rooms, ID and exam rules (Korean)',
+          url: 'https://www.donga.ac.kr/academics/lectures/exam-info',
           iconName: 'school',
         ),
         GuideLink(
@@ -4193,7 +4694,7 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — grading rules',
           descriptionKo: '결석 1/3 초과 F 기준',
           descriptionEn: 'The over-one-third absence F rule (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN131',
+          url: 'https://www.donga.ac.kr/academics/grades/grading-rules',
           iconName: 'school',
         ),
         GuideLink(
@@ -4201,15 +4702,16 @@ abstract final class ExpansionGuides {
           labelEn: 'Dong-A academic guide — checking grades',
           descriptionKo: '공시·이의신청·확정',
           descriptionEn: 'Review, concerns and finalisation (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN132',
+          url: 'https://www.donga.ac.kr/academics/grades/grade-lookup',
           iconName: 'school',
         ),
         GuideLink(
           labelKo: '동아대 학사일정',
           labelEn: 'Dong-A academic calendar',
-          descriptionKo: '시험·성적 공시·수강취소 날짜',
-          descriptionEn: 'Exam, grade review and drop dates (Korean)',
-          url: 'https://www.donga.ac.kr/kor/CMS/Contents/Contents.do?mCode=MN173',
+          // r21 B 117 S-1: 연간 학사일정에는 수강취소 날짜가 없다(학사공지·수강신청 안내에 있다).
+          descriptionKo: '시험·성적 공시·정정 일정',
+          descriptionEn: 'Exam and grade review dates (Korean)',
+          url: 'https://www.donga.ac.kr/community/academic-calendar',
           iconName: 'event_repeat',
         ),
         GuideLink(
@@ -4235,6 +4737,14 @@ abstract final class ExpansionGuides {
           descriptionEn: 'Registering and changing courses',
           url: '/guide/item/course-registration',
           iconName: 'school',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 도서관 이용안내',
+          labelEn: 'Guide — Library Guide',
+          url: '/guide/item/library-guide',
+          descriptionKo: '시험기간 열람실과 전자자료·논문 이용 방법을 확인하세요.',
+          descriptionEn: 'Reading rooms during exams, and how to reach e-resources off campus.',
+          iconName: 'menu_book',
         ),
       ],
       difficulty: 1,

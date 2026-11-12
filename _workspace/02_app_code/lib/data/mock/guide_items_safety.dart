@@ -24,10 +24,13 @@ abstract final class SafetyGuides {
     AdminGuideItem(
       id: 'moving-and-utilities',
       categoryId: GuideCategory.housing,
+      // r19: 조사 04/046 의 베트남어 별칭 항목 수에 맞춰 한국어 쪽을 채웠다.
+      // 본문이 실제로 다루는 말만 넣는다(계량기·퇴거 정산은 절차에 있다).
       searchAliasesKo: ['공과금', '전기요금', '가스요금', '수도요금', '관리비', '이사정산',
-        '전출', '자동이체'],
+        '전출', '자동이체', '이사', '퇴거', '계량기', '정산', '인터넷 해지'],
       searchAliasesEn: ['utilities', 'electricity bill', 'gas bill', 'water bill',
-        'maintenance fee', 'moving out', 'final bill', 'auto payment'],
+        'maintenance fee', 'moving out', 'final bill', 'auto payment',
+        'home internet'],
       titleKo: '이사·공과금 정산',
       titleEn: 'Moving in and out: utilities',
       summaryKo: '입주·퇴거 때 전기·가스·수도·관리비 정리',
@@ -73,62 +76,62 @@ abstract final class SafetyGuides {
       checklistNoteKo: '고지서가 없다면 관리실이나 임대인에게 «공급자와 고객번호»를 물어보세요. '
             '그것부터 알아야 나머지 절차가 진행됩니다.',
               stepsKo: [
-          '계약서에서 관리비에 무엇이 포함되는지 확인한다'
+          '계약서에서 관리비에 무엇이 포함되는지 확인한다. '
               '관리비에 수도·인터넷이 포함된 집도 있고, 전기만 따로 내는 집도 있습니다. '
               '계약서에 적힌 항목과 실제 고지서를 맞춰 보세요.',
-          '전기·가스·수도의 공급자와 명의를 확인한다'
+          '전기·가스·수도의 공급자와 명의를 확인한다. '
               '고지서나 관리실을 통해 각 공급자와 현재 명의자를 확인합니다. '
               '명의가 임대인으로 되어 있으면 사용자가 직접 해지할 수 없는 경우가 있습니다.',
-          '입주일에 계량기와 집 상태를 사진으로 남긴다'
+          '입주일에 계량기와 집 상태를 사진으로 남긴다. '
               '전기·가스·수도 계량기 숫자가 보이게 찍고, 날짜가 남도록 저장하세요. '
               '퇴거 정산과 보증금 분쟁에서 가장 확실한 자료입니다.',
-          '가스는 전입·전출 신청이 필요한지 확인한다'
+          '가스는 전입·전출 신청이 필요한지 확인한다. '
               '부산도시가스는 전입·전출 신청을 받습니다. 방문이 필요한지, 언제 '
               '예약해야 하는지는 공식 페이지나 고객센터(1544-0009)에서 확인하세요.',
-          '자동납부를 새로 등록하거나 해지한다'
+          '자동납부를 새로 등록하거나 해지한다. '
               '상수도 자동납부는 납기 며칠 전까지 변경·해지해야 합니다. 기한은 '
               '공식 안내에서 확인하세요. 해지를 잊으면 이사 뒤에도 인출될 수 있습니다.',
-          '퇴거일 계량값과 최종 정산내역을 문서로 받는다'
+          '퇴거일 계량값과 최종 정산내역을 문서로 받는다. '
               '퇴거일에 계량기를 다시 찍고, 관리비·공과금 정산내역을 문서(메시지·이메일 등 '
               '기록이 남는 형태)로 받으세요.',
-          '보증금 반환과 열쇠 인도 일정을 따로 정한다'
+          '보증금 반환과 열쇠 인도 일정을 따로 정한다. '
               '공과금 정산과 보증금 반환은 관련은 있지만 같은 절차가 아닙니다. '
               '반환 일정과 방법을 임대인과 따로 확정하세요.',
-          '주소 변경과 출국 절차로 넘어간다'
+          '주소 변경과 출국 절차로 넘어간다. '
               '이사하면 체류지 변경 신고가 필요합니다. 출국이라면 출국 전 정리 '
               '가이드의 순서를 함께 확인하세요.',
         ],
         stepsEn: [
-          'Check what the maintenance fee covers'
+          'Check what the maintenance fee covers. '
               'Some buildings bundle water or internet into the '
               'maintenance fee; others bill electricity separately. Match what '
               'the lease lists against an actual bill.',
-          'Find out the supplier and whose name the account is in'
+          'Find out the supplier and whose name the account is in. '
               'Use the bill or the building office to identify each '
               'supplier and the current account holder. If the account is in '
               'the landlord\'s name, you may not be able to close it yourself.',
-          'Photograph the meters and the flat on move-in day'
+          'Photograph the meters and the flat on move-in day. '
               'Photograph each meter so the numbers are legible, and keep '
               'the date on the file. This is the strongest evidence you will '
               'have in a move-out or deposit dispute.',
-          'Check whether gas needs a move-in or move-out visit'
+          'Check whether gas needs a move-in or move-out visit. '
               'Busan City Gas takes move-in and move-out requests. Check '
               'the official page or call 1544-0009 to find out whether a visit '
               'is needed and how far ahead to book it.',
-          'Set up or cancel automatic payment'
+          'Set up or cancel automatic payment. '
               'Water bill auto-payment has to be changed or cancelled a '
               'few days before the due date — check the official page for the '
               'exact cut-off. Forget it and money can still leave your account '
               'after you have moved.',
-          'Get the closing meter readings and the final statement'
+          'Get the closing meter readings and the final statement. '
               'Photograph the meters again on the day you leave, and get '
               'the final statement of fees and utilities in writing — a '
               'message or email, something that leaves a record.',
-          'Agree the deposit and key handover separately'
+          'Agree the deposit and key handover separately. '
               'Settling the utilities and getting your deposit back are '
               'related but not the same process. Agree the date and method for '
               'the deposit with your landlord separately.',
-          'Move on to the address change and departure steps'
+          'Move on to the address change and departure steps. '
               'Moving means you must report the change of address. If you '
               'are leaving Korea, follow the departure checklist as well.',
         ],
@@ -157,6 +160,34 @@ abstract final class SafetyGuides {
             linesEn: ['Charges, fees and how long a booking takes vary by supplier '
                 'and by season. Check the official page or the call centre for '
                 'the figure that applies to you.'],
+          ),
+          // r23 D1(보강 15): 공정거래위원회 고시 제2025-14호 「소비자분쟁해결기준」
+          // (2025-12-18 시행) 별표 2 「⑦초고속 인터넷통신망 서비스업」. 분쟁 때 합의·권고의
+          // 기준(고시 제1조)이라 「위약금 없이 해지된다」고 단정하지 않는다. 사업자 한 곳의
+          // 약관·요금은 일반화하지 않는다.
+          GuideNote(
+            titleKo: '인터넷을 따로 가입한다면',
+            titleEn: 'If you sign up for home internet yourself',
+            linesKo: [
+              '관리비에 인터넷이 없어 직접 가입한다면 약정 기간을 체류 · 임대차 기간과 비교하세요. '
+                  '약정 기간 중에 해지하면 가입 때 면제받은 설치비와 할인 혜택을 포함한 위약금이 '
+                  '생길 수 있습니다.',
+              '공정거래위원회 소비자분쟁해결기준은 계약 기간 안에 서비스가 안 되는 지역으로 '
+                  '이사하면 위약금 없이 해지하는 것을 분쟁 해결 기준으로 둡니다. 이사 · 귀국 때 '
+                  '어떤 조건이 적용되는지는 가입한 회사의 약관과 고객센터에서 확인하세요.',
+            ],
+            linesEn: [
+              'If internet is not in your maintenance fee and you sign up '
+                  'yourself, compare the contract term with how long you will '
+                  'stay and how long your lease runs. Cancelling during the term '
+                  'can mean a penalty that includes the installation fee and '
+                  'discounts you were given when you signed up.',
+              'Under the Fair Trade Commission\'s consumer dispute standards, '
+                  'moving within the term to an area the service does not cover '
+                  'is a case for cancelling without a penalty. Check your '
+                  'provider\'s terms and customer centre for what applies when '
+                  'you move or go home.',
+            ],
           ),
           ],
         ),
@@ -204,7 +235,7 @@ abstract final class SafetyGuides {
       id: 'waste-and-recycling',
       categoryId: GuideCategory.living,
       searchAliasesKo: ['쓰레기', '분리수거', '분리배출', '종량제봉투', '음식물쓰레기',
-        '대형폐기물', '이사쓰레기'],
+        '대형폐기물', '이사쓰레기', '쓰레기봉투', '재활용', '쓰레기 배출'],
       searchAliasesEn: ['waste', 'rubbish', 'recycling', 'food waste',
         'bulky waste', 'garbage bag', 'trash'],
       titleKo: '쓰레기 버리기·분리배출',
@@ -246,50 +277,52 @@ abstract final class SafetyGuides {
       checklistNoteKo: '종량제봉투는 지역마다 다릅니다. 다른 구에서 산 봉투는 수거하지 않을 수 '
             '있으니 동네 편의점·마트에서 «이 동네 봉투»를 사세요.',
               stepsKo: [
-          '주소의 관할 구와 건물 규칙을 확인한다'
+          '주소의 관할 구와 건물 규칙을 확인한다. '
               '건물 게시판·관리실 공지에 배출 장소와 요일이 적혀 있는 경우가 많습니다. '
               '없으면 관할 구청 안내를 확인하세요.',
-          '일반·음식물·재활용·대형폐기물로 나눈다'
+          '일반·음식물·재활용·대형폐기물로 나눈다. '
               '네 가지는 봉투도 배출 방법도 다릅니다. 음식물은 전용 봉투나 전용 '
               '수거함을 씁니다.',
-          '재활용품은 비우고 헹구고 분리한다'
+          '재활용품은 비우고 헹구고 분리한다. '
               '내용물을 비우고, 물로 헹구고, 라벨이나 뚜껑처럼 재질이 다른 부분을 '
               '분리합니다. 환경부 분리배출 가이드라인의 기본 원칙입니다.',
-          '관할 지역의 봉투를 사서 담는다'
-              '일반쓰레기와 음식물쓰레기는 지정된 봉투에 담아야 수거합니다.',
-          '정해진 장소·시간에 내놓는다'
+          '관할 지역의 봉투를 사서 담는다. '
+              '일반쓰레기는 지정된 봉투에 담아야 수거합니다. 음식물쓰레기는 지정 봉투나 '
+              '전용 수거함 등 그 지역에서 정한 방식으로 내놓으세요.',
+          '정해진 장소·시간에 내놓는다. '
               '건물이나 구청이 안내한 장소와 시간을 지키세요. 시간 전에 내놓으면 '
               '수거되지 않고 남아 있을 수 있습니다.',
-          '대형폐기물은 미리 신고한다'
+          '대형폐기물은 미리 신고한다. '
               '가구·가전처럼 큰 물건은 관할 구청에 신고하고 수수료를 낸 뒤 '
               '스티커나 필증을 받아 붙여야 합니다. 절차와 금액은 구청 안내를 확인하세요.',
-          '애매하면 버리기 전에 물어본다'
+          '애매하면 버리기 전에 물어본다. '
               '분류가 헷갈리는 물건은 임의로 버리지 말고 구청이나 관리실에 '
               '확인하세요.',
         ],
         stepsEn: [
-          'Find your district and your building\'s rules'
+          'Find your district and your building\'s rules. '
               'The collection point and days are usually posted in the '
               'building. If not, check the district office\'s guidance.',
-          'Sort into general, food, recyclable and bulky'
+          'Sort into general, food, recyclable and bulky. '
               'The four go out differently and in different bags. Food '
               'waste uses its own bag or its own bin.',
-          'Empty, rinse and separate recyclables'
+          'Empty, rinse and separate recyclables. '
               'Empty the container, rinse it, and take off parts made of a '
               'different material such as labels or caps — the basic rule in '
               'the Ministry of Environment guideline.',
-          'Buy the right bag and use it'
-              'General and food waste are only collected in the '
-              'designated bags.',
-          'Put it out at the right place and time'
+          'Buy the right bag and use it. '
+              'General waste is only collected in the designated bags. Food '
+              'waste goes in a designated bag or a food-waste bin, whichever '
+              'your area uses.',
+          'Put it out at the right place and time. '
               'Follow the place and time your building or district gives. '
               'Put it out early and it may simply sit there.',
-          'Report bulky waste in advance'
+          'Report bulky waste in advance. '
               'Furniture and appliances have to be reported to the '
               'district office, paid for, and labelled with the sticker or '
               'slip they issue. Check the district office for the procedure '
               'and the fee.',
-          'When in doubt, ask before you throw it out'
+          'When in doubt, ask before you throw it out. '
               'If you cannot place an item, ask the district office or the '
               'building rather than guessing.',
         ],
@@ -340,10 +373,12 @@ abstract final class SafetyGuides {
     AdminGuideItem(
       id: 'consumer-disputes',
       categoryId: GuideCategory.living,
+      // 조사 04/052 결함 2-7: vi `khiếu nại người tiêu dùng` 가 0건이었다.
       searchAliasesKo: ['환불', '소비자피해', '미배송', '계약분쟁', '중고거래', '1372',
-        '소비자24'],
+        '소비자24', '소비자원', '피해구제', '환불거부', '소비자 민원', '차지백', '해외 쇼핑몰'],
       searchAliasesEn: ['refund', 'consumer', 'not delivered', 'dispute',
-        'second-hand', 'scam seller'],
+        'second-hand', 'scam seller', 'consumer complaint', 'chargeback',
+        'overseas shopping site'],
       titleKo: '소비자 피해·환불 분쟁',
       titleEn: 'Refunds and consumer disputes',
       summaryKo: '결제 후 환불·미배송 문제를 푸는 순서',
@@ -354,7 +389,7 @@ abstract final class SafetyGuides {
           '중요한 것은 순서입니다. 먼저 증거를 남기고, 판매자에게 기록이 남는 방식으로 '
           '요구하고, 그래도 안 되면 1372 소비자상담센터에 상담합니다.\n\n'
           '처음부터 속일 의도가 있었던 경우(입금 후 잠적, 계정 탈취, 피싱 등)는 소비자 '
-          '분쟁이 아니라 범죄입니다. 그때는 경찰 신고로 넘어가세요 — 아래 6단계에 적어 '
+          '분쟁이 아니라 범죄입니다. 그때는 경찰 신고로 넘어가세요 — 아래 7단계에 적어 '
           '두었습니다.',
       overviewEn: 'Goods that never arrive, goods that are not what was '
           'described, a refund that is refused — it happens to everyone. Korea '
@@ -365,7 +400,7 @@ abstract final class SafetyGuides {
           'fails, take it to the 1372 consumer counselling centre.\n\n'
           'If you were deceived from the start — payment then silence, a '
           'hijacked account, phishing — that is a crime, not a consumer '
-          'dispute, and it goes to the police instead. Step 6 covers that.',
+          'dispute, and it goes to the police instead. Step 7 covers that.',
             checklistKo: [
           '주문·결제 내역(화면 캡처 포함)',
           '판매자와 주고받은 대화·이메일',
@@ -383,55 +418,55 @@ abstract final class SafetyGuides {
       checklistNoteKo: '대화가 삭제될 수 있는 앱을 썼다면 먼저 캡처해 두세요. 분쟁이 시작되면 '
             '판매자가 글을 내리는 경우가 많습니다.',
               stepsKo: [
-          '추가 결제·원격제어 요구를 중단한다'
+          '추가 결제·원격제어 요구를 중단한다. '
               '«해결해 주겠다»며 추가 결제나 원격제어 앱 설치를 요구하면 응하지 '
               '마세요. 피해가 커지는 전형적인 경로입니다.',
-          '증거를 모아 저장한다'
+          '증거를 모아 저장한다. '
               '주문 내역·대화·상품 설명을 캡처해 한곳에 모으세요.',
-          '판매자에게 기록이 남는 방식으로 요구한다'
+          '판매자에게 기록이 남는 방식으로 요구한다. '
               '전화보다 메시지·이메일처럼 기록이 남는 방식으로 환불이나 이행을 '
               '요구하세요. 날짜와 요구 내용이 남아야 합니다.',
-          '결제수단의 이의제기가 가능한지 확인한다'
+          '결제수단의 이의제기가 가능한지 확인한다. '
               '카드나 간편결제에 따라 이의제기·결제취소 절차가 있을 수 있습니다. '
               '가능 여부와 기한을 해당 회사에 확인하세요.',
-          '1372 소비자상담센터에 상담한다'
+          '1372 소비자상담센터에 상담한다. '
               '전화 1372로 분쟁 유형과 다음 절차를 상담할 수 있습니다. '
               '온라인은 소비자24를 이용합니다.',
-          '해결되지 않으면 피해구제를 신청한다'
+          '해결되지 않으면 피해구제를 신청한다. '
               '한국소비자원의 피해구제 대상과 신청 방법을 확인해 신청합니다.',
-          '범죄가 의심되면 경찰로 넘어간다'
+          '범죄가 의심되면 경찰로 넘어간다. '
               '처음부터 속일 의도가 보이면 소비자 분쟁이 아니라 사기입니다. '
               '경찰 신고 경로와 금융사기 대응 가이드를 확인하세요.',
-          '접수번호와 제출 자료를 보관한다'
+          '접수번호와 제출 자료를 보관한다. '
               '상담·신청 번호, 제출한 자료, 받은 답변을 모아 두세요. 이후 '
               '절차에서 계속 필요합니다.',
         ],
         stepsEn: [
-          'Stop paying and stop installing anything'
+          'Stop paying and stop installing anything. '
               'If someone offers to «fix it» in exchange for another '
               'payment or asks you to install a remote-control app, stop. That '
               'is how a small loss becomes a large one.',
-          'Collect and save the evidence'
+          'Collect and save the evidence. '
               'Capture the order, the conversation and the description, '
               'and keep them together.',
-          'Put your demand to the seller in writing'
+          'Put your demand to the seller in writing. '
               'Use a message or email rather than a phone call, so the '
               'date and what you asked for are on record.',
-          'Ask your payment provider about a chargeback'
+          'Ask your payment provider about a chargeback. '
               'Depending on the card or payment service there may be a '
               'dispute or cancellation process. Ask them whether it applies '
               'and by when.',
-          'Call the 1372 consumer counselling centre'
+          'Call the 1372 consumer counselling centre. '
               'Dial 1372 for advice on what kind of dispute this is and '
               'what comes next. Online, use 소비자24 (consumer.go.kr).',
-          'File for redress if it is still unresolved'
+          'File for redress if it is still unresolved. '
               'Check what the Korea Consumer Agency\'s redress process '
               'covers and how to apply, then apply.',
-          'If it looks like a crime, go to the police'
+          'If it looks like a crime, go to the police. '
               'Where there was intent to deceive from the start it is '
               'fraud, not a consumer dispute. Use the police route and the '
               'financial-fraud guide.',
-          'Keep the case number and what you submitted'
+          'Keep the case number and what you submitted. '
               'Keep the reference numbers, what you sent and what you were '
               'told. You will need them at every later step.',
         ],
@@ -449,6 +484,33 @@ abstract final class SafetyGuides {
             linesEn: ['Refunds, delivery and terms go to the consumer service; '
                 'deliberate deception goes to the police. If you cannot tell '
                 'which it is, start with 1372.'],
+          ),
+          // r23 D1(보강 11): 한국소비자원 국제거래 소비자포털 「상담신청」(2026-01-01 통합
+          // 안내)과 「신용카드 차지백이란?」(2024-02-14 등록). 기관 기준 단일(한국소비자원).
+          // 차지백 기한 숫자는 외국 기관 자료를 옮긴 것이라 앱에 적지 않는다. 공정위
+          // 국내대리인 지정(2027-01-21 시행)은 아직 시행 전이라 넣지 않는다.
+          GuideNote(
+            titleKo: '판매자가 해외 사업자라면',
+            titleEn: 'If the seller is based abroad',
+            linesKo: [
+              '2026년 1월 1일부터 해외 사업자와의 분쟁 상담도 1372 소비자상담센터로 '
+                  '신청합니다. 사업자가 국내에서 불만을 처리하는 고객센터나 창구를 두고 있으면 '
+                  '1372로 접수할 수 있습니다. 개인 간 거래는 이 국제거래 상담 대상이 아닙니다.',
+              '사기 의심 사이트라면 결제한 신용카드사에 차지백(해외 결제 이의제기)을 본인이 직접 '
+                  '신청하는 것이 가장 효과적이라고 한국소비자원은 안내합니다. 신청 기한은 카드사마다 '
+                  '다르니 바로 카드사에 확인하세요.',
+            ],
+            linesEn: [
+              'Since 1 January 2026, disputes with overseas businesses also go '
+                  'to the 1372 consumer counselling centre. If the business runs a '
+                  'customer centre or complaints desk in Korea, 1372 can take the '
+                  'case. Trades between individuals are not covered by this '
+                  'cross-border counselling.',
+              'If the site looks like a scam, the Korea Consumer Agency says the '
+                  'most effective step is to ask the card company you paid with '
+                  'for a chargeback yourself. Deadlines differ by card company, '
+                  'so contact yours straight away.',
+            ],
           ),
           ],
         ),
@@ -473,6 +535,15 @@ abstract final class SafetyGuides {
           url: '/guide/item/financial-scam-response',
           iconName: 'emergency',
         ),
+        GuideLink(
+          labelKo: '국제거래 소비자포털 — 해외 거래 상담 안내',
+          labelEn: 'Korea Consumer Agency — cross-border disputes',
+          url: 'https://crossborder.kca.go.kr/home/sub.do?menukey=283',
+          descriptionKo: '1372 통합 안내, 사기 의심 사이트 확인, 차지백',
+          descriptionEn: 'The 1372 merger, scam-site check and chargebacks '
+              '(Korean)',
+          iconName: 'link',
+        ),
       ],
     ),
 
@@ -482,10 +553,14 @@ abstract final class SafetyGuides {
     AdminGuideItem(
       id: 'financial-scam-response',
       categoryId: GuideCategory.emergency,
+      // 감사 05/065 권고-4 로 zh 묶음(`电话诈骗·诈骗电话`, `诈骗·被骗`)을 풀자 실제
+      // 중국어 질의 `诈骗电话`·`被骗` 가 0건이 됐다(둘 다 검색 계약에 있다). 묶음으로
+      // 되돌리지 않고 ko 에 **압축 후 다른** 실제 검색어 두 자리를 끝에 붙인다.
       searchAliasesKo: ['보이스피싱', '피싱', '사기송금', '지급정지', '금융사기',
-        '대포통장', '악성앱'],
+        '대포통장', '악성앱', '사기', '계좌지급정지', '피해구제', '사기 전화', '사기 피해'],
       searchAliasesEn: ['voice phishing', 'phishing', 'scam transfer',
-        'payment suspension', 'fraud', 'malicious app'],
+        'payment suspension', 'fraud', 'malicious app', 'scam call',
+        'scammed'],
       titleKo: '금융사기·피싱 긴급 대응',
       titleEn: 'Fraud and phishing: act now',
       summaryKo: '송금 직후 지급정지·신고·피해구제 순서',
@@ -523,49 +598,49 @@ abstract final class SafetyGuides {
       checklistNoteKo: '자료를 모으느라 지급정지를 미루지 마세요. 먼저 전화하고 나중에 '
             '정리해도 됩니다.',
               stepsKo: [
-          '추가 송금·인증번호 전달·원격제어를 즉시 멈춘다'
+          '추가 송금·인증번호 전달·원격제어를 즉시 멈춘다. '
               '통화를 끊고, 인증번호를 알려 주지 말고, 원격제어 앱을 열지 마세요.',
-          '은행에 지급정지를 요청한다'
+          '은행에 지급정지를 요청한다. '
               '내가 보낸 은행과 상대 계좌의 은행 모두에 연락해 지급정지를 '
               '요청하세요. 가장 급한 단계입니다.',
-          '경찰에 신고한다'
+          '경찰에 신고한다. '
               '긴급하면 112. 온라인·방문 신고 방법은 경찰 ECRM 안내에서 '
               '확인하세요. 상담은 182입니다.',
-          '필요한 확인서를 발급받는다'
+          '필요한 확인서를 발급받는다. '
               '경찰이 안내하는 사건사고사실확인원 등 은행 제출용 서류를 '
               '발급받습니다.',
-          '은행에 피해구제를 신청한다'
+          '은행에 피해구제를 신청한다. '
               '확인서와 이체 내역을 제출해 피해구제를 신청하세요. 기한이 있으므로 '
               '은행이 안내한 날짜를 지키세요.',
-          '비밀번호·인증수단을 안전한 기기에서 바꾼다'
+          '비밀번호·인증수단을 안전한 기기에서 바꾼다. '
               '악성 앱이 설치됐을 수 있으므로, 사기에 쓰인 기기가 아닌 안전한 '
               '기기에서 은행·이메일·메신저 비밀번호와 인증수단을 바꾸세요.',
-          '접수번호와 기한을 기록한다'
+          '접수번호와 기한을 기록한다. '
               '경찰 신고번호, 은행 접수번호, 제출 기한을 적어 두고 안내에 따라 '
               '후속 조치를 하세요.',
         ],
         stepsEn: [
-          'Stop sending money, codes and access — now'
+          'Stop sending money, codes and access — now. '
               'Hang up, give no verification codes, and do not open any '
               'remote-control app.',
-          'Ask the bank to freeze the account'
+          'Ask the bank to freeze the account. '
               'Contact both your own bank and the bank of the receiving '
               'account and ask for a payment suspension. This is the urgent '
               'one.',
-          'Report it to the police'
+          'Report it to the police. '
               'In an emergency call 112. For online or in-person reporting '
               'follow the police ECRM guidance; 182 is the enquiry line.',
-          'Get the confirmation document'
+          'Get the confirmation document. '
               'Obtain the document the police direct you to — the incident '
               'confirmation the bank will ask for.',
-          'File the claim with your bank'
+          'File the claim with your bank. '
               'Submit the confirmation and the transfer record to claim. '
               'There are deadlines — keep the date the bank gives you.',
-          'Change your passwords from a clean device'
+          'Change your passwords from a clean device. '
               'A malicious app may still be watching. Change your banking, '
               'email and messenger passwords — and your verification methods — '
               'from a device that was not involved.',
-          'Write down the case numbers and deadlines'
+          'Write down the case numbers and deadlines. '
               'Note the police report number, the bank\'s reference and '
               'every deadline, then follow what each of them tells you next.',
         ],
@@ -621,6 +696,25 @@ abstract final class SafetyGuides {
           labelEn: 'Guide — Opening a bank account',
           url: '/guide/item/bank-account',
           iconName: 'account_balance',
+        ),
+        GuideLink(
+          labelKo: '가이드 — 소비자 피해·환불 분쟁',
+          labelEn: 'Guide — Refunds and consumer disputes',
+          url: '/guide/item/consumer-disputes',
+          descriptionKo: '사기가 아니라 환불·미배송 분쟁이라면 1372 소비자상담센터로 갑니다.',
+          descriptionEn: 'For a refund or non-delivery dispute rather than fraud, start at 1372.',
+          iconName: 'storefront',
+        ),
+        // r24 후보 29 · 감사 05/086 R-3: 엠세이퍼 본문은 휴대폰 개통 가이드 한 곳에 두고
+        // 신분증 · 개인정보가 노출된 학생이 찾는 이 가이드에서는 연결만 한다.
+        GuideLink(
+          labelKo: '가이드 — 휴대폰 개통',
+          labelEn: 'Guide — Get a Mobile Plan',
+          url: '/guide/item/mobile-plan',
+          descriptionKo: '신분증이 노출됐다면 내 명의 휴대폰 확인과 새 개통 막기(엠세이퍼)',
+          descriptionEn: 'If your ID was exposed: check lines in your name and block '
+              'new ones (M-Safer)',
+          iconName: 'smartphone',
         ),
       ],
     ),

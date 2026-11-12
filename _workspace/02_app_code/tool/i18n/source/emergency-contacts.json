@@ -8,7 +8,7 @@
    "en": "Emergency Contacts"
   },
   "summary": {
-   "ko": "112 · 119 긴급신고 안내",
+   "ko": "경찰 112 · 화재·구급 119",
    "en": "Police 112 · Fire & Ambulance 119"
   },
   "tips": {
@@ -33,15 +33,27 @@
     "119",
     "112",
     "긴급 전화",
-    "응급"
+    "응급",
+    "경찰",
+    "소방",
+    "화재 신고",
+    "구급차",
+    "112 전화",
+    "119 전화"
    ],
    "en": [
     "emergency",
     "ambulance",
     "fire",
-    "police number"
+    "police number",
+    "police",
+    "fire brigade",
+    "report a fire",
+    "call an ambulance",
+    "call 112",
+    "call 119"
    ],
-   "count": 4
+   "count": 10
   },
   "top_sections[0].title": {
    "ko": "긴급상황 안내",
@@ -67,13 +79,13 @@
    "ko": [
     "폭행 또는 위협을 받고 있을 때",
     "절도 · 강도 등 범죄 피해를 입었을 때",
-    "스토킹 등 즉각적인 경찰 도움이 필요할 때",
+    "그 밖에 즉각적인 경찰 도움이 필요할 때",
     "위험한 범죄 상황을 목격했을 때"
    ],
    "en": [
     "You are being assaulted or threatened",
     "You have been robbed, or something was stolen from you",
-    "You are being stalked, or otherwise need the police now",
+    "You otherwise need the police right now",
     "You witness a dangerous crime"
    ],
    "count": 4
@@ -230,6 +242,49 @@
    ],
    "count": 1
   },
+  "sections[2].title": {
+   "ko": "재난문자 · 지진 · 태풍 대비",
+   "en": "Disaster alerts, earthquakes and typhoons"
+  },
+  "sections[2].body": {
+   "ko": "행정안전부는 외국인용 재난안전 앱 「Emergency Ready App」을 설치하면 긴급재난문자를 영어 · 중국어 · 베트남어 · 태국어 · 일본어로 받을 수 있다고 안내합니다. 태풍이나 지진이 오기 전에, 한국에 도착하면 미리 설치하고 설정해 두세요.",
+   "en": "The Ministry of the Interior and Safety says that its app for foreign residents, the Emergency Ready App, sends emergency disaster alerts in English, Chinese, Vietnamese, Thai or Japanese. Install and set it up soon after you arrive — before a typhoon or an earthquake, not during one."
+  },
+  "sections[2].steps": {
+   "ko": [
+    "Google Play · App Store · ONE Store에서 「Emergency Ready App」 설치",
+    "앱 안의 환경설정 → 재난문자 메시지 설정에서 수신 알림 · 수신 지역 · 알림 소리 설정",
+    "대피소와 응급의료기관 · 소방서 · 경찰서 정보를 앱에서 미리 확인",
+    "재난문자를 받으면 문자의 안내를 따르고, 다친 사람이 있거나 위험하면 119에 신고"
+   ],
+   "en": [
+    "Install the Emergency Ready App from Google Play, the App Store or ONE Store.",
+    "In the app’s settings, open the disaster-alert settings and choose notifications, the areas you want alerts for, and the alert sound.",
+    "Look up shelters, emergency medical centres, fire stations and police stations in the app ahead of time.",
+    "When an alert arrives, follow what it says — and if someone is hurt or you are in danger, call 119."
+   ],
+   "count": 4
+  },
+  "sections[2].footnote": {
+   "ko": "※ 앱에서 볼 수 있는 재난 · 안전정보의 언어는 기관 안내마다 다르게 적혀 있습니다. 지원 언어는 앱에서 확인하세요.",
+   "en": "※ Official pages list the languages for the app’s safety information differently. Check the languages in the app itself."
+  },
+  "sections[2].links[0].label": {
+   "ko": "행정안전부 — 안전디딤돌 · Emergency Ready App",
+   "en": "Ministry of the Interior and Safety — Emergency Ready App"
+  },
+  "sections[2].links[0].description": {
+   "ko": "앱 기능과 설치 · 재난문자 설정 방법",
+   "en": "What the app does, and how to install it and set up alerts (Korean)"
+  },
+  "sections[2].links[1].label": {
+   "ko": "가이드 — 재난별 대피와 사전 준비",
+   "en": "Guide — Disaster Preparedness"
+  },
+  "sections[2].links[1].description": {
+   "ko": "지진 · 호우 · 지진해일마다 행동과 대피 장소가 다릅니다.",
+   "en": "Earthquakes, heavy rain and tsunamis each call for different actions and places."
+  },
   "links[0].label": {
    "ko": "경찰청 112신고 안내",
    "en": "Korean National Police — 112"
@@ -253,6 +308,22 @@
   "links[2].description": {
    "ko": "말하기 어렵거나 한국말이 서툰 외국인을 위한 119 인터넷 신고",
    "en": "Report to 119 online if you cannot speak or find Korean difficult"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 병원 이용",
+   "en": "Guide — Visiting a Hospital"
+  },
+  "links[3].description": {
+   "ko": "급한 상황이 아니라면 접수·진료·수납과 야간·휴일 진료를 확인하세요.",
+   "en": "When it is not urgent: registering, fees, and night or holiday care."
+  },
+  "links[4].label": {
+   "ko": "가이드 — 사건·사고 대응",
+   "en": "Guide — Incident Response"
+  },
+  "links[4].description": {
+   "ko": "분실·도난·사고는 연락할 곳이 서로 다릅니다.",
+   "en": "Lost property, theft and accidents each go to a different desk."
   }
  }
 }

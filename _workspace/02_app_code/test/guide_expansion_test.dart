@@ -85,13 +85,21 @@ void _expectPair(String? ko, String? en, String what) {
 
 void main() {
   group('catalogue integrity', () {
-    test('expansion ships exactly the implemented guides, after the 18', () {
+    test('expansion ships exactly the implemented guides, after A1 and the 18',
+        () {
       expect(ExpansionGuides.items.map((g) => g.id), _shipped);
       // The 2026-09-26 safety batch is appended after the expansion, so the
       // expansion's own slice is bounded on both sides now.
+      // r19: `arrival-first-steps` is declared first, so the base batch of 18
+      // starts at index 1 and this slice at index 19. The offset is asserted
+      // rather than hard-coded into `skip`, so a silent shift fails here
+      // instead of sliding the window (B 코덱스 03/109 F-4).
+      final start =
+          MockData.guideItems.indexWhere((g) => g.id == _shipped.first);
+      expect(start, 19, reason: 'A1 1개 + 기본 18개 뒤에서 시작해야 한다');
       expect(
           MockData.guideItems
-              .skip(18)
+              .skip(start)
               .take(_shipped.length)
               .map((g) => g.id),
           _shipped);
@@ -105,8 +113,28 @@ void main() {
         'financial-scam-response',
       ];
       expect(SafetyGuides.items.map((g) => g.id), safety);
-      expect(MockData.guideItems.skip(18 + _shipped.length).map((g) => g.id),
+      // r19: 1 (A1) + 18 (base) + expansion, then safety. r21 appends the two
+      // SupportGuides and then ExtraGuides after safety, so safety is pinned by
+      // its exact slot.
+      expect(
+          MockData.guideItems
+              .skip(19 + _shipped.length)
+              .take(safety.length)
+              .map((g) => g.id),
           safety);
+      expect(
+          MockData.guideItems
+              .skip(19 + _shipped.length + safety.length)
+              .map((g) => g.id),
+          [
+            'scholarships-and-topik',
+            'campus-online-services',
+            'overseas-parcels-and-customs',
+            // r23: 사용자 선택 신규 3건이 r21 뒤에 붙는다.
+            'graduate-degree-guide',
+            'driving-and-e-scooters',
+            'disaster-preparedness',
+          ]);
     });
 
     test('ids are unique across the whole catalogue', () {
@@ -291,8 +319,24 @@ void main() {
       // The manual's extension restriction for personal-reason leave.
       expect(ko, contains('체류기간 연장을 제한'));
       expect(en, contains('extensions are restricted'));
-      // No blanket answer on staying in Korea during leave.
-      expect(ko, contains('일반적으로 정한 공식 안내는 찾지 못했습니다'));
+      // No blanket answer on staying in Korea during leave — r21 (감사 067·070):
+      // the OIA's August 2026 booklet does give a school step, 「30일내 출국」,
+      // so the notice now quotes it while keeping its start day and legal basis
+      // open instead of claiming no guidance exists.
+      expect(ko, contains('30일내 출국'));
+      expect(ko, isNot(contains('일반적으로 정한 공식 안내는 찾지 못했습니다')));
+      // r22 R1: the 30 days are the university's guidance, not a legal stay —
+      // the notice keeps the open start day and basis, adds the Ministry of
+      // Justice step (immigration tells the student to leave), and says
+      // outright that the 30 days are not a guaranteed stay.
+      expect(ko, contains('이 30일은 학교 안내이고, 언제부터 세는지와 법적 근거는 적혀 있지 않습니다'));
+      expect(ko, contains('30일을 그대로 머물 수 있다고 여기지 말고'));
+      expect(ko, contains('출국 안내를 합니다(법무부 안내)'));
+      // 감사 05/072 R-2: the same limits in English.
+      expect(en, contains('leave Korea within 30 days'));
+      expect(en, contains('These 30 days are the university’s guidance'));
+      expect(en, contains('it does not say when they start or what rule they come from'));
+      expect(en, contains('do not assume you can stay for 30 days'));
       for (final banned in const [
         '휴학하면 비자가 취소',
         '휴학해도 비자는 유지',
@@ -315,8 +359,27 @@ void main() {
       expect(ko, contains('해당 학기 학사공지에서 확인'));
       expect(ko, contains('30일까지 6분의 5'));
       expect(en, contains('five sixths up to day 30'));
-      expect(ko, contains('재입국허가가 면제될 수 있습니다'));
-      expect(en, contains('may be exempt from a re-entry permit'));
+      // r22 R1: the r19 「leave and come back on the re-entry exemption」
+      // section contradicted the Ministry of Justice Q&A (2025-03-07): once the
+      // leave is reported and the student has left, the student visa is
+      // cancelled and a new visa is needed. The section now says that, and the
+      // exemption promise must not come back for leave.
+      expect(ko, contains('체류기간이 남아 있어도 유학비자가 말소되고'));
+      expect(ko, contains('다시 들어올 때는 새 비자를 받아야 합니다'));
+      expect(en, contains('your student visa is cancelled even if your period of stay '
+          'has not ended'));
+      expect(ko, isNot(contains('재입국허가가 면제될 수 있습니다')));
+      expect(en, isNot(contains('may be exempt from a re-entry permit')));
+      // 감사 05/073 R-1 → 074 R-4: the Ministry's case is a student who is
+      // already abroad when the leave is reported — not only one who leaves
+      // after it.
+      expect(ko, contains('학교가 휴학을 출입국에 통보할 때 이미 출국해 있는 상태라면'));
+      expect(ko, contains('휴학 통보 때 이미 출국해 있으면'));
+      expect(ko, isNot(contains('통보된 뒤 이미 출국한')));
+      expect(en, contains('already outside Korea when the university reports '
+          'your leave'));
+      // 감사 05/073 R-2: no 「재학 중」 qualifier the source does not have.
+      expect(ko, isNot(contains('재학 중 재입국허가 면제')));
     });
   });
 
@@ -679,8 +742,11 @@ void main() {
           contains('class-attendance-and-exams'));
       expect(searchGuideItems(MockData.guideItems, '비자 변경').map((g) => g.id),
           contains('status-change-d4-to-d2'));
-      expect(MockData.guideItems, hasLength(34),
-          reason: '30 + the four added after the 2026-09-26 gap review');
+      expect(MockData.guideItems, hasLength(41),
+          reason: '30 + the four added after the 2026-09-26 gap review '
+              '+ arrival-first-steps (r19) + the two r21 SupportGuides '
+              '+ the r21 ExtraGuides addition '
+              '+ the three r23 user-selected guides');
     });
   });
 

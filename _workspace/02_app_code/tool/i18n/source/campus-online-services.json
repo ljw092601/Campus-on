@@ -1,0 +1,437 @@
+{
+ "id": "campus-online-services",
+ "category": "school",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "학교 온라인 서비스 사용하기",
+   "en": "Using Dong-A Online Services"
+  },
+  "detail_title": {
+   "ko": "통합정보시스템·LMS·메일·Wi-Fi — 어디에 어떤 계정으로 들어가나",
+   "en": "Integrated system, LMS, email, Wi-Fi — where to log in, and with what"
+  },
+  "summary": {
+   "ko": "첫 로그인·LMS·메일·Wi-Fi·학생증",
+   "en": "First login, LMS, email, Wi-Fi, ID"
+  },
+  "overview": {
+   "ko": "동아대학교의 학생용 온라인 서비스는 대부분 학번과 학교 비밀번호 하나로 들어갑니다. 수강 내역·성적·등록금고지서·공결 신청 같은 학사 업무는 통합정보시스템(dx.donga.ac.kr)에서, 강의자료와 과제는 LMS에서 처리하고, Wi-Fi·모바일 학생증·학생메일도 같은 계정으로 시작합니다.\n\n처음에는 어느 사이트로 가야 하는지, 학번이 나오기 전에는 무엇으로 로그인하는지에서 막히기 쉽습니다. 이 가이드는 서비스별 주소와 로그인 방법, 막혔을 때 연락할 곳을 정리합니다. 각 업무의 자세한 절차는 연결된 가이드에서 확인하세요. 이 안내는 학위과정 재학생 기준입니다. 교환학생과 한국어학당 학생은 계정·메일·학생증을 쓸 수 있는지 국제교류과(051-200-6447)나 한국어학당(051-200-6446)에 확인하세요.\n\n학교 홈페이지의 영어·중국어·베트남어 화면은 Google 자동 번역이라고 학교가 안내합니다. 연결된 시스템이 모두 외국어로 나오는 것은 아니므로, 이 가이드는 메뉴 이름을 한국어 그대로 적었습니다.",
+   "en": "Most of Dong-A’s student services use one login: your student number and your university password. Academic tasks — your registered courses, grades, tuition bill, excused-absence requests — are done in the integrated information system (dx.donga.ac.kr); course materials and assignments are in the LMS; Wi-Fi, the mobile student ID and student email start from the same account.\n\nThe usual sticking points are which site to go to and what to log in with before you have a student number. This guide lists the address and login for each service, and whom to contact when you are stuck. For the full procedure of each task, follow the linked guides. This guide is for degree students; exchange and Korean Language Institute students should check with the Office of International Affairs (051-200-6447) or the institute (051-200-6446) which accounts, email and ID they can use.\n\nThe university says the English, Chinese and Vietnamese versions of its homepage are Google machine translations, and not every linked system has them — so this guide keeps menu names in Korean."
+  },
+  "checklist_title": {
+   "ko": "처음 쓰기 전에 준비할 것",
+   "en": "Have these ready"
+  },
+  "checklist": {
+   "ko": [
+    "학번(아직 없으면 원서접수 수험번호)",
+    "통합정보시스템 비밀번호",
+    "본인 사진 — 모바일 학생증 발급에 필요",
+    "여권과 같은 영문 성명 — 영문 증명서 발급 전에 등록",
+    "앱을 설치할 스마트폰, LMS용 PC(Chrome 권장)"
+   ],
+   "en": [
+    "Your student number (or your application number if you do not have one yet)",
+    "Your integrated-system password",
+    "A photo of yourself — needed for the mobile student ID",
+    "Your English name exactly as in your passport — register it before you need an English certificate",
+    "A smartphone for the apps, and a PC for the LMS (Chrome recommended)"
+   ],
+   "count": 5
+  },
+  "steps": {
+   "ko": [
+    "통합정보시스템에 로그인해 본다. 학번과 비밀번호로 들어가지는지 먼저 확인합니다. 학번이 아직 없으면 위 「처음 로그인」을 보세요 — 수험번호 로그인은 수강신청 사이트 안내에만 있습니다. 안 되면 아래 「막혔을 때」를 보세요.",
+    "Wi-Fi를 쓰기 전에 비밀번호를 바꾼다. 학교는 통합정보시스템(학생정보서비스) 비밀번호를 변경해야 무선랜을 쓸 수 있다고 안내합니다.",
+    "학생정보에 사진과 영문 성명을 등록한다. 사진이 없으면 모바일 학생증이 발급되지 않고, 영문 성명이 없으면 영문 증명서를 발급받을 수 없습니다.",
+    "모바일 학생증 앱 「캠퍼스락」을 설치한다. Google Play·App Store에서 「캠퍼스락」을 검색해 설치하고 학번·비밀번호로 로그인합니다.",
+    "LMS(eclass.donga.ac.kr)에 들어가 수강 과목을 확인한다. 로그인할 때 「통합 로그인」을 고릅니다. 모바일 앱은 LearningX Student입니다.",
+    "학생메일·오피스 365 계정을 만든다. 홈페이지 E-캠퍼스 › 학생메일&오피스 365에서 통합정보시스템의 클라우드 서비스로 들어가 계정을 생성합니다."
+   ],
+   "en": [
+    "Try logging in to the integrated information system. Check that your student number and password work. If you have no student number yet, see «First login» above — logging in with an application number is described only for the course registration site. If it does not work, see «If you are stuck» below.",
+    "Change your password before using Wi-Fi. The university says campus Wi-Fi only works after you change your integrated-system (student information service) password.",
+    "Register your photo and English name in student information. Without a photo the mobile student ID cannot be issued, and without an English name you cannot get English certificates.",
+    "Install the mobile student ID app, «캠퍼스락» (CampusLock). Search for it on Google Play or the App Store and log in with your student number and password.",
+    "Open the LMS (eclass.donga.ac.kr) and check your courses. Choose «통합 로그인» (single sign-on) when you log in. The mobile app is LearningX Student.",
+    "Create your student email and Office 365 accounts. From the homepage, go to E-캠퍼스 › 학생메일&오피스 365 and follow the link to the cloud service in the integrated system."
+   ],
+   "count": 6
+  },
+  "tips": {
+   "ko": [
+    "🌐 학교 홈페이지의 외국어 화면은 자동 번역입니다. 메뉴는 한국어 이름으로 찾는 것이 정확합니다.",
+    "💻 LMS는 PC에서 Chrome을 쓰라고 안내합니다.",
+    "📱 학생증 앱(캠퍼스락)과 도서관 앱(모바일 이용증)은 서로 다른 앱입니다."
+   ],
+   "en": [
+    "🌐 The homepage’s foreign-language versions are machine translations. Searching for menus by their Korean names is more reliable.",
+    "💻 The LMS recommends Chrome on a PC.",
+    "📱 The student ID app (캠퍼스락) and the library app (mobile library card) are different apps."
+   ],
+   "count": 3
+  },
+  "search_aliases": {
+   "ko": [
+    "통합정보시스템",
+    "학생정보",
+    "학생정보서비스",
+    "포털",
+    "LMS",
+    "학교 메일",
+    "오피스 365",
+    "와이파이",
+    "모바일 학생증",
+    "캠퍼스락",
+    "비밀번호 찾기"
+   ],
+   "en": [
+    "student portal",
+    "dx",
+    "LMS",
+    "eclass",
+    "school email",
+    "Office 365",
+    "Wi-Fi",
+    "wifi",
+    "student ID",
+    "password",
+    "login"
+   ],
+   "count": 11
+  },
+  "top_sections[0].title": {
+   "ko": "처음 로그인 — 학번이 나오기 전과 후",
+   "en": "First login — before and after you have a student number"
+  },
+  "top_sections[0].notice": {
+   "ko": "학번이 나오면 학번으로 / 신·편입생도 학번이 부여된 뒤에는 수험번호가 아니라 학번으로 로그인합니다.",
+   "en": "Switch to your student number / New and transfer students log in with their student number, not the application number, once it is issued."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 통합로그인(login.donga.ac.kr)·수강신청(dxsugang.donga.ac.kr) 로그인 화면 안내와 국제교류과 「외국인 유학생 수강신청 안내 책자」 2026.8판 인쇄 p.2 기준, 2026-10-30 확인. 두 초기 비밀번호 안내가 서로 다릅니다.",
+   "en": "※ Based on the login pages of the single sign-on (login.donga.ac.kr) and course registration (dxsugang.donga.ac.kr) sites and the Office of International Affairs handbook for international students, Aug 2026 edition, printed p.2, checked 2026-10-30. The two initial-password instructions differ."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "학번이 나온 뒤",
+   "en": "Once you have a student number"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "아이디는 학번, 비밀번호는 통합정보시스템 비밀번호입니다. 통합로그인 화면은 학생에게 「기존에 설정된 비밀번호를 그대로」 쓰라고 안내합니다.",
+    "비밀번호는 문자·숫자·특수문자를 섞은 9자리 이상입니다.",
+    "아이디 찾기·비밀번호 찾기·비밀번호 변경은 통합정보시스템(dx.donga.ac.kr)에서 합니다."
+   ],
+   "en": [
+    "Your ID is your student number and your password is your integrated-system password. The single sign-on page tells students to keep using the password already set.",
+    "Passwords are at least 9 characters and mix letters, numbers and symbols.",
+    "Finding your ID, resetting or changing your password are done in the integrated information system (dx.donga.ac.kr)."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "학번이 나오기 전 — 신입·편입생 수강신청",
+   "en": "Before you have one — new and transfer students registering for courses"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "아이디는 원서접수 수험번호입니다. 수험번호는 진학어플라이(www.jinhakapply.com)에서 조회합니다.",
+    "수강신청 로그인 화면의 초기 비밀번호: 생년월일 6자리 + 입학원서에 적은 휴대폰번호 뒤 4자리(총 10자리)",
+    "국제교류과 2026.8 신입생 안내책자는 같은 수강신청 화면의 외국인 신입생 초기 비밀번호를 「생년월일 6자리 + 0000」(예: 2002.01.01. → 0201010000)으로 안내했습니다.",
+    "두 안내 중 어느 쪽이 누구에게 적용되는지는 공개된 안내에 적혀 있지 않습니다. 수강신청 전에 국제교류과(051-200-6447)에 확인하세요."
+   ],
+   "en": [
+    "Your ID is your application number. Look it up on Jinhak Apply (www.jinhakapply.com).",
+    "Initial password on the course registration login page: your date of birth (6 digits) + the last 4 digits of the mobile number on your application (10 digits in all)",
+    "The Office of International Affairs handbook for new students (Aug 2026) gave international freshmen a different initial password for the same registration page: «date of birth (6 digits) + 0000» (e.g. 2002.01.01. → 0201010000).",
+    "Neither source says which one applies to whom. Before registration opens, ask the Office of International Affairs (051-200-6447) which to use."
+   ],
+   "count": 4
+  },
+  "sections[0].title": {
+   "ko": "어디서 무엇을 하나요",
+   "en": "Which service does what"
+  },
+  "sections[0].notice": {
+   "ko": "portal.donga.ac.kr은 교직원용입니다 / 홈페이지에서 「그룹웨어」로 연결되는 portal.donga.ac.kr의 화면 제목은 교직원정보시스템입니다. 학생 업무는 통합정보시스템에서 시작하세요.",
+   "en": "portal.donga.ac.kr is for staff / The «그룹웨어» (groupware) link on the homepage goes to portal.donga.ac.kr, titled «staff information system». Start student tasks from the integrated system."
+  },
+  "sections[0].footnote": {
+   "ko": "※ 동아대학교 홈페이지 E-캠퍼스(무선랜 이용안내·기기별 설정·네트워크 접근 제어·학생메일&오피스 365), 학생증 발급안내, 원격교육지원센터 LMS 안내 기준, 2026-10-30 확인. 로그인한 뒤의 메뉴 위치는 바뀔 수 있습니다.",
+   "en": "※ Based on the university homepage E-campus pages (Wi-Fi, device set-up, network access control, student email & Office 365), the student ID page and the Distance Education Center’s LMS page, checked 2026-10-30. Menus after login may move."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "통합정보시스템 — dx.donga.ac.kr",
+   "en": "Integrated information system — dx.donga.ac.kr"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "수강 내역·성적·등록금고지서·공결 신청·졸업 사정표·개인정보 변경 등 학사 업무를 합니다.",
+    "학교 안내에 따라 「학생정보」·「학생정보서비스」라고도 부르며, 모두 이 주소입니다."
+   ],
+   "en": [
+    "Academic tasks: your registered courses, grades, tuition bill, excused-absence requests, graduation audit, personal details.",
+    "University pages also call it «학생정보» (student information) or «학생정보서비스» (student information service) — all the same address."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[1].title": {
+   "ko": "수강신청 — dxsugang.donga.ac.kr",
+   "en": "Course registration — dxsugang.donga.ac.kr"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "수강신청·정정을 하는 별도 사이트입니다. 기간과 절차는 「수강신청」 가이드를 보세요."
+   ],
+   "en": [
+    "A separate site for registering and changing courses. For dates and steps, see the course registration guide."
+   ],
+   "count": 1
+  },
+  "sections[0].notes[2].title": {
+   "ko": "LMS — eclass.donga.ac.kr",
+   "en": "LMS — eclass.donga.ac.kr"
+  },
+  "sections[0].notes[2].lines": {
+   "ko": [
+    "강의자료·과제·온라인 강의와 진도·출석을 관리하는 학습관리시스템입니다.",
+    "모바일 앱: LearningX Student(Android는 LearningX Student 2.0)",
+    "첫 화면에서 한국어·영어를 고를 수 있습니다."
+   ],
+   "en": [
+    "The learning management system for course materials, assignments, online lectures, progress and attendance.",
+    "Mobile app: LearningX Student (on Android, LearningX Student 2.0)",
+    "The front page can be switched between Korean and English."
+   ],
+   "count": 3
+  },
+  "sections[0].notes[3].title": {
+   "ko": "Wi-Fi — donga-wpa2",
+   "en": "Wi-Fi — donga-wpa2"
+  },
+  "sections[0].notes[3].lines": {
+   "ko": [
+    "사용자 이름은 학번, 암호는 학생정보서비스(통합정보시스템) 비밀번호입니다.",
+    "기기별 설정 방법은 학교 「무선랜 이용안내」에 있습니다. 비밀번호가 틀리면 통합정보시스템에서 비밀번호를 초기화한 뒤 다시 로그인하라고 안내합니다.",
+    "다른 대학에서는 eduroam에 「무선랜ID@dau.ac.kr」로 접속할 수 있습니다."
+   ],
+   "en": [
+    "User name: your student number. Password: your student information service (integrated-system) password.",
+    "Set-up steps for each device are on the university’s Wi-Fi page. If the password is rejected, the page says to reset it in the integrated system and log in again.",
+    "At other universities you can join eduroam as «무선랜ID@dau.ac.kr» (your Wi-Fi ID@dau.ac.kr)."
+   ],
+   "count": 3
+  },
+  "sections[0].notes[4].title": {
+   "ko": "모바일 학생증 — 캠퍼스락 앱",
+   "en": "Mobile student ID — the 캠퍼스락 app"
+  },
+  "sections[0].notes[4].lines": {
+   "ko": [
+    "학생정보에 본인 사진을 등록해야 발급됩니다.",
+    "도서관 출입·대출에 쓰는 「모바일 이용증」은 도서관 앱에 따로 있습니다.",
+    "시험장 신분증으로는 외국인등록증이나 여권을 가져가세요."
+   ],
+   "en": [
+    "It is only issued once your photo is registered in student information.",
+    "The library’s «mobile library card» for entry and loans is a separate thing, in the library app.",
+    "For exams, bring your residence card or passport as ID."
+   ],
+   "count": 3
+  },
+  "sections[1].title": {
+   "ko": "막혔을 때",
+   "en": "If you are stuck"
+  },
+  "sections[1].notice": {
+   "ko": "계정은 본인만 씁니다 / 다른 사람의 학번으로 로그인하거나 인증을 대신 받게 하지 마세요. 본인 정보로 인증이 안 되면 위 담당 부서에 문의하세요.",
+   "en": "Use only your own account / Do not log in with someone else’s student number or have someone verify for you. If your own details do not work, contact the office above."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 부서 이름과 번호는 각 서비스 안내 페이지의 표기 그대로입니다(통합로그인 화면 「정보전산과」, 무선랜 이용안내 「정보전산원 교육지원팀」). 2026-10-30 확인.",
+   "en": "※ Office names and numbers are as each service page shows them (the sign-on page says «정보전산과», the Wi-Fi page «정보전산원 교육지원팀»). Checked 2026-10-30."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "본인인증이 안 될 때",
+   "en": "If identity verification fails"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "통합로그인 화면은 본인 인증을 하지 못하면 정보전산과로 문의하라고 안내합니다: 051-200-6803, 6820, 6837, 6723",
+    "학번 찾기에는 성명·생년월일 6자리·휴대폰번호가 필요합니다. 조회되지 않으면 이름이나 번호를 임의로 바꿔 넣지 말고 문의하세요."
+   ],
+   "en": [
+    "The single sign-on page says to contact the Information Technology Division if you cannot verify your identity: 051-200-6803, 6820, 6837, 6723",
+    "Looking up your student number needs your name, date of birth (6 digits) and mobile number. If it does not work, ask rather than trying other spellings or numbers."
+   ],
+   "count": 2
+  },
+  "sections[1].notes[1].title": {
+   "ko": "서비스별 문의처",
+   "en": "Who to call"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "Wi-Fi: 정보전산원 교육지원팀 051-200-6809, 6119",
+    "LMS: LMS 안의 문의게시판, 원격교육지원센터 051-200-1046",
+    "증명서: 학사관리과 051-200-6090~1",
+    "학번·초기 비밀번호 등 유학생 학사: 국제교류과 051-200-6447"
+   ],
+   "en": [
+    "Wi-Fi: IT Center, Education Support Team, 051-200-6809, 6119",
+    "LMS: the question board inside the LMS, or the Distance Education Center, 051-200-1046",
+    "Certificates: Academic Affairs, 051-200-6090~1",
+    "Student number, initial password and other academic questions for international students: Office of International Affairs, 051-200-6447"
+   ],
+   "count": 4
+  },
+  "sections[2].title": {
+   "ko": "개인정보를 바꿀 때",
+   "en": "Changing your details"
+  },
+  "sections[2].notes[0].title": {
+   "ko": "학교 시스템과 출입국 신고는 따로",
+   "en": "The university system and immigration are separate"
+  },
+  "sections[2].notes[0].lines": {
+   "ko": [
+    "학생정보에서 주소를 바꿔도 출입국 체류지 변경신고가 되지 않습니다. 이사했다면 「체류지·등록사항 변경신고」 가이드를 따로 보세요.",
+    "영문 성명은 학생정보 › 학적변동 › 개인정보변경에서 등록합니다. 여권과 같은 철자로 넣으세요."
+   ],
+   "en": [
+    "Changing your address in student information does not report it to immigration. If you have moved, see the address-change guide as well.",
+    "Register your English name under 학생정보 › 학적변동 › 개인정보변경 (student information › record changes › personal details), spelled exactly as in your passport."
+   ],
+   "count": 2
+  },
+  "links[0].label": {
+   "ko": "동아대학교 통합정보시스템",
+   "en": "Dong-A integrated information system"
+  },
+  "links[0].description": {
+   "ko": "학사·등록·성적·개인정보",
+   "en": "Academic records, tuition, grades, personal details"
+  },
+  "links[1].label": {
+   "ko": "동아대학교 통합로그인",
+   "en": "Dong-A single sign-on"
+  },
+  "links[1].description": {
+   "ko": "로그인 안내·본인인증 문의처",
+   "en": "Login help and who to call for verification"
+  },
+  "links[2].label": {
+   "ko": "동아대학교 수강신청",
+   "en": "Dong-A course registration"
+  },
+  "links[2].description": {
+   "ko": "신·편입생 수험번호 로그인 안내",
+   "en": "Login help for new and transfer students"
+  },
+  "links[3].label": {
+   "ko": "동아대학교 LMS",
+   "en": "Dong-A LMS"
+  },
+  "links[3].description": {
+   "ko": "강의자료·과제·온라인 강의",
+   "en": "Course materials, assignments, online lectures"
+  },
+  "links[4].label": {
+   "ko": "LMS 이용 안내(원격교육지원센터)",
+   "en": "LMS help (Distance Education Center)"
+  },
+  "links[4].description": {
+   "ko": "앱 이름·로그인·문의처",
+   "en": "App names, login and contacts"
+  },
+  "links[5].label": {
+   "ko": "학생메일&오피스 365",
+   "en": "Student email & Office 365"
+  },
+  "links[5].description": {
+   "ko": "계정 생성·관리 안내",
+   "en": "Creating and managing the accounts"
+  },
+  "links[6].label": {
+   "ko": "무선랜 이용안내",
+   "en": "Campus Wi-Fi"
+  },
+  "links[6].description": {
+   "ko": "기기별 설정·이용 가능 건물",
+   "en": "Set-up by device and where it works"
+  },
+  "links[7].label": {
+   "ko": "학생증 발급안내",
+   "en": "Student ID"
+  },
+  "links[7].description": {
+   "ko": "모바일 학생증(캠퍼스락)·사진 등록",
+   "en": "Mobile student ID (캠퍼스락) and photo upload"
+  },
+  "links[8].label": {
+   "ko": "정보전산과 051-200-6803",
+   "en": "IT Division 051-200-6803"
+  },
+  "links[8].description": {
+   "ko": "본인인증 문의(통합로그인 안내 기준)",
+   "en": "Identity verification (per the sign-on page)"
+  },
+  "links[9].label": {
+   "ko": "가이드 — 수강신청",
+   "en": "Guide — Course Registration"
+  },
+  "links[9].description": {
+   "ko": "기간·학점·확정 확인",
+   "en": "Dates, credits and confirmation"
+  },
+  "links[10].label": {
+   "ko": "가이드 — 증명서 발급",
+   "en": "Guide — Certificate Issuance"
+  },
+  "links[10].description": {
+   "ko": "인터넷 발급·영문 성명 등록",
+   "en": "Online issuance and registering your English name"
+  },
+  "links[11].label": {
+   "ko": "가이드 — 등록금 납부·등록 확인",
+   "en": "Guide — Paying Tuition & Confirming Registration"
+  },
+  "links[11].description": {
+   "ko": "고지서 출력과 납부 확인",
+   "en": "Printing the bill and confirming payment"
+  },
+  "links[12].label": {
+   "ko": "가이드 — 출결·공결·시험·성적",
+   "en": "Guide — Attendance, Exams & Grades"
+  },
+  "links[12].description": {
+   "ko": "공결 신청·성적 확인",
+   "en": "Excused absences and grades"
+  },
+  "links[13].label": {
+   "ko": "가이드 — 도서관 이용안내",
+   "en": "Guide — Library Guide"
+  },
+  "links[13].description": {
+   "ko": "도서관 앱과 모바일 이용증",
+   "en": "The library app and mobile library card"
+  },
+  "links[14].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting Address & Registration Changes"
+  },
+  "links[14].description": {
+   "ko": "이사했을 때 출입국 신고",
+   "en": "Reporting a move to immigration"
+  },
+  "phrases[0].text": {
+   "ko": "통합정보시스템에 로그인할 수 없습니다. 본인인증을 도와주실 수 있나요?",
+   "en": "I cannot log in to the integrated information system. Could you help me with identity verification?"
+  },
+  "phrases[1].text": {
+   "ko": "아직 학번이 없습니다. 수강신청 초기 비밀번호를 확인하고 싶습니다.",
+   "en": "I do not have a student number yet. I would like to check my initial password for course registration."
+  }
+ }
+}

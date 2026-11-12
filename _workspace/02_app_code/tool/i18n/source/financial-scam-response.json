@@ -38,22 +38,22 @@
   },
   "steps": {
    "ko": [
-    "추가 송금·인증번호 전달·원격제어를 즉시 멈춘다통화를 끊고, 인증번호를 알려 주지 말고, 원격제어 앱을 열지 마세요.",
-    "은행에 지급정지를 요청한다내가 보낸 은행과 상대 계좌의 은행 모두에 연락해 지급정지를 요청하세요. 가장 급한 단계입니다.",
-    "경찰에 신고한다긴급하면 112. 온라인·방문 신고 방법은 경찰 ECRM 안내에서 확인하세요. 상담은 182입니다.",
-    "필요한 확인서를 발급받는다경찰이 안내하는 사건사고사실확인원 등 은행 제출용 서류를 발급받습니다.",
-    "은행에 피해구제를 신청한다확인서와 이체 내역을 제출해 피해구제를 신청하세요. 기한이 있으므로 은행이 안내한 날짜를 지키세요.",
-    "비밀번호·인증수단을 안전한 기기에서 바꾼다악성 앱이 설치됐을 수 있으므로, 사기에 쓰인 기기가 아닌 안전한 기기에서 은행·이메일·메신저 비밀번호와 인증수단을 바꾸세요.",
-    "접수번호와 기한을 기록한다경찰 신고번호, 은행 접수번호, 제출 기한을 적어 두고 안내에 따라 후속 조치를 하세요."
+    "추가 송금·인증번호 전달·원격제어를 즉시 멈춘다. 통화를 끊고, 인증번호를 알려 주지 말고, 원격제어 앱을 열지 마세요.",
+    "은행에 지급정지를 요청한다. 내가 보낸 은행과 상대 계좌의 은행 모두에 연락해 지급정지를 요청하세요. 가장 급한 단계입니다.",
+    "경찰에 신고한다. 긴급하면 112. 온라인·방문 신고 방법은 경찰 ECRM 안내에서 확인하세요. 상담은 182입니다.",
+    "필요한 확인서를 발급받는다. 경찰이 안내하는 사건사고사실확인원 등 은행 제출용 서류를 발급받습니다.",
+    "은행에 피해구제를 신청한다. 확인서와 이체 내역을 제출해 피해구제를 신청하세요. 기한이 있으므로 은행이 안내한 날짜를 지키세요.",
+    "비밀번호·인증수단을 안전한 기기에서 바꾼다. 악성 앱이 설치됐을 수 있으므로, 사기에 쓰인 기기가 아닌 안전한 기기에서 은행·이메일·메신저 비밀번호와 인증수단을 바꾸세요.",
+    "접수번호와 기한을 기록한다. 경찰 신고번호, 은행 접수번호, 제출 기한을 적어 두고 안내에 따라 후속 조치를 하세요."
    ],
    "en": [
-    "Stop sending money, codes and access — nowHang up, give no verification codes, and do not open any remote-control app.",
-    "Ask the bank to freeze the accountContact both your own bank and the bank of the receiving account and ask for a payment suspension. This is the urgent one.",
-    "Report it to the policeIn an emergency call 112. For online or in-person reporting follow the police ECRM guidance; 182 is the enquiry line.",
-    "Get the confirmation documentObtain the document the police direct you to — the incident confirmation the bank will ask for.",
-    "File the claim with your bankSubmit the confirmation and the transfer record to claim. There are deadlines — keep the date the bank gives you.",
-    "Change your passwords from a clean deviceA malicious app may still be watching. Change your banking, email and messenger passwords — and your verification methods — from a device that was not involved.",
-    "Write down the case numbers and deadlinesNote the police report number, the bank's reference and every deadline, then follow what each of them tells you next."
+    "Stop sending money, codes and access — now. Hang up, give no verification codes, and do not open any remote-control app.",
+    "Ask the bank to freeze the account. Contact both your own bank and the bank of the receiving account and ask for a payment suspension. This is the urgent one.",
+    "Report it to the police. In an emergency call 112. For online or in-person reporting follow the police ECRM guidance; 182 is the enquiry line.",
+    "Get the confirmation document. Obtain the document the police direct you to — the incident confirmation the bank will ask for.",
+    "File the claim with your bank. Submit the confirmation and the transfer record to claim. There are deadlines — keep the date the bank gives you.",
+    "Change your passwords from a clean device. A malicious app may still be watching. Change your banking, email and messenger passwords — and your verification methods — from a device that was not involved.",
+    "Write down the case numbers and deadlines. Note the police report number, the bank's reference and every deadline, then follow what each of them tells you next."
    ],
    "count": 7
   },
@@ -65,7 +65,12 @@
     "지급정지",
     "금융사기",
     "대포통장",
-    "악성앱"
+    "악성앱",
+    "사기",
+    "계좌지급정지",
+    "피해구제",
+    "사기 전화",
+    "사기 피해"
    ],
    "en": [
     "voice phishing",
@@ -73,9 +78,11 @@
     "scam transfer",
     "payment suspension",
     "fraud",
-    "malicious app"
+    "malicious app",
+    "scam call",
+    "scammed"
    ],
-   "count": 7
+   "count": 12
   },
   "sections[0].title": {
    "ko": "알아두기",
@@ -122,6 +129,22 @@
   "links[3].label": {
    "ko": "가이드 — 은행 계좌 개설",
    "en": "Guide — Opening a bank account"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 소비자 피해·환불 분쟁",
+   "en": "Guide — Refunds and consumer disputes"
+  },
+  "links[4].description": {
+   "ko": "사기가 아니라 환불·미배송 분쟁이라면 1372 소비자상담센터로 갑니다.",
+   "en": "For a refund or non-delivery dispute rather than fraud, start at 1372."
+  },
+  "links[5].label": {
+   "ko": "가이드 — 휴대폰 개통",
+   "en": "Guide — Get a Mobile Plan"
+  },
+  "links[5].description": {
+   "ko": "신분증이 노출됐다면 내 명의 휴대폰 확인과 새 개통 막기(엠세이퍼)",
+   "en": "If your ID was exposed: check lines in your name and block new ones (M-Safer)"
   }
  }
 }

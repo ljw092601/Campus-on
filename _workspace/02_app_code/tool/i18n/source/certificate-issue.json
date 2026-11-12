@@ -53,14 +53,18 @@
     "재학증명서",
     "성적증명서",
     "졸업증명서",
-    "증명서 발급"
+    "증명서 발급",
+    "아포스티유",
+    "영사확인"
    ],
    "en": [
     "certificate of enrollment",
     "transcript",
-    "diploma certificate"
+    "diploma certificate",
+    "apostille",
+    "legalization"
    ],
-   "count": 4
+   "count": 6
   },
   "duration": {
    "ko": "즉시~수일",
@@ -161,12 +165,12 @@
   },
   "sections[1].notes[0].lines": {
    "ko": [
-    "승학캠퍼스: 학교 공식 안내 두 곳의 표기가 다릅니다 — 자동발급기 안내는 「인문과학대학 로비」, 증명서 발급 안내는 「인문대학 지하1층」. 가기 전에 학사관리과에 위치를 확인하세요.",
+    "승학캠퍼스: 대학본부 및 인문과학대학 건물(1대). 학교 안내 두 곳의 층 표기가 다릅니다 — 자동발급기 안내는 「인문과학대학 로비」, 증명서 발급 안내는 「인문대학 지하1층」. 찾기 어려우면 학사관리과(051-200-6090~1)에 물어보세요.",
     "부민캠퍼스: 사회과학대학 로비",
     "구덕캠퍼스: 구덕캠퍼스에서 증명서 발급이 필요한 경우 의과대학 행정지원실(051-240-2903)에 문의하세요."
    ],
    "en": [
-    "Seunghak campus: the university's two official pages disagree — the kiosk page says the lobby of the College of Humanities (인문과학대학 로비), the certificate page says basement 1 of the Humanities building (인문대학 지하1층). Check the location with the Office of Academic Affairs before you go.",
+    "Seunghak campus: the University Administration & College of Humanities building (one kiosk). The university's two pages give different floors — the kiosk page says the lobby of the College of Humanities (인문과학대학 로비), the certificate page says basement 1 (인문대학 지하1층). If you cannot find it, ask the Office of Academic Affairs (051-200-6090~1).",
     "Bumin campus: lobby of the College of Social Sciences (사회과학대학)",
     "Gudeok campus: if you need a certificate there, ask the College of Medicine administrative office (051-240-2903)."
    ],
@@ -393,6 +397,25 @@
    ],
    "count": 1
   },
+  "sections[4].notes[3].title": {
+   "ko": "해외 기관에 낼 때 — 아포스티유 · 영사확인",
+   "en": "Using a certificate abroad — apostille or legalization"
+  },
+  "sections[4].notes[3].lines": {
+   "ko": [
+    "졸업 · 성적증명서를 해외 대학이나 기관에 내면 한국 문서임을 확인하는 인증을 요구받을 수 있습니다. 어떤 인증이 필요한지는 제출기관에 먼저 확인하세요.",
+    "문서를 낼 나라가 아포스티유 협약 가입국이면 아포스티유를 받습니다. 재외동포청 아포스티유 안내는 사립대학에서 발급받은 서류는 변호사의 공증을 받은 뒤 법무부에 아포스티유를 신청해야 한다고 적고 있습니다. 동아대학교는 사립대학입니다.",
+    "가입국이 아니면 문서를 낼 나라의 주한 대사관 · 총영사관에서 「영사확인」을 받는 것이 일반적이며, 그 전에 재외동포청의 본부 영사확인을 먼저 요구받을 수 있습니다.",
+    "가입국 목록, 수수료, 처리기간은 바뀔 수 있으니 신청 전에 재외동포청 아포스티유 사이트에서 확인하세요."
+   ],
+   "en": [
+    "An overseas university or authority may ask for your graduation certificate or transcript to be certified as a genuine Korean document. Ask the receiving institution first which certification it needs.",
+    "If the country belongs to the Apostille Convention, you need an apostille. The Overseas Koreans Agency's apostille guidance says documents issued by a private university must first be notarised by a lawyer, then submitted to the Ministry of Justice for the apostille. Dong-A is a private university.",
+    "If the country is not a member, the usual route is legalization (영사확인) at that country's embassy or consulate in Korea, which may first ask for the Overseas Koreans Agency's own confirmation.",
+    "Member countries, fees and processing times can change — check the agency's apostille site before you apply."
+   ],
+   "count": 4
+  },
   "sections[5].title": {
    "ko": "통합정보시스템에서 발급하는 서류",
    "en": "Documents available through the Integrated Information System"
@@ -544,6 +567,14 @@
   "links[5].description": {
    "ko": "출국 전 챙길 증명서와 행정",
    "en": "Certificates and paperwork before you leave"
+  },
+  "links[6].label": {
+   "ko": "재외동포청 — 아포스티유 발급절차",
+   "en": "Overseas Koreans Agency — apostille procedure"
+  },
+  "links[6].description": {
+   "ko": "구비서류 · 공증 필요 여부 · 가입국 (한국어)",
+   "en": "Documents, when notarisation is needed, member countries (Korean page)"
   }
  }
 }

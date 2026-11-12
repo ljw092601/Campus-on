@@ -75,7 +75,8 @@
     "중간고사",
     "기말고사",
     "성적 확인",
-    "성적 이의신청"
+    "성적 이의신청",
+    "출결"
    ],
    "en": [
     "attendance",
@@ -86,7 +87,7 @@
     "final exam",
     "grades"
    ],
-   "count": 8
+   "count": 9
   },
   "top_sections[0].title": {
    "ko": "결석이 많으면 어떻게 되나요?",
@@ -224,8 +225,8 @@
    "en": "Dong-A academic guide — exams"
   },
   "links[1].description": {
-   "ko": "시험 시기·신분증·부정행위",
-   "en": "Exam periods, ID and misconduct (Korean)"
+   "ko": "시험 시간·장소·신분증·수험규정",
+   "en": "Exam times and rooms, ID and exam rules (Korean)"
   },
   "links[2].label": {
    "ko": "동아대 학사안내 — 성적관리 기준",
@@ -248,8 +249,8 @@
    "en": "Dong-A academic calendar"
   },
   "links[4].description": {
-   "ko": "시험·성적 공시·수강취소 날짜",
-   "en": "Exam, grade review and drop dates (Korean)"
+   "ko": "시험·성적 공시·정정 일정",
+   "en": "Exam and grade review dates (Korean)"
   },
   "links[5].label": {
    "ko": "가이드 — 학사경고·제적 예방",
@@ -274,6 +275,14 @@
   "links[7].description": {
    "ko": "수강신청과 정정",
    "en": "Registering and changing courses"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 도서관 이용안내",
+   "en": "Guide — Library Guide"
+  },
+  "links[8].description": {
+   "ko": "시험기간 열람실과 전자자료·논문 이용 방법을 확인하세요.",
+   "en": "Reading rooms during exams, and how to reach e-resources off campus."
   },
   "phrases[0].text": {
    "ko": "입원 때문에 결석했습니다. 공결 신청을 했는데 출결에 반영되었는지 확인해 주실 수 있을까요?",

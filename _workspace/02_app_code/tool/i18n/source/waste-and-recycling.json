@@ -34,22 +34,22 @@
   },
   "steps": {
    "ko": [
-    "주소의 관할 구와 건물 규칙을 확인한다건물 게시판·관리실 공지에 배출 장소와 요일이 적혀 있는 경우가 많습니다. 없으면 관할 구청 안내를 확인하세요.",
-    "일반·음식물·재활용·대형폐기물로 나눈다네 가지는 봉투도 배출 방법도 다릅니다. 음식물은 전용 봉투나 전용 수거함을 씁니다.",
-    "재활용품은 비우고 헹구고 분리한다내용물을 비우고, 물로 헹구고, 라벨이나 뚜껑처럼 재질이 다른 부분을 분리합니다. 환경부 분리배출 가이드라인의 기본 원칙입니다.",
-    "관할 지역의 봉투를 사서 담는다일반쓰레기와 음식물쓰레기는 지정된 봉투에 담아야 수거합니다.",
-    "정해진 장소·시간에 내놓는다건물이나 구청이 안내한 장소와 시간을 지키세요. 시간 전에 내놓으면 수거되지 않고 남아 있을 수 있습니다.",
-    "대형폐기물은 미리 신고한다가구·가전처럼 큰 물건은 관할 구청에 신고하고 수수료를 낸 뒤 스티커나 필증을 받아 붙여야 합니다. 절차와 금액은 구청 안내를 확인하세요.",
-    "애매하면 버리기 전에 물어본다분류가 헷갈리는 물건은 임의로 버리지 말고 구청이나 관리실에 확인하세요."
+    "주소의 관할 구와 건물 규칙을 확인한다. 건물 게시판·관리실 공지에 배출 장소와 요일이 적혀 있는 경우가 많습니다. 없으면 관할 구청 안내를 확인하세요.",
+    "일반·음식물·재활용·대형폐기물로 나눈다. 네 가지는 봉투도 배출 방법도 다릅니다. 음식물은 전용 봉투나 전용 수거함을 씁니다.",
+    "재활용품은 비우고 헹구고 분리한다. 내용물을 비우고, 물로 헹구고, 라벨이나 뚜껑처럼 재질이 다른 부분을 분리합니다. 환경부 분리배출 가이드라인의 기본 원칙입니다.",
+    "관할 지역의 봉투를 사서 담는다. 일반쓰레기는 지정된 봉투에 담아야 수거합니다. 음식물쓰레기는 지정 봉투나 전용 수거함 등 그 지역에서 정한 방식으로 내놓으세요.",
+    "정해진 장소·시간에 내놓는다. 건물이나 구청이 안내한 장소와 시간을 지키세요. 시간 전에 내놓으면 수거되지 않고 남아 있을 수 있습니다.",
+    "대형폐기물은 미리 신고한다. 가구·가전처럼 큰 물건은 관할 구청에 신고하고 수수료를 낸 뒤 스티커나 필증을 받아 붙여야 합니다. 절차와 금액은 구청 안내를 확인하세요.",
+    "애매하면 버리기 전에 물어본다. 분류가 헷갈리는 물건은 임의로 버리지 말고 구청이나 관리실에 확인하세요."
    ],
    "en": [
-    "Find your district and your building's rulesThe collection point and days are usually posted in the building. If not, check the district office's guidance.",
-    "Sort into general, food, recyclable and bulkyThe four go out differently and in different bags. Food waste uses its own bag or its own bin.",
-    "Empty, rinse and separate recyclablesEmpty the container, rinse it, and take off parts made of a different material such as labels or caps — the basic rule in the Ministry of Environment guideline.",
-    "Buy the right bag and use itGeneral and food waste are only collected in the designated bags.",
-    "Put it out at the right place and timeFollow the place and time your building or district gives. Put it out early and it may simply sit there.",
-    "Report bulky waste in advanceFurniture and appliances have to be reported to the district office, paid for, and labelled with the sticker or slip they issue. Check the district office for the procedure and the fee.",
-    "When in doubt, ask before you throw it outIf you cannot place an item, ask the district office or the building rather than guessing."
+    "Find your district and your building's rules. The collection point and days are usually posted in the building. If not, check the district office's guidance.",
+    "Sort into general, food, recyclable and bulky. The four go out differently and in different bags. Food waste uses its own bag or its own bin.",
+    "Empty, rinse and separate recyclables. Empty the container, rinse it, and take off parts made of a different material such as labels or caps — the basic rule in the Ministry of Environment guideline.",
+    "Buy the right bag and use it. General waste is only collected in the designated bags. Food waste goes in a designated bag or a food-waste bin, whichever your area uses.",
+    "Put it out at the right place and time. Follow the place and time your building or district gives. Put it out early and it may simply sit there.",
+    "Report bulky waste in advance. Furniture and appliances have to be reported to the district office, paid for, and labelled with the sticker or slip they issue. Check the district office for the procedure and the fee.",
+    "When in doubt, ask before you throw it out. If you cannot place an item, ask the district office or the building rather than guessing."
    ],
    "count": 7
   },
@@ -61,7 +61,10 @@
     "종량제봉투",
     "음식물쓰레기",
     "대형폐기물",
-    "이사쓰레기"
+    "이사쓰레기",
+    "쓰레기봉투",
+    "재활용",
+    "쓰레기 배출"
    ],
    "en": [
     "waste",
@@ -72,7 +75,7 @@
     "garbage bag",
     "trash"
    ],
-   "count": 7
+   "count": 10
   },
   "sections[0].title": {
    "ko": "알아두기",

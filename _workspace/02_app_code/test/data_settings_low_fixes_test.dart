@@ -277,6 +277,13 @@ void main() {
       expect(prefs.getString('app_locale'), 'en');
       // Setting the current locale again is a no-op success.
       expect(await notifier.setLocale(const Locale('en')), isTrue);
+      // r19: zh·vi are shipping languages now, so the choice has to persist
+      // for them too — not just for the original two.
+      for (final code in const ['zh', 'vi', 'ko']) {
+        expect(await notifier.setLocale(Locale(code)), isTrue, reason: code);
+        expect(prefs.getString('app_locale'), code);
+        expect(container.read(localeProvider).languageCode, code);
+      }
     });
   });
 

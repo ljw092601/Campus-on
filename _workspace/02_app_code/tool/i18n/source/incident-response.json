@@ -41,7 +41,8 @@
     "사기",
     "범죄 신고",
     "분실 신고",
-    "여권 분실"
+    "여권 분실",
+    "경찰서"
    ],
    "en": [
     "police",
@@ -50,9 +51,10 @@
     "accident",
     "scam",
     "fraud",
-    "lost passport"
+    "lost passport",
+    "police station"
    ],
-   "count": 8
+   "count": 9
   },
   "top_sections[0].title": {
    "ko": "지금 즉시 위험하다면",
@@ -151,20 +153,16 @@
     "분실 신고는 부정 사용을 막기 위해 분실 사실을 알리는 절차이며, 신고만으로 카드의 효력이 정지되거나 회복되는 것은 아닙니다",
     "신고한 뒤 24시간 이내에는 철회할 수 있습니다",
     "온라인 신고가 어려우면 관할 출입국 · 외국인관서를 방문해 신고할 수 있습니다",
-    "분실 신고와 별도로, 새 카드는 주소지 관할 출입국 · 외국인관서에 재발급을 신청해야 받을 수 있습니다. 재발급 신청은 미루지 말고 가능한 한 빨리 하세요",
-    "재발급 수수료는 35,000원(현금 수납만 가능)이고, 여권 · 신청서 · 분실 사유를 설명하는 자료와 사진(3.5×4.5cm) 1장이 필요합니다. 하이코리아는 이전 사진이 6개월 이상 지난 경우에만 사진을 요구하지만, 시행령은 조건 없이 사진 1장을 첨부하도록 하므로 챙겨 가면 확실합니다",
-    "구비서류와 수수료는 바뀔 수 있으니 하이코리아 또는 1345에서 최신 안내를 확인하세요"
+    "분실 신고는 재발급 신청이 아닙니다. 새 카드는 따로 신청해야 하고 준비물과 수수료는 아래 「외국인등록증 재발급」 가이드에 있습니다. 미루지 마세요"
    ],
    "en": [
     "You can file a loss report online on HiKorea",
     "The report records that the card was lost to help prevent misuse. It does not, by itself, suspend or restore the card.",
     "You can withdraw the report within 24 hours of filing it",
     "If filing online does not work, you can report it at the immigration office for your area",
-    "The loss report does not replace the card — apply for a new one separately at the immigration office for your address, and do not put the application off",
-    "The replacement fee is KRW 35,000 (cash only). Bring your passport, the application form, something explaining the loss and one 3.5×4.5 cm photo. HiKorea asks for a photo only if your last one is more than six months old, but the enforcement decree simply requires one, so take it along",
-    "Documents and fees can change, so check HiKorea, or call 1345, for the current information"
+    "A loss report is not an application for a new card. You must apply separately; the documents and the fee are in the \"Residence Card reissue\" guide below. Do not put it off."
    ],
-   "count": 7
+   "count": 5
   },
   "sections[2].notes[1].title": {
    "ko": "여권",
@@ -234,8 +232,8 @@
    "en": "If you need support afterwards"
   },
   "sections[4].body": {
-   "ko": "인권침해나 성희롱 · 성폭력 문제의 학교 상담 · 신고 창구는 상담 창구 가이드에서 확인할 수 있습니다.\n\n사건 이후 마음이나 학교생활이 힘들 때 이야기할 수 있는 창구도 같은 가이드에 정리되어 있습니다.",
-   "en": "The university desks that take counselling requests and reports about harassment, sexual violence and other violations of your rights are listed in the counselling guide.\n\nThe same guide lists where to talk to someone if things are hard afterwards, in yourself or at university."
+   "ko": "인권침해 문제의 학교 상담 · 신고 창구는 상담 창구 가이드에서 확인할 수 있습니다.\n\n사건 이후 마음이나 학교생활이 힘들 때 이야기할 수 있는 창구도 같은 가이드에 정리되어 있습니다.",
+   "en": "The university desks that take counselling requests and reports about violations of your rights are listed in the counselling guide.\n\nThe same guide lists where to talk to someone if things are hard afterwards, in yourself or at university."
   },
   "sections[4].notice": {
    "ko": "지금 위험한 상황이라면 이 섹션보다 112가 먼저입니다.",
@@ -304,6 +302,22 @@
   "links[6].description": {
    "ko": "보증금을 돌려받지 못했을 때",
    "en": "If your deposit is not returned"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 금융사기·피싱 긴급 대응",
+   "en": "Guide — Fraud and phishing: act now"
+  },
+  "links[7].description": {
+   "ko": "돈을 보냈다면 지급정지가 먼저입니다. 순서가 정해져 있어요.",
+   "en": "If the money has already gone, freezing the account comes first."
+  },
+  "links[8].label": {
+   "ko": "가이드 — 외국인등록증 재발급",
+   "en": "Guide — Residence Card reissue"
+  },
+  "links[8].description": {
+   "ko": "분실 신고와 별개로 새 카드를 신청하는 준비물·수수료",
+   "en": "Applying for a new card after a loss report: documents and fee"
   }
  }
 }

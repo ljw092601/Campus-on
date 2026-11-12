@@ -1,0 +1,331 @@
+{
+ "id": "arrival-first-steps",
+ "category": "immigration",
+ "note": "Translate every \"ko\" value. Keep list lengths, numbers, deadlines, conditions, phone numbers and URLs exactly. \"en\" is a reference translation, not the source of truth.",
+ "fields": {
+  "title": {
+   "ko": "입국 후 처음 해야 할 일",
+   "en": "Your first steps after arriving"
+  },
+  "detail_title": {
+   "ko": "입국 후 처음 해야 할 일 — 무엇이 먼저고 무엇을 같이 할 수 있나",
+   "en": "After you arrive — what comes first, and what can run alongside"
+  },
+  "summary": {
+   "ko": "외국인등록 90일 — 교통·통신·은행은 마감 없음",
+   "en": "Registration: 90 days. Transit, phone, bank: no deadline"
+  },
+  "overview": {
+   "ko": "이 가이드는 절차를 설명하지 않습니다. 무엇을 먼저 하고 무엇을 같이 할 수 있는지만 알려 주고, 각 단계에서 그 절차를 담은 가이드로 보냅니다.\n\n이 가이드에서 비교하는 외국인등록·교통카드·통신·은행 가운데 법정 신청 마감이 있는 것은 외국인등록입니다. 90일을 초과해 체류할 예정이면 입국한 날부터 90일 이내에 신청해야 합니다. 교통카드·휴대폰·은행은 외국인등록과 같이 진행할 수 있습니다. 다만 살 곳을 교외에서 구해 임대차계약을 했다면 금액 기준에 따라 계약일부터 30일 이내 신고 의무가 생길 수 있으니 「임대차 보증금 지키기」 가이드를 확인하세요. 이사 뒤 체류지 변경신고처럼 나중에 별도 기한이 생기는 절차와 건강보험의 체류자격별 적용 시점도 각 연결 가이드에서 확인하세요.\n\n건강보험은 체류자격에 따라 적용 시점이 다릅니다. 유학(D-2)과 어학연수(D-4-1)가 같지 않으니 아래에서 본인 자격을 확인하세요.",
+   "en": "This guide does not explain the procedures. It only tells you what to do first and what can run in parallel, and sends you to the guide that owns each one.\n\nOf the steps compared here — registration, transit card, phone and bank — the one with a statutory filing deadline is the alien registration. If you will stay more than 90 days, you must apply within 90 days of arriving. The transit card, a phone line and a bank account can run alongside it. If you sign a lease off campus, though, the contract itself may have to be reported within 30 days depending on the rent and deposit — see the deposit guide. Steps that bring their own deadline later — reporting a move after you register — and when health insurance applies to your status are in the guides linked below.\n\nHealth insurance starts at different times depending on your status of stay. Degree study (D-2) and language training (D-4-1) are not the same — check yours below."
+  },
+  "checklist_title": {
+   "ko": "도착해서 먼저 확인할 것",
+   "en": "Check these first"
+  },
+  "checklist": {
+   "ko": [
+    "여권과 사증(비자)",
+    "내 체류자격 — 유학(D-2) / 어학연수(D-4) / 교환학생(D-2-6) 중 어느 것인지",
+    "예정 체류기간이 90일을 넘는지",
+    "살 곳의 주소와 체류지 입증서류 — 임대차계약서, 기숙사 입사확인서 등",
+    "학교 입학·재학 관련 서류"
+   ],
+   "en": [
+    "Your passport and visa",
+    "Your status of stay — degree study (D-2), language training (D-4) or exchange (D-2-6)",
+    "Whether your stay will exceed 90 days",
+    "Your address and proof of it — a lease, a dormitory confirmation, and so on",
+    "Your admission or enrolment documents"
+   ],
+   "count": 5
+  },
+  "checklist_note": {
+   "ko": "체류지 입증서류는 외국인등록 신청에 필요합니다. 살 곳을 먼저 정하면 나머지가 수월해집니다.",
+   "en": "Proof of your address is needed for the registration itself, so settling where you live first makes the rest easier."
+  },
+  "steps": {
+   "ko": [
+    "살 곳과 체류지 입증서류를 확보한다. 외국인등록 신청에 필요합니다.",
+    "90일을 초과해 체류할 예정이면 입국일부터 90일 이내에 외국인등록을 신청한다. 외국인등록·교통카드·통신·은행 중 신청 마감이 있는 것은 이것뿐입니다. 교외 임대차계약을 했다면 계약 신고기한을 따로 확인하세요.",
+    "교통카드 구매, 여권으로 가능한 선불 통신, 은행 계좌 문의는 외국인등록과 같이 진행한다.",
+    "외국인등록증을 받으면 은행에 거래한도 해제가 가능한지, 통신사에 체류기간·본인정보 갱신이 필요한지 확인한다.",
+    "건강보험은 본인 체류자격의 적용 시점을 확인한다. D-2 와 D-4-1 이 다릅니다."
+   ],
+   "en": [
+    "Secure where you will live and the document that proves it — the registration needs it.",
+    "If your stay will exceed 90 days, apply for the alien registration within 90 days of arriving. Of the registration, transit card, phone and bank, this is the only one with a filing deadline — if you signed a lease, check its own reporting deadline.",
+    "Buy a transit card, open a passport-eligible prepaid line and ask a bank about an account — all of this can run alongside.",
+    "Once the residence card arrives, ask your bank whether the transaction limit can be lifted, and your carrier whether your stay period and identity details need updating.",
+    "Check when health insurance applies to your own status: D-2 and D-4-1 differ."
+   ],
+   "count": 5
+  },
+  "tips": {
+   "ko": [
+    "🪪 외국인등록·교통카드·통신·은행 중 신청 마감이 있는 것은 외국인등록뿐입니다 — 나머지는 같이 진행하면 됩니다. 임대차계약 신고, 이사 뒤 변경신고, 건강보험은 각 가이드를 보세요.",
+    "🏠 살 곳과 체류지 입증서류가 가장 먼저입니다. 외국인등록 신청에 필요합니다. 교외에서 임대차계약을 했다면 금액 기준에 따라 계약일부터 30일 이내 신고 대상일 수 있습니다.",
+    "🚌 교통카드는 외국인등록증이나 계좌 없이 바로 쓸 수 있습니다.",
+    "🩺 건강보험 적용 시점은 D-2 와 D-4-1 이 다릅니다. 본인 자격을 확인하세요.",
+    "📞 숫자와 조건이 회사·기관마다 달라, 이 가이드는 확인할 곳을 알려 줍니다."
+   ],
+   "en": [
+    "🪪 Of the registration, transit card, phone and bank only the registration has a filing deadline — the rest can run alongside. For reporting a lease, reporting a move and health insurance, see their own guides.",
+    "🏠 Somewhere to live, and proof of it, comes first: the registration needs it. If you sign a lease off campus, it may have to be reported within 30 days of signing, depending on the rent and deposit.",
+    "🚌 A transit card works straight away, with no residence card or bank account.",
+    "🩺 When health insurance starts differs between D-2 and D-4-1. Check your own status.",
+    "📞 Figures and conditions differ by company and office, so this guide points you to where to check."
+   ],
+   "count": 5
+  },
+  "search_aliases": {
+   "ko": [
+    "입국",
+    "입국 직후",
+    "도착",
+    "처음",
+    "무엇부터",
+    "순서",
+    "첫 주",
+    "정착",
+    "입국 후 할 일"
+   ],
+   "en": [
+    "arrival",
+    "just arrived",
+    "first steps",
+    "what first",
+    "order",
+    "first week",
+    "settling in",
+    "after arriving"
+   ],
+   "count": 9
+  },
+  "duration": {
+   "ko": "외국인등록 90일 이내",
+   "en": "Registration within 90 days"
+  },
+  "top_sections[0].title": {
+   "ko": "외국인등록·교통·통신·은행 — 신청 마감이 있는 것과 없는 것",
+   "en": "Registration, transit, phone, bank — what has a deadline"
+  },
+  "top_sections[0].notice": {
+   "ko": "초기 절차에 공통된 「도착 후 2주」 기한은 없습니다\n절차마다 기준이 다르고, 하나의 기간 안에 전부 끝내야 한다는 공식 안내는 없습니다. 이 가이드가 비교하는 외국인등록·교통카드·통신·은행 가운데 법정 신청 마감이 있는 것은 외국인등록의 90일입니다. 다만 이사 뒤 체류지 변경신고에는 15일의 별도 기한이 있고, 조건에 해당하는 주택 임대차계약에는 계약일부터 30일의 별도 신고기한이 생길 수 있으며, 건강보험에도 체류자격별 적용 시점이 있으므로 각 연결 가이드에서 확인하세요.",
+   "en": "There is no shared \"two weeks after arrival\" window\nEach procedure has its own basis, and no official guidance says they must all be finished inside one period. Of the steps compared here — registration, transit card, phone and bank — the one with a statutory filing deadline is the registration, at 90 days. Reporting a move after you register carries its own 15-day deadline, a qualifying lease must be reported within 30 days of signing, and health insurance starts at different times by status — check each in the guides linked below."
+  },
+  "top_sections[0].footnote": {
+   "ko": "※ 외국인등록 기한과 예외는 「출입국관리법」 제31조 기준. 조사 04/045 §2.1, 2026-10-25 확인.",
+   "en": "※ The registration deadline and its exceptions follow article 31 of the Immigration Act. Checked 2026-10-25."
+  },
+  "top_sections[0].notes[0].title": {
+   "ko": "⏰ 외국인등록 — 90일 법정 신청 마감",
+   "en": "⏰ Alien registration — a 90-day statutory deadline"
+  },
+  "top_sections[0].notes[0].lines": {
+   "ko": [
+    "90일을 초과해 체류할 예정이면 입국한 날부터 90일 이내에 신청합니다.",
+    "국내에서 체류자격을 새로 받았거나 체류자격 변경허가를 받았다면 입국일 기준 90일을 기다리지 말고 그 허가를 받을 때 신청합니다.",
+    "교환학생도 자격 이름만으로 면제되지 않습니다. 실제 예정 체류기간이 90일을 넘는지로 판단하세요."
+   ],
+   "en": [
+    "If you will stay more than 90 days, apply within 90 days of the day you arrived.",
+    "If you were granted a status of stay — or permission to change it — inside Korea, do not wait out the 90 days: apply when that permission is granted.",
+    "Exchange students are not exempt because of the status name. What matters is whether the stay will exceed 90 days."
+   ],
+   "count": 3
+  },
+  "top_sections[0].notes[1].title": {
+   "ko": "✅ 교통카드·통신·은행 — 신청 마감 없이 병행",
+   "en": "✅ Transit card, phone, bank — no deadline, run them alongside"
+  },
+  "top_sections[0].notes[1].lines": {
+   "ko": [
+    "교통카드는 외국인등록증이나 한국 계좌 없이 살 수 있습니다.",
+    "여권으로 개통할 수 있는 선불 통신상품이 있습니다. 가능한 상품과 사용기간은 통신사마다 다르니 확인하세요.",
+    "은행 계좌는 외국인등록증을 받기 전에도 문의할 수 있습니다. 다만 개설이 보장되지는 않습니다."
+   ],
+   "en": [
+    "You can buy a transit card without a residence card or a Korean bank account.",
+    "Some prepaid mobile products can be opened with a passport. Which products, and for how long, differs by carrier — check before you sign up.",
+    "You can ask a bank about an account before your residence card arrives, but no bank guarantees it will open one."
+   ],
+   "count": 3
+  },
+  "sections[0].title": {
+   "ko": "체류자격에 따라 다른 것 — 건강보험",
+   "en": "What differs by status — health insurance"
+  },
+  "sections[0].body": {
+   "ko": "세 집단이 같은 조건이라고 가정하지 마세요. 은행·통신·교통카드는 체류자격보다 외국인등록증 보유 여부와 각 회사 기준이 중요하지만, 건강보험은 체류자격 자체가 적용 시점을 가릅니다.",
+   "en": "Do not assume the three groups share conditions. For banks, carriers and transit cards what matters is whether you hold the residence card and what each company requires — but for health insurance the status of stay itself decides when cover starts."
+  },
+  "sections[0].notice": {
+   "ko": "「모든 유학생이 입국 즉시 가입된다」는 설명은 정확하지 않습니다\n본인 체류자격의 적용 시점을 건강보험 가입 가이드와 국민건강보험공단에서 확인하세요.",
+   "en": "\"Every international student is covered on arrival\" is not accurate\nCheck when cover starts for your own status in the health insurance guide and with the NHIS."
+  },
+  "sections[0].footnote": {
+   "ko": "※ 국민건강보험공단 외국인 가입자 관리 안내와 「장기체류 재외국민 및 외국인에 대한 건강보험 적용기준」 기준. 조사 04/045 §2.4, 2026-10-25 확인. 직장가입자·피부양자 요건이나 외국 보험에 따른 가입 제외는 개인별로 달라 이 가이드에서 다루지 않습니다.",
+   "en": "※ Based on the National Health Insurance Service guidance for foreign subscribers, checked 2026-10-25. Workplace subscription, dependants and exemption through foreign insurance vary by person and are out of scope here."
+  },
+  "sections[0].notes[0].title": {
+   "ko": "🎓 유학(D-2) 학위과정",
+   "en": "🎓 Degree study (D-2)"
+  },
+  "sections[0].notes[0].lines": {
+   "ko": [
+    "건강보험은 입국일에 지역가입자 자격을 얻는 것이 원칙입니다.",
+    "외국인등록일이 입국일보다 늦으면 외국인등록일이 기준입니다."
+   ],
+   "en": [
+    "Cover as a local subscriber normally starts on the day you arrived.",
+    "If your registration date is later than your arrival date, the registration date applies instead."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[1].title": {
+   "ko": "🔁 교환학생(D-2-6)",
+   "en": "🔁 Exchange students (D-2-6)"
+  },
+  "sections[0].notes[1].lines": {
+   "ko": [
+    "D-2 범주이므로 건강보험은 학위과정과 같은 원칙을 따릅니다.",
+    "외국인등록은 자격 이름이 아니라 예정 체류기간이 90일을 넘는지로 판단합니다."
+   ],
+   "en": [
+    "This sits inside D-2, so health insurance follows the same rule as degree study.",
+    "For the registration, what matters is whether the stay exceeds 90 days — not the status name."
+   ],
+   "count": 2
+  },
+  "sections[0].notes[2].title": {
+   "ko": "🗣 어학연수(D-4-1)",
+   "en": "🗣 Language training (D-4-1)"
+  },
+  "sections[0].notes[2].lines": {
+   "ko": [
+    "원칙적으로 국내 거주 6개월이 지난 뒤 지역가입 대상이 됩니다. D-2 와 다릅니다.",
+    "6개월을 세는 방법에는 출국기간에 관한 세부 규칙이 있습니다. 중간에 길게 출국했다면 국민건강보험공단에 확인하세요."
+   ],
+   "en": [
+    "As a rule you become a local subscriber only after six months of residence — unlike D-2.",
+    "How those six months are counted has its own rules about time spent outside Korea. If you left for a long period, check with the National Health Insurance Service."
+   ],
+   "count": 2
+  },
+  "sections[1].title": {
+   "ko": "외국인등록증을 받은 뒤",
+   "en": "Once the residence card arrives"
+  },
+  "sections[1].body": {
+   "ko": "카드를 받으면 먼저 개통하거나 개설해 둔 것들을 한 번 점검하세요. 여기 적은 점검에는 법정 기한이 없지만 미루면 불편이 쌓입니다.",
+   "en": "When the card arrives, go back over what you set up first. The checks listed here carry no statutory deadline, but putting them off piles up inconvenience."
+  },
+  "sections[1].footnote": {
+   "ko": "※ 한도제한계좌의 1일 거래한도는 2024-05-02 시행 기준 창구 300만원, ATM 100만원, 전자금융 100만원이며 인터넷전문은행 등은 별도 한도를 둘 수 있습니다(금융위원회 안내, 2026-10-25 확인). 통신 선불상품의 사용기간은 사업자마다 달라 이 가이드에 고정 숫자를 적지 않았습니다 — 조사 04/045 §2.2·§2.3.",
+   "en": "※ Under the rules in force since 2 May 2024, a limited-transaction account allows ₩3 million at a counter and ₩1 million by ATM or electronic banking per day; internet-only banks may set their own (Financial Services Commission, checked 2026-10-25). Prepaid validity differs by carrier, so no fixed figure is given here."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "🏦 은행",
+   "en": "🏦 Bank"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "한도제한계좌로 개설됐다면 거래목적을 보여 주는 서류를 내고 한도 해제가 가능한지 문의하세요.",
+    "한도 여부는 외국인등록증 유무만으로 정해지지 않고 거래목적 증빙과 은행 기준으로 정해집니다."
+   ],
+   "en": [
+    "If your account was opened with transaction limits, ask what document showing the purpose of the account would lift them.",
+    "Limits are not decided by whether you hold a residence card alone — they follow the evidence of purpose and the bank's own rules."
+   ],
+   "count": 2
+  },
+  "sections[1].notes[1].title": {
+   "ko": "📱 통신사",
+   "en": "📱 Mobile carrier"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "여권으로 개통한 선불 회선은 사용기간이 정해져 있을 수 있습니다. 연장이나 후불 전환 조건을 통신사에 확인하세요.",
+    "외국인등록증을 받은 뒤 체류기간·본인정보 갱신이 필요한지도 함께 물어보세요."
+   ],
+   "en": [
+    "A prepaid line opened on a passport may have a fixed usable period. Ask your carrier about extending it or moving to a postpaid plan.",
+    "Ask too whether your stay period and identity details need updating now that you have the card."
+   ],
+   "count": 2
+  },
+  "links[0].label": {
+   "ko": "가이드 — 외국인등록증(ARC) 발급",
+   "en": "Guide — Residence Card (ARC)"
+  },
+  "links[0].description": {
+   "ko": "90일 법정 신청 마감이 있는 단계. 준비물·절차·수수료",
+   "en": "The step with a 90-day deadline: documents and fee"
+  },
+  "links[1].label": {
+   "ko": "가이드 — 교통카드",
+   "en": "Guide — Transit Card"
+  },
+  "links[1].description": {
+   "ko": "도착 직후 바로 쓸 수 있는 것",
+   "en": "What works from the day you land"
+  },
+  "links[2].label": {
+   "ko": "가이드 — 휴대폰 개통",
+   "en": "Guide — Getting a Mobile Plan"
+  },
+  "links[2].description": {
+   "ko": "선불·후불과 외국인등록증 유무에 따른 차이",
+   "en": "Prepaid or postpaid, with or without the card"
+  },
+  "links[3].label": {
+   "ko": "가이드 — 은행 계좌 개설",
+   "en": "Guide — Opening a Bank Account"
+  },
+  "links[3].description": {
+   "ko": "신분증과 거래목적 서류, 한도제한계좌",
+   "en": "ID, proof of purpose, and limited accounts"
+  },
+  "links[4].label": {
+   "ko": "가이드 — 건강보험 가입",
+   "en": "Guide — National Health Insurance"
+  },
+  "links[4].description": {
+   "ko": "체류자격별 적용 시점과 보험료",
+   "en": "When cover starts for your status, and the premium"
+  },
+  "links[5].label": {
+   "ko": "가이드 — 체류지·등록사항 변경신고",
+   "en": "Guide — Reporting Address & Registration Changes"
+  },
+  "links[5].description": {
+   "ko": "등록 뒤 이사하면 15일 이내 신고",
+   "en": "After registering, a move must be reported in 15 days"
+  },
+  "links[6].label": {
+   "ko": "가이드 — 국제교류과 방문 안내",
+   "en": "Guide — Visiting the OIA"
+  },
+  "links[6].description": {
+   "ko": "학교 확인이 필요하거나 판단이 어려울 때",
+   "en": "When you need the university, or are unsure"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 임대차 보증금 지키기",
+   "en": "Guide — Protecting Your Deposit"
+  },
+  "links[7].description": {
+   "ko": "교외 계약은 금액 기준에 따라 계약일부터 30일 이내 신고",
+   "en": "A qualifying lease must be reported within 30 days"
+  },
+  "links[8].label": {
+   "ko": "가이드 — 비자 종류 안내",
+   "en": "Guide — Visa Types"
+  },
+  "links[8].description": {
+   "ko": "입국 전 전자입국신고 대상 · 제외와 무료 공식 경로",
+   "en": "Before you land: who files the e-Arrival Card, free official route"
+  }
+ }
+}

@@ -66,15 +66,19 @@
     "비자",
     "체류자격",
     "D-2",
-    "D-4"
+    "D-4",
+    "전자입국신고",
+    "입국신고서"
    ],
    "en": [
     "visa",
     "status of stay",
     "D-2",
-    "D-4"
+    "D-4",
+    "e-Arrival Card",
+    "arrival card"
    ],
-   "count": 4
+   "count": 6
   },
   "top_sections[0].title": {
    "ko": "D-2 유학 비자",
@@ -229,18 +233,12 @@
   },
   "sections[0].notes[0].lines": {
    "ko": [
-    "비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다.",
-    "한국에서 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 해야 합니다(외교·공무 등 법이 정한 일부 예외 제외).",
-    "아직 외국인등록을 하지 않은 상태에서 국내에서 체류자격을 받거나 체류자격 변경허가를 받았다면, 입국일 기준 90일을 기다리지 말고 그 허가를 받는 때에 외국인등록을 해야 합니다.",
-    "이미 외국인등록을 마친 뒤에 체류자격이 바뀌는 경우는 새로 등록하는 것이 아니라 체류자격 변경허가 절차를 따릅니다."
+    "비자와 외국인등록증(Residence Card / ARC)은 같은 것이 아닙니다. 90일을 초과해 체류하려면 입국한 날부터 90일 이내에 외국인등록을 해야 하고, 예외와 절차는 아래 「외국인등록증(ARC) 발급」 가이드에 있습니다."
    ],
    "en": [
-    "A visa and a Residence Card (ARC) are two different things.",
-    "If you plan to stay in Korea for more than 90 days, you must register within 90 days of entry (a few statutory exceptions, such as diplomatic and official postings, apply).",
-    "If you have not registered yet and you are granted a status of stay, or a change of status, while in Korea, you register at the time that permission is granted rather than waiting out the 90 days.",
-    "If you are already registered and your status changes later, that is a change-of-status application, not a new registration."
+    "A visa and a Residence Card (ARC) are not the same thing. To stay more than 90 days you must register within 90 days of arriving; the exceptions and the procedure are in the Residence Card guide below."
    ],
-   "count": 4
+   "count": 1
   },
   "sections[0].notes[1].title": {
    "ko": "💼 아르바이트는 자동으로 허용되지 않아요",
@@ -248,20 +246,12 @@
   },
   "sections[0].notes[1].lines": {
    "ko": [
-    "D-2 또는 D-4 체류자격만으로 시간제취업이 자동으로 허용되는 것은 아닙니다.",
-    "시간제취업이 허용되는 대상 학생이 일반적인 아르바이트를 하려면 원칙적으로 일을 시작하기 전에 허가를 받아야 합니다.",
-    "허용 대상과 근무 가능 시간은 세부 체류자격, 과정, 학년, 한국어 능력, 학교 유학생 담당자의 확인 등 여러 조건에 따라 달라질 수 있습니다.",
-    "특히 어학연수(D-4) 학생과 방문학생(D-2-8)은 입국일 또는 자격 변경일부터 일정 기간이 지나야 신청할 수 있습니다.",
-    "근무를 시작하기 전에 HiKorea와 학교 국제교류과에서 본인에게 적용되는 조건을 확인하세요."
+    "D-2 또는 D-4 체류자격만으로 시간제취업이 허용되는 것은 아닙니다. 허용 대상과 근무 가능 시간, 신청 시기는 세부 자격·과정·한국어 능력에 따라 달라지므로 아래 「시간제취업(아르바이트) 허가」 가이드에서 본인 조건을 확인하세요."
    ],
    "en": [
-    "A D-2 or D-4 status does not automatically allow part-time work.",
-    "Eligible students generally need permission before starting ordinary part-time employment.",
-    "Eligibility and permitted hours can depend on the exact status of stay, the program, the year of study, Korean proficiency and confirmation from the university's international student adviser.",
-    "D-4 language students and visiting students (D-2-8) in particular can only apply once a set period has passed since entry, or since their status was changed.",
-    "Check the rules that apply to you with HiKorea and the university's international affairs office before starting work."
+    "D-2 or D-4 status alone does not allow part-time work. Who may work, for how many hours and from when depends on your sub-status, course and Korean ability — check your own case in the part-time work guide below."
    ],
-   "count": 5
+   "count": 1
   },
   "sections[0].notes[2].title": {
    "ko": "🔄 교육과정이 바뀌면 확인하세요",
@@ -269,16 +259,12 @@
   },
   "sections[0].notes[2].lines": {
    "ko": [
-    "한국어연수에서 학부과정으로 진학하는 것처럼 학업 형태가 달라지면 현재 체류자격이 새로운 활동에 맞는지 확인해야 합니다.",
-    "현재 체류자격과 다른 체류자격에 해당하는 활동을 하려면 미리 체류자격 변경허가를 받아야 합니다.",
-    "변경이 필요한지, 언제까지 신청해야 하는지 새 과정을 시작하기 전에 HiKorea 또는 학교 국제교류 관련 부서에서 확인하세요."
+    "한국어연수에서 학부과정으로 진학하는 것처럼 학업 형태가 바뀌면 미리 체류자격 변경허가를 받아야 할 수 있습니다. 아래 「어학연수→학위과정 체류자격 변경」 가이드를 보세요."
    ],
    "en": [
-    "If the kind of study changes — moving from a Korean language course into a degree program, say — check that your current status still fits what you will be doing.",
-    "If what you will be doing falls under a different status of stay, you must obtain permission to change your status before you start.",
-    "Ask HiKorea or your university's international office whether you need to change, and by when, before the new course begins."
+    "If the kind of study changes — language training to a degree course, for instance — you may need permission to change your status first. See the D-4 to D-2 guide below."
    ],
-   "count": 3
+   "count": 1
   },
   "sections[0].notes[3].title": {
    "ko": "📅 체류기간도 확인하세요",
@@ -286,12 +272,31 @@
   },
   "sections[0].notes[3].lines": {
    "ko": [
-    "비자를 발급받았더라도 한국에서 허가받은 체류기간을 확인하고, 계속 체류해야 한다면 만료 전에 연장 절차를 준비하세요."
+    "비자를 발급받았더라도 한국에서 허가받은 체류기간을 확인하고, 계속 체류해야 한다면 만료 전에 아래 「체류기간 연장」 가이드로 준비하세요."
    ],
    "en": [
-    "Even once your visa is issued, check the stay period you were granted — and if you need to stay longer, start the extension before it expires."
+    "Having a visa is not the same as having time left. Check the stay period you were granted, and if you need to stay on, prepare before it expires using the extension guide below."
    ],
    "count": 1
+  },
+  "sections[0].notes[4].title": {
+   "ko": "🛬 입국신고서는 비자와 별개예요",
+   "en": "🛬 The arrival card is separate from your visa"
+  },
+  "sections[0].notes[4].lines": {
+   "ko": [
+    "한국에 입국할 때 내는 입국신고서는 법무부 전자입국신고 공식 사이트에서 한국 도착 3일 전부터 미리 낼 수 있습니다. 비용은 무료이고, 전자로 냈다면 종이 입국신고서는 쓰지 않아도 됩니다.",
+    "사증(비자)을 받아 입국하는 사람은 신고 대상입니다. 유효한 한국 외국인등록증을 가진 사람은 신고 대상에서 제외됩니다. 그 밖의 대상 · 제외 기준은 공식 사이트의 「신고대상자 안내」를 확인하세요.",
+    "제출한 신고서는 72시간이 지나거나 입국심사를 받으면 효력이 끝납니다. 다시 입국할 때는 그때 대상인지 다시 확인하세요.",
+    "입국신고서는 입국심사 때 내는 서류입니다. 입국 후 외국인등록은 아래 「외국인등록증(ARC) 발급」 가이드대로 따로 해야 합니다."
+   ],
+   "en": [
+    "The arrival card you hand in when entering Korea can be filed in advance on the Ministry of Justice's official e-Arrival Card site, from 3 days before you arrive. It is free, and once you have filed it online you do not need to fill in a paper card.",
+    "People entering on a Korean visa must file one. Holders of a valid Korean Residence Card are exempt. For the other groups that must file or are exempt, see the \"who must file\" page on the official site.",
+    "A filed card stops being valid 72 hours after you submit it, or once you pass immigration. Next time you enter, check again whether you need one.",
+    "The arrival card is for the immigration check at the border. Registering as a foreign resident after you arrive is a separate step — see the Residence Card guide below."
+   ],
+   "count": 4
   },
   "sections[1].title": {
    "ko": "내 비자를 정확히 확인하세요",
@@ -360,6 +365,14 @@
   "links[6].description": {
    "ko": "허가 대상·허용 시간·신청 절차",
    "en": "Who can apply, permitted hours and how to apply"
+  },
+  "links[7].label": {
+   "ko": "법무부 전자입국신고 (e-Arrival Card)",
+   "en": "Korea e-Arrival Card (Ministry of Justice)"
+  },
+  "links[7].description": {
+   "ko": "신고 대상 · 제외 대상과 무료 공식 신고",
+   "en": "Who must file, who is exempt, and the free official form"
   }
  }
 }

@@ -78,7 +78,9 @@
     "졸업요건",
     "졸업 학점",
     "학위취득 유예",
-    "졸업유예"
+    "졸업유예",
+    "졸업 조건",
+    "졸업 요건"
    ],
    "en": [
     "graduation",
@@ -86,7 +88,7 @@
     "degree requirements",
     "credits to graduate"
    ],
-   "count": 5
+   "count": 7
   },
   "top_sections[0].title": {
    "ko": "졸업하려면 무엇이 필요한가요?",

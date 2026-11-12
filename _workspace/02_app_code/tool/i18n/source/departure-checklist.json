@@ -30,7 +30,8 @@
     "건강보험: 지역가입자는 출국해 1개월 이상 해외에 머물면 출국 다음 날 자격이 끝남 — 보험료 정산은 국민건강보험공단에 확인",
     "일했다면: 마지막 임금 정산, 퇴직급여 대상인지, 국민연금 반환일시금 대상인지 확인",
     "주거: 임대차 보증금 반환 일정, 공과금·관리비 정산",
-    "휴대폰·은행: 해지하거나 유지할지 각 회사에 확인(해외에서 본인 확인이 필요한 서비스 포함)"
+    "휴대폰·은행: 해지하거나 유지할지 각 회사에 확인(해외에서 본인 확인이 필요한 서비스 포함)",
+    "짐을 우체국 EMS로 부친다면: 충전식 배터리(니켈류 제외)와 배터리를 뺄 수 없는 노트북 · 휴대폰 등, 향수 · 스프레이는 보낼 수 없음 — 음식물 · 한약처럼 도착 국가가 막는 물품도 있으니 우체국에 확인"
    ],
    "en": [
     "Stay: whether to hand in your Residence Card, your expiry date, and a change of status if you are staying on",
@@ -38,9 +39,10 @@
     "Health insurance: for regional subscribers, coverage ends from the day after departure once you stay abroad 1 month or more — check the final premium with the National Health Insurance Service",
     "If you worked: your final wages, whether you qualify for severance pay, and whether you qualify for a National Pension lump-sum refund",
     "Housing: when your deposit comes back, and settling utilities and maintenance fees",
-    "Phone and bank: ask each company whether to cancel or keep it (including services that need identity checks from abroad)"
+    "Phone and bank: ask each company whether to cancel or keep it (including services that need identity checks from abroad)",
+    "Shipping your things home by Korea Post EMS: rechargeable batteries (other than nickel types), laptops and phones whose battery cannot be removed, perfume and sprays cannot be sent — and the destination country may ban items such as food or herbal medicine, so check with the post office"
    ],
-   "count": 6
+   "count": 7
   },
   "steps": {
    "ko": [
@@ -78,15 +80,18 @@
     "귀국",
     "한국 떠나기",
     "본국 귀국",
-    "등록증 반납"
+    "등록증 반납",
+    "짐 보내기",
+    "EMS 금지물품"
    ],
    "en": [
     "leaving Korea",
     "departure",
     "go home",
-    "return home"
+    "return home",
+    "shipping belongings home"
    ],
-   "count": 5
+   "count": 7
   },
   "top_sections[0].title": {
    "ko": "일시 출국인가요, 완전 출국인가요?",
@@ -252,6 +257,22 @@
   "links[11].description": {
    "ko": "보증금 반환 일정과 미반환 대응",
    "en": "Deposit refund timing, and if it is not returned"
+  },
+  "links[12].label": {
+   "ko": "가이드 — 이사·공과금 정산",
+   "en": "Guide — Moving in and out: utilities"
+  },
+  "links[12].description": {
+   "ko": "퇴거일 계량값과 정산내역을 남기는 순서입니다.",
+   "en": "How to record the final meter readings and the settlement."
+  },
+  "links[13].label": {
+   "ko": "우체국 EMS — 보낼 수 없는 물품",
+   "en": "Korea Post EMS — items you cannot send"
+  },
+  "links[13].description": {
+   "ko": "배터리 · 향수 · 스프레이 등 항공운송 금지품목",
+   "en": "Batteries, perfume, sprays and other items barred from air transport (Korean)"
   },
   "phrases[0].text": {
    "ko": "다음 달에 출국하는데, 해지하거나 정산할 것이 있는지 확인하고 싶습니다.",

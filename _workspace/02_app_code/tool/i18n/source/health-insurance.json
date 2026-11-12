@@ -87,14 +87,22 @@
     "건강보험",
     "의료보험",
     "보험료",
-    "국민건강보험"
+    "국민건강보험",
+    "건강검진",
+    "국가건강검진",
+    "스케일링",
+    "치석제거"
    ],
    "en": [
     "insurance",
     "NHIS",
-    "health insurance premium"
+    "health insurance premium",
+    "health check-up",
+    "medical check-up",
+    "scaling",
+    "dental scaling"
    ],
-   "count": 4
+   "count": 8
   },
   "top_sections[0].title": {
    "ko": "언제 가입되나요?",
@@ -157,6 +165,42 @@
   "sections[1].notice": {
    "ko": "다만 모든 진료가 건강보험 대상인 것은 아닙니다. 예를 들어 미용 목적의 시술·수술 등 일부 비급여 의료서비스에는 건강보험이 적용되지 않을 수 있습니다.",
    "en": "However, not every medical service is covered. Certain non-covered services, including some cosmetic procedures, may require full payment by the patient."
+  },
+  "sections[1].notes[0].title": {
+   "ko": "국가건강검진 대상인지 확인하세요",
+   "en": "Check whether you are due a national health check-up"
+  },
+  "sections[1].notes[0].lines": {
+   "ko": [
+    "국민건강보험법은 세대주인 지역가입자와 20세 이상 지역가입자를 일반건강검진 대상으로 정하고 있고, 검진은 2년마다 1회입니다. 법제처 생활법령은 일반건강검진 비용을 공단이 전액 부담한다고 안내합니다(「건강검진 실시기준」 제12조).",
+    "외국인 유학생이 그해 실제 대상자로 선정되는지는 개인 상황에 따라 다를 수 있고, 모든 유학생에게 같은 조건이라고 공개 자료로 확인되지는 않습니다. 본인 대상 여부는 공단에서 확인하세요.",
+    "확인 방법: 국민건강보험공단 홈페이지의 「검진대상 조회」(로그인 · 본인인증 필요)나 아래 「문의」의 공단 상담 번호",
+    "검진을 받을 때는 검진기관에 신분증을 가져가세요. 공단 영문 외국인 안내 페이지에서 검진 문진표를 영어 · 중국어 · 베트남어 등으로 내려받을 수 있습니다."
+   ],
+   "en": [
+    "Under the National Health Insurance Act, self-employed (regional) subscribers who head a household, and those aged 20 or over, are due a general health check-up once every two years. The government's Easy-to-find Law guide says NHIS pays the full cost of the general check-up (Health Check-up Standards, art. 12).",
+    "Whether an international student is actually selected in a given year can depend on your own circumstances, and the published material does not say the same rule applies to every student. Check your own case with NHIS.",
+    "How to check: \"검진대상 조회\" (check-up eligibility) on the NHIS website, which needs a login and identity check, or the NHIS numbers under \"Contact\" below.",
+    "Take ID to the check-up clinic. NHIS's English guidance page has the check-up questionnaire in English, Chinese, Vietnamese and other languages."
+   ],
+   "count": 4
+  },
+  "sections[1].notes[1].title": {
+   "ko": "치과 스케일링(치석제거)",
+   "en": "Dental scaling (tartar removal)"
+  },
+  "sections[1].notes[1].lines": {
+   "ko": [
+    "만 19세 이상이고 다른 치료 없이 치석제거만으로 치료가 끝나는 경우, 건강보험이 매년 1월 1일부터 12월 31일까지 1회 적용됩니다.",
+    "무료가 아니라 본인부담금이 있고, 금액은 치과와 진료 내용에 따라 다릅니다. 잇몸 치료 등 다른 치료와 함께 하는 치석제거는 기준이 다를 수 있습니다.",
+    "진료 전에 치과에서 건강보험 적용 여부, 올해 남은 횟수, 본인부담금을 확인하세요."
+   ],
+   "en": [
+    "If you are 19 or older and the treatment ends with tartar removal alone, health insurance covers it once each calendar year (1 January to 31 December).",
+    "It is not free — you pay a share, and the amount depends on the clinic and the treatment. Scaling done as part of other treatment, such as gum treatment, may follow different rules.",
+    "Before treatment, ask the dental clinic whether insurance applies, whether you have this year's visit left, and what you will pay."
+   ],
+   "count": 3
   },
   "sections[2].title": {
    "ko": "보험료를 체납하면 주의하세요",
@@ -253,6 +297,14 @@
   "links[4].description": {
    "ko": "출국 전 보험·계약 정리 순서",
    "en": "Insurance and contracts to sort out before leaving"
+  },
+  "links[5].label": {
+   "ko": "국민건강보험공단 — 일반건강검진 안내",
+   "en": "NHIS — general health check-up"
+  },
+  "links[5].description": {
+   "ko": "검진 대상 · 주기 · 절차와 검진대상 조회 경로 (한국어)",
+   "en": "Who is due, how often, and where to check eligibility (Korean page)"
   }
  }
 }

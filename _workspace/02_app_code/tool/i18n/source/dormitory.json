@@ -76,19 +76,13 @@
   "tips": {
    "ko": [
     "📅 모집기간은 매 학기 달라요 — 지난 학기의 신청기간을 기준으로 판단하지 말고 최신 모집공고를 확인하세요.",
-    "🏠 기숙사마다 대상이 달라요 — 학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다.",
-    "💰 비용은 최신 공지를 확인하세요 — 기숙사비는 입사기간과 기숙사에 따라 달라질 수 있습니다.",
-    "🛏 침구류를 확인하세요 — 침구가 제공되지 않는 기숙사가 있을 수 있으므로 입사 전 확인하세요.",
-    "📄 결핵 검사 결과를 준비하세요 — 한림생활관과 석당글로벌하우스 모두 입사할 때 결핵 검사 결과를 요구합니다."
+    "🏠 기숙사마다 대상이 달라요 — 학부생, 대학원생, 교환학생, 한국어학당 학생 등 학생 유형에 따라 이용 가능한 기숙사가 다를 수 있습니다."
    ],
    "en": [
     "📅 Application periods change each semester — never go by last semester's dates; read the current notice.",
-    "🏠 Each dormitory has its own eligibility — undergraduates, graduate students, exchange students and Korean language students are not all offered the same place.",
-    "💰 Check the fee in the current notice — it changes with the dormitory and the length of stay.",
-    "🛏 Check the bedding — some dormitories provide none, so find out before you arrive.",
-    "📄 Get your tuberculosis test result ready — both Hanlim Residence Hall and Seokdang Global House ask for one when you move in."
+    "🏠 Each dormitory has its own eligibility — undergraduates, graduate students, exchange students and Korean language students are not all offered the same place."
    ],
-   "count": 5
+   "count": 2
   },
   "search_aliases": {
    "ko": [
@@ -99,7 +93,9 @@
     "건강진단서",
     "결핵검사",
     "흉부X선",
-    "입사건강서류"
+    "입사건강서류",
+    "보건증",
+    "보건소"
    ],
    "en": [
     "dorm",
@@ -107,9 +103,10 @@
     "residence hall",
     "health certificate",
     "tuberculosis test",
-    "chest x-ray"
+    "chest x-ray",
+    "public health centre"
    ],
-   "count": 8
+   "count": 10
   },
   "duration": {
    "ko": "신청기간 확인 필요",
@@ -328,7 +325,7 @@
     "배정된 기숙사 및 방 확인",
     "기숙사비 납부",
     "제출서류 확인",
-    "침구류 준비 여부 확인",
+    "침구류 준비 여부 확인 — 기숙사에 따라 제공되지 않을 수 있으니 해당 기숙사에 확인하세요.",
     "결핵 검사 결과(건강검진결과표 · 결핵검진 확인서) 준비"
    ],
    "en": [
@@ -336,7 +333,7 @@
     "Which dormitory and room you were given",
     "Payment of the dormitory fee",
     "What you have to submit",
-    "Whether you need to bring bedding",
+    "Whether you need to bring bedding — some dormitories do not provide it, so ask yours",
     "Your tuberculosis test result (health-check or TB screening certificate)"
    ],
    "count": 6
@@ -357,36 +354,39 @@
    "count": 2
   },
   "sections[0].notes[2].title": {
-   "ko": "🍽 식사는 기숙사마다 달라요",
-   "en": "🍽 Meals differ by dormitory"
+   "ko": "🏥 결핵 서류는 어디서 받나요?",
+   "en": "🏥 Where do I get the TB paperwork?"
   },
   "sections[0].notes[2].lines": {
    "ko": [
-    "기숙사별 식사 제공 여부와 식권 구매 방법을 입사 전에 확인하세요.",
-    "한림생활관은 식비가 생활관비에 포함되지 않으며, 학기 단위로 식사권을 구입해 이용합니다.",
-    "석당글로벌하우스는 취사가 가능한 조리실이 있으며, 식사 제공 여부는 행정실에 확인하세요."
+    "부산 서구보건소와 사하구보건소는 외국인 결핵 확인서를 발급합니다(2026년 수수료표 기준 6,760원, 여권 · 외국인등록증, 처리 2~3일). 다른 보건소는 발급 여부를 먼저 확인하세요.",
+    "보건증(건강진단결과서, 장티푸스 · 파라티푸스 · 결핵)도 두 보건소에서 3,000원, 5일입니다. 한림생활관은 결핵검진 확인서 대신 보건증도 받습니다.",
+    "결핵과 B형간염이 함께 들어간 건강진단서도 발급하지만, 검사 항목과 금액은 보건소마다 다릅니다.",
+    "신분증 원본을 가져가세요. 수수료 · 처리기간 · 접수 시간은 보건소마다 다르고, 어떤 서류를 받는지는 기숙사에 먼저 확인하세요."
    ],
    "en": [
-    "Check whether your dormitory serves meals, and how meal tickets are bought, before you move in.",
-    "At Hanlim, meals are not part of the dormitory fee — you buy a meal plan for the semester.",
-    "Seokdang Global House has a kitchen where you can cook; ask the house office whether meals are provided."
+    "Seo-gu and Saha-gu public health centres (보건소) in Busan issue a TB certificate for foreigners (2026 fee lists: ₩6,760, passport and Residence Card, 2–3 days). Check with any other centre first.",
+    "Both also issue the health certificate known as 보건증 (typhoid, paratyphoid and TB) for ₩3,000 in 5 days. Hanlim accepts a 보건증 in place of the TB screening certificate.",
+    "They also issue certificates covering both TB and hepatitis B, but what is tested and what it costs differs between centres.",
+    "Bring your original ID. Fees, processing times and opening hours differ by centre, and check with your dormitory first which document it accepts."
    ],
-   "count": 3
+   "count": 4
   },
-  "sections[0].notes[3].title": {
-   "ko": "🛏 침구류를 확인하세요",
-   "en": "🛏 Check the bedding"
+  "sections[0].links[0].label": {
+   "ko": "부산 서구보건소 — 제증명 발급 안내",
+   "en": "Seo-gu Health Center — certificates"
   },
-  "sections[0].notes[3].lines": {
-   "ko": [
-    "기숙사에 따라 침구류가 제공되지 않을 수 있으므로 입사 전에 준비 여부를 확인하세요.",
-    "석당글로벌하우스 입 · 퇴사 안내에는 이불 · 패드 · 베개 유료 대여가 적혀 있으나, 현재 제공 여부는 행정실에 확인하세요."
-   ],
-   "en": [
-    "Some dormitories do not provide bedding, so find out before you arrive whether you have to bring your own.",
-    "Seokdang Global House's move-in/out page mentions renting a duvet, mattress pad and pillow for a fee — ask the office whether it is still offered."
-   ],
-   "count": 2
+  "sections[0].links[0].description": {
+   "ko": "외국인 결핵검진확인서 · 건강진단결과서 수수료와 처리기간",
+   "en": "Fees and processing times for the TB certificate and health certificates (Korean)"
+  },
+  "sections[0].links[1].label": {
+   "ko": "부산 사하구보건소 — 검사 · 제증명 수수료",
+   "en": "Saha-gu Health Center — tests and certificates"
+  },
+  "sections[0].links[1].description": {
+   "ko": "외국인 결핵확인서 · 건강진단서 수수료와 처리기간",
+   "en": "Fees and processing times for the TB certificate and health certificates (Korean)"
   },
   "sections[1].title": {
    "ko": "입사 후 해야 할 일",
@@ -501,6 +501,14 @@
   "links[6].description": {
    "ko": "기숙사 입·퇴사도 체류지 변경신고 대상",
    "en": "Moving into or out of a dormitory is a change of address too"
+  },
+  "links[7].label": {
+   "ko": "가이드 — 쓰레기 버리기·분리배출",
+   "en": "Guide — Waste and recycling"
+  },
+  "links[7].description": {
+   "ko": "생활규칙의 분리배출을 실제로 어떻게 하는지 확인하세요.",
+   "en": "How to actually separate and put out waste, as the dorm rules require."
   }
  }
 }

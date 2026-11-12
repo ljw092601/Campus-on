@@ -1,5 +1,11 @@
 [
  {
+  "id": "arrival-first-steps",
+  "category": "immigration",
+  "title_ko": "입국 후 처음 해야 할 일",
+  "fields": 53
+ },
+ {
   "id": "arc-issue",
   "category": "immigration",
   "title_ko": "외국인등록증(ARC) 발급",
@@ -15,31 +21,31 @@
   "id": "visa-types",
   "category": "immigration",
   "title_ko": "비자 종류 안내",
-  "fields": 56
+  "fields": 60
  },
  {
   "id": "dormitory",
   "category": "housing",
   "title_ko": "기숙사 신청",
-  "fields": 68
+  "fields": 72
  },
  {
   "id": "off-campus-housing",
   "category": "housing",
   "title_ko": "교외주거 구하기",
-  "fields": 126
+  "fields": 136
  },
  {
   "id": "bank-account",
   "category": "living",
   "title_ko": "은행 계좌 개설",
-  "fields": 17
+  "fields": 26
  },
  {
   "id": "mobile-plan",
   "category": "living",
   "title_ko": "휴대폰 개통",
-  "fields": 30
+  "fields": 43
  },
  {
   "id": "transit-card",
@@ -51,31 +57,31 @@
   "id": "health-insurance",
   "category": "health",
   "title_ko": "건강보험 가입",
-  "fields": 41
+  "fields": 47
  },
  {
   "id": "campus-clinic",
   "category": "health",
   "title_ko": "교내 보건진료소",
-  "fields": 41
+  "fields": 43
  },
  {
   "id": "hospital-guide",
   "category": "health",
   "title_ko": "병원 이용",
-  "fields": 56
+  "fields": 71
  },
  {
   "id": "course-registration",
   "category": "school",
   "title_ko": "수강신청",
-  "fields": 101
+  "fields": 105
  },
  {
   "id": "certificate-issue",
   "category": "school",
   "title_ko": "증명서 발급",
-  "fields": 82
+  "fields": 86
  },
  {
   "id": "library-guide",
@@ -87,49 +93,49 @@
   "id": "oia-visit",
   "category": "school",
   "title_ko": "국제교류과 방문 안내",
-  "fields": 54
+  "fields": 67
  },
  {
   "id": "emergency-contacts",
   "category": "emergency",
   "title_ko": "긴급 연락처",
-  "fields": 39
+  "fields": 51
  },
  {
   "id": "incident-response",
   "category": "emergency",
   "title_ko": "사건·사고 대응",
-  "fields": 58
+  "fields": 62
  },
  {
   "id": "counseling",
   "category": "emergency",
   "title_ko": "상담 창구",
-  "fields": 74
+  "fields": 103
  },
  {
   "id": "part-time-work",
   "category": "immigration",
   "title_ko": "시간제취업(아르바이트) 허가",
-  "fields": 70
+  "fields": 79
  },
  {
   "id": "academic-status-and-visa",
   "category": "school",
   "title_ko": "휴학·복학·자퇴와 체류",
-  "fields": 68
+  "fields": 72
  },
  {
   "id": "academic-probation",
   "category": "school",
   "title_ko": "학사경고·제적 예방",
-  "fields": 41
+  "fields": 53
  },
  {
   "id": "address-and-registration-changes",
   "category": "immigration",
   "title_ko": "체류지·등록사항 변경신고",
-  "fields": 44
+  "fields": 45
  },
  {
   "id": "d10-job-seeking",
@@ -147,13 +153,13 @@
   "id": "residence-card-reissue",
   "category": "immigration",
   "title_ko": "외국인등록증 재발급",
-  "fields": 35
+  "fields": 37
  },
  {
   "id": "departure-checklist",
   "category": "immigration",
   "title_ko": "귀국·출국 전 행정 정리",
-  "fields": 45
+  "fields": 49
  },
  {
   "id": "graduation-requirements",
@@ -165,7 +171,7 @@
   "id": "rental-deposit-protection",
   "category": "housing",
   "title_ko": "임대차 보증금 지키기",
-  "fields": 50
+  "fields": 60
  },
  {
   "id": "status-change-d4-to-d2",
@@ -177,13 +183,13 @@
   "id": "class-attendance-and-exams",
   "category": "school",
   "title_ko": "출결·공결·시험·성적",
-  "fields": 44
+  "fields": 46
  },
  {
   "id": "moving-and-utilities",
   "category": "housing",
   "title_ko": "이사·공과금 정산",
-  "fields": 17
+  "fields": 19
  },
  {
   "id": "waste-and-recycling",
@@ -195,12 +201,48 @@
   "id": "consumer-disputes",
   "category": "living",
   "title_ko": "소비자 피해·환불 분쟁",
-  "fields": 13
+  "fields": 17
  },
  {
   "id": "financial-scam-response",
   "category": "emergency",
   "title_ko": "금융사기·피싱 긴급 대응",
-  "fields": 16
+  "fields": 20
+ },
+ {
+  "id": "scholarships-and-topik",
+  "category": "school",
+  "title_ko": "장학금·TOPIK 지원받기",
+  "fields": 75
+ },
+ {
+  "id": "campus-online-services",
+  "category": "school",
+  "title_ko": "학교 온라인 서비스 사용하기",
+  "fields": 71
+ },
+ {
+  "id": "overseas-parcels-and-customs",
+  "category": "living",
+  "title_ko": "해외 소포·직구 받기",
+  "fields": 47
+ },
+ {
+  "id": "graduate-degree-guide",
+  "category": "school",
+  "title_ko": "대학원 학위과정 길잡이",
+  "fields": 74
+ },
+ {
+  "id": "driving-and-e-scooters",
+  "category": "living",
+  "title_ko": "운전면허·전동킥보드",
+  "fields": 58
+ },
+ {
+  "id": "disaster-preparedness",
+  "category": "emergency",
+  "title_ko": "재난별 대피와 사전 준비",
+  "fields": 43
  }
 ]

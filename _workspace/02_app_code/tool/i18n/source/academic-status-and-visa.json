@@ -13,7 +13,7 @@
   },
   "summary": {
    "ko": "학교 절차와 출입국 체류 판단은 따로 확인",
-   "en": "The school procedure and your stay are decided separately"
+   "en": "Ask separately: school, immigration"
   },
   "overview": {
    "ko": "휴학·복학·자퇴는 학교에 신청하는 학적 절차이지만, 외국인 유학생은 그 결과가 체류에도 이어집니다. 학교는 유학생이 등록하지 않거나 휴학하거나 제적·자퇴 등으로 유학이 끝나면 15일 안에 출입국·외국인관서에 신고해야 합니다.\n\n학교가 승인했다고 체류가 그대로 보장되는 것은 아닙니다. 체류허가를 유지할지, 연장·변경·취소할지는 출입국·외국인관서가 판단합니다. 학적을 바꾸기 전에 국제교류과와 출입국(1345)에 본인의 체류 계획을 먼저 확인하세요.",
@@ -28,14 +28,14 @@
     "외국인등록증의 체류기간 만료일",
     "휴학·자퇴 사유와 기간(질병이면 진단서 등 증빙)",
     "등록금 납부 여부와 신청 날짜 — 이월·환불 금액이 달라집니다",
-    "휴학 중 한국에 머물지, 출국할지에 대한 계획",
+    "휴학하면 출국해야 할 수 있다는 점 — 출국 날짜와, 국내에 남아야 할 사유(질병 등)가 있는지",
     "장학금·기숙사·시간제취업 허가 등 학적에 묶인 혜택이나 허가"
    ],
    "en": [
     "The expiry date of the period of stay on your Residence Card",
     "Why and for how long you are taking leave or withdrawing (for illness, a medical certificate or other proof)",
     "Whether you have paid tuition and on what date you apply — the carry-over or refund amount depends on it",
-    "Whether you plan to stay in Korea or leave during the leave",
+    "That taking leave may mean leaving Korea — your departure date, and whether you have a reason (such as illness) you must stay",
     "Scholarships, dormitory places, part-time work permission and other benefits or permissions tied to your enrolment"
    ],
    "count": 5
@@ -49,15 +49,15 @@
     "국제교류과와 출입국(1345)에 휴학·자퇴가 체류에 미치는 영향을 먼저 확인",
     "학교 절차 신청 — 일반휴학·복학은 인터넷, 자퇴는 소속대학 행정실 방문(지도교수 상담)",
     "승인 결과와 등록금 이월·환불 내역 확인, 필요한 증명서(휴학증명서·제적증명서 등) 발급",
-    "출입국 안내에 따라 체류 조치 — 계속 체류, 체류기간 연장·체류자격 변경 신청, 또는 출국",
-    "복학할 때는 복학 신청 → 학적이 「재학」으로 바뀐 뒤 등록금 납부 → 수강신청 순서로 진행"
+    "휴학이면 학교·출입국 안내에 따라 출국 준비 — 질병 등으로 국내에 남아야 하면 출국 전에 1345·관할 출입국에 먼저 확인. 자퇴·제적이면 출국할지 다른 체류자격으로 바꿀 수 있는지 확인",
+    "복학할 때는 복학 신청 → 학적이 「재학」으로 바뀐 뒤 등록금 납부 → 수강신청 순서로 진행 (휴학 중 출국했다면 국제교류과에 비자 서류를 신청해 비자를 받은 뒤 입국)"
    ],
    "en": [
     "First check with the Office of International Affairs and immigration (1345) how leave or withdrawal will affect your stay.",
     "File the university procedure — general leave and return online; withdrawal in person at your college administration office (with a talk with your academic adviser).",
     "Check the decision and any tuition carry-over or refund, and get the certificates you need (certificate of leave, of dismissal, etc.).",
-    "Follow immigration’s guidance on your stay — keep staying, apply to extend or change your status, or leave Korea.",
-    "To return: apply for return → once your status shows “enrolled”, pay tuition → register for courses."
+    "If you take leave, prepare to leave Korea as the university and immigration instruct — if illness or a similar reason means you must stay, check with 1345 or your immigration office before you leave. If you withdraw or are dismissed, check whether you must leave or can change to another status.",
+    "To return: apply for return → once your status shows “enrolled”, pay tuition → register for courses (if you left Korea during your leave, request visa documents from the Office of International Affairs and get a visa before you come back)."
    ],
    "count": 5
   },
@@ -82,23 +82,27 @@
     "복학",
     "자퇴",
     "제적",
-    "재입학"
+    "재입학",
+    "휴학 출국",
+    "휴학 후 출국"
    ],
    "en": [
     "leave of absence",
     "return to school",
     "withdrawal",
-    "dismissal"
+    "dismissal",
+    "departure during leave",
+    "leaving Korea on leave"
    ],
-   "count": 5
+   "count": 7
   },
   "top_sections[0].title": {
    "ko": "학교가 하는 일, 출입국이 하는 일",
    "en": "What the university does, what immigration does"
   },
   "top_sections[0].notice": {
-   "ko": "휴학한 유학생이 한국에 계속 머물 수 있는지를 일반적으로 정한 공식 안내는 찾지 못했습니다. 휴학 기간·사유·남은 체류기간에 따라 달라지므로 신청 전에 1345나 관할 출입국·외국인관서에 확인하세요.",
-   "en": "We found no official guidance that says in general whether an international student on leave may stay in Korea. It depends on the length and reason of the leave and on your remaining period of stay, so check with 1345 or your immigration office before you apply."
+   "ko": "휴학하면 출국해야 할 수 있어요\n학교가 휴학을 출입국에 알리면, 출입국은 그 학생이 더 이상 학교를 다니지 않는 것으로 보고 출국 안내를 합니다(법무부 안내).\n국제교류과의 2026년 8월 학부 신입생 학사안내는 휴학 절차를 「국제교류과 담당자에게 문의 → 휴학신청 → 학과에 휴학처리 확인 → 30일내 출국」으로 적고, 휴학을 신청하기 전에 반드시 국제교류과 담당자에게 먼저 연락하라고 합니다. 이 30일은 학교 안내이고, 언제부터 세는지와 법적 근거는 적혀 있지 않습니다. 실제로 언제까지 출국해야 하는지는 출입국 안내를 따라야 하므로, 30일을 그대로 머물 수 있다고 여기지 말고 휴학 신청 전에 국제교류과와 1345에서 확인하세요.",
+   "en": "Taking leave may mean you have to leave Korea\nWhen the university reports your leave, the immigration office treats you as no longer attending school and tells you to leave Korea (Ministry of Justice guidance).\nThe Office of International Affairs’ August 2026 orientation guide for new undergraduates lists the leave procedure as “ask the office → apply for leave → confirm the leave with your department → leave Korea within 30 days”, and says you must contact the office before you apply. These 30 days are the university’s guidance; it does not say when they start or what rule they come from. Your actual departure deadline follows immigration’s instructions, so do not assume you can stay for 30 days — check with the office and with 1345 before you apply for leave."
   },
   "top_sections[0].notes[0].title": {
    "ko": "🏫 학교(동아대학교)",
@@ -202,8 +206,8 @@
    "en": "If you do not return in the semester you are due back, you may be dismissed for non-return. To extend your leave, apply online before that semester starts and check the semester’s academic notice for the exact dates. A leave extension can be used only once while enrolled."
   },
   "sections[1].footnote": {
-   "ko": "※ 휴학 중 출국했다면 체류기간이 남아 있는지, 다시 들어올 때 사증이 필요한지 복학 신청 전에 확인하세요.",
-   "en": "※ If you left Korea during your leave, check before you apply to return whether your period of stay is still valid and whether you need a visa to come back."
+   "ko": "※ 휴학 중 출국했다면: 국제교류과의 2026년 8월 학부 신입생 학사안내는 복학 절차를 「온라인 복학신청 → 국제교류과 담당자 문의 → 등록금 납부 → 학교에서 비자 관련 서류를 받아 비자 신청 → 입국」으로 안내하고, 복학(재입학)을 신청할 때 국제교류과 담당자에게 연락해 비자 서류를 신청하라고 적고 있습니다. 안내는 해마다 바뀔 수 있으니 그 학기 공지도 확인하세요.",
+   "en": "※ If you left Korea during your leave: the Office of International Affairs’ August 2026 orientation guide for new undergraduates lists the return steps as “apply to return online → contact the office → pay tuition → get visa documents from the university and apply for a visa → enter Korea”, and says to contact the office to request the visa documents when you apply to return (or for readmission). The guidance can change every year, so also check that semester’s notice."
   },
   "sections[2].title": {
    "ko": "자퇴와 제적",
@@ -252,24 +256,24 @@
    "count": 3
   },
   "sections[3].title": {
-   "ko": "휴학 중 본국에 다녀오려면",
-   "en": "Going home during your leave"
+   "ko": "휴학하고 출국할 때",
+   "en": "Leaving Korea during your leave"
   },
   "sections[3].notes[0].title": {
-   "ko": "재입국과 외국인등록증",
-   "en": "Re-entry and your Residence Card"
+   "ko": "다시 들어오려면 새 비자",
+   "en": "You need a new visa to come back"
   },
   "sections[3].notes[0].lines": {
    "ko": [
-    "외국인등록을 한 유학(D-2)·일반연수(D-4) 체류자는 출국한 날부터 1년(남은 체류기간이 1년보다 짧으면 그 기간) 안에 다시 들어오면 재입국허가가 면제될 수 있습니다.",
-    "체류기간 안에 다시 들어올 예정이라면 출국할 때 외국인등록증을 반납하지 않아도 되는 경우가 있습니다. 반납 대상인지 출국 전에 확인하세요.",
-    "휴학 중 체류기간이 끝나면 연장이 제한될 수 있으므로, 만료일을 넘겨 해외에 머물 계획이라면 복학 때 새 사증이 필요한지 미리 확인하세요.",
+    "법무부 안내에 따르면, 학교가 휴학을 출입국에 통보할 때 이미 출국해 있는 상태라면 체류기간이 남아 있어도 유학비자가 말소되고, 다시 들어올 때는 새 비자를 받아야 합니다.",
+    "외국인등록증에 남은 체류기간이나 재입국허가 면제만 믿고 출국하지 마세요. 휴학 중 출국과 재입국은 출국 전에 국제교류과와 1345에 확인하세요.",
+    "복학할 때 필요한 비자 서류는 국제교류과에 신청합니다. 순서는 위 「복학」을 보세요.",
     "건강보험 지역가입자는 출국해 1개월 이상 해외에 머물면 출국 다음 날로 자격이 끝납니다. 자세한 내용은 건강보험 가이드를 보세요."
    ],
    "en": [
-    "Registered student (D-2) and general training (D-4) residents who come back within 1 year of leaving (or within their remaining period of stay, if shorter) may be exempt from a re-entry permit.",
-    "If you will come back within your period of stay, you may not need to hand in your Residence Card when you leave. Check whether you must return it before departure.",
-    "Extensions can be restricted during leave, so if you plan to stay abroad past your expiry date, check in advance whether you will need a new visa to return.",
+    "According to the Ministry of Justice, if you are already outside Korea when the university reports your leave to immigration, your student visa is cancelled even if your period of stay has not ended, and you need a new visa to come back.",
+    "Do not rely on the remaining period on your Residence Card or on the re-entry permit exemption. Before you leave, check departure and re-entry with the Office of International Affairs and with 1345.",
+    "You apply to the Office of International Affairs for the visa documents you need to return. See “Returning” above for the steps.",
     "For regional health insurance subscribers, coverage ends from the day after departure once you stay abroad 1 month or more. See the health insurance guide for details."
    ],
    "count": 4
@@ -385,6 +389,22 @@
   "links[13].description": {
    "ko": "장기 귀국 시 건강보험 자격",
    "en": "Health insurance if you are abroad for long"
+  },
+  "links[14].label": {
+   "ko": "국제교류과 — 2026학년도 후기 예비대학 안내",
+   "en": "International Affairs — 2026 autumn pre-college notice"
+  },
+  "links[14].description": {
+   "ko": "첨부 「외국인 유학생 수강신청 안내 책자_(국제교류과)」 15~16쪽에 휴학 · 복학 절차",
+   "en": "The attached OIA booklet has the leave and return steps on pages 15–16 (Korean)"
+  },
+  "links[15].label": {
+   "ko": "법무부 — 유학생이 자주 묻는 질문",
+   "en": "Ministry of Justice — FAQ for international students"
+  },
+  "links[15].description": {
+   "ko": "휴학 통보 때 이미 출국해 있으면 유학비자 말소·새 비자",
+   "en": "Already abroad when your leave is reported: student visa cancelled, new visa needed (Korean)"
   },
   "phrases[0].text": {
    "ko": "휴학하려고 하는데, 체류에 어떤 영향이 있는지 확인하고 싶습니다.",

@@ -44,14 +44,16 @@
    "ko": [
     "보건진료소",
     "보건실",
-    "학교 병원"
+    "학교 병원",
+    "의무실",
+    "학교 의원"
    ],
    "en": [
     "clinic",
     "health center",
     "nurse"
    ],
-   "count": 3
+   "count": 5
   },
   "top_sections[0].title": {
    "ko": "어디에 있나요?",
@@ -175,14 +177,14 @@
   },
   "sections[3].notes[0].lines": {
    "ko": [
-    "재학생(휴학생 포함) 본인은 동아대학교병원에서 20% 감면을 받습니다(외래는 본인만, 입원은 본인과 직계가족 이용 시).",
+    "재학생(휴학생 포함) 본인은 동아대학교병원 외래·입원에서 20% 감면을 받습니다(항목별, 아래). 직계가족은 입원 때만 해당하며 감면율이 다릅니다(아래).",
     "재학생의 직계가족은 입원만 해당하며 감면율 10% · 감면 상한액 20만원입니다.",
     "감면율은 진찰료 · 비보험진료비 · 일반진료비 · 보험적용 건강진단 같은 항목별로 적용되며, 전체 진료비의 20%가 깎이는 것은 아닙니다.",
     "감면 신청은 퇴원 전까지 해야 하며, 퇴원 후에는 소급 적용되지 않습니다.",
     "상급병실료 · 식대 · 약품비 · 치료재료대 등 일부 항목은 감면에서 제외됩니다. 자세한 내용은 동아대학교병원 원무과(051-240-2321~2)에 문의하세요."
    ],
    "en": [
-    "Enrolled students (including those on leave) get a 20% reduction at Dong-A University Hospital — outpatient care for yourself, inpatient care for you or your immediate family.",
+    "Enrolled students (including those on leave) get a 20% reduction at Dong-A University Hospital, applied by fee category (below), on their own outpatient and inpatient care. Immediate family qualify for inpatient care only, at a different rate (below).",
     "A student's immediate family gets 10%, for inpatient care only, capped at 200,000 won.",
     "The percentage applies to particular fee categories — consultation, non-covered care, general treatment, covered health checks — not to your whole bill.",
     "Apply before you are discharged; it cannot be applied retroactively afterwards.",
@@ -251,6 +253,14 @@
   "links[2].description": {
    "ko": "건강보험에 가입되어 있으면 병원 진료비 부담을 덜 수 있습니다.",
    "en": "Being enrolled lowers what you pay for treatment."
+  },
+  "links[3].label": {
+   "ko": "가이드 — 기숙사 신청",
+   "en": "Guide — Dormitory Application"
+  },
+  "links[3].description": {
+   "ko": "결핵 확인서 · 보건증은 구 보건소에서 발급합니다(발급처 · 수수료).",
+   "en": "TB certificates and the 보건증 come from district public health centres (where, and the fees)."
   }
  }
 }
