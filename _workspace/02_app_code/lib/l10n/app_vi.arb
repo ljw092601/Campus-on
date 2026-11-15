@@ -190,6 +190,8 @@
   "facility_section_about": "Giới thiệu",
   "facility_floors_title": "Hướng dẫn theo tầng",
   "facility_floors_error": "Không thể tải thông tin theo tầng.",
+  "facility_floors_showRooms": "Xem tên phòng",
+  "facility_floors_hideRooms": "Ẩn tên phòng",
   "facility_floors_roomCount": "{count} địa điểm",
   "facility_floors_total": "Tổng {count} nơi",
   "@facility_floors_total": {

@@ -117,7 +117,11 @@ class PeekSheet extends ConsumerWidget {
         if (facility.hasFloorInfo) ...[
           SizedBox(height: d.spaceLg),
           FloorSectionHeader(facilityId: facility.id),
-          FloorAccordion(facilityId: facility.id, expandedFloor: expandedFloor),
+          FloorAccordion(
+              facilityId: facility.id,
+              buildingCode: facility.buildingCode,
+              title: facility.name(locale),
+              expandedFloor: expandedFloor),
         ],
         // Keeps the last floor row clear of the sheet's rounded bottom edge.
         const SizedBox(height: 4),

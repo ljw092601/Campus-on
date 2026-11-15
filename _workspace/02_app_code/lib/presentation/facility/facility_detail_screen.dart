@@ -137,7 +137,10 @@ class _DetailBody extends ConsumerWidget {
               if (facility.hasFloorInfo) ...[
                 SizedBox(height: d.spaceLg),
                 FloorSectionHeader(facilityId: facility.id),
-                FloorAccordion(facilityId: facility.id),
+                FloorAccordion(
+                    facilityId: facility.id,
+                    buildingCode: facility.buildingCode,
+                    title: facility.name(locale)),
               ],
             ],
           ),

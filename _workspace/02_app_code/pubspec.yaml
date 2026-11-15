@@ -100,14 +100,17 @@ flutter:
     # generated from 도면화/ by tool/floorplans/build_floorplans.py.
     - assets/floorplans/
 
-  # Bundle Pretendard here in a later week (see architecture doc §Fonts / TODO).
-  # fonts:
-  #   - family: Pretendard
-  #     fonts:
-  #       - asset: assets/fonts/Pretendard-Regular.otf
-  #       - asset: assets/fonts/Pretendard-Medium.otf
-  #         weight: 500
-  #       - asset: assets/fonts/Pretendard-SemiBold.otf
-  #         weight: 600
-  #       - asset: assets/fonts/Pretendard-Bold.otf
-  #         weight: 700
+  # Pretendard v1.3.9 (SIL OFL 1.1 — assets/fonts/Pretendard-LICENSE.txt).
+  # Only the weights the UI uses; w600/w900 fall back to the nearest bundled
+  # weight. Chinese glyphs are not in Pretendard and fall back to the system.
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Pretendard-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard-ExtraBold.otf
+          weight: 800

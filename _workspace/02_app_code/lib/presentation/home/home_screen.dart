@@ -72,7 +72,7 @@ class HomeScreen extends ConsumerWidget {
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
         children: const [
           _Greeting(),
-          SizedBox(height: 18),
+          SizedBox(height: 16),
           _HeroSearchCard(),
           SizedBox(height: 16),
           _FeatureGrid(),
@@ -215,7 +215,7 @@ class _LangToggle extends ConsumerWidget {
   }
 }
 
-/// Date chip ("SUN · 9.27") + semester-week text, then the big greeting.
+/// Date chip ("SUN · 9.27") + semester-week text.
 class _Greeting extends StatelessWidget {
   const _Greeting();
 
@@ -270,18 +270,6 @@ class _Greeting extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
-        Text(
-          l.home_greeting,
-          style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.5,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? scheme.onSurface
-                : AppColors.ink,
-          ),
-        ),
       ],
     );
   }
@@ -325,10 +313,11 @@ class _HeroSearchCard extends StatelessWidget {
             onTap: () => context.push('/classroom-search'),
             child: Stack(
               children: [
-                // Decorative DM emblem, partly cropped by the card's edge.
+                // Decorative DM emblem, partly cropped by the card's edge;
+                // sized to sit beside the title, above the search pill.
                 Positioned(
-                  top: -6,
-                  right: -22,
+                  top: -2,
+                  right: -12,
                   child: IgnorePointer(
                     child: Transform.rotate(
                       angle: 0.12,
@@ -336,8 +325,8 @@ class _HeroSearchCard extends StatelessWidget {
                         opacity: 0.95,
                         child: Image.asset(
                           'assets/home/app_emblem.png',
-                          width: 132,
-                          height: 132,
+                          width: 88,
+                          height: 88,
                           // Decorative: the card's Semantics label names
                           // the action.
                           excludeFromSemantics: true,
@@ -352,7 +341,7 @@ class _HeroSearchCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 96),
+                        padding: const EdgeInsets.only(right: 72),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -371,15 +360,6 @@ class _HeroSearchCard extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                                 letterSpacing: -0.3,
                                 color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              l.home_classroom_subtitle,
-                              style: TextStyle(
-                                fontSize: 14,
-                                height: 1.4,
-                                color: Colors.white.withValues(alpha: 0.85),
                               ),
                             ),
                           ],
@@ -440,28 +420,24 @@ class _FeatureGrid extends StatelessWidget {
     final cards = <_FeatureCardData>[
       _FeatureCardData(
         title: l.home_section_guide,
-        description: l.home_card_guide_desc,
         icon: Symbols.badge,
         tone: Tone.blue,
         onTap: () => context.go('/guide'),
       ),
       _FeatureCardData(
         title: l.home_card_calendar_title,
-        description: l.home_card_calendar_desc,
         icon: Symbols.calendar_month,
         tone: Tone.yellow,
         onTap: () => context.go('/home/calendar'),
       ),
       _FeatureCardData(
         title: l.home_card_map_title,
-        description: l.home_card_map_desc,
         icon: Symbols.location_on,
         tone: Tone.green,
         onTap: () => context.go('/map'),
       ),
       _FeatureCardData(
         title: l.home_card_dining_title,
-        description: l.home_card_dining_desc,
         icon: Symbols.rice_bowl,
         tone: Tone.coral,
         onTap: () => context.go('/home/dining'),
@@ -512,21 +488,19 @@ class _FeatureGrid extends StatelessWidget {
 class _FeatureCardData {
   const _FeatureCardData({
     required this.title,
-    required this.description,
     required this.icon,
     required this.tone,
     required this.onTap,
   });
 
   final String title;
-  final String description;
   final IconData icon;
   final Tone tone;
   final VoidCallback onTap;
 }
 
 /// White r24 feature card: tinted icon tile + gray chevron on top, bold title
-/// and gray one-liner below.
+/// below.
 class _FeatureCard extends StatelessWidget {
   const _FeatureCard({required this.data});
   final _FeatureCardData data;
@@ -550,8 +524,8 @@ class _FeatureCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         // One semantics node per card (audit L-30): a button labeled with the
-        // card title (+ the teaser text), instead of an unlabeled tap target
-        // followed by two loose text nodes.
+        // card title, instead of an unlabeled tap target and a loose text
+        // node.
         child: MergeSemantics(
           child: Semantics(
             button: true,
@@ -593,7 +567,7 @@ class _FeatureCard extends StatelessWidget {
                 maxLines: large ? null : 2,
                 overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 21,
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.3,
                   color: Theme.of(context).brightness == Brightness.dark
@@ -601,17 +575,6 @@ class _FeatureCard extends StatelessWidget {
                       : AppColors.ink,
                 ),
               )),
-              const SizedBox(height: 4),
-              Text(
-                data.description,
-                maxLines: large ? null : 3,
-                overflow: large ? TextOverflow.visible : TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 13,
-                  height: 1.4,
-                  color: scheme.onSurfaceVariant,
-                ),
-              ),
             ],
           ),
         ),
@@ -762,11 +725,20 @@ class _UpcomingRow extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            ToneBadge(
-              _dateLabel(),
-              minWidth: 80,
-              fontSize: 14,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            // Both badges are capped and scale down past the cap, so the
+            // title always keeps the middle of the row on a narrow screen.
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 130),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: ToneBadge(
+                  _dateLabel(),
+                  minWidth: 80,
+                  fontSize: 14,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                ),
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -782,7 +754,13 @@ class _UpcomingRow extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 8),
-            ToneBadge(label, tone: tone),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 110),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: ToneBadge(label, tone: tone),
+              ),
+            ),
           ],
         ),
       ),

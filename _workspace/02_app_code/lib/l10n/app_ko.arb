@@ -214,6 +214,8 @@
   "facility_section_about": "소개",
   "facility_floors_title": "층별 안내",
   "facility_floors_error": "층별 정보를 불러오지 못했어요.",
+  "facility_floors_showRooms": "방 이름 보기",
+  "facility_floors_hideRooms": "방 이름 접기",
   "facility_floors_roomCount": "{count}곳",
   "@facility_floors_roomCount": {
     "placeholders": { "count": { "type": "int" } }

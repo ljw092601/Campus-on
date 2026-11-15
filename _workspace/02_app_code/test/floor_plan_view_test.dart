@@ -5,6 +5,7 @@ import 'package:campus_on/presentation/classroom/widgets/floor_plan_view.dart';
 import 'package:campus_on/presentation/classroom/widgets/room_location_card.dart';
 import 'package:campus_on/presentation/providers/floor_plan_providers.dart';
 import 'package:campus_on/presentation/providers/repository_providers.dart';
+import 'package:campus_on/presentation/shared/widgets/floor_accordion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -100,5 +101,74 @@ void main() {
     await tester.pump();
     expect(viewer.transformationController!.value, original);
     expect(tester.takeException(), isNull);
+  });
+
+  // Own container, disposed inside the test: the floor-guide provider's cache
+  // timer must not outlive it. The plan index is an asset load (real I/O),
+  // so it is warmed up in runAsync first.
+  Future<void> pumpGuide(
+      WidgetTester tester, ProviderContainer c, FloorAccordion child) async {
+    await tester.runAsync(() => c.read(floorPlansProvider.future));
+    await tester.pumpWidget(UncontrolledProviderScope(
+      container: c,
+      child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(body: SingleChildScrollView(child: child)),
+      ),
+    ));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> disposeGuide(WidgetTester tester, ProviderContainer c) async {
+    await tester.pumpWidget(const SizedBox.shrink());
+    c.dispose();
+  }
+
+  testWidgets('floor guide shows the floor drawing and opens it full screen',
+      (tester) async {
+    final c = ProviderContainer();
+    await pumpGuide(
+        tester,
+        c,
+        const FloorAccordion(
+            facilityId: 's04', buildingCode: 'S04', title: '공과대학2호관'));
+
+    // Collapsed: no drawing yet.
+    expect(find.byType(FloorPlanView), findsNothing);
+    await tester.tap(find.text('3F'));
+    await tester.pumpAndSettle();
+    expect(find.byType(FloorPlanView), findsOneWidget);
+    // With a drawing the room names start folded behind a toggle.
+    expect(find.textContaining(' · '), findsNothing);
+    await tester.ensureVisible(find.text('Show room names'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Show room names'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining(' · '), findsOneWidget);
+    expect(find.text('Hide room names'), findsOneWidget);
+
+    await tester.ensureVisible(find.byType(FloorPlanView));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(FloorPlanView));
+    await tester.pumpAndSettle();
+    expect(find.byType(FloorPlanScreen), findsOneWidget);
+    // No room on a floor-guide plan → no "back to the room" action.
+    expect(find.byTooltip('Back to the room'), findsNothing);
+    await disposeGuide(tester, c);
+  });
+
+  testWidgets('split building shows one drawing per wing with its code',
+      (tester) async {
+    final c = ProviderContainer();
+    await pumpGuide(
+        tester,
+        c,
+        const FloorAccordion(
+            facilityId: 'b04', buildingCode: 'B04', expandedFloor: '3F'));
+    expect(find.byType(FloorPlanView), findsNWidgets(2));
+    expect(find.text('B04A'), findsOneWidget);
+    expect(find.text('B04B'), findsOneWidget);
+    await disposeGuide(tester, c);
   });
 }

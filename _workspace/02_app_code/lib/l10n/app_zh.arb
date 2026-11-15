@@ -190,6 +190,8 @@
   "facility_section_about": "简介",
   "facility_floors_title": "各楼层指南",
   "facility_floors_error": "未能加载各楼层信息。",
+  "facility_floors_showRooms": "查看房间名称",
+  "facility_floors_hideRooms": "收起房间名称",
   "facility_floors_roomCount": "{count} 处",
   "facility_floors_total": "共 {count} 处",
   "@facility_floors_total": {

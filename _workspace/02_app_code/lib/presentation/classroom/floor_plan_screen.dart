@@ -6,17 +6,29 @@ import '../../l10n/gen/app_localizations.dart';
 import 'widgets/floor_plan_view.dart';
 
 /// Full-screen floor plan (pinch-zoom / pan / double-tap) opened from the
-/// room card in the map peek sheet. Starts zoomed in and centred on the red
-/// dot; later viewport changes (rotation, split screen) keep the user's zoom
+/// room card in the map peek sheet, or from a floor in the floor guide
+/// ([FloorPlanScreen.plan], no room). With a room it starts zoomed in and
+/// centred on the red dot, otherwise fitted; later viewport changes (rotation, split screen) keep the user's zoom
 /// and the plan point under the centre instead of resetting (L-5).
 class FloorPlanScreen extends StatefulWidget {
   const FloorPlanScreen({
     super.key,
-    required this.location,
+    required RoomLocation this.location,
     required this.title,
-  });
+  }) : floorPlan = null;
 
-  final RoomLocation location;
+  /// A whole floor without a highlighted room (floor guide).
+  const FloorPlanScreen.plan({
+    super.key,
+    required FloorPlan plan,
+    required this.title,
+  })  : location = null,
+        floorPlan = plan;
+
+  final RoomLocation? location;
+  final FloorPlan? floorPlan;
+
+  FloorPlan get plan => location?.plan ?? floorPlan!;
 
   /// e.g. "S04-0306-1 · 공과대학2호관".
   final String title;
@@ -44,7 +56,7 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
 
   /// Plan size when fitted (contain) into [viewport].
   Size _fitted(Size viewport) {
-    final ar = widget.location.plan.aspectRatio;
+    final ar = widget.plan.aspectRatio;
     return viewport.width / viewport.height > ar
         ? Size(viewport.height * ar, viewport.height)
         : Size(viewport.width, viewport.width / ar);
@@ -66,9 +78,11 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
       ..scaleByDouble(scale, scale, 1, 1);
   }
 
-  /// Zoom so the dot sits in the middle of the viewport.
+  /// Zoom so the dot sits in the middle of the viewport (fitted plan when
+  /// there is no room).
   Matrix4 _focusOnRoom(Size viewport) {
-    final room = widget.location.room;
+    final room = widget.location?.room;
+    if (room == null) return Matrix4.identity();
     return _centreOn(viewport, Offset(room.x, room.y), _initialScale);
   }
 
@@ -82,8 +96,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
         MatrixUtils.transformPoint(inverse, prev.center(Offset.zero));
     final fit = _fitted(prev);
     final o = _fitOffset(prev, fit);
-    final u = Offset(
-        (centreScene.dx - o.dx) / fit.width, (centreScene.dy - o.dy) / fit.height);
+    final u = Offset((centreScene.dx - o.dx) / fit.width,
+        (centreScene.dy - o.dy) / fit.height);
     return _centreOn(next, u, scale);
   }
 
@@ -128,14 +142,15 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
       appBar: AppBar(
         title: Text(widget.title, maxLines: 1, overflow: TextOverflow.ellipsis),
         actions: [
-          IconButton(
-            tooltip: l.classroom_plan_recenter,
-            icon: const Icon(Symbols.center_focus_strong),
-            onPressed: () {
-              final viewport = _viewport;
-              if (viewport != null) _ctrl.value = _focusOnRoom(viewport);
-            },
-          ),
+          if (loc != null)
+            IconButton(
+              tooltip: l.classroom_plan_recenter,
+              icon: const Icon(Symbols.center_focus_strong),
+              onPressed: () {
+                final viewport = _viewport;
+                if (viewport != null) _ctrl.value = _focusOnRoom(viewport);
+              },
+            ),
         ],
       ),
       // Drawings are white-background artwork; keep them on white in dark
@@ -168,8 +183,8 @@ class _FloorPlanScreenState extends State<FloorPlanScreen> {
                     // Thin base border / small dot — they scale up with the
                     // zoom.
                     child: FloorPlanView(
-                      plan: loc.plan,
-                      room: loc.room,
+                      plan: widget.plan,
+                      room: loc?.room,
                       strokeWidth: 1.2,
                       dotSize: 7,
                     ),

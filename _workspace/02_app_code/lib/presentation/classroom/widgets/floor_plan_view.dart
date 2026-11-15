@@ -8,7 +8,9 @@ import '../floor_label.dart';
 /// "red = you are looking for this" reads the same in light and dark).
 const _dotColor = Color(0xFFE53935);
 
-/// Floor-plan drawing with the searched [room] highlighted: its real outline
+/// Floor-plan drawing, optionally with the searched [room] highlighted (a
+/// plain drawing when [room] is null — the floor guide's per-floor plan):
+/// its real outline
 /// filled light red with a softly pulsing red border. Rooms without a known
 /// shape fall back to the rectangle, and rooms without either (several rooms
 /// sharing one region on the drawing) to a small pulsing dot on the label.
@@ -19,14 +21,14 @@ class FloorPlanView extends StatelessWidget {
   const FloorPlanView({
     super.key,
     required this.plan,
-    required this.room,
+    this.room,
     this.strokeWidth = 2,
     this.dotSize = 13,
     this.decodeWidth,
   });
 
   final FloorPlan plan;
-  final PlanRoom room;
+  final PlanRoom? room;
 
   /// Room border width in logical pixels at the widget's rendered size.
   final double strokeWidth;
@@ -40,7 +42,7 @@ class FloorPlanView extends StatelessWidget {
 
   /// Room shape in unit (0..1) coordinates, or null when only the label
   /// point is known.
-  List<Offset>? get _shape {
+  List<Offset>? _shape(PlanRoom room) {
     final o = room.outline;
     if (o != null) {
       return [for (var i = 0; i + 1 < o.length; i += 2) Offset(o[i], o[i + 1])];
@@ -59,11 +61,12 @@ class FloorPlanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shape = _shape;
+    final room = this.room;
+    final shape = room == null ? null : _shape(room);
     final l = AppLocalizations.of(context);
     // Screen readers get the building/floor and the room instead of "image"
     // and a colour-only highlight (L-30).
-    final markerLabel = l.floorplan_roomMarker(room.code);
+    final markerLabel = room == null ? '' : l.floorplan_roomMarker(room.code);
     return AspectRatio(
       aspectRatio: plan.aspectRatio,
       child: LayoutBuilder(builder: (context, c) {
@@ -77,17 +80,18 @@ class FloorPlanView extends StatelessWidget {
                 fit: BoxFit.contain,
                 cacheWidth: decodeWidth,
                 filterQuality: FilterQuality.medium,
-                semanticLabel: l.floorplan_imageLabel(plan.buildingCode,
-                    localizedFloorLabel(l, plan.floorLabel)),
+                semanticLabel: l.floorplan_imageLabel(
+                    plan.buildingCode, localizedFloorLabel(l, plan.floorLabel)),
               ),
             ),
-            if (shape != null)
+            if (room == null)
+              const SizedBox.shrink()
+            else if (shape != null)
               Positioned.fill(
                 child: Semantics(
                   label: markerLabel,
                   child: IgnorePointer(
-                    child:
-                        _PulsingRoom(shape: shape, strokeWidth: strokeWidth),
+                    child: _PulsingRoom(shape: shape, strokeWidth: strokeWidth),
                   ),
                 ),
               )

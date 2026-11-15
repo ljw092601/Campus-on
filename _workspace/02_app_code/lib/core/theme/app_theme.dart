@@ -91,10 +91,10 @@ class AppTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: background,
       visualDensity: VisualDensity.standard,
+      fontFamily: 'Pretendard',
     );
 
-    // Typography tokens (§4.2). Font family left null → system font (cost 0);
-    // swap to 'Pretendard' once bundled (see pubspec + TODO).
+    // Typography tokens (§4.2), set in the bundled Pretendard (pubspec).
     final t = base.textTheme;
     final textTheme = t.copyWith(
       displaySmall: t.displaySmall

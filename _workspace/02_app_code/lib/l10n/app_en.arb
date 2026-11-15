@@ -221,6 +221,9 @@
   "facility_section_about": "About",
   "facility_floors_title": "Floor Guide",
   "facility_floors_error": "Couldn't load floor info.",
+  "facility_floors_showRooms": "Show room names",
+  "facility_floors_hideRooms": "Hide room names",
+  "@facility_floors_showRooms": {"description": "Floor guide: toggle that reveals the room-name list under a floor drawing"},
   "facility_floors_roomCount": "{count} rooms",
   "@facility_floors_roomCount": {
     "placeholders": { "count": { "type": "int" } }

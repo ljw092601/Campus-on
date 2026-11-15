@@ -3,8 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../../../domain/entities/floor_plan.dart';
 import '../../classroom/floor_label.dart';
+import '../../classroom/floor_plan_screen.dart';
+import '../../classroom/widgets/floor_plan_view.dart';
 import '../../providers/facility_providers.dart';
+import '../../providers/floor_plan_providers.dart';
 import 'read_status.dart';
 import '../../../data/i18n/place_text.dart';
 import 'ui_kit.dart';
@@ -16,12 +20,24 @@ import 'ui_kit.dart';
 /// → rooftop). Room names are Korean-only for now (plan §9).
 ///
 /// Styled as a [GroupCard]: each row is a navy floor pill ("B1F"), the bold
-/// room count and a gray chevron.
+/// room count and a gray chevron. An expanded floor shows its drawing(s)
+/// above the room names when the building has floor plans ([buildingCode];
+/// one per wing, e.g. B04A/B04B) — tap to open it full screen.
 class FloorAccordion extends ConsumerWidget {
   const FloorAccordion(
-      {super.key, required this.facilityId, this.expandedFloor});
+      {super.key,
+      required this.facilityId,
+      this.buildingCode,
+      this.title,
+      this.expandedFloor});
 
   final String facilityId;
+
+  /// Campus-map building code ("S04", "B04") used to find the drawings.
+  final String? buildingCode;
+
+  /// Building name for the full-screen plan's title.
+  final String? title;
 
   /// Floor label (e.g. "3F") whose tile starts expanded — used by the
   /// classroom-search deep link so the target floor is open on arrival.
@@ -34,6 +50,17 @@ class FloorAccordion extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final d = context.dimens;
     final async = ref.watch(buildingFloorsProvider(facilityId));
+    // Drawings are optional extras: while loading or on error the floor guide
+    // simply shows without them.
+    final planIndex = ref.watch(floorPlansProvider).valueOrNull;
+    List<FloorPlan> plansFor(String floor) {
+      final code = buildingCode;
+      if (code == null || code.isEmpty || planIndex == null) return const [];
+      return [
+        for (final c in planCodesFor(code, planIndex.keys))
+          if (planIndex[c]?[floor] case final p?) p,
+      ];
+    }
 
     return async.when(
       loading: () => Padding(
@@ -113,25 +140,145 @@ class FloorAccordion extends ConsumerWidget {
                   ],
                 ),
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      // Untranslated names keep their Korean — that is what the
-                      // door sign says, so it is also what a student compares
-                      // against.
-                      [for (final r in floor.rooms) roomText(r, locale)]
-                          .join(' · '),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: scheme.onSurfaceVariant),
+                  for (final plan in plansFor(floor.floor)) ...[
+                    _FloorPlanThumb(
+                      plan: plan,
+                      floorText: locale.languageCode == 'ko'
+                          ? localizedFloorLabel(l, floor.floor)
+                          : floorLabelText(floor.floor, locale),
+                      title: title,
+                      showCode: plansFor(floor.floor).length > 1,
                     ),
+                    SizedBox(height: d.spaceSm),
+                  ],
+                  // With a drawing the names fold away behind a toggle: the
+                  // drawing carries the numbers, the list the (translated)
+                  // names — kept for that and for screen readers.
+                  _RoomNames(
+                    text: [for (final r in floor.rooms) roomText(r, locale)]
+                        .join(' · '),
+                    collapsible: plansFor(floor.floor).isNotEmpty,
                   ),
                 ],
               ),
           ],
         );
       },
+    );
+  }
+}
+
+/// Room names of one floor. Untranslated names keep their Korean — that is
+/// what the door sign says, so it is also what a student compares against.
+/// [collapsible] (the floor has a drawing) starts it folded behind a
+/// "show room names" toggle.
+class _RoomNames extends StatefulWidget {
+  const _RoomNames({required this.text, required this.collapsible});
+
+  final String text;
+  final bool collapsible;
+
+  @override
+  State<_RoomNames> createState() => _RoomNamesState();
+}
+
+class _RoomNamesState extends State<_RoomNames> {
+  bool _open = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final names = Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        widget.text,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(color: scheme.onSurfaceVariant),
+      ),
+    );
+    if (!widget.collapsible) return names;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            onPressed: () => setState(() => _open = !_open),
+            icon: Icon(_open ? Icons.expand_less : Icons.expand_more),
+            label: Text(_open
+                ? l.facility_floors_hideRooms
+                : l.facility_floors_showRooms),
+          ),
+        ),
+        if (_open) names,
+      ],
+    );
+  }
+}
+
+/// One floor drawing inside an expanded floor: white card (drawings stay on
+/// white in dark mode), wing code chip when the floor has several drawings,
+/// tap → zoomable full-screen plan.
+class _FloorPlanThumb extends StatelessWidget {
+  const _FloorPlanThumb({
+    required this.plan,
+    required this.floorText,
+    required this.title,
+    required this.showCode,
+  });
+
+  final FloorPlan plan;
+  final String floorText;
+  final String? title;
+  final bool showCode;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final label = '${plan.buildingCode} $floorText';
+    return Semantics(
+      button: true,
+      label: l.classroom_plan_open(label),
+      excludeSemantics: true,
+      child: Material(
+        color: Colors.white,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: scheme.outlineVariant),
+        ),
+        child: InkWell(
+          onTap: () => Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+              builder: (_) => FloorPlanScreen.plan(
+                plan: plan,
+                title: [label, if (title != null) title].join(' · '),
+              ),
+            ),
+          ),
+          child: Stack(
+            children: [
+              FloorPlanView(plan: plan, decodeWidth: 1200),
+              if (showCode)
+                Positioned(
+                  left: 8,
+                  top: 8,
+                  child: ToneBadge(plan.buildingCode,
+                      tone: Tone.navy, fontSize: 12),
+                ),
+              const Positioned(
+                right: 8,
+                bottom: 8,
+                child: Icon(Icons.zoom_in, size: 20, color: Color(0xFF1B3A7A)),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
