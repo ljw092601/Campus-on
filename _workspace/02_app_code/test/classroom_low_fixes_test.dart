@@ -254,9 +254,9 @@ void main() {
   group('L-5 / L-33 full-screen plan', () {
     Future<InteractiveViewer> pumpScreen(WidgetTester tester) async {
       final loc = await tester.runAsync(
-          () => container.read(roomLocationProvider(('S07', '0524-13')).future));
+          () => container.read(roomLocationProvider(('S07', '0501-10')).future));
       await tester.pumpWidget(
-          app(FloorPlanScreen(location: loc!, title: 'S07-0524-13')));
+          app(FloorPlanScreen(location: loc!, title: 'S07-0501-10')));
       await tester.pump();
       return tester.widget<InteractiveViewer>(find.byType(InteractiveViewer));
     }
@@ -300,7 +300,7 @@ void main() {
 
       final viewer = await pumpScreen(tester);
       final ctrl = viewer.transformationController!;
-      final loc = container.read(roomLocationProvider(('S07', '0524-13'))).value!;
+      final loc = container.read(roomLocationProvider(('S07', '0501-10'))).value!;
 
       Offset centreInPlanFractions(Size viewport) {
         final ar = loc.plan.aspectRatio;

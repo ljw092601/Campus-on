@@ -15,7 +15,7 @@
   예)    python build_floorplans.py ../../../../도면화 raw_rooms.json
 
 규칙:
-  - 파일명은 <건물>_<층>: S04_3F, B02_B1(지하 1층), B04A_10F(동이 나뉜 건물은 동 문자까지 건물코드).
+  - 파일명은 <건물>_<층>: S04_3F, B02_B1(지하 1층), B04A_10F(동이 나뉜 건물은 동 문자 A~D까지 건물코드).
   - 호수는 0301 / 0306-1 / 0101-A (앞 2자리 = 층), 지하는 B101 / B110-1 (B + 지하층 + 2자리).
     층과 어긋나면 경고 후 제외한다 (도면 오타 가능성 — overrides.json의 rename으로 바로잡고,
     059-1처럼 형식 밖이지만 실제 호수인 것은 allow에 넣는다).
@@ -50,7 +50,7 @@ OVERRIDES = SCRIPT_DIR / "overrides.json"
 MAX_WIDTH = 2400
 # group(1) = 지상층 2자리, group(2) = 지하층 1자리
 CODE = re.compile(r"^(?:(\d{2})\d{2}|B(\d)\d{2})(?:-(?:\d{1,2}|[A-Z]))?$")
-KEY = re.compile(r"^([SGB]\d{2}[AB]?)_(B?)(\d+)F?$", re.I)
+KEY = re.compile(r"^([SGB]\d{2}[A-D]?)_(B?)(\d+)F?$", re.I)
 # extract_rooms.py와 같은 채움색 (하늘색 호실, 민트색 화장실)
 FILL = np.array([221, 241, 255])
 WC = np.array([200, 242, 229])
@@ -172,6 +172,13 @@ def main(src_dir: Path, raw_path: Path) -> None:
         rename = ov.get("rename", {})
         drop = set(ov.get("drop", []))
         allow = set(ov.get("allow", []))
+        # 한 도면에 두 동이 같은 호수로 섞인 경우(B04 B1의 C·D동): 같은 이미지를
+        # 동마다 복사해 두고, 라벨 위치 [x0, y0, x1, y1] 영역으로 방을 나눈다.
+        keep_regions = ov.get("keep_regions")
+        drop_regions = ov.get("drop_regions", [])
+
+        def in_any(r, regions):
+            return any(x0 <= r["x"] <= x1 and y0 <= r["y"] <= y1 for x0, y0, x1, y1 in regions)
 
         rooms: dict = {}
         for r in raw[key]["rooms"]:
@@ -180,6 +187,10 @@ def main(src_dir: Path, raw_path: Path) -> None:
                 continue
             code = rename.get(code, code)
             if code in drop:
+                continue
+            if keep_regions is not None and not in_any(r, keep_regions):
+                continue
+            if in_any(r, drop_regions):
                 continue
             if not code_on_floor(code, basement, floor_no) and code not in allow:
                 warnings.append(f"{key}: '{code}' 층/형식 불일치 — 제외")

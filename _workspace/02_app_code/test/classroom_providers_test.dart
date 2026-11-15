@@ -180,7 +180,7 @@ void main() {
         RoomLookupStatus.missingPlan);
     expect((await c.read(roomLookupProvider(('S01', '0301')).future)).status,
         RoomLookupStatus.missingPlan);
-    expect((await c.read(roomLookupProvider(('S07', '059-1')).future)).status,
+    expect((await c.read(roomLookupProvider(('S07', '0501-10')).future)).status,
         RoomLookupStatus.found);
   });
 }

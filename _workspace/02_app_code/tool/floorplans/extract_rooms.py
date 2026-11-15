@@ -10,7 +10,7 @@ WC = np.array([200,242,229])
 # 0301, 059-1, 0306-1, 0101-A, B101(지하 1층), B110-1
 CODE = re.compile(r'^(?:B\d{3}|\d{3,4})(?:-(?:\d{1,2}|[A-Z]))?$')
 # 건물 접두어 (S07 / 507 / B02 / B04(A) / S11)
-PREFIX = re.compile(r'^[SGB5$][O0]\d{1,2}(\([AB]\))?$')
+PREFIX = re.compile(r'^[SGB5$][O0]\d{1,2}(\([A-D]\))?$')
 
 def ocr(img):
     res, _ = eng(np.array(img))

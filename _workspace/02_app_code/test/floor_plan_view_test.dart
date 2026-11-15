@@ -70,13 +70,13 @@ void main() {
   testWidgets('full-screen plan lays out and zooms onto the room',
       (tester) async {
     final loc = await tester.runAsync(
-        () => container.read(roomLocationProvider(('S07', '0524-13')).future));
+        () => container.read(roomLocationProvider(('S07', '0501-10')).future));
     await tester.pumpWidget(UncontrolledProviderScope(
       container: container,
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: FloorPlanScreen(location: loc!, title: 'S07-0524-13'),
+        home: FloorPlanScreen(location: loc!, title: 'S07-0501-10'),
       ),
     ));
     await tester.pump();
