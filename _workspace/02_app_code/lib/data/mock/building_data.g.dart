@@ -326,8 +326,8 @@ abstract final class BuildingData {
     ),
     Facility(
       id: 'g05',
-      nameKo: '구덕교육동 2,3호관',
-      nameEn: 'Gudeok Education Buildings 2 & 3',
+      nameKo: '구덕강의동 1,2호관',
+      nameEn: 'Gudeok Lecture Buildings 1 & 2',
       category: FacilityCategory.building,
       lat: 35.12116219735184,
       lng: 129.01905533530316,

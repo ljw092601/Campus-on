@@ -3302,7 +3302,7 @@
   {
     "campus": "gudeok",
     "code": "G05",
-    "name": "구덕교육동 2,3호관",
+    "name": "구덕강의동 1,2호관",
     "description": "",
     "floors": [
       {
@@ -3476,7 +3476,7 @@
     "lat": 35.12116219735184,
     "lng": 129.01905533530316,
     "id": "g05",
-    "name_en": "Gudeok Education Buildings 2 & 3"
+    "name_en": "Gudeok Lecture Buildings 1 & 2"
   },
   {
     "campus": "gudeok",

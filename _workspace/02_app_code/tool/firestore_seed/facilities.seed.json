@@ -524,8 +524,8 @@
     }
   },
   "g05": {
-    "name_ko": "구덕교육동 2,3호관",
-    "name_en": "Gudeok Education Buildings 2 & 3",
+    "name_ko": "구덕강의동 1,2호관",
+    "name_en": "Gudeok Lecture Buildings 1 & 2",
     "category": "building",
     "lat": 35.12116219735184,
     "lng": 129.01905533530316,
@@ -534,10 +534,10 @@
     "hasFloorInfo": true,
     "i18n": {
       "zh": {
-        "name": "Gudeok教育楼2、3号馆"
+        "name": "Gudeok讲义楼1、2号馆"
       },
       "vi": {
-        "name": "Tòa Giáo dục Gudeok 2, 3"
+        "name": "Tòa Giảng đường Gudeok 1, 2"
       }
     }
   },

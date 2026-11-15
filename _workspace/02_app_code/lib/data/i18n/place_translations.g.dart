@@ -332,13 +332,13 @@ const Map<String, Map<String, Map<String, Object?>>> facilityI18n = {
   },
   'g05': {
     'en': {
-      'name': 'Gudeok Education Buildings 2 & 3',
+      'name': 'Gudeok Lecture Buildings 1 & 2',
     },
     'zh': {
-      'name': 'Gudeok教育楼2、3号馆',
+      'name': 'Gudeok讲义楼1、2号馆',
     },
     'vi': {
-      'name': 'Tòa Giáo dục Gudeok 2, 3',
+      'name': 'Tòa Giảng đường Gudeok 1, 2',
     },
   },
   'g06': {

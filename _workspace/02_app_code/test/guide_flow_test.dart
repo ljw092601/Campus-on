@@ -1010,7 +1010,7 @@ void main() {
     expect(find.text('Hanlim Library (B)'), findsOneWidget);
     expect(find.text('International Hall'), findsOneWidget);
     expect(find.text('Law School (LS)'), findsOneWidget);
-    expect(find.text('Gudeok Education Buildings 2 & 3'), findsOneWidget);
+    expect(find.text('Gudeok Lecture Buildings 1 & 2'), findsOneWidget);
   });
 
   testWidgets('Guide detail: library guide fits a 360dp phone', (tester) async {

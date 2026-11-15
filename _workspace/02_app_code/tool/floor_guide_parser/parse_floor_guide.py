@@ -67,7 +67,7 @@ EN_NAMES = {
     "loc062": "College of Medicine (S2)",
     "g02": "College of Medicine",
     "g04": "Gudeok Education Building 1",
-    "g05": "Gudeok Education Buildings 2 & 3",
+    "g05": "Gudeok Lecture Buildings 1 & 2",
     "g06": "Gudeok Research Building 2",
     "g11": "Gudeok Education Building 4",
     "g12": "Gudeok Student Union Building",

@@ -7564,7 +7564,7 @@ class MockData {
         ),
       ],
       // 한림도서관(승학) / 국제관 = 부민도서관(부민) / 법학전문대학원 = 법학도서분관(부민) /
-      // 구덕교육동 2,3호관 2F = 의학도서분관(구덕). All four already exist in the
+      // 구덕강의동 1,2호관 2F = 의학도서분관(구덕). All four already exist in the
       // building data — no new coordinates were invented for this guide.
       relatedFacilityIds: ['s10', 'b05', 'b02', 'g05'],
       durationKo: '5~10분',
